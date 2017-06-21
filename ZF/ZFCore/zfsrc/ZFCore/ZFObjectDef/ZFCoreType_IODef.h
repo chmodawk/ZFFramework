@@ -1,0 +1,73 @@
+/* ====================================================================== *
+ * Copyright (c) 2010-2016 ZFFramework
+ * home page: http://ZFFramework.com
+ * blog: http://zsaber.com
+ * contact: master@zsaber.com (Chinese and English only)
+ * Distributed under MIT license:
+ *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
+ * ====================================================================== */
+/**
+ * @file ZFCoreType_IODef.h
+ * @brief type io with io callbacks
+ */
+
+#ifndef _ZFI_ZFCoreType_IODef_h_
+#define _ZFI_ZFCoreType_IODef_h_
+
+#include "ZFCallback_common.h"
+#include "ZFSerializable.h"
+#include "ZFFilterForZFClass.h"
+#include "ZFFilterForZFMethod.h"
+#include "ZFFilterForZFProperty.h"
+#include "zfautoObjectFwd.h"
+#include "ZFAny.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+// ============================================================
+// util
+#define _ZFP_ZFCoreType_IODef_outputObjectPointer() \
+    {if(v) {output << v->objectInfo();} else {output.execute(ZFTOKEN_zfnull);}}
+
+// ============================================================
+// common output for core types
+ZFOUTPUT_TYPE_TEMPLATE(typename T_Public ZFM_COMMA() typename T_Internal,
+                       ZFFilterBase<T_Public ZFM_COMMA() T_Internal>,
+                       {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE_TEMPLATE(typename T_Element,
+                       ZFCoreArray<T_Element>,
+                       {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE_TEMPLATE(typename T_Element,
+                       ZFCoreQueuePOD<T_Element>,
+                       {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE(ZFCoreMap, {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE(ZFCorePointerBase, {output << v.objectInfo();})
+
+// ============================================================
+// common output for ZFObject types
+ZFOUTPUT_TYPE(ZFFilterForZFClass, {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE(ZFObject *, _ZFP_ZFCoreType_IODef_outputObjectPointer())
+
+ZFOUTPUT_TYPE(const ZFClass *, _ZFP_ZFCoreType_IODef_outputObjectPointer())
+
+ZFOUTPUT_TYPE(const ZFMethod *, _ZFP_ZFCoreType_IODef_outputObjectPointer())
+
+ZFOUTPUT_TYPE(const ZFProperty *, _ZFP_ZFCoreType_IODef_outputObjectPointer())
+
+ZFOUTPUT_TYPE(ZFObserverHolder, {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE(ZFListenerData, {output << v.objectInfo();})
+
+ZFOUTPUT_TYPE(ZFAny, {output << v.toObject();})
+
+ZFOUTPUT_TYPE_TEMPLATE(typename T_ZFObject,
+                       ZFAnyT<T_ZFObject *>,
+                       {output << v.toObject();})
+
+ZF_NAMESPACE_GLOBAL_END
+#endif // #ifndef _ZFI_ZFCoreType_IODef_h_
+
