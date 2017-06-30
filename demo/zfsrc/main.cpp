@@ -295,7 +295,7 @@ ZF_GLOBAL_INITIALIZER_INIT(iOS7AutoTitleSpace)
                 margin.top = 20;
                 lp->layoutMarginSet(margin);
             })
-            ZFObjectGlobalEventObserver.observerAdd(ZFUIWindow::EventWindowLayoutParamOnInit(), windowLayoutParamOnUpdate);
+            ZFObjectGlobalEventObserver().observerAdd(ZFUIWindow::EventWindowLayoutParamOnInit(), windowLayoutParamOnUpdate);
         }
     }
 }

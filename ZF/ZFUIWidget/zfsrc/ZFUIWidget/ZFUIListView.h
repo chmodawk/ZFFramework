@@ -141,7 +141,7 @@ protected:
      * -  #ZFUIScrollView::scrollBounceHorizontalAlways
      */
     zfoverride
-    virtual ZFSerializable::PropertyType serializableOnCheckPropertyType(ZF_IN const ZFProperty *property);
+    virtual ZFSerializablePropertyType serializableOnCheckPropertyType(ZF_IN const ZFProperty *property);
     /**
      * @brief all child views would be ignored from serializable
      */

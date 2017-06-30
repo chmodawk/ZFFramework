@@ -7,7 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertyDeclare.h"
-#include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -39,4 +39,14 @@ void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN const ZFProperty *propert
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFProperty *, ZFPropertyGet, ZFMP_IN(const zfchar *, clsName), ZFMP_IN(const zfchar *, propertyName))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFProperty *, ZFPropertyGet, ZFMP_IN(const ZFClass *, cls), ZFMP_IN(const zfchar *, propertyName))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

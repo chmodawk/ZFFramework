@@ -30,9 +30,9 @@ ZFOUTPUT_TYPE(ZFJsonItem, {output << v.objectInfo();})
  *   <Node refType="json" refData="file descriptor, see ZFInputCallbackForFileDescriptor" />
  * @endcode
  */
-#define ZFSerializableDataRefType_json json
-/** @brief see #ZFSerializableDataRefType_json */
-#define ZFSerializableDataRefTypeName_json ZFM_TOSTRING(ZFSerializableDataRefType_json)
+#define ZFSerializableDataRefTypeId_json json
+/** @brief see #ZFSerializableDataRefTypeId_json */
+#define ZFSerializableDataRefType_json ZFM_TOSTRING(ZFSerializableDataRefTypeId_json)
 
 /**
  * @brief see #ZFOBJECT_CREATOR_DEFINE
@@ -44,9 +44,9 @@ ZFOUTPUT_TYPE(ZFJsonItem, {output << v.objectInfo();})
  * data is a file descriptor to a json file,
  * which should contain a serializable object
  */
-#define ZFObjectCreatorType_json json
-/** @brief see #ZFSerializableDataRefType_json */
-#define ZFObjectCreatorTypeName_json ZFM_TOSTRING(ZFObjectCreatorType_json)
+#define ZFObjectCreatorTypeId_json json
+/** @brief see #ZFSerializableDataRefTypeId_json */
+#define ZFObjectCreatorType_json ZFM_TOSTRING(ZFObjectCreatorTypeId_json)
 
 // ============================================================
 /**
@@ -81,11 +81,11 @@ extern ZF_ENV_EXPORT ZFJsonItem ZFJsonPrintFromSerializableData(ZF_IN const ZFSe
  * @brief util method to print serializable data in json format, usually for debug use only
  */
 extern ZF_ENV_EXPORT void ZFJsonPrint(ZF_IN const ZFSerializableData &serializableData,
-                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                       ZF_IN_OPT const ZFJsonOutputFlags &flags = ZFJsonOutputFlagsDefault);
 /** @brief see #ZFJsonPrint */
 extern ZF_ENV_EXPORT void ZFJsonPrint(ZF_IN ZFObject *obj,
-                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                       ZF_IN_OPT const ZFJsonOutputFlags &flags = ZFJsonOutputFlagsDefault);
 
 // ============================================================

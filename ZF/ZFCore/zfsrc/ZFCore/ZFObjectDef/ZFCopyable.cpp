@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFCopyable.h"
+#include "ZFObjectImpl.h"
 #include "ZFSerializable.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
@@ -45,8 +46,8 @@ ZF_NAMESPACE_GLOBAL_END
 #include "../ZFObject.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<ZFCopyable *>()->copy();}, ZFCopyable, zfautoObject, copy)
-ZFMETHOD_USER_REGISTER_1({return invokerObject->to<ZFCopyable *>()->copyFrom(anotherObj);}, ZFCopyable, void, copy, ZFMP_IN(ZFObject *, anotherObj))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFCopyable, zfautoObject, copy)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFCopyable, void, copyFrom, ZFMP_IN(ZFObject *, anotherObj))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif

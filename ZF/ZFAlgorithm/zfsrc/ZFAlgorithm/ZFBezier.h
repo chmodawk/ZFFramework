@@ -55,6 +55,15 @@ public:
         this->cy = ref.cy;
         return *this;
     }
+    zfbool operator == (ZF_IN const ZFBezier &ref) const
+    {
+        return (this->p0x == ref.p0x
+            && this->p0y == ref.p0y
+            && this->p1x == ref.p1x
+            && this->p1y == ref.p1y
+            );
+    }
+    inline zfbool operator != (ZF_IN const ZFBezier &ref) const {return !this->operator == (ref);}
     /** @endcond */
 
 public:
@@ -153,24 +162,6 @@ ZFEXPORT_VAR_READONLY_DECLARE(ZFBezier, ZFBezierBounceOut)
  * @brief bounce in out bezier
  */
 ZFEXPORT_VAR_READONLY_DECLARE(ZFBezier, ZFBezierBounceInOut)
-
-// ============================================================
-/** @cond ZFPrivateDoc */
-inline zfbool operator == (ZF_IN const ZFBezier &v0,
-                           ZF_IN const ZFBezier &v1)
-{
-    return (v0.p0x == v1.p0x && v0.p0y == v1.p0y
-            && v0.p1x == v1.p1x && v0.p1y == v1.p1y);
-}
-inline zfbool operator != (ZF_IN const ZFBezier &v0,
-                           ZF_IN const ZFBezier &v1)
-{
-    return !(v0 == v1);
-}
-/** @endcond */
-ZFCOMPARER_DEFAULT_DECLARE(ZFBezier, ZFBezier, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 // ============================================================
 /**

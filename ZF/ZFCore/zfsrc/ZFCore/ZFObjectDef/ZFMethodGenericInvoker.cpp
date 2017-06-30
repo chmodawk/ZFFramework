@@ -7,8 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFMethodGenericInvoker.h"
-#include "ZFObjectCore.h"
-#include "zfautoObject.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 

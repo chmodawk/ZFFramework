@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFObjectCreator.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -45,4 +46,13 @@ void _ZFP_ZFObjectCreatorUnregister(ZF_IN const zfchar *type)
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfautoObject, ZFObjectCreate, ZFMP_IN(const zfchar *, type), ZFMP_IN(const zfchar *, data))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

@@ -376,9 +376,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN c
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFInputCallbackForInputInRange ZFInputCallbackForInputInRange
+#define ZFCallbackSerializeCustomTypeId_ZFInputCallbackForInputInRange ZFInputCallbackForInputInRange
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFInputCallbackForInputInRange ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFInputCallbackForInputInRange)
+#define ZFCallbackSerializeCustomType_ZFInputCallbackForInputInRange ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForInputInRange)
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFInputCallbackForInputInRange_input zfText("input")

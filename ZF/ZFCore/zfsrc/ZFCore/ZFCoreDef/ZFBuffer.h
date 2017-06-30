@@ -215,9 +215,7 @@ public:
     {
         ++(d->refCount);
     }
-    /**
-     * @brief retain the ref, to copy, use #bufferCopy
-     */
+    /** @cond ZFPrivateDoc */
     zffinal ZFBuffer &operator =(ZF_IN const ZFBuffer &ref)
     {
         _ZFP_ZFBufferPrivate *dTmp = d;
@@ -230,16 +228,12 @@ public:
         }
         return *this;
     }
-    /** @brief true if same ref */
     zffinal zfbool operator == (ZF_IN const ZFBuffer &ref) const
     {
         return (d == ref.d);
     }
-    /** @brief true if not same ref */
-    zffinal zfbool operator != (ZF_IN const ZFBuffer &ref) const
-    {
-        return (d != ref.d);
-    }
+    inline zfbool operator != (ZF_IN const ZFBuffer &ref) const {return !this->operator == (ref);}
+    /** @endcond */
     ~ZFBuffer(void)
     {
         --(d->refCount);

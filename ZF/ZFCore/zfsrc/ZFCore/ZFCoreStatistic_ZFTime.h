@@ -89,7 +89,7 @@ zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFCoreStatisticInvokeTimeLoggerOneTime
 {
 public:
     _ZFP_ZFCoreStatisticInvokeTimeLoggerOneTime(ZF_IN const zfchar *key,
-                                                ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault)
+                                                ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault())
     : key(key)
     , output(output)
     {
@@ -160,7 +160,7 @@ zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFCoreStatisticInvokeTimeAccurateLoggerOneTime
 {
 public:
     _ZFP_ZFCoreStatisticInvokeTimeAccurateLoggerOneTime(ZF_IN const zfchar *key,
-                                                        ZF_IN const ZFOutputCallback &output = ZFOutputCallbackDefault)
+                                                        ZF_IN const ZFOutputCallback &output = ZFOutputCallbackDefault())
     : key(key)
     , output(output)
     {

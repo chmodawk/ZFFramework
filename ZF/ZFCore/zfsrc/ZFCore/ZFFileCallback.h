@@ -78,9 +78,9 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFOutputCallbackForFile ZFOutputCallbackForFile
+#define ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFile ZFOutputCallbackForFile
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFOutputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFOutputCallbackForFile)
+#define ZFCallbackSerializeCustomType_ZFOutputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFile)
 
 /**
  * @brief util to create a file output callback
@@ -115,9 +115,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFInputCallbackForFile ZFInputCallbackForFile
+#define ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFile ZFInputCallbackForFile
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFInputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFInputCallbackForFile)
+#define ZFCallbackSerializeCustomType_ZFInputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFile)
 
 /**
  * @brief util to create a file input callback
@@ -153,9 +153,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const 
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFInputCallbackForResFile ZFInputCallbackForResFile
+#define ZFCallbackSerializeCustomTypeId_ZFInputCallbackForResFile ZFInputCallbackForResFile
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFInputCallbackForResFile ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFInputCallbackForResFile)
+#define ZFCallbackSerializeCustomType_ZFInputCallbackForResFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForResFile)
 
 /**
  * @brief util to create a resource file input callback,
@@ -191,9 +191,9 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile ZFOutputCallbackForLocalFile
+#define ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile ZFOutputCallbackForLocalFile
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFOutputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile)
+#define ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile)
 
 /**
  * @brief util to create a file output callback
@@ -230,9 +230,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile ZFInputCallbackForLocalFile
+#define ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile ZFInputCallbackForLocalFile
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFInputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile)
+#define ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile)
 
 /**
  * @brief util to create a file input callback

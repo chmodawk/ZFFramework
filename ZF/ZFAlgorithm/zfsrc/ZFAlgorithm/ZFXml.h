@@ -120,7 +120,7 @@ public:
     /** @cond ZFPrivateDoc */
     ZFXmlItem &operator = (ZF_IN const ZFXmlItem &ref);
     zfbool operator == (ZF_IN const ZFXmlItem &ref) const;
-    zfbool operator != (ZF_IN const ZFXmlItem &ref) const {return !(this->operator == (ref));}
+    inline zfbool operator != (ZF_IN const ZFXmlItem &ref) const {return !(this->operator == (ref));}
     /** @endcond */
 private:
     zfbool operator == (ZF_IN const zfchar *ref) const;
@@ -465,14 +465,7 @@ public:
                 && this->siblingIndex == ref.siblingIndex
             );
     }
-    zfbool operator != (ZF_IN ZFXmlVisitData const &ref) const
-    {
-        return (this->xmlItem != ref.xmlItem
-                || this->xmlVisitType != ref.xmlVisitType
-                || this->depth != ref.depth
-                || this->siblingIndex != ref.siblingIndex
-            );
-    }
+    inline zfbool operator != (ZF_IN ZFXmlVisitData const &ref) const {return !this->operator == (ref);}
     /** @endcond */
 };
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFXmlVisitData, ZFXmlVisitData)
@@ -611,13 +604,13 @@ extern ZF_ENV_EXPORT const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDetailed(void)
 
 extern ZF_ENV_EXPORT ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(
     ZF_IN const ZFCallerInfo &callerInfo,
-    ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+    ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
     ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
 /**
  * @brief create a ZFXmlVisitCallback to output xml DOM tree
  *
  * takes 0 ~ 2 params:
- * -  (const ZFOutputCallback &) the output callback to use, #ZFOutputCallbackDefault by default
+ * -  (const ZFOutputCallback &) the output callback to use, #ZFOutputCallbackDefault() by default
  * -  (const ZFXmlOutputFlags &) output flags to use, #ZFXmlOutputFlagsDefault by default
  */
 #define ZFXmlVisitCallbackForOutput(...) \

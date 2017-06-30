@@ -25,9 +25,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   "skinKey used in zfSkin"
  * @endcode
  */
-#define ZFObjectCreatorType_skin skin
-/** @brief see #ZFObjectCreatorType_skin */
-#define ZFObjectCreatorTypeName_skin ZFM_TOSTRING(ZFObjectCreatorType_skin)
+#define ZFObjectCreatorTypeId_skin skin
+/** @brief see #ZFObjectCreatorTypeId_skin */
+#define ZFObjectCreatorType_skin ZFM_TOSTRING(ZFObjectCreatorTypeId_skin)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSkinUtil_ZFSerializableHelper_h_

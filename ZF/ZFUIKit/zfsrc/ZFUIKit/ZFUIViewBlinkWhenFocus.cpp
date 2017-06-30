@@ -69,13 +69,13 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewBlinkWhenFocusDataHolder, ZFLevelZ
 
     this->viewBlinkOnListener = ZFCallbackForRawFunction(zfself::viewBlinkOn);
     this->viewBlinkOffListener = ZFCallbackForRawFunction(zfself::viewBlinkOff);
-    ZFObjectGlobalEventObserver.observerAdd(ZFGlobalEvent::EventViewBlinkOn(), this->viewBlinkOnListener);
-    ZFObjectGlobalEventObserver.observerAdd(ZFGlobalEvent::EventViewBlinkOff(), this->viewBlinkOffListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFGlobalEvent::EventViewBlinkOn(), this->viewBlinkOnListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFGlobalEvent::EventViewBlinkOff(), this->viewBlinkOffListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkWhenFocusDataHolder)
 {
-    ZFObjectGlobalEventObserver.observerRemove(ZFGlobalEvent::EventViewBlinkOn(), this->viewBlinkOnListener);
-    ZFObjectGlobalEventObserver.observerRemove(ZFGlobalEvent::EventViewBlinkOff(), this->viewBlinkOffListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFGlobalEvent::EventViewBlinkOn(), this->viewBlinkOnListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFGlobalEvent::EventViewBlinkOff(), this->viewBlinkOffListener);
     ZFUIViewBlinkWhenFocusMaskImage = zfautoObjectNull;
 }
 public:
@@ -172,7 +172,7 @@ void ZFUIViewBlinkWhenFocusAutoApplyStart(ZF_IN_OPT ZFUIImage *img /* = zfnull *
     _ZFP_ZFUIViewBlinkWhenFocus_started = zftrue;
     d->maskImageCur = zfautoObjectCreateMarkCached((img != zfnull) ? img : ZFUIViewBlinkWhenFocusMaskImage.to<ZFUIImage *>());
 
-    ZFObjectGlobalEventObserver.observerAdd(ZFUIView::EventViewFocusOnChange(), d->focusChangeListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewFocusOnChange(), d->focusChangeListener);
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewBlinkWhenFocusAutoApplyStart());
 }
 void ZFUIViewBlinkWhenFocusAutoApplyStop(void)
@@ -185,7 +185,7 @@ void ZFUIViewBlinkWhenFocusAutoApplyStop(void)
     _ZFP_ZFUIViewBlinkWhenFocus_started = zffalse;
 
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewBlinkWhenFocusDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkWhenFocusDataHolder);
-    ZFObjectGlobalEventObserver.observerRemove(ZFUIView::EventViewFocusOnChange(), d->focusChangeListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewFocusOnChange(), d->focusChangeListener);
     for(zfindex i = 0; i < d->focusedViews.count(); ++i)
     {
         ZFUIView *view = d->focusedViews[i];

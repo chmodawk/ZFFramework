@@ -38,11 +38,11 @@ static zfindex _ZFP_ZFOutputCallbackForConsoleFunction(ZF_IN const void *s, ZF_I
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFOutputCallbackForConsoleDataHolder, ZFLevelZFFrameworkEssential)
 {
     this->outputCallbackForConsole = ZFCallbackForRawFunction(_ZFP_ZFOutputCallbackForConsoleFunction);
-    ZFOutputCallbackDefault = this->outputCallbackForConsole;
+    ZFOutputCallbackDefaultSet(this->outputCallbackForConsole);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFOutputCallbackForConsoleDataHolder)
 {
-    ZFOutputCallbackDefault = ZFCallbackNull();
+    ZFOutputCallbackDefaultSet(ZFCallbackNull());
 }
 public:
     ZFOutputCallback outputCallbackForConsole;

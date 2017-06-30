@@ -110,9 +110,9 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
         return zftrue;
     })
 
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFRegExpResult *>()->zfv.matched;}, v_ZFRegExpResult, zfbool, matched)
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFRegExpResult *>()->zfv.matchedRange;}, v_ZFRegExpResult, zfindexRange, matchedRange)
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFRegExpResult *>()->zfv.namedGroups;}, v_ZFRegExpResult, ZFCoreArrayPOD<zfindexRange>, namedGroups)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFRegExpResult, zfbool, matched)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFRegExpResult, zfindexRange, matchedRange)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFRegExpResult, ZFCoreArrayPOD<zfindexRange>, namedGroups)
 
 // ============================================================
 // global

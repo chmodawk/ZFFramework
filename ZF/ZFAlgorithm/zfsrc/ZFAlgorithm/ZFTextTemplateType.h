@@ -98,10 +98,7 @@ public:
                 && this->indexFlag == ref.indexFlag
             );
     }
-    zfbool operator != (ZF_IN const ZFTextTemplateIndexData &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFTextTemplateIndexData &ref) const {return !this->operator == (ref);}
     /** @endcond */
 
 public:
@@ -115,9 +112,6 @@ public:
         return ret;
     }
 };
-ZFCOMPARER_DEFAULT_DECLARE(ZFTextTemplateIndexData, ZFTextTemplateIndexData, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE
@@ -233,10 +227,7 @@ public:
 
     /** @cond ZFPrivateDoc */
     zfbool operator == (ZF_IN const ZFTextTemplateParam &ref) const;
-    zfbool operator != (ZF_IN const ZFTextTemplateParam &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFTextTemplateParam &ref) const {return !this->operator == (ref);}
     /** @endcond */
 
 public:
@@ -260,9 +251,6 @@ public:
 private:
     _ZFP_ZFTextTemplateParamPrivate *d;
 };
-ZFCOMPARER_DEFAULT_DECLARE(ZFTextTemplateParam, ZFTextTemplateParam, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE

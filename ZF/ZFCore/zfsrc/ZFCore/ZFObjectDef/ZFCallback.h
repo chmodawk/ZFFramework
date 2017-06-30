@@ -41,10 +41,6 @@ typedef enum
 /** @brief string tokens */
 #define ZFTOKEN_ZFCallbackTypeRawFunction zfText("TypeRawFunction")
 
-ZFCOMPARER_DEFAULT_DECLARE(ZFCallbackType, ZFCallbackType, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
-
 // ============================================================
 // callback invoker
 extern ZF_ENV_EXPORT void _ZFP_ZFCallback_executeNullCallback(ZF_IN const ZFCallerInfo &callerInfo);
@@ -174,6 +170,8 @@ public:
     ZFCallback(const ZFCallback &ref);
     virtual ZFCallback &operator =(const ZFCallback &ref);
     virtual ~ZFCallback(void);
+    zfbool operator == (ZF_IN const ZFCallback &ref) const {return (this->objectCompare(ref) == ZFCompareTheSame);}
+    zfbool operator != (ZF_IN const ZFCallback &ref) const {return (this->objectCompare(ref) != ZFCompareTheSame);}
     static ZFCallback _ZFP_ZFCallbackCreate(ZF_IN ZFCallbackType callbackType,
                                             ZF_IN ZFObject *callbackOwnerObj,
                                             ZF_IN const ZFMethod *callbackMethod,
@@ -397,21 +395,6 @@ private:
     ZFFuncAddrType _ZFP_ZFCallbackCached_callbackInvoker_rawFunction(void) const;
     ZFObject *_ZFP_ZFCallbackCached_callbackOwnerObj;
 };
-
-ZFCOMPARER_DEFAULT_DECLARE(ZFCallback, ZFCallback, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
-
-/**
- * @brief compare two callback by #ZFCallback::objectCompare
- */
-extern ZF_ENV_EXPORT zfbool operator == (ZF_IN const ZFCallback &v0,
-                                         ZF_IN const ZFCallback &v1);
-/**
- * @brief compare two callback by #ZFCallback::objectCompare
- */
-extern ZF_ENV_EXPORT zfbool operator != (ZF_IN const ZFCallback &v0,
-                                         ZF_IN const ZFCallback &v1);
 
 // ============================================================
 // ZFCallback create

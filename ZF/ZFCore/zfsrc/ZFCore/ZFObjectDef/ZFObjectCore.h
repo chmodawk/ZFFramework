@@ -41,6 +41,28 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 #define ZFTOKEN_ZFObjectInfoRight zfText(">")
 
 // ============================================================
+/**
+ * @brief object instance state for ZFObject
+ */
+typedef enum {
+    ZFObjectInstanceStateOnInit = 0x01, /**< @brief object is under #objectOnInit */
+    ZFObjectInstanceStateOnInitFinish = 0x03, /**< @brief object is under #objectOnInitFinish */
+    ZFObjectInstanceStateIdle = 0, /**< @brief object is constructed successfully */
+    ZFObjectInstanceStateOnDeallocPrepare = 0x30, /**< @brief object is under #objectOnDeallocPrepare */
+    ZFObjectInstanceStateOnDealloc = 0x10, /**< @brief object is under #objectOnDealloc */
+} ZFObjectInstanceState;
+/** @brief string tokens */
+#define ZFTOKEN_ZFObjectInstanceStateOnInit zfText("ZFObjectInstanceStateOnInit")
+/** @brief string tokens */
+#define ZFTOKEN_ZFObjectInstanceStateOnInitFinish zfText("ZFObjectInstanceStateOnInitFinish")
+/** @brief string tokens */
+#define ZFTOKEN_ZFObjectInstanceStateIdle zfText("ZFObjectInstanceStateIdle")
+/** @brief string tokens */
+#define ZFTOKEN_ZFObjectInstanceStateOnDeallocPrepare zfText("ZFObjectInstanceStateOnDeallocPrepare")
+/** @brief string tokens */
+#define ZFTOKEN_ZFObjectInstanceStateOnDealloc zfText("ZFObjectInstanceStateOnDealloc")
+
+// ============================================================
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFObjectDummyParent
 {
 public:
@@ -685,28 +707,9 @@ public:
 
 public:
     /**
-     * @brief object state
-     *
-     * note, it's ensured that:
-     * @code
-     *   ObjectInstanceState state0 = ObjectInstanceStateOnInitFinish;
-     *   zfbool t0 = ZFBitTest(state0, ObjectInstanceStateOnInit); // ensured true
-     *
-     *   ObjectInstanceState state1 = ObjectInstanceStateOnDeallocPrepare;
-     *   zfbool t1 = ZFBitTest(state1, ObjectInstanceStateOnDealloc); // ensured true
-     * @endcode
-     */
-    typedef enum {
-        ObjectInstanceStateOnInit = 0x01, /**< @brief object is under #objectOnInit */
-        ObjectInstanceStateOnInitFinish = 0x03, /**< @brief object is under #objectOnInitFinish */
-        ObjectInstanceStateIdle = 0, /**< @brief object is constructed successfully */
-        ObjectInstanceStateOnDeallocPrepare = 0x30, /**< @brief object is under #objectOnDeallocPrepare */
-        ObjectInstanceStateOnDealloc = 0x10, /**< @brief object is under #objectOnDealloc */
-    } ObjectInstanceState;
-    /**
      * @brief object instance's state
      */
-    virtual ZFObject::ObjectInstanceState objectInstanceState(void);
+    virtual ZFObjectInstanceState objectInstanceState(void);
 
 public:
     /**

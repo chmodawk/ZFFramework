@@ -189,7 +189,7 @@ inline const zfchar *requireCategory(ZF_IN const ZFSerializableData &serializabl
  * return true if anything not resolved, or false if all resolved
  */
 extern ZF_ENV_EXPORT zfbool printResolveStatus(ZF_IN const ZFSerializableData &serializableData,
-                                               ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault);
+                                               ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault());
 
 // ============================================================
 // util macro for impl

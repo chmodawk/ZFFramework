@@ -3,11 +3,14 @@
 WORK_DIR=$(cd "$(dirname "$0")"; pwd)
 PROJ_GIT=$1
 DST_PATH=$2
-CLONE_FULL=$3
+CLONE_OPTION=${@:3}
 if test "x-$PROJ_GIT" = "x-" || test "x-$DST_PATH" = "x-" ; then
     echo usage:
-    echo   git_check.sh PROJ_GIT DST_PATH [full]
+    echo   git_check.sh PROJ_GIT DST_PATH [options]
     exit 1
+fi
+if test "x-$CLONE_OPTION" = "x-" ; then
+    CLONE_OPTION=--depth=1
 fi
 
 _OLD_DIR=$(pwd)
@@ -51,11 +54,7 @@ if test "$_GIT_VALID" = "1"; then
 else
     rm -rf "$DST_PATH" >/dev/null 2>&1
     mkdir -p "$DST_PATH" >/dev/null 2>&1
-    if test "x-$CLONE_FULL" = "x-full"; then
-        git clone "$PROJ_GIT" "$DST_PATH"
-    else
-        git clone --depth=1 "$PROJ_GIT" "$DST_PATH"
-    fi
+    git clone $CLONE_OPTION "$PROJ_GIT" "$DST_PATH"
 
     if test "$?" = "0"; then
         sh "$WORK_DIR/timestamp_save.sh" "$DST_PATH/.git" $_TIMEOUT

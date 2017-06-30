@@ -69,10 +69,7 @@ public:
                 && this->tokenEtc.compare(ref.tokenEtc) == 0
             );
     }
-    zfbool operator != (ZF_IN const ZFTokenForContainer &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFTokenForContainer &ref) const {return !this->operator == (ref);}
     /** @endcond */
 };
 extern ZF_ENV_EXPORT const ZFTokenForContainer _ZFP_ZFTokenForContainerTrim;
@@ -195,10 +192,7 @@ public:
                 && this->tokenEtc.compare(ref.tokenEtc) == 0
             );
     }
-    zfbool operator != (ZF_IN const ZFTokenForKeyValueContainer &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFTokenForKeyValueContainer &ref) const {return !this->operator == (ref);}
     /** @endcond */
 };
 extern ZF_ENV_EXPORT const ZFTokenForKeyValueContainer _ZFP_ZFTokenForKeyValueContainerTrim;

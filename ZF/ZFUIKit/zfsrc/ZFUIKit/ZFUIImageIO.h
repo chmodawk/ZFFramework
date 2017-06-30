@@ -49,9 +49,9 @@ extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromNativeImage(ZF_IN void *nativ
  *   <ZFCallback ... />
  * @endcode
  */
-#define ZFUIImageSerializeType_input input
+#define ZFUIImageSerializeTypeId_input input
 /** @brief see #ZFUIImageSerializeTypeRegister */
-#define ZFUIImageSerializeTypeName_input ZFM_TOSTRING(ZFUIImageSerializeType_input)
+#define ZFUIImageSerializeType_input ZFM_TOSTRING(ZFUIImageSerializeTypeId_input)
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFUIImageIO_input zfText("input")
@@ -75,9 +75,9 @@ extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCall
  *   </node>
  * @endcode
  */
-#define ZFUIImageSerializeType_color color
+#define ZFUIImageSerializeTypeId_color color
 /** @brief see #ZFUIImageSerializeTypeRegister */
-#define ZFUIImageSerializeTypeName_color ZFM_TOSTRING(ZFUIImageSerializeType_color)
+#define ZFUIImageSerializeType_color ZFM_TOSTRING(ZFUIImageSerializeTypeId_color)
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFUIImageIO_color zfText("color")

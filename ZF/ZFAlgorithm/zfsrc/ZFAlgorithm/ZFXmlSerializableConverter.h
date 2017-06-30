@@ -30,9 +30,9 @@ ZFOUTPUT_TYPE(ZFXmlItem, {output << v.objectInfo();})
  *   <Node refType="xml" refData="file descriptor, see ZFInputCallbackForFileDescriptor" />
  * @endcode
  */
-#define ZFSerializableDataRefType_xml xml
-/** @brief see #ZFSerializableDataRefType_xml */
-#define ZFSerializableDataRefTypeName_xml ZFM_TOSTRING(ZFSerializableDataRefType_xml)
+#define ZFSerializableDataRefTypeId_xml xml
+/** @brief see #ZFSerializableDataRefTypeId_xml */
+#define ZFSerializableDataRefType_xml ZFM_TOSTRING(ZFSerializableDataRefTypeId_xml)
 
 /**
  * @brief see #ZFOBJECT_CREATOR_DEFINE
@@ -44,9 +44,9 @@ ZFOUTPUT_TYPE(ZFXmlItem, {output << v.objectInfo();})
  * data is a file descriptor to a xml file,
  * which should contain a serializable object
  */
-#define ZFObjectCreatorType_xml xml
-/** @brief see #ZFSerializableDataRefType_xml */
-#define ZFObjectCreatorTypeName_xml ZFM_TOSTRING(ZFObjectCreatorType_xml)
+#define ZFObjectCreatorTypeId_xml xml
+/** @brief see #ZFSerializableDataRefTypeId_xml */
+#define ZFObjectCreatorType_xml ZFM_TOSTRING(ZFObjectCreatorTypeId_xml)
 
 // ============================================================
 /**
@@ -81,11 +81,11 @@ extern ZF_ENV_EXPORT ZFXmlItem ZFXmlPrintFromSerializableData(ZF_IN const ZFSeri
  * @brief util method to convert serializable object to xml format
  */
 extern ZF_ENV_EXPORT void ZFXmlPrint(ZF_IN const ZFSerializableData &serializableData,
-                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                      ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
 /** @brief see #ZFXmlPrint */
 extern ZF_ENV_EXPORT void ZFXmlPrint(ZF_IN ZFObject *obj,
-                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                      ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
 
 // ============================================================

@@ -21,6 +21,7 @@ public:
     zfbool childAddOverrideFlag;
     zfbool scrollContentFrameOverrideFlag;
     ZFUIListAdapter *listAdapter;
+    ZFListener listAdapterOnReloadListener;
     zfbool listReloadRequested;
     zfbool listQuickReloadRequested;
     zfbool cellNeedUpdate;
@@ -55,6 +56,7 @@ public:
     , childAddOverrideFlag(zffalse)
     , scrollContentFrameOverrideFlag(zffalse)
     , listAdapter(zfnull)
+    , listAdapterOnReloadListener(ZFCallbackForRawFunction(listAdapterOnReload))
     , listReloadRequested(zftrue)
     , listQuickReloadRequested(zftrue)
     , cellNeedUpdate(zftrue)
@@ -74,6 +76,19 @@ public:
     }
 
 public:
+    static ZFLISTENER_PROTOTYPE_EXPAND(listAdapterOnReload)
+    {
+        ZFUIListView *listView = userData->to<ZFObjectHolder *>()->holdedObj;
+        ZFValue *atIndex = listenerData.param0->to<ZFValue *>();
+        if(atIndex == zfnull || atIndex->indexValue() == zfindexMax)
+        {
+            listView->listReload();
+        }
+        else
+        {
+            listView->listReloadCellAtIndex(atIndex->indexValue());
+        }
+    }
     void listBounceUpdate(void)
     {
         if(this->pimplOwner->listBounce())
@@ -94,6 +109,35 @@ public:
                     zfCoreCriticalShouldNotGoHere();
                     return ;
             }
+        }
+    }
+    void listAdapterSettingUpdate(void)
+    {
+        if(this->listAdapter != zfnull)
+        {
+            this->listAdapter->_ZFP_ZFUIListAdapter_listOrientation = this->pimplOwner->listOrientation();
+            this->listAdapter->_ZFP_ZFUIListAdapter_cellSizeHint = this->pimplOwner->cellSizeHint();
+            this->listAdapter->_ZFP_ZFUIListAdapter_listContainerSize = this->pimplOwner->scrollArea().size;
+        }
+    }
+    void listAdapterAfterAttach(void)
+    {
+        if(this->listAdapter != zfnull)
+        {
+            this->listAdapter->toObject()->observerAdd(
+                ZFUIListAdapter::EventListAdapterOnReload(),
+                this->listAdapterOnReloadListener,
+                this->pimplOwner->objectHolder());
+            this->listAdapterSettingUpdate();
+        }
+    }
+    void listAdapterBeforeDetach(void)
+    {
+        if(this->listAdapter)
+        {
+            this->listAdapter->toObject()->observerRemove(
+                ZFUIListAdapter::EventListAdapterOnReload(),
+                this->listAdapterOnReloadListener);
         }
     }
 
@@ -1287,21 +1331,21 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIListView, ListVisibleCellOnChange)
 #define _ZFP_ZFUIListView_listAdapterHolderTag zfText("_ZFP_ZFUIListView_listAdapterHolderTag")
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIListView, ZFUIListAdapter *, listAdapter)
 {
-    this->tagRemove(_ZFP_ZFUIListView_listAdapterHolderTag);
+    d->listAdapterBeforeDetach();
     d->listAdapter = this->listAdapter();
+    d->listAdapterAfterAttach();
+
     if(this->listAdapter() != propertyValueOld)
     {
         this->listReload();
     }
+    this->tagRemove(_ZFP_ZFUIListView_listAdapterHolderTag);
 }
 void ZFUIListView::listAdapterSetAutoRetain(ZF_IN ZFUIListAdapter *listAdapter)
 {
     zfRetainWithoutLeakTest(listAdapter);
     this->listAdapterSet(listAdapter);
-    if(listAdapter != zfnull)
-    {
-        this->toObject()->tagSet(_ZFP_ZFUIListView_listAdapterHolderTag, listAdapter->toObject());
-    }
+    this->toObject()->tagSet(_ZFP_ZFUIListView_listAdapterHolderTag, this->listAdapter()->toObject());
     zfReleaseWithoutLeakTest(listAdapter);
 }
 
@@ -1365,7 +1409,7 @@ void ZFUIListView::objectOnDeallocPrepare(void)
     d->childAddOverrideFlag = zffalse;
 }
 
-ZFSerializable::PropertyType ZFUIListView::serializableOnCheckPropertyType(ZF_IN const ZFProperty *property)
+ZFSerializablePropertyType ZFUIListView::serializableOnCheckPropertyType(ZF_IN const ZFProperty *property)
 {
     if(property == ZFPropertyAccess(ZFUIScrollView, scrollContentFrame)
         || property == ZFPropertyAccess(ZFUIScrollView, scrollBounceVertical)
@@ -1374,7 +1418,7 @@ ZFSerializable::PropertyType ZFUIListView::serializableOnCheckPropertyType(ZF_IN
         || property == ZFPropertyAccess(ZFUIScrollView, scrollBounceHorizontalAlways)
         )
     {
-        return ZFSerializable::PropertyTypeNotSerializable;
+        return ZFSerializablePropertyTypeNotSerializable;
     }
     else
     {
@@ -1391,10 +1435,7 @@ void ZFUIListView::layoutOnLayoutPrepare(ZF_IN const ZFUIRect &bounds)
     }
     if((d->listReloadRequested || d->listQuickReloadRequested) && d->listAdapter != zfnull)
     {
-        // update list adapter's settings
-        d->listAdapter->_ZFP_ZFUIListAdapter_listOrientation = this->listOrientation();
-        d->listAdapter->_ZFP_ZFUIListAdapter_cellSizeHint = this->cellSizeHint();
-        d->listAdapter->_ZFP_ZFUIListAdapter_listContainerSize = this->scrollArea().size;
+        d->listAdapterSettingUpdate();
     }
     zfsuper::layoutOnLayoutPrepare(bounds);
     d->listCheckReload();

@@ -44,9 +44,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFTimeValue, ZFTimeValue)
 ZFOUTPUT_TYPE(ZFTimeValue, {output << ZFTimeValueToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFTimeValue)
-ZFCOMPARER_DEFAULT_DECLARE(ZFTimeValue, ZFTimeValue, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief a zero time value
@@ -216,9 +213,6 @@ inline ZFTimeInfo ZFTimeInfoMake(ZF_IN zfint const &year,
 }
 
 ZFCORE_POD_COMPARER_DECLARE(ZFTimeInfo)
-ZFCOMPARER_DEFAULT_DECLARE(ZFTimeInfo, ZFTimeInfo, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief convert ZFTimeInfo to string

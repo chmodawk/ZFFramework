@@ -7,11 +7,13 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFEnum.h"
-#include "ZFPropertyType.h"
+#include "ZFObjectImpl.h"
+
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+// ============================================================
 ZF_STATIC_INITIALIZER_INIT(ZFEnumDataHolder)
 {
 }
@@ -32,11 +34,11 @@ zfbool ZFEnum::serializableOnSerializeFromData(ZF_IN const ZFSerializableData &s
     const zfchar *valueString = ZFSerializableUtil::checkPropertyValue(serializableData);
     if(valueString != zfnull)
     {
-        ZFEnumValue enumValue = ZFEnumValueInvalid;
-        if(!zfscmpTheSame(valueString, ZFEnumValueNameInvalid))
+        zfuint enumValue = ZFEnumInvalid();
+        if(!zfscmpTheSame(valueString, ZFEnumNameInvalid()))
         {
             enumValue = this->enumValueForName(valueString);
-            if(enumValue == ZFEnumValueInvalid)
+            if(enumValue == ZFEnumInvalid())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                     zfText("invalid value %s for enum %s"), valueString, this->classData()->className());
@@ -47,7 +49,7 @@ zfbool ZFEnum::serializableOnSerializeFromData(ZF_IN const ZFSerializableData &s
     }
     else
     {
-        this->enumValueSet(ZFEnumValueInvalid);
+        this->enumValueSet(ZFEnumInvalid());
     }
     return zftrue;
 }
@@ -58,7 +60,7 @@ zfbool ZFEnum::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &seria
     if(!zfsuperI(ZFSerializable)::serializableOnSerializeToData(serializableData, referencedOwnerOrNull, outErrorHint)) {return zffalse;}
     zfself *ref = ZFCastZFObject(zfself *, referencedOwnerOrNull);
 
-    if((ref == zfnull && this->enumValue() != ZFEnumValueInvalid)
+    if((ref == zfnull && this->enumValue() != ZFEnumInvalid())
         || (ref != zfnull && this->enumValue() != ref->enumValue()))
     {
         serializableData.propertyValueSet(this->enumName());
@@ -66,7 +68,7 @@ zfbool ZFEnum::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &seria
     return zftrue;
 }
 
-ZFObject *ZFEnum::objectOnInit(ZF_IN ZFEnumValue value)
+ZFObject *ZFEnum::objectOnInit(ZF_IN zfuint value)
 {
     this->objectOnInit();
     zfself::enumValueSet(value);
@@ -84,7 +86,7 @@ ZFObject *ZFEnum::objectOnInit(ZF_IN ZFEnum *another)
 ZFObject *ZFEnum::objectOnInit(void)
 {
     zfsuper::objectOnInit();
-    _ZFP_ZFEnum_value = ZFEnumValueInvalid;
+    _ZFP_ZFEnum_value = ZFEnumInvalid();
     return this;
 }
 void ZFEnum::objectOnDealloc(void)
@@ -111,12 +113,12 @@ ZFCompareResult ZFEnum::objectCompare(ZF_IN ZFObject *anotherObj)
     }
 
     zfself *another = ZFCastZFObjectUnchecked(zfself *, anotherObj);
-    if(this->enumValue() == ZFEnumValueInvalid
-        || another->enumValue() == ZFEnumValueInvalid)
+    if(this->enumValue() == ZFEnumInvalid()
+        || another->enumValue() == ZFEnumInvalid())
     {
         return ZFCompareUncomparable;
     }
-    zfint n = ZFCastStatic(zfint, this->enumValue()) - ZFCastStatic(zfint, another->enumValue());
+    zfint n = this->enumValue() - another->enumValue();
     if(n < 0)
     {
         return ZFCompareSmaller;
@@ -140,7 +142,7 @@ public:
 zfclassNotPOD _ZFP_ZFEnumDataPrivate
 {
 public:
-    typedef zfstlmap<ZFEnumValue, _ZFP_ZFEnumDataPrivateNameData> DataType;
+    typedef zfstlmap<zfuint, _ZFP_ZFEnumDataPrivateNameData> DataType;
     _ZFP_ZFEnumDataPrivate::DataType d;
 public:
     ~_ZFP_ZFEnumDataPrivate(void)
@@ -164,14 +166,14 @@ _ZFP_ZFEnumData::~_ZFP_ZFEnumData(void)
     d = zfnull;
 }
 void _ZFP_ZFEnumData::add(ZF_IN zfbool isEnableDuplicateValue,
-                          ZF_IN ZFEnumValue value,
+                          ZF_IN zfuint value,
                           ZF_IN const zfchar *name,
                           ZF_IN const zfchar *fullName,
                           ZF_IN const ZFClass *ownerClass,
                           ZF_IN const zfcharA *callerFile,
                           zfindex callerLine)
 {
-    zfCoreAssert(value != ZFEnumValueInvalid);
+    zfCoreAssert(value != ZFEnumInvalid());
     _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
     if(it != d->d.end())
     {
@@ -195,7 +197,7 @@ zfindex _ZFP_ZFEnumData::enumCount(void) const
 {
     return d->d.size();
 }
-zfindex _ZFP_ZFEnumData::enumIndexForValue(ZF_IN ZFEnumValue value) const
+zfindex _ZFP_ZFEnumData::enumIndexForValue(ZF_IN zfuint value) const
 {
     _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
     if(it != d->d.end())
@@ -209,11 +211,11 @@ zfindex _ZFP_ZFEnumData::enumIndexForValue(ZF_IN ZFEnumValue value) const
     }
     return zfindexMax;
 }
-ZFEnumValue _ZFP_ZFEnumData::enumValueAtIndex(ZF_IN zfindex index) const
+zfuint _ZFP_ZFEnumData::enumValueAtIndex(ZF_IN zfindex index) const
 {
     if(index >= d->d.size())
     {
-        return ZFEnumValueInvalid;
+        return ZFEnumInvalid();
     }
     _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
     for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i)
@@ -222,7 +224,7 @@ ZFEnumValue _ZFP_ZFEnumData::enumValueAtIndex(ZF_IN zfindex index) const
     }
     if(it == d->d.end())
     {
-        return ZFEnumValueInvalid;
+        return ZFEnumInvalid();
     }
     return it->first;
 }
@@ -230,13 +232,13 @@ const zfchar *_ZFP_ZFEnumData::enumNameAtIndex(ZF_IN zfindex index) const
 {
     if(index >= d->d.size())
     {
-        return ZFEnumValueNameInvalid;
+        return ZFEnumNameInvalid();
     }
     _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
     for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i);
     if(it == d->d.end())
     {
-        return ZFEnumValueNameInvalid;
+        return ZFEnumNameInvalid();
     }
     return it->second.name;
 }
@@ -244,25 +246,25 @@ const zfchar *_ZFP_ZFEnumData::enumFullNameAtIndex(ZF_IN zfindex index) const
 {
     if(index >= d->d.size())
     {
-        return ZFEnumValueNameInvalid;
+        return ZFEnumNameInvalid();
     }
     _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
     for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i);
     if(it == d->d.end())
     {
-        return ZFEnumValueNameInvalid;
+        return ZFEnumNameInvalid();
     }
     return it->second.fullName;
 }
-zfbool _ZFP_ZFEnumData::enumContainValue(ZF_IN ZFEnumValue value) const
+zfbool _ZFP_ZFEnumData::enumContainValue(ZF_IN zfuint value) const
 {
     return (d->d.find(value) != d->d.end());
 }
-ZFEnumValue _ZFP_ZFEnumData::enumValueForName(ZF_IN const zfchar *name) const
+zfuint _ZFP_ZFEnumData::enumValueForName(ZF_IN const zfchar *name) const
 {
     if(name == zfnull)
     {
-        return ZFEnumValueInvalid;
+        return ZFEnumInvalid();
     }
     for(_ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
         it != d->d.end();
@@ -273,16 +275,16 @@ ZFEnumValue _ZFP_ZFEnumData::enumValueForName(ZF_IN const zfchar *name) const
             return it->first;
         }
     }
-    return ZFEnumValueInvalid;
+    return ZFEnumInvalid();
 }
-const zfchar *_ZFP_ZFEnumData::enumNameForValue(ZF_IN ZFEnumValue value) const
+const zfchar *_ZFP_ZFEnumData::enumNameForValue(ZF_IN zfuint value) const
 {
     _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.find(value);
     if(it != d->d.end())
     {
         return it->second.name;
     }
-    return ZFEnumValueNameInvalid;
+    return ZFEnumNameInvalid();
 }
 
 _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name)
@@ -329,7 +331,7 @@ public:
             ret->nameList = (const zfchar **)zfmalloc(sizeof(const zfchar *) * ret->enumCount);
             for(zfindex i = 0; i < ret->enumCount; ++i)
             {
-                ret->flagList[i] = enumValueAtIndexMethod->executeStatic<ZFEnumValue, zfindex>(i);
+                ret->flagList[i] = enumValueAtIndexMethod->executeStatic<zfuint, zfindex>(i);
                 ret->nameList[i] = enumNameAtIndexMethod->executeStatic<const zfchar *, zfindex>(i);
             }
         }
@@ -401,4 +403,31 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
 ZFOUTPUT_TYPE_DEFINE(ZFEnumFlagsBase, {output << v.objectInfo();})
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFEnum, zfindex, enumCount)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfindex, enumIndexForValue, ZFMP_IN(zfuint, value))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfuint, enumValueAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumNameAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumFullNameAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfbool, enumContainValue, ZFMP_IN(zfuint, value))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfuint, enumValueForName, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumNameForValue, ZFMP_IN(zfuint, value))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFEnum, zfuint, enumValue)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFEnum, const zfchar *, enumName)
+static void _ZFP_ZFEnum_enumValueSet_methodInvoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value)
+{
+    invokerObject->to<ZFEnum *>()->_ZFP_ZFEnum_enumValueSet(value);
+}
+ZFMETHOD_USER_REGISTER_DETAIL_1(ZFEnum_enumValueSet, _ZFP_ZFEnum_enumValueSet_methodInvoker, ZFEnum::ClassData(), protected, ZFMethodIsVirtual, void, zfText("enumValueSet"), ZFMP_IN(zfuint, value))
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_7(zfbool, zfflagsToString, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_6(zfstring, zfflagsToString, ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(zfbool, zfflagsFromString, ZFMP_OUT(zfflags &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

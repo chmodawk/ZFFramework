@@ -45,8 +45,27 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 #define ZFSerializableKeyword_serializableNewInstance ZFM_TOSTRING(ZFSerializableKeyword_serializableNewInstanceSig)
 
-zfclassFwd _ZFP_I_ZFSerializable_PropertyTypeHolder;
 // ============================================================
+/**
+ * @brief serializable property type, see #ZFSerializable::serializableOnCheckPropertyType
+ */
+typedef enum {
+    /**
+     * @brief see #ZFSerializable::serializableOnCheckPropertyType
+     */
+    ZFSerializablePropertyTypeNotSerializable,
+    /**
+     * @brief see #ZFSerializable::serializableOnCheckPropertyType
+     */
+    ZFSerializablePropertyTypeSerializableProperty,
+    /**
+     * @brief see #ZFSerializable::serializableOnCheckPropertyType
+     */
+    ZFSerializablePropertyTypeEmbededProperty,
+} ZFSerializablePropertyType;
+
+// ============================================================
+zfclassFwd _ZFP_I_ZFSerializablePropertyTypeHolder;
 /**
  * @brief base class of call serializable object
  *
@@ -260,7 +279,7 @@ public:
                                    ZF_IN_OPT ZFSerializable *referencedObject = zfnull);
 
 private:
-    zffinal _ZFP_I_ZFSerializable_PropertyTypeHolder *_ZFP_ZFSerializable_getPropertyTypeHolder(void);
+    zffinal _ZFP_I_ZFSerializablePropertyTypeHolder *_ZFP_ZFSerializable_getPropertyTypeHolder(void);
 public:
     /**
      * @brief get all serializable property, usually for debug only, see #serializableOnCheckPropertyType
@@ -285,24 +304,6 @@ public:
         return ret;
     }
 
-public:
-    /**
-     * @brief serializable property type, see #ZFSerializable::serializableOnCheckPropertyType
-     */
-    typedef enum {
-        /**
-         * @brief see #ZFSerializable::serializableOnCheckPropertyType
-         */
-        PropertyTypeNotSerializable,
-        /**
-         * @brief see #ZFSerializable::serializableOnCheckPropertyType
-         */
-        PropertyTypeSerializableProperty,
-        /**
-         * @brief see #ZFSerializable::serializableOnCheckPropertyType
-         */
-        PropertyTypeEmbededProperty,
-    } PropertyType;
 protected:
     /**
      * @brief check the property type that serializable should do what while serializing
@@ -335,10 +336,10 @@ protected:
      * \n
      * subclass may override this method to make ZFSerializable ignore or force serialize some property,
      * but you must make sure it's logical valid\n
-     * ignored property (i.e. PropertyTypeNotSerializable) can be manually serialized
+     * ignored property (i.e. ZFSerializablePropertyTypeNotSerializable) can be manually serialized
      * during #serializableOnSerializeFromData and #serializableOnSerializeToData
      */
-    virtual ZFSerializable::PropertyType serializableOnCheckPropertyType(ZF_IN const ZFProperty *property);
+    virtual ZFSerializablePropertyType serializableOnCheckPropertyType(ZF_IN const ZFProperty *property);
 
 protected:
     /**

@@ -80,8 +80,8 @@ typedef zfbool (*ZFCallbackSerializeCustomSerializeCallback)(ZF_IN_OUT ZFCallbac
  * typically you should use #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE to define your type for short:
  * @code
  *   // in header file
- *   #define ZFCallbackSerializeCustomType_yourType yourType
- *   #define ZFCallbackSerializeCustomTypeName_yourType ZFM_TOSTRING(ZFCallbackSerializeCustomType_yourType)
+ *   #define ZFCallbackSerializeCustomTypeId_yourType yourType
+ *   #define ZFCallbackSerializeCustomType_yourType ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_yourType)
  *
  *   // in cpp file
  *   ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(yourType)
@@ -110,11 +110,11 @@ extern ZF_ENV_EXPORT ZFCallbackSerializeCustomSerializeCallback ZFCallbackSerial
                                                                          ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */); \
     ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFCallbackSerializeCallbackRegister_##type, ZFLevelZFFrameworkNormal) \
     { \
-        ZFCallbackSerializeCustomTypeRegister(ZFCallbackSerializeCustomTypeName_##type, _ZFP_ZFCallbackSerializeCustomSerializeCallback_##type); \
+        ZFCallbackSerializeCustomTypeRegister(ZFCallbackSerializeCustomType_##type, _ZFP_ZFCallbackSerializeCustomSerializeCallback_##type); \
     } \
     ZF_GLOBAL_INITIALIZER_DESTROY(ZFCallbackSerializeCallbackRegister_##type) \
     { \
-        ZFCallbackSerializeCustomTypeUnregister(ZFCallbackSerializeCustomTypeName_##type); \
+        ZFCallbackSerializeCustomTypeUnregister(ZFCallbackSerializeCustomType_##type); \
     } \
     ZF_GLOBAL_INITIALIZER_END(ZFCallbackSerializeCallbackRegister_##type) \
     static zfbool _ZFP_ZFCallbackSerializeCustomSerializeCallback_##type(ZF_IN_OUT ZFCallback &result, \

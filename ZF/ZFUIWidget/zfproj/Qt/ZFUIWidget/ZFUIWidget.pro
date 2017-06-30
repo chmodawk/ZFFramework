@@ -20,7 +20,7 @@ ZF_BUILD_STATIC_LIB = 0
 
 # whether to use unity builds
 # NOTE: you must ensure no Q_OBJECT used while unity builds enabled
-ZF_UNITY_BUILD = 1
+ZF_UNITY_BUILD = 0
 
 # ZFFramework's root path
 ZF_ROOT_PATH = $$_PRO_FILE_PWD_/../../../../../../ZFFramework

@@ -31,7 +31,7 @@ extern ZF_ENV_EXPORT zfautoObject ZFObjectCreate(ZF_IN const zfchar *type,
 /**
  * @brief usually for debug use only
  *
- * macro names are recommended to be ZFObjectCreatorType_XXX
+ * macro names are recommended to be ZFObjectCreatorTypeId_XXX
  */
 extern ZF_ENV_EXPORT void ZFObjectCreatorGetAllTypeT(ZF_OUT ZFCoreArray<const zfchar *> &ret);
 /** @brief see #ZFObjectCreatorGetAllType */

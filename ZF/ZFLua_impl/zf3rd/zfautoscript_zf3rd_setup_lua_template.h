@@ -11,9 +11,9 @@ extern "C" {
 #define LUA_LIB
 #define luaall_c
 
-#include "../../../../zf3rd/_tmp/lua/lua.h"
-#include "../../../../zf3rd/_tmp/lua/lualib.h"
-#include "../../../../zf3rd/_tmp/lua/lauxlib.h"
+#include "../../../../zfsrc_ext/ZFImpl/_repo/lua/lua.h"
+#include "../../../../zfsrc_ext/ZFImpl/_repo/lua/lualib.h"
+#include "../../../../zfsrc_ext/ZFImpl/_repo/lua/lauxlib.h"
 
 #ifdef __cplusplus
 }

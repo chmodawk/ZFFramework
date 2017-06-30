@@ -134,14 +134,14 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
         } while(zffalse);
         if(success)
         {
-            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomTypeName_ZFInputCallbackForFileDescriptor);
+            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomType_ZFInputCallbackForFileDescriptor);
             ret.callbackSerializeCustomDataSet(customData);
         }
     }
 
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFInputCallbackForFileDescriptor)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFileDescriptor)
 {
     const ZFSerializableData *fileDescriptorData = ZFSerializableUtil::requireElementByCategory(
         serializableData, ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_fileDescriptor, outErrorHint, outErrorPos);
@@ -263,14 +263,14 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
         } while(zffalse);
         if(success)
         {
-            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomTypeName_ZFOutputCallbackForFileDescriptor);
+            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomType_ZFOutputCallbackForFileDescriptor);
             ret.callbackSerializeCustomDataSet(customData);
         }
     }
 
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFOutputCallbackForFileDescriptor)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFileDescriptor)
 {
     const ZFSerializableData *fileDescriptorData = ZFSerializableUtil::requireElementByCategory(
         serializableData, ZFSerializableKeyword_ZFOutputCallbackForFileDescriptor_fileDescriptor, outErrorHint, outErrorPos);

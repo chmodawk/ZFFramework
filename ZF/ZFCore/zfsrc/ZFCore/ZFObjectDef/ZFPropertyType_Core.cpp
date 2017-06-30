@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertyType_Core.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -150,4 +151,22 @@ zfbool ZFPropertySerializeTo(ZF_IN const ZFProperty *propertyInfo,
 ZFOBJECT_REGISTER(ZFPropertyTypeWrapper)
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFPropertySerializeFrom, ZFMP_IN(ZFObject *, ownerObject), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFPropertySerializeTo, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObject), ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, const zfchar *, wrappedValuePropertyTypeId)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, void, wrappedValueReset)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, zfbool, wrappedValueIsInit)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFPropertyTypeWrapper, zfbool, wrappedValueFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueToSerializableData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueFromString, ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFPropertyTypeWrapper, zfbool, wrappedValueToString, ZFMP_IN_OUT(zfstring &, s))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

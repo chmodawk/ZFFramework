@@ -342,7 +342,7 @@ ZFDebugCallback _ZFP_ZFDebugCallbackCreate(ZF_IN_OUT ZFDebugSession &session)
 }
 
 // ============================================================
-zfbool zfDebugStart(ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault */)
+zfbool zfDebugStart(ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault() */)
 {
     return zfDebugSessionStart(_ZFP_ZFDebugGlobalSession, callback);
 }
@@ -379,7 +379,7 @@ void zfDebug(ZF_IN const zfchar *format,
 
 // ============================================================
 zfbool zfDebugSessionStart(ZF_IN_OUT ZFDebugSession &session,
-                           ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault */)
+                           ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault() */)
 {
     zfDebugSessionStop(session);
     if(callback.callbackIsValid())

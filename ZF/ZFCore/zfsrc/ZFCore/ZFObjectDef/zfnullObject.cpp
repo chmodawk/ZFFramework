@@ -7,13 +7,12 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "zfnullObject.h"
-#include "ZFSerializable.h"
+#include "ZFObjectImpl.h"
 #include "ZFCopyable.h"
-#include "ZFObjectSmartPointer.h"
-#include "ZFPropertyType.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+/** @brief see #zfnullObject */
 zfclass ZFNull : zfextends ZFObject, zfimplements ZFSerializable, zfimplements ZFCopyable
 {
     ZFOBJECT_DECLARE(ZFNull, ZFObject)
@@ -49,16 +48,17 @@ private:
     ZFMETHOD_DECLARE_DETAIL_0(private, ZFMethodIsStatic,
                               zfautoObject, ZFSerializableKeyword_serializableNewInstanceSig)
     {
-        return zfautoObjectCreate(zfnullObject);
+        return zfautoObjectCreate(zfnullObject());
     }
 
 public:
     zfoverride
     virtual zfautoObject copy(void)
     {
-        return zfautoObjectCreate(zfnullObject);
+        return zfautoObjectCreate(zfnullObject());
     }
 };
+
 ZFOBJECT_REGISTER(ZFNull)
 
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(zfnullObjHolder, ZFLevelZFFrameworkEssential)
@@ -75,10 +75,19 @@ ZF_GLOBAL_INITIALIZER_DESTROY(zfnullObjHolder)
 public:
     ZFObject *nullObject;
 ZF_GLOBAL_INITIALIZER_END(zfnullObjHolder)
-ZFObject *const &_ZFP_zfnullObject(void)
+ZFObject *_ZFP_zfnullObject(void)
 {
     return ZF_GLOBAL_INITIALIZER_INSTANCE(zfnullObjHolder)->nullObject;
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_0({return zfnullObject();}, ZFObject *, zfnullObject)
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

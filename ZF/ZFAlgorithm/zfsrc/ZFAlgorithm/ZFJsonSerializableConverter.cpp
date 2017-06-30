@@ -35,7 +35,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 #define _ZFP_ZFJsonSerializeKey_classPrefix '@'
 
-ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefType_json)
+ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_json)
 {
     ZFJsonItem jsonObject = ZFJsonFromInput(ZFInputCallbackForFileDescriptor(refData));
     if(jsonObject.jsonIsNull())
@@ -47,7 +47,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefType_json)
     return ZFJsonParseToSerializableData(serializableData, jsonObject);
 }
 
-ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorType_json, data)
+ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_json, data)
 {
     ZFJsonItem jsonObject = ZFJsonFromInput(ZFInputCallbackForFileDescriptor(data));
     if(jsonObject.jsonIsNull())
@@ -236,7 +236,7 @@ ZFJsonItem ZFJsonPrintFromSerializableData(ZF_IN const ZFSerializableData &seria
 }
 
 void ZFJsonPrint(ZF_IN const ZFSerializableData &serializableData,
-                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                  ZF_IN_OPT const ZFJsonOutputFlags &flags /* = ZFJsonOutputFlagsDefault */)
 {
     ZFJsonItem jsonObject = ZFJsonPrintFromSerializableData(serializableData);
@@ -247,7 +247,7 @@ void ZFJsonPrint(ZF_IN const ZFSerializableData &serializableData,
     }
 }
 void ZFJsonPrint(ZF_IN ZFObject *obj,
-                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                  ZF_IN_OPT const ZFJsonOutputFlags &flags /* = ZFJsonOutputFlagsDefault */)
 {
     ZFJsonPrint(ZFObjectToSerializableData(obj), outputCallback, flags);

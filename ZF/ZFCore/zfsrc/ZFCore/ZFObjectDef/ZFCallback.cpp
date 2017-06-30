@@ -7,9 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFCallback.h"
-#include "ZFObjectCore.h"
-#include "ZFObjectSmartPointer.h"
-#include "ZFSerializableData.h"
+#include "ZFObjectImpl.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
@@ -469,18 +467,6 @@ ZFFuncAddrType ZFCallback::_ZFP_ZFCallbackCached_callbackInvoker_rawFunction(voi
     return d->callbackRawFunc;
 }
 
-// ============================================================
-zfbool operator == (ZF_IN const ZFCallback &v0,
-                    ZF_IN const ZFCallback &v1)
-{
-    return (v0.objectCompare(v1) == ZFCompareTheSame);
-}
-zfbool operator != (ZF_IN const ZFCallback &v0,
-                    ZF_IN const ZFCallback &v1)
-{
-    return (v0.objectCompare(v1) != ZFCompareTheSame);
-}
-
 ZF_NAMESPACE_GLOBAL_END
 
 #if 1 // ZFObject related method register
@@ -488,29 +474,29 @@ ZF_NAMESPACE_GLOBAL_END
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, void, callbackIdSet, ZFMP_IN(const zfchar *, callbackId))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, const zfchar *, callbackId)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_3(v_ZFCallback, void, callbackTagSet, ZFMP_IN(const zfchar *, key), ZFMP_IN(ZFObject *, tag), ZFMP_IN_OPT(zfbool, autoMarkCached, zffalse))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_2(v_ZFCallback, void, callbackTagSetMarkCached, ZFMP_IN(const zfchar *, key), ZFMP_IN(ZFObject *, tag))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, ZFObject *, callbackTagGet, ZFMP_IN(const zfchar *, key))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_2(v_ZFCallback, void, callbackTagGetAllKeyValue, ZFMP_IN_OUT(ZFCoreArray<const zfchar *> &, allKey), ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, allValue))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, void, callbackTagRemove, ZFMP_IN(const zfchar *, key))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, zfautoObject, callbackTagRemoveAndGet, ZFMP_IN(const zfchar *, key))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, void, callbackTagRemoveAll)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, zfbool, callbackIsValid)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, ZFCallbackType, callbackType)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, ZFObject *, callbackOwnerObject)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, const ZFMethod *, callbackMethod)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, ZFFuncAddrType, callbackFunctionAddr)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, void, callbackCallerInfoSet, ZFMP_IN(const ZFCallerInfo &, callerInfo))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, const ZFCallerInfo &, callbackCallerInfo)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, void, callbackClear)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, void, callbackOwnerObjectRetain)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, void, callbackOwnerObjectRelease)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, void, callbackSerializeCustomTypeSet, ZFMP_IN(const zfchar *, customType))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, const zfchar *, callbackSerializeCustomType)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFCallback, void, callbackSerializeCustomDataSet, ZFMP_IN(const ZFSerializableData &, customData))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(v_ZFCallback, const ZFSerializableData *, callbackSerializeCustomData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackIdSet, ZFMP_IN(const zfchar *, callbackId))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const zfchar *, callbackId)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFCallback, void, callbackTagSet, ZFMP_IN(const zfchar *, key), ZFMP_IN(ZFObject *, tag), ZFMP_IN_OPT(zfbool, autoMarkCached, zffalse))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFCallback, void, callbackTagSetMarkCached, ZFMP_IN(const zfchar *, key), ZFMP_IN(ZFObject *, tag))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, ZFObject *, callbackTagGet, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFCallback, void, callbackTagGetAllKeyValue, ZFMP_IN_OUT(ZFCoreArray<const zfchar *> &, allKey), ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, allValue))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackTagRemove, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, zfautoObject, callbackTagRemoveAndGet, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, void, callbackTagRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, zfbool, callbackIsValid)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, ZFCallbackType, callbackType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, ZFObject *, callbackOwnerObject)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const ZFMethod *, callbackMethod)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, ZFFuncAddrType, callbackFunctionAddr)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackCallerInfoSet, ZFMP_IN(const ZFCallerInfo &, callerInfo))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const ZFCallerInfo &, callbackCallerInfo)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, void, callbackClear)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, void, callbackOwnerObjectRetain)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, void, callbackOwnerObjectRelease)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackSerializeCustomTypeSet, ZFMP_IN(const zfchar *, customType))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const zfchar *, callbackSerializeCustomType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackSerializeCustomDataSet, ZFMP_IN(const ZFSerializableData &, customData))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const ZFSerializableData *, callbackSerializeCustomData)
 
 // ============================================================
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFCallback, ZFCallbackNullDetail, ZFMP_IN(const ZFCallerInfo &, callerInfo))

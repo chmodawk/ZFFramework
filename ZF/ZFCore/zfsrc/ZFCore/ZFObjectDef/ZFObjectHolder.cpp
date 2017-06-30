@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFObjectHolder.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -66,4 +67,17 @@ ZFCompareResult ZFListenerHolder::objectCompare(ZF_IN ZFObject *anotherObj)
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFObjectHolder, ZFAny, holdedObj)
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFListenerHolder, ZFListener, runnable)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFListenerHolder, ZFListenerData, listenerData)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFListenerHolder, void, runnableExecute)
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

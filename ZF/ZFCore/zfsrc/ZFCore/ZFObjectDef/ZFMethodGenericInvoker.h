@@ -24,8 +24,8 @@ zfclassFwd ZFMethod;
 /**
  * @brief generic invoker for advanced reflection, see #ZFMethod::methodGenericInvoker
  */
-typedef zfbool (*ZFMethodGenericInvoker)(ZF_IN const ZFMethod *ownerMethod
-                                         , ZF_IN ZFObject *ownerObjOrNullForStaticFunc
+typedef zfbool (*ZFMethodGenericInvoker)(ZF_IN const ZFMethod *invokerMethod
+                                         , ZF_IN ZFObject *invokerObjectOrNullForStaticFunc
                                          , ZF_OUT_OPT zfstring *errorHint
                                          , ZF_OUT_OPT zfautoObject &ret
                                          , ZF_IN_OPT ZFObject *param0 /* = ZFMethodGenericInvokeraultParam */
@@ -41,7 +41,7 @@ typedef zfbool (*ZFMethodGenericInvoker)(ZF_IN const ZFMethod *ownerMethod
  * @brief used for generic invoker to check whether it's able to invoke from specified params,
  *   see #ZFMethod::methodGenericInvokerChecker
  */
-typedef zfbool (*ZFMethodGenericInvokerChecker)(ZF_IN const ZFMethod *ownerMethod
+typedef zfbool (*ZFMethodGenericInvokerChecker)(ZF_IN const ZFMethod *invokerMethod
                                                 , ZF_OUT_OPT zfstring *errorHint
                                                 , ZF_IN_OPT ZFObject *param0 /* = ZFMethodGenericInvokeraultParam */
                                                 , ZF_IN_OPT ZFObject *param1 /* = ZFMethodGenericInvokeraultParam */
@@ -92,7 +92,7 @@ public:
             ZFPropertyTypeIdData<_ParamTypeTraits##N>::PropertyRegistered \
         >::AllTypeMustBeRegisteredBy_ZFPROPERTY_TYPE_XXX _ParamTypeCheck##N;
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(ParamType, param, N) \
-    if(!(N >= ownerMethod->methodParamDefaultBeginIndex() && param == ZFMethodGenericInvokeraultParam) \
+    if(!(N >= invokerMethod->methodParamDefaultBeginIndex() && param == ZFMethodGenericInvokeraultParam) \
         && !ZFPropertyTypeIdData<_ParamTypeTraits##N>::Value<_ParamTypeTraits##N>::accessAvailable(param)) \
     { \
         zfstringAppend(errorHint, \
@@ -133,8 +133,8 @@ public:
             ZFPropertyTypeIdData<typename zftTraitsType<T_ReturnType>::TraitsRemoveReference>::PropertyRegistered
         >::AllTypeMustBeRegisteredBy_ZFPROPERTY_TYPE_XXX _ReturnTypeCheck;
 public:
-    static zfbool wrap(ZF_IN const ZFMethod *ownerMethod
-                       , ZF_IN ZFObject *ownerObj
+    static zfbool wrap(ZF_IN const ZFMethod *invokerMethod
+                       , ZF_IN ZFObject *invokerObject
                        , ZF_OUT_OPT zfstring *errorHint
                        , ZF_OUT_OPT zfautoObject &ret
                        , ZF_IN ZFObject *param0
@@ -148,7 +148,7 @@ public:
                        )
     {
         if(!T_Invoker::invokeCheck(
-                  ownerMethod
+                  invokerMethod
                 , errorHint
                 , param0
                 , param1
@@ -162,7 +162,7 @@ public:
         {
             return zffalse;
         }
-        T_ReturnType retTmp = T_Invoker::invoke(ownerMethod, ownerObj
+        T_ReturnType retTmp = T_Invoker::invoke(invokerMethod, invokerObject
                 , param0
                 , param1
                 , param2
@@ -189,8 +189,8 @@ template<typename T_Invoker>
 zfclassNotPOD _ZFP_ZFMethodGenericInvokerWrapper<T_Invoker, void>
 {
 public:
-    static zfbool wrap(ZF_IN const ZFMethod *ownerMethod
-                       , ZF_IN ZFObject *ownerObj
+    static zfbool wrap(ZF_IN const ZFMethod *invokerMethod
+                       , ZF_IN ZFObject *invokerObject
                        , ZF_OUT_OPT zfstring *errorHint
                        , ZF_OUT_OPT zfautoObject &ret
                        , ZF_IN ZFObject *param0
@@ -204,7 +204,7 @@ public:
                        )
     {
         if(!T_Invoker::invokeCheck(
-                  ownerMethod
+                  invokerMethod
                 , errorHint
                 , param0
                 , param1
@@ -218,7 +218,7 @@ public:
         {
             return zffalse;
         }
-        T_Invoker::invoke(ownerMethod, ownerObj
+        T_Invoker::invoke(invokerMethod, invokerObject
                 , param0
                 , param1
                 , param2
@@ -267,7 +267,7 @@ public:
         _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS(7, ParamExpandOrEmpty7, ParamType7, DefaultValueFix7) \
     public: \
         static zfbool invokeCheck( \
-                                    ZF_IN const ZFMethod *ownerMethod \
+                                    ZF_IN const ZFMethod *invokerMethod \
                                   , ZF_OUT_OPT zfstring *errorHint \
                                   , ZF_IN ZFObject *param0 \
                                   , ZF_IN ZFObject *param1 \
@@ -289,8 +289,8 @@ public:
             ParamExpandOrEmpty7(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(ParamType7, param7, 7)) \
             return zftrue; \
         } \
-        static inline ReturnType invoke(ZF_IN const ZFMethod *ownerMethod, \
-                                        ZF_IN ZFObject *ownerObj \
+        static inline ReturnType invoke(ZF_IN const ZFMethod *invokerMethod, \
+                                        ZF_IN ZFObject *invokerObject \
                                         , ZF_IN ZFObject *param0 \
                                         , ZF_IN ZFObject *param1 \
                                         , ZF_IN ZFObject *param2 \
@@ -326,7 +326,7 @@ public:
         , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         ) \
-        return ZFCastZFObject(zfself *, ownerObj)->methodName( \
+        return ZFCastZFObject(zfself *, invokerObject)->methodName( \
                 ParamExpandOrEmpty0(ZFM_EMPTY() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
                 ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
                 ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
@@ -393,7 +393,7 @@ public:
         , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         ) \
-        return (methodInvoker)(ownerMethod, ownerObj \
+        return (methodInvoker)(invokerMethod, invokerObject \
                 ParamExpandOrEmpty0(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
                 ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
                 ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \

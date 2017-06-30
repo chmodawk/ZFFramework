@@ -35,10 +35,6 @@ typedef enum
 /** @brief string tokens */
 #define ZFTOKEN_ZFMethodPrivilegeTypePrivate zfText("private")
 
-ZFCOMPARER_DEFAULT_DECLARE(ZFMethodPrivilegeType, ZFMethodPrivilegeType, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
-
 // ============================================================
 zfclassFwd ZFObject;
 zfclassFwd ZFClass;
@@ -128,9 +124,9 @@ zfclassFwd ZFClass;
     ParamType, paramName, _ZFP_ZFMethodDefaultParam(DefaultValue)
 
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
-#define ZFMethodFuncNamespaceIdGlobal ZF_NAMESPACE_GLOBAL_ID
+#define ZFMethodFuncNamespaceGlobalId ZF_NAMESPACE_GLOBAL_ID
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
-#define ZFMethodFuncNamespaceGlobal ZFM_TOSTRING(ZFMethodFuncNamespaceIdGlobal)
+#define ZFMethodFuncNamespaceGlobal ZFM_TOSTRING(ZFMethodFuncNamespaceGlobalId)
 
 typedef zfautoObject (*_ZFP_ZFMethodParamDefaultValueAccessCallback)(void);
 

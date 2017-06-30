@@ -25,9 +25,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   <zfstring refType="lang_zfstring" refData="langKey used by zfLang" />
  * @endcode
  */
-#define ZFSerializableDataRefType_lang_zfstring lang_zfstring
-/** @brief see #ZFSerializableDataRefType_lang_zfstring */
-#define ZFSerializableDataRefTypeName_lang_zfstring ZFM_TOSTRING(ZFSerializableDataRefType_lang_zfstring)
+#define ZFSerializableDataRefTypeId_lang_zfstring lang_zfstring
+/** @brief see #ZFSerializableDataRefTypeId_lang_zfstring */
+#define ZFSerializableDataRefType_lang_zfstring ZFM_TOSTRING(ZFSerializableDataRefTypeId_lang_zfstring)
 
 /**
  * @brief see #ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE
@@ -37,9 +37,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   <ZFString refType="lang_ZFString" refData="langKey used by zfLang" />
  * @endcode
  */
-#define ZFSerializableDataRefType_lang_ZFString lang_ZFString
-/** @brief see #ZFSerializableDataRefType_lang_ZFString */
-#define ZFSerializableDataRefTypeName_lang_ZFString ZFM_TOSTRING(ZFSerializableDataRefType_lang_ZFString)
+#define ZFSerializableDataRefTypeId_lang_ZFString lang_ZFString
+/** @brief see #ZFSerializableDataRefTypeId_lang_ZFString */
+#define ZFSerializableDataRefType_lang_ZFString ZFM_TOSTRING(ZFSerializableDataRefTypeId_lang_ZFString)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLangUtil_ZFSerializableHelper_h_

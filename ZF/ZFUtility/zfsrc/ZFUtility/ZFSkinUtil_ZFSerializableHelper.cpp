@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorType_skin, data)
+ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_skin, data)
 {
     return zfSkin(data);
 }

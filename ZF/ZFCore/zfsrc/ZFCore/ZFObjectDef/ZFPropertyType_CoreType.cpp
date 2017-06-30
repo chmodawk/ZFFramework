@@ -7,10 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertyType_CoreType.h"
-#include "ZFClassSerializable.h"
-#include "ZFMethodSerializable.h"
-#include "ZFPropertySerializable.h"
-#include "ZFCoreType_IODef.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -861,6 +858,61 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFMethodPrivilegeType, ZFMethodPrivil
     })
 
 // ============================================================
+ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFObjectInstanceState, ZFObjectInstanceState, {
+        const zfchar *tokens[] = ZFM_EXPAND({
+            ZFTOKEN_ZFObjectInstanceStateOnInit,
+            ZFTOKEN_ZFObjectInstanceStateOnInitFinish,
+            ZFTOKEN_ZFObjectInstanceStateIdle,
+            ZFTOKEN_ZFObjectInstanceStateOnDeallocPrepare,
+            ZFTOKEN_ZFObjectInstanceStateOnDealloc,
+        });
+        zfindex matched = zfsCheckMatch(tokens, ZFM_ARRAY_SIZE(tokens), src, srcLen);
+        v = ZFObjectInstanceStateOnInit;
+        switch(matched)
+        {
+            case 0:
+                v = ZFObjectInstanceStateOnInit;
+                return zftrue;
+            case 1:
+                v = ZFObjectInstanceStateOnInitFinish;
+                return zftrue;
+            case 2:
+                v = ZFObjectInstanceStateIdle;
+                return zftrue;
+            case 3:
+                v = ZFObjectInstanceStateOnDeallocPrepare;
+                return zftrue;
+            case 4:
+                v = ZFObjectInstanceStateOnDealloc;
+                return zftrue;
+            default:
+                return zffalse;
+        }
+    }, {
+        switch(v)
+        {
+            case ZFObjectInstanceStateOnInit:
+                s += ZFTOKEN_ZFObjectInstanceStateOnInit;
+                return zftrue;
+            case ZFObjectInstanceStateOnInitFinish:
+                s += ZFTOKEN_ZFObjectInstanceStateOnInitFinish;
+                return zftrue;
+            case ZFObjectInstanceStateIdle:
+                s += ZFTOKEN_ZFObjectInstanceStateIdle;
+                return zftrue;
+            case ZFObjectInstanceStateOnDeallocPrepare:
+                s += ZFTOKEN_ZFObjectInstanceStateOnDeallocPrepare;
+                return zftrue;
+            case ZFObjectInstanceStateOnDealloc:
+                s += ZFTOKEN_ZFObjectInstanceStateOnDealloc;
+                return zftrue;
+            default:
+                zfCoreCriticalShouldNotGoHere();
+                return zffalse;
+        }
+    })
+
+// ============================================================
 ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFCallbackType, ZFCallbackType, {
         const zfchar *tokens[] = ZFM_EXPAND({
             ZFTOKEN_ZFCallbackTypeDummy,
@@ -949,10 +1001,14 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForIdentity, ZFFilterForIdentity)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForString, ZFFilterForString)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFIdentityGenerator, ZFIdentityGenerator)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFListenerData, ZFListenerData)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFObserverAddParam, ZFObserverAddParam)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFObserverHolder, ZFObserverHolder)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFClass, ZFFilterForZFClass)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFMethod, ZFFilterForZFMethod)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFProperty, ZFFilterForZFProperty)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFObject, ZFFilterForZFObject)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFMethodGenericInvokerChecker, ZFMethodGenericInvokerChecker)
 
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(VoidPointer, void *)
 ZFPROPERTY_TYPE_ALIAS_DEFINE(VoidPointer, void *, VoidPointerConst, const void *)

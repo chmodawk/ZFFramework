@@ -16,6 +16,6 @@ exit /b 1
 
 set _OLD_DIR=%cd%
 cd "%PROJ_PATH%"
-call ndk-build -j2
+call ndk-build -j1
 cd "%_OLD_DIR%"
 

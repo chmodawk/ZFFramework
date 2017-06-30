@@ -36,9 +36,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFInputCallbackForFileDescriptor ZFInputCallbackForFileDescriptor
+#define ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFileDescriptor ZFInputCallbackForFileDescriptor
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFInputCallbackForFileDescriptor ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFInputCallbackForFileDescriptor)
+#define ZFCallbackSerializeCustomType_ZFInputCallbackForFileDescriptor ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFileDescriptor)
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_fileDescriptor zfText("fileDescriptor")
@@ -77,9 +77,9 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_
  *   </node>
  * @endcode
  */
-#define ZFCallbackSerializeCustomType_ZFOutputCallbackForFileDescriptor ZFOutputCallbackForFileDescriptor
+#define ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFileDescriptor ZFOutputCallbackForFileDescriptor
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
-#define ZFCallbackSerializeCustomTypeName_ZFOutputCallbackForFileDescriptor ZFM_TOSTRING(ZFCallbackSerializeCustomType_ZFOutputCallbackForFileDescriptor)
+#define ZFCallbackSerializeCustomType_ZFOutputCallbackForFileDescriptor ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFileDescriptor)
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFOutputCallbackForFileDescriptor_fileDescriptor zfText("fileDescriptor")

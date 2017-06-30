@@ -838,12 +838,12 @@ extern ZF_ENV_EXPORT ZFCoreArray<ZFProtocolImplInfoData> ZFProtocolImplInfoDataG
 /**
  * @brief util method to #ZFProtocolImplInfoDataGet
  */
-extern ZF_ENV_EXPORT void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault);
+extern ZF_ENV_EXPORT void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault());
 /**
  * @brief util method to #ZFProtocolImplInfoDataGet
  */
 extern ZF_ENV_EXPORT void ZFProtocolImplInfoDataPrint(ZF_IN const ZFProtocolImplInfoData &data,
-                                                      ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault);
+                                                      ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault());
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFProtocol_h_

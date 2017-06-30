@@ -7,6 +7,8 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFIdMap.h"
+#include "ZFObjectImpl.h"
+
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 
@@ -149,4 +151,15 @@ void ZFIdMapGetAll(ZF_IN const zfchar *moduleName, ZF_OUT ZFCoreArrayPOD<zfident
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const zfchar *, ZFIdMapGetName, ZFMP_IN(const zfchar *, moduleName), ZFMP_IN(const zfidentity &, idValue))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfidentity, ZFIdMapGetId, ZFMP_IN(const zfchar *, moduleName), ZFMP_IN(const zfchar *, idName))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(void, ZFIdMapGetAll, ZFMP_IN(const zfchar *, moduleName), ZFMP_OUT(ZFCoreArrayPOD<zfidentity> &, idValues), ZFMP_OUT(ZFCoreArrayPOD<const zfchar *> &, idNames))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

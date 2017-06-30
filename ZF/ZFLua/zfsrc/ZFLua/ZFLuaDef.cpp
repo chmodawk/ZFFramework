@@ -42,7 +42,7 @@ void _ZFP_ZFLuaErrorOccurred(ZF_IN const ZFCallerInfo &callerInfo,
 
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFImpl_ZFLua_debug_autoOutputError, ZFLevelZFFrameworkNormal)
 {
-    this->debugCallback = ZFOutputCallbackDefault;
+    this->debugCallback = ZFOutputCallbackDefault();
     ZFLuaErrorCallbacks.add(this->debugCallback);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_ZFLua_debug_autoOutputError)

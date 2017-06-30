@@ -45,26 +45,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 #endif // you must change these if change zfchar's type
 // ============================================================
 
-/** @cond ZFPrivateDoc */
-inline zfbool operator == (ZF_IN ZFCoreStringA const &s0, ZF_IN ZFCoreStringA const s1)
-{
-    return (s0.compare(s1) == 0);
-}
-inline zfbool operator != (ZF_IN ZFCoreStringA const &s0, ZF_IN ZFCoreStringA const s1)
-{
-    return (s0.compare(s1) != 0);
-}
-// ============================================================
-inline zfbool operator == (ZF_IN ZFCoreStringW const &s0, ZF_IN ZFCoreStringW const s1)
-{
-    return (s0.compare(s1) == 0);
-}
-inline zfbool operator != (ZF_IN ZFCoreStringW const &s0, ZF_IN ZFCoreStringW const s1)
-{
-    return (s0.compare(s1) != 0);
-}
-/** @endcond */
-
 ZF_NAMESPACE_GLOBAL_END
 
 #endif // #ifndef _ZFI_ZFCoreString_h_

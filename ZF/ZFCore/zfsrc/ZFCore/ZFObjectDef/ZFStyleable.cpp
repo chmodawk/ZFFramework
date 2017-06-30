@@ -7,11 +7,10 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFStyleable.h"
+#include "ZFObjectImpl.h"
+#include "ZFObjectUtil.h"
 #include "ZFClassUtil.h"
 #include "ZFListenerDeclare.h"
-#include "ZFObjectUtil.h"
-#include "ZFObjectHolder.h"
-#include "ZFObjectSmartPointer.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -299,4 +298,17 @@ void ZFStyleDefaultApplyAutoCopy(ZF_IN ZFStyleable *style)
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFStyleable, ZFStyleable *, defaultStyle)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFStyleable, void, styleableCopyFrom, ZFMP_IN(ZFStyleable *, anotherStyleable))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFStyleable, zfbool, styleableIsDefaultStyle)
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFStyleDefaultApplyAutoCopy, ZFMP_IN(ZFStyleable *, style))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

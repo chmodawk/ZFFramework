@@ -30,9 +30,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   static zfautoObject yourMethod(void);\n
  * no method id supported
  */
-#define ZFObjectCreatorType_method method
-/** @brief see #ZFObjectCreatorType_method */
-#define ZFObjectCreatorTypeName_ZFMethod ZFM_TOSTRING(ZFObjectCreatorType_method)
+#define ZFObjectCreatorTypeId_method method
+/** @brief see #ZFObjectCreatorTypeId_method */
+#define ZFObjectCreatorType_ZFMethod ZFM_TOSTRING(ZFObjectCreatorTypeId_method)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFObjectCreator_common_h_

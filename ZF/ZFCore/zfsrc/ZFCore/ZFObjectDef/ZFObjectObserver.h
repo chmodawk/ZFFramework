@@ -92,6 +92,15 @@ public:
         this->param1 = ref.param1;
         return *this;
     }
+    zfbool operator == (ZF_IN const ZFListenerData &ref) const
+    {
+        return (this->eventId == ref.eventId
+            && this->sender == ref.sender
+            && this->param0 == ref.param0
+            && this->param1 == ref.param1
+            );
+    }
+    inline zfbool operator != (ZF_IN const ZFListenerData &ref) const {return !this->operator == (ref);}
     /** @endcond */
 public:
     /**
@@ -140,21 +149,6 @@ public:
         return *this;
     }
 };
-/** @cond ZFPrivateDoc */
-inline zfbool operator == (ZF_IN const ZFListenerData &v0,
-                           ZF_IN const ZFListenerData &v1)
-{
-    return (v0.eventId == v1.eventId && v0.sender == v1.sender && v0.param0 == v1.param0 && v0.param1 == v1.param1);
-}
-inline zfbool operator != (ZF_IN const ZFListenerData &v0,
-                           ZF_IN const ZFListenerData &v1)
-{
-    return !(v0 == v1);
-}
-/** @endcond */
-ZFCOMPARER_DEFAULT_DECLARE(ZFListenerData, ZFListenerData, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 // ============================================================
 /**
@@ -206,6 +200,21 @@ zffinal zfclassLikePOD ZF_ENV_EXPORT ZFObserverAddParam
 
     /** @brief see #ZFObject::observerNotify */
     ZFCORE_PARAM_WITH_INIT(ZFLevel, observerLevel, ZFLevelAppNormal)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN ZFObserverAddParam const &ref) const
+    {
+        return (this->eventId() == ref.eventId()
+            && this->observer() == ref.observer()
+            && this->userData() == ref.userData()
+            && this->owner() == ref.owner()
+            && this->autoRemoveAfterActivate() == ref.autoRemoveAfterActivate()
+            && this->observerLevel() == ref.observerLevel()
+            );
+    }
+    inline zfbool operator != (ZF_IN ZFObserverAddParam const &ref) const {return !this->operator == (ref);}
+    /** @endcond */
 };
 
 zfclassFwd _ZFP_ZFObserverHolderPrivate;
@@ -217,11 +226,12 @@ zffinal zfclassLikePOD ZF_ENV_EXPORT ZFObserverHolder
 public:
     /** @cond ZFPrivateDoc */
     ZFObserverHolder(void);
-    ~ZFObserverHolder(void);
-    /** @endcond */
-private:
     ZFObserverHolder(ZF_IN ZFObserverHolder const &ref);
+    ~ZFObserverHolder(void);
     ZFObserverHolder &operator = (ZF_IN ZFObserverHolder const &ref);
+    zfbool operator == (ZF_IN ZFObserverHolder const &ref) const;
+    inline zfbool operator != (ZF_IN ZFObserverHolder const &ref) const {return !this->operator == (ref);}
+    /** @endcond */
 
 public:
     /** @brief see #ZFObject::observerNotify */
@@ -281,15 +291,11 @@ public:
 
 public:
     /** @brief owner object of this observer holder, or null if none */
-    inline ZFObject *observerOwner(void) const
-    {
-        return this->_observerOwner;
-    }
+    ZFObject *observerOwner(void) const;
     zffinal void _ZFP_ZFObserverHolder_observerOwnerSet(ZF_IN ZFObject *obj);
 
 private:
     _ZFP_ZFObserverHolderPrivate *d;
-    ZFObject *_observerOwner;
 };
 
 // ============================================================
@@ -300,7 +306,7 @@ extern ZF_ENV_EXPORT ZFObserverHolder &_ZFP_ZFObjectGlobalEventObserverRef(void)
  *
  * use only if necessary, which may cause performance issue
  */
-#define ZFObjectGlobalEventObserver (_ZFP_ZFObjectGlobalEventObserverRef())
+#define ZFObjectGlobalEventObserver() (_ZFP_ZFObjectGlobalEventObserverRef())
 
 // ============================================================
 // observer

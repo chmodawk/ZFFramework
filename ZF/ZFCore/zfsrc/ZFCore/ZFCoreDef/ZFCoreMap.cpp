@@ -87,10 +87,6 @@ zfbool ZFCoreMap::operator ==(ZF_IN const ZFCoreMap &ref) const
 {
     return (d == ref.d);
 }
-zfbool ZFCoreMap::operator !=(ZF_IN const ZFCoreMap &ref) const
-{
-    return (d != ref.d);
-}
 ZFCoreMap::~ZFCoreMap(void)
 {
     --(d->refCount);

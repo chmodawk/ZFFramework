@@ -255,18 +255,17 @@ ZFPROPERTY_TYPE_DEFINE(ZFBezier, ZFBezier, {
     })
 
 // ============================================================
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_4(v_ZFBezier, void, controlPointSet,
-    ZFMP_IN(zffloat, p0x), ZFMP_IN(zffloat, p0y), ZFMP_IN(zffloat, p1x), ZFMP_IN(zffloat, p1y))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, y_by_t, ZFMP_IN(zffloat, t))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, y_by_x, ZFMP_IN(zffloat, x))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, x_by_t, ZFMP_IN(zffloat, t))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, x_by_y, ZFMP_IN(zffloat, y))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, t_by_x, ZFMP_IN(zffloat, x))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(v_ZFBezier, zffloat, t_by_y, ZFMP_IN(zffloat, y))
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFBezier *>()->zfv.p0x;}, v_ZFBezier, zffloat, p0x)
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFBezier *>()->zfv.p0y;}, v_ZFBezier, zffloat, p0y)
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFBezier *>()->zfv.p1x;}, v_ZFBezier, zffloat, p1x)
-ZFMETHOD_USER_REGISTER_0({return invokerObject->to<v_ZFBezier *>()->zfv.p1y;}, v_ZFBezier, zffloat, p1y)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_4(v_ZFBezier, void, controlPointSet, ZFMP_IN(zffloat, p0x), ZFMP_IN(zffloat, p0y), ZFMP_IN(zffloat, p1x), ZFMP_IN(zffloat, p1y))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, y_by_t, ZFMP_IN(zffloat, t))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, y_by_x, ZFMP_IN(zffloat, x))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, x_by_t, ZFMP_IN(zffloat, t))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, x_by_y, ZFMP_IN(zffloat, y))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, t_by_x, ZFMP_IN(zffloat, x))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFBezier, zffloat, t_by_y, ZFMP_IN(zffloat, y))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFBezier, zffloat, p0x)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFBezier, zffloat, p0y)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFBezier, zffloat, p1x)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFBezier, zffloat, p1y)
 
 ZF_NAMESPACE_GLOBAL_END
 

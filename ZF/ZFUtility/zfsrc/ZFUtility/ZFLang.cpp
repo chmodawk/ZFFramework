@@ -87,7 +87,7 @@ void zfLangUnload(void)
     zfLangNotifyChanged();
 }
 
-void zfLangDebug(ZF_IN_OPT const ZFOutputCallback &output /* = ZFOutputCallbackDefault */)
+void zfLangDebug(ZF_IN_OPT const ZFOutputCallback &output /* = ZFOutputCallbackDefault() */)
 {
     _ZFP_ZFLangMapType &m = _ZFP_ZFLangMapGlobal();
     for(_ZFP_ZFLangMapType::iterator it = m.begin(); it != m.end(); ++it)

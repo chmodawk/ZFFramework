@@ -22,7 +22,7 @@ ZF_NAMESPACE_BEGIN(ZFFileUtil)
  * @brief list all files, usually for debug use
  */
 extern ZF_ENV_EXPORT void fileList(ZF_IN_OPT const zfchar *path = zfText("."),
-                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                    ZF_IN_OPT const zfchar *headToken = zfnull,
                                    ZF_IN_OPT const zfchar *indentToken = zfText("  "));
 
@@ -30,7 +30,7 @@ extern ZF_ENV_EXPORT void fileList(ZF_IN_OPT const zfchar *path = zfText("."),
  * @brief list all resource files, usually for debug use
  */
 extern ZF_ENV_EXPORT void resFileList(ZF_IN_OPT const zfchar *path = zfText("."),
-                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault,
+                                      ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
                                       ZF_IN_OPT const zfchar *headToken = zfnull,
                                       ZF_IN_OPT const zfchar *indentToken = zfText("  "));
 

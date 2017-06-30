@@ -230,7 +230,7 @@ ZF_NAMESPACE_USE(_ZFP_ZFDebugDummyNamespace)
 /**
  * @brief see #zfDebugSessionStart
  */
-extern ZF_ENV_EXPORT zfbool zfDebugStart(ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault);
+extern ZF_ENV_EXPORT zfbool zfDebugStart(ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault());
 /**
  * @brief see #zfDebugStart
  */
@@ -274,7 +274,7 @@ extern ZF_ENV_EXPORT void zfDebug(ZF_IN const zfchar *format,
  * @param callback output callback
  */
 extern ZF_ENV_EXPORT zfbool zfDebugSessionStart(ZF_IN_OUT ZFDebugSession &session,
-                                                ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault);
+                                                ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault());
 /**
  * @brief get the internal output callback
  */

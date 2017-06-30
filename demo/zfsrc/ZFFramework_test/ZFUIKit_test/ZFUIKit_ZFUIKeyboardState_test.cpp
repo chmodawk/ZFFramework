@@ -13,11 +13,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_GLOBAL_INITIALIZER_INIT(ZFUIKeyboardState_test)
 {
     this->keyPressedOnChangeListener = ZFCallbackForRawFunction(zfself::keyPressedOnChange);
-    ZFObjectGlobalEventObserver.observerAdd(ZFUIKeyboardState::EventKeyPressedOnChange(), this->keyPressedOnChangeListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFUIKeyboardState::EventKeyPressedOnChange(), this->keyPressedOnChangeListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIKeyboardState_test)
 {
-    ZFObjectGlobalEventObserver.observerRemove(ZFUIKeyboardState::EventKeyPressedOnChange(), this->keyPressedOnChangeListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFUIKeyboardState::EventKeyPressedOnChange(), this->keyPressedOnChangeListener);
 }
 private:
     ZFListener keyPressedOnChangeListener;

@@ -7,9 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFFilterForZFClass.h"
-#include "ZFObjectCore.h"
-#include "ZFClass.h"
-#include "ZFPropertyType.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -34,10 +32,6 @@ ZFFilterForZFClass &ZFFilterForZFClass::operator = (ZF_IN const ZFFilterForZFCla
 zfbool ZFFilterForZFClass::operator == (ZF_IN const ZFFilterForZFClass &ref) const
 {
     return this->_ZFP_ZFFilterForZFClass_filters == ref._ZFP_ZFFilterForZFClass_filters;
-}
-zfbool ZFFilterForZFClass::operator != (ZF_IN const ZFFilterForZFClass &ref) const
-{
-    return this->_ZFP_ZFFilterForZFClass_filters != ref._ZFP_ZFFilterForZFClass_filters;
 }
 /** @endcond */
 ZFFilterForZFClass::~ZFFilterForZFClass(void)
@@ -76,12 +70,17 @@ ZFFilterForZFClass &ZFFilterForZFClass::filterRemoveAtIndex(ZF_IN zfindex index)
     this->_ZFP_ZFFilterForZFClass_filters.remove(index);
     return *this;
 }
+ZFFilterForZFClass &ZFFilterForZFClass::filterRemoveAll(void)
+{
+    this->_ZFP_ZFFilterForZFClass_filters.removeAll();
+    return *this;
+}
 
 zfindex ZFFilterForZFClass::filterCount(void) const
 {
     return this->_ZFP_ZFFilterForZFClass_filters.count();
 }
-const ZFClass *ZFFilterForZFClass::filterGetFilterClass(ZF_IN zfindex index) const
+const ZFClass *ZFFilterForZFClass::filterGet(ZF_IN zfindex index) const
 {
     return this->_ZFP_ZFFilterForZFClass_filters.get(index).filterClass;
 }
@@ -234,4 +233,21 @@ void ZFFilterForZFClass::objectInfoT(ZF_IN_OUT zfstring &ret) const
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFilterForZFClass, void, copyFrom, ZFMP_IN(ZFFilterForZFClass const &, ref))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFFilterForZFClass, void, filterAdd, ZFMP_IN(const ZFClass * const &, e), ZFMP_IN_OPT(ZFFilterForZFClassType, filterType, ZFFilterForZFClassTypeExclude))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFFilterForZFClass, void, filterRemove, ZFMP_IN(const ZFClass * const &, e), ZFMP_IN_OPT(ZFFilterForZFClassType, filterType, ZFFilterForZFClassTypeExclude))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFilterForZFClass, void, filterRemoveAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFilterForZFClass, void, filterRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFilterForZFClass, zfindex, filterCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFilterForZFClass, const ZFClass *, filterGet, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFilterForZFClass, ZFFilterForZFClassType, filterGetFilterType, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFilterForZFClass, zfbool, filterCheckActive, ZFMP_IN(const ZFClass * const &, e))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

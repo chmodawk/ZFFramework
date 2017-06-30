@@ -7,9 +7,8 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertySerializable.h"
+#include "ZFObjectImpl.h"
 #include "ZFSerializableUtil.h"
-#include "ZFPropertyType.h"
-#include "ZFCoreType_IODef.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 

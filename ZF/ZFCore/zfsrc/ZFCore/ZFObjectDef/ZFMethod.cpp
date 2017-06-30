@@ -7,7 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFMethod.h"
-#include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -336,4 +336,64 @@ zfbool _ZFP_ZFMethodInstanceCleanup(ZF_IN const ZFMethod *method)
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFEXPORT_ENUM_DEFINE(ZFMethodPrivilegeType, ZFMethodPrivilegeTypePublic, ZFMethodPrivilegeTypeProtected, ZFMethodPrivilegeTypePrivate)
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodInternalId)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfbool, methodIsUserRegister)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodName)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodReturnTypeId)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodReturnTypeName)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfindex, methodParamCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamTypeIdAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamTypeNameAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamDefaultNameAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, zfautoObject, methodParamDefaultValueAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfindex, methodParamDefaultBeginIndex)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFFuncAddrType, methodInvoker)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, void, methodInvokerSet, ZFMP_IN(ZFFuncAddrType, methodInvoker))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFFuncAddrType, methodInvokerOrg)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvoker)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFMethod, zfautoObject, methodGenericInvoke, ZFMP_IN_OPT(ZFObject *, ownerObjOrNull, zfnull)
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokeraultParam)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokeraultParam) */
+    /* ZFMETHOD_MAX_PARAM , ZFMP_OUT_OPT(zfstring *, errorHint, zfnull) */
+    )
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvokerOrg)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvokerChecker, methodGenericInvokerChecker)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFMethod, zfbool, methodGenericInvokerCheck
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokeraultParam)
+    , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokeraultParam)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_OUT_OPT(zfstring *, errorHint, zfnull) */
+    )
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvokerChecker, methodGenericInvokerCheckerOrg)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFMethod, void, methodGenericInvokerSet, ZFMP_IN(ZFMethodGenericInvoker, methodGenericInvoker), ZFMP_IN(ZFMethodGenericInvokerChecker, methodGenericInvokerChecker))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const ZFClass *, methodOwnerClass)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodPrivilegeType, methodPrivilegeType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfbool, methodIsStatic)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfbool, methodIsVirtual)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfbool, methodIsFunctionType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodNamespace)
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(void, ZFMethodGetAll, ZFMP_OUT(ZFCoreArray<const ZFMethod *> &, ret), ZFMP_IN_OPT(const ZFFilterForZFMethod *, methodFilter, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFCoreArrayPOD<const ZFMethod *>, ZFMethodGetAll, ZFMP_IN_OPT(const ZFFilterForZFMethod *, methodFilter, zfnull))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

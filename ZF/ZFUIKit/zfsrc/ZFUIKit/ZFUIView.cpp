@@ -240,7 +240,7 @@ public:
                   ZF_IN ZFUIViewLayoutParam *layoutParam,
                   ZF_IN zfindex atIndex)
     {
-        zfCoreAssertWithMessageTrim(!ZFBitTest(this->pimplOwner->objectInstanceState(), ZFObject::ObjectInstanceStateOnDealloc),
+        zfCoreAssertWithMessageTrim(!ZFBitTest(this->pimplOwner->objectInstanceState(), ZFObjectInstanceStateOnDealloc),
             zfTextA("[ZFUIView] add child during parent's dealloc is not allowed"));
         zfCoreAssertWithMessageTrim(view != zfnull, zfTextA("[ZFUIView] add null child"));
         zfCoreAssertWithMessageTrim(view->viewParent() == zfnull, zfTextA("[ZFUIView] add child which already has parent, you should remove it first"));

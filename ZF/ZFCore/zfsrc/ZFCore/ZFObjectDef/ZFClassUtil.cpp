@@ -7,11 +7,10 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFClassUtil.h"
-#include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
 #include "ZFFilterForZFClass.h"
 #include "ZFFilterForZFMethod.h"
 #include "ZFFilterForZFProperty.h"
-#include "ZFPropertyType.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_NAMESPACE_BEGIN(ZFClassUtil)

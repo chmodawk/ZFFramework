@@ -18,6 +18,10 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+/** @brief see #ZFMethodUserRegister_0 */
+extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
+
+// ============================================================
 #define _ZFP_ZFMethodUserRegister_methodExtSig zfText("ZFMethodUserRegister")
 
 #define _ZFP_ZFMethodUserRegister(...) \
@@ -242,6 +246,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     } \
     ZFUNUSED(resultMethod)
 
+// ============================================================
 #define _ZFP_ZFMETHOD_USER_REGISTER(...) \
     ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_USER_REGISTER_( \
@@ -289,6 +294,82 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         )
 
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(...) \
+    ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_(__VA_ARGS__))
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_( \
+    ownerClass, \
+    ReturnType, methodName, DECLARE_LINE \
+    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            return (ReturnType)invokerObject->to<ownerClass *>()->methodName( \
+                ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
+                ParamExpandOrEmpty1(ZFM_COMMA() param1) \
+                ParamExpandOrEmpty2(ZFM_COMMA() param2) \
+                ParamExpandOrEmpty3(ZFM_COMMA() param3) \
+                ParamExpandOrEmpty4(ZFM_COMMA() param4) \
+                ParamExpandOrEmpty5(ZFM_COMMA() param5) \
+                ParamExpandOrEmpty6(ZFM_COMMA() param6) \
+                ParamExpandOrEmpty7(ZFM_COMMA() param7) \
+                ); \
+        }, ownerClass, \
+        ZFMethodIsVirtual, \
+        ReturnType, methodName, DECLARE_LINE \
+        , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+        )
+
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(...) \
+    ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_(__VA_ARGS__))
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_( \
+    ownerClass, \
+    ReturnType, methodName, DECLARE_LINE \
+    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            return (ReturnType)ownerClass::methodName( \
+                ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
+                ParamExpandOrEmpty1(ZFM_COMMA() param1) \
+                ParamExpandOrEmpty2(ZFM_COMMA() param2) \
+                ParamExpandOrEmpty3(ZFM_COMMA() param3) \
+                ParamExpandOrEmpty4(ZFM_COMMA() param4) \
+                ParamExpandOrEmpty5(ZFM_COMMA() param5) \
+                ParamExpandOrEmpty6(ZFM_COMMA() param6) \
+                ParamExpandOrEmpty7(ZFM_COMMA() param7) \
+                ); \
+        }, ownerClass, \
+        ZFMethodIsStatic, \
+        ReturnType, methodName, DECLARE_LINE \
+        , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+        )
+
 template<typename T_Wrapper>
 inline T_Wrapper &_ZFP_ZFMethodUserRegister_zfv(T_Wrapper &zfv)
 {
@@ -309,9 +390,9 @@ inline T_Wrapper const &_ZFP_ZFMethodUserRegister_zfv(const T_Wrapper *zfv)
 {
     return *zfv;
 };
-#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(...) \
-    ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_(__VA_ARGS__))
-#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_(ownerClass, \
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(...) \
+    ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_(__VA_ARGS__))
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_(WrapperClass, \
     ReturnType, methodName \
     , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
     , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
@@ -323,7 +404,7 @@ inline T_Wrapper const &_ZFP_ZFMethodUserRegister_zfv(const T_Wrapper *zfv)
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
     _ZFP_ZFMETHOD_USER_REGISTER({ \
-            return (ReturnType)_ZFP_ZFMethodUserRegister_zfv(invokerObject->to<ownerClass *>()->zfv).methodName( \
+            return (ReturnType)_ZFP_ZFMethodUserRegister_zfv(invokerObject->to<WrapperClass *>()->zfv).methodName( \
                 ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
                 ParamExpandOrEmpty1(ZFM_COMMA() param1) \
                 ParamExpandOrEmpty2(ZFM_COMMA() param2) \
@@ -333,7 +414,42 @@ inline T_Wrapper const &_ZFP_ZFMethodUserRegister_zfv(const T_Wrapper *zfv)
                 ParamExpandOrEmpty6(ZFM_COMMA() param6) \
                 ParamExpandOrEmpty7(ZFM_COMMA() param7) \
                 ); \
-        }, ownerClass, ZFMethodIsVirtual, ReturnType, methodName, ZF_CALLER_LINE \
+        }, WrapperClass, ZFMethodIsVirtual, ReturnType, methodName, ZF_CALLER_LINE \
+        , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+        )
+
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(...) \
+    ZFM_EXPAND(_ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_(__VA_ARGS__))
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
+    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
+    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
+    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
+    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
+    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
+    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
+    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            return (ReturnType)OriginalClass::methodName( \
+                ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
+                ParamExpandOrEmpty1(ZFM_COMMA() param1) \
+                ParamExpandOrEmpty2(ZFM_COMMA() param2) \
+                ParamExpandOrEmpty3(ZFM_COMMA() param3) \
+                ParamExpandOrEmpty4(ZFM_COMMA() param4) \
+                ParamExpandOrEmpty5(ZFM_COMMA() param5) \
+                ParamExpandOrEmpty6(ZFM_COMMA() param6) \
+                ParamExpandOrEmpty7(ZFM_COMMA() param7) \
+                ); \
+        }, WrapperClass, ZFMethodIsStatic, ReturnType, methodName, ZF_CALLER_LINE \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
         , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
         , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
@@ -384,7 +500,74 @@ inline T_Wrapper const &_ZFP_ZFMethodUserRegister_zfv(const T_Wrapper *zfv)
 
 // ============================================================
 /** @brief see #ZFMethodUserRegister_0 */
-extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_READONLY(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_GETTER(ownerClass, VarType, VarName)
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_GETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_SETTER(ownerClass, VarType, VarName)
+
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_GETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            return (VarType)(invokerObject->to<ownerClass *>()->VarName); \
+        }, ownerClass, ZFMethodIsVirtual, VarType, VarName, ZF_CALLER_LINE \
+        , ZFM_EMPTY, ParamType0, param0, DefaultValueFix0 \
+        , ZFM_EMPTY, ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY, ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY, ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY, ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY, ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY, ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY, ParamType7, param7, DefaultValueFix7 \
+        )
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_SETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            invokerObject->to<ownerClass *>()->VarName = param0; \
+        }, ownerClass, ZFMethodIsVirtual, void, VarName##Set, ZF_CALLER_LINE \
+        , ZFM_EXPAND, VarType, param0, ZFM_EMPTY \
+        , ZFM_EMPTY, ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY, ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY, ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY, ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY, ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY, ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY, ParamType7, param7, DefaultValueFix7 \
+        )
+
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_READONLY(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_GETTER(ownerClass, VarType, VarName)
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_GETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_SETTER(ownerClass, VarType, VarName)
+
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_GETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            return (VarType)(_ZFP_ZFMethodUserRegister_zfv(invokerObject->to<ownerClass *>()->zfv).VarName); \
+        }, ownerClass, ZFMethodIsVirtual, VarType, VarName, ZF_CALLER_LINE \
+        , ZFM_EMPTY, ParamType0, param0, DefaultValueFix0 \
+        , ZFM_EMPTY, ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY, ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY, ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY, ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY, ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY, ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY, ParamType7, param7, DefaultValueFix7 \
+        )
+#define _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR_SETTER(ownerClass, VarType, VarName) \
+    _ZFP_ZFMETHOD_USER_REGISTER({ \
+            _ZFP_ZFMethodUserRegister_zfv(invokerObject->to<ownerClass *>()->zfv).VarName = param0; \
+        }, ownerClass, ZFMethodIsVirtual, void, VarName##Set, ZF_CALLER_LINE \
+        , ZFM_EXPAND, VarType, param0, ZFM_EMPTY \
+        , ZFM_EMPTY, ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY, ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY, ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY, ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY, ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY, ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY, ParamType7, param7, DefaultValueFix7 \
+        )
 
 // ============================================================
 // 0 param
@@ -518,10 +701,55 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_0(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ownerClass, \
     ReturnType, methodName \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(ownerClass, \
+    ReturnType, methodName \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(WrapperClass, \
+    ReturnType, methodName \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_0(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -639,11 +867,59 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_1(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -767,12 +1043,63 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_2(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_2(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_2(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -902,13 +1229,67 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_3(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
     , ZFMP_2 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_3(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_3(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1044,14 +1425,71 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_4(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_4(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
     , ZFMP_2 \
     , ZFMP_3 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_4(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_4(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_4(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1193,7 +1631,7 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_5(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_5(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
@@ -1201,7 +1639,67 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
     , ZFMP_3 \
     , ZFMP_4 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_5(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_5(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1349,7 +1847,7 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_6(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_6(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
@@ -1358,7 +1856,70 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
     , ZFMP_4 \
     , ZFMP_5 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_6(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_6(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_6(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1512,7 +2073,7 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_7(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_7(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
@@ -1522,7 +2083,73 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
     , ZFMP_5 \
     , ZFMP_6 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_7(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_7(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_7(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1682,7 +2309,7 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
         )
 /** @brief see #ZFMethodUserRegister_0 */
-#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_8(ownerClass, \
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_8(ownerClass, \
     ReturnType, methodName \
     , ZFMP_0 \
     , ZFMP_1 \
@@ -1693,7 +2320,76 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
     , ZFMP_6 \
     , ZFMP_7 \
     ) \
-    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER(ownerClass, \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_8(ownerClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    , ZFMP_7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC(ownerClass, \
+        ReturnType, methodName, ZF_CALLER_LINE \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    , ZFMP_7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC(WrapperClass, \
+        ReturnType, methodName \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
+        )
+/** @brief see #ZFMethodUserRegister_0 */
+#define ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_8(OriginalClass, WrapperClass, \
+    ReturnType, methodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    , ZFMP_7 \
+    ) \
+    _ZFP_ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC(OriginalClass, WrapperClass, \
         ReturnType, methodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \

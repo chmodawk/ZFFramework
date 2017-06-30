@@ -1,6 +1,10 @@
 @echo off
 setlocal
 
+rem to make doc, copy these files from doxygen binary to:
+rem   master\ZF_docs\Doxygen\doxygen.exe
+rem   master\ZF_docs\Doxygen\libclang.dll
+
 set WORK_DIR=%~dp0
 
 set OUTPUT_PATH=%WORK_DIR%\..\..\_tmp\DoxygenDoc

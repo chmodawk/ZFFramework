@@ -521,10 +521,7 @@ public:
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerCheckEqual( \
-                this->zfv, \
-                zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv \
-            ) == ZFCompareTheSame); \
+        return (ZFComparerCheckEqual(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
@@ -748,10 +745,7 @@ public:
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerCheckEqual( \
-                this->zfv, \
-                zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv \
-            ) == ZFCompareTheSame); \
+        return (ZFComparerCheckEqual(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \

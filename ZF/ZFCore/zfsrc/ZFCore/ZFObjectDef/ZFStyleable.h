@@ -312,7 +312,7 @@ private:
  *   @endcode
  *   serializing this code would result to create an instance of YourObject,
  *   then copy style from YourStyle::DefaultStyleReflect by #ZFStyleable::styleableCopyFrom\n
- *   see #ZFObjectCreatorType_method for more info
+ *   see #ZFObjectCreatorTypeId_method for more info
  * @note for performance, the default style won't be copied to its instance by default,
  *   you may use #ZFClass::instanceObserverAdd to observe styleable object's
  *   instance alloc event, and apply your default styles\n

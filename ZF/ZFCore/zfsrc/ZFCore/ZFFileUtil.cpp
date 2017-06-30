@@ -51,7 +51,7 @@ static void _ZFP_fileList(ZF_IN zfbool resFile,
 }
 
 void fileList(ZF_IN_OPT const zfchar *path /* = zfText(".") */,
-              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
               ZF_IN_OPT const zfchar *headToken /* = zfnull */,
               ZF_IN_OPT const zfchar *indentToken /* = zfText("  ") */)
 {
@@ -59,7 +59,7 @@ void fileList(ZF_IN_OPT const zfchar *path /* = zfText(".") */,
 }
 
 void resFileList(ZF_IN_OPT const zfchar *path /* = zfText(".") */,
-                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                  ZF_IN_OPT const zfchar *headToken /* = zfnull */,
                  ZF_IN_OPT const zfchar *indentToken /* = zfText("  ") */)
 {

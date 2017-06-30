@@ -406,7 +406,7 @@ static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallbac
     } while(zffalse);
     if(success)
     {
-        ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomTypeName_ZFOutputCallbackForFile);
+        ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomType_ZFOutputCallbackForFile);
         ret.callbackSerializeCustomDataSet(customData);
     }
 }
@@ -537,7 +537,7 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
         } while(zffalse);
         if(success)
         {
-            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomTypeName_ZFInputCallbackForFile);
+            ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomType_ZFInputCallbackForFile);
             ret.callbackSerializeCustomDataSet(customData);
         }
     }
@@ -634,7 +634,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const ZFCallerInfo &callerIn
     _ZFP_ZFOutputCallbackForFile_storeImplData(ret, ZFSerializableKeyword_ZFFileCallback_filePath, filePath, flags, autoFlushSize);
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFOutputCallbackForFile)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
@@ -681,7 +681,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo
         autoSkipBOMTable, autoSkipBOMTableCount);
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFInputCallbackForFile)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
@@ -728,7 +728,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const ZFCallerInfo &callerI
         autoSkipBOMTable, autoSkipBOMTableCount);
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFInputCallbackForResFile)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForResFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
@@ -823,7 +823,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &cal
     _ZFP_ZFOutputCallbackForFile_storeImplData(ret, ZFSerializableKeyword_ZFFileCallback_localPath, localPath, flags, autoFlushSize);
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
@@ -887,7 +887,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &calle
         autoSkipBOMTable, autoSkipBOMTableCount);
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;

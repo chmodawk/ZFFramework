@@ -7,7 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFMethodFuncDeclare.h"
-#include "ZFClass.h"
+#include "ZFObjectImpl.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_vector.h"
@@ -208,4 +208,27 @@ void ZFMethodFuncGetAllT(ZF_IN_OUT ZFCoreArray<const ZFMethod *> &ret,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFMethod *, ZFMethodFuncGet, ZFMP_IN(const zfchar *, methodNamespace), ZFMP_IN(const zfchar *, methodName))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(const ZFMethod *, ZFMethodFuncGet, ZFMP_IN(const zfchar *, methodNamespace), ZFMP_IN(const zfchar *, methodName)
+    , ZFMP_IN(const zfchar *, param0)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
+    )
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(void, ZFMethodFuncGetAllT, ZFMP_IN_OUT(ZFCoreArray<const ZFMethod *> &, ret), ZFMP_IN_OPT(const ZFFilterForZFMethod *, filter, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFCoreArrayPOD<const ZFMethod *>, ZFMethodFuncGetAll, ZFMP_IN_OPT(const ZFFilterForZFMethod *, filter, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, ZFMethodFuncGetAllT, ZFMP_IN_OUT(ZFCoreArray<const ZFMethod *> &, ret), ZFMP_IN(const zfchar *, methodNamespace), ZFMP_IN(const zfchar *, methodName), ZFMP_IN_OPT(const ZFFilterForZFMethod *, filter, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(ZFCoreArrayPOD<const ZFMethod *>, ZFMethodFuncGetAll, ZFMP_IN(const zfchar *, methodNamespace), ZFMP_IN(const zfchar *, methodName), ZFMP_IN_OPT(const ZFFilterForZFMethod *, filter, zfnull))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

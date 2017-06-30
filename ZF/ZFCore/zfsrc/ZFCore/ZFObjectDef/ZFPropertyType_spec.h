@@ -571,7 +571,15 @@ public:
     }
     static zfbool PropertyConvertToZFObject(ZF_OUT zfautoObject &obj, ZF_IN T_Type v)
     {
-        return ZFPropertyTypeIdData<T_Type_>::PropertyConvertToZFObject(obj, v ? *v : zftValue<T_Type_>().zfv);
+        if(v == zfnull)
+        {
+            obj = zfautoObjectNull;
+            return zftrue;
+        }
+        else
+        {
+            return ZFPropertyTypeIdData<T_Type_>::PropertyConvertToZFObject(obj, *v);
+        }
     }
     template<typename T_Access = T_Type
         , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer

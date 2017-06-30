@@ -7,8 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertyTypeFwd.h"
-#include "ZFPropertyType.h"
-#include "zfautoObject.h"
+#include "ZFObjectImpl.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"

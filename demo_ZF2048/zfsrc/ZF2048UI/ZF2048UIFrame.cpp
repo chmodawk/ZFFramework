@@ -112,7 +112,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
     zfindex blockCount = 0;
     while(d->blocks->count() < bgCount)
     {
-        d->blocks->add(zfnullObject);
+        d->blocks->add(zfnullObject());
     }
     while(bgCount < d->blocks->count())
     {
@@ -122,7 +122,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
     {
         if(data[i] == 0)
         {
-            d->blocks->set(i, zfnullObject);
+            d->blocks->set(i, zfnullObject());
         }
         else
         {

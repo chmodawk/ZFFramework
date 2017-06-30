@@ -5,17 +5,17 @@ setlocal enabledelayedexpansion
 set WORK_DIR=%~dp0
 set PROJ_GIT=%~1%
 set DST_PATH=%~2%
-set CLONE_FULL=%~3%
+for /f "tokens=2,* delims= " %%a in ("%*") do set CLONE_OPTION=%%b
 
 if not defined PROJ_GIT goto :usage
 if not defined DST_PATH goto :usage
 goto :run
 :usage
 echo usage:
-echo   git_check.bat PROJ_GIT DST_PATH [full]
+echo   git_check.bat PROJ_GIT DST_PATH [options]
 exit /b 1
 :run
-if not defined CLONE_FULL set CLONE_FULL=0
+if not defined CLONE_OPTION set CLONE_OPTION=--depth=1
 
 set _OLD_DIR=%cd%
 set _TIMEOUT=86400
@@ -58,11 +58,7 @@ if "%_GIT_VALID%" == "1" (
 ) else (
     rmdir /s/q "%DST_PATH%" >nul 2>&1
     mkdir "%DST_PATH%" >nul 2>&1
-    if "%CLONE_FULL%" == "full" (
-        git clone "%PROJ_GIT%" "%DST_PATH%"
-    ) else (
-        git clone --depth=1 "%PROJ_GIT%" "%DST_PATH%"
-    )
+    git clone %CLONE_OPTION% "%PROJ_GIT%" "%DST_PATH%"
 
     if "!errorlevel!" == "0" (
         call "%WORK_DIR%\timestamp_save.bat" "%DST_PATH%\.git" %_TIMEOUT%

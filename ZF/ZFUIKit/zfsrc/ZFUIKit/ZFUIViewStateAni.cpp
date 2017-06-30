@@ -96,14 +96,14 @@ public:
             return ;
         }
         this->taskStarted = zftrue;
-        ZFObjectGlobalEventObserver.observerAdd(ZFUIView::EventViewOnRemoveFromParent(), this->viewOnDetachListener);
-        ZFObjectGlobalEventObserver.observerAdd(ZFUIView::EventViewLayoutOnLayoutFinish(), this->viewTaskOnStartListener);
+        ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewOnRemoveFromParent(), this->viewOnDetachListener);
+        ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewLayoutOnLayoutFinish(), this->viewTaskOnStartListener);
         ZFGlobalEventCenter::instance()->observerNotify(ZFUIViewStateAniImpl::EventStateAniOnInit());
     }
     void taskStop(void)
     {
-        ZFObjectGlobalEventObserver.observerRemove(ZFUIView::EventViewOnRemoveFromParent(), this->viewOnDetachListener);
-        ZFObjectGlobalEventObserver.observerRemove(ZFUIView::EventViewLayoutOnLayoutFinish(), this->viewTaskOnStartListener);
+        ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewOnRemoveFromParent(), this->viewOnDetachListener);
+        ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewLayoutOnLayoutFinish(), this->viewTaskOnStartListener);
         this->taskStarted = zffalse;
         ZFGlobalEventCenter::instance()->observerNotify(ZFUIViewStateAniImpl::EventStateAniOnDealloc());
     }

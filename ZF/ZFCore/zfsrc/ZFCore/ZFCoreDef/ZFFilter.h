@@ -35,10 +35,6 @@ typedef enum {
 /** @brief string tokens */
 #define ZFTOKEN_ZFFilterTypeExclude zfText("Exclude")
 
-ZFCOMPARER_DEFAULT_DECLARE(ZFFilterType, ZFFilterType, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
-
 /**
  * @brief filter result for custom filter callback
  */
@@ -53,10 +49,6 @@ typedef enum {
 #define ZFTOKEN_ZFFilterCallbackResultActive zfText("Active")
 /** @brief string tokens */
 #define ZFTOKEN_ZFFilterCallbackResultNotActive zfText("NotActive")
-
-ZFCOMPARER_DEFAULT_DECLARE(ZFFilterCallbackResult, ZFFilterCallbackResult, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief declare a filter class
@@ -152,10 +144,7 @@ public:
     {
         return this->_ZFP_ZFFilterBase_filters == ref._ZFP_ZFFilterBase_filters;
     }
-    zfbool operator != (ZF_IN const ZFFilterBase<T_Public, T_Internal> &ref) const
-    {
-        return this->_ZFP_ZFFilterBase_filters != ref._ZFP_ZFFilterBase_filters;
-    }
+    inline zfbool operator != (ZF_IN const ZFFilterBase<T_Public, T_Internal> &ref) const {return !this->operator == (ref);}
     /** @endcond */
     virtual ~ZFFilterBase(void)
     {

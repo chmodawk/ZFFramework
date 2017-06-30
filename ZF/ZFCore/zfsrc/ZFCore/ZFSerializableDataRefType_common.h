@@ -39,12 +39,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @code
  *   <Node refType="value" refData="[method|MyStyle::DefaultStyleReflect]::myProperty"
  * @endcode
- * this would access MyStyle's default style (by #ZFObjectCreatorType_method),
+ * this would access MyStyle's default style (by #ZFObjectCreatorTypeId_method),
  * then copy the "myProperty" value to the result node
  */
-#define ZFSerializableDataRefType_value value
-/** @brief see #ZFSerializableDataRefType_value */
-#define ZFSerializableDataRefTypeName_value ZFM_TOSTRING(ZFSerializableDataRefType_value)
+#define ZFSerializableDataRefTypeId_value value
+/** @brief see #ZFSerializableDataRefTypeId_value */
+#define ZFSerializableDataRefType_value ZFM_TOSTRING(ZFSerializableDataRefTypeId_value)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSerializableDataRefType_common_h_

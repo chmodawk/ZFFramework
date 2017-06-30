@@ -178,10 +178,15 @@ public:
         }
         return *this;
     }
+    zfbool operator == (ZF_IN const zfiterator &ref) const
+    {
+        return (d.data == ref.d.data
+            && d.deleteCallback == ref.d.deleteCallback
+            && d.copyCallback == ref.d.copyCallback
+            );
+    }
+    inline zfbool operator != (ZF_IN const zfiterator &ref) const {return !this->operator == (ref);}
     /** @endcond */
-private:
-    zfbool operator == (ZF_IN const zfiterator &ref);
-    zfbool operator != (ZF_IN const zfiterator &ref);
 private:
     zfclassPOD _Data
     {

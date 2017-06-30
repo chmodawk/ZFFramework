@@ -7,6 +7,8 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
+
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_vector.h"
 
@@ -88,10 +90,14 @@ typedef zfstlmap<zfidentity, _ZFP_ZFObserverListType> _ZFP_ZFObserverMapType;
 zfclassNotPOD _ZFP_ZFObserverHolderPrivate
 {
 public:
+    zfindex refCount;
+    ZFObject *observerOwner;
     _ZFP_ZFObserverMapType observerMap;
 public:
     _ZFP_ZFObserverHolderPrivate(void)
-    : observerMap()
+    : refCount(1)
+    , observerOwner(zfnull)
+    , observerMap()
     {
     }
 
@@ -140,15 +146,40 @@ public:
 // ZFObserverHolder
 /** @cond ZFPrivateDoc */
 ZFObserverHolder::ZFObserverHolder(void)
-: d(zfpoolNew(_ZFP_ZFObserverHolderPrivate))
-, _observerOwner(zfnull)
 {
+    zfCoreMutexLocker();
+    d = zfpoolNew(_ZFP_ZFObserverHolderPrivate);
+}
+ZFObserverHolder::ZFObserverHolder(ZF_IN ZFObserverHolder const &ref)
+{
+    zfCoreMutexLocker();
+    d = ref.d;
+    ++(d->refCount);
 }
 ZFObserverHolder::~ZFObserverHolder(void)
 {
+    zfCoreMutexLocker();
     zfpoolDelete(d);
 }
+ZFObserverHolder &ZFObserverHolder::operator = (ZF_IN ZFObserverHolder const &ref)
+{
+    zfCoreMutexLocker();
+    ++(ref.d->refCount);
+    --(d->refCount);
+    if(d->refCount == 0)
+    {
+        zfpoolDelete(d);
+    }
+    d = ref.d;
+    return *this;
+}
+zfbool ZFObserverHolder::operator == (ZF_IN ZFObserverHolder const &ref) const
+{
+    zfCoreMutexLocker();
+    return (d == ref.d);
+}
 /** @endcond */
+
 void ZFObserverHolder::observerAdd(ZF_IN const zfidentity &eventId,
                                    ZF_IN const ZFListener &observer,
                                    ZF_IN_OPT ZFObject *userData /* = zfnull */,
@@ -385,7 +416,7 @@ void ZFObserverHolder::observerNotifyWithCustomSender(ZF_IN ZFObject *customSend
     {
         this->observerOwner()->_ZFP_ZFObject_observerNotifyBegin();
         this->observerOwner()->observerOnEvent(eventId, param0, param1);
-        ZFObjectGlobalEventObserver.d->observerNotifyPrepare(toNotify, toRelease, eventId, this->observerOwner());
+        ZFObjectGlobalEventObserver().d->observerNotifyPrepare(toNotify, toRelease, eventId, this->observerOwner());
     }
     zfCoreMutexUnlock();
 
@@ -442,6 +473,10 @@ void ZFObserverHolder::objectInfoT(ZF_OUT zfstring &ret) const
     ret += zfText("\n  >");
 }
 
+ZFObject *ZFObserverHolder::observerOwner(void) const
+{
+    return d->observerOwner;
+}
 void ZFObserverHolder::_ZFP_ZFObserverHolder_observerOwnerSet(ZF_IN ZFObject *obj)
 {
     /*
@@ -450,7 +485,7 @@ void ZFObserverHolder::_ZFP_ZFObserverHolder_observerOwnerSet(ZF_IN ZFObject *ob
      * * also send all events to ZFObjectGlobalEventObserver
      * * notify events to owner ZFObject, such as observerOnAdd
      */
-    this->_observerOwner = obj;
+    d->observerOwner = obj;
 }
 
 // ============================================================
@@ -461,4 +496,49 @@ ZFObserverHolder &_ZFP_ZFObjectGlobalEventObserverRef(void)
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFListenerData, zfidentity, eventId)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFListenerData, ZFObject *, sender)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFListenerData, ZFObject *, param0)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFListenerData, ZFObject *, param1)
+
+ZFMETHOD_USER_REGISTER_2({return ZFListener(invokerObject->to<v_ZFCallback *>()->zfv).execute(listenerData, userData);}, v_ZFCallback, void, execute, ZFMP_IN(const ZFListenerData &, listenerData), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, zfidentity, eventId)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, eventIdSet, ZFMP_IN(zfidentity const &, v))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, ZFListener, observer)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, observerSet, ZFMP_IN(ZFListener const &, v))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, ZFObject *, userData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, userDataSet, ZFMP_IN(ZFObject * const &, v))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, ZFObject *, owner)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, ownerSet, ZFMP_IN(ZFObject * const &, v))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, zfbool, autoRemoveAfterActivate)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, autoRemoveAfterActivateSet, ZFMP_IN(zfbool const &, v))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverAddParam, ZFLevel, observerLevel)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverAddParam, void, observerLevelSet, ZFMP_IN(ZFLevel const &, v))
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_6(v_ZFObserverHolder, void, observerAdd, ZFMP_IN(const zfidentity &, eventId), ZFMP_IN(const ZFListener &, observer), ZFMP_IN_OPT(ZFObject *, userData, zfnull), ZFMP_IN_OPT(ZFObject *, owner, zfnull), ZFMP_IN_OPT(zfbool, autoRemoveAfterActivate, zffalse), ZFMP_IN_OPT(ZFLevel, observerLevel, ZFLevelAppNormal))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverHolder, void, observerAdd, ZFMP_IN(const ZFObserverAddParam &, param))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFObserverHolder, void, observerRemove, ZFMP_IN(const zfidentity &, eventId), ZFMP_IN(const ZFListener &, callback), ZFMP_IN_OPT(ZFObject *, userData, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverHolder, void, observerRemoveByOwner, ZFMP_IN(ZFObject *, owner))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverHolder, void, observerRemoveAll, ZFMP_IN(const zfidentity &, eventId))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverHolder, void, observerRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverHolder, zfbool, observerHasAdd)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFObserverHolder, zfbool, observerHasAdd, ZFMP_IN(const zfidentity &, eventId))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFObserverHolder, void, observerNotify, ZFMP_IN(const zfidentity &, eventId), ZFMP_IN_OPT(ZFObject *, param0, zfnull), ZFMP_IN_OPT(ZFObject *, param1, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_4(v_ZFObserverHolder, void, observerNotifyWithCustomSender, ZFMP_IN(ZFObject *, customSender), ZFMP_IN(const zfidentity &, eventId), ZFMP_IN_OPT(ZFObject *, param0, zfnull), ZFMP_IN_OPT(ZFObject *, param1, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFObserverHolder, ZFObject *, observerOwner)
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(ZFObserverHolder &, ZFObjectGlobalEventObserver)
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(const zfchar *, ZFObserverEventGetName, ZFMP_IN(const zfidentity &, eventId))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfidentity, ZFObserverEventGetId, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(void, ZFObserverEventGetId, ZFMP_OUT(ZFCoreArrayPOD<zfidentity> &, idValues), ZFMP_OUT(ZFCoreArrayPOD<const zfchar *> &, idNames))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

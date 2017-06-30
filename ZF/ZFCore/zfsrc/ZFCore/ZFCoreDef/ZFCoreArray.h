@@ -97,14 +97,10 @@ public:
      * @brief retain the array, if you want to copy, use #copyFrom instead
      */
     ZFCoreArray<T_Element> &operator =(ZF_IN const ZFCoreArray<T_Element> &ref);
-    /**
-     * @brief compare by pointer
-     */
-    zfbool operator ==(ZF_IN const ZFCoreArray<T_Element> &ref) const;
-    /**
-     * @brief compare by pointer
-     */
-    zfbool operator !=(ZF_IN const ZFCoreArray<T_Element> &ref) const;
+    /** @cond ZFPrivateDoc */
+    zfbool operator ==(ZF_IN const ZFCoreArray<T_Element> &ref) const {return (d == ref.d);}
+    inline zfbool operator !=(ZF_IN const ZFCoreArray<T_Element> &ref) const {return !this->operator == (ref);}
+    /** @endcond */
     /**
      * @brief copy all settings and contents from another array
      */

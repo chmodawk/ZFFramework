@@ -81,7 +81,7 @@ public:
     virtual void undo(void);
 
 public:
-    virtual void debugStatus(ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault);
+    virtual void debugStatus(ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault());
 
 protected:
     virtual void gameDataOnChange(void);

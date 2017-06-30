@@ -67,7 +67,7 @@ public:
     /**
      * @brief true if not same ref
      */
-    zffinal zfbool operator !=(ZF_IN const ZFCoreMap &ref) const;
+    zffinal zfbool operator !=(ZF_IN const ZFCoreMap &ref) const {return !this->operator == (ref);}
     ~ZFCoreMap(void);
 
 public:

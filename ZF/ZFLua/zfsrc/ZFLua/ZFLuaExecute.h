@@ -52,7 +52,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     while other types must exactly match the original types\n
  *     these namespace are considered as the same:
  *     -  #ZFMethodFuncNamespaceGlobal
- *     -  #ZFLuaGlobalFuncNamespace
+ *     -  #ZFLuaFuncNamespaceGlobal
  *     -  empty string
  * -  value holder
  *   -  `value = v_YourTypeName("yourTypeData")`

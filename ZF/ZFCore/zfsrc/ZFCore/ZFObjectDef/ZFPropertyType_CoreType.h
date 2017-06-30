@@ -451,6 +451,17 @@ ZFOUTPUT_TYPE(ZFMethodPrivilegeType, {output.execute(ZFMethodPrivilegeTypeToStri
  *
  * serializable data:
  * @code
+ *   <ZFObjectInstanceState value="value" />
+ * @endcode
+ */
+ZFPROPERTY_TYPE_DECLARE(ZFObjectInstanceState, ZFObjectInstanceState)
+ZFOUTPUT_TYPE(ZFObjectInstanceState, {output.execute(ZFObjectInstanceStateToString(v));})
+
+/**
+ * @brief see #ZFPROPERTY_TYPE_DECLARE
+ *
+ * serializable data:
+ * @code
  *   <ZFCallbackType value="value" />
  * @endcode
  */
@@ -490,10 +501,14 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForIdentity, ZFFilterForIdentity)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForString, ZFFilterForString)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFIdentityGenerator, ZFIdentityGenerator)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFListenerData, ZFListenerData)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFObserverAddParam, ZFObserverAddParam)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFObserverHolder, ZFObserverHolder)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFClass, ZFFilterForZFClass)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFMethod, ZFFilterForZFMethod)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFProperty, ZFFilterForZFProperty)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFObject, ZFFilterForZFObject)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFMethodGenericInvokerChecker, ZFMethodGenericInvokerChecker)
 
 // ============================================================
 // void *

@@ -230,7 +230,7 @@ static ZFCompareResult _ZFP_ZFProtocolImplInfoDataPrint_sortComparer(ZF_IN const
     }
 }
 void ZFProtocolImplInfoDataPrint(ZF_IN const ZFProtocolImplInfoData &data,
-                                 ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault */)
+                                 ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault() */)
 {
     callback.execute(data.protocolName.cString());
     if(data.protocolOptional)
@@ -251,7 +251,7 @@ void ZFProtocolImplInfoDataPrint(ZF_IN const ZFProtocolImplInfoData &data,
         }
     }
 }
-void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault */)
+void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault() */)
 {
     if(!callback.callbackIsValid())
     {

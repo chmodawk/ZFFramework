@@ -42,11 +42,11 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(zfSkinApplyDataHolder, ZFLevelZFFrameworkN
     this->objOnDeallocListener = ZFCallbackForRawFunction(zfself::objOnDealloc);
     this->skinOnChangeListener = ZFCallbackForRawFunction(zfself::skinOnChange);
 
-    ZFObjectGlobalEventObserver.observerAdd(ZFGlobalEvent::EventSkinOnChange(), this->skinOnChangeListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFGlobalEvent::EventSkinOnChange(), this->skinOnChangeListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(zfSkinApplyDataHolder)
 {
-    ZFObjectGlobalEventObserver.observerRemove(ZFGlobalEvent::EventSkinOnChange(), this->skinOnChangeListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFGlobalEvent::EventSkinOnChange(), this->skinOnChangeListener);
 
     if(!this->dataMap.empty())
     {

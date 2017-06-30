@@ -432,7 +432,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     ReturnType, methodName \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -480,7 +480,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     ReturnType, methodName \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -513,7 +513,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     ReturnType, methodName \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -565,7 +565,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_0 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -616,7 +616,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_0 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -651,7 +651,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_0 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
@@ -706,7 +706,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_1 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -760,7 +760,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_1 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -797,7 +797,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_1 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -855,7 +855,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_2 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -912,7 +912,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_2 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -951,7 +951,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_2 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1012,7 +1012,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_3 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1072,7 +1072,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_3 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1113,7 +1113,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_3 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1177,7 +1177,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_4 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1240,7 +1240,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_4 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1283,7 +1283,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_4 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1350,7 +1350,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_5 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1416,7 +1416,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_5 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1461,7 +1461,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_5 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1531,7 +1531,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_6 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1600,7 +1600,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_6 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1647,7 +1647,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_6 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1720,7 +1720,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_7 \
     ) \
     _ZFP_ZFMethodFuncUserRegister(resultMethod, methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1792,7 +1792,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_7 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER(methodInvokerAction, \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
@@ -1841,7 +1841,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
     , ZFMP_7 \
     ) \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC( \
-        ZFMethodFuncNamespaceIdGlobal, \
+        ZFMethodFuncNamespaceGlobalId, \
         ReturnType, methodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \

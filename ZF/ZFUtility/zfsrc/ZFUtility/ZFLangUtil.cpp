@@ -42,11 +42,11 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(zfLangApplyDataHolder, ZFLevelZFFrameworkN
     this->objOnDeallocListener = ZFCallbackForRawFunction(zfself::objOnDealloc);
     this->langOnChangeListener = ZFCallbackForRawFunction(zfself::langOnChange);
 
-    ZFObjectGlobalEventObserver.observerAdd(ZFGlobalEvent::EventLangOnChange(), this->langOnChangeListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFGlobalEvent::EventLangOnChange(), this->langOnChangeListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(zfLangApplyDataHolder)
 {
-    ZFObjectGlobalEventObserver.observerRemove(ZFGlobalEvent::EventLangOnChange(), this->langOnChangeListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFGlobalEvent::EventLangOnChange(), this->langOnChangeListener);
 
     if(!this->dataMap.empty())
     {

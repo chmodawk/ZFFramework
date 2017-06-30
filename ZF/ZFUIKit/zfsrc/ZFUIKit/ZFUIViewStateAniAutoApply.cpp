@@ -69,8 +69,8 @@ void ZFUIViewStateAniAutoApplyStart(void)
 
     _ZFP_ZFUIViewStateAniAutoApply_started = zftrue;
 
-    ZFObjectGlobalEventObserver.observerAdd(ZFUIView::EventViewLayoutOnLayoutRequest(), d->taskStartListener);
-    ZFObjectGlobalEventObserver.observerAdd(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewLayoutOnLayoutRequest(), d->taskStartListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyStart());
 }
 void ZFUIViewStateAniAutoApplyStop(void)
@@ -83,8 +83,8 @@ void ZFUIViewStateAniAutoApplyStop(void)
     _ZFP_ZFUIViewStateAniAutoApply_started = zffalse;
 
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewStateAniAutoApplyDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniAutoApplyDataHolder);
-    ZFObjectGlobalEventObserver.observerRemove(ZFUIView::EventViewLayoutOnLayoutRequest(), d->taskStartListener);
-    ZFObjectGlobalEventObserver.observerRemove(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewLayoutOnLayoutRequest(), d->taskStartListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyStop());
 }
 zfbool ZFUIViewStateAniAutoApplyStarted(void)

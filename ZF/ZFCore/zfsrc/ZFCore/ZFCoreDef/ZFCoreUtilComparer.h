@@ -17,6 +17,7 @@
 #include "ZFCoreTypeDef.h"
 #include "ZFCoreUtilTemplate.h"
 #include "ZFCoreUtilMacro.h"
+#include "ZFCoreUtilMath.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -43,14 +44,6 @@ public:
         {
             return ZFCompareTheSame;
         }
-        else if(v0 < v1)
-        {
-            return ZFCompareSmaller;
-        }
-        else if(v0 > v1)
-        {
-            return ZFCompareGreater;
-        }
         else
         {
             return ZFCompareUncomparable;
@@ -65,7 +58,7 @@ inline ZFCompareResult _ZFP_ZFComparerDefault(ZF_IN T_Comparable0 const &v0, ZF_
 /**
  * @brief default comparer for common types, see #ZFComparer
  *
- * by default, compare by operator ==, < and >,
+ * by default, compare by operator ==,
  * you may use #ZFCOMPARER_DEFAULT_DECLARE to supply your own type's compare method
  */
 #define ZFComparerDefault _ZFP_ZFComparerDefault
@@ -97,6 +90,18 @@ inline ZFCompareResult _ZFP_ZFComparerDefault(ZF_IN T_Comparable0 const &v0, ZF_
         } \
     }; \
     /** @endcond */
+
+/**
+ * @brief util macro to alias compare action see #ZFCOMPARER_DEFAULT_DECLARE
+ *
+ * usage:
+ * @code
+ *   ZFCOMPARER_DEFAULT_DECLARE_ALIAS(T_Comparable0, T_Comparable1, ZFComparerCheckEqual)
+ *   ZFCOMPARER_DEFAULT_DECLARE_ALIAS(T_Comparable2, T_Comparable3, ZFComparerNumeric)
+ * @endcode
+ */
+#define ZFCOMPARER_DEFAULT_DECLARE_ALIAS(T_Comparable0, T_Comparable1, compareAction) \
+    ZFCOMPARER_DEFAULT_DECLARE(T_Comparable0, T_Comparable1, {return compareAction(v0, v1);})
 
 /**
  * @brief see #ZFCOMPARER_DEFAULT_DECLARE
@@ -174,9 +179,6 @@ inline ZFCompareResult _ZFP_ZFComparerDummy(ZF_IN T_Comparable const &v0, ZF_IN 
 #define ZFComparerDummy _ZFP_ZFComparerDummy
 
 // ============================================================
-ZFCOMPARER_DEFAULT_DECLARE(zfbool, zfbool, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 ZFCOMPARER_DEFAULT_DECLARE(const zfchar *, const zfchar *, {
         const zfchar *v0Tmp = ((v0 == zfnull) ? zfText("") : v0);
         const zfchar *v1Tmp = ((v1 == zfnull) ? zfText("") : v1);
@@ -209,16 +211,27 @@ ZFCOMPARER_DEFAULT_DECLARE(zfstring, zfstring, {
             return ZFCompareTheSame;
         }
     })
-
-ZFCOMPARER_DEFAULT_DECLARE(ZFCompareResult, ZFCompareResult, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zfindex, zfindex, ZFComparerNumeric)
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zfint, zfint, ZFComparerNumeric)
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zfuint, zfuint, ZFComparerNumeric)
+ZFCOMPARER_DEFAULT_DECLARE(zffloat, zffloat, {
+        if(zffloatIsSmaller(v0, v1)) {return ZFCompareSmaller;}
+        else if(zffloatIsGreater(v0, v1)) {return ZFCompareGreater;}
+        else {return ZFCompareTheSame;}
     })
-ZFCOMPARER_DEFAULT_DECLARE(ZFSeekPos, ZFSeekPos, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
+ZFCOMPARER_DEFAULT_DECLARE(zfdouble, zfdouble, {
+        if(zffloatIsSmaller(v0, v1)) {return ZFCompareSmaller;}
+        else if(zffloatIsGreater(v0, v1)) {return ZFCompareGreater;}
+        else {return ZFCompareTheSame;}
     })
-ZFCOMPARER_DEFAULT_DECLARE(zfindexRange, zfindexRange, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
+ZFCOMPARER_DEFAULT_DECLARE(zflongdouble, zflongdouble, {
+        if(zffloatIsSmaller(v0, v1)) {return ZFCompareSmaller;}
+        else if(zffloatIsGreater(v0, v1)) {return ZFCompareGreater;}
+        else {return ZFCompareTheSame;}
     })
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zftimet, zftimet, ZFComparerNumeric)
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zfflags, zfflags, ZFComparerNumeric)
+ZFCOMPARER_DEFAULT_DECLARE_ALIAS(zfidentity, zfidentity, ZFComparerNumeric)
 
 // ============================================================
 /**

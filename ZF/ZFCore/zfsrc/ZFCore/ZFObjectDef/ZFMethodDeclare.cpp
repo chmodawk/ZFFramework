@@ -7,7 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFMethodDeclare.h"
-#include "ZFClass.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -89,4 +89,34 @@ const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFMethod *, ZFMethodGet, ZFMP_IN(const zfchar *, className), ZFMP_IN(const zfchar *, methodName))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(const ZFMethod *, ZFMethodGet, ZFMP_IN(const zfchar *, className), ZFMP_IN(const zfchar *, methodName)
+    , ZFMP_IN(const zfchar *, param0)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
+    )
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFMethod *, ZFMethodGet, ZFMP_IN(const ZFClass *, cls), ZFMP_IN(const zfchar *, methodName))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(const ZFMethod *, ZFMethodGet, ZFMP_IN(const ZFClass *, cls), ZFMP_IN(const zfchar *, methodName)
+    , ZFMP_IN(const zfchar *, param0)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
+    )
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

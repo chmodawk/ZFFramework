@@ -22,19 +22,19 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief debug use only, to output human readable view tree info
  */
 extern ZF_ENV_EXPORT void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
-                                            ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault);
+                                            ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault());
 
 /**
  * @brief delay to #ZFUIViewTreePrint using #ZFThreadTaskRequest
  */
 extern ZF_ENV_EXPORT void ZFUIViewTreePrintDelayed(ZF_IN ZFUIView *view,
-                                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault);
+                                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault());
 /**
  * @brief delay to #ZFUIViewTreePrint using #ZFThreadExecuteInMainThreadAfterDelay
  */
 extern ZF_ENV_EXPORT void ZFUIViewTreePrintDelayed(ZF_IN zftimet delay,
                                                    ZF_IN ZFUIView *view,
-                                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault);
+                                                   ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault());
 
 /**
  * @brief info getter for #ZFUIViewTreePrint, see #ZFUIViewTreePrintInfoGetterSet

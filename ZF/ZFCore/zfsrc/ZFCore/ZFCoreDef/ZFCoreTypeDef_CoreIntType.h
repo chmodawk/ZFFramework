@@ -104,23 +104,23 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 #define ZFT_INT_STRONG(T, D) \
     ZFT_INT_STRONG_DETAIL(T, D, \
-        ZFT_INT_STRONG_BIT_NOT_SUPPORT, \
-        ZFT_INT_STRONG_MATH_SUPPORT)
+        ZFT_INT_STRONG_SETTING_BIT_NOT_SUPPORT, \
+        ZFT_INT_STRONG_SETTING_MATH_SUPPORT)
 /** @brief see #ZFT_INT_STRONG */
 #define ZFT_INT_STRONG_WITH_BIT(T, D) \
     ZFT_INT_STRONG_DETAIL(T, D, \
-        ZFT_INT_STRONG_BIT_SUPPORT, \
-        ZFT_INT_STRONG_MATH_SUPPORT)
+        ZFT_INT_STRONG_SETTING_BIT_SUPPORT, \
+        ZFT_INT_STRONG_SETTING_MATH_SUPPORT)
 /** @brief see #ZFT_INT_STRONG */
 #define ZFT_INT_STRONG_DETAIL(T, D, \
-        ZFT_INT_STRONG_BIT_SUPPORT_OR_NOT, \
-        ZFT_INT_STRONG_MATH_SUPPORT_OR_NOT) \
+        ZFT_INT_STRONG_SETTING_BIT_SUPPORT_OR_NOT, \
+        ZFT_INT_STRONG_SETTING_MATH_SUPPORT_OR_NOT) \
     _ZFP_ZFT_INT_STRONG_DETAIL(T, D, \
-        ZFT_INT_STRONG_BIT_SUPPORT_OR_NOT, \
-        ZFT_INT_STRONG_MATH_SUPPORT_OR_NOT)
+        ZFT_INT_STRONG_SETTING_BIT_SUPPORT_OR_NOT, \
+        ZFT_INT_STRONG_SETTING_MATH_SUPPORT_OR_NOT)
 #define _ZFP_ZFT_INT_STRONG_DETAIL(T, D, \
-        ZFT_INT_STRONG_BIT_SUPPORT_OR_NOT, \
-        ZFT_INT_STRONG_MATH_SUPPORT_OR_NOT) \
+        ZFT_INT_STRONG_SETTING_BIT_SUPPORT_OR_NOT, \
+        ZFT_INT_STRONG_SETTING_MATH_SUPPORT_OR_NOT) \
     /** @cond ZFPrivateDoc */ \
     class _zft_##D \
     { \
@@ -131,12 +131,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         _zft_##D(void) : t() {} \
         _zft_##D(const D &t_) : t(t_.t) {} \
         explicit _zft_##D(const T t_) : t(t_) {} \
-        D &operator = (const D &t_) {t = t_.t; return *this;} \
-        template<typename T2> D &operator = (const T2 &t_) {t = t_; return *this;} \
-        operator const T &(void) const {return t;} \
-        operator T &(void) {return t;} \
-        _ZFP_ZFT_INT_STRONG_BIT_MEMBER(ZFT_INT_STRONG_BIT_SUPPORT_OR_NOT, T, D) \
-        _ZFP_ZFT_INT_STRONG_MATH_MEMBER(ZFT_INT_STRONG_MATH_SUPPORT_OR_NOT, T, D) \
+        inline D &operator = (const D &t_) {t = t_.t; return *this;} \
+        template<typename T2> inline D &operator = (const T2 &t_) {t = t_; return *this;} \
+        inline operator const T &(void) const {return t;} \
+        inline operator T &(void) {return t;} \
+        _ZFP_ZFT_INT_STRONG_SETTING_BIT_MEMBER(ZFT_INT_STRONG_SETTING_BIT_SUPPORT_OR_NOT, T, D) \
+        _ZFP_ZFT_INT_STRONG_SETTING_MATH_MEMBER(ZFT_INT_STRONG_SETTING_MATH_SUPPORT_OR_NOT, T, D) \
     }; \
     /** @endcond */ \
     typedef _zft_##D D; \
@@ -149,102 +149,102 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     inline bool operator <= (const D &v, const D &t_) {return (v.t <= t_.t);} \
     inline bool operator >  (const D &v, const D &t_) {return (v.t >  t_.t);} \
     inline bool operator >= (const D &v, const D &t_) {return (v.t >= t_.t);} \
-    template<typename T2> bool operator == (const D &v, const T2 &t_) {return (v.t == t_);} \
-    template<typename T2> bool operator != (const D &v, const T2 &t_) {return (v.t != t_);} \
-    template<typename T2> bool operator <  (const D &v, const T2 &t_) {return (v.t <  t_);} \
-    template<typename T2> bool operator <= (const D &v, const T2 &t_) {return (v.t <= t_);} \
-    template<typename T2> bool operator >  (const D &v, const T2 &t_) {return (v.t >  t_);} \
-    template<typename T2> bool operator >= (const D &v, const T2 &t_) {return (v.t >= t_);} \
-    template<typename T2> bool operator == (const T2 &t_, const D &v) {return (t_ == v.t);} \
-    template<typename T2> bool operator != (const T2 &t_, const D &v) {return (t_ != v.t);} \
-    template<typename T2> bool operator <  (const T2 &t_, const D &v) {return (t_ <  v.t);} \
-    template<typename T2> bool operator <= (const T2 &t_, const D &v) {return (t_ <= v.t);} \
-    template<typename T2> bool operator >  (const T2 &t_, const D &v) {return (t_ >  v.t);} \
-    template<typename T2> bool operator >= (const T2 &t_, const D &v) {return (t_ >= v.t);} \
+    template<typename T2> inline bool operator == (const D &v, const T2 &t_) {return (v.t == t_);} \
+    template<typename T2> inline bool operator != (const D &v, const T2 &t_) {return (v.t != t_);} \
+    template<typename T2> inline bool operator <  (const D &v, const T2 &t_) {return (v.t <  t_);} \
+    template<typename T2> inline bool operator <= (const D &v, const T2 &t_) {return (v.t <= t_);} \
+    template<typename T2> inline bool operator >  (const D &v, const T2 &t_) {return (v.t >  t_);} \
+    template<typename T2> inline bool operator >= (const D &v, const T2 &t_) {return (v.t >= t_);} \
+    template<typename T2> inline bool operator == (const T2 &t_, const D &v) {return (t_ == v.t);} \
+    template<typename T2> inline bool operator != (const T2 &t_, const D &v) {return (t_ != v.t);} \
+    template<typename T2> inline bool operator <  (const T2 &t_, const D &v) {return (t_ <  v.t);} \
+    template<typename T2> inline bool operator <= (const T2 &t_, const D &v) {return (t_ <= v.t);} \
+    template<typename T2> inline bool operator >  (const T2 &t_, const D &v) {return (t_ >  v.t);} \
+    template<typename T2> inline bool operator >= (const T2 &t_, const D &v) {return (t_ >= v.t);} \
     /** @endcond */ \
-    _ZFP_ZFT_INT_STRONG_BIT(ZFT_INT_STRONG_BIT_SUPPORT_OR_NOT, T, D) \
-    _ZFP_ZFT_INT_STRONG_MATH(ZFT_INT_STRONG_MATH_SUPPORT_OR_NOT, T, D)
+    _ZFP_ZFT_INT_STRONG_SETTING_BIT(ZFT_INT_STRONG_SETTING_BIT_SUPPORT_OR_NOT, T, D) \
+    _ZFP_ZFT_INT_STRONG_SETTING_MATH(ZFT_INT_STRONG_SETTING_MATH_SUPPORT_OR_NOT, T, D)
 
 /** @brief see #ZFT_INT_STRONG_DETAIL */
-#define ZFT_INT_STRONG_BIT_NOT_SUPPORT bit_not_support
+#define ZFT_INT_STRONG_SETTING_BIT_NOT_SUPPORT bit_not_support
 /** @brief see #ZFT_INT_STRONG_DETAIL */
-#define ZFT_INT_STRONG_BIT_SUPPORT bit_support
+#define ZFT_INT_STRONG_SETTING_BIT_SUPPORT bit_support
 
 /** @brief see #ZFT_INT_STRONG_DETAIL */
-#define ZFT_INT_STRONG_MATH_NOT_SUPPORT math_not_support
+#define ZFT_INT_STRONG_SETTING_MATH_NOT_SUPPORT math_not_support
 /** @brief see #ZFT_INT_STRONG_DETAIL */
-#define ZFT_INT_STRONG_MATH_SUPPORT math_support
+#define ZFT_INT_STRONG_SETTING_MATH_SUPPORT math_support
 
 // ============================================================
-#define _ZFP_ZFT_INT_STRONG_BIT_MEMBER(bit_support_or_not, T, D) \
-    _ZFP_ZFT_INT_STRONG_BIT_MEMBER_##bit_support_or_not(T, D)
-#define _ZFP_ZFT_INT_STRONG_BIT_MEMBER_bit_not_support(T, D)
-#define _ZFP_ZFT_INT_STRONG_BIT_MEMBER_bit_support(T, D) \
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT_MEMBER(bit_support_or_not, T, D) \
+    _ZFP_ZFT_INT_STRONG_SETTING_BIT_MEMBER_##bit_support_or_not(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT_MEMBER_bit_not_support(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT_MEMBER_bit_support(T, D) \
     /** @cond ZFPrivateDoc */ \
-    D operator ~ (void) const {return (D)(~t);} \
-    D &operator <<= (int n) {t <<= n; return *this;} \
-    D &operator >>= (int n) {t >>= n; return *this;} \
-    D &operator |= (const D &t_) {t |= t_.t; return *this;} \
-    D &operator &= (const D &t_) {t &= t_.t; return *this;} \
-    D &operator ^= (const D &t_) {t ^= t_.t; return *this;} \
-    template<typename T2> D &operator |= (const T2 &t_) {t |= t_; return *this;} \
-    template<typename T2> D &operator &= (const T2 &t_) {t &= t_; return *this;} \
-    template<typename T2> D &operator ^= (const T2 &t_) {t ^= t_; return *this;} \
+    inline D operator ~ (void) const {return (D)(~t);} \
+    inline D &operator <<= (int n) {t <<= n; return *this;} \
+    inline D &operator >>= (int n) {t >>= n; return *this;} \
+    inline D &operator |= (const D &t_) {t |= t_.t; return *this;} \
+    inline D &operator &= (const D &t_) {t &= t_.t; return *this;} \
+    inline D &operator ^= (const D &t_) {t ^= t_.t; return *this;} \
+    template<typename T2> inline D &operator |= (const T2 &t_) {t |= t_; return *this;} \
+    template<typename T2> inline D &operator &= (const T2 &t_) {t &= t_; return *this;} \
+    template<typename T2> inline D &operator ^= (const T2 &t_) {t ^= t_; return *this;} \
     /** @endcond */
-#define _ZFP_ZFT_INT_STRONG_BIT(bit_support_or_not, T, D) \
-    _ZFP_ZFT_INT_STRONG_BIT_##bit_support_or_not(T, D)
-#define _ZFP_ZFT_INT_STRONG_BIT_bit_not_support(T, D)
-#define _ZFP_ZFT_INT_STRONG_BIT_bit_support(T, D) \
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT(bit_support_or_not, T, D) \
+    _ZFP_ZFT_INT_STRONG_SETTING_BIT_##bit_support_or_not(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT_bit_not_support(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_BIT_bit_support(T, D) \
     /** @cond ZFPrivateDoc */ \
     inline D operator << (const D &v, int n) {return (D)(v.t << n);} \
     inline D operator >> (const D &v, int n) {return (D)(v.t >> n);} \
     inline D operator | (const D &v, const D &t_) {return (D)(v.t | t_.t);} \
     inline D operator & (const D &v, const D &t_) {return (D)(v.t & t_.t);} \
     inline D operator ^ (const D &v, const D &t_) {return (D)(v.t ^ t_.t);} \
-    template<typename T2> D operator | (const D &v, const T2 &t_) {return (D)(v.t | t_);} \
-    template<typename T2> D operator & (const D &v, const T2 &t_) {return (D)(v.t & t_);} \
-    template<typename T2> D operator ^ (const D &v, const T2 &t_) {return (D)(v.t ^ t_);} \
-    template<typename T2> D operator | (const T2 &t_, const D &v) {return (D)(t_ | v.t);} \
-    template<typename T2> D operator & (const T2 &t_, const D &v) {return (D)(t_ & v.t);} \
-    template<typename T2> D operator ^ (const T2 &t_, const D &v) {return (D)(t_ ^ v.t);} \
+    template<typename T2> inline D operator | (const D &v, const T2 &t_) {return (D)(v.t | t_);} \
+    template<typename T2> inline D operator & (const D &v, const T2 &t_) {return (D)(v.t & t_);} \
+    template<typename T2> inline D operator ^ (const D &v, const T2 &t_) {return (D)(v.t ^ t_);} \
+    template<typename T2> inline D operator | (const T2 &t_, const D &v) {return (D)(t_ | v.t);} \
+    template<typename T2> inline D operator & (const T2 &t_, const D &v) {return (D)(t_ & v.t);} \
+    template<typename T2> inline D operator ^ (const T2 &t_, const D &v) {return (D)(t_ ^ v.t);} \
     /** @endcond */
 
 // ============================================================
-#define _ZFP_ZFT_INT_STRONG_MATH_MEMBER(math_support_or_not, T, D) \
-    _ZFP_ZFT_INT_STRONG_MATH_MEMBER_##math_support_or_not(T, D)
-#define _ZFP_ZFT_INT_STRONG_MATH_MEMBER_math_not_support(T, D)
-#define _ZFP_ZFT_INT_STRONG_MATH_MEMBER_math_support(T, D) \
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH_MEMBER(math_support_or_not, T, D) \
+    _ZFP_ZFT_INT_STRONG_SETTING_MATH_MEMBER_##math_support_or_not(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH_MEMBER_math_not_support(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH_MEMBER_math_support(T, D) \
     /** @cond ZFPrivateDoc */ \
-    bool operator ! (void) const {return (t != 0);} \
-    D &operator ++ (void) {++t; return *this;} \
-    D &operator -- (void) {--t; return *this;} \
-    D operator ++ (int) {return (D)(t++);} \
-    D operator -- (int) {return (D)(t--);} \
-    D &operator += (const D &t_) {t += t_.t; return *this;} \
-    D &operator -= (const D &t_) {t -= t_.t; return *this;} \
-    D &operator *= (const D &t_) {t *= t_.t; return *this;} \
-    D &operator /= (const D &t_) {t /= t_.t; return *this;} \
-    template<typename T2> D &operator %= (const T2 &t_) {t %= t_; return *this;} \
-    template<typename T2> D &operator += (const T2 &t_) {t += t_; return *this;} \
-    template<typename T2> D &operator -= (const T2 &t_) {t -= t_; return *this;} \
-    template<typename T2> D &operator *= (const T2 &t_) {t *= t_; return *this;} \
-    template<typename T2> D &operator /= (const T2 &t_) {t /= t_; return *this;} \
+    inline bool operator ! (void) const {return (t != 0);} \
+    inline D &operator ++ (void) {++t; return *this;} \
+    inline D &operator -- (void) {--t; return *this;} \
+    inline D operator ++ (int) {return (D)(t++);} \
+    inline D operator -- (int) {return (D)(t--);} \
+    inline D &operator += (const D &t_) {t += t_.t; return *this;} \
+    inline D &operator -= (const D &t_) {t -= t_.t; return *this;} \
+    inline D &operator *= (const D &t_) {t *= t_.t; return *this;} \
+    inline D &operator /= (const D &t_) {t /= t_.t; return *this;} \
+    template<typename T2> inline D &operator %= (const T2 &t_) {t %= t_; return *this;} \
+    template<typename T2> inline D &operator += (const T2 &t_) {t += t_; return *this;} \
+    template<typename T2> inline D &operator -= (const T2 &t_) {t -= t_; return *this;} \
+    template<typename T2> inline D &operator *= (const T2 &t_) {t *= t_; return *this;} \
+    template<typename T2> inline D &operator /= (const T2 &t_) {t /= t_; return *this;} \
     /** @endcond */
-#define _ZFP_ZFT_INT_STRONG_MATH(math_support_or_not, T, D) \
-    _ZFP_ZFT_INT_STRONG_MATH_##math_support_or_not(T, D)
-#define _ZFP_ZFT_INT_STRONG_MATH_math_not_support(T, D)
-#define _ZFP_ZFT_INT_STRONG_MATH_math_support(T, D) \
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH(math_support_or_not, T, D) \
+    _ZFP_ZFT_INT_STRONG_SETTING_MATH_##math_support_or_not(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH_math_not_support(T, D)
+#define _ZFP_ZFT_INT_STRONG_SETTING_MATH_math_support(T, D) \
     /** @cond ZFPrivateDoc */ \
     inline bool operator || (const D &v, const D &t_) {return ((v.t != 0) || (t_.t != 0));} \
     inline bool operator && (const D &v, const D &t_) {return ((v.t != 0) && (t_.t != 0));} \
     inline D operator + (const D &v, const D &t_) {return (D)(v.t + t_.t);} \
     inline D operator - (const D &v, const D &t_) {return (D)(v.t - t_.t);} \
     inline D operator / (const D &v, const D &t_) {return (D)(v.t / t_.t);} \
-    template<typename T2> bool operator || (const D &v, const T2 &t_) {return ((v.t != 0) || t_);} \
-    template<typename T2> bool operator && (const D &v, const T2 &t_) {return ((v.t != 0) && t_);} \
-    template<typename T2> T2 operator % (const D &v, const T2 &t_) {return (T2)(v.t % t_);} \
-    template<typename T2> bool operator || (const T2 &t_, const D &v) {return (t_ || (v.t != 0));} \
-    template<typename T2> bool operator && (const T2 &t_, const D &v) {return (t_ && (v.t != 0));} \
+    template<typename T2> inline bool operator || (const D &v, const T2 &t_) {return ((v.t != 0) || t_);} \
+    template<typename T2> inline bool operator && (const D &v, const T2 &t_) {return ((v.t != 0) && t_);} \
+    template<typename T2> inline T2 operator % (const D &v, const T2 &t_) {return (T2)(v.t % t_);} \
+    template<typename T2> inline bool operator || (const T2 &t_, const D &v) {return (t_ || (v.t != 0));} \
+    template<typename T2> inline bool operator && (const T2 &t_, const D &v) {return (t_ && (v.t != 0));} \
     /** @endcond */
 
 ZF_NAMESPACE_GLOBAL_END

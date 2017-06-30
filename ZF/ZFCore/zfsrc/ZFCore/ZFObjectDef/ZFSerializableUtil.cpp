@@ -7,8 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFSerializableUtil.h"
-#include "ZFCoreType_IODef.h"
-#include "ZFPropertyType.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -293,7 +292,7 @@ static zfbool _ZFP_ZFSerializableUtilPrintResolveStatus(ZF_IN const ZFSerializab
     return zffalse;
 }
 zfbool printResolveStatus(ZF_IN const ZFSerializableData &serializableData,
-                          ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */)
+                          ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
 {
     zfstring tmp = zfText("not all resolved:\n");
     zfbool ret = _ZFP_ZFSerializableUtilPrintResolveStatus(serializableData, ZFOutputCallbackForString(tmp), 1);

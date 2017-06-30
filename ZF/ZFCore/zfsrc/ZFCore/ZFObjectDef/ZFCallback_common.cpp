@@ -7,11 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFCallback_common.h"
-#include "ZFSerializableData.h"
-#include "ZFCallbackSerializable.h"
-#include "ZFObjectCore.h"
-#include "ZFObjectUtil.h"
-#include "ZFObjectSmartPointer.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -745,7 +741,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
 
             if(success)
             {
-                ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomTypeName_ZFInputCallbackForInputInRange);
+                ret.callbackSerializeCustomTypeSet(ZFCallbackSerializeCustomType_ZFInputCallbackForInputInRange);
                 ret.callbackSerializeCustomDataSet(customData);
             }
         }
@@ -753,7 +749,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
 
     return ret;
 }
-ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomType_ZFInputCallbackForInputInRange)
+ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForInputInRange)
 {
     const ZFSerializableData *inputData = ZFSerializableUtil::requireElementByCategory(
         serializableData, ZFSerializableKeyword_ZFInputCallbackForInputInRange_input, outErrorHint, outErrorPos);

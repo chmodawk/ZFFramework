@@ -186,6 +186,22 @@ public:
         d.length = 1;
         return *this;
     }
+    zfbool operator == (ZF_IN const ZFCoreString_impl &ref) const
+    {
+        return (this->compare(ref) == 0);
+    }
+    zfbool operator != (ZF_IN const ZFCoreString_impl &ref) const
+    {
+        return (this->compare(ref) != 0);
+    }
+    zfbool operator == (ZF_IN const T_Char *ref) const
+    {
+        return (this->compare(ref) == 0);
+    }
+    zfbool operator != (ZF_IN const T_Char *ref) const
+    {
+        return (this->compare(ref) != 0);
+    }
     /** @endcond */
 
 public:

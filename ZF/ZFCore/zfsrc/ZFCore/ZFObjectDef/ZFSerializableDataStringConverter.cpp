@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFSerializableDataStringConverter.h"
+#include "ZFObjectImpl.h"
 #include "ZFSerializableUtil.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
@@ -453,4 +454,19 @@ zfbool ZFSerializableDataToOutput(ZF_IN_OUT const ZFOutputCallback &output,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFSerializableDataFromString, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_IN(const zfchar *, encodedData), ZFMP_IN(zfindex, encodedDataLen), ZFMP_OUT(zfstring *, outErrorHint))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(ZFSerializableData, ZFSerializableDataFromString, ZFMP_IN(const zfchar *, encodedData), ZFMP_IN(zfindex, encodedDataLen), ZFMP_OUT(zfstring *, outErrorHint))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFSerializableDataFromInput, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFSerializableData, ZFSerializableDataFromInput, ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFSerializableDataToString, ZFMP_OUT(zfstring &, result), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT(zfstring *, outErrorHint))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfstring, ZFSerializableDataToString, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT(zfstring *, outErrorHint))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFSerializableDataToOutput, ZFMP_IN_OUT(const ZFOutputCallback &, output), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

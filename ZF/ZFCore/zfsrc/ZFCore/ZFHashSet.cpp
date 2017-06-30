@@ -51,7 +51,7 @@ void ZFHashSet::add(ZF_IN ZFObject *obj)
     zfCoreAssertWithMessage(obj != zfnull, zfTextA("insert null object"));
     if(!d->isContain(obj))
     {
-        d->set(obj, zfnullObject);
+        d->set(obj, zfnullObject());
         this->contentOnAdd(obj);
         this->contentOnChange();
     }
@@ -68,7 +68,7 @@ void ZFHashSet::addFrom(ZF_IN ZFContainer *another)
         ZFObject *obj = another->iteratorNext(it);
         if(!d->isContain(obj))
         {
-            d->set(obj, zfnullObject);
+            d->set(obj, zfnullObject());
             this->contentOnAdd(obj);
         }
     }

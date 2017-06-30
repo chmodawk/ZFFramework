@@ -7,12 +7,8 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFSerializable.h"
-#include "ZFStyleable.h"
+#include "ZFObjectImpl.h"
 #include "ZFObjectCreator.h"
-#include "ZFObjectSmartPointer.h"
-#include "ZFPropertyType.h"
-#include "ZFListenerDeclare.h"
-#include "ZFGlobalEventCenter.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_map.h"
@@ -25,18 +21,18 @@ zfclassNotPOD _ZFP_ZFSerializable_PropertyTypeData
 {
 public:
     const ZFProperty *property;
-    ZFSerializable::PropertyType propertyType;
+    ZFSerializablePropertyType propertyType;
 };
-zfclass _ZFP_I_ZFSerializable_PropertyTypeHolder : zfextends ZFObject
+zfclass _ZFP_I_ZFSerializablePropertyTypeHolder : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE(_ZFP_I_ZFSerializable_PropertyTypeHolder, ZFObject)
+    ZFOBJECT_DECLARE(_ZFP_I_ZFSerializablePropertyTypeHolder, ZFObject)
 public:
     ZFCoreArrayPOD<_ZFP_ZFSerializable_PropertyTypeData *> serializableProperty;
     ZFCoreMap serializablePropertyMap; // _ZFP_ZFSerializable_PropertyTypeData *
 
 public:
     void addData(ZF_IN const ZFProperty *property,
-                 ZF_IN ZFSerializable::PropertyType propertyType)
+                 ZF_IN ZFSerializablePropertyType propertyType)
     {
         _ZFP_ZFSerializable_PropertyTypeData *typeData = zfnew(_ZFP_ZFSerializable_PropertyTypeData);
         typeData->property = property;
@@ -218,7 +214,7 @@ zfbool ZFSerializable::serializeFromData(ZF_IN const ZFSerializableData &seriali
             // serialize the property
             switch(data->propertyType)
             {
-                case ZFSerializable::PropertyTypeSerializableProperty:
+                case ZFSerializablePropertyTypeSerializableProperty:
                     if(!this->serializableOnSerializePropertyFromData(
                         element,
                         data->property,
@@ -228,7 +224,7 @@ zfbool ZFSerializable::serializeFromData(ZF_IN const ZFSerializableData &seriali
                         return zffalse;
                     }
                     break;
-                case ZFSerializable::PropertyTypeEmbededProperty:
+                case ZFSerializablePropertyTypeEmbededProperty:
                     if(!this->serializableOnSerializeEmbededPropertyFromData(
                         element,
                         data->property,
@@ -238,7 +234,7 @@ zfbool ZFSerializable::serializeFromData(ZF_IN const ZFSerializableData &seriali
                         return zffalse;
                     }
                     break;
-                case ZFSerializable::PropertyTypeNotSerializable:
+                case ZFSerializablePropertyTypeNotSerializable:
                 default:
                     zfCoreCriticalShouldNotGoHere();
                     return zffalse;
@@ -337,7 +333,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
 
             switch(data->propertyType)
             {
-                case ZFSerializable::PropertyTypeSerializableProperty:
+                case ZFSerializablePropertyTypeSerializableProperty:
                     if(!this->serializableOnSerializePropertyToData(propertyData,
                                                                     data->property,
                                                                     referencedOwnerOrNull,
@@ -346,7 +342,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
                         return zffalse;
                     }
                     break;
-                case ZFSerializable::PropertyTypeEmbededProperty:
+                case ZFSerializablePropertyTypeEmbededProperty:
                     if(!this->serializableOnSerializeEmbededPropertyToData(propertyData,
                                                                            data->property,
                                                                            referencedOwnerOrNull,
@@ -355,7 +351,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
                         return zffalse;
                     }
                     break;
-                case ZFSerializable::PropertyTypeNotSerializable:
+                case ZFSerializablePropertyTypeNotSerializable:
                 default:
                     zfCoreCriticalShouldNotGoHere();
                     return zffalse;
@@ -395,13 +391,13 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
     return zftrue;
 }
 
-_ZFP_I_ZFSerializable_PropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_getPropertyTypeHolder(void)
+_ZFP_I_ZFSerializablePropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_getPropertyTypeHolder(void)
 {
     zfCoreMutexLocker();
-    _ZFP_I_ZFSerializable_PropertyTypeHolder *holder = this->classData()->classTagGet<_ZFP_I_ZFSerializable_PropertyTypeHolder *>(_ZFP_I_ZFSerializable_PropertyTypeHolder::ClassData()->className());
+    _ZFP_I_ZFSerializablePropertyTypeHolder *holder = this->classData()->classTagGet<_ZFP_I_ZFSerializablePropertyTypeHolder *>(_ZFP_I_ZFSerializablePropertyTypeHolder::ClassData()->className());
     if(holder == zfnull)
     {
-        zflockfree_zfblockedAllocWithoutLeakTest(_ZFP_I_ZFSerializable_PropertyTypeHolder, holderTmp);
+        zflockfree_zfblockedAllocWithoutLeakTest(_ZFP_I_ZFSerializablePropertyTypeHolder, holderTmp);
         ZFCoreArrayPOD<const ZFProperty *> allProperty;
         {
             // the order affects the serialization step's order,
@@ -436,13 +432,13 @@ _ZFP_I_ZFSerializable_PropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_ge
             const ZFProperty *property = allProperty[i];
             switch(this->serializableOnCheckPropertyType(property))
             {
-                case ZFSerializable::PropertyTypeNotSerializable:
+                case ZFSerializablePropertyTypeNotSerializable:
                     break;
-                case ZFSerializable::PropertyTypeSerializableProperty:
-                    holderTmp->addData(property, ZFSerializable::PropertyTypeSerializableProperty);
+                case ZFSerializablePropertyTypeSerializableProperty:
+                    holderTmp->addData(property, ZFSerializablePropertyTypeSerializableProperty);
                     break;
-                case ZFSerializable::PropertyTypeEmbededProperty:
-                    holderTmp->addData(property, ZFSerializable::PropertyTypeEmbededProperty);
+                case ZFSerializablePropertyTypeEmbededProperty:
+                    holderTmp->addData(property, ZFSerializablePropertyTypeEmbededProperty);
                     break;
                 default:
                     zfCoreCriticalShouldNotGoHere();
@@ -452,9 +448,9 @@ _ZFP_I_ZFSerializable_PropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_ge
 
         holder = holderTmp;
         this->classData()->classTagSet(
-            _ZFP_I_ZFSerializable_PropertyTypeHolder::ClassData()->className(),
+            _ZFP_I_ZFSerializablePropertyTypeHolder::ClassData()->className(),
             holderTmp);
-        this->classData()->classDataChangeAutoRemoveTagAdd(_ZFP_I_ZFSerializable_PropertyTypeHolder::ClassData()->className());
+        this->classData()->classDataChangeAutoRemoveTagAdd(_ZFP_I_ZFSerializablePropertyTypeHolder::ClassData()->className());
     }
     return holder;
 }
@@ -463,7 +459,7 @@ void ZFSerializable::serializableGetAllSerializablePropertyT(ZF_OUT ZFCoreArray<
     const ZFCoreArrayPOD<_ZFP_ZFSerializable_PropertyTypeData *> &tmp = this->_ZFP_ZFSerializable_getPropertyTypeHolder()->serializableProperty;
     for(zfindex i = 0; i < tmp.count(); ++i)
     {
-        if(tmp[i]->propertyType == ZFSerializable::PropertyTypeSerializableProperty)
+        if(tmp[i]->propertyType == ZFSerializablePropertyTypeSerializableProperty)
         {
             ret.add(tmp[i]->property);
         }
@@ -474,18 +470,18 @@ void ZFSerializable::serializableGetAllSerializableEmbededPropertyT(ZF_OUT ZFCor
     const ZFCoreArrayPOD<_ZFP_ZFSerializable_PropertyTypeData *> &tmp = this->_ZFP_ZFSerializable_getPropertyTypeHolder()->serializableProperty;
     for(zfindex i = 0; i < tmp.count(); ++i)
     {
-        if(tmp[i]->propertyType == ZFSerializable::PropertyTypeEmbededProperty)
+        if(tmp[i]->propertyType == ZFSerializablePropertyTypeEmbededProperty)
         {
             ret.add(tmp[i]->property);
         }
     }
 }
 
-ZFSerializable::PropertyType ZFSerializable::serializableOnCheckPropertyType(ZF_IN const ZFProperty *property)
+ZFSerializablePropertyType ZFSerializable::serializableOnCheckPropertyType(ZF_IN const ZFProperty *property)
 {
     if(!property->propertyIsSerializable())
     {
-        return ZFSerializable::PropertyTypeNotSerializable;
+        return ZFSerializablePropertyTypeNotSerializable;
     }
 
     if(property->propertyIsRetainProperty())
@@ -495,22 +491,22 @@ ZFSerializable::PropertyType ZFSerializable::serializableOnCheckPropertyType(ZF_
             if(property->getterMethod()->methodPrivilegeType() == ZFMethodPrivilegeTypePrivate
                 || !property->propertyClassOfRetainProperty()->classIsTypeOf(ZFSerializable::ClassData()))
             {
-                return ZFSerializable::PropertyTypeNotSerializable;
+                return ZFSerializablePropertyTypeNotSerializable;
             }
             else
             {
-                return ZFSerializable::PropertyTypeEmbededProperty;
+                return ZFSerializablePropertyTypeEmbededProperty;
             }
         }
         else
         {
             if(property->getterMethod()->methodPrivilegeType() == ZFMethodPrivilegeTypePrivate)
             {
-                return ZFSerializable::PropertyTypeNotSerializable;
+                return ZFSerializablePropertyTypeNotSerializable;
             }
             else
             {
-                return ZFSerializable::PropertyTypeSerializableProperty;
+                return ZFSerializablePropertyTypeSerializableProperty;
             }
         }
     }
@@ -518,11 +514,11 @@ ZFSerializable::PropertyType ZFSerializable::serializableOnCheckPropertyType(ZF_
     {
         if(property->propertyIsSerializable())
         {
-            return ZFSerializable::PropertyTypeSerializableProperty;
+            return ZFSerializablePropertyTypeSerializableProperty;
         }
         else
         {
-            return ZFSerializable::PropertyTypeNotSerializable;
+            return ZFSerializablePropertyTypeNotSerializable;
         }
     }
 }
@@ -1001,4 +997,45 @@ ZFSerializableData ZFObjectToSerializableData(ZF_IN ZFObject *obj,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, zfbool, serializable)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFSerializable, zfbool, serializeFromData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFSerializable, zfbool, serializeToData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableGetAllSerializablePropertyT, ZFMP_OUT(ZFCoreArray<const ZFProperty *> &, ret))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, ZFCoreArrayPOD<const ZFProperty *>, serializableGetAllSerializableProperty)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableGetAllSerializableEmbededPropertyT, ZFMP_OUT(ZFCoreArray<const ZFProperty *> &, ret))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, ZFCoreArrayPOD<const ZFProperty *>, serializableGetAllSerializableEmbededProperty)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableGetInfoT, ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, zfstring, serializableGetInfo)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableCopyInfoFrom, ZFMP_IN(ZFSerializable *, anotherSerializable))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFSerializable, void, referenceInfoSet, ZFMP_IN(const zfchar *, key), ZFMP_IN(const ZFSerializableData *, referenceInfo))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, const ZFSerializableData *, referenceInfo, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, referenceInfoForSelfSet, ZFMP_IN(const ZFSerializableData *, referenceInfo))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, const ZFSerializableData *, referenceInfoForSelf)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFSerializable, void, referenceInfoForCategorySet, ZFMP_IN(const zfchar *, key), ZFMP_IN(const ZFSerializableData *, referenceInfo))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, const ZFSerializableData *, referenceInfoForCategory, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableStyleableTypeSet, ZFMP_IN(const zfchar *, styleableType))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, const zfchar *, serializableStyleableTypeGet)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableStyleableDataSet, ZFMP_IN(const zfchar *, styleableData))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, const zfchar *, serializableStyleableDataGet)
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfbool, ZFObjectIsSerializable, ZFMP_IN(ZFObject *, obj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromString, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromString, ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectFromInput, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfautoObject, ZFObjectFromInput, ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToString, ZFMP_OUT(zfstring &, encodedData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfstring, ZFObjectToString, ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToOutput, ZFMP_IN_OUT(const ZFInputCallback &, output), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromSerializableData, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectToSerializableData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFSerializableData, ZFObjectToSerializableData, ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfbool *, outSuccess, zfnull), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

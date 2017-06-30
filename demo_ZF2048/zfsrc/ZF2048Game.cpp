@@ -97,7 +97,7 @@ public:
     {
         this->aniStop();
 
-        if(this->owner->objectInstanceState() != ZFObject::ObjectInstanceStateIdle)
+        if(this->owner->objectInstanceState() != ZFObjectInstanceStateIdle)
         { // no animation for first time
             this->gameUI->update(this->gameCore->dataPrev(), this->gameCore->dataWidth(), this->gameCore->dataHeight());
             return ;

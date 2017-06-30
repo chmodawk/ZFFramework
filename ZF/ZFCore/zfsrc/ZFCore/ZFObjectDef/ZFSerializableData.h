@@ -101,7 +101,7 @@ public:
     /**
      * @brief true if not same ref
      */
-    zfbool operator !=(ZF_IN const ZFSerializableData &ref) const;
+    inline zfbool operator !=(ZF_IN const ZFSerializableData &ref) const {return !this->operator == (ref);}
     ~ZFSerializableData(void);
 
 public:
@@ -305,7 +305,7 @@ public:
      * after you add, remove or modify attributes
      */
     zffinal void attributeSet(ZF_IN const zfchar *name,
-                             ZF_IN const zfchar *value);
+                              ZF_IN const zfchar *value);
     /** @brief see #attributeSet */
     zffinal const zfchar *attributeForName(ZF_IN const zfchar *name) const;
 
@@ -530,14 +530,10 @@ private:
     friend zfclassFwd _ZFP_ZFSerializableDataPrivate;
 };
 
-ZFCOMPARER_DEFAULT_DECLARE(ZFSerializableData, ZFSerializableData, {
-        return v0.objectCompare(v1);
-    })
-
 /**
  * @brief usually for debug use only
  *
- * macro names are recommended to be ZFSerializableDataRefType_XXX
+ * macro names are recommended to be ZFSerializableDataRefTypeId_XXX
  */
 extern ZF_ENV_EXPORT void ZFSerializableDataRefTypeGetAllT(ZF_OUT ZFCoreArray<const zfchar *> &ret);
 /** @brief see #ZFSerializableDataRefTypeGetAll */

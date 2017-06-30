@@ -79,7 +79,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName(zfnull))
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMethodFuncAccess(MethodName) \
-    _ZFP_ZFMethodFuncAccess(ZFMethodFuncNamespaceIdGlobal, MethodName)
+    _ZFP_ZFMethodFuncAccess(ZFMethodFuncNamespaceGlobalId, MethodName)
 
 #define _ZFP_ZFMethodFuncAccessDetail(MethodNamespace, MethodName \
         , ParamExpandOrEmpty0, ParamType0 \
@@ -530,13 +530,13 @@ public:
  * and can be invoked by #ZFMethod::executeStatic
  * or by #ZFMethod::execute with null as first param\n
  * function type method support at most one level namespace,
- * or, use #ZFMethodFuncNamespaceIdGlobal if your method has no namespace
+ * or, use #ZFMethodFuncNamespaceGlobalId if your method has no namespace
  */
 #define ZFMETHOD_FUNC_DECLARE_0( \
     ReturnType, MethodName \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_0( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DECLARE_DETAIL_0( \
@@ -558,7 +558,7 @@ public:
     ReturnType, MethodName \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_0( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_DETAIL_0( \
@@ -584,7 +584,7 @@ public:
     , ZFMP_0 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_1( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
@@ -609,7 +609,7 @@ public:
     , ZFMP_0 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_1( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
@@ -638,7 +638,7 @@ public:
     , ZFMP_1 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_2( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         )
@@ -666,7 +666,7 @@ public:
     , ZFMP_1 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_2( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         )
@@ -698,7 +698,7 @@ public:
     , ZFMP_2 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_3( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -729,7 +729,7 @@ public:
     , ZFMP_2 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_3( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -764,7 +764,7 @@ public:
     , ZFMP_3 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_4( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -798,7 +798,7 @@ public:
     , ZFMP_3 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_4( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -836,7 +836,7 @@ public:
     , ZFMP_4 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_5( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -873,7 +873,7 @@ public:
     , ZFMP_4 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_5( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -914,7 +914,7 @@ public:
     , ZFMP_5 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_6( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -954,7 +954,7 @@ public:
     , ZFMP_5 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_6( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -998,7 +998,7 @@ public:
     , ZFMP_6 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_7( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -1041,7 +1041,7 @@ public:
     , ZFMP_6 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_7( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -1088,7 +1088,7 @@ public:
     , ZFMP_7 \
     ) \
     ZFMETHOD_FUNC_DECLARE_DETAIL_8( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \
@@ -1134,7 +1134,7 @@ public:
     , ZFMP_7 \
     ) \
     ZFMETHOD_FUNC_DEFINE_DETAIL_8( \
-        ZFMethodFuncNamespaceIdGlobal, ReturnType, MethodName \
+        ZFMethodFuncNamespaceGlobalId, ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND(ZFMP_2) \

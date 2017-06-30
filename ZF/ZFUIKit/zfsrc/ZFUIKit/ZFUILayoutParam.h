@@ -68,9 +68,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFUISizeParam, ZFUISizeParam)
 ZFOUTPUT_TYPE(ZFUISizeParam, {output << ZFUISizeParamToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFUISizeParam)
-ZFCOMPARER_DEFAULT_DECLARE(ZFUISizeParam, ZFUISizeParam, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief make a ZFUISizeParam

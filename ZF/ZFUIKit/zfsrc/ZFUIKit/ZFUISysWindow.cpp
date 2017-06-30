@@ -168,7 +168,7 @@ ZFUIOrientationEnum ZFUISysWindow::windowOrientation(void)
 }
 void ZFUISysWindow::windowOrientationFlagsSet(ZF_IN const ZFUIOrientationFlags &windowOrientationFlags)
 {
-    ZFEnumValue tmp = 0;
+    zfuint tmp = 0;
     if(ZFBitTest(windowOrientationFlags.enumValue(), ZFUIOrientation::e_Left))
     {
         ZFBitSet(tmp, ZFUIOrientation::e_Left);

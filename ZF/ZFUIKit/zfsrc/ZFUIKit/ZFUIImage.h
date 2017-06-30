@@ -41,11 +41,11 @@ typedef zfbool (*ZFUIImageSerializeFromCallback)(ZF_IN_OUT ZFUIImage *image,
  * typically you should use #ZFUIIMAGE_SERIALIZE_TYPE_DEFINE to define your type for short:
  * @code
  *   // in header file
- *   #define ZFUIImageSerializeType_yourType yourType
- *   #define ZFUIImageSerializeTypeName_yourType ZFM_TOSTRING(ZFUIImageSerializeType_yourType)
+ *   #define ZFUIImageSerializeTypeId_yourType yourType
+ *   #define ZFUIImageSerializeType_yourType ZFM_TOSTRING(ZFUIImageSerializeTypeId_yourType)
  *
  *   // in cpp file
- *   ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeType_yourType)
+ *   ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_yourType)
  *   {
  *       // serialize callback from data
  *       return zftrue;
@@ -70,11 +70,11 @@ extern ZF_ENV_EXPORT void ZFUIImageSerializeTypeUnregister(ZF_IN const zfchar *n
                                                              ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */); \
     ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIImageSerializeCallbackRegister_##type, ZFLevelZFFrameworkNormal) \
     { \
-        ZFUIImageSerializeTypeRegister(ZFUIImageSerializeTypeName_##type, _ZFP_ZFUIImageSerializeFromCallback_##type); \
+        ZFUIImageSerializeTypeRegister(ZFUIImageSerializeType_##type, _ZFP_ZFUIImageSerializeFromCallback_##type); \
     } \
     ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIImageSerializeCallbackRegister_##type) \
     { \
-        ZFUIImageSerializeTypeUnregister(ZFUIImageSerializeTypeName_##type); \
+        ZFUIImageSerializeTypeUnregister(ZFUIImageSerializeType_##type); \
     } \
     ZF_GLOBAL_INITIALIZER_END(ZFUIImageSerializeCallbackRegister_##type) \
     static zfbool _ZFP_ZFUIImageSerializeFromCallback_##type(ZF_IN_OUT ZFUIImage *result, \

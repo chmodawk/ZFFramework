@@ -141,9 +141,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFUIPoint, ZFUIPoint)
 ZFOUTPUT_TYPE(ZFUIPoint, {output << ZFUIPointToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFUIPoint)
-ZFCOMPARER_DEFAULT_DECLARE(ZFUIPoint, ZFUIPoint, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief (0, 0)
@@ -224,9 +221,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFUIMargin, ZFUIMargin)
 ZFOUTPUT_TYPE(ZFUIMargin, {output << ZFUIMarginToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFUIMargin)
-ZFCOMPARER_DEFAULT_DECLARE(ZFUIMargin, ZFUIMargin, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief (0, 0, 0, 0)
@@ -437,9 +431,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFUISize, ZFUISize)
 ZFOUTPUT_TYPE(ZFUISize, {output << ZFUISizeToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFUISize)
-ZFCOMPARER_DEFAULT_DECLARE(ZFUISize, ZFUISize, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief (0, 0)
@@ -626,9 +617,6 @@ ZFPROPERTY_TYPE_DECLARE(ZFUIRect, ZFUIRect)
 ZFOUTPUT_TYPE(ZFUIRect, {output << ZFUIRectToString(v);})
 
 ZFCORE_POD_COMPARER_DECLARE(ZFUIRect)
-ZFCOMPARER_DEFAULT_DECLARE(ZFUIRect, ZFUIRect, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief (0, 0, 0, 0)
@@ -1062,9 +1050,6 @@ inline zfbool ZFUIColorIsEqual(ZF_IN ZFUIColor const &v0, ZF_IN ZFUIColor const 
 {
     return (v0 == v1);
 }
-ZFCOMPARER_DEFAULT_DECLARE(ZFUIColor, ZFUIColor, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 /**
  * @brief make a color

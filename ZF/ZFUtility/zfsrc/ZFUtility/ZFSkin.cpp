@@ -101,7 +101,7 @@ void zfSkinUnload(void)
     zfSkinNotifyChanged();
 }
 
-void zfSkinDebug(ZF_IN_OPT const ZFOutputCallback &output /* = ZFOutputCallbackDefault */)
+void zfSkinDebug(ZF_IN_OPT const ZFOutputCallback &output /* = ZFOutputCallbackDefault() */)
 {
     _ZFP_ZFSkinMapType &m = _ZFP_ZFSkinMapGlobal;
     for(_ZFP_ZFSkinMapType::iterator it = m.begin(); it != m.end(); ++it)

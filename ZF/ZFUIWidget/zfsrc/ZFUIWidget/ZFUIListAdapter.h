@@ -32,6 +32,17 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
+     * called when list adapter's content changed
+     * and owner list view needs to be updated,
+     * param0 is null to update entire list,
+     * or a #ZFValue::indexValue shows which cell to reload\n
+     * typically, this event would be fired by #listAdapterNotifyReload
+     * which would be called by list adapter impl
+     */
+    ZFOBSERVER_EVENT(ListAdapterOnReload)
+    /**
+     * @brief see #ZFObject::observerNotify
+     *
      * called when update list cell,
      * param0 is the #ZFUIListCell,
      * param1 is the index of the list cell (as #ZFValue::indexValue)
@@ -84,6 +95,13 @@ public:
     // basic list cell access
 public:
     /**
+     * @brief see #EventListAdapterOnReload
+     */
+    virtual void listAdapterNotifyReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax)
+    {
+        this->listAdapterOnReload(atIndexOrMax);
+    }
+    /**
      * @brief cell count
      */
     virtual zfindex cellCount(void) zfpurevirtual;
@@ -110,8 +128,16 @@ public:
     }
 
     // ============================================================
-    // list cell update callback
+    // list update callback
 protected:
+    /**
+     * @brief see #EventListAdapterOnReload
+     */
+    virtual inline void listAdapterOnReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax)
+    {
+        this->toObject()->observerNotify(zfself::EventListAdapterOnReload(),
+            (atIndexOrMax == zfindexMax) ? zfnull : ZFValue::indexValueCreate(atIndexOrMax).toObject());
+    }
     /**
      * @brief see #EventListCellOnUpdate
      */

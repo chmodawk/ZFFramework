@@ -23,48 +23,18 @@ zfclassFwd ZFClass;
  * @brief filter type for #ZFFilterForZFClass
  */
 typedef enum {
-    /**
-     * @brief exactly the same
-     */
-    ZFFilterForZFClassTypeInclude,
-    /**
-     * @brief exactly not the same
-     */
-    ZFFilterForZFClassTypeExclude,
+    ZFFilterForZFClassTypeInclude, /**< @brief exactly the same */
+    ZFFilterForZFClassTypeExclude, /**< @brief exactly not the same */
 
-    /**
-     * @brief cls->classIsSubclassOf(clsToCheck)
-     */
-    ZFFilterForZFClassTypeIncludeChildOf,
-    /**
-     * @brief cls->classIsTypeOf(clsToCheck)
-     */
-    ZFFilterForZFClassTypeIncludeChildTypeOf,
-    /**
-     * @brief clsToCheck->classIsSubclassOf(cls)
-     */
-    ZFFilterForZFClassTypeIncludeParentOf,
-    /**
-     * @brief clsToCheck->classIsTypeOf(cls)
-     */
-    ZFFilterForZFClassTypeIncludeParentTypeOf,
+    ZFFilterForZFClassTypeIncludeChildOf, /**< @brief cls->classIsSubclassOf(clsToCheck) */
+    ZFFilterForZFClassTypeIncludeChildTypeOf, /**< @brief cls->classIsTypeOf(clsToCheck) */
+    ZFFilterForZFClassTypeIncludeParentOf, /**< @brief clsToCheck->classIsSubclassOf(cls) */
+    ZFFilterForZFClassTypeIncludeParentTypeOf, /**< @brief clsToCheck->classIsTypeOf(cls) */
 
-    /**
-     * @brief !cls->classIsSubclassOf(clsToCheck)
-     */
-    ZFFilterForZFClassTypeExcludeChildOf,
-    /**
-     * @brief !cls->classIsTypeOf(clsToCheck)
-     */
-    ZFFilterForZFClassTypeExcludeChildTypeOf,
-    /**
-     * @brief !clsToCheck->classIsSubclassOf(cls)
-     */
-    ZFFilterForZFClassTypeExcludeParentOf,
-    /**
-     * @brief !clsToCheck->classIsTypeOf(cls)
-     */
-    ZFFilterForZFClassTypeExcludeParentTypeOf,
+    ZFFilterForZFClassTypeExcludeChildOf, /**< @brief !cls->classIsSubclassOf(clsToCheck) */
+    ZFFilterForZFClassTypeExcludeChildTypeOf, /**< @brief !cls->classIsTypeOf(clsToCheck) */
+    ZFFilterForZFClassTypeExcludeParentOf, /**< @brief !clsToCheck->classIsSubclassOf(cls) */
+    ZFFilterForZFClassTypeExcludeParentTypeOf, /**< @brief !clsToCheck->classIsTypeOf(cls) */
 } ZFFilterForZFClassType;
 /** @brief string tokens */
 #define ZFTOKEN_ZFFilterForZFClassTypeInclude zfText("Include")
@@ -86,10 +56,6 @@ typedef enum {
 #define ZFTOKEN_ZFFilterForZFClassTypeExcludeParentOf zfText("ExcludeParentOf")
 /** @brief string tokens */
 #define ZFTOKEN_ZFFilterForZFClassTypeExcludeParentTypeOf zfText("ExcludeParentTypeOf")
-
-ZFCOMPARER_DEFAULT_DECLARE(ZFFilterForZFClassType, ZFFilterForZFClassType, {
-        return ((v0 == v1) ? ZFCompareTheSame : ZFCompareUncomparable);
-    })
 
 // ============================================================
 zfclassPOD ZF_ENV_EXPORT _ZFP_ZFFilterForZFClassData
@@ -124,7 +90,7 @@ public:
     virtual ZFFilterForZFClass &operator = (ZF_IN const ZFFilterForZFClass &ref);
     /** @cond ZFPrivateDoc */
     zfbool operator == (ZF_IN const ZFFilterForZFClass &ref) const;
-    zfbool operator != (ZF_IN const ZFFilterForZFClass &ref) const;
+    inline zfbool operator != (ZF_IN const ZFFilterForZFClass &ref) const {return !this->operator == (ref);}
     /** @endcond */
     virtual ~ZFFilterForZFClass(void);
     /**
@@ -144,9 +110,13 @@ public:
     virtual ZFFilterForZFClass &filterRemove(ZF_IN const ZFClass * const &e,
                                              ZF_IN_OPT ZFFilterForZFClassType filterType = ZFFilterForZFClassTypeExclude);
     /**
-     * @brief remove
+     * @brief remove filter
      */
     virtual ZFFilterForZFClass &filterRemoveAtIndex(ZF_IN zfindex index);
+    /**
+     * @brief remove filter
+     */
+    virtual ZFFilterForZFClass &filterRemoveAll(void);
 
 public:
     /**
@@ -156,7 +126,7 @@ public:
     /**
      * @brief get filter class at index
      */
-    virtual const ZFClass *filterGetFilterClass(ZF_IN zfindex index) const;
+    virtual const ZFClass *filterGet(ZF_IN zfindex index) const;
     /**
      * @brief get filter type at index
      */

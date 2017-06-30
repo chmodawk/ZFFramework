@@ -128,10 +128,7 @@ public:
                 && zfscmpTheSame((const zfchar *)_callerFunc, (const zfchar *)ref._callerFunc)
                 && _callerLine == ref._callerLine);
     }
-    zfbool operator != (ZF_IN const ZFCallerInfo &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFCallerInfo &ref) const {return !this->operator == (ref);}
     /** @endcond */
 public:
     /**

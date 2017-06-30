@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefType_xml)
+ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_xml)
 {
     ZFXmlItem xmlElement = ZFXmlParseFirstElement(ZFInputCallbackForFileDescriptor(refData));
     if(xmlElement.xmlType() == ZFXmlType::e_XmlNull)
@@ -22,7 +22,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefType_xml)
     return ZFXmlParseToSerializableData(serializableData, xmlElement);
 }
 
-ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorType_xml, data)
+ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_xml, data)
 {
     ZFXmlItem xmlElement = ZFXmlParseFirstElement(ZFInputCallbackForFileDescriptor(data));
     if(xmlElement.xmlIsNull())
@@ -188,7 +188,7 @@ ZFXmlItem ZFXmlPrintFromSerializableData(ZF_IN const ZFSerializableData &seriali
 }
 
 void ZFXmlPrint(ZF_IN const ZFSerializableData &serializableData,
-                ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                 ZF_IN_OPT const ZFXmlOutputFlags &flags /* = ZFXmlOutputFlagsDefault */)
 {
     ZFXmlItem xmlElement = ZFXmlPrintFromSerializableData(serializableData);
@@ -200,7 +200,7 @@ void ZFXmlPrint(ZF_IN const ZFSerializableData &serializableData,
     }
 }
 void ZFXmlPrint(ZF_IN ZFObject *obj,
-                ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                 ZF_IN_OPT const ZFXmlOutputFlags &flags /* = ZFXmlOutputFlagsDefault */)
 {
     ZFXmlPrint(ZFObjectToSerializableData(obj), outputCallback, flags);

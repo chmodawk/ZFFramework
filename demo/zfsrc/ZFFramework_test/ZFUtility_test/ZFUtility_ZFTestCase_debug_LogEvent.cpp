@@ -20,7 +20,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUtility_ZFTestCase_debug_LogEvent)
             << listenerData.param0->to<ZFPointerHolder *>()->holdedDataPointer<const zfchar *>();
     })
     this->testCaseOnOutputListener = testCaseOnOutput;
-    ZFObjectGlobalEventObserver.observerAdd(ZFTestCase::EventTestCaseOnOutput(), this->testCaseOnOutputListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFTestCase::EventTestCaseOnOutput(), this->testCaseOnOutputListener);
 
     ZFLISTENER_LOCAL(testCaseOnStart, {
         zfLogTrimT()
@@ -29,7 +29,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUtility_ZFTestCase_debug_LogEvent)
             << zfText("========================== start ===========================");
     })
     this->testCaseOnStartListener = testCaseOnStart;
-    ZFObjectGlobalEventObserver.observerAdd(ZFTestCase::EventTestCaseOnStart(), this->testCaseOnStartListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFTestCase::EventTestCaseOnStart(), this->testCaseOnStartListener);
 
     ZFLISTENER_LOCAL(testCaseOnProgress, {
         zfLogTrimT()
@@ -38,7 +38,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUtility_ZFTestCase_debug_LogEvent)
             << zfText("progress updated");
     })
     this->testCaseOnProgressListener = testCaseOnProgress;
-    ZFObjectGlobalEventObserver.observerAdd(ZFTestCase::EventTestCaseOnProgress(), this->testCaseOnProgressListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFTestCase::EventTestCaseOnProgress(), this->testCaseOnProgressListener);
 
     ZFLISTENER_LOCAL(testCaseOnStop, {
         zfLogTrimT()
@@ -47,14 +47,14 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFUtility_ZFTestCase_debug_LogEvent)
             << zfText("-------------------------- stop ----------------------------");
     })
     this->testCaseOnStopListener = testCaseOnStop;
-    ZFObjectGlobalEventObserver.observerAdd(ZFTestCase::EventTestCaseOnStop(), this->testCaseOnStopListener);
+    ZFObjectGlobalEventObserver().observerAdd(ZFTestCase::EventTestCaseOnStop(), this->testCaseOnStopListener);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUtility_ZFTestCase_debug_LogEvent)
 {
-    ZFObjectGlobalEventObserver.observerRemove(ZFTestCase::EventTestCaseOnOutput(), this->testCaseOnOutputListener);
-    ZFObjectGlobalEventObserver.observerRemove(ZFTestCase::EventTestCaseOnStart(), this->testCaseOnStartListener);
-    ZFObjectGlobalEventObserver.observerRemove(ZFTestCase::EventTestCaseOnProgress(), this->testCaseOnProgressListener);
-    ZFObjectGlobalEventObserver.observerRemove(ZFTestCase::EventTestCaseOnStop(), this->testCaseOnStopListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFTestCase::EventTestCaseOnOutput(), this->testCaseOnOutputListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFTestCase::EventTestCaseOnStart(), this->testCaseOnStartListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFTestCase::EventTestCaseOnProgress(), this->testCaseOnProgressListener);
+    ZFObjectGlobalEventObserver().observerRemove(ZFTestCase::EventTestCaseOnStop(), this->testCaseOnStopListener);
 }
 private:
     ZFListener testCaseOnOutputListener;

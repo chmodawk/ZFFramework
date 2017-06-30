@@ -108,10 +108,7 @@ public:
                 && this->matchedRange == ref.matchedRange
                 && this->namedGroups.objectCompare(ref.namedGroups) == ZFCompareTheSame);
     }
-    zfbool operator = (ZF_IN const ZFRegExpResult &ref) const
-    {
-        return !this->operator == (ref);
-    }
+    inline zfbool operator != (ZF_IN const ZFRegExpResult &ref) const {return !this->operator == (ref);}
     /** @endcond */
 };
 

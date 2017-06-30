@@ -765,7 +765,7 @@ void ZF2048Core::undo(void)
     this->gameDataOnChange();
 }
 
-void ZF2048Core::debugStatus(ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */)
+void ZF2048Core::debugStatus(ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
 {
     d->debugStatus(outputCallback, d->data.pointerValueGet());
 }

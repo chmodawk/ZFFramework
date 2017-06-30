@@ -18,7 +18,7 @@ static void _ZFP_ZFUIViewTreePrintDelayedAction(ZF_IN const ZFListenerData &list
     ZFUIViewTreePrint(ZFCastZFObjectUnchecked(ZFUIView *, data->listenerData.param0), data->runnable);
 }
 void ZFUIViewTreePrintDelayed(ZF_IN ZFUIView *view,
-                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */)
+                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
 {
     ZFThreadTaskRequest(
         ZFCallbackForRawFunction(_ZFP_ZFUIViewTreePrintDelayedAction),
@@ -27,7 +27,7 @@ void ZFUIViewTreePrintDelayed(ZF_IN ZFUIView *view,
 
 void ZFUIViewTreePrintDelayed(ZF_IN zftimet delay,
                               ZF_IN ZFUIView *view,
-                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */)
+                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
 {
     ZFThreadExecuteInMainThreadAfterDelay(
         delay,
@@ -72,7 +72,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewTreePrintSyncObjectHolder)
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewTreePrintSyncObjectHolder);
 void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
-                       ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */)
+                       ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
 {
     if(view == zfnull || !outputCallback.callbackIsValid())
     {

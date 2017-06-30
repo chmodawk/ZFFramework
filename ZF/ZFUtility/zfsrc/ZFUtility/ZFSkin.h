@@ -69,7 +69,7 @@ extern ZF_ENV_EXPORT void zfSkinUnload(void);
 /**
  * @brief for debug use only
  */
-extern ZF_ENV_EXPORT void zfSkinDebug(ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault);
+extern ZF_ENV_EXPORT void zfSkinDebug(ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault());
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSkin_h_

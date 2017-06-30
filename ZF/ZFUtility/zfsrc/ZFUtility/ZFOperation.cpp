@@ -573,13 +573,13 @@ public:
 
         if(autoTrim && this->attachedObject.size() == 1)
         {
-            ZFObjectGlobalEventObserver.observerAdd(
+            ZFObjectGlobalEventObserver().observerAdd(
                 ZFGlobalEvent::EventAppOnReceiveMemoryWarning(),
                 this->cacheTrimListener);
         }
         else if(!autoTrim && this->attachedObject.size() == 0)
         {
-            ZFObjectGlobalEventObserver.observerRemove(
+            ZFObjectGlobalEventObserver().observerRemove(
                 ZFGlobalEvent::EventAppOnReceiveMemoryWarning(),
                 this->cacheTrimListener);
         }

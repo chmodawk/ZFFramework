@@ -318,13 +318,13 @@ public:
 
         this->owner->game()->observerAdd(ZF2048Game::EventGameDataOnChange(), ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, dataOnChange)));
 
-        ZFObjectGlobalEventObserver.observerAdd(ZFObserverAddParam()
+        ZFObjectGlobalEventObserver().observerAdd(ZFObserverAddParam()
                 .eventIdSet(ZFUISysWindow::EventSysWindowOnRotate())
                 .observerSet(ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, orientationOnChange)))
                 .ownerSet(this)
             );
 
-        ZFObjectGlobalEventObserver.observerAdd(ZFUISysWindow::EventSysWindowOnPause(), ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, appPaused)));
+        ZFObjectGlobalEventObserver().observerAdd(ZFUISysWindow::EventSysWindowOnPause(), ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, appPaused)));
 
         this->dataUpdate();
         this->orientationUpdate();
@@ -332,7 +332,7 @@ public:
     zfoverride
     virtual void objectOnDealloc(void)
     {
-        ZFObjectGlobalEventObserver.observerRemoveByOwner(this);
+        ZFObjectGlobalEventObserver().observerRemoveByOwner(this);
         zfsuper::objectOnDealloc();
     }
 };

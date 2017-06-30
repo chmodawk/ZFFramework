@@ -52,11 +52,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief use to declare friend if your type has non-public constructors
  */
 #if ZFMEMPOOL_ENABLE
-    #define zfpoolNew(T_Type, ...) zfpoolNewLogger(T_Type, new (_ZFP_zfpoolObjectHolder<T_Type>::poolMalloc()) T_Type(__VA_ARGS__))
+    #define zfpoolNew(T_Type, ...) zfpoolNewLogger(T_Type, new (_ZFP_zfpoolObjectHolder::poolMalloc<T_Type>()) T_Type(__VA_ARGS__))
     #define zfpoolDelete(obj) _ZFP_zfpoolDelete(zfpoolDeleteLogger(obj))
     #define zfpoolDeclareFriend() \
-        template<typename T_Type> \
-        friend zfclassFwd ZF_NAMESPACE_GLOBAL::_ZFP_zfpoolObjectHolder;
+        friend zfclassFwd ::_ZFP_zfpoolObjectHolder;
 #else
     #define zfpoolNew(T_Type, ...) zfpoolNewLogger(T_Type, zfnew(T_Type, ##__VA_ARGS__))
     #define zfpoolDelete(obj) zfdelete(zfpoolDeleteLogger(obj))
@@ -125,14 +124,15 @@ private:
     _ZFP_zfpoolObjectBlock<N> *_available;
 };
 
-template<typename T_Type>
 zfclassNotPOD _ZFP_zfpoolObjectHolder
 {
 public:
+    template<typename T_Type>
     static void *poolMalloc(void)
     {
         return _ZFP_zfpoolObject<_ZFP_zfpoolSizeAlign(sizeof(T_Type))>::instance().poolMalloc();
     }
+    template<typename T_Type>
     static void poolDelete(ZF_IN T_Type *obj)
     {
         obj->~T_Type();
@@ -144,7 +144,7 @@ inline void _ZFP_zfpoolDelete(ZF_IN T_Type *obj)
 {
     if(obj)
     {
-        _ZFP_zfpoolObjectHolder<T_Type>::poolDelete(obj);
+        _ZFP_zfpoolObjectHolder::poolDelete<T_Type>(obj);
     }
 }
 

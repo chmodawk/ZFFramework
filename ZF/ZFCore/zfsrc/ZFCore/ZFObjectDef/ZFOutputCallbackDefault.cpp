@@ -7,30 +7,30 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFOutputCallbackDefault.h"
-
+#include "ZFObjectImpl.h"
 #include "ZFGlobalEventCenter.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFOBSERVER_EVENT_GLOBAL_REGISTER(ZFGlobalEvent, ZFOutputCallbackDefaultOnChange)
 
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFOutputCallbackDefaultDataHolder, ZFLevelZFFrameworkEssential)
-{
-}
-public:
-    ZFOutputCallback outputCallbackDefault;
-ZF_GLOBAL_INITIALIZER_END(ZFOutputCallbackDefaultDataHolder)
+ZFOutputCallback _ZFP_ZFOutputCallbackDefault;
 
-const ZFOutputCallback &_ZFP_ZFOutputCallbackDefaultHolder::operator = (ZF_IN const ZFOutputCallback &callback) const
+void ZFOutputCallbackDefaultSet(ZF_IN const ZFOutputCallback &v)
 {
-    ZF_GLOBAL_INITIALIZER_INSTANCE(ZFOutputCallbackDefaultDataHolder)->outputCallbackDefault = callback;
+    _ZFP_ZFOutputCallbackDefault = v;
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventZFOutputCallbackDefaultOnChange());
-    return callback;
-}
-_ZFP_ZFOutputCallbackDefaultHolder::operator const ZFOutputCallback &(void) const
-{
-    return ZF_GLOBAL_INITIALIZER_INSTANCE(ZFOutputCallbackDefaultDataHolder)->outputCallbackDefault;
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(const ZFOutputCallback &, ZFOutputCallbackDefault)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFOutputCallbackDefaultSet, ZFMP_IN(const ZFOutputCallback &, v))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

@@ -442,7 +442,7 @@ private:
 };
 
 ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(ZF_IN const ZFCallerInfo &callerInfo,
-                                                    ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault */,
+                                                    ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
                                                     ZF_IN_OPT const ZFXmlOutputFlags &flags /* = ZFXmlOutputFlagsDefault */)
 {
     if(!outputCallback.callbackIsValid())

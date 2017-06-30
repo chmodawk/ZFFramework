@@ -27,19 +27,18 @@ ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
 ZFOBSERVER_EVENT_GLOBAL(ZFOutputCallbackDefaultOnChange)
 ZF_NAMESPACE_END(ZFGlobalEvent)
 
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFOutputCallbackDefaultHolder
-{
-public:
-    const ZFOutputCallback &operator = (ZF_IN const ZFOutputCallback &callback) const;
-    operator const ZFOutputCallback &(void) const;
-};
+extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackDefault;
 /**
- * @brief default output callback, source must be zfchar *string
+ * @brief default output callback, output source must be zfchar *string
  *
- * you may change this at runtime,
+ * you may change this at runtime by #ZFOutputCallbackDefaultSet,
  * and #ZFGlobalEvent::EventZFOutputCallbackDefaultOnChange would be fired
  */
-#define ZFOutputCallbackDefault _ZFP_ZFOutputCallbackDefaultHolder()
+#define ZFOutputCallbackDefault() ((const ZFOutputCallback &)_ZFP_ZFOutputCallbackDefault)
+/**
+ * @brief see #ZFOutputCallbackDefault
+ */
+extern ZF_ENV_EXPORT void ZFOutputCallbackDefaultSet(ZF_IN const ZFOutputCallback &v);
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFOutputCallbackDefault_h_

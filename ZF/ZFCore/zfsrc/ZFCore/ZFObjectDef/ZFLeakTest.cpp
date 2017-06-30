@@ -7,11 +7,8 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFLeakTest.h"
-
-#include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
 #include "ZFEnum.h"
-#include "ZFObjectSmartPointer.h"
-#include "ZFPropertyType.h"
 #include "ZFClassUtil.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
@@ -229,6 +226,16 @@ ZF_GLOBAL_INITIALIZER_END(ZFLeakTestDataHolder)
 #define _ZFP_ZFLeakTestGlobalData (ZF_GLOBAL_INITIALIZER_INSTANCE(ZFLeakTestDataHolder)->globalData)
 static _ZFP_ZFLeakTestSectionData *_ZFP_ZFLeakTestActivatingSection = zfnull;
 zfbool _ZFP_ZFLeakTestEnableCache = zffalse;
+ZFOutputCallback _ZFP_ZFLeakTestOutputCallbackDefault;
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFLeakTestOutputCallbackDefaultInit, ZFLevelZFFrameworkEssential)
+{
+    _ZFP_ZFLeakTestOutputCallbackDefault = ZFOutputCallbackDefault();
+}
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFLeakTestOutputCallbackDefaultInit)
+{
+    _ZFP_ZFLeakTestOutputCallbackDefault = ZFCallbackNull();
+}
+ZF_GLOBAL_INITIALIZER_END(ZFLeakTestOutputCallbackDefaultInit)
 
 // ============================================================
 // internal function declare
@@ -822,4 +829,18 @@ void _ZFP_ZFLeakTestPrintStatus(ZF_IN const ZFCallerInfo &callerInfo,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(zfbool, ZFLeakTestEnable)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFLeakTestEnableSet, ZFMP_IN(zfbool, enable))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFLeakTestExcludeNameAdd, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFLeakTestExcludeNameRemove, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFLeakTestExcludeInstanceAdd, ZFMP_IN(ZFObject *, obj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, ZFLeakTestExcludeInstanceRemove, ZFMP_IN(ZFObject *, obj))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

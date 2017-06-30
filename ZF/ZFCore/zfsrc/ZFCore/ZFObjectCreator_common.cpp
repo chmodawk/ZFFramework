@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorType_method, data)
+ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_method, data)
 {
     if(data == zfnull)
     {

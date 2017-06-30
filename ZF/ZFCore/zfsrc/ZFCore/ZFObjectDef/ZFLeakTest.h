@@ -32,11 +32,18 @@ zfclassFwd ZFClass;
 zfclassFwd ZFObject;
 
 extern ZF_ENV_EXPORT zfbool _ZFP_ZFLeakTestEnableCache;
-
+extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFLeakTestOutputCallbackDefault;
 /**
  * @brief default output callback for ZFLeakTest
+ *
+ * #ZFOutputCallbackDefault by default, can be changed by #ZFLeakTestOutputCallbackDefault
  */
-#define ZFLeakTestOutputCallbackDefault ZFOutputCallbackDefault
+#define ZFLeakTestOutputCallbackDefault() ((const ZFOutputCallback &)_ZFP_ZFLeakTestOutputCallbackDefault)
+/** @brief see #ZFLeakTestOutputCallbackDefault */
+inline void ZFLeakTestOutputCallbackDefaultSet(ZF_IN const ZFOutputCallback &v)
+{
+    _ZFP_ZFLeakTestOutputCallbackDefault = v;
+}
 
 /** @brief see #ZFLeakTestBegin */
 zfclassLikePOD ZF_ENV_EXPORT ZFLeakTestBeginParam
@@ -44,7 +51,7 @@ zfclassLikePOD ZF_ENV_EXPORT ZFLeakTestBeginParam
     ZFCORE_PARAM_DECLARE_SELF(ZFLeakTestBeginParam)
 
     /** @brief see #ZFLeakTestBegin, the #ZFOutputCallback to use, #ZFLeakTestOutputCallbackDefault by default */
-    ZFCORE_PARAM_WITH_INIT(ZFOutputCallback, outputCallback, ZFLeakTestOutputCallbackDefault)
+    ZFCORE_PARAM_WITH_INIT(ZFOutputCallback, outputCallback, ZFLeakTestOutputCallbackDefault())
 
     /** @brief see #ZFLeakTestBegin, whether to check over-released object, zffalse by default */
     ZFCORE_PARAM_WITH_INIT(zfbool, checkOverRelease, zffalse)

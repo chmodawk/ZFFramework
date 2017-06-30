@@ -13,7 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 static void _ZFP_ZFImpl_ZFLua_zfl_callStatic_methodScopeFix(ZF_IN_OUT zfstring &methodScope)
 {
-    if(methodScope.compare(zfText(ZFLuaGlobalFuncNamespace)) == 0
+    if(methodScope.compare(zfText(ZFLuaFuncNamespaceGlobal)) == 0
         || methodScope.compare(ZFMethodFuncNamespaceGlobal) == 0)
     {
         methodScope.removeAll();

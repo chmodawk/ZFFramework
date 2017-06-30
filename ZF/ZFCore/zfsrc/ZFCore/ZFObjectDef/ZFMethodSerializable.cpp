@@ -7,8 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFMethodSerializable.h"
-#include "ZFSerializableUtil.h"
-#include "ZFCoreType_IODef.h"
+#include "ZFObjectImpl.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -185,4 +184,24 @@ zfbool ZFMethodSigSplit(ZF_OUT ZFCoreArray<zfindexRange> &ret,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_8(const ZFMethod *, ZFMethodFromSig, ZFMP_IN(const zfchar *, classOrNamespace), ZFMP_IN(const zfchar *, methodName)
+    , ZFMP_IN(const zfchar *, param0)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId2, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId3, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId4, zfnull)
+    , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull) */
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull) */
+    )
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(const ZFMethod *, ZFMethodFromSig, ZFMP_IN(const zfchar *, methodSig), ZFMP_IN(const ZFCoreArray<zfindexRange> &, methodSigPos))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFMethodSigSplit, ZFMP_OUT(ZFCoreArray<zfindexRange> &, ret), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 

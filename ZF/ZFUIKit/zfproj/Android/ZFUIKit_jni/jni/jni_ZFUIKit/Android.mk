@@ -32,7 +32,7 @@ ZF_SRC_EXT_DIRS         =
 ZF_SRC_EXT_DIRS         += ../../../zfsrc_ext
 
 # whether use unity build
-ZF_UNITY_BUILD          = true
+ZF_UNITY_BUILD          = false
 ifeq ($(OS),Windows_NT)
 ZF_UNITY_BUILD_SCRIPT   = $(ZF_ROOT_PATH)/tools/common/unity_build.bat
 else
@@ -124,7 +124,7 @@ include $(PREBUILT_SHARED_LIBRARY)
 #     then ndk-build
 ifeq ($(OS),Windows_NT)
 _zf_ls_win = ../$(subst \,/,$(1))$(subst \,/,$(subst $(abspath $(1)),,$(2)))
-_zf_ls = $(foreach file,$(shell dir $(subst /,\,$(1)) /a-d /b /s),$(call _zf_ls_win,$(subst \,/,$(1)),$(subst \,/,$(file))))
+_zf_ls = $(foreach file,$(shell dir $(subst /,\,$(1)) /a-d /b /s 2>nul),$(call _zf_ls_win,$(subst \,/,$(1)),$(subst \,/,$(file))))
 else
 _zf_ls = $(shell find $(1) -type f)
 endif
@@ -146,7 +146,7 @@ endif
 else
 LOCAL_SRC_FILES := $(call zf_find_src_files,$(ZF_SRC_DIRS),$(ZF_SRC_EXTS))
 endif
-LOCAL_SRC_FILES += $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
+LOCAL_SRC_FILES += $(LOCAL_SRC_FILES) $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
 LOCAL_CFLAGS := $(ZF_CFLAGS)
 LOCAL_LDLIBS := $(ZF_LFLAGS)
 

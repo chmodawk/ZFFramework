@@ -220,8 +220,8 @@ void ZFOperationQueue::taskOnStart(ZF_IN ZFOperationTaskData *operationTaskData)
 
     for(zfindex i = taskState->childToRun->count() - 1; i != zfindexMax; --i)
     {
-        queueResult->childResultsInOrder()->add(zfnullObject);
-        queueProgress->childLastProgressDatas()->add(zfnullObject);
+        queueResult->childResultsInOrder()->add(zfnullObject());
+        queueProgress->childLastProgressDatas()->add(zfnullObject());
         taskState->childToRun->get<ZFOperationQueueChildTaskData *>(i)->childTaskData()->operationTaskData()->tagSet(
             _ZFP_ZFOperationQueueKey_childIndex,
             ZFValue::indexValueCreate(i).toObject());

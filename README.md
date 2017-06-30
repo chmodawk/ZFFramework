@@ -40,7 +40,7 @@ it's designed to be a complete and complex framework, current code status:
 
 * this piece of code shows how to show a hello world on UI and log output
 
-``` c++
+```cpp
     #include "ZFUIKit.h" // for UI module
     ZFMAIN_ENTRY(params) // app starts from here
     {
@@ -66,6 +66,8 @@ it's designed to be a complete and complex framework, current code status:
     local textView = zfAlloc("ZFUITextView");
     window:childAdd(textView);
     textView:textContentStringSet("hello wolrd");
+
+    zfLog("hello world");
 ```
 
 * and here are screenshot of demo 2048 game built by ZFFramework:

@@ -226,6 +226,7 @@ public:
  * @see ZFOBJECT_DECLARE, ZFClass
  */
 #define ZFOBJECT_REGISTER(T_ZFObject) \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(T_ZFObject, const ZFClass *, ClassData) \
     ZF_STATIC_INITIALIZER_INIT(ZFObjectRegister_##T_ZFObject) \
     { \
         T_ZFObject::_ZFP_ZFObjectGetClass()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \

@@ -53,7 +53,7 @@ zfautoObject ZFUIImageLoadFromNativeImage(ZF_IN void *nativeImage)
 
 // ============================================================
 // input
-ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeType_input)
+ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_input)
 {
     ZFCallback input;
     if(!ZFCallbackFromSerializableData(input, serializableData, outErrorHint, outErrorPos))
@@ -89,7 +89,7 @@ zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCallback &input)
         ZFSerializableData inputData;
         if(ZFCallbackToSerializableData(inputData, input))
         {
-            image->imageSerializableTypeSet(ZFUIImageSerializeTypeName_input);
+            image->imageSerializableTypeSet(ZFUIImageSerializeType_input);
             image->imageSerializableDataSet(&inputData);
         }
     }
@@ -99,7 +99,7 @@ zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCallback &input)
 
 // ============================================================
 // color
-ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeType_color)
+ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
 {
     ZFUIColor color = ZFUIColorTransparent;
     { // color
@@ -213,7 +213,7 @@ zfautoObject ZFUIImageLoadFromColor(ZF_IN const ZFUIColor &color,
 
     if(imageData.itemClass() != zfnull)
     {
-        image->imageSerializableTypeSet(ZFUIImageSerializeTypeName_color);
+        image->imageSerializableTypeSet(ZFUIImageSerializeType_color);
         image->imageSerializableDataSet(&imageData);
     }
 

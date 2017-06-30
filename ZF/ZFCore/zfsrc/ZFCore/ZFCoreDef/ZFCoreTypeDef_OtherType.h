@@ -121,22 +121,18 @@ inline zfbool zfindexRangeContain(ZF_IN const zfindexRange &range,
 {
     return (range.count > 0 && index >= range.start && index < range.start + range.count);
 }
-/**
- * @brief compare
- */
+/** @cond ZFPrivateDoc */
 inline zfbool operator == (ZF_IN const zfindexRange &v0,
                            ZF_IN const zfindexRange &v1)
 {
     return (v0.start == v1.start && v0.count == v1.count);
 }
-/**
- * @brief compare
- */
 inline zfbool operator != (ZF_IN const zfindexRange &v0,
                            ZF_IN const zfindexRange &v1)
 {
     return (v0.start != v1.start || v0.count != v1.count);
 }
+/** @endcond */
 
 // ============================================================
 /**

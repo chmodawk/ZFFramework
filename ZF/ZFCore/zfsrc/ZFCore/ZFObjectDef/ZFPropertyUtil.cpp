@@ -7,7 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFPropertyUtil.h"
-#include "ZFObjectCore.h"
+#include "ZFObjectImpl.h"
 #include "ZFClassUtil.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
@@ -196,4 +196,21 @@ void ZFPropertyGetInfo(ZF_IN_OUT zfstring &ret,
 }
 
 ZF_NAMESPACE_GLOBAL_END
+
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfbool, ZFPropertyIsValueAccessed, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfbool, ZFPropertyIsInitValue, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFCompareResult, ZFPropertyCompare, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, obj0), ZFMP_IN(ZFObject *, obj1), ZFMP_OUT_OPT(zfbool *, successfullyCompared, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFPropertyCopy, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, dstObj), ZFMP_IN(ZFObject *, srcObj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFPropertyRetainSet, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, dstObj), ZFMP_IN(ZFObject *, src))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(ZFObject *, ZFPropertyRetainGet, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObj), ZFMP_OUT_OPT(zfbool *, success, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, ZFPropertyCopyAll, ZFMP_IN(ZFObject *, dstObj), ZFMP_IN(ZFObject *, srcObj), ZFMP_IN_OPT(const ZFFilterForZFProperty *, filter, zfnull), ZFMP_OUT_OPT(ZFCoreArrayPOD<const ZFProperty *> *, copiedProperties, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(void, ZFPropertyGetInfo, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObject))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfstring, ZFPropertyGetInfo, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObject))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
 
