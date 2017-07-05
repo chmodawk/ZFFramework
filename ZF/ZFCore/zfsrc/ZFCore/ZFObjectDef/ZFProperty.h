@@ -184,7 +184,6 @@ public:
      * @brief see #ZFPropertyGetInfo
      */
     ZFPropertyCallbackGetInfo callbackGetInfo;
-    _ZFP_ZFPropertyDeallocCallback _ZFP_ZFPropertyDeallocCallbackFunc;
 
     /**
      * @brief see #ZFPROPERTY_USER_REGISTER_ASSIGN
@@ -218,8 +217,8 @@ public:
     zfbool _ZFP_ZFProperty_serializable;
     const ZFMethod *_ZFP_ZFProperty_setterMethod;
     const ZFMethod *_ZFP_ZFProperty_getterMethod;
-
     const ZFClass *_ZFP_ZFProperty_propertyClassOfRetainProperty;
+    _ZFP_ZFPropertyDeallocCallback _ZFP_ZFPropertyDeallocCallbackFunc;
 };
 
 inline void _ZFP_ZFPropertyInstanceSig(ZF_OUT zfstring &ret,

@@ -913,7 +913,7 @@ ZFClass *ZFClass::_ZFP_ZFClassRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
     else
     {
         cls = d->pointerValueT<ZFClass *>();
-        if(cls->d->constructor != constructor)
+        if(cls->d->isInterface != isInterface || cls->d->classParent != parent)
         {
             zfCoreCriticalMessageTrim(zfTextA("[ZFClass] register a class that already registered: %s"), zfsCoreZ2A(name));
             return zfnull;
