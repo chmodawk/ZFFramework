@@ -27,7 +27,7 @@ find . -name "*.a.*" | xargs rm
 find . -name "*.so.*" | xargs rm
 find . -name "*.dylib.*" | xargs rm
 qmake "$PROJ_PATH/zfproj/Qt/$PROJ_NAME/$PROJ_NAME.pro" -r -spec linux-g++
-make -j1
+make -j2
 cd "$_OLD_DIR"
 
 sh "$ZF_TOOLS_PATH/common/copy_check.sh" "$RELEASE_PATH/module/$PROJ_NAME" "$RELEASE_PATH/all" >/dev/null 2>&1

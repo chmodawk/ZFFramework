@@ -39,11 +39,11 @@ public:
             zfstring tmp;
             #if ZF_ENV_sys_Windows
                 zfcharW buf[1024] = {0};
-                ::GetModuleFileNameW(zfnull, buf, 1024);
+                GetModuleFileNameW(zfnull, buf, 1024);
                 ZFString::toZFChar(tmp, buf, ZFStringEncodingForZFCharW);
             #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown // #if ZF_ENV_sys_Windows
                 zfcharA buf[1024] = {0};
-                zfint len = (zfint)::readlink(zfTextA("/proc/self/exe"), buf, 1024);
+                zfint len = (zfint)readlink(zfTextA("/proc/self/exe"), buf, 1024);
                 if(len > 0)
                 {
                     buf[len] = '\0';

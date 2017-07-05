@@ -20,13 +20,13 @@ const zflongdouble zffloatEpsilonT<zflongdouble>::v = zflongdoubleEpsilon;
 // ============================================================
 ZF_STATIC_INITIALIZER_INIT(ZFCoreUtilMathDataHolder)
 {
-    ::srand((zfuint)time(zfnull));
+    srand((zfuint)time(zfnull));
 }
 ZF_STATIC_INITIALIZER_END(ZFCoreUtilMathDataHolder)
 
 zfuint zfmRand(void)
 {
-    return (zfuint)::rand();
+    return (zfuint)rand();
 }
 
 ZF_NAMESPACE_GLOBAL_END

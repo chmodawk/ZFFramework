@@ -490,6 +490,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name);
     _ZFP_ZFENUM_CONVERTER_DEFINE(ChildEnum) \
     ZFOBJECT_REGISTER(ChildEnum) \
     ZFOBJECT_REGISTER(ChildEnum##Editable) \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(ChildEnum, zfuint, EnumDefault) \
     ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfidentity, hashForValue, ZFMP_IN(zfuint, value)) \
     ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(ChildEnum, zfindex, EnumCount) \
     ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfindex, EnumIndexForValue, ZFMP_IN(zfuint, value)) \

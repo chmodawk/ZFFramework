@@ -11,6 +11,6 @@ fi
 
 _OLD_DIR=$(pwd)
 cd "$PROJ_PATH"
-ndk-build -j1
+ndk-build -j2
 cd "$_OLD_DIR"
 

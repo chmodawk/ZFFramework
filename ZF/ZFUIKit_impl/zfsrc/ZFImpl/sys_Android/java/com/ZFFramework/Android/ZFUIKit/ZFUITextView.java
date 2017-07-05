@@ -8,12 +8,10 @@
  * ====================================================================== */
 package com.ZFFramework.Android.ZFUIKit;
 
-import com.ZFFramework.Android.NativeEnum.ZFUIKit.ZFUIAlign;
-import com.ZFFramework.Android.NativeEnum.ZFUIKit.ZFUITextAppearance;
-import com.ZFFramework.Android.NativeEnum.ZFUIKit.ZFUITextTruncateMode;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidLog;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidSize;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidUI;
+import com.ZFFramework.Android.ZF.ZFEnum;
 import com.ZFFramework.Android.ZF.ZFMainEntry;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -40,16 +38,16 @@ public final class ZFUITextView extends TextView {
     public static void native_textAppearanceSet(Object nativeTextView,
                                                 int textAppearance) {
         ZFUITextView nativeTextViewTmp = (ZFUITextView)nativeTextView;
-        if(textAppearance == ZFUITextAppearance.e_Normal) {
+        if(textAppearance == ZFEnum.e("ZFUITextAppearance", "Normal")) {
             nativeTextViewTmp.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
         }
-        else if(textAppearance == ZFUITextAppearance.e_Bold) {
+        else if(textAppearance == ZFEnum.e("ZFUITextAppearance", "Bold")) {
             nativeTextViewTmp.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         }
-        else if(textAppearance == ZFUITextAppearance.e_Italic) {
+        else if(textAppearance == ZFEnum.e("ZFUITextAppearance", "Italic")) {
             nativeTextViewTmp.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.ITALIC));
         }
-        else if(textAppearance == ZFUITextAppearance.e_BoldItalic) {
+        else if(textAppearance == ZFEnum.e("ZFUITextAppearance", "BoldItalic")) {
             nativeTextViewTmp.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD_ITALIC));
         }
         else {
@@ -60,13 +58,13 @@ public final class ZFUITextView extends TextView {
     public static void native_textAlignSet(Object nativeTextView,
                                            int textAlign) {
         ZFUITextView nativeTextViewTmp = (ZFUITextView)nativeTextView;
-        if((textAlign & ZFUIAlign.e_LeftInner) == ZFUIAlign.e_LeftInner) {
+        if((textAlign & ZFEnum.e("ZFUIAlign", "LeftInner")) == ZFEnum.e("ZFUIAlign", "LeftInner")) {
             nativeTextViewTmp.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         }
-        else if((textAlign & ZFUIAlign.e_RightInner) == ZFUIAlign.e_RightInner) {
+        else if((textAlign & ZFEnum.e("ZFUIAlign", "RightInner")) == ZFEnum.e("ZFUIAlign", "RightInner")) {
             nativeTextViewTmp.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         }
-        else if(textAlign == ZFUIAlign.e_Center) {
+        else if(textAlign == ZFEnum.e("ZFUIAlign", "Center")) {
             nativeTextViewTmp.setGravity(Gravity.CENTER);
         }
         else {
@@ -108,16 +106,16 @@ public final class ZFUITextView extends TextView {
     public static void native_textTruncateModeSet(Object nativeTextView,
                                                   int textTruncateMode) {
         ZFUITextView nativeTextViewTmp = (ZFUITextView)nativeTextView;
-        if(textTruncateMode == ZFUITextTruncateMode.e_Disable) {
+        if(textTruncateMode == ZFEnum.e("ZFUITextTruncateMode", "Disable")) {
             nativeTextViewTmp.setEllipsize(TruncateAt.END);
         }
-        else if(textTruncateMode == ZFUITextTruncateMode.e_Tail) {
+        else if(textTruncateMode == ZFEnum.e("ZFUITextTruncateMode", "Tail")) {
             nativeTextViewTmp.setEllipsize(TruncateAt.END);
         }
-        else if(textTruncateMode == ZFUITextTruncateMode.e_Middle) {
+        else if(textTruncateMode == ZFEnum.e("ZFUITextTruncateMode", "Middle")) {
             nativeTextViewTmp.setEllipsize(TruncateAt.MIDDLE);
         }
-        else if(textTruncateMode == ZFUITextTruncateMode.e_Head) {
+        else if(textTruncateMode == ZFEnum.e("ZFUITextTruncateMode", "Head")) {
             nativeTextViewTmp.setEllipsize(TruncateAt.START);
         }
         else {

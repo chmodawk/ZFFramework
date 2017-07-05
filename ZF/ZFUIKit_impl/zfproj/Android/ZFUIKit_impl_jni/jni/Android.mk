@@ -8,5 +8,5 @@
 # ======================================================================
 
 LOCAL_PATH := $(call my-dir)
-include jni/jni_ZFUIKit_impl/Android.mk
+include $(call all-subdir-makefiles)
 

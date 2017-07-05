@@ -8,9 +8,9 @@
  * ====================================================================== */
 package com.ZFFramework.Android.ZFUIKit;
 
-import com.ZFFramework.Android.NativeEnum.ZFUIKit.ZFUIOrientation;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidLog;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidRect;
+import com.ZFFramework.Android.ZF.ZFEnum;
 import com.ZFFramework.Android.ZF.ZFMainEntry;
 import android.app.Activity;
 import android.content.Context;
@@ -45,8 +45,8 @@ public final class ZFUISysWindow extends Activity {
     private boolean _isMainWindow = false;
     private long _zfjniPointerOwnerZFUISysWindow = 0;
     private MainLayout _containerView = null;
-    private int _windowOrientation = ZFUIOrientation.e_Top;
-    private int _windowOrientationFlags = ZFUIOrientation.e_Top;
+    private int _windowOrientation = ZFEnum.e("ZFUIOrientation", "Top");
+    private int _windowOrientationFlags = ZFEnum.e("ZFUIOrientation", "Top");
 
     // ============================================================
     public static void native_nativeMainWindowCreate(long zfjniPointerOwnerZFUISysWindow) {
@@ -83,23 +83,23 @@ public final class ZFUISysWindow extends Activity {
         if(nativeWindow == null) {
             int nativeOrientation = ZFMainEntry.mainEntryActivity().getResources().getConfiguration().orientation;
             if(nativeOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-                return ZFUIOrientation.e_Left;
+                return ZFEnum.e("ZFUIOrientation", "Left");
             }
             else {
-                return ZFUIOrientation.e_Top;
+                return ZFEnum.e("ZFUIOrientation", "Top");
             }
         }
         return ((ZFUISysWindow)nativeWindow)._windowOrientation;
     }
     public static void native_windowOrientationFlagsSet(Object nativeWindow,
-                                                      int windowOrientationFlags) {
+                                                        int windowOrientationFlags) {
         ZFUISysWindow nativeWindowTmp = (ZFUISysWindow)nativeWindow;
         nativeWindowTmp._windowOrientationFlags = windowOrientationFlags;
 
-        boolean left = ((windowOrientationFlags & ZFUIOrientation.e_Left) != 0);
-        boolean top = ((windowOrientationFlags & ZFUIOrientation.e_Top) != 0);
-        boolean right = ((windowOrientationFlags & ZFUIOrientation.e_Right) != 0);
-        boolean bottom = ((windowOrientationFlags & ZFUIOrientation.e_Bottom) != 0);
+        boolean left = ((windowOrientationFlags & ZFEnum.e("ZFUIOrientation", "Left")) != 0);
+        boolean top = ((windowOrientationFlags & ZFEnum.e("ZFUIOrientation", "Top")) != 0);
+        boolean right = ((windowOrientationFlags & ZFEnum.e("ZFUIOrientation", "Right")) != 0);
+        boolean bottom = ((windowOrientationFlags & ZFEnum.e("ZFUIOrientation", "Bottom")) != 0);
 
         int count = 0;
         if(left) {++count;}
@@ -238,19 +238,19 @@ public final class ZFUISysWindow extends Activity {
         int windowOrientationOld = _windowOrientation;
         switch(((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getOrientation()) {
             case Surface.ROTATION_0:
-                _windowOrientation = ZFUIOrientation.e_Top;
+                _windowOrientation = ZFEnum.e("ZFUIOrientation", "Top");
                 break;
             case Surface.ROTATION_90:
-                _windowOrientation = ZFUIOrientation.e_Right;
+                _windowOrientation = ZFEnum.e("ZFUIOrientation", "Right");
                 break;
             case Surface.ROTATION_180:
-                _windowOrientation = ZFUIOrientation.e_Bottom;
+                _windowOrientation = ZFEnum.e("ZFUIOrientation", "Bottom");
                 break;
             case Surface.ROTATION_270:
-                _windowOrientation = ZFUIOrientation.e_Left;
+                _windowOrientation = ZFEnum.e("ZFUIOrientation", "Left");
                 break;
             default:
-                _windowOrientation = ZFUIOrientation.e_Top;
+                _windowOrientation = ZFEnum.e("ZFUIOrientation", "Top");
                 break;
         }
 

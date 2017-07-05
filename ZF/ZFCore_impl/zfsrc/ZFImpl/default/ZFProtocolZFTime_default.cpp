@@ -165,17 +165,17 @@ public:
     virtual zftimet timestamp(void)
     {
         #if ZF_ENV_sys_Windows
-            return (zftimet)::GetTickCount();
+            return (zftimet)GetTickCount();
         #elif __APPLE__
-            static ::mach_timebase_info_data_t _timebaseInfo;
+            static mach_timebase_info_data_t _timebaseInfo;
             if(_timebaseInfo.denom == 0)
             {
-                (void)::mach_timebase_info(&_timebaseInfo);
+                (void)mach_timebase_info(&_timebaseInfo);
             }
-            return (zftimet)(((::mach_absolute_time() / 1000000) * _timebaseInfo.numer) / _timebaseInfo.denom);
+            return (zftimet)(((mach_absolute_time() / 1000000) * _timebaseInfo.numer) / _timebaseInfo.denom);
         #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown // #if ZF_ENV_sys_Windows
             struct timespec ts;
-            ::clock_gettime(CLOCK_MONOTONIC, &ts);
+            clock_gettime(CLOCK_MONOTONIC, &ts);
             return (zftimet)(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
         #endif // #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown
     }
@@ -184,7 +184,7 @@ public:
         #if ZF_ENV_sys_Windows
             #if ZF_ENV_sys_WindowsCE
                 SYSTEMTIME stTmp;
-                ::GetLocalTime(&stTmp);
+                GetLocalTime(&stTmp);
                 this->timeInfoToTimeValue(
                     tv,
                     ZFTimeInfoMake(
@@ -202,13 +202,13 @@ public:
                     zft_zfuint16 ns100;
                     FILETIME ft;
                 } now;
-                ::GetSystemTimeAsFileTime(&now.ft);
+                GetSystemTimeAsFileTime(&now.ft);
                 tv.sec = (time_t)((now.ns100 - 116444736000000000LL) / 10000000LL);
                 tv.usec = (time_t)((now.ns100 / 10LL) % 1000000LL);
             #endif
         #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown // #if ZF_ENV_sys_Windows
             struct timeval tvTmp;
-            ::gettimeofday(&tvTmp, zfnull);
+            gettimeofday(&tvTmp, zfnull);
             tv.sec = tvTmp.tv_sec;
             tv.usec = tvTmp.tv_usec;
         #endif // #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown
@@ -354,7 +354,7 @@ public:
         static ZFTimeValue _tv = ZFTimeValueZero;
         #if ZF_ENV_sys_Windows
             TIME_ZONE_INFORMATION tzInfo;
-            if(::GetTimeZoneInformation(&tzInfo) != TIME_ZONE_ID_INVALID)
+            if(GetTimeZoneInformation(&tzInfo) != TIME_ZONE_ID_INVALID)
             {
                 _tv.sec = -tzInfo.Bias * zftimetOneMinute;
                 _tv.usec = 0;
@@ -362,7 +362,7 @@ public:
         #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown
             struct timeval tvDummy;
             struct timezone tz;
-            if(::gettimeofday(&tvDummy,&tz) == 0)
+            if(gettimeofday(&tvDummy,&tz) == 0)
             {
                 _tv.sec = -tz.tz_minuteswest * zftimetOneMinute;
                 _tv.usec = 0;

@@ -27,35 +27,9 @@ ZF_ROOT_PATH            = ../../../../../ZFFramework
 ZF_SRC_DIRS             =
 ZF_SRC_DIRS             += ../../../zfsrc
 
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFCore/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFUtility/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFUIKit/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFAddition/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFUIWidget/zfsrc
-
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZF_impl/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZF_loader_impl/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFCore_impl/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm_impl/zfsrc
-ZF_SRC_DIRS             += $(ZF_ROOT_PATH)/ZF/ZFUIKit_impl/zfsrc
-
 # extra source files, ensured no unity build
 ZF_SRC_EXT_DIRS         =
 ZF_SRC_EXT_DIRS         += ../../../zfsrc_ext
-
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFCore/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFUtility/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFUIKit/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFAddition/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFUIWidget/zfsrc_ext
-
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZF_impl/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZF_loader_impl/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFCore_impl/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm_impl/zfsrc_ext
-ZF_SRC_EXT_DIRS         += $(ZF_ROOT_PATH)/ZF/ZFUIKit_impl/zfsrc_ext
 
 # whether use unity build
 ZF_UNITY_BUILD          = false
@@ -74,19 +48,7 @@ ZF_BUILD_SHARED         = true
 # extra include path setting, separated by space
 ZF_INCLUDES             =
 ZF_INCLUDES             += ../../../zfsrc
-
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFCore/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFUtility/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFUIKit/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFAddition/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFUIWidget/zfsrc
-
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZF_impl/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZF_loader_impl/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFCore_impl/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFAlgorithm_impl/zfsrc
-ZF_INCLUDES             += $(ZF_ROOT_PATH)/ZF/ZFUIKit_impl/zfsrc
+ZF_INCLUDES             += $(ZF_ROOT_PATH)/_release/Android/all/libs/include
 
 # compiler flags
 ZF_CFLAGS               = -Os
@@ -99,6 +61,19 @@ ZF_LOAD_STATIC_LIB      =
 ZF_LOAD_SHARED_LIB      =
 # ZF dependency
 # ZF_LOAD_SHARED_LIB      += ZFDependencyLib
+
+ZF_LOAD_SHARED_LIB      += ZFCore
+ZF_LOAD_SHARED_LIB      += ZFAlgorithm
+ZF_LOAD_SHARED_LIB      += ZFUtility
+ZF_LOAD_SHARED_LIB      += ZFUIKit
+ZF_LOAD_SHARED_LIB      += ZFAddition
+ZF_LOAD_SHARED_LIB      += ZFUIWidget
+
+ZF_LOAD_SHARED_LIB      += ZF_impl
+ZF_LOAD_SHARED_LIB      += ZF_loader_impl
+ZF_LOAD_SHARED_LIB      += ZFCore_impl
+ZF_LOAD_SHARED_LIB      += ZFAlgorithm_impl
+ZF_LOAD_SHARED_LIB      += ZFUIKit_impl
 
 
 #============================================================
@@ -114,6 +89,52 @@ ZF_LOAD_SHARED_LIB      =
 # LOCAL_MODULE := ZFDependencyLib
 # LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFDependencyLib.so
 # include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFCore
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFCore.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFAlgorithm
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFAlgorithm.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFUtility
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFUtility.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFUIKit
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFUIKit.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFAddition
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFAddition.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFUIWidget
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFUIWidget.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZF_impl
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZF_impl.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZF_loader_impl
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZF_loader_impl.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFCore_impl
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFCore_impl.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFAlgorithm_impl
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFAlgorithm_impl.so
+include $(PREBUILT_SHARED_LIBRARY)
+include $(CLEAR_VARS)
+LOCAL_MODULE := ZFUIKit_impl
+LOCAL_SRC_FILES := ../$(ZF_ROOT_PATH)/_release/Android/all/libs/$(TARGET_ARCH_ABI)/libZFUIKit_impl.so
+include $(PREBUILT_SHARED_LIBRARY)
 
 
 
@@ -165,7 +186,7 @@ endif
 else
 LOCAL_SRC_FILES := $(call zf_find_src_files,$(ZF_SRC_DIRS),$(ZF_SRC_EXTS))
 endif
-LOCAL_SRC_FILES := $(LOCAL_SRC_FILES) $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
+LOCAL_SRC_FILES += $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
 LOCAL_CFLAGS := $(ZF_CFLAGS)
 LOCAL_LDLIBS := $(ZF_LFLAGS)
 

@@ -9,8 +9,8 @@
 
 package com.ZFFramework.Android.ZFUIKit;
 
-import com.ZFFramework.Android.NativeEnum.ZFUIKit.ZFAnimationNativeViewCurve;
 import com.ZFFramework.Android.NativeUtil.ZFAndroidLog;
+import com.ZFFramework.Android.ZF.ZFEnum;
 import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.view.View;
@@ -270,23 +270,34 @@ public class ZFAnimationNativeView {
     private static _CurveEaseIn _curveEaseIn = new _CurveEaseIn();
     private static _CurveEaseOut _curveEaseOut = new _CurveEaseOut();
     private static _CurveEaseInOut _curveEaseInOut = new _CurveEaseInOut();
+    private static int _e_Linear = -1;
+    private static int _e_EaseInOut = -1;
+    private static int _e_EaseIn = -1;
+    private static int _e_EaseOut = -1;
     public static void native_setup(Object nativeAnimation
                                     , int aniCurve
                                     , int aniDuration
                                     ) {
+        if(_e_Linear == -1) {
+            _e_Linear = ZFEnum.e("ZFAnimationNativeViewCurve", "Linear");
+            _e_EaseInOut = ZFEnum.e("ZFAnimationNativeViewCurve", "EaseInOut");
+            _e_EaseIn = ZFEnum.e("ZFAnimationNativeViewCurve", "EaseIn");
+            _e_EaseOut = ZFEnum.e("ZFAnimationNativeViewCurve", "EaseOut");
+        }
+
         NativeAnimation nativeAnimationTmp = (NativeAnimation)nativeAnimation;
         nativeAnimationTmp.nativeAnimationReset();
 
-        if(aniCurve == ZFAnimationNativeViewCurve.e_Linear) {
+        if(aniCurve == _e_Linear) {
             nativeAnimationTmp.setInterpolator(_curveLinear);
         }
-        else if(aniCurve == ZFAnimationNativeViewCurve.e_EaseInOut) {
+        else if(aniCurve == _e_EaseInOut) {
             nativeAnimationTmp.setInterpolator(_curveEaseInOut);
         }
-        else if(aniCurve == ZFAnimationNativeViewCurve.e_EaseIn) {
+        else if(aniCurve == _e_EaseIn) {
             nativeAnimationTmp.setInterpolator(_curveEaseIn);
         }
-        else if(aniCurve == ZFAnimationNativeViewCurve.e_EaseOut) {
+        else if(aniCurve == _e_EaseOut) {
             nativeAnimationTmp.setInterpolator(_curveEaseOut);
         }
         else {

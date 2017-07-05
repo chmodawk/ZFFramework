@@ -161,7 +161,7 @@ endif
 else
 LOCAL_SRC_FILES := $(call zf_find_src_files,$(ZF_SRC_DIRS),$(ZF_SRC_EXTS))
 endif
-LOCAL_SRC_FILES += $(LOCAL_SRC_FILES) $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
+LOCAL_SRC_FILES += $(call zf_find_src_files,$(ZF_SRC_EXT_DIRS),$(ZF_SRC_EXTS))
 LOCAL_CFLAGS := $(ZF_CFLAGS)
 LOCAL_LDLIBS := $(ZF_LFLAGS)
 

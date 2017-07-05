@@ -142,15 +142,15 @@ ZF_ENV_SENSITIVE("Android JNI has no wchar_t version support")
 #else
     zfindex _ZFP_zfslenW(const zfcharW *s)
     {
-        return (zfindex)::wcslen(s);
+        return (zfindex)wcslen(s);
     }
     zfcharW *_ZFP_zfscpyW(zfcharW *dst, const zfcharW *src)
     {
-        return ::wcscpy(dst, src);
+        return wcscpy(dst, src);
     }
     zfint _ZFP_zfscmpW(const zfcharW *s1, const zfcharW *s2)
     {
-        return ::wcscmp(s1, s2);
+        return wcscmp(s1, s2);
     }
     zfint _ZFP_zfsicmpW(const zfcharW *s1, const zfcharW *s2)
     {
@@ -158,7 +158,7 @@ ZF_ENV_SENSITIVE("Android JNI has no wchar_t version support")
     }
     zfint _ZFP_zfsncmpW(const zfcharW *s1, const zfcharW *s2, zfindex count)
     {
-        return ((count == zfindexMax) ? ::wcscmp(s1, s2) : ::wcsncmp(s1, s2, (size_t)count));
+        return ((count == zfindexMax) ? wcscmp(s1, s2) : wcsncmp(s1, s2, (size_t)count));
     }
     zfint _ZFP_zfsnicmpW(const zfcharW *s1, const zfcharW *s2, zfindex count)
     {

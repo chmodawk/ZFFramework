@@ -22,6 +22,7 @@ del /f/s/q "%DST_PATH%\*.c" >nul 2>&1
 del /f/s/q "%DST_PATH%\*.cpp" >nul 2>&1
 del /f/s/q "%DST_PATH%\*.m" >nul 2>&1
 del /f/s/q "%DST_PATH%\*.mm" >nul 2>&1
+del /f/s/q "%DST_PATH%\*.java" >nul 2>&1
 
 del /f/s/q "%DST_PATH%\.*" >nul 2>&1
 >nul 2>&1 (

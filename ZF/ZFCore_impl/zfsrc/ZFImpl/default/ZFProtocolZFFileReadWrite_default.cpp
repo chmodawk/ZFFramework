@@ -69,14 +69,14 @@ public:
 
         #if ZF_ENV_sys_Windows
             zfstringW _filePathSaved = ZFStringZ2W(filePath);
-            DWORD _fileAttrSaved = ::GetFileAttributesW(_filePathSaved.cString());
-            ::SetFileAttributesW(_filePathSaved.cString(), FILE_ATTRIBUTE_NORMAL);
+            DWORD _fileAttrSaved = GetFileAttributesW(_filePathSaved.cString());
+            SetFileAttributesW(_filePathSaved.cString(), FILE_ATTRIBUTE_NORMAL);
         #endif
 
-        ZFFileToken ret = (ZFFileToken)(::fopen(ZFStringZ2A(filePath), sFlag));
+        ZFFileToken ret = (ZFFileToken)(fopen(ZFStringZ2A(filePath), sFlag));
 
         #if ZF_ENV_sys_Windows
-            ::SetFileAttributesW(_filePathSaved.cString(), _fileAttrSaved);
+            SetFileAttributesW(_filePathSaved.cString(), _fileAttrSaved);
         #endif
 
         return ret;
@@ -87,7 +87,7 @@ public:
         {
             return zftrue;
         }
-        return (::fclose((FILE *)token) == 0);
+        return (fclose((FILE *)token) == 0);
     }
 
     virtual zfindex fileTell(ZF_IN ZFFileToken token)
@@ -96,7 +96,7 @@ public:
         {
             return zfindexMax;
         }
-        long result = ::ftell((FILE *)token);
+        long result = ftell((FILE *)token);
         if(result == -1)
         {
             return zfindexMax;
@@ -132,7 +132,7 @@ public:
                 zfCoreCriticalShouldNotGoHere();
                 break;
         }
-        return (::fseek((FILE *)token, seekSize, tmpPos) == 0);
+        return (fseek((FILE *)token, seekSize, tmpPos) == 0);
     }
 
     virtual zfindex fileRead(ZF_IN ZFFileToken token,
@@ -150,7 +150,7 @@ public:
             zfbyte *tmpBuf = (zfbyte *)buf;
             do
             {
-                curReadCount = (zfindex)::fread(tmpBuf, 1, 1024, (FILE *)token);
+                curReadCount = (zfindex)fread(tmpBuf, 1, 1024, (FILE *)token);
                 readCount += curReadCount;
                 tmpBuf += readCount;
             } while(curReadCount == 1024);
@@ -158,7 +158,7 @@ public:
         }
         else
         {
-            return (zfindex)::fread(buf, 1, (size_t)maxByteSize, (FILE *)token);
+            return (zfindex)fread(buf, 1, (size_t)maxByteSize, (FILE *)token);
         }
     }
 
@@ -170,22 +170,22 @@ public:
         {
             return 0;
         }
-        return (zfindex)::fwrite(src, 1, (size_t)maxByteSize, (FILE *)token);
+        return (zfindex)fwrite(src, 1, (size_t)maxByteSize, (FILE *)token);
     }
     virtual void fileFlush(ZF_IN ZFFileToken token)
     {
         if(token != ZFFileTokenInvalid)
         {
-            ::fflush((FILE *)token);
+            fflush((FILE *)token);
         }
     }
     virtual zfbool fileEof(ZF_IN ZFFileToken token)
     {
-        return (::feof((FILE *)token) != 0);
+        return (feof((FILE *)token) != 0);
     }
     virtual zfbool fileError(ZF_IN ZFFileToken token)
     {
-        return (::ferror((FILE *)token) != 0);
+        return (ferror((FILE *)token) != 0);
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFFileReadWriteImpl_default)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFFileReadWriteImpl_default)

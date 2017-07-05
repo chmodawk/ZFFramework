@@ -48,11 +48,11 @@ public:
 typedef DWORD _ZFP_ZFThreadImpl_default_NativeThreadIdType;
 static _ZFP_ZFThreadImpl_default_NativeThreadIdType _ZFP_ZFThreadImpl_default_getNativeThreadId(void)
 {
-    return ::GetCurrentThreadId();
+    return GetCurrentThreadId();
 }
 static void _ZFP_ZFThreadImpl_default_sleep(const zftimet &miliSecs)
 {
-    ::Sleep((DWORD)miliSecs);
+    Sleep((DWORD)miliSecs);
 }
 static void _ZFP_ZFThreadImpl_default_threadCallback(_ZFP_ZFThreadImpl_default_ExecuteData *data);
 static DWORD WINAPI _ZFP_ZFThreadImpl_default_nativeCallback(LPVOID param)
@@ -62,17 +62,17 @@ static DWORD WINAPI _ZFP_ZFThreadImpl_default_nativeCallback(LPVOID param)
 }
 static void _ZFP_ZFThreadImpl_default_startNativeThread(_ZFP_ZFThreadImpl_default_ExecuteData *data)
 {
-    ::CreateThread(NULL, 0, _ZFP_ZFThreadImpl_default_nativeCallback, data, 0, NULL);
+    CreateThread(NULL, 0, _ZFP_ZFThreadImpl_default_nativeCallback, data, 0, NULL);
 }
 #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown
 typedef pthread_t _ZFP_ZFThreadImpl_default_NativeThreadIdType;
 static _ZFP_ZFThreadImpl_default_NativeThreadIdType _ZFP_ZFThreadImpl_default_getNativeThreadId(void)
 {
-    return ::pthread_self();
+    return pthread_self();
 }
 static void _ZFP_ZFThreadImpl_default_sleep(const zftimet &miliSecs)
 {
-    ::usleep((unsigned int)(miliSecs * 1000));
+    usleep((unsigned int)(miliSecs * 1000));
 }
 static void _ZFP_ZFThreadImpl_default_threadCallback(_ZFP_ZFThreadImpl_default_ExecuteData *data);
 static void *_ZFP_ZFThreadImpl_default_nativeCallback(void *param)
@@ -83,7 +83,7 @@ static void *_ZFP_ZFThreadImpl_default_nativeCallback(void *param)
 static void _ZFP_ZFThreadImpl_default_startNativeThread(_ZFP_ZFThreadImpl_default_ExecuteData *data)
 {
     pthread_t tid = 0;
-    ::pthread_create(&tid, NULL, _ZFP_ZFThreadImpl_default_nativeCallback, data);
+    pthread_create(&tid, NULL, _ZFP_ZFThreadImpl_default_nativeCallback, data);
 }
 #endif
 

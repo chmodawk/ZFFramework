@@ -507,7 +507,7 @@ private:
     }
     zftimet aniBySpeed_calcTime(ZF_IN zfint v, ZF_IN zfint offset, ZF_IN zfint a)
     {
-        zftimet t = (zftimet)(zft_zftimet)((-v + ::sqrt((double)((long)v * v + (long)2 * a * offset))) * 1000 / a);
+        zftimet t = (zftimet)(zft_zftimet)((-v + sqrt((double)((long)v * v + (long)2 * a * offset))) * 1000 / a);
         return zfmMax((zftimet)0, t);
     }
 

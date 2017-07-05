@@ -151,7 +151,7 @@ inline void _ZFP_zfdeletePlacementAction(Type *obj)
  */
 inline void *zfmalloc(zfindex size)
 {
-    return ::malloc((size_t)size);
+    return malloc((size_t)size);
 }
 /**
  * @brief util method to #zfmalloc and #zfmemset to zero
@@ -162,7 +162,7 @@ extern ZF_ENV_EXPORT void *zfmallocZero(zfindex size);
  */
 inline void *zfrealloc(void *oldPtr, zfindex newSize)
 {
-    return ::realloc(oldPtr, (size_t)newSize);
+    return realloc(oldPtr, (size_t)newSize);
 }
 /**
  * @brief util method to #zfrealloc and #zfmemset the increased memory to zero
@@ -174,7 +174,7 @@ extern ZF_ENV_EXPORT void *zfreallocZero(void *oldPtr, zfindex newSize, zfindex 
  */
 inline void zffree(void *ptr)
 {
-    ::free(ptr);
+    free(ptr);
 }
 
 /**
@@ -182,28 +182,28 @@ inline void zffree(void *ptr)
  */
 inline void *zfmemset(void *p, zfint ch, zfindex size)
 {
-    return ::memset(p, ch, (size_t)size);
+    return memset(p, ch, (size_t)size);
 }
 /**
  * @brief wrapper to memcpy
  */
 inline void *zfmemcpy(void *dst, const void *src, zfindex size)
 {
-    return ::memcpy(dst, src, (size_t)size);
+    return memcpy(dst, src, (size_t)size);
 }
 /**
  * @brief wrapper to memmove
  */
 inline void *zfmemmove(void *dst, const void *src, zfindex size)
 {
-    return ::memmove(dst, src, (size_t)size);
+    return memmove(dst, src, (size_t)size);
 }
 /**
  * @brief wrapper to memcmp
  */
 inline zfint zfmemcmp(const void *p1, const void *p2, zfindex size)
 {
-    return (zfint)::memcmp(p1, p2, (size_t)size);
+    return (zfint)memcmp(p1, p2, (size_t)size);
 }
 
 /**

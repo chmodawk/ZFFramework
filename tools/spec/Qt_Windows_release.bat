@@ -32,7 +32,7 @@ cd "%ZF_ROOT_PATH%\_tmp\%QT_TYPE%\%PROJ_NAME%"
 del ".\*.dll" /f/s/q/a >nul 2>&1
 del ".\*.a" /f/s/q/a >nul 2>&1
 qmake "%PROJ_PATH%\zfproj\Qt\%PROJ_NAME%\%PROJ_NAME%.pro" -r -spec win32-g++
-mingw32-make -j1
+mingw32-make -j2
 cd "%_OLD_DIR%"
 
 call "%ZF_TOOLS_PATH%\common\copy_check.bat" "%RELEASE_PATH%\module\%PROJ_NAME%" "%RELEASE_PATH%\all" >nul 2>&1

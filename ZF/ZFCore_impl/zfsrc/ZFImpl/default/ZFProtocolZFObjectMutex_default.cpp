@@ -155,33 +155,33 @@ private:
     void init(void)
     {
         this->INVALID_THREAD_ID = (_ZFP_ZFObjectMutexImpl_default_ThreadIdType)INVALID_HANDLE_VALUE;
-        ::InitializeCriticalSection(&(this->mutex));
-        ::InitializeCriticalSection(&(this->mutexParamLocker));
+        InitializeCriticalSection(&(this->mutex));
+        InitializeCriticalSection(&(this->mutexParamLocker));
     }
     void destroy(void)
     {
-        ::DeleteCriticalSection(&(this->mutex));
-        ::DeleteCriticalSection(&(this->mutexParamLocker));
+        DeleteCriticalSection(&(this->mutex));
+        DeleteCriticalSection(&(this->mutexParamLocker));
     }
     _ZFP_ZFObjectMutexImpl_default_ThreadIdType currentThreadId(void)
     {
-        return ::GetCurrentThreadId();
+        return GetCurrentThreadId();
     }
     void paramLock(void)
     {
-        ::EnterCriticalSection(&(this->mutexParamLocker));
+        EnterCriticalSection(&(this->mutexParamLocker));
     }
     void paramUnlock(void)
     {
-        ::LeaveCriticalSection(&(this->mutexParamLocker));
+        LeaveCriticalSection(&(this->mutexParamLocker));
     }
     void doLock(void)
     {
-        ::EnterCriticalSection(&(this->mutex));
+        EnterCriticalSection(&(this->mutex));
     }
     void doUnlock(void)
     {
-        ::LeaveCriticalSection(&(this->mutex));
+        LeaveCriticalSection(&(this->mutex));
     }
 #elif ZF_ENV_sys_Posix || ZF_ENV_sys_unknown
 private:
@@ -197,33 +197,33 @@ private:
     void init(void)
     {
         this->INVALID_THREAD_ID = (_ZFP_ZFObjectMutexImpl_default_ThreadIdType)-1;
-        ::pthread_mutex_init(&(this->mutex), NULL);
-        ::pthread_mutex_init(&(this->mutexParamLocker), NULL);
+        pthread_mutex_init(&(this->mutex), NULL);
+        pthread_mutex_init(&(this->mutexParamLocker), NULL);
     }
     void destroy(void)
     {
-        ::pthread_mutex_destroy(&(this->mutex));
-        ::pthread_mutex_destroy(&(this->mutexParamLocker));
+        pthread_mutex_destroy(&(this->mutex));
+        pthread_mutex_destroy(&(this->mutexParamLocker));
     }
     _ZFP_ZFObjectMutexImpl_default_ThreadIdType currentThreadId(void)
     {
-        return ::pthread_self();
+        return pthread_self();
     }
     void paramLock(void)
     {
-        (void)::pthread_mutex_lock(&(this->mutexParamLocker));
+        (void)pthread_mutex_lock(&(this->mutexParamLocker));
     }
     void paramUnlock(void)
     {
-        ::pthread_mutex_unlock(&(this->mutexParamLocker));
+        pthread_mutex_unlock(&(this->mutexParamLocker));
     }
     void doLock(void)
     {
-        (void)::pthread_mutex_lock(&(this->mutex));
+        (void)pthread_mutex_lock(&(this->mutex));
     }
     void doUnlock(void)
     {
-        ::pthread_mutex_unlock(&(this->mutex));
+        pthread_mutex_unlock(&(this->mutex));
     }
 #endif // #if ZF_ENV_sys_Windows
 };

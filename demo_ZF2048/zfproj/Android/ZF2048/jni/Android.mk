@@ -53,5 +53,5 @@ else
     $(info $(shell cp -rf $(ZF_ROOT_PATH)/_release/Android/module/ZFUIKit_impl/. ./ >/dev/null 2>&1))
 endif
 
-include jni/jni_ZF2048/Android.mk
+include $(call all-subdir-makefiles)
 
