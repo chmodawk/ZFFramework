@@ -492,11 +492,20 @@ public:
         static const ZFMethod *_method = _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE::methodInstance(); \
         return _method; \
     } \
-    ZF_STATIC_INITIALIZER_INIT(_ZFP_ZFMethodFuncRegister_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
+    ZF_STATIC_INITIALIZER_INIT(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
     { \
-        _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE::methodInstance(); \
+        (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName((void (*)( \
+               ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
+               ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
+               ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
+               ParamExpandOrEmpty3(ZFM_COMMA() ParamType3) \
+               ParamExpandOrEmpty4(ZFM_COMMA() ParamType4) \
+               ParamExpandOrEmpty5(ZFM_COMMA() ParamType5) \
+               ParamExpandOrEmpty6(ZFM_COMMA() ParamType6) \
+               ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
+            ))zfnull)); \
     } \
-    ZF_STATIC_INITIALIZER_END(_ZFP_ZFMethodFuncRegister_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
+    ZF_STATIC_INITIALIZER_END(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
     ReturnType (MethodName)( \
         ParamExpandOrEmpty0(            ParamType0 param0) \
         ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \

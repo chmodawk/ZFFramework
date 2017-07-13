@@ -240,7 +240,7 @@ ZF_GLOBAL_INITIALIZER_END(ZFLeakTestOutputCallbackDefaultInit)
 // ============================================================
 // internal function declare
 static void _ZFP_ZFLeakTestPrintLocationInfo(ZF_IN _ZFP_ZFLeakTestSectionData *ownerSection,
-                                             ZF_IN_OPT const ZFCallerInfo &callerInfo = ZFCallerInfo());
+                                             ZF_IN_OPT const ZFCallerInfo &callerInfo = ZFCallerInfoEmpty());
 static void _ZFP_ZFLeakTestPrintObjectStatus(ZF_IN _ZFP_ZFLeakTestSectionData *ownerSection,
                                              ZF_IN ZFObject *obj,
                                              ZF_IN _ZFP_ZFLeakTestObjectData *objectData);
@@ -426,7 +426,7 @@ void _ZFP_ZFLeakTestLogAutoReleaseBeforeRelease(ZF_IN ZFObject *obj)
     ZFCorePointerForPoolObject<_ZFP_ZFLeakTestActionData *> data(zfpoolNew(_ZFP_ZFLeakTestActionData,
         _ZFP_ZFLeakTestAction::e_OnAutoRelease,
         objectRetainCount,
-        ZFCallerInfo()));
+        ZFCallerInfoEmpty()));
 
     _ZFP_ZFLeakTestObjectDataMapType::iterator it = _ZFP_ZFLeakTestActivatingSection->data.find(obj);
     if(it != _ZFP_ZFLeakTestActivatingSection->data.end())
@@ -721,7 +721,7 @@ void _ZFP_ZFLeakTestEnd(void)
 // ============================================================
 // ZFLeakTestPrintStatus
 void _ZFP_ZFLeakTestPrintLocationInfo(ZF_IN _ZFP_ZFLeakTestSectionData *ownerSection,
-                                      ZF_IN_OPT const ZFCallerInfo &callerInfo /* = ZFCallerInfo() */)
+                                      ZF_IN_OPT const ZFCallerInfo &callerInfo /* = ZFCallerInfoEmpty() */)
 {
     if(!_ZFP_ZFLeakTestInitFlag)
     {

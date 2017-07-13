@@ -19,39 +19,36 @@
 #include "ZFCoreLog.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+extern ZF_ENV_EXPORT void _ZFP_zfCoreLogCriticalMessage(ZF_IN const ZFCallerInfo &callerInfo,
+                                                        ZF_IN const zfcharA *fmt,
+                                                        ...);
+extern ZF_ENV_EXPORT void _ZFP_zfCoreLogCriticalMessageV(ZF_IN const ZFCallerInfo &callerInfo,
+                                                         ZF_IN const zfcharA *fmt,
+                                                         ZF_IN va_list vaList);
+extern ZF_ENV_EXPORT void _ZFP_zfCoreCritical(ZF_IN const ZFCallerInfo &callerInfo,
+                                              ZF_IN const zfcharA *fmt,
+                                              ...);
+extern ZF_ENV_EXPORT void _ZFP_zfCoreCriticalV(ZF_IN const ZFCallerInfo &callerInfo,
+                                               ZF_IN const zfcharA *fmt,
+                                               ZF_IN va_list vaList);
+
 // ============================================================
 /**
  * @brief print a critical error message which is easy to notice
  */
-#define zfCoreLogCriticalMessage(fmt, ...) \
-    do { \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-        zfCoreLogTrimNoEndl(zfTextA("| ")); \
-        zfCoreLog(fmt, ##__VA_ARGS__); \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-    } while(zffalse)
+#define zfCoreLogCriticalMessage(fmt, ...) _ZFP_zfCoreLogCriticalMessage(ZFCallerInfoMake(), fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreLogCriticalMessage */
+#define zfCoreLogCriticalMessageV(fmt, vaList) _ZFP_zfCoreLogCriticalMessageV(ZFCallerInfoMake(), fmt, vaList)
 
-/**
- * @brief see #zfCoreLogCriticalMessage
- */
-#define zfCoreLogCriticalMessageTrim(fmt, ...) \
-    do { \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-        zfCoreLogTrimNoEndl(zfTextA("| ")); \
-        zfCoreLogTrim(fmt, ##__VA_ARGS__); \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-    } while(zffalse)
+/** @brief see #zfCoreLogCriticalMessage */
+#define zfCoreLogCriticalMessageTrim(fmt, ...) _ZFP_zfCoreLogCriticalMessage(ZFCallerInfoEmpty(), fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreLogCriticalMessage */
+#define zfCoreLogCriticalMessageTrimV(fmt, vaList) _ZFP_zfCoreLogCriticalMessageV(ZFCallerInfoEmpty(), fmt, vaList)
 
-/**
- * @brief see #zfCoreLogCriticalMessage
- */
-#define zfCoreLogCriticalMessageDetail(callerInfo, fmt, ...) \
-    do { \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-        zfCoreLogTrimNoEndl(zfTextA("| ")); \
-        zfCoreLogDetail(callerInfo, fmt, ##__VA_ARGS__); \
-        zfCoreLogTrimNoEndl(zfTextA("============================================================\n")); \
-    } while(zffalse)
+/** @brief see #zfCoreLogCriticalMessage */
+#define zfCoreLogCriticalMessageDetail(callerInfo, fmt, ...) _ZFP_zfCoreLogCriticalMessage(callerInfo, fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreLogCriticalMessage */
+#define zfCoreLogCriticalMessageDetailV(callerInfo, fmt, vaList) _ZFP_zfCoreLogCriticalMessageV(callerInfo, fmt, vaList)
 
 // ============================================================
 /**
@@ -63,51 +60,31 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @note unlike zfassert, this function is always active, even if ZF_ENV_DEBUG is zftrue
  * @see zfassert
  */
-#define zfCoreAssert(exp) \
-    zfCoreAssertWithMessage(exp, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
+#define zfCoreAssert(exp) zfCoreAssertWithMessage(exp, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
 
-/**
- * @brief see #zfCoreAssert
- */
-#define zfCoreAssertTrim(exp) \
-    zfCoreAssertWithMessageTrim(exp, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
+/** @brief see #zfCoreAssert */
+#define zfCoreAssertTrim(exp) zfCoreAssertWithMessageTrim(exp, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
 
-/**
- * @brief see #zfCoreAssert
- */
-#define zfCoreAssertDetail(exp, callerInfo) \
-    zfCoreAssertWithMessageDetail(exp, callerInfo, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
+/** @brief see #zfCoreAssert */
+#define zfCoreAssertDetail(exp, callerInfo) zfCoreAssertWithMessageDetail(exp, callerInfo, zfTextA("assert failed for \"%s\""), ZFM_TOSTRING_A(exp))
 
 // ============================================================
 /**
  * @brief print a critical error message and abort
  */
-#define zfCoreCriticalMessage(fmt, ...) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessage(fmt, ##__VA_ARGS__); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+#define zfCoreCriticalMessage(fmt, ...) _ZFP_zfCoreCritical(ZFCallerInfoMake(), fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreCriticalMessage */
+#define zfCoreCriticalMessageV(fmt, vaList) _ZFP_zfCoreCriticalV(ZFCallerInfoMake(), fmt, vaList)
 
-/**
- * @brief see #zfCoreCriticalMessage
- */
-#define zfCoreCriticalMessageTrim(fmt, ...) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessageTrim(fmt, ##__VA_ARGS__); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+/** @brief see #zfCoreCriticalMessage */
+#define zfCoreCriticalMessageTrim(fmt, ...) _ZFP_zfCoreCritical(ZFCallerInfoEmpty(), fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreCriticalMessage */
+#define zfCoreCriticalMessageTrimV(fmt, vaList) _ZFP_zfCoreCriticalV(ZFCallerInfoEmpty(), fmt, vaList)
 
-/**
- * @brief see #zfCoreCriticalMessage
- */
-#define zfCoreCriticalMessageDetail(callerInfo, fmt, ...) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessageDetail(callerInfo, fmt, ##__VA_ARGS__); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+/** @brief see #zfCoreCriticalMessage */
+#define zfCoreCriticalMessageDetail(callerInfo, fmt, ...) _ZFP_zfCoreCritical(callerInfo, fmt, ##__VA_ARGS__)
+/** @brief see #zfCoreCriticalMessage */
+#define zfCoreCriticalMessageDetailV(callerInfo, fmt, vaList) _ZFP_zfCoreCriticalV(callerInfo, fmt, vaList)
 
 // ============================================================
 /**
@@ -151,65 +128,39 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief log that likes "[file function (line)] index i out of range [0, n)"
  */
 #define zfCoreCriticalIndexOutOfRange(index, range) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessage(zfTextA("index %s out of range [0, %s)"), \
-            zfsFromInt<zfstringA>(index).cString(), \
-            zfsFromInt<zfstringA>(range).cString()); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+    zfCoreCriticalIndexOutOfRangeDetail(ZFCallerInfoMake(), index, range)
 /**
  * @brief see #zfCoreCriticalIndexOutOfRange
  */
-#define zfCoreCriticalIndexOutOfRangeDetail(index, range, callerInfo) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessageDetail(callerInfo, \
-            zfTextA("index %s out of range [0, %s)"), \
-            zfsFromInt<zfstringA>(index).cString(), \
-            zfsFromInt<zfstringA>(range).cString()); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+#define zfCoreCriticalIndexOutOfRangeDetail(callerInfo, index, range) \
+    zfCoreCriticalMessageDetail(callerInfo, \
+        zfTextA("index %zi out of range [0, %zi)"), \
+        (zfindex)(index), \
+        (zfindex)(range))
 
 // ============================================================
 /**
  * @brief log that likes "[file function (line)] should not go here"
  */
 #define zfCoreCriticalShouldNotGoHere() \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessage(zfTextA("should not go here")); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+    zfCoreCriticalShouldNotGoHereDetail(ZFCallerInfoMake())
 /**
  * @brief see #zfCoreCriticalShouldNotGoHere
  */
 #define zfCoreCriticalShouldNotGoHereDetail(callerInfo) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessageDetail(callerInfo, zfTextA("should not go here")); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+    zfCoreCriticalMessageDetail(callerInfo, zfTextA("should not go here"))
 
 // ============================================================
 /**
  * @brief log that likes "[file function (line)] not supported"
  */
 #define zfCoreCriticalNotSupported() \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessage(zfTextA("not supported")); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+    zfCoreCriticalNotSupportedDetail(ZFCallerInfoMake())
 /**
  * @brief see #zfCoreCriticalNotSupported
  */
 #define zfCoreCriticalNotSupportedDetail(callerInfo) \
-    do { \
-        zfCoreCriticalErrorPrepare(); \
-        zfCoreLogCriticalMessageDetail(callerInfo, zfTextA("not supported")); \
-        zfCoreCriticalError(); \
-    } while(zffalse)
+    zfCoreCriticalMessageDetail(callerInfo, zfTextA("not supported"))
 
 ZF_NAMESPACE_GLOBAL_END
 

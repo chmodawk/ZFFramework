@@ -13,16 +13,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // ZFObject
-ZF_STATIC_INITIALIZER_INIT(ZFPropertyTypeIdRegister_ZFObject)
+ZF_STATIC_INITIALIZER_INIT(PropTIReg_ZFObject)
 {
     _ZFP_ZFPropertyTypeIdDataRegister(ZFPropertyTypeId_ZFObject,
         zfnew(ZFPropertyTypeIdData<ZFObject *>));
 }
-ZF_STATIC_INITIALIZER_DESTROY(ZFPropertyTypeIdRegister_ZFObject)
+ZF_STATIC_INITIALIZER_DESTROY(PropTIReg_ZFObject)
 {
     _ZFP_ZFPropertyTypeIdDataUnregister(ZFPropertyTypeId_ZFObject);
 }
-ZF_STATIC_INITIALIZER_END(ZFPropertyTypeIdRegister_ZFObject)
+ZF_STATIC_INITIALIZER_END(PropTIReg_ZFObject)
 
 // ============================================================
 // ZFCallerInfo

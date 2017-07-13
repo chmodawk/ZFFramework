@@ -55,10 +55,7 @@ public:
     }
     ~_ZFP_ZFIdMapUnregisterHolder(void)
     {
-        if(!*(this->ZFCoreLibDestroyFlag))
-        {
-            _ZFP_ZFIdMapUnregister(this->ZFCoreLibDestroyFlag, this->moduleName, this->idValue);
-        }
+        _ZFP_ZFIdMapUnregister(this->ZFCoreLibDestroyFlag, this->moduleName, this->idValue);
     }
 
 private:

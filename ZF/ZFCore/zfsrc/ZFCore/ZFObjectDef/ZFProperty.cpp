@@ -90,6 +90,12 @@ zfclassLikePOD _ZFP_ZFPropertyMapData
 public:
     zfindex refCount;
     ZFProperty propertyInfo;
+public:
+    _ZFP_ZFPropertyMapData(void)
+    : refCount(1)
+    , propertyInfo()
+    {
+    }
 };
 ZF_STATIC_INITIALIZER_INIT(ZFPropertyDataHolder)
 {

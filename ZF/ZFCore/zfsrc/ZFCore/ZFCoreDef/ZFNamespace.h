@@ -33,7 +33,7 @@
 /**
  * @brief global namespace id for impl
  */
-#define ZF_NAMESPACE_GLOBAL_ID ZFFramework
+#define ZF_NAMESPACE_GLOBAL_ID ZF
 /**
  * @brief abbreviation for global namespace id for impl
  */

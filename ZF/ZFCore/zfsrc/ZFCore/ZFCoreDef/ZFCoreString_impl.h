@@ -22,7 +22,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 template<typename T_Char>
-zfclassNotPOD _ZFP_ZFCoreString_implPrivate
+zfclassNotPOD _zfstrD
 {
 public:
     zfbool builtinBuf;
@@ -36,7 +36,7 @@ public:
     } d;
 
 public:
-    _ZFP_ZFCoreString_implPrivate(void)
+    _zfstrD(void)
     : builtinBuf(zftrue)
     , length(0)
     , d()
@@ -71,22 +71,22 @@ public:
  * @brief low level string container
  */
 template<typename T_Char>
-zfclassLikePOD ZF_ENV_EXPORT ZFCoreString_impl
+zfclassLikePOD ZF_ENV_EXPORT _zfstr
 {
 public:
     /** @brief construct an empty string */
-    ZFCoreString_impl(void)
+    _zfstr(void)
     : d()
     {
     }
     /** @brief construct a string with specified capacity */
-    ZFCoreString_impl(ZF_IN zfindex capacity)
+    _zfstr(ZF_IN zfindex capacity)
     : d()
     {
         _capacityRequire(capacity)[0] = '\0';
     }
     /** @brief copy content from another string */
-    ZFCoreString_impl(ZF_IN const ZFCoreString_impl &s)
+    _zfstr(ZF_IN const _zfstr &s)
     : d()
     {
         T_Char *buf = _capacityRequire(s.length());
@@ -95,7 +95,7 @@ public:
         buf[d.length] = '\0';
     }
     /** @brief copy content from another string */
-    ZFCoreString_impl(ZF_IN const ZFCoreString_impl &s, zfindex pos)
+    _zfstr(ZF_IN const _zfstr &s, zfindex pos)
     : d()
     {
         if(pos < s.length())
@@ -107,7 +107,7 @@ public:
         }
     }
     /** @brief copy content from another string */
-    ZFCoreString_impl(ZF_IN const ZFCoreString_impl &s, zfindex pos, zfindex len)
+    _zfstr(ZF_IN const _zfstr &s, zfindex pos, zfindex len)
     : d()
     {
         if(pos < s.length())
@@ -123,7 +123,7 @@ public:
         }
     }
     /** @brief copy content from another string */
-    ZFCoreString_impl(ZF_IN const T_Char *s)
+    _zfstr(ZF_IN const T_Char *s)
     : d()
     {
         if(s)
@@ -136,7 +136,7 @@ public:
         }
     }
     /** @brief copy content from another string */
-    ZFCoreString_impl(ZF_IN const T_Char *s, zfindex len)
+    _zfstr(ZF_IN const T_Char *s, zfindex len)
     : d()
     {
         if(s)
@@ -151,7 +151,7 @@ public:
             buf[d.length] = '\0';
         }
     }
-    ~ZFCoreString_impl(void)
+    ~_zfstr(void)
     {
         if(!d.builtinBuf)
         {
@@ -166,7 +166,7 @@ public:
 
 public:
     /** @cond ZFPrivateDoc */
-    inline ZFCoreString_impl &operator = (ZF_IN const ZFCoreString_impl &s)
+    inline _zfstr &operator = (ZF_IN const _zfstr &s)
     {
         if(&s == this)
         {
@@ -177,8 +177,8 @@ public:
             return this->assign(s);
         }
     }
-    inline ZFCoreString_impl &operator = (ZF_IN const T_Char *s) {return this->assign(s);}
-    ZFCoreString_impl &operator = (ZF_IN T_Char c)
+    inline _zfstr &operator = (ZF_IN const T_Char *s) {return this->assign(s);}
+    _zfstr &operator = (ZF_IN T_Char c)
     {
         T_Char *buf = d.buf();
         buf[0] = c;
@@ -186,11 +186,11 @@ public:
         d.length = 1;
         return *this;
     }
-    zfbool operator == (ZF_IN const ZFCoreString_impl &ref) const
+    zfbool operator == (ZF_IN const _zfstr &ref) const
     {
         return (this->compare(ref) == 0);
     }
-    zfbool operator != (ZF_IN const ZFCoreString_impl &ref) const
+    zfbool operator != (ZF_IN const _zfstr &ref) const
     {
         return (this->compare(ref) != 0);
     }
@@ -206,9 +206,9 @@ public:
 
 public:
     /** @cond ZFPrivateDoc */
-    inline ZFCoreString_impl &operator += (ZF_IN const ZFCoreString_impl &s) {return this->append(s);}
-    inline ZFCoreString_impl &operator += (ZF_IN const T_Char *s) {return this->append(s);}
-    ZFCoreString_impl &operator += (ZF_IN T_Char c)
+    inline _zfstr &operator += (ZF_IN const _zfstr &s) {return this->append(s);}
+    inline _zfstr &operator += (ZF_IN const T_Char *s) {return this->append(s);}
+    _zfstr &operator += (ZF_IN T_Char c)
     {
         T_Char *buf = _capacityRequire(d.length + 1);
         buf[d.length] = c;
@@ -232,16 +232,16 @@ public:
 
 public:
     /** @brief append string */
-    inline ZFCoreString_impl &append(ZF_IN const ZFCoreString_impl &s) {this->append(s.cString(), s.length()); return *this;}
+    inline _zfstr &append(ZF_IN const _zfstr &s) {this->append(s.cString(), s.length()); return *this;}
     /** @brief append string */
-    inline ZFCoreString_impl &append(ZF_IN const ZFCoreString_impl &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &append(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
     {
         return this->append(s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief append string */
-    inline ZFCoreString_impl &append(ZF_IN const T_Char *s) {return this->append(s, zfindexMax);}
+    inline _zfstr &append(ZF_IN const T_Char *s) {return this->append(s, zfindexMax);}
     /** @brief append string */
-    ZFCoreString_impl &append(ZF_IN const T_Char *s, ZF_IN zfindex len)
+    _zfstr &append(ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(s)
         {
@@ -260,16 +260,16 @@ public:
 
 public:
     /** @brief replace all content of the string */
-    inline ZFCoreString_impl &assign(ZF_IN const ZFCoreString_impl &s) {return this->assign(s.cString(), s.length());}
+    inline _zfstr &assign(ZF_IN const _zfstr &s) {return this->assign(s.cString(), s.length());}
     /** @brief replace all content of the string */
-    inline ZFCoreString_impl &assign(ZF_IN const ZFCoreString_impl &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &assign(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
     {
         return this->assign(s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief replace all content of the string */
-    inline ZFCoreString_impl &assign(ZF_IN const T_Char *s) {return this->assign(s, zfindexMax);}
+    inline _zfstr &assign(ZF_IN const T_Char *s) {return this->assign(s, zfindexMax);}
     /** @brief replace all content of the string */
-    ZFCoreString_impl &assign(ZF_IN const T_Char *s, ZF_IN zfindex len)
+    _zfstr &assign(ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(s)
         {
@@ -293,16 +293,16 @@ public:
 
 public:
     /** @brief insert string */
-    inline ZFCoreString_impl &insert(ZF_IN zfindex insertAt, ZF_IN const ZFCoreString_impl &s) {return this->insert(insertAt, s.cString(), s.length());}
+    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const _zfstr &s) {return this->insert(insertAt, s.cString(), s.length());}
     /** @brief insert string */
-    inline ZFCoreString_impl &insert(ZF_IN zfindex insertAt, ZF_IN const ZFCoreString_impl &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
     {
         return this->insert(insertAt, s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief insert string */
-    inline ZFCoreString_impl &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s) {return this->insert(insertAt, s, zfindexMax);}
+    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s) {return this->insert(insertAt, s, zfindexMax);}
     /** @brief insert string */
-    ZFCoreString_impl &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s, ZF_IN zfindex len)
+    _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(insertAt >= d.length)
         {
@@ -326,16 +326,16 @@ public:
 
 public:
     /** @brief replace string in range */
-    inline ZFCoreString_impl &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const ZFCoreString_impl &s) {return this->replace(replacePos, replaceLen, s.cString(), s.length());}
+    inline _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const _zfstr &s) {return this->replace(replacePos, replaceLen, s.cString(), s.length());}
     /** @brief replace string in range */
-    ZFCoreString_impl &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const ZFCoreString_impl &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
     {
         return this->replace(replacePos, replaceLen, s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief replace string in range */
-    inline ZFCoreString_impl &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s) {return this->replace(replacePos, replaceLen, s, zfindexMax);}
+    inline _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s) {return this->replace(replacePos, replaceLen, s, zfindexMax);}
     /** @brief replace string in range */
-    ZFCoreString_impl &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s, ZF_IN zfindex len)
+    _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(replacePos >= d.length)
         {
@@ -414,7 +414,7 @@ public:
 
 public:
     /** @brief compare with another string */
-    inline zfint compare(ZF_IN const ZFCoreString_impl &s) const {return zfscmpT(this->cString(), s.cString());}
+    inline zfint compare(ZF_IN const _zfstr &s) const {return zfscmpT(this->cString(), s.cString());}
     /** @brief compare with another string */
     zfint compare(ZF_IN const T_Char *s, ZF_IN zfindex len = zfindexMax) const
     {
@@ -449,7 +449,7 @@ public:
     }
 
 private:
-    _ZFP_ZFCoreString_implPrivate<T_Char> d;
+    _zfstrD<T_Char> d;
 private:
     T_Char *_capacityRequire(ZF_IN zfindex size)
     {
@@ -494,10 +494,10 @@ private:
     }
 };
 
-/** @brief see #ZFCoreString_impl */
-typedef ZFCoreString_impl<zfcharA> ZFCoreStringA_impl;
-/** @brief see #ZFCoreString_impl */
-typedef ZFCoreString_impl<zfcharW> ZFCoreStringW_impl;
+/** @brief see #_zfstr */
+typedef _zfstr<zfcharA> ZFCoreStringA_impl;
+/** @brief see #_zfstr */
+typedef _zfstr<zfcharW> ZFCoreStringW_impl;
 
 ZF_NAMESPACE_GLOBAL_END
 

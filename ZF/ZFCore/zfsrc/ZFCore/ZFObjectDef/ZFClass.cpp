@@ -950,6 +950,10 @@ ZFClass *ZFClass::_ZFP_ZFClassRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
 }
 void ZFClass::_ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const zfchar *name)
 {
+    if(*ZFCoreLibDestroyFlag)
+    {
+        return ;
+    }
     zfCoreMutexLocker();
 
     zfiterator it = _ZFP_ZFClassMap.iteratorForKey(name);
@@ -1429,7 +1433,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(ZFClass, v_ZFClass, const ZFClass *, classForName, ZFMP_IN(const zfchar *, className))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_2(ZFClass, v_ZFClass, zfautoObject, newInstanceForName, ZFMP_IN(const zfchar *, className), ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfo()))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_2(ZFClass, v_ZFClass, zfautoObject, newInstanceForName, ZFMP_IN(const zfchar *, className), ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(ZFClass, v_ZFClass, zfautoObject, newInstanceForNameWithoutLeakTest, ZFMP_IN(const zfchar *, className))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(ZFClass, v_ZFClass, void, allClass, ZFMP_OUT(ZFCoreArray<const ZFClass *> &, ret))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_0(ZFClass, v_ZFClass, ZFCoreArrayPOD<const ZFClass *>, allClass)
@@ -1445,7 +1449,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsAbstract)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsInterface)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsPrivate)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsInternal)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, zfautoObject, newInstance, ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfo()))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, zfautoObject, newInstance, ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfautoObject, newInstanceWithoutLeakTest)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfindex, implementedInterfaceCount)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, const ZFClass *, implementedInterfaceAtIndex, ZFMP_IN(zfindex, index))

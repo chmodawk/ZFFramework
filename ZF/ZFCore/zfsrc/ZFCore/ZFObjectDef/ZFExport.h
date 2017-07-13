@@ -64,23 +64,23 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     }
 
 #define _ZFP_ZFEXPORT_VAR_DEFINE(Type, Name, ZFLevel_, initAction, deallocAction) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFGlobalVar_##Name, ZFLevel_) \
+    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(GlobV_##Name, ZFLevel_) \
     { \
         initAction \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(_ZFP_ZFGlobalVar_##Name) \
+    ZF_GLOBAL_INITIALIZER_DESTROY(GlobV_##Name) \
     { \
         deallocAction \
     } \
     Type v; \
-    ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFGlobalVar_##Name) \
+    ZF_GLOBAL_INITIALIZER_END(GlobV_##Name) \
     ZFMETHOD_FUNC_DEFINE_0(Type &, Name) \
     { \
-        return ZF_GLOBAL_INITIALIZER_INSTANCE(_ZFP_ZFGlobalVar_##Name)->v; \
+        return ZF_GLOBAL_INITIALIZER_INSTANCE(GlobV_##Name)->v; \
     } \
     ZFMETHOD_FUNC_DEFINE_1(void, ZFM_CAT(Name, Set), ZFMP_IN(Type const &, v)) \
     { \
-        ZF_GLOBAL_INITIALIZER_INSTANCE(_ZFP_ZFGlobalVar_##Name)->v = v; \
+        ZF_GLOBAL_INITIALIZER_INSTANCE(GlobV_##Name)->v = v; \
     }
 
 // ============================================================
@@ -102,19 +102,19 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     }
 
 #define _ZFP_ZFEXPORT_VAR_READONLY_DEFINE(Type, Name, ZFLevel_, initAction, deallocAction) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFGlobalVar_##Name, ZFLevel_) \
+    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(GlobV_##Name, ZFLevel_) \
     { \
         initAction \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(_ZFP_ZFGlobalVar_##Name) \
+    ZF_GLOBAL_INITIALIZER_DESTROY(GlobV_##Name) \
     { \
         deallocAction \
     } \
     Type v; \
-    ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFGlobalVar_##Name) \
+    ZF_GLOBAL_INITIALIZER_END(GlobV_##Name) \
     ZFMETHOD_FUNC_DEFINE_0(Type const &, Name) \
     { \
-        return ZF_GLOBAL_INITIALIZER_INSTANCE(_ZFP_ZFGlobalVar_##Name)->v; \
+        return ZF_GLOBAL_INITIALIZER_INSTANCE(GlobV_##Name)->v; \
     }
 
 // ============================================================
@@ -129,18 +129,28 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @endcode
  */
 #define ZFEXPORT_ENUM_DEFINE(EnumName, enumValues, ...) \
-    _ZFP_ZFEXPORT_ENUM_BEGIN(ZF_CALLER_LINE, EnumName) \
-    ZFM_FIX_PARAM(_ZFP_ZFEXPORT_ENUM_EXPAND, ZFM_EMPTY, enumValues, ##__VA_ARGS__) \
-    _ZFP_ZFEXPORT_ENUM_END(ZF_CALLER_LINE, EnumName)
-#define _ZFP_ZFEXPORT_ENUM_BEGIN(DECLARE_LINE, EnumName) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFEXPORT_ENUM_##EnumName##_##DECLARE_LINE, ZFLevelZFFrameworkNormal) \
-    {
-#define _ZFP_ZFEXPORT_ENUM_END(DECLARE_LINE, EnumName) \
+    _ZFP_ZFEXPORT_ENUM_DEFINE(ZF_CALLER_LINE, EnumName, enumValues, ##__VA_ARGS__)
+
+#define _ZFP_ZFEXPORT_ENUM_DEFINE(...) \
+    ZFM_EXPAND(_ZFP_ZFEXPORT_ENUM_DEFINE_(__VA_ARGS__))
+#define _ZFP_ZFEXPORT_ENUM_DEFINE_(DECLARE_LINE, EnumName, enumValues, ...) \
+    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFEXPORT_ENUM_##EnumName##_##DECLARE_LINE, ZFLevelZFFrameworkNormal) \
+    { \
+        ZFM_FIX_PARAM(_ZFP_ZFEXPORT_ENUM_EXPAND, ZFM_EMPTY, enumValues, ##__VA_ARGS__) \
     } \
-    ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFEXPORT_ENUM_##EnumName##_##DECLARE_LINE)
+    ZF_GLOBAL_INITIALIZER_DESTROY(ZFEXPORT_ENUM_##EnumName##_##DECLARE_LINE) \
+    { \
+        for(zfindex i = 0; i < m.count(); ++i) \
+        { \
+            ZFMethodFuncUserUnregister(m[i]); \
+        } \
+    } \
+    ZFCoreArrayPOD<const ZFMethod *> m; \
+    ZF_GLOBAL_INITIALIZER_END(ZFEXPORT_ENUM_##EnumName##_##DECLARE_LINE)
 #define _ZFP_ZFEXPORT_ENUM_EXPAND(v) \
     { \
         ZFMethodFuncUserRegister_0(resultMethod, {return v;}, zfint, v); \
+        m.add(resultMethod); \
     }
 
 ZF_NAMESPACE_GLOBAL_END

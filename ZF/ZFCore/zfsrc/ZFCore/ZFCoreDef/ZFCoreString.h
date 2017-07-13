@@ -18,14 +18,14 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-/** @brief see #ZFCoreString_impl */
+/** @brief see #_zfstr */
 #ifndef _ZFT_ZFCoreStringA
     typedef ZFCoreStringA_impl ZFCoreStringA;
 #else
     typedef _ZFT_ZFCoreStringA ZFCoreStringA;
 #endif
 
-/** @brief see #ZFCoreString_impl */
+/** @brief see #_zfstr */
 #ifndef _ZFT_ZFCoreStringW
     typedef ZFCoreStringW_impl ZFCoreStringW;
 #else

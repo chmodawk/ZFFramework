@@ -45,7 +45,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFLuaErrorOccurred(ZF_IN const ZFCallerInfo &call
  * @brief util method to notify #ZFLuaErrorCallbacks
  */
 #define ZFLuaErrorOccurredTrim(fmt, ...) \
-    ZFLuaErrorOccurredDetail(ZFCallerInfo(), fmt, ##__VA_ARGS__)
+    ZFLuaErrorOccurredDetail(ZFCallerInfoEmpty(), fmt, ##__VA_ARGS__)
 /**
  * @brief util method to notify #ZFLuaErrorCallbacks
  */

@@ -51,6 +51,16 @@ void _ZFP_zfCoreLog(ZF_IN const ZFCallerInfo &callerInfo,
                     ZF_IN const zfcharA *format,
                     ...)
 {
+    va_list vaList;
+    va_start(vaList, format);
+    _ZFP_zfCoreLogV(callerInfo, isAutoEndl, format, vaList);
+    va_end(vaList);
+}
+void _ZFP_zfCoreLogV(ZF_IN const ZFCallerInfo &callerInfo,
+                     ZF_IN zfbool isAutoEndl,
+                     ZF_IN const zfcharA *format,
+                     ZF_IN va_list vaList)
+{
     if(_ZFP_ZFCoreLogOutputCallback == zfnull)
     {
         return ;
@@ -58,8 +68,6 @@ void _ZFP_zfCoreLog(ZF_IN const ZFCallerInfo &callerInfo,
 
     zfstringA s;
 
-    va_list vaList;
-    va_start(vaList, format);
     if(callerInfo.callerInfoAT(s))
     {
         s += ' ';
@@ -69,7 +77,6 @@ void _ZFP_zfCoreLog(ZF_IN const ZFCallerInfo &callerInfo,
     {
         zfstringAppend(s, zfTextA("\n"));
     }
-    va_end(vaList);
 
     _ZFP_ZFCoreLogOutputCallback(zfsCoreZ2A(s.cString()));
 }

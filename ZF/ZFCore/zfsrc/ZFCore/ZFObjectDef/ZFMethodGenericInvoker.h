@@ -75,36 +75,36 @@ inline const zfautoObject &_ZFP_ZFMethodGenericInvokeraultParamHolder(void)
 
 // ============================================================
 template<typename T_Dummy, int n>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerTypeCheck
+zfclassNotPOD _ZFP_MtdGICheck
 {
 };
 template<typename T_Dummy>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerTypeCheck<T_Dummy, 1>
+zfclassNotPOD _ZFP_MtdGICheck<T_Dummy, 1>
 {
 public:
-    typedef int AllTypeMustBeRegisteredBy_ZFPROPERTY_TYPE_XXX;
+    typedef int TypeMustRegisterByZFPROPERTY;
 };
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_DECLARE_EXPAND(ParamType, param, N) \
-    typedef ParamType _ParamType##N; \
-    typedef zftTraitsType<ParamType>::TraitsRemoveReference _ParamTypeTraits##N; \
-    typedef _ZFP_ZFMethodGenericInvokerTypeCheck< \
-            _ParamTypeTraits##N, \
-            ZFPropertyTypeIdData<_ParamTypeTraits##N>::PropertyRegistered \
-        >::AllTypeMustBeRegisteredBy_ZFPROPERTY_TYPE_XXX _ParamTypeCheck##N;
+    typedef ParamType _T##N; \
+    typedef zftTraitsType<ParamType>::TraitsRemoveReference _TR##N; \
+    typedef _ZFP_MtdGICheck< \
+            _TR##N, \
+            ZFPropertyTypeIdData<_TR##N>::PropertyRegistered \
+        >::TypeMustRegisterByZFPROPERTY _Ck##N;
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(ParamType, param, N) \
     if(!(N >= invokerMethod->methodParamDefaultBeginIndex() && param == ZFMethodGenericInvokeraultParam) \
-        && !ZFPropertyTypeIdData<_ParamTypeTraits##N>::Value<_ParamTypeTraits##N>::accessAvailable(param)) \
+        && !ZFPropertyTypeIdData<_TR##N>::Value<_TR##N>::accessAvailable(param)) \
     { \
         zfstringAppend(errorHint, \
                 zfText("[ZFMethodGenericInvoker] unable to access param%zi as type %s: %s"), \
                 (zfindex)N, \
-                ZFPropertyTypeIdData<_ParamTypeTraits##N>::PropertyTypeId(), \
+                ZFPropertyTypeIdData<_TR##N>::PropertyTypeId(), \
                 ZFObjectInfo(param).cString() \
             ); \
         return zffalse; \
     }
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(paramDefaultAccess, ParamType, param, N) \
-    ZFPropertyTypeIdData<_ParamTypeTraits##N>::Value<_ParamType##N>::access( \
+    ZFPropertyTypeIdData<_TR##N>::Value<_T##N>::access( \
             (param != ZFMethodGenericInvokeraultParam) \
             ? param \
             : paramDefaultAccess().toObject() \
@@ -125,13 +125,13 @@ public:
 
 // ============================================================
 template<typename T_Invoker, typename T_ReturnType>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerWrapper
+zfclassNotPOD _ZFP_MtdGIWrapper
 {
 public:
-    typedef typename _ZFP_ZFMethodGenericInvokerTypeCheck<
+    typedef typename _ZFP_MtdGICheck<
             typename zftTraitsType<T_ReturnType>::TraitsRemoveReference, \
             ZFPropertyTypeIdData<typename zftTraitsType<T_ReturnType>::TraitsRemoveReference>::PropertyRegistered
-        >::AllTypeMustBeRegisteredBy_ZFPROPERTY_TYPE_XXX _ReturnTypeCheck;
+        >::TypeMustRegisterByZFPROPERTY _ReturnTypeCheck;
 public:
     static zfbool wrap(ZF_IN const ZFMethod *invokerMethod
                        , ZF_IN ZFObject *invokerObject
@@ -186,7 +186,7 @@ public:
     }
 };
 template<typename T_Invoker>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerWrapper<T_Invoker, void>
+zfclassNotPOD _ZFP_MtdGIWrapper<T_Invoker, void>
 {
 public:
     static zfbool wrap(ZF_IN const ZFMethod *invokerMethod
@@ -245,7 +245,7 @@ public:
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
     public: \
-    zfclassNotPOD _ZFP_ZFMethodGenericInvoker_##methodSig \
+    zfclassNotPOD _ZFP_MtdGI_##methodSig \
     { \
     private: \
          ParamExpandOrEmpty0(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_DECLARE_EXPAND(ParamType0, param0, 0)) \
@@ -327,17 +327,17 @@ public:
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         ) \
         return ZFCastZFObject(zfself *, invokerObject)->methodName( \
-                ParamExpandOrEmpty0(ZFM_EMPTY() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
-                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
-                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
-                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
-                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
-                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
-                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
-                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
+                ParamExpandOrEmpty0(ZFM_EMPTY() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
+                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
+                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
+                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
+                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
+                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
+                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
+                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
             ); \
     _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_END() \
-    friend zfclassFwd _ZFP_ZFMethodGenericInvoker_##methodSig;
+    friend zfclassFwd _ZFP_MtdGI_##methodSig;
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_FUNC_TYPE( \
     ReturnType, funcAddr, methodSig \
     , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
@@ -361,14 +361,14 @@ public:
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         ) \
         return (funcAddr)( \
-                ParamExpandOrEmpty0(ZFM_EMPTY() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
-                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
-                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
-                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
-                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
-                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
-                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
-                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
+                ParamExpandOrEmpty0(ZFM_EMPTY() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
+                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
+                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
+                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
+                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
+                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
+                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
+                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
             ); \
     _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_END()
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_USER_REGISTER( \
@@ -394,23 +394,23 @@ public:
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
         ) \
         return (methodInvoker)(invokerMethod, invokerObject \
-                ParamExpandOrEmpty0(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
-                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
-                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
-                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
-                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
-                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
-                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
-                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
+                ParamExpandOrEmpty0(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess0, ParamType0, param0, 0)) \
+                ParamExpandOrEmpty1(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess1, ParamType1, param1, 1)) \
+                ParamExpandOrEmpty2(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess2, ParamType2, param2, 2)) \
+                ParamExpandOrEmpty3(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess3, ParamType3, param3, 3)) \
+                ParamExpandOrEmpty4(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess4, ParamType4, param4, 4)) \
+                ParamExpandOrEmpty5(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess5, ParamType5, param5, 5)) \
+                ParamExpandOrEmpty6(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess6, ParamType6, param6, 6)) \
+                ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_INVOKE_EXPAND(_ZFP_MtdGI_##methodSig::paramDefaultAccess7, ParamType7, param7, 7)) \
             ); \
     _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_END()
 /* ZFMETHOD_MAX_PARAM */
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, methodSig) \
-    _ZFP_ZFMethodGenericInvokerWrapper<_ZFP_ZFMethodGenericInvoker_##methodSig, ReturnType>::wrap
+    _ZFP_MtdGIWrapper<_ZFP_MtdGI_##methodSig, ReturnType>::wrap
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(methodSig) \
-    _ZFP_ZFMethodGenericInvoker_##methodSig::invokeCheck
+    _ZFP_MtdGI_##methodSig::invokeCheck
 #define _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(methodSig, N) \
-    _ZFP_ZFMethodGenericInvoker_##methodSig::paramDefaultAccess##N
+    _ZFP_MtdGI_##methodSig::paramDefaultAccess##N
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFMethodGenericInvoker_h_

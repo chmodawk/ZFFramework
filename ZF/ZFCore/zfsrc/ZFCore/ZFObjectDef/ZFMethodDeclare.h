@@ -57,7 +57,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
 
 // ============================================================
 #define _ZFP_ZFMethodAccess(OwnerClass, MethodName) \
-    (OwnerClass::_ZFP_ZFMethod_##MethodName(zfnull))
+    (OwnerClass::_ZFP_Mtd_##MethodName(zfnull))
 /** @brief see #ZFMethod */
 #define ZFMethodAccess(OwnerClass, MethodName) \
     _ZFP_ZFMethodAccess(OwnerClass, MethodName)
@@ -72,7 +72,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ParamExpandOrEmpty6, ParamType6 \
         , ParamExpandOrEmpty7, ParamType7 \
     ) \
-    (OwnerClass::_ZFP_ZFMethod_##MethodName((void (*)( \
+    (OwnerClass::_ZFP_Mtd_##MethodName((void (*)( \
            ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
            ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
            ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -239,14 +239,14 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
 // ============================================================
 #define _ZFP_ZFMethod_AutoRegister_isAutoRegister(MethodName, DECLARE_LINE) \
     private: \
-        zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFMethodAutoRegister_##MethodName##_##DECLARE_LINE \
+        zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdReg_##MethodName##_##DECLARE_LINE \
         { \
         public: \
-            _ZFP_ZFMethodAutoRegister_##MethodName##_##DECLARE_LINE(void) \
+            _ZFP_MtdReg_##MethodName##_##DECLARE_LINE(void) \
             { \
-                static zftValue<const ZFMethod *> _dummy(zfself::_ZFP_ZFMethod_##MethodName##_##DECLARE_LINE()); \
+                static zftValue<const ZFMethod *> _dummy(zfself::_ZFP_Mtd_##MethodName##_##DECLARE_LINE()); \
             } \
-        } _ZFP_ZFMethodAutoRegister_##MethodName##_##DECLARE_LINE##_; \
+        } _ZFP_MtdReg_##MethodName##_##DECLARE_LINE##_; \
     public:
 #define _ZFP_ZFMethod_AutoRegister_notAutoRegister(MethodName, DECLARE_LINE)
 #define _ZFP_ZFMethod_AutoRegister(autoRegisterOrNot, MethodName, DECLARE_LINE) \
@@ -287,7 +287,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
             ) \
     public: \
-        static const ZFMethod *_ZFP_ZFMethodAccess_##MethodName##_##DECLARE_LINE(void) \
+        static const ZFMethod *_ZFP_MtdInit_##MethodName##_##DECLARE_LINE(void) \
         { \
             zfCoreMutexLocker(); \
             static _ZFP_ZFMethodInstanceHolder _methodHolder( \
@@ -311,7 +311,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
                     _methodHolder.methodInternalId, \
                     zffalse, \
                     ZFCastReinterpret(ZFFuncAddrType, \
-                        &zfself::_ZFP_ZFMethodInvoker_##MethodName##_##DECLARE_LINE), \
+                        &zfself::_ZFP_MtdI_##MethodName##_##DECLARE_LINE), \
                     _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, MethodName##_##DECLARE_LINE), \
                     _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(MethodName##_##DECLARE_LINE), \
                     _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsWhatType), \
@@ -377,12 +377,12 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             } \
             return _method; \
         } \
-        static const ZFMethod *_ZFP_ZFMethod_##MethodName##_##DECLARE_LINE(void) \
+        static const ZFMethod *_ZFP_Mtd_##MethodName##_##DECLARE_LINE(void) \
         { \
-            static const ZFMethod *_method = zfself::_ZFP_ZFMethodAccess_##MethodName##_##DECLARE_LINE(); \
+            static const ZFMethod *_method = zfself::_ZFP_MtdInit_##MethodName##_##DECLARE_LINE(); \
             return _method; \
         } \
-        static const ZFMethod *_ZFP_ZFMethod_##MethodName(void (*)( \
+        static const ZFMethod *_ZFP_Mtd_##MethodName(void (*)( \
             ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
             ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
             ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -391,11 +391,11 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             ParamExpandOrEmpty5(ZFM_COMMA() ParamType5) \
             ParamExpandOrEmpty6(ZFM_COMMA() ParamType6) \
             ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
-            )) \
+            )) /* tricks to support overload method */ \
         { \
-            return _ZFP_ZFMethod_##MethodName##_##DECLARE_LINE(); \
+            return _ZFP_Mtd_##MethodName##_##DECLARE_LINE(); \
         } \
-        static inline ReturnType _ZFP_ZFMethodInvoker_##MethodName##_##DECLARE_LINE( \
+        static inline ReturnType _ZFP_MtdI_##MethodName##_##DECLARE_LINE( \
             ZF_IN const ZFMethod *method, \
             ZF_IN ZFObject *obj \
             ParamExpandOrEmpty0(ZFM_COMMA() ParamType0 param0) \
@@ -504,13 +504,17 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
         )
 
-#define _ZFP_ZFMETHOD_REGISTER(OwnerClass, MethodName, DECLARE_LINE) \
-    ZF_STATIC_INITIALIZER_INIT(ZFMethodRegister_##OwnerClass##_##MethodName##_##DECLARE_LINE) \
+#define _ZFP_ZFMETHOD_REGISTER(...) \
+    _ZFP_ZFMETHOD_REGISTER_(__VA_ARGS__)
+#define _ZFP_ZFMETHOD_REGISTER_(OwnerClass, MethodName, DECLARE_LINE) \
+    ZF_STATIC_INITIALIZER_INIT(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE) \
     { \
-        (void)OwnerClass::_ZFP_ZFMethod_##MethodName(zfnull); \
+        (void)OwnerClass::_ZFP_Mtd_##MethodName(zfnull); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFMethodRegister_##OwnerClass##_##MethodName##_##DECLARE_LINE)
-#define _ZFP_ZFMETHOD_REGISTER_DETAIL(OwnerClass, MethodName, DECLARE_LINE \
+    ZF_STATIC_INITIALIZER_END(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE)
+#define _ZFP_ZFMETHOD_REGISTER_DETAIL(...) \
+    _ZFP_ZFMETHOD_REGISTER_DETAIL_(__VA_ARGS__)
+#define _ZFP_ZFMETHOD_REGISTER_DETAIL_(OwnerClass, MethodName, DECLARE_LINE \
         , ParamExpandOrEmpty0, ParamType0 \
         , ParamExpandOrEmpty1, ParamType1 \
         , ParamExpandOrEmpty2, ParamType2 \
@@ -520,9 +524,9 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ParamExpandOrEmpty6, ParamType6 \
         , ParamExpandOrEmpty7, ParamType7 \
     ) \
-    ZF_STATIC_INITIALIZER_INIT(ZFMethodRegister_##OwnerClass##_##MethodName##_##DECLARE_LINE) \
+    ZF_STATIC_INITIALIZER_INIT(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE) \
     { \
-        (void)OwnerClass::_ZFP_ZFMethod_##MethodName((void (*)( \
+        (void)OwnerClass::_ZFP_Mtd_##MethodName((void (*)( \
                ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
                ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
                ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -533,7 +537,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
                ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
            ))zfnull); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFMethodRegister_##OwnerClass##_##MethodName##_##DECLARE_LINE)
+    ZF_STATIC_INITIALIZER_END(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE)
 
 /**
  * @brief see #ZFMethod

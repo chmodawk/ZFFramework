@@ -89,6 +89,10 @@ const zfidentity *_ZFP_ZFIdMapRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN
 }
 void _ZFP_ZFIdMapUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const zfchar *moduleName, ZF_IN zfidentity idValue)
 {
+    if(*ZFCoreLibDestroyFlag)
+    {
+        return ;
+    }
     zfCoreMutexLocker();
     _ZFP_ZFIdMapModuleData &moduleData = _ZFP_ZFIdMapModuleDataMap()[moduleName];
     _ZFP_ZFIdMapDataIdMapType &dataIdMap = moduleData.dataIdMap;

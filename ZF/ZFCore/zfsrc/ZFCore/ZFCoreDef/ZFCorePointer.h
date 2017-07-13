@@ -396,7 +396,7 @@ private:
  */
 #define ZFCOREPOINTER_DECLARE(T_ZFCorePointer, pointerRetainAction, pointerDeleteAction) \
     template<typename T_Type> \
-    zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCorePointerType_##T_ZFCorePointer \
+    zfclassNotPOD ZF_ENV_EXPORT _ZFP_CPT_##T_ZFCorePointer \
     { \
     public: \
         static inline void pointerOnRetain(T_Type const &p) \
@@ -406,39 +406,30 @@ private:
     }; \
     /** @brief see #ZFCorePointer */ \
     template<typename T_Type> \
-    zfclassLikePOD ZF_ENV_EXPORT T_ZFCorePointer : zfextendsLikePOD ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> > \
+    zfclassLikePOD ZF_ENV_EXPORT T_ZFCorePointer : zfextendsLikePOD ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> > \
     { \
     public: \
         /** @cond ZFPrivateDoc */ \
         T_ZFCorePointer(void) \
-        : ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >() \
+        : ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> >() \
         { \
         } \
         T_ZFCorePointer(T_Type const &value) \
-        : ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >(value) \
+        : ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> >(value) \
         { \
         } \
-        T_ZFCorePointer(ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> > const &ref) \
-        : ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >(ref) \
-        { \
-        } \
-        T_ZFCorePointer(T_ZFCorePointer<T_Type> const &ref) \
-        : ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >(ref) \
+        T_ZFCorePointer(ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> > const &ref) \
+        : ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> >(ref) \
         { \
         } \
         T_ZFCorePointer<T_Type> &operator = (T_Type const &value) \
         { \
-            ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >::operator = (value); \
+            ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> >::operator = (value); \
             return *this; \
         } \
-        T_ZFCorePointer<T_Type> &operator = (ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> > const &ref) \
+        T_ZFCorePointer<T_Type> &operator = (ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> > const &ref) \
         { \
-            ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >::operator = (ref); \
-            return *this; \
-        } \
-        T_ZFCorePointer<T_Type> &operator = (T_ZFCorePointer<T_Type> const &ref) \
-        { \
-            ZFCorePointer<T_Type, _ZFP_ZFCorePointerType_##T_ZFCorePointer<T_Type> >::operator = (ref); \
+            ZFCorePointer<T_Type, _ZFP_CPT_##T_ZFCorePointer<T_Type> >::operator = (ref); \
             return *this; \
         } \
         template<typename T_PointerDesired> \

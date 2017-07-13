@@ -537,10 +537,7 @@ public:
     }
     ~_ZFP_ZFClassRegisterHolder(void)
     {
-        if(!*(this->ZFCoreLibDestroyFlag))
-        {
-            ZFClass::_ZFP_ZFClassUnregister(this->ZFCoreLibDestroyFlag, this->cls->className());
-        }
+        ZFClass::_ZFP_ZFClassUnregister(this->ZFCoreLibDestroyFlag, this->cls->className());
     }
 public:
     zfbool *ZFCoreLibDestroyFlag;

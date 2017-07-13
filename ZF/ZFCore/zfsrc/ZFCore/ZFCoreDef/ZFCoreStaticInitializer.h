@@ -19,27 +19,27 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFStaticInitializerDummyBase
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_SI_DummyBase
 {
 public:
-    virtual ~_ZFP_ZFStaticInitializerDummyBase(void)
+    virtual ~_ZFP_SI_DummyBase(void)
     {
     }
 };
-typedef _ZFP_ZFStaticInitializerDummyBase *(*_ZFP_ZFStaticInitializerConstructor)(void);
-extern ZF_ENV_EXPORT _ZFP_ZFStaticInitializerDummyBase *&_ZFP_ZFStaticInitializerInstanceAccess(ZF_IN const zfchar *name,
-                                                                                                ZF_IN _ZFP_ZFStaticInitializerConstructor constructor);
-extern ZF_ENV_EXPORT void _ZFP_ZFStaticInitializerInstanceCleanup(ZF_IN const zfchar *name);
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFStaticInitializerInstanceCleanupHolder
+typedef _ZFP_SI_DummyBase *(*_ZFP_SI_Constructor)(void);
+extern ZF_ENV_EXPORT _ZFP_SI_DummyBase *&_ZFP_SI_instanceHolderAccess(ZF_IN const zfchar *name,
+                                                                      ZF_IN _ZFP_SI_Constructor constructor);
+extern ZF_ENV_EXPORT void _ZFP_SI_instanceCleanup(ZF_IN const zfchar *name);
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_SI_InstanceCleanupHolder
 {
 public:
-    _ZFP_ZFStaticInitializerInstanceCleanupHolder(ZF_IN const zfchar *name)
+    _ZFP_SI_InstanceCleanupHolder(ZF_IN const zfchar *name)
     : _name(name)
     {
     }
-    ~_ZFP_ZFStaticInitializerInstanceCleanupHolder(void)
+    ~_ZFP_SI_InstanceCleanupHolder(void)
     {
-        _ZFP_ZFStaticInitializerInstanceCleanup(_name);
+        _ZFP_SI_instanceCleanup(_name);
     }
 private:
     const zfchar *_name;
@@ -79,46 +79,46 @@ private:
  *   you may check it by #ZFFrameworkStateCheck
  */
 #define ZF_STATIC_INITIALIZER_INIT(Name) \
-    zfclassNotPOD _ZFP_ZFStaticInitializer_##Name : zfextendsNotPOD _ZFP_ZFStaticInitializerDummyBase \
+    zfclassNotPOD _ZFP_SI_##Name : zfextendsNotPOD _ZFP_SI_DummyBase \
     { \
     public: \
-        static _ZFP_ZFStaticInitializerDummyBase *_ZFP_ZFStaticInitializerConstructor_##Name(void) \
+        static _ZFP_SI_DummyBase *_ZFP_SI_constructor_##Name(void) \
         { \
-            return zfnew(_ZFP_ZFStaticInitializer_##Name); \
+            return zfnew(_ZFP_SI_##Name); \
         } \
-        static _ZFP_ZFStaticInitializer_##Name *instanceAccess(void) \
+        static _ZFP_SI_##Name *_ZFP_SI_instanceAccess(void) \
         { \
-            static _ZFP_ZFStaticInitializerDummyBase *&instance = _ZFP_ZFStaticInitializerInstanceAccess( \
+            static _ZFP_SI_DummyBase *&instance = _ZFP_SI_instanceHolderAccess( \
                 zfText(#Name), \
-                _ZFP_ZFStaticInitializer_##Name::_ZFP_ZFStaticInitializerConstructor_##Name); \
-            static _ZFP_ZFStaticInitializerInstanceCleanupHolder _cleanupHolder(zfText(#Name)); \
-            return ZFCastStatic(_ZFP_ZFStaticInitializer_##Name *, instance); \
+                _ZFP_SI_##Name::_ZFP_SI_constructor_##Name); \
+            static _ZFP_SI_InstanceCleanupHolder _cleanupHolder(zfText(#Name)); \
+            return ZFCastStatic(_ZFP_SI_##Name *, instance); \
         } \
     public: \
-        _ZFP_ZFStaticInitializer_##Name(void)
+        _ZFP_SI_##Name(void)
 /**
  * @brief see #ZF_STATIC_INITIALIZER_INIT
  */
 #define ZF_STATIC_INITIALIZER_DESTROY(Name) \
-        virtual ~_ZFP_ZFStaticInitializer_##Name(void)
+        virtual ~_ZFP_SI_##Name(void)
 /**
  * @brief see #ZF_STATIC_INITIALIZER_INIT
  */
 #define ZF_STATIC_INITIALIZER_END(Name) \
     }; \
-    ZF_STATIC_REGISTER_INIT(ZFStaticInitializer_##Name) \
+    ZF_STATIC_REGISTER_INIT(SI_##Name) \
     { \
-        _ZFP_ZFStaticInitializer_##Name::instanceAccess(); \
+        _ZFP_SI_##Name::_ZFP_SI_instanceAccess(); \
     } \
-    ZF_STATIC_REGISTER_END(ZFStaticInitializer_##Name)
+    ZF_STATIC_REGISTER_END(SI_##Name)
 /**
  * @brief access the instance of the initializer
  */
 #define ZF_STATIC_INITIALIZER_INSTANCE(Name) \
-    (_ZFP_ZFStaticInitializer_##Name::instanceAccess())
+    (_ZFP_SI_##Name::_ZFP_SI_instanceAccess())
 
 #define _ZFP_ZF_STATIC_INITIALIZER_CLASS(Name) \
-    _ZFP_ZFStaticInitializer_##Name
+    _ZFP_SI_##Name
 /**
  * @brief the class holder of the static initializer
  */

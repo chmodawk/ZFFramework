@@ -261,6 +261,12 @@ private:
 #define ZFCallerInfoMake() \
     ZFCallerInfo(ZF_CALLER_FILE, ZF_CALLER_FUNCTION, ZF_CALLER_LINE)
 
+extern ZF_ENV_EXPORT const ZFCallerInfo &_ZFP_ZFCallerInfoEmpty(void);
+/**
+ * @brief empty caller info
+ */
+#define ZFCallerInfoEmpty() _ZFP_ZFCallerInfoEmpty()
+
 // ============================================================
 // ZFCallerInfoHolder
 /**

@@ -216,6 +216,12 @@ zfclassLikePOD _ZFP_ZFMethodMapData
 public:
     zfindex refCount;
     ZFMethod method;
+public:
+    _ZFP_ZFMethodMapData(void)
+    : refCount(1)
+    , method()
+    {
+    }
 };
 ZF_STATIC_INITIALIZER_INIT(ZFMethodDataHolder)
 {

@@ -9,7 +9,6 @@
 
 APP_PLATFORM := android-18
 APP_STL := stlport_shared
-APP_SHORT_COMMANDS := true
 APP_CPPFLAGS += -fexceptions
 #APP_ABI := armeabi armeabi-v7a x86
 

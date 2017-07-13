@@ -18,7 +18,30 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-#define _ZFP_ZFMethodFuncUserRegister_methodExtSig zfText("ZFMethodFuncUserRegister")
+#define _ZFP_ZFMethodFuncUserRegister_methodExtSig zfText("MtdFUR")
+
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdFURHolder
+{
+public:
+    zfstring _methodNamespace;
+    zfstring _methodName;
+    zfstring _methodExtSig;
+    zfstring _methodInternalId;
+    ZFMethod *_method;
+public:
+    _ZFP_MtdFURHolder(ZF_IN const zfchar *methodNamespace_,
+                      ZF_IN const zfchar *methodName_,
+                      ZF_IN const zfchar *methodExtSig_
+                      , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
+                      , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
+                      );
+};
 
 #define _ZFP_ZFMethodFuncUserRegister(...) \
     ZFM_EXPAND(_ZFP_ZFMethodFuncUserRegister_(__VA_ARGS__))
@@ -34,7 +57,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##resultMethod##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##resultMethod##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -52,7 +75,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         } \
     }; \
     _ZFP_ZFMethodFuncUserRegisterDetail(resultMethod, \
-        _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##resultMethod##_##DECLARE_LINE::invoker, \
+        _ZFP_MtdFURInvoker_##methodNamespace##_##resultMethod##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), \
         ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
@@ -80,43 +103,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     ) \
     const ZFMethod *resultMethod = zfnull; \
     { \
-        zfclassNotPOD _ZFP_ZFMethodFuncUserRegisterHolder \
+        zfclassNotPOD _ZFP_MtdFUR \
         { \
-        public: \
-            zfstring _methodNamespace; \
-            zfstring _methodName; \
-            zfstring _methodExtSig; \
-            zfstring _methodInternalId; \
-        public: \
-            _ZFP_ZFMethodFuncUserRegisterHolder(ZF_IN const zfchar *methodNamespace_, \
-                                                ZF_IN const zfchar *methodName_, \
-                                                ZF_IN const zfchar *methodExtSig_ \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull \
-                                                , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull \
-                                                ) \
-            : _methodNamespace(methodNamespace_) \
-            , _methodName(methodName_) \
-            , _methodExtSig(methodExtSig_) \
-            , _methodInternalId() \
-            { \
-                zfCoreAssert(!_methodName.isEmpty()); \
-                _ZFP_ZFMethodInstanceSig(_methodInternalId, _methodNamespace, _methodName, _methodExtSig \
-                    , methodParamTypeId0 \
-                    , methodParamTypeId1 \
-                    , methodParamTypeId2 \
-                    , methodParamTypeId3 \
-                    , methodParamTypeId4 \
-                    , methodParamTypeId5 \
-                    , methodParamTypeId6 \
-                    , methodParamTypeId7 \
-                    ); \
-            } \
         public: \
             typedef ReturnType (*MethodTypeChecker)(const ZFMethod *, ZFObject * \
                     ParamExpandOrEmpty0(ZFM_COMMA() ParamType0) \
@@ -139,31 +127,34 @@ ZF_NAMESPACE_GLOBAL_BEGIN
                 , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
                 , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
                 ) \
-            const ZFMethod *methodRegister(void) \
+            static const ZFMethod *methodRegister(ZF_IN const zfchar *methodNamespaceString_, ZF_IN const zfchar *methodNameString_) \
             { \
                 zfCoreMutexLocker(); \
-                _ZFP_ZFMethodFuncUserRegisterHolder::MethodTypeChecker fn = methodInvoker; \
+                _ZFP_MtdFUR::MethodTypeChecker fn = methodInvoker; \
                 zfCoreAssert(fn != zfnull); \
+                _ZFP_MtdFURHolder holder( \
+                        methodNamespaceString_, methodNameString_, _ZFP_ZFMethodFuncUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
+                        ParamExpandOrEmpty0(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty1(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty2(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty3(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty4(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty5(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty6(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId()) \
+                        ParamExpandOrEmpty7(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId()) \
+                    ); \
                 \
-                ZFMethod *_method = _ZFP_ZFMethodInstanceFind(_methodInternalId); \
-                zfCoreAssertWithMessageTrim(_method == zfnull, \
-                    zfTextA("[ZFMethodFuncUserRegister] registering a method that already registered, methodNamespace: %s, methodName: %s, methodExtSig: %s"), \
-                    zfsCoreZ2A(_methodNamespace.cString()), \
-                    zfsCoreZ2A(_methodName.cString()), \
-                    zfsCoreZ2A(_methodExtSig.cString())); \
-                _method = _ZFP_ZFMethodInstanceAccess(_methodInternalId); \
-                \
-                if(_method->_ZFP_ZFMethodNeedInit) \
+                if(holder._method->_ZFP_ZFMethodNeedInit) \
                 { \
-                    _method->_ZFP_ZFMethodNeedInit = zffalse; \
-                    _method->_ZFP_ZFMethod_init( \
-                        _methodInternalId, \
+                    holder._method->_ZFP_ZFMethodNeedInit = zffalse; \
+                    holder._method->_ZFP_ZFMethod_init( \
+                        holder._methodInternalId, \
                         zftrue, \
                         ZFCastReinterpret(ZFFuncAddrType, fn), \
                         _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
                         _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(_), \
                         _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic), \
-                        _methodName, \
+                        holder._methodName, \
                         ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
                         zfText(#ReturnType), \
                         ParamExpandOrEmpty0( \
@@ -216,24 +207,14 @@ ZF_NAMESPACE_GLOBAL_BEGIN
                             ZFM_EMPTY()) \
                         zfnull \
                         ); \
-                    _method->_ZFP_ZFMethod_initFuncType(_methodNamespace); \
-                    _ZFP_ZFMethodFuncRegister(_method); \
-                    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, _method); \
+                    holder._method->_ZFP_ZFMethod_initFuncType(holder._methodNamespace); \
+                    _ZFP_ZFMethodFuncRegister(holder._method); \
+                    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, holder._method); \
                 } \
-                return _method; \
+                return holder._method; \
             } \
         }; \
-        resultMethod = _ZFP_ZFMethodFuncUserRegisterHolder( \
-                methodNamespaceString, methodNameString, _ZFP_ZFMethodFuncUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
-                ParamExpandOrEmpty0(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty1(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty2(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty3(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty4(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty5(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty6(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId()) \
-                ParamExpandOrEmpty7(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId()) \
-            ).methodRegister(); \
+        resultMethod = _ZFP_MtdFUR::methodRegister(methodNamespaceString, methodNameString); \
     } \
     ZFUNUSED(resultMethod)
 
@@ -251,7 +232,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##methodName##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -268,8 +249,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             methodInvokerAction \
         } \
     }; \
-    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(_ZFP_ZFMethodFuncUserRegisterSig_##methodNamespace##_##methodName##_##DECLARE_LINE, \
-        _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
+    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
+        _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
         , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
@@ -294,7 +275,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##methodName##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -320,8 +301,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
                 ZFM_BRACKET_R()); \
         } \
     }; \
-    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(_ZFP_ZFMethodFuncUserRegisterSig_##methodNamespace##_##methodName##_##DECLARE_LINE, \
-        _ZFP_ZFMethodFuncUserRegisterInvokerHolder_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
+    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
+        _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
         , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
@@ -346,7 +327,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFMethodFuncUserRegisterAutoRegister_##registerSig, ZFLevelZFFrameworkNormal) \
+    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(MtdFURReg_##registerSig, ZFLevelZFFrameworkNormal) \
     { \
         _ZFP_ZFMethodFuncUserRegisterDetail(resultMethod, methodInvoker, methodNamespaceString, \
             ReturnType, methodNameString \
@@ -361,12 +342,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             ); \
         this->_method = resultMethod; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(_ZFP_ZFMethodFuncUserRegisterAutoRegister_##registerSig) \
+    ZF_GLOBAL_INITIALIZER_DESTROY(MtdFURReg_##registerSig) \
     { \
         ZFMethodFuncUserUnregister(this->_method); \
     } \
     const ZFMethod *_method; \
-    ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFMethodFuncUserRegisterAutoRegister_##registerSig)
+    ZF_GLOBAL_INITIALIZER_END(MtdFURReg_##registerSig)
 
 // ============================================================
 /** @brief see #ZFMethodFuncUserRegister_0 */

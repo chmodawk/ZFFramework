@@ -84,82 +84,58 @@ extern ZF_ENV_EXPORT ZFFrameworkState ZFFrameworkStateCheck(void);
 extern ZF_ENV_EXPORT ZFFrameworkState ZFFrameworkStateCheck(ZF_IN ZFLevel level);
 
 // ============================================================
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFGlobalInitializerDummyBase
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_GI_DummyBase
 {
 public:
-    virtual ~_ZFP_ZFGlobalInitializerDummyBase(void)
+    virtual ~_ZFP_GI_DummyBase(void)
     {
     }
 };
-typedef _ZFP_ZFGlobalInitializerDummyBase *(*_ZFP_ZFGlobalInitializerConstructor)(void);
-extern ZF_ENV_EXPORT void _ZFP_ZFGlobalInitializerDataRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
-                                                               ZF_IN const zfchar *name,
-                                                               ZF_IN ZFLevel level,
-                                                               ZF_IN _ZFP_ZFGlobalInitializerConstructor constructor);
-extern ZF_ENV_EXPORT void _ZFP_ZFGlobalInitializerDataUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
-                                                                 ZF_IN const zfchar *name,
-                                                                 ZF_IN ZFLevel level);
-extern ZF_ENV_EXPORT _ZFP_ZFGlobalInitializerDummyBase *&_ZFP_ZFGlobalInitializerInstanceHolderAccess(ZF_IN const zfchar *name,
-                                                                                                      ZF_IN ZFLevel level);
+typedef _ZFP_GI_DummyBase *(*_ZFP_GI_Constructor)(void);
+extern ZF_ENV_EXPORT void _ZFP_GI_dataRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
+                                               ZF_IN const zfchar *name,
+                                               ZF_IN ZFLevel level,
+                                               ZF_IN _ZFP_GI_Constructor constructor);
+extern ZF_ENV_EXPORT void _ZFP_GI_dataUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
+                                                 ZF_IN const zfchar *name,
+                                                 ZF_IN ZFLevel level);
+extern ZF_ENV_EXPORT _ZFP_GI_DummyBase *&_ZFP_GI_instanceHolderAccess(ZF_IN const zfchar *name,
+                                                                      ZF_IN ZFLevel level);
 
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFGlobalInitializerRegisterHolder
-{
-public:
-    _ZFP_ZFGlobalInitializerRegisterHolder(ZF_IN zfbool *ZFCoreLibDestroyFlag,
-                                           ZF_IN const zfchar *name,
-                                           ZF_IN ZFLevel level,
-                                           ZF_IN _ZFP_ZFGlobalInitializerConstructor constructor)
-    : ZFCoreLibDestroyFlag(ZFCoreLibDestroyFlag)
-    , name(name)
-    , level(level)
-    {
-        _ZFP_ZFGlobalInitializerDataRegister(ZFCoreLibDestroyFlag, name, level, constructor);
-    }
-    ~_ZFP_ZFGlobalInitializerRegisterHolder(void)
-    {
-        _ZFP_ZFGlobalInitializerDataUnregister(ZFCoreLibDestroyFlag, name, level);
-    }
-private:
-    zfbool *ZFCoreLibDestroyFlag;
-    zfstring name;
-    ZFLevel level;
-};
 #define _ZFP_ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(Name, ZFLevel_) \
     /** @cond ZFPrivateDoc */ \
-    zfclassNotPOD _ZFP_ZFGlobalInitializer_##Name : zfextendsNotPOD _ZFP_ZFGlobalInitializerDummyBase \
+    zfclassNotPOD _ZFP_GI_##Name : zfextendsNotPOD _ZFP_GI_DummyBase \
     { \
     protected: \
-        typedef _ZFP_ZFGlobalInitializer_##Name zfself; \
+        typedef _ZFP_GI_##Name zfself; \
     public: \
-        static zfbool _ZFP_ZFGlobalInitializerRegister(void) \
+        static void _ZFP_GI_register(ZF_IN zfbool *ZFCoreLibDestroyFlag) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
-            static _ZFP_ZFGlobalInitializerRegisterHolder _d( \
-                &ZFCoreLibDestroyFlag, \
-                ZFM_TOSTRING(Name), \
-                ZFLevel_, \
-                _ZFP_ZFGlobalInitializer_##Name::_ZFP_ZFGlobalInitializerNewInstance); \
-            return zftrue; \
+            _ZFP_GI_dataRegister(ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_, _ZFP_GI_##Name::_ZFP_GI_construct); \
         } \
-        static _ZFP_ZFGlobalInitializerDummyBase *_ZFP_ZFGlobalInitializerNewInstance(void) \
+        static void _ZFP_GI_unregister(ZF_IN zfbool *ZFCoreLibDestroyFlag) \
         { \
-            return zfnew(_ZFP_ZFGlobalInitializer_##Name); \
+            _ZFP_GI_dataUnregister(ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_); \
         } \
-        static _ZFP_ZFGlobalInitializer_##Name *_ZFP_ZFGlobalInitializerInstanceAccess(void) \
+        static _ZFP_GI_DummyBase *_ZFP_GI_construct(void) \
         { \
-            static _ZFP_ZFGlobalInitializerDummyBase *&instance = \
-                _ZFP_ZFGlobalInitializerInstanceHolderAccess( \
+            return zfnew(_ZFP_GI_##Name); \
+        } \
+        static _ZFP_GI_##Name *_ZFP_GI_instanceAccess(void) \
+        { \
+            static _ZFP_GI_DummyBase *&instance = \
+                _ZFP_GI_instanceHolderAccess( \
                     ZFM_TOSTRING(Name), \
                     ZFLevel_); \
             if(instance == zfnull) \
             { \
-                (void)_ZFP_ZFGlobalInitializerInstanceHolderAccess( \
+                (void)_ZFP_GI_instanceHolderAccess( \
                     ZFM_TOSTRING(Name), \
                     ZFLevel_); \
             } \
-            return ZFCastStatic(_ZFP_ZFGlobalInitializer_##Name *, instance); \
+            return ZFCastStatic(_ZFP_GI_##Name *, instance); \
         } \
-        _ZFP_ZFGlobalInitializer_##Name(void)
+        _ZFP_GI_##Name(void)
 /**
  * @brief code block that will be executed when app start and stop
  *
@@ -198,7 +174,7 @@ private:
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_DESTROY(Name) \
     public: \
-        virtual ~_ZFP_ZFGlobalInitializer_##Name(void)
+        virtual ~_ZFP_GI_##Name(void)
 /**
  * @brief see #ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL
  */
@@ -208,11 +184,18 @@ private:
 #define _ZFP_ZF_GLOBAL_INITIALIZER_END(Name) \
     }; \
     /** @endcond */ \
-    ZF_STATIC_REGISTER_INIT(ZFGlobalInitializer_##Name) \
+    ZF_STATIC_REGISTER_INIT(GI_##Name) \
     { \
-        _ZFP_ZFGlobalInitializer_##Name::_ZFP_ZFGlobalInitializerRegister(); \
+        ZFCoreLibDestroyFlag = zffalse; \
+        _ZFP_GI_##Name::_ZFP_GI_register(&ZFCoreLibDestroyFlag); \
     } \
-    ZF_STATIC_REGISTER_END(ZFGlobalInitializer_##Name)
+    ZF_STATIC_REGISTER_DESTROY(GI_##Name) \
+    { \
+        _ZFP_GI_##Name::_ZFP_GI_unregister(&ZFCoreLibDestroyFlag); \
+    } \
+    private: \
+        zfbool ZFCoreLibDestroyFlag; \
+    ZF_STATIC_REGISTER_END(GI_##Name)
 /**
  * @brief see #ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL
  */
@@ -220,7 +203,7 @@ private:
     _ZFP_ZF_GLOBAL_INITIALIZER_END(Name)
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_INSTANCE(Name) \
-    (_ZFP_ZFGlobalInitializer_##Name::_ZFP_ZFGlobalInitializerInstanceAccess())
+    (_ZFP_GI_##Name::_ZFP_GI_instanceAccess())
 /**
  * @brief access the instance of the initializer
  */
@@ -228,7 +211,7 @@ private:
     _ZFP_ZF_GLOBAL_INITIALIZER_INSTANCE(Name)
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_CLASS(Name) \
-    _ZFP_ZFGlobalInitializer_##Name
+    _ZFP_GI_##Name
 /**
  * @brief the class holder of the global initializer
  */
