@@ -18,12 +18,16 @@ ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
 zfclassNotPOD _ZFP_ZFJsonImpl_default_MemoryPoolHolder
 {
 public:
-    zfindex refCount;
+    /*
+     * as for rapidjson, string values are directly stored in owner document's buffer,
+     * store ref count, init as 0, each child node refering to the doc would inc the ref count
+     */
+    zfindex docRefCount;
     ZFBuffer buf;
     rapidjson::Document implJsonDoc;
 public:
     _ZFP_ZFJsonImpl_default_MemoryPoolHolder(void)
-    : refCount(0)
+    : docRefCount(0)
     , buf()
     , implJsonDoc()
     {
@@ -50,8 +54,8 @@ public:
     virtual void jsonMemoryPoolRelease(ZF_IN void *token, ZF_IN const zfchar *value)
     {
         _ZFP_ZFJsonImpl_default_MemoryPoolHolder *docHolder = (_ZFP_ZFJsonImpl_default_MemoryPoolHolder *)token;
-        --(docHolder->refCount);
-        if(docHolder->refCount == 0)
+        --(docHolder->docRefCount);
+        if(docHolder->docRefCount == 0)
         {
             zfdelete(docHolder);
         }
@@ -72,7 +76,7 @@ private:
             return ZFJsonItem();
         }
         ZFJsonItem ret = this->jsonConvert(docHolder->implJsonDoc, docHolder);
-        if(docHolder->refCount == 0)
+        if(docHolder->docRefCount == 0)
         {
             zfdelete(docHolder);
         }
@@ -92,7 +96,7 @@ private:
             case rapidjson::kNumberType:
             {
                 ZFJsonItem jsonValue(ZFJsonType::e_JsonValue);
-                ++(docHolder->refCount);
+                ++(docHolder->docRefCount);
                 this->jsonMemoryPool_jsonValueSet(jsonValue, implJsonItem.GetString(), docHolder);
                 return jsonValue;
             }
@@ -120,7 +124,7 @@ private:
                     {
                         return ZFJsonItem();
                     }
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->jsonMemoryPool_jsonItemSet(jsonObject, it->name.GetString(), docHolder, jsonChild);
                 }
                 return jsonObject;

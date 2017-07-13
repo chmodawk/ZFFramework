@@ -17,12 +17,16 @@ ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
 zfclassNotPOD _ZFP_ZFXmlImpl_default_MemoryPoolHolder
 {
 public:
-    zfindex refCount;
+    /*
+     * as for pugixml, string values are directly stored in owner document's buffer,
+     * store ref count, init as 0, each child node refering to the doc would inc the ref count
+     */
+    zfindex docRefCount;
     ZFBuffer buf;
     pugi::xml_document implXmlDoc;
 public:
     _ZFP_ZFXmlImpl_default_MemoryPoolHolder(void)
-    : refCount(0)
+    : docRefCount(0)
     , buf()
     , implXmlDoc()
     {
@@ -49,8 +53,8 @@ public:
     virtual void xmlMemoryPoolRelease(ZF_IN void *token, ZF_IN const zfchar *value)
     {
         _ZFP_ZFXmlImpl_default_MemoryPoolHolder *docHolder = (_ZFP_ZFXmlImpl_default_MemoryPoolHolder *)token;
-        --(docHolder->refCount);
-        if(docHolder->refCount == 0)
+        --(docHolder->docRefCount);
+        if(docHolder->docRefCount == 0)
         {
             zfdelete(docHolder);
         }
@@ -72,7 +76,7 @@ private:
         }
         ZFXmlItem doc(ZFXmlType::e_XmlDocument);
         this->translateChildren(docHolder->implXmlDoc, doc, docHolder);
-        if(docHolder->refCount == 0)
+        if(docHolder->docRefCount == 0)
         {
             zfdelete(docHolder);
         }
@@ -86,9 +90,9 @@ private:
         while(implXmlAttribute)
         {
             ZFXmlItem zfXmlAttribute(ZFXmlType::e_XmlAttribute);
-            ++(docHolder->refCount);
+            ++(docHolder->docRefCount);
             this->xmlMemoryPool_xmlNameSet(zfXmlAttribute, implXmlAttribute.name(), docHolder);
-            ++(docHolder->refCount);
+            ++(docHolder->docRefCount);
             this->xmlMemoryPool_xmlValueSet(zfXmlAttribute, implXmlAttribute.value(), docHolder);
             zfXmlItem.xmlAttributeAdd(zfXmlAttribute);
 
@@ -113,7 +117,7 @@ private:
                     this->translateAttribute(implXmlChild, zfXmlChild, docHolder);
                     this->translateChildren(implXmlChild, zfXmlChild, docHolder);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -122,9 +126,9 @@ private:
                 {
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlText);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -134,9 +138,9 @@ private:
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlText);
                     zfXmlChild.xmlTextCDATASet(zftrue);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -145,9 +149,9 @@ private:
                 {
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlComment);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -157,9 +161,9 @@ private:
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlDeclaration);
                     this->translateAttribute(implXmlChild, zfXmlChild, docHolder);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -168,9 +172,9 @@ private:
                 {
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlDOCTYPE);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
@@ -179,9 +183,9 @@ private:
                 {
                     ZFXmlItem zfXmlChild(ZFXmlType::e_XmlProcessingInstruction);
 
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlNameSet(zfXmlChild, implXmlChild.name(), docHolder);
-                    ++(docHolder->refCount);
+                    ++(docHolder->docRefCount);
                     this->xmlMemoryPool_xmlValueSet(zfXmlChild, implXmlChild.value(), docHolder);
                     zfXmlItem.xmlChildAdd(zfXmlChild);
                     break;
