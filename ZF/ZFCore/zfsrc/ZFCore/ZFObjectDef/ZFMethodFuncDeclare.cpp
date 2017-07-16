@@ -15,6 +15,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+// ============================================================
 ZF_STATIC_INITIALIZER_INIT(ZFMethodFuncDataHolder)
 {
 }
@@ -60,6 +61,7 @@ void _ZFP_ZFMethodFuncUnregister(ZF_IN const ZFMethod *method)
     }
 }
 
+// ============================================================
 const ZFMethod *ZFMethodFuncGet(ZF_IN const zfchar *methodNamespace,
                                 ZF_IN const zfchar *methodName)
 {
@@ -205,6 +207,42 @@ void ZFMethodFuncGetAllT(ZF_IN_OUT ZFCoreArray<const ZFMethod *> &ret,
             }
         }
     }
+}
+
+// ============================================================
+_ZFP_ZFMethodFuncInstanceHolder::_ZFP_ZFMethodFuncInstanceHolder(ZF_IN const zfchar *methodInternalId)
+: _ZFP_ZFMethodInstanceHolder(methodInternalId)
+{
+    _ZFP_ZFMethodFuncRegister(this->method);
+}
+_ZFP_ZFMethodFuncInstanceHolder::_ZFP_ZFMethodFuncInstanceHolder(ZF_IN const zfchar *methodScope,
+                                                                 ZF_IN const zfchar *methodName,
+                                                                 ZF_IN const zfchar *methodExtSig
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId0 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId1 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId2 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId3 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId4 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId5 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId6 /* = zfnull */
+                                                                 , ZF_IN_OPT const zfchar *methodParamTypeId7 /* = zfnull */
+                                                                 )
+: _ZFP_ZFMethodInstanceHolder(methodScope, methodName, methodExtSig
+        , methodParamTypeId0
+        , methodParamTypeId1
+        , methodParamTypeId2
+        , methodParamTypeId3
+        , methodParamTypeId4
+        , methodParamTypeId5
+        , methodParamTypeId6
+        , methodParamTypeId7
+    )
+{
+    _ZFP_ZFMethodFuncRegister(this->method);
+}
+_ZFP_ZFMethodFuncInstanceHolder::~_ZFP_ZFMethodFuncInstanceHolder(void)
+{
+    _ZFP_ZFMethodFuncUnregister(this->method);
 }
 
 ZF_NAMESPACE_GLOBAL_END

@@ -11,26 +11,48 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfclass _ZFP_I_ZFMethodGenericInvokeraultParamType : zfextends ZFObject
+zfclass _ZFP_I_ZFMethodGenericInvokerDefaultParamType : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE(_ZFP_I_ZFMethodGenericInvokeraultParamType, ZFObject)
+    ZFOBJECT_DECLARE(_ZFP_I_ZFMethodGenericInvokerDefaultParamType, ZFObject)
 };
-ZFObject *_ZFP_ZFMethodGenericInvokeraultParamRef = zfnull;
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFMethodGenericInvokeraultParamInit, ZFLevelZFFrameworkEssential)
+ZFObject *_ZFP_ZFMethodGenericInvokerDefaultParamRef = zfnull;
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFMethodGenericInvokerDefaultParamInit, ZFLevelZFFrameworkEssential)
 {
-    _ZFP_ZFMethodGenericInvokeraultParamRef = zfAllocWithoutLeakTest(_ZFP_I_ZFMethodGenericInvokeraultParamType);
-    _ZFP_ZFMethodGenericInvokeraultParamHolderRef = zfautoObjectCreateWithoutLeakTest(_ZFP_ZFMethodGenericInvokeraultParamRef);
+    _ZFP_ZFMethodGenericInvokerDefaultParamRef = zfAllocWithoutLeakTest(_ZFP_I_ZFMethodGenericInvokerDefaultParamType);
+    _ZFP_ZFMethodGenericInvokerDefaultParamHolderRef = zfautoObjectCreateWithoutLeakTest(_ZFP_ZFMethodGenericInvokerDefaultParamRef);
 }
-ZF_GLOBAL_INITIALIZER_DESTROY(ZFMethodGenericInvokeraultParamInit)
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFMethodGenericInvokerDefaultParamInit)
 {
-    zfReleaseWithoutLeakTest(_ZFP_ZFMethodGenericInvokeraultParamRef);
-    _ZFP_ZFMethodGenericInvokeraultParamRef = zfnull;
+    zfReleaseWithoutLeakTest(_ZFP_ZFMethodGenericInvokerDefaultParamRef);
+    _ZFP_ZFMethodGenericInvokerDefaultParamRef = zfnull;
 
-    _ZFP_ZFMethodGenericInvokeraultParamHolderRef = zfautoObjectNull;
+    _ZFP_ZFMethodGenericInvokerDefaultParamHolderRef = zfautoObjectNull;
 }
-ZF_GLOBAL_INITIALIZER_END(ZFMethodGenericInvokeraultParamInit)
+ZF_GLOBAL_INITIALIZER_END(ZFMethodGenericInvokerDefaultParamInit)
 
-zfautoObject _ZFP_ZFMethodGenericInvokeraultParamHolderRef;
+zfautoObject _ZFP_ZFMethodGenericInvokerDefaultParamHolderRef;
+
+void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
+                          ZF_IN zfindex paramIndex,
+                          ZF_IN const zfchar *paramTypeId,
+                          ZF_IN ZFObject *param)
+{
+    zfstringAppend(errorHint,
+            zfText("[ZFMethodGenericInvoker] unable to access param%zi as type %s: %s"),
+            paramIndex,
+            paramTypeId,
+            ZFObjectInfo(param).cString()
+        );
+}
+void _ZFP_MtdGIRetError(ZF_OUT_OPT zfstring *errorHint,
+                        ZF_IN const zfchar *returnTypeId,
+                        ZF_IN const zfchar *returnValueInfo)
+{
+    zfstringAppend(errorHint,
+        zfText("[ZFMethodGenericInvoker] unable to convert return value as type %s: %s"),
+        returnTypeId,
+        returnValueInfo);
+}
 
 ZF_NAMESPACE_GLOBAL_END
 

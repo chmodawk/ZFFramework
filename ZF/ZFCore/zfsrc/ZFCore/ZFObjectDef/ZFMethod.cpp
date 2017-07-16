@@ -16,21 +16,20 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN const zfchar *methodInternalId,
                                   ZF_IN zfbool methodIsUserRegister,
                                   ZF_IN ZFFuncAddrType invoker,
                                   ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
-                                  ZF_IN ZFMethodGenericInvokerChecker methodGenericInvokerChecker,
                                   ZF_IN const zfchar *methodIsWhatType,
                                   ZF_IN const zfchar *methodName,
                                   ZF_IN const zfchar *returnTypeId,
                                   ZF_IN const zfchar *returnTypeName,
                                   ...)
 {
+    zfCoreAssert(invoker != zfnull && methodGenericInvoker != zfnull);
+
     this->_ZFP_ZFMethod_methodInternalId = methodInternalId;
     this->_ZFP_ZFMethod_methodIsUserRegister = methodIsUserRegister;
     this->_ZFP_ZFMethod_invoker = invoker;
     this->_ZFP_ZFMethod_invokerOrg = invoker;
     this->_ZFP_ZFMethod_methodGenericInvoker = methodGenericInvoker;
     this->_ZFP_ZFMethod_methodGenericInvokerOrg = methodGenericInvoker;
-    this->_ZFP_ZFMethod_methodGenericInvokerChecker = methodGenericInvokerChecker;
-    this->_ZFP_ZFMethod_methodGenericInvokerCheckerOrg = methodGenericInvokerChecker;
     this->_ZFP_ZFMethod_methodName = methodName;
     this->_ZFP_ZFMethod_returnTypeId = returnTypeId;
     this->_ZFP_ZFMethod_returnTypeName = returnTypeName;
@@ -74,6 +73,9 @@ void ZFMethod::_ZFP_ZFMethod_initClassMemberType(ZF_IN const ZFClass *methodOwne
 {
     this->_ZFP_ZFMethod_methodOwnerClass = methodOwnerClass;
     this->_ZFP_ZFMethod_privilegeType = privilegeType;
+
+    methodOwnerClass->_ZFP_ZFClass_removeConst()->_ZFP_ZFClass_methodRegister(this);
+    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, this);
 }
 void ZFMethod::_ZFP_ZFMethod_initFuncType(ZF_IN const zfchar *methodNamespace)
 {
@@ -81,6 +83,8 @@ void ZFMethod::_ZFP_ZFMethod_initFuncType(ZF_IN const zfchar *methodNamespace)
 
     this->_ZFP_ZFMethod_methodOwnerClass = zfnull;
     this->_ZFP_ZFMethod_privilegeType = ZFMethodPrivilegeTypePublic;
+
+    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, this);
 }
 
 /** @cond ZFPrivateDoc */
@@ -91,8 +95,6 @@ ZFMethod::ZFMethod(void)
 , _ZFP_ZFMethod_invokerOrg(zfnull)
 , _ZFP_ZFMethod_methodGenericInvoker(zfnull)
 , _ZFP_ZFMethod_methodGenericInvokerOrg(zfnull)
-, _ZFP_ZFMethod_methodGenericInvokerChecker(zfnull)
-, _ZFP_ZFMethod_methodGenericInvokerCheckerOrg(zfnull)
 , _ZFP_ZFMethod_methodName()
 , _ZFP_ZFMethod_returnTypeId()
 , _ZFP_ZFMethod_returnTypeName()
@@ -186,19 +188,16 @@ void ZFMethod::objectInfoT(ZF_IN_OUT zfstring &ret) const
     }
 }
 
-void ZFMethod::methodGenericInvokerSet(ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
-                                       ZF_IN ZFMethodGenericInvokerChecker methodGenericInvokerChecker) const
+void ZFMethod::methodGenericInvokerSet(ZF_IN ZFMethodGenericInvoker methodGenericInvoker) const
 {
     ZFMethod *m = this->_ZFP_ZFMethod_removeConst();
-    if(methodGenericInvoker != zfnull && methodGenericInvokerChecker != zfnull)
+    if(methodGenericInvoker != zfnull)
     {
         m->_ZFP_ZFMethod_methodGenericInvoker = methodGenericInvoker;
-        m->_ZFP_ZFMethod_methodGenericInvokerChecker = methodGenericInvokerChecker;
     }
     else
     {
         m->_ZFP_ZFMethod_methodGenericInvoker = m->_ZFP_ZFMethod_methodGenericInvokerOrg;
-        m->_ZFP_ZFMethod_methodGenericInvokerChecker = m->_ZFP_ZFMethod_methodGenericInvokerCheckerOrg;
     }
     _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeUpdate, zfnull, zfnull, this);
 }
@@ -365,31 +364,18 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, void, methodInvokerSet, ZF
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFFuncAddrType, methodInvokerOrg)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvoker)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFMethod, zfautoObject, methodGenericInvoke, ZFMP_IN_OPT(ZFObject *, ownerObjOrNull, zfnull)
-    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokeraultParam)
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokeraultParam) */
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokerDefaultParam)
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokerDefaultParam)
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokerDefaultParam) */
     /* ZFMETHOD_MAX_PARAM , ZFMP_OUT_OPT(zfstring *, errorHint, zfnull) */
     )
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvokerOrg)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvokerChecker, methodGenericInvokerChecker)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFMethod, zfbool, methodGenericInvokerCheck
-    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokeraultParam)
-    , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokeraultParam)
-    /* ZFMETHOD_MAX_PARAM , ZFMP_OUT_OPT(zfstring *, errorHint, zfnull) */
-    )
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvokerChecker, methodGenericInvokerCheckerOrg)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFMethod, void, methodGenericInvokerSet, ZFMP_IN(ZFMethodGenericInvoker, methodGenericInvoker), ZFMP_IN(ZFMethodGenericInvokerChecker, methodGenericInvokerChecker))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, void, methodGenericInvokerSet, ZFMP_IN(ZFMethodGenericInvoker, methodGenericInvoker))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const ZFClass *, methodOwnerClass)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodPrivilegeType, methodPrivilegeType)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfbool, methodIsStatic)

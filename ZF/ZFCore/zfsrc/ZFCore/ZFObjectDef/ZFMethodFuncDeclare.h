@@ -259,11 +259,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFMethodFuncInstanceHolder : zfextendsLikePOD _ZFP_ZFMethodInstanceHolder
 {
 public:
-    _ZFP_ZFMethodFuncInstanceHolder(ZF_IN const zfchar *methodInternalId)
-    : _ZFP_ZFMethodInstanceHolder(methodInternalId)
-    {
-        _ZFP_ZFMethodFuncRegister(this->method);
-    }
+    _ZFP_ZFMethodFuncInstanceHolder(ZF_IN const zfchar *methodInternalId);
     _ZFP_ZFMethodFuncInstanceHolder(ZF_IN const zfchar *methodScope,
                                     ZF_IN const zfchar *methodName,
                                     ZF_IN const zfchar *methodExtSig
@@ -275,24 +271,8 @@ public:
                                     , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
                                     , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
                                     , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                                    )
-    : _ZFP_ZFMethodInstanceHolder(methodScope, methodName, methodExtSig
-            , methodParamTypeId0
-            , methodParamTypeId1
-            , methodParamTypeId2
-            , methodParamTypeId3
-            , methodParamTypeId4
-            , methodParamTypeId5
-            , methodParamTypeId6
-            , methodParamTypeId7
-        )
-    {
-        _ZFP_ZFMethodFuncRegister(this->method);
-    }
-    ~_ZFP_ZFMethodFuncInstanceHolder(void)
-    {
-        _ZFP_ZFMethodFuncUnregister(this->method);
-    }
+                                    );
+    ~_ZFP_ZFMethodFuncInstanceHolder(void);
 };
 
 #define _ZFP_ZFMETHOD_FUNC_DECLARE(...) \
@@ -355,8 +335,8 @@ public:
     zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE \
     { \
     public: \
-        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_FUNC_TYPE( \
-            ReturnType, MethodName, _ \
+        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
+            ReturnType, _ \
             , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
             , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
             , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
@@ -391,7 +371,6 @@ public:
                     ZFCastReinterpret(ZFFuncAddrType, \
                         &methodInvoker), \
                     _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
-                    _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(_), \
                     ZFM_TOSTRING(ZFMethodIsStatic()), \
                     ZFM_TOSTRING(MethodName), \
                     ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
@@ -449,7 +428,6 @@ public:
                 _method->_ZFP_ZFMethod_initFuncType( \
                     ZFM_TOSTRING(MethodNamespace) \
                     ); \
-                _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, _method); \
             } \
             return _method; \
         } \

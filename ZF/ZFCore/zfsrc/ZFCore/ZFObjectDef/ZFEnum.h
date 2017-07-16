@@ -196,9 +196,7 @@ public:
              ZF_IN zfuint value,
              ZF_IN const zfchar *name,
              ZF_IN const zfchar *fullName,
-             ZF_IN const ZFClass *ownerClass,
-             ZF_IN const zfcharA *callerFile,
-             ZF_IN zfindex callerLine);
+             ZF_IN const ZFClass *ownerClass);
     zfindex enumCount(void) const;
     zfindex enumIndexForValue(ZF_IN zfuint value) const;
     zfuint enumValueAtIndex(ZF_IN zfindex index) const;
@@ -424,7 +422,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name);
 
 /** @brief see #ZFENUM_BEGIN */
 #define ZFENUM_VALUE_REGISTER_WITH_NAME(Value, Name) \
-                d->add(isEnableDuplicateValue, zfself::e_##Value, Name, zfsConnectLineFree(prefix, Name), zfself::ClassData(), ZF_CALLER_FILE, ZF_CALLER_LINE);
+                d->add(isEnableDuplicateValue, zfself::e_##Value, Name, zfsConnectLineFree(prefix, Name), zfself::ClassData());
 /** @brief see #ZFENUM_BEGIN */
 #define ZFENUM_VALUE_REGISTER(Value) \
                 ZFENUM_VALUE_REGISTER_WITH_NAME(Value, zfText(#Value))

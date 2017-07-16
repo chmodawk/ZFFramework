@@ -41,9 +41,17 @@ public class Loader extends Activity {
         if(BuildConfig.DEBUG) {
             ZFMainEntry.debugModeSet(true);
         }
-        Intent intent = new Intent(Loader.this, ZFMainEntry.class);
-        startActivity(intent);
-        this.finish();
+    }
+    private boolean _firstTime = true;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(_firstTime) {
+            _firstTime = false;
+            Intent intent = new Intent(Loader.this, ZFMainEntry.class);
+            startActivity(intent);
+            Loader.this.finish();
+        }
     }
 }
 

@@ -1008,7 +1008,6 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFMethod, ZFFilterForZFMethod)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFProperty, ZFFilterForZFProperty)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForZFObject, ZFFilterForZFObject)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
-ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFMethodGenericInvokerChecker, ZFMethodGenericInvokerChecker)
 
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(VoidPointer, void *)
 ZFPROPERTY_TYPE_ALIAS_DEFINE(VoidPointer, void *, VoidPointerConst, const void *)

@@ -14,6 +14,57 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+zfbool ZFPropertyTypeIdDataBase::propertyWrapperFromSerializableData(ZF_OUT zfautoObject &v,
+                                                                     ZF_IN const ZFSerializableData &serializableData,
+                                                                     ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                                                                     ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */) const
+{
+    this->propertyWrapper(v);
+    ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, v);
+    if(wrapper == zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            zfText("property not serializable"));
+        return zffalse;
+    }
+    return wrapper->wrappedValueFromSerializableData(serializableData, outErrorHint, outErrorPos);
+}
+zfbool ZFPropertyTypeIdDataBase::propertyWrapperToSerializableData(ZF_OUT ZFSerializableData &serializableData,
+                                                                   ZF_IN ZFObject *v,
+                                                                   ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */) const
+{
+    ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, v);
+    if(wrapper == zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint,
+            zfText("unable to access wrapper type"));
+        return zffalse;
+    }
+    return wrapper->wrappedValueToSerializableData(serializableData, outErrorHint);
+}
+zfbool ZFPropertyTypeIdDataBase::propertyWrapperFromString(ZF_OUT zfautoObject &v,
+                                                           ZF_IN const zfchar *src,
+                                                           ZF_IN_OPT zfindex srcLen /* = zfindexMax */) const
+{
+    this->propertyWrapper(v);
+    ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, v);
+    if(wrapper == zfnull)
+    {
+        return zffalse;
+    }
+    return wrapper->wrappedValueFromString(src, srcLen);
+}
+zfbool ZFPropertyTypeIdDataBase::propertyWrapperToString(ZF_IN_OUT zfstring &s,
+                                                         ZF_IN ZFObject *v) const
+{
+    ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, v);
+    if(wrapper == zfnull)
+    {
+        return zffalse;
+    }
+    return wrapper->wrappedValueToString(s);
+}
+
 // ============================================================
 ZF_STATIC_INITIALIZER_INIT(ZFPropertyTypeIdDataHolder)
 {

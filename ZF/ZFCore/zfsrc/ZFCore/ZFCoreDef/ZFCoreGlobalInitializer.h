@@ -104,23 +104,24 @@ extern ZF_ENV_EXPORT _ZFP_GI_DummyBase *&_ZFP_GI_instanceHolderAccess(ZF_IN cons
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(Name, ZFLevel_) \
     /** @cond ZFPrivateDoc */ \
+    static _ZFP_GI_DummyBase *_ZFP_GI_construct_##Name(void); \
+    ZF_STATIC_REGISTER_INIT(GI_##Name) \
+    { \
+        ZFCoreLibDestroyFlag = zffalse; \
+        _ZFP_GI_dataRegister(&ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_, _ZFP_GI_construct_##Name); \
+    } \
+    ZF_STATIC_REGISTER_DESTROY(GI_##Name) \
+    { \
+        _ZFP_GI_dataUnregister(&ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_); \
+    } \
+    private: \
+        zfbool ZFCoreLibDestroyFlag; \
+    ZF_STATIC_REGISTER_END(GI_##Name) \
     zfclassNotPOD _ZFP_GI_##Name : zfextendsNotPOD _ZFP_GI_DummyBase \
     { \
     protected: \
         typedef _ZFP_GI_##Name zfself; \
     public: \
-        static void _ZFP_GI_register(ZF_IN zfbool *ZFCoreLibDestroyFlag) \
-        { \
-            _ZFP_GI_dataRegister(ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_, _ZFP_GI_##Name::_ZFP_GI_construct); \
-        } \
-        static void _ZFP_GI_unregister(ZF_IN zfbool *ZFCoreLibDestroyFlag) \
-        { \
-            _ZFP_GI_dataUnregister(ZFCoreLibDestroyFlag, ZFM_TOSTRING(Name), ZFLevel_); \
-        } \
-        static _ZFP_GI_DummyBase *_ZFP_GI_construct(void) \
-        { \
-            return zfnew(_ZFP_GI_##Name); \
-        } \
         static _ZFP_GI_##Name *_ZFP_GI_instanceAccess(void) \
         { \
             static _ZFP_GI_DummyBase *&instance = \
@@ -183,19 +184,11 @@ extern ZF_ENV_EXPORT _ZFP_GI_DummyBase *&_ZFP_GI_instanceHolderAccess(ZF_IN cons
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_END(Name) \
     }; \
-    /** @endcond */ \
-    ZF_STATIC_REGISTER_INIT(GI_##Name) \
+    static _ZFP_GI_DummyBase *_ZFP_GI_construct_##Name(void) \
     { \
-        ZFCoreLibDestroyFlag = zffalse; \
-        _ZFP_GI_##Name::_ZFP_GI_register(&ZFCoreLibDestroyFlag); \
+        return zfnew(_ZFP_GI_##Name); \
     } \
-    ZF_STATIC_REGISTER_DESTROY(GI_##Name) \
-    { \
-        _ZFP_GI_##Name::_ZFP_GI_unregister(&ZFCoreLibDestroyFlag); \
-    } \
-    private: \
-        zfbool ZFCoreLibDestroyFlag; \
-    ZF_STATIC_REGISTER_END(GI_##Name)
+    /** @endcond */
 /**
  * @brief see #ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL
  */

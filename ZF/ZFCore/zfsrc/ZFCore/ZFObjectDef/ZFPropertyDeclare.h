@@ -136,11 +136,11 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
         public: \
             zfautoObject valueHolder; \
         }; \
-        zfself::_ZFP_PropV_##Name Name##_ZFPropertyValue; \
+        zfself::_ZFP_PropV_##Name Name##_PropV; \
     public: \
         zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
         { \
-            if(Name##_ZFPropertyValue.propertyAccessed()) \
+            if(Name##_PropV.propertyAccessed()) \
             { \
                 zfself::_ZFP_PropV_##Name _holder; \
                 if(outInitValue != zfnull) \
@@ -205,11 +205,11 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
         private: \
             zfself::_ZFP_PropVT_##Name *value; \
         }; \
-        zfself::_ZFP_PropV_##Name Name##_ZFPropertyValue; \
+        zfself::_ZFP_PropV_##Name Name##_PropV; \
     public: \
         zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
         { \
-            if(Name##_ZFPropertyValue.propertyAccessed()) \
+            if(Name##_PropV.propertyAccessed()) \
             { \
                 zfself::_ZFP_PropV_##Name _holder; \
                 if(outInitValue != zfnull) \
@@ -233,7 +233,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
         static zfbool _ZFP_propCbAccessed_##Name(ZF_IN const ZFProperty *property, \
                                                  ZF_IN ZFObject *ownerObj) \
         { \
-            return ZFCastZFObjectUnchecked(zfself *, ownerObj)->Name##_ZFPropertyValue.propertyAccessed(); \
+            return ZFCastZFObjectUnchecked(zfself *, ownerObj)->Name##_PropV.propertyAccessed(); \
         } \
     private: \
         static zfbool _ZFP_propCbIsInit_##Name(ZF_IN const ZFProperty *property, \
@@ -381,7 +381,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
         static void _ZFP_propCbDel_##Name(ZF_IN ZFObject *owner, ZF_IN const ZFProperty *property) \
         { \
             zfself *t = ZFCastZFObjectUnchecked(zfself *, owner); \
-            t->Name##_ZFPropertyValue.propertyDealloc(t); \
+            t->Name##_PropV.propertyDealloc(t); \
         } \
     public:
 #define _ZFP_ZFPROPERTY_DECLARE_RETAIN(Type, ZFPropertyTypeId_noneOrType, Name, \
@@ -403,7 +403,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_VALUE_REF(Name) \
-    (Name##_ZFPropertyValue.propertyInit(this))
+    (Name##_PropV.propertyInit(this))
 
 #define _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name) \
     Name##Set
@@ -431,7 +431,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN cons
         { \
             zfCoreMutexLock(); \
             Type &valuePointerRef = _ZFP_ZFPROPERTY_VALUE_REF(Name); /* must access first */ \
-            zfautoObject &valueRef = this->Name##_ZFPropertyValue.valueHolder; \
+            zfautoObject &valueRef = this->Name##_PropV.valueHolder; \
             zfautoObject valueOld = valueRef; \
             zfautoObject valueNew = zflockfree_zfautoObjectCreate(ZFObjectToObject(propertyValue)); \
             this->_ZFP_propL_onDetach_##Name(valueNew, valueOld); \

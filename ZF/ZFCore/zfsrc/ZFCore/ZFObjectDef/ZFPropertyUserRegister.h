@@ -20,9 +20,9 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-zfclass ZF_ENV_EXPORT _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder : zfextends ZFObject
+zfclass ZF_ENV_EXPORT _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE(_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder, ZFObject)
+    ZFOBJECT_DECLARE(_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder, ZFObject)
 public:
     ZFCorePointerBase *v;
 public:
@@ -42,7 +42,7 @@ public:
 // ============================================================
 /** @brief default impl for #ZFPropertyUserRegisterRetain */
 template<typename T_Type>
-zfclassNotPOD ZF_ENV_EXPORT ZFPropertyUserRegisteraultImplRetain
+zfclassNotPOD ZF_ENV_EXPORT ZFPropertyUserRegisterDefaultImplRetain
 {
 public:
     /** @brief default impl for #ZFPropertyUserRegisterRetain */
@@ -50,8 +50,8 @@ public:
     {
         zfCoreMutexLocker();
         ownerObj->tagSet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplRetain_"), property->propertyName()),
-                _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder::create(
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplRetain_"), property->propertyName()),
+                _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(
                     ZFCorePointerForZFObject<T_Type>(ZFCastZFObject(T_Type, v))
                 )
             );
@@ -60,21 +60,21 @@ public:
     static ZFObject *callbackGet(ZF_IN const ZFProperty *property, ZF_IN ZFObject *ownerObj)
     {
         zfCoreMutexLocker();
-        _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *holder =
-            ownerObj->tagGet<_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *>(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplRetain_"), property->propertyName()));
+        _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *holder =
+            ownerObj->tagGet<_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *>(
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplRetain_"), property->propertyName()));
         if(holder == zfnull)
         {
             zfautoObject tmp;
             property->userRegisterInitValueSetupCallback((void *)&tmp);
 
-            zfautoObject holderTmp = _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder::create(
+            zfautoObject holderTmp = _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(
                     ZFCorePointerForZFObject<T_Type>(tmp.to<T_Type>())
                 );
             ownerObj->tagSet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplRetain_"), property->propertyName()),
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplRetain_"), property->propertyName()),
                 holderTmp);
-            holder = holderTmp.to<_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *>();
+            holder = holderTmp.to<_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *>();
         }
         T_Type ret = holder->v->pointerValueT<T_Type>();
         if(ret == zfnull)
@@ -90,7 +90,7 @@ public:
     static zfbool callbackIsValueAccessed(ZF_IN const ZFProperty *property, ZF_IN ZFObject *ownerObj)
     {
         return (ownerObj->tagGet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplRetain_"), property->propertyName())
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplRetain_"), property->propertyName())
             ) != zfnull);
     }
     /** @brief default impl for #ZFPropertyUserRegisterRetain */
@@ -146,7 +146,7 @@ public:
 // ============================================================
 /** @brief default impl for #ZFPropertyUserRegisterAssign */
 template<typename T_Type>
-zfclassNotPOD ZF_ENV_EXPORT ZFPropertyUserRegisteraultImplAssign
+zfclassNotPOD ZF_ENV_EXPORT ZFPropertyUserRegisterDefaultImplAssign
 {
 public:
     /** @brief default impl for #ZFPropertyUserRegisterAssign */
@@ -154,8 +154,8 @@ public:
     {
         zfCoreMutexLocker();
         ownerObj->tagSet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplAssign_"), property->propertyName()),
-                _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder::create(
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplAssign_"), property->propertyName()),
+                _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(
                     ZFCorePointerForObject<T_Type *>(zfnew(T_Type, *(T_Type *)v))
                 )
             );
@@ -164,21 +164,21 @@ public:
     static const void *callbackGet(ZF_IN const ZFProperty *property, ZF_IN ZFObject *ownerObj)
     {
         zfCoreMutexLocker();
-        _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *holder =
-            ownerObj->tagGet<_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *>(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplAssign_"), property->propertyName()));
+        _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *holder =
+            ownerObj->tagGet<_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *>(
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplAssign_"), property->propertyName()));
         if(holder == zfnull)
         {
             T_Type tmp = T_Type();
             property->userRegisterInitValueSetupCallback((void *)&tmp);
 
-            zfautoObject holderTmp = _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder::create(
+            zfautoObject holderTmp = _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(
                     ZFCorePointerForObject<T_Type *>(zfnew(T_Type, tmp))
                 );
             ownerObj->tagSet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplAssign_"), property->propertyName()),
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplAssign_"), property->propertyName()),
                 holderTmp);
-            holder = holderTmp.to<_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder *>();
+            holder = holderTmp.to<_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder *>();
         }
         return holder->v->pointerValueT<T_Type *>();
     }
@@ -186,7 +186,7 @@ public:
     static zfbool callbackIsValueAccessed(ZF_IN const ZFProperty *property, ZF_IN ZFObject *ownerObj)
     {
         return (ownerObj->tagGet(
-                zfsConnectLineFree(zfText("ZFPropertyUserRegisteraultImplAssign_"), property->propertyName())
+                zfsConnectLineFree(zfText("ZFPropertyUserRegisterDefaultImplAssign_"), property->propertyName())
             ) != zfnull);
     }
     /** @brief default impl for #ZFPropertyUserRegisterAssign */
@@ -444,7 +444,7 @@ public:
         Func_ZFPropertyCallbackCopy, \
         Func_ZFPropertyCallbackGetInfo \
     ) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFPropertyUserRegisterAutoRegister_##registerSig, ZFLevelZFFrameworkNormal) \
+    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(PropReg_##registerSig, ZFLevelZFFrameworkNormal) \
     { \
         _ZFP_ZFPropertyUserRegister(result, ownerClass, \
             Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
@@ -462,12 +462,12 @@ public:
             ); \
         this->_property = result; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(_ZFP_ZFPropertyUserRegisterAutoRegister_##registerSig) \
+    ZF_GLOBAL_INITIALIZER_DESTROY(PropReg_##registerSig) \
     { \
         ZFPropertyUserUnregister(this->_property); \
     } \
     const ZFProperty *_property; \
-    ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFPropertyUserRegisterAutoRegister_##registerSig)
+    ZF_GLOBAL_INITIALIZER_END(PropReg_##registerSig)
 
 // ============================================================
 /**
@@ -520,17 +520,17 @@ public:
  *       myCallbackGetInfo)
  *
  *   // or, if you simply want to register a raw value,
- *   // you may use ZFPropertyUserRegisteraultImplRetain or ZFPropertyUserRegisteraultImplAssign as default impl
+ *   // you may use ZFPropertyUserRegisterDefaultImplRetain or ZFPropertyUserRegisterDefaultImplAssign as default impl
  *   ZFPROPERTY_USER_REGISTER_RETAIN(MyClassToAttachTheProperty, MyClassToAttachTheProperty::ClassData(),
  *       Type, zfText("propertyName"), ZFPropertyNoInitValue,
  *       public, public,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackSet,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackGet,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsValueAccessed,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsInitValue,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackCompare,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackCopy,
- *       ZFPropertyUserRegisteraultImplRetain<Type>::callbackGetInfo)
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackSet,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGet,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsValueAccessed,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsInitValue,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCompare,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCopy,
+ *       ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGetInfo)
  * @endcode
  *
  * note:
@@ -549,13 +549,13 @@ public:
     ZFPropertyUserRegisterRetainDetail(resultProperty, ownerClass, \
         Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackSet, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackGet, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsValueAccessed, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsInitValue, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackCompare, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackCopy, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackGetInfo \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackSet, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGet, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsValueAccessed, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsInitValue, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCompare, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCopy, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGetInfo \
     )
 /** @brief see #ZFPropertyUserRegisterRetain */
 #define ZFPropertyUserRegisterRetainDetail(resultProperty, ownerClass, \
@@ -591,13 +591,13 @@ public:
     ZFPROPERTY_USER_REGISTER_RETAIN_DETAIL(registerSig, ownerClass, \
         Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackSet, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackGet, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsValueAccessed, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackIsInitValue, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackCompare, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackCopy, \
-        ZFPropertyUserRegisteraultImplRetain<Type>::callbackGetInfo \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackSet, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGet, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsValueAccessed, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackIsInitValue, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCompare, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackCopy, \
+        ZFPropertyUserRegisterDefaultImplRetain<Type>::callbackGetInfo \
     )
 /** @brief see #ZFPropertyUserRegisterRetain */
 #define ZFPROPERTY_USER_REGISTER_RETAIN_DETAIL(registerSig, ownerClass, \
@@ -635,13 +635,13 @@ public:
     ZFPropertyUserRegisterAssignDetail(resultProperty, ownerClass, \
         Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackSet, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackGet, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackIsValueAccessed, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackIsInitValue, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackCompare, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackCopy, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackGetInfo \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackSet, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackGet, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackIsValueAccessed, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackIsInitValue, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackCompare, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackCopy, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackGetInfo \
     )
 /** @brief see #ZFPropertyUserRegisterRetain */
 #define ZFPropertyUserRegisterAssignDetail(resultProperty, ownerClass, \
@@ -677,13 +677,13 @@ public:
     ZFPROPERTY_USER_REGISTER_ASSIGN_DETAIL(registerSig, ownerClass, \
         Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackSet, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackGet, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackIsValueAccessed, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackIsInitValue, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackCompare, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackCopy, \
-        ZFPropertyUserRegisteraultImplAssign<Type>::callbackGetInfo \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackSet, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackGet, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackIsValueAccessed, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackIsInitValue, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackCompare, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackCopy, \
+        ZFPropertyUserRegisterDefaultImplAssign<Type>::callbackGetInfo \
     )
 /** @brief see #ZFPropertyUserRegisterAssign */
 #define ZFPROPERTY_USER_REGISTER_ASSIGN_DETAIL(registerSig, ownerClass, \

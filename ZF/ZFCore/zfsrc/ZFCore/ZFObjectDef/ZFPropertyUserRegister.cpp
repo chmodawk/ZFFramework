@@ -11,9 +11,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject _ZFP_I_ZFPropertyUserRegisteraultImplValueHolder::create(ZF_IN const ZFCorePointerBase &p)
+zfautoObject _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(ZF_IN const ZFCorePointerBase &p)
 {
-    zfblockedAllocWithoutLeakTest(_ZFP_I_ZFPropertyUserRegisteraultImplValueHolder, holder);
+    zfblockedAllocWithoutLeakTest(_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder, holder);
     holder->v = p.refNew();
     return zfautoObjectCreateWithoutLeakTest(holder);
 }

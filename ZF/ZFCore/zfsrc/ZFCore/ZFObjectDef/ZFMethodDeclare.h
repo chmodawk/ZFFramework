@@ -275,8 +275,8 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     /** @cond ZFPrivateDoc */ \
     public: \
         _ZFP_ZFMethod_AutoRegister(autoRegisterOrNot, MethodName, DECLARE_LINE) \
-        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_METHOD_TYPE( \
-            ReturnType, MethodName, MethodName##_##DECLARE_LINE \
+        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
+            ReturnType, MethodName##_##DECLARE_LINE \
             , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
             , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
             , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
@@ -313,7 +313,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
                     ZFCastReinterpret(ZFFuncAddrType, \
                         &zfself::_ZFP_MtdI_##MethodName##_##DECLARE_LINE), \
                     _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, MethodName##_##DECLARE_LINE), \
-                    _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(MethodName##_##DECLARE_LINE), \
                     _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsWhatType), \
                     ZFM_TOSTRING(MethodName), \
                     ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
@@ -372,8 +371,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
                     zfself::ClassData(), \
                     _ZFP_ZFMethod_initClassMemberType_privilege(PublicOrProtectedOrPrivate) \
                     ); \
-                zfself::_ZFP_ZFObjectGetClass()->_ZFP_ZFClass_methodRegister(_method); \
-                _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, _method); \
             } \
             return _method; \
         } \

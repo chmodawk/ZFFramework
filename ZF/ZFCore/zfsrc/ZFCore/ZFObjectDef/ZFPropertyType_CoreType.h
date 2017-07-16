@@ -508,7 +508,6 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFMethod, ZFFilterForZFMethod)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFProperty, ZFFilterForZFProperty)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFilterForZFObject, ZFFilterForZFObject)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFMethodGenericInvoker, ZFMethodGenericInvoker)
-ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFMethodGenericInvokerChecker, ZFMethodGenericInvokerChecker)
 
 // ============================================================
 // void *

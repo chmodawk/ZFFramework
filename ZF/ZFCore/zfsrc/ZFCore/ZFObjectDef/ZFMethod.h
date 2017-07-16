@@ -259,7 +259,6 @@ public:
                             ZF_IN zfbool methodIsUserRegister,
                             ZF_IN ZFFuncAddrType invoker,
                             ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
-                            ZF_IN ZFMethodGenericInvokerChecker methodGenericInvokerChecker,
                             ZF_IN const zfchar *methodIsWhatType,
                             ZF_IN const zfchar *methodName,
                             ZF_IN const zfchar *returnTypeId,
@@ -453,7 +452,7 @@ public:
      * which is a pain when binding with script languages\n
      * since ZFFramework supply reflection (though limited),
      * we are trying to solve the dynamic script binding, how it works:
-     * -  #ZFPropertyTypeIdData::PropertyConvertFromZFObject\n
+     * -  #ZFPropertyTypeIdData::Value\n
      *   to supply type conversion to ZFObject types without knowing actual type
      * -  #ZFMethodGenericInvoker\n
      *   to invoke the reflectable method without static type binding
@@ -469,7 +468,7 @@ public:
      *
      * \n
      * typical steps for impl:
-     * -# supply type convert methods to bind #ZFPropertyTypeIdData::PropertyConvertFromZFObject types to script languages
+     * -# supply type convert methods to bind #ZFPropertyTypeIdData::Value types to script languages
      * -# using reflection of #ZFClass and #ZFMethod,
      *   to bind all class and methods to script languages
      *
@@ -489,14 +488,14 @@ public:
      * @brief util method to invoke #methodGenericInvoker
      */
     inline zfautoObject methodGenericInvoke(ZF_IN_OPT ZFObject *ownerObjOrNull = zfnull
-                                            , ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokeraultParam
+                                            , ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam
                                             , ZF_OUT_OPT zfstring *errorHint = zfnull
                                             ) const
     {
@@ -523,55 +522,11 @@ public:
     }
 
     /**
-     * @brief callback to check whether it's able to perform generic invoker
-     *   from specified params
-     */
-    inline ZFMethodGenericInvokerChecker methodGenericInvokerChecker(void) const
-    {
-        return this->_ZFP_ZFMethod_methodGenericInvokerChecker;
-    }
-    /**
-     * @brief util method to invoke #methodGenericInvokerChecker
-     */
-    inline zfbool methodGenericInvokerCheck(
-                                              ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokeraultParam
-                                            , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokeraultParam
-                                            , ZF_OUT_OPT zfstring *errorHint = zfnull
-                                            ) const
-    {
-        return this->methodGenericInvokerChecker()(this, errorHint
-                , param0
-                , param1
-                , param2
-                , param3
-                , param4
-                , param5
-                , param6
-                , param7
-            );
-    }
-    /* ZFMETHOD_MAX_PARAM */
-    /**
-     * @brief see #methodGenericInvokerSet
-     */
-    inline ZFMethodGenericInvokerChecker methodGenericInvokerCheckerOrg(void) const
-    {
-        return this->_ZFP_ZFMethod_methodGenericInvokerCheckerOrg;
-    }
-
-    /**
-     * @brief change default impl for #methodGenericInvoker/#methodGenericInvokerChecker
+     * @brief change default impl for #methodGenericInvoker
      *
-     * the original invoker can be accessed by #methodGenericInvokerOrg/#methodGenericInvokerCheckerOrg
+     * the original invoker can be accessed by #methodGenericInvokerOrg
      */
-    void methodGenericInvokerSet(ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
-                                 ZF_IN ZFMethodGenericInvokerChecker methodGenericInvokerChecker) const;
+    void methodGenericInvokerSet(ZF_IN ZFMethodGenericInvoker methodGenericInvoker) const;
 
     // ============================================================
     // class member type
@@ -640,8 +595,6 @@ private:
     ZFFuncAddrType _ZFP_ZFMethod_invokerOrg;
     ZFMethodGenericInvoker _ZFP_ZFMethod_methodGenericInvoker;
     ZFMethodGenericInvoker _ZFP_ZFMethod_methodGenericInvokerOrg;
-    ZFMethodGenericInvokerChecker _ZFP_ZFMethod_methodGenericInvokerChecker;
-    ZFMethodGenericInvokerChecker _ZFP_ZFMethod_methodGenericInvokerCheckerOrg;
     zfstring _ZFP_ZFMethod_methodName;
     zfstring _ZFP_ZFMethod_returnTypeId;
     zfstring _ZFP_ZFMethod_returnTypeName;

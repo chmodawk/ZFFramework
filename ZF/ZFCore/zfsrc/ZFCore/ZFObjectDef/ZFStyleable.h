@@ -156,26 +156,26 @@ protected:
 
 // ============================================================
 // DefaultStyle
-#define _ZFP_ZFStyleableault_level ZFLevelZFFrameworkHigh
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFStyleableaultPointerHolder
+#define _ZFP_ZFStyleableDefault_level ZFLevelZFFrameworkHigh
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFStyleableDefaultPointerHolder
 {
 public:
     void *d;
-    _ZFP_ZFStyleableaultPointerHolder(void) : d(zfnull) {}
+    _ZFP_ZFStyleableDefaultPointerHolder(void) : d(zfnull) {}
 };
 
-extern ZF_ENV_EXPORT _ZFP_ZFStyleableaultPointerHolder *_ZFP_ZFStyleableaultRefAccess(ZF_IN const zfchar *name);
-typedef void (*_ZFP_ZFStyleableaultDeleteCallback)(ZF_IN void *instance);
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFStyleableaultDeleteCallbackHolder
+extern ZF_ENV_EXPORT _ZFP_ZFStyleableDefaultPointerHolder *_ZFP_ZFStyleableDefaultRefAccess(ZF_IN const zfchar *name);
+typedef void (*_ZFP_ZFStyleableDefaultDeleteCallback)(ZF_IN void *instance);
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFStyleableDefaultDeleteCallbackHolder
 {
 public:
-    _ZFP_ZFStyleableaultDeleteCallbackHolder(ZF_IN _ZFP_ZFStyleableaultDeleteCallback deleteCallback,
+    _ZFP_ZFStyleableDefaultDeleteCallbackHolder(ZF_IN _ZFP_ZFStyleableDefaultDeleteCallback deleteCallback,
                                                 ZF_IN void *instance)
     : deleteCallback(deleteCallback)
     , instance(instance)
     {
     }
-    ~_ZFP_ZFStyleableaultDeleteCallbackHolder(void)
+    ~_ZFP_ZFStyleableDefaultDeleteCallbackHolder(void)
     {
         if(this->deleteCallback && this->instance)
         {
@@ -183,13 +183,13 @@ public:
         }
     }
 private:
-    _ZFP_ZFStyleableaultDeleteCallback deleteCallback;
+    _ZFP_ZFStyleableDefaultDeleteCallback deleteCallback;
     void *instance;
 };
 
 #define _ZFP_ZFSTYLE_DEFAULT_DECLARE(YourStyle) \
     public: \
-        zfclass _ZFP_ZFStyleableault_##YourStyle; \
+        zfclass _ZFP_ZFStyleableDefault_##YourStyle; \
     public: \
         /** \n default style for @ref YourStyle */ \
         static YourStyle *DefaultStyle(void); \
@@ -197,13 +197,13 @@ private:
         ZFMETHOD_DECLARE_STATIC_0(zfautoObject, DefaultStyleReflect); \
     private: \
         static void _ZFP_ZFStyleablEnumDefaultStyleSet(ZF_IN YourStyle *newInstance); \
-        static ZFCorePointerBase *&_ZFP_ZFStyleableaultCleaner(void); \
-        static void _ZFP_ZFStyleableaultOnDelete(ZF_IN void *instance); \
+        static ZFCorePointerBase *&_ZFP_ZFStyleableDefaultCleaner(void); \
+        static void _ZFP_ZFStyleableDefaultOnDelete(ZF_IN void *instance); \
     public:
 #define _ZFP_ZFSTYLE_DEFAULT_DEFINE(YourStyle) \
-    zfclass YourStyle::_ZFP_ZFStyleableault_##YourStyle : zfextends YourStyle \
+    zfclass YourStyle::_ZFP_ZFStyleableDefault_##YourStyle : zfextends YourStyle \
     { \
-        ZFOBJECT_DECLARE(_ZFP_ZFStyleableault_##YourStyle, YourStyle) \
+        ZFOBJECT_DECLARE(_ZFP_ZFStyleableDefault_##YourStyle, YourStyle) \
     public: \
         zfoverride \
         virtual zfbool styleableIsDefaultStyle(void) \
@@ -214,14 +214,14 @@ private:
     YourStyle *YourStyle::DefaultStyle(void) \
     { \
         zfCoreMutexLocker(); \
-        static _ZFP_ZFStyleableaultPointerHolder *holder = _ZFP_ZFStyleableaultRefAccess(ZFM_TOSTRING(YourStyle)); \
+        static _ZFP_ZFStyleableDefaultPointerHolder *holder = _ZFP_ZFStyleableDefaultRefAccess(ZFM_TOSTRING(YourStyle)); \
         if(holder->d == zfnull) \
         { \
-            if(ZFFrameworkStateCheck(_ZFP_ZFStyleableault_level) == ZFFrameworkStateNotAvailable) \
+            if(ZFFrameworkStateCheck(_ZFP_ZFStyleableDefault_level) == ZFFrameworkStateNotAvailable) \
             { \
                 return zfnull; \
             } \
-            zfautoObject obj = _ZFP_ZFStyleableault_##YourStyle::ClassData()->newInstance( \
+            zfautoObject obj = _ZFP_ZFStyleableDefault_##YourStyle::ClassData()->newInstance( \
                 ZFCallerInfo(ZF_CALLER_FILE, zfTextA("DefaultStyle"), ZF_CALLER_LINE)); \
             if(obj != zfautoObjectNull) \
             { \
@@ -236,39 +236,39 @@ private:
     } \
     void YourStyle::_ZFP_ZFStyleablEnumDefaultStyleSet(ZF_IN YourStyle *newInstance) \
     { \
-        if(ZFFrameworkStateCheck(_ZFP_ZFStyleableault_level) == ZFFrameworkStateNotAvailable) \
+        if(ZFFrameworkStateCheck(_ZFP_ZFStyleableDefault_level) == ZFFrameworkStateNotAvailable) \
         { \
             return ; \
         } \
-        _ZFP_ZFStyleableaultPointerHolder *holder = _ZFP_ZFStyleableaultRefAccess(ZFM_TOSTRING(YourStyle)); \
+        _ZFP_ZFStyleableDefaultPointerHolder *holder = _ZFP_ZFStyleableDefaultRefAccess(ZFM_TOSTRING(YourStyle)); \
         if(holder->d == newInstance) \
         { \
             return ; \
         } \
-        ZFCorePointerBase *&cleanerRef = _ZFP_ZFStyleableaultCleaner(); \
+        ZFCorePointerBase *&cleanerRef = _ZFP_ZFStyleableDefaultCleaner(); \
         ZFCorePointerBase *cleanerOld = cleanerRef; \
         cleanerRef = zfnull; \
         if(newInstance != zfnull) \
         { \
             holder->d = zfRetain(newInstance); \
             newInstance->toObject()->objectCachedSet(zftrue); \
-            cleanerRef = ZFObjectGlobalInstanceAdd(ZFCorePointerForObject<_ZFP_ZFStyleableaultDeleteCallbackHolder *>( \
-                zfnew(_ZFP_ZFStyleableaultDeleteCallbackHolder, YourStyle::_ZFP_ZFStyleableaultOnDelete, holder->d)), \
-                _ZFP_ZFStyleableault_level); \
+            cleanerRef = ZFObjectGlobalInstanceAdd(ZFCorePointerForObject<_ZFP_ZFStyleableDefaultDeleteCallbackHolder *>( \
+                zfnew(_ZFP_ZFStyleableDefaultDeleteCallbackHolder, YourStyle::_ZFP_ZFStyleableDefaultOnDelete, holder->d)), \
+                _ZFP_ZFStyleableDefault_level); \
         } \
         if(cleanerOld != zfnull) \
         { \
-            ZFObjectGlobalInstanceRemove(cleanerOld, _ZFP_ZFStyleableault_level); \
+            ZFObjectGlobalInstanceRemove(cleanerOld, _ZFP_ZFStyleableDefault_level); \
         } \
     } \
-    ZFCorePointerBase *&YourStyle::_ZFP_ZFStyleableaultCleaner(void) \
+    ZFCorePointerBase *&YourStyle::_ZFP_ZFStyleableDefaultCleaner(void) \
     { \
         static ZFCorePointerBase *_cleaner = zfnull; \
         return _cleaner; \
     } \
-    void YourStyle::_ZFP_ZFStyleableaultOnDelete(ZF_IN void *instance) \
+    void YourStyle::_ZFP_ZFStyleableDefaultOnDelete(ZF_IN void *instance) \
     { \
-        _ZFP_ZFStyleableaultPointerHolder *holder = _ZFP_ZFStyleableaultRefAccess(ZFM_TOSTRING(YourStyle)); \
+        _ZFP_ZFStyleableDefaultPointerHolder *holder = _ZFP_ZFStyleableDefaultRefAccess(ZFM_TOSTRING(YourStyle)); \
         if(holder->d == instance) \
         { \
             holder->d = zfnull; \

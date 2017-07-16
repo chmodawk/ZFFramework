@@ -57,7 +57,7 @@ public:
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##resultMethod##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURIvk_##methodNamespace##_##resultMethod##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -75,7 +75,7 @@ public:
         } \
     }; \
     _ZFP_ZFMethodFuncUserRegisterDetail(resultMethod, \
-        _ZFP_MtdFURInvoker_##methodNamespace##_##resultMethod##_##DECLARE_LINE::invoker, \
+        _ZFP_MtdFURIvk_##methodNamespace##_##resultMethod##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), \
         ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
@@ -116,8 +116,8 @@ public:
                     ParamExpandOrEmpty6(ZFM_COMMA() ParamType6) \
                     ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
                 ); \
-            _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE_USER_REGISTER( \
-                ReturnType, methodInvoker, _ \
+            _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
+                ReturnType, _ \
                 , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
                 , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
                 , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
@@ -131,7 +131,6 @@ public:
             { \
                 zfCoreMutexLocker(); \
                 _ZFP_MtdFUR::MethodTypeChecker fn = methodInvoker; \
-                zfCoreAssert(fn != zfnull); \
                 _ZFP_MtdFURHolder holder( \
                         methodNamespaceString_, methodNameString_, _ZFP_ZFMethodFuncUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
                         ParamExpandOrEmpty0(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId()) \
@@ -152,7 +151,6 @@ public:
                         zftrue, \
                         ZFCastReinterpret(ZFFuncAddrType, fn), \
                         _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
-                        _ZFP_ZFMETHOD_GENERIC_INVOKER_CHECKER_ADDR(_), \
                         _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic), \
                         holder._methodName, \
                         ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
@@ -209,7 +207,6 @@ public:
                         ); \
                     holder._method->_ZFP_ZFMethod_initFuncType(holder._methodNamespace); \
                     _ZFP_ZFMethodFuncRegister(holder._method); \
-                    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, zfnull, zfnull, holder._method); \
                 } \
                 return holder._method; \
             } \
@@ -232,7 +229,7 @@ public:
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -250,7 +247,7 @@ public:
         } \
     }; \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
-        _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
+        _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
         , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
@@ -275,7 +272,7 @@ public:
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    zfclassNotPOD _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE \
+    zfclassNotPOD _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE \
     { \
     public: \
         static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
@@ -302,7 +299,7 @@ public:
         } \
     }; \
     _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
-        _ZFP_MtdFURInvoker_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
+        _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
         ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
         , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
         , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \

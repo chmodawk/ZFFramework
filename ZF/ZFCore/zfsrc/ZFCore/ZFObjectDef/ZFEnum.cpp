@@ -169,18 +169,14 @@ void _ZFP_ZFEnumData::add(ZF_IN zfbool isEnableDuplicateValue,
                           ZF_IN zfuint value,
                           ZF_IN const zfchar *name,
                           ZF_IN const zfchar *fullName,
-                          ZF_IN const ZFClass *ownerClass,
-                          ZF_IN const zfcharA *callerFile,
-                          zfindex callerLine)
+                          ZF_IN const ZFClass *ownerClass)
 {
     zfCoreAssert(value != ZFEnumInvalid());
     _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
     if(it != d->d.end())
     {
         zfCoreAssertWithMessageTrim(isEnableDuplicateValue,
-            zfTextA("[%s (%s)] duplicate value %s (new: %s, old: %s) when define %s"),
-            ZF_CALLER_FILE_TO_NAME(callerFile),
-            zfsFromInt<zfstringA>(callerLine).cString(),
+            zfTextA("[ZFEnum] duplicate value %s (new: %s, old: %s) when define %s"),
             zfsFromInt<zfstringA>(value).cString(),
             zfsCoreZ2A(name),
             zfsCoreZ2A(it->second.name),

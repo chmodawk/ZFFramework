@@ -198,23 +198,23 @@ _ZFP_I_ZFStyleable_PropertyTypeHolder *ZFStyleable::_ZFP_ZFStyleable_getProperty
 ZFOBJECT_REGISTER(ZFStyleableObject)
 
 // ============================================================
-ZF_STATIC_INITIALIZER_INIT(ZFStyleableaultStyleDataHolder)
+ZF_STATIC_INITIALIZER_INIT(ZFStyleableDefaultStyleDataHolder)
 {
 }
-ZFCoreMap instanceDataMap; // _ZFP_ZFStyleableaultPointerHolder *
-ZF_STATIC_INITIALIZER_END(ZFStyleableaultStyleDataHolder)
+ZFCoreMap instanceDataMap; // _ZFP_ZFStyleableDefaultPointerHolder *
+ZF_STATIC_INITIALIZER_END(ZFStyleableDefaultStyleDataHolder)
 
-_ZFP_ZFStyleableaultPointerHolder *_ZFP_ZFStyleableaultRefAccess(ZF_IN const zfchar *name)
+_ZFP_ZFStyleableDefaultPointerHolder *_ZFP_ZFStyleableDefaultRefAccess(ZF_IN const zfchar *name)
 {
     zfCoreMutexLocker();
-    ZFCoreMap &m = ZF_STATIC_INITIALIZER_INSTANCE(ZFStyleableaultStyleDataHolder)->instanceDataMap;
+    ZFCoreMap &m = ZF_STATIC_INITIALIZER_INSTANCE(ZFStyleableDefaultStyleDataHolder)->instanceDataMap;
     ZFCorePointerBase *v = m.get(name);
     if(v == zfnull)
     {
-        m.set(name, ZFCorePointerForObject<_ZFP_ZFStyleableaultPointerHolder *>(zfnew(_ZFP_ZFStyleableaultPointerHolder)));
+        m.set(name, ZFCorePointerForObject<_ZFP_ZFStyleableDefaultPointerHolder *>(zfnew(_ZFP_ZFStyleableDefaultPointerHolder)));
         v = m.get(name);
     }
-    return v->pointerValueT<_ZFP_ZFStyleableaultPointerHolder *>();
+    return v->pointerValueT<_ZFP_ZFStyleableDefaultPointerHolder *>();
 }
 
 // ============================================================

@@ -438,7 +438,7 @@ extern ZF_ENV_EXPORT zfbool ZFPropertySerializeTo(ZF_IN const ZFProperty *proper
 // ============================================================
 /**
  * @brief dummy base for all wrapper types,
- *   see #ZFPropertyTypeIdData::PropertyConvertFromZFObject
+ *   see #ZFPropertyTypeIdData::Value
  *
  * serializable data:
  * @code
@@ -481,23 +481,23 @@ public:
 
 public:
     /**
-     * @brief convert from serializable data, see #ZFPropertyTypeIdData::PropertyFromSerializableData
+     * @brief convert from serializable data, see #ZFPropertyTypeIdData::propertyWrapperFromSerializableData
      */
     virtual zfbool wrappedValueFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
                                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull,
                                                     ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) zfpurevirtual;
     /**
-     * @brief convert to serializable data, see #ZFPropertyTypeIdData::PropertyToSerializableData
+     * @brief convert to serializable data, see #ZFPropertyTypeIdData::propertyWrapperToSerializableData
      */
     virtual zfbool wrappedValueToSerializableData(ZF_OUT ZFSerializableData &serializableData,
                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull) zfpurevirtual;
     /**
-     * @brief convert from string, see #ZFPropertyTypeIdData::PropertyFromString
+     * @brief convert from string, see #ZFPropertyTypeIdData::propertyWrapperFromString
      */
     virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src,
                                           ZF_IN_OPT zfindex srcLen = zfindexMax) zfpurevirtual;
     /**
-     * @brief convert to string, see #ZFPropertyTypeIdData::PropertyToString
+     * @brief convert to string, see #ZFPropertyTypeIdData::propertyWrapperToString
      */
     virtual zfbool wrappedValueToString(ZF_IN_OUT zfstring &s) zfpurevirtual;
 
@@ -515,7 +515,7 @@ public:
 
 protected:
     zfoverride
-    virtual inline void styleableOnCopyFrom(ZF_IN ZFStyleable *anotherStyleable)
+    virtual void styleableOnCopyFrom(ZF_IN ZFStyleable *anotherStyleable)
     {
         zfsuper::styleableOnCopyFrom(anotherStyleable);
         this->wrappedValueSet(anotherStyleable->to<ZFPropertyTypeWrapper *>()->wrappedValue());

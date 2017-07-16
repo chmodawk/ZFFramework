@@ -66,7 +66,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
 
         v.namedGroups.removeAll();
         element = ZFSerializableUtil::checkElementByName(serializableData, ZFSerializableKeyword_ZFRegExpResult_namedGroups);
-        if(element != zfnull && !ZFPropertyTypeIdData<ZFCoreArrayPOD<zfindexRange> >::PropertyFromSerializableData(v.namedGroups, serializableData, outErrorHint, outErrorPos))
+        if(element != zfnull && !ZFCoreArrayFromSerializableData(v.namedGroups, serializableData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
