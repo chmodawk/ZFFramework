@@ -163,7 +163,7 @@ extern ZF_ENV_EXPORT void ZFPropertyCallbackGetInfoChange(ZF_IN const ZFProperty
 /**
  * @brief for user registered property only, used to setup a property's init value
  */
-typedef void (*ZFPropertyUserRegisterInitValueSetupCallback)(ZF_IN_OUT void *v);
+typedef void (*ZFPropertyCallbackUserRegisterInitValueSetup)(ZF_IN_OUT void *v);
 
 // ============================================================
 /**

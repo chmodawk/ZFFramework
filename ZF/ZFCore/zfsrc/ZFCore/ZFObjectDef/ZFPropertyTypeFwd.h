@@ -305,7 +305,7 @@ public:
         {return TypeName##ToSerializableData(serializableData, this->zfv, outErrorHint);} \
         zfoverride \
         virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src, \
-                                                     ZF_IN_OPT zfindex srcLen = zfindexMax) \
+                                              ZF_IN_OPT zfindex srcLen = zfindexMax) \
         {return TypeName##FromString(this->zfv, src, srcLen);} \
         zfoverride \
         virtual zfbool wrappedValueToString(ZF_IN_OUT zfstring &s) \

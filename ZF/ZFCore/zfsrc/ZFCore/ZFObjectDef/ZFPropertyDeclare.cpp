@@ -31,13 +31,6 @@ const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     return zfnull;
 }
 
-void _ZFP_ZFPropertyCallbackGetInfoRetainDefault(ZF_IN const ZFProperty *property,
-                                                 ZF_IN ZFObject *ownerObj,
-                                                 ZF_IN_OUT zfstring &ret)
-{
-    ZFObjectInfoT(ret, property->callbackRetainGet(property, ownerObj));
-}
-
 ZF_NAMESPACE_GLOBAL_END
 
 #if 1 // ZFObject related method register

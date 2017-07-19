@@ -239,12 +239,12 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
 // ============================================================
 #define _ZFP_ZFMethod_AutoRegister_isAutoRegister(MethodName, DECLARE_LINE) \
     private: \
-        zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdReg_##MethodName##_##DECLARE_LINE \
+        zfclassNotPOD _ZFP_MtdReg_##MethodName##_##DECLARE_LINE \
         { \
         public: \
             _ZFP_MtdReg_##MethodName##_##DECLARE_LINE(void) \
             { \
-                static zftValue<const ZFMethod *> _dummy(zfself::_ZFP_Mtd_##MethodName##_##DECLARE_LINE()); \
+                zfself::_ZFP_Mtd_##MethodName##_##DECLARE_LINE(); \
             } \
         } _ZFP_MtdReg_##MethodName##_##DECLARE_LINE##_; \
     public:
@@ -308,7 +308,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             { \
                 _method->_ZFP_ZFMethodNeedInit = zffalse; \
                 _method->_ZFP_ZFMethod_init( \
-                    _methodHolder.methodInternalId, \
                     zffalse, \
                     ZFCastReinterpret(ZFFuncAddrType, \
                         &zfself::_ZFP_MtdI_##MethodName##_##DECLARE_LINE), \

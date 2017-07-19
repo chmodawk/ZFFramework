@@ -412,7 +412,7 @@ void ZFObject::_ZFP_ZFObjectDealloc(ZFObject *obj)
     for(zfstlsize i = obj->d->propertyAccessed.size() - 1; i != (zfstlsize)-1; --i)
     {
         const ZFProperty *property = obj->d->propertyAccessed[i];
-        property->_ZFP_ZFPropertyDeallocCallbackFunc(obj, property);
+        property->_ZFP_ZFProperty_callbackDealloc(obj, property);
     }
     obj->d->objectInstanceState = ZFObjectInstanceStateOnDealloc;
     zflockfree_ZFLeakTestLogBeforeDealloc(obj);
@@ -527,8 +527,19 @@ void ZFObject::_ZFP_ZFObject_objectPropertyValueAttach(ZF_IN const ZFProperty *p
         d->propertyAccessed.push_back(property);
     }
 }
-void ZFObject::_ZFP_ZFObject_objectPropertyValueDetach(ZF_IN const ZFProperty *property)
+void ZFObject::_ZFP_ZFObject_objectPropertyValueDetach(ZF_IN const ZFProperty *property,
+                                                       ZF_IN zfbool completeDetach)
 {
+    if(completeDetach)
+    {
+        for(zfstlsize i = d->propertyAccessed.size() - 1; i != (zfstlsize)-1; --i)
+        {
+            if(d->propertyAccessed[i] == property)
+            {
+                d->propertyAccessed.erase(d->propertyAccessed.begin() + i);
+            }
+        }
+    }
     if(this->objectCached() && property->propertyIsRetainProperty())
     {
         ZFObject *value = property->callbackRetainGet(property, this);

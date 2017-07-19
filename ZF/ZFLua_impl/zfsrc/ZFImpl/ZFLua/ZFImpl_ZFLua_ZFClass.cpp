@@ -24,7 +24,7 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFClass_classOnChange)
     }
 }
 ZFImpl_ZFLua_implSetupCallback_DEFINE(ZFClass, {
-        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClass::allClass();
+        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClassGetAll();
         if(!allClass.isEmpty())
         {
             const zfchar **classNameList = (const zfchar **)zfmalloc(sizeof(const zfchar *) * (allClass.count() + 1));

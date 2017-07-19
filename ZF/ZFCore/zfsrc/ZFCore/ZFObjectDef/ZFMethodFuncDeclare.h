@@ -366,7 +366,6 @@ public:
             { \
                 _method->_ZFP_ZFMethodNeedInit = zffalse; \
                 _method->_ZFP_ZFMethod_init( \
-                    _methodHolder.methodInternalId, \
                     zffalse, \
                     ZFCastReinterpret(ZFFuncAddrType, \
                         &methodInvoker), \

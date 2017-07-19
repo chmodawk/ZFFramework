@@ -15,6 +15,19 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+_ZFP_ZFIdMapHolder::_ZFP_ZFIdMapHolder(ZF_IN const zfchar *moduleName, ZF_IN const zfchar *idName)
+: ZFCoreLibDestroyFlag(zffalse)
+, moduleName(moduleName)
+, idName(idName)
+, idValue(_ZFP_ZFIdMapRegister(&ZFCoreLibDestroyFlag, moduleName, idName))
+{
+}
+_ZFP_ZFIdMapHolder::~_ZFP_ZFIdMapHolder(void)
+{
+    _ZFP_ZFIdMapUnregister(&ZFCoreLibDestroyFlag, moduleName, *idValue);
+}
+
+// ============================================================
 zfclassLikePOD _ZFP_ZFIdMapData
 {
 public:

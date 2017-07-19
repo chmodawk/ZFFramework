@@ -154,18 +154,18 @@ template<typename T_zffloat>
 inline T_zffloat zfmRoundUp(ZF_IN const T_zffloat &v)
 {
     return (T_zffloat)((v >= 0)
-                      ? (zfint)(v + 1 - zffloatEpsilonT<T_zffloat>::v)
-                      : (zfint)v
-                      );
+            ? (zfint)(v + 1 - zffloatEpsilonT<T_zffloat>::v)
+            : (zfint)v
+        );
 }
 /** @brief util method to round up/down or round a float value */
 template<typename T_zffloat>
 inline T_zffloat zfmRoundDown(ZF_IN const T_zffloat &v)
 {
     return (T_zffloat)((v >= 0)
-                      ? (zfint)v
-                      : (zfint)(v - 1 + zffloatEpsilonT<T_zffloat>::v)
-                      );
+            ? (zfint)v
+            : (zfint)(v - 1 + zffloatEpsilonT<T_zffloat>::v)
+        );
 }
 /** @brief util method to round up/down or round a float value */
 template<typename T_zffloat>

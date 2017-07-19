@@ -18,7 +18,7 @@ zfclassLikePOD _ZFP_SI_ItemData
 public:
     zfindex refCount;
     zfstring name;
-    _ZFP_SI_DummyBase *instance;
+    _ZFP_SI_Base *instance;
 public:
     _ZFP_SI_ItemData(void)
     : refCount(1)
@@ -42,8 +42,8 @@ public:
     _ZFP_SI_DataArrayType data;
 
 public:
-    _ZFP_SI_DummyBase *&access(ZF_IN const zfchar *name,
-                               ZF_IN _ZFP_SI_Constructor constructor)
+    _ZFP_SI_Base *&access(ZF_IN const zfchar *name,
+                          ZF_IN _ZFP_SI_Constructor constructor)
     {
         for(zfindex i = 0; i < this->data.count(); ++i)
         {
@@ -84,18 +84,14 @@ static _ZFP_SI_Data &_ZFP_SI_dataRef_(void)
 }
 #define _ZFP_SI_dataRef _ZFP_SI_dataRef_()
 
-_ZFP_SI_DummyBase *&_ZFP_SI_instanceHolderAccess(ZF_IN const zfchar *name,
-                                                 ZF_IN _ZFP_SI_Constructor constructor)
+_ZFP_SI_Base *&_ZFP_SI_instanceAccess(ZF_IN const zfchar *name,
+                                      ZF_IN _ZFP_SI_Constructor constructor)
 {
-    zfCoreMutexLocker();
-    _ZFP_SI_Data &instance = _ZFP_SI_dataRef;
-    return instance.access(name, constructor);
+    return _ZFP_SI_dataRef.access(name, constructor);
 }
-void _ZFP_SI_instanceCleanup(ZF_IN const zfchar *name)
+void _ZFP_SI_instanceCleanup(ZF_IN _ZFP_SI_Base *instance)
 {
-    zfCoreMutexLocker();
-    _ZFP_SI_Data &instance = _ZFP_SI_dataRef;
-    instance.cleanup(name);
+    _ZFP_SI_dataRef.cleanup(instance->_ZFP_SI_name());
 }
 
 ZF_NAMESPACE_GLOBAL_END

@@ -132,7 +132,7 @@ private:
     {
         this->testCases.removeAll();
 
-        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClass::allClass();
+        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClassGetAll();
         const ZFClass *desired = ZFTestCase::ClassData();
         for(zfindex i = 0; i < allClass.count(); ++i)
         {

@@ -23,15 +23,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdFURHolder
 {
 public:
-    zfstring _methodNamespace;
-    zfstring _methodName;
-    zfstring _methodExtSig;
-    zfstring _methodInternalId;
     ZFMethod *_method;
 public:
-    _ZFP_MtdFURHolder(ZF_IN const zfchar *methodNamespace_,
-                      ZF_IN const zfchar *methodName_,
-                      ZF_IN const zfchar *methodExtSig_
+    _ZFP_MtdFURHolder(ZF_IN const zfchar *methodNamespace,
+                      ZF_IN const zfchar *methodName,
+                      ZF_IN const zfchar *methodExtSig
                       , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
                       , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
                       , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
@@ -147,12 +143,11 @@ public:
                 { \
                     holder._method->_ZFP_ZFMethodNeedInit = zffalse; \
                     holder._method->_ZFP_ZFMethod_init( \
-                        holder._methodInternalId, \
                         zftrue, \
                         ZFCastReinterpret(ZFFuncAddrType, fn), \
                         _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
                         _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic), \
-                        holder._methodName, \
+                        methodNameString_, \
                         ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
                         zfText(#ReturnType), \
                         ParamExpandOrEmpty0( \
@@ -205,7 +200,7 @@ public:
                             ZFM_EMPTY()) \
                         zfnull \
                         ); \
-                    holder._method->_ZFP_ZFMethod_initFuncType(holder._methodNamespace); \
+                    holder._method->_ZFP_ZFMethod_initFuncType(methodNamespaceString_); \
                     _ZFP_ZFMethodFuncRegister(holder._method); \
                 } \
                 return holder._method; \

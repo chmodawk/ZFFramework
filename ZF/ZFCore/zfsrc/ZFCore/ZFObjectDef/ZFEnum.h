@@ -192,11 +192,10 @@ public:
     ~_ZFP_ZFEnumData(void);
 public:
     zfbool needInitFlag;
+    const ZFClass *ownerClass;
     void add(ZF_IN zfbool isEnableDuplicateValue,
              ZF_IN zfuint value,
-             ZF_IN const zfchar *name,
-             ZF_IN const zfchar *fullName,
-             ZF_IN const ZFClass *ownerClass);
+             ZF_IN const zfchar *name);
     zfindex enumCount(void) const;
     zfindex enumIndexForValue(ZF_IN zfuint value) const;
     zfuint enumValueAtIndex(ZF_IN zfindex index) const;
@@ -208,7 +207,7 @@ public:
 private:
     _ZFP_ZFEnumDataPrivate *d;
 };
-extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name);
+extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass *ownerClass);
 
 // ============================================================
 /**
@@ -409,12 +408,17 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name);
     private: \
         static const _ZFP_ZFEnumData *_ZFP_ZFEnumDataRef(void) \
         { \
-            static _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataAccess(ZFM_TOSTRING(ChildEnum)); \
+            static const _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataInit(); \
+            return d; \
+        } \
+        static const _ZFP_ZFEnumData *_ZFP_ZFEnumDataInit(void) \
+        { \
+            zfCoreMutexLocker(); \
+            _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataAccess(ChildEnum::ClassData()); \
             if(d->needInitFlag) \
             { \
                 d->needInitFlag = zffalse; \
-                zfbool isEnableDuplicateValue = isEnableDuplicateValue_; \
-                const zfchar *prefix = zfText(#ChildEnum) zfText("::");
+                zfbool isEnableDuplicateValue = isEnableDuplicateValue_;
 /** @brief see #ZFENUM_BEGIN */
 #define ZFENUM_SEPARATOR(ChildEnum) _ZFP_ZFENUM_SEPARATOR(ChildEnum, zffalse)
 /** @brief see #ZFENUM_BEGIN */
@@ -422,7 +426,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name);
 
 /** @brief see #ZFENUM_BEGIN */
 #define ZFENUM_VALUE_REGISTER_WITH_NAME(Value, Name) \
-                d->add(isEnableDuplicateValue, zfself::e_##Value, Name, zfsConnectLineFree(prefix, Name), zfself::ClassData());
+                d->add(isEnableDuplicateValue, zfself::e_##Value, Name);
 /** @brief see #ZFENUM_BEGIN */
 #define ZFENUM_VALUE_REGISTER(Value) \
                 ZFENUM_VALUE_REGISTER_WITH_NAME(Value, zfText(#Value))

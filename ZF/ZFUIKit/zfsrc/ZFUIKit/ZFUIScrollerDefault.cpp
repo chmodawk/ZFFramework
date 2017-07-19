@@ -714,7 +714,7 @@ void ZFUIScrollerDefault::scrollOnDragBegin(ZF_IN zfint mousePos,
     d->aniByPointStopPos = mousePos;
 }
 void ZFUIScrollerDefault::scrollOnDrag(ZF_IN zfint mousePos,
-                                                ZF_IN const zftimet &mouseTime)
+                                       ZF_IN const zftimet &mouseTime)
 {
     d->scrollDragPrevPrevPos = d->scrollDragPrevPos;
     d->scrollDragPrevPrevTime = d->scrollDragPrevTime;

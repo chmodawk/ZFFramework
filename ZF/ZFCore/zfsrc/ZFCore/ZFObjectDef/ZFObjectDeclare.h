@@ -70,11 +70,6 @@ public:
         } \
         /** @endcond */ \
     public: \
-        static ZFClass *_ZFP_ZFObjectGetClass(void) \
-        { \
-            static ZFClass *cls = zfself::_ZFP_ZFObjectClassRegister(); \
-            return cls; \
-        } \
         /** @brief get class info */ \
         static const ZFClass *ClassData(void) \
         { \
@@ -87,9 +82,8 @@ public:
             return zfself::_ZFP_ZFObjectGetClass(); \
         } \
     private: \
-        static ZFClass *_ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
+        static void _ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
         { \
-            zfCoreMutexLocker(); \
             if(cls->_ZFP_ZFClassNeedInitImplementationList) \
             { \
                 cls->_ZFP_ZFClassNeedInitImplementationList = zffalse; \
@@ -98,7 +92,6 @@ public:
                     zfself::_ZFP_ZFObjectInitImplementationList(cls); \
                 } \
             } \
-            return cls; \
         } \
     public:
 #define _ZFP_ZFOBJECT_DECLARE_OBJECT(ChildClass, SuperClass) \
@@ -119,34 +112,30 @@ public:
         { \
             zfpoolDelete(_ZFP_ZFCastZFObjectInternal(zfself *, obj)); \
         } \
-        static ZFClass *_ZFP_ZFObjectClassRegister(void) \
+        static ZFClass *_ZFP_ZFObjectGetClass(void) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
             static _ZFP_ZFClassRegisterHolder _holder( \
-                &ZFCoreLibDestroyFlag, \
-                ZFClass::_ZFP_ZFClassInitFinish(zfself::_ZFP_ZFObjectCheckInitImplementationList(ZFClass::_ZFP_ZFClassRegister( \
-                    &ZFCoreLibDestroyFlag, \
                     zfText(#ChildClass), \
                     zfsuper::ClassData(), \
                     &zfself::_ZFP_ZFObject_constructor, \
-                    &zfself::_ZFP_ZFObject_destructor)))); \
+                    &zfself::_ZFP_ZFObject_destructor, \
+                    &zfself::_ZFP_ZFObjectCheckInitImplementationList \
+                ); \
             return _holder.cls; \
         }
 #define _ZFP_ZFOBJECT_DECLARE_ABSTRACT(ChildClass, SuperClass) \
     public: \
         typedef enum {_ZFP_ZFObjectCanAlloc = 0} _ZFP_ZFObjectCanAllocChecker; \
     public: \
-        static ZFClass *_ZFP_ZFObjectClassRegister(void) \
+        static ZFClass *_ZFP_ZFObjectGetClass(void) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
             static _ZFP_ZFClassRegisterHolder _holder( \
-                &ZFCoreLibDestroyFlag, \
-                ZFClass::_ZFP_ZFClassInitFinish(zfself::_ZFP_ZFObjectCheckInitImplementationList(ZFClass::_ZFP_ZFClassRegister( \
-                    &ZFCoreLibDestroyFlag, \
                     zfText(#ChildClass), \
                     zfsuper::ClassData(), \
                     zfnull, \
-                    zfnull)))); \
+                    zfnull, \
+                    &zfself::_ZFP_ZFObjectCheckInitImplementationList \
+                ); \
             return _holder.cls; \
         }
 /**

@@ -85,9 +85,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFLeakTestBegin(ZF_IN const ZFCallerInfo &callerI
  * @note you may call ZFLeakTestBegin multiple times,
  *   but you must make sure ZFLeakTestBegin and ZFLeakTestEnd are paired
  * @note leak test consumes much CPU and memory, you should enable only if necessary,
- *   and should not enable for too long,
- *   since object may retain or release much frequently,
- *   the actions would be accumulated and may consume much memory to store
+ *   and only for debug usage
  */
 #define ZFLeakTestBegin(...) _ZFP_ZFLeakTestBegin( \
     ZFCallerInfoMake(), \

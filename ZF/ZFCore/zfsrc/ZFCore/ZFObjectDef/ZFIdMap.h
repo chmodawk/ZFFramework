@@ -44,24 +44,17 @@ extern ZF_ENV_EXPORT zfidentity ZFIdMapGetId(ZF_IN const zfchar *moduleName, ZF_
  */
 extern ZF_ENV_EXPORT void ZFIdMapGetAll(ZF_IN const zfchar *moduleName, ZF_OUT ZFCoreArrayPOD<zfidentity> &idValues, ZF_OUT ZFCoreArrayPOD<const zfchar *> &idNames);
 
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFIdMapUnregisterHolder
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFIdMapHolder
 {
 public:
-    _ZFP_ZFIdMapUnregisterHolder(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const zfchar *moduleName, ZF_IN zfidentity idValue)
-    : ZFCoreLibDestroyFlag(ZFCoreLibDestroyFlag)
-    , moduleName(moduleName)
-    , idValue(idValue)
-    {
-    }
-    ~_ZFP_ZFIdMapUnregisterHolder(void)
-    {
-        _ZFP_ZFIdMapUnregister(this->ZFCoreLibDestroyFlag, this->moduleName, this->idValue);
-    }
+    _ZFP_ZFIdMapHolder(ZF_IN const zfchar *moduleName, ZF_IN const zfchar *idName);
+    ~_ZFP_ZFIdMapHolder(void);
 
-private:
-    zfbool *ZFCoreLibDestroyFlag;
+public:
+    zfbool ZFCoreLibDestroyFlag;
     zfstring moduleName;
-    zfidentity idValue;
+    zfstring idName;
+    const zfidentity *idValue;
 };
 /**
  * @brief declare an id within ZFObject class scope
@@ -103,17 +96,20 @@ private:
         /** \n */ \
         static zfidentity prefix##YourIdName(void) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
-            static const zfidentity *idValue = _ZFP_ZFIdMapRegister( \
-                &ZFCoreLibDestroyFlag, ZFM_TOSTRING(YourModuleName), zfself::prefix##YourIdName##_name()); \
-            static _ZFP_ZFIdMapUnregisterHolder unregisterHolder(&ZFCoreLibDestroyFlag, ZFM_TOSTRING(YourModuleName), *idValue); \
-            return *idValue; \
+            return *(_ZFP_IM_##prefix##YourIdName().idValue); \
         } \
         /** @brief see @ref prefix##YourIdName */ \
         static const zfchar *prefix##YourIdName##_name(void) \
         { \
-            static zfstring _s = zfsConnectLineFree(zfself::ClassData()->className(), zfText("::") zfText(#prefix) zfText(#YourIdName)); \
-            return _s.cString(); \
+            return _ZFP_IM_##prefix##YourIdName().idName; \
+        } \
+        static _ZFP_ZFIdMapHolder &_ZFP_IM_##prefix##YourIdName(void) \
+        { \
+            static _ZFP_ZFIdMapHolder d( \
+                    ZFM_TOSTRING(YourModuleName), \
+                    zfsConnectLineFree(zfself::ClassData()->className(), zfText("::"), zfText(#prefix), zfText(#YourIdName)) \
+                ); \
+            return d; \
         }
 
 /**
@@ -145,13 +141,8 @@ private:
     public: \
         static zfidentity idValue(void) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
-            static const zfidentity *idValue = _ZFP_ZFIdMapRegister( \
-                &ZFCoreLibDestroyFlag, \
-                ZFM_TOSTRING(YourModuleName), \
-                _ZFP_ZFIdMapHolder_##YourModuleName##_##GlobalNamespace##_##prefix##_##YourIdName::idName()); \
-            static _ZFP_ZFIdMapUnregisterHolder unregisterHolder(&ZFCoreLibDestroyFlag, ZFM_TOSTRING(YourModuleName), *idValue); \
-            return *idValue; \
+            static _ZFP_ZFIdMapHolder d(ZFM_TOSTRING(YourModuleName), idName()); \
+            return *(d.idValue); \
         } \
         static const zfchar *idName(void) \
         { \

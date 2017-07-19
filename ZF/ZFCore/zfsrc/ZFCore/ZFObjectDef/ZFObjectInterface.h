@@ -59,9 +59,8 @@ public:
         /** @brief typedef for self */ \
         typedef InterfaceName zfself; \
     private: \
-        static ZFClass *_ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
+        static void _ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
         { \
-            zfCoreMutexLocker(); \
             if(cls->_ZFP_ZFClassNeedInitImplementationList) \
             { \
                 cls->_ZFP_ZFClassNeedInitImplementationList = zffalse; \
@@ -70,33 +69,24 @@ public:
                     zfself::_ZFP_ZFObjectInitImplementationList(cls); \
                 } \
             } \
-            return cls; \
         } \
     public: \
-        static ZFClass *_ZFP_ZFObjectClassRegister(void) \
+        static ZFClass *_ZFP_ZFObjectGetClass(void) \
         { \
-            static zfbool ZFCoreLibDestroyFlag = zffalse; \
             static _ZFP_ZFClassRegisterHolder _holder( \
-                &ZFCoreLibDestroyFlag, \
-                ZFClass::_ZFP_ZFClassInitFinish(zfself::_ZFP_ZFObjectCheckInitImplementationList(ZFClass::_ZFP_ZFClassRegister( \
-                    &ZFCoreLibDestroyFlag, \
                     zfText(#InterfaceName), \
                     DummyParent::ClassData(), \
                     zfnull, \
                     zfnull, \
-                    zftrue)))); \
+                    &zfself::_ZFP_ZFObjectCheckInitImplementationList, \
+                    zftrue \
+                ); \
             return _holder.cls; \
-        } \
-        static ZFClass *_ZFP_ZFObjectGetClass(void) \
-        { \
-            static ZFClass *cls = zfself::_ZFP_ZFObjectClassRegister(); \
-            return cls; \
         } \
         /** @brief get class info */ \
         static const ZFClass *ClassData(void) \
         { \
-            static const ZFClass *cls = zfself::_ZFP_ZFObjectClassRegister(); \
-            return cls; \
+            return zfself::_ZFP_ZFObjectGetClass(); \
         } \
     protected: \
         virtual void _ZFP_ZFInterface_INHERIT_CHECKER(void) \

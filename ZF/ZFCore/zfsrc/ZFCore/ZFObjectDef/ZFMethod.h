@@ -255,8 +255,7 @@ zffinal zfclassNotPOD ZF_ENV_EXPORT ZFMethod
 
 public:
     zfbool _ZFP_ZFMethodNeedInit;
-    void _ZFP_ZFMethod_init(ZF_IN const zfchar *methodExtSig,
-                            ZF_IN zfbool methodIsUserRegister,
+    void _ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
                             ZF_IN ZFFuncAddrType invoker,
                             ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
                             ZF_IN const zfchar *methodIsWhatType,
@@ -613,8 +612,11 @@ private:
 
     // for func type
     zfstring _ZFP_ZFMethod_methodNamespace;
+private:
+    friend ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalId);
 };
 
+// ============================================================
 extern ZF_ENV_EXPORT void _ZFP_ZFMethodInstanceSig(ZF_OUT zfstring &ret,
                                                    ZF_IN const zfchar *methodScope,
                                                    ZF_IN const zfchar *methodName,
@@ -662,8 +664,7 @@ zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFMethodInstanceHolder
 {
 public:
     _ZFP_ZFMethodInstanceHolder(ZF_IN const zfchar *methodInternalId)
-    : methodInternalId(methodInternalId)
-    , method(_ZFP_ZFMethodInstanceAccess(methodInternalId))
+    : method(_ZFP_ZFMethodInstanceAccess(methodInternalId))
     {
     }
     _ZFP_ZFMethodInstanceHolder(ZF_IN const zfchar *methodScope,
@@ -678,7 +679,7 @@ public:
                                 , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
                                 , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
                                 )
-    : methodInternalId(_ZFP_ZFMethodInstanceSig(methodScope, methodName, methodExtSig
+    : method(_ZFP_ZFMethodInstanceAccess(_ZFP_ZFMethodInstanceSig(methodScope, methodName, methodExtSig
             , methodParamTypeId0
             , methodParamTypeId1
             , methodParamTypeId2
@@ -687,20 +688,19 @@ public:
             , methodParamTypeId5
             , methodParamTypeId6
             , methodParamTypeId7
-            ))
-    , method(_ZFP_ZFMethodInstanceAccess(methodInternalId))
+            )))
     {
     }
     ~_ZFP_ZFMethodInstanceHolder(void)
     {
         _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, zfnull, this->method);
-        _ZFP_ZFMethodInstanceCleanup(this->methodInternalId);
+        _ZFP_ZFMethodInstanceCleanup(this->method);
     }
 public:
-    zfstring methodInternalId;
     ZFMethod *method;
 };
 
+// ============================================================
 zfclassFwd ZFFilterForZFMethod;
 /**
  * @brief get all method currently registered, for debug use only

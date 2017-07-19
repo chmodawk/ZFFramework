@@ -105,7 +105,7 @@ void zfSkinApply(ZF_IN ZFStyleable *obj,
     else
     {
         obj->toObject()->observerAdd(ZFObject::EventObjectBeforeDealloc(),
-                         ZF_GLOBAL_INITIALIZER_INSTANCE(zfSkinApplyDataHolder)->objOnDeallocListener);
+             ZF_GLOBAL_INITIALIZER_INSTANCE(zfSkinApplyDataHolder)->objOnDeallocListener);
         dataList = &(m[obj] = ZFCoreArrayPOD<_ZFP_zfSkinApplyData *>());
     }
     _ZFP_zfSkinApplyData *d = zfnull;

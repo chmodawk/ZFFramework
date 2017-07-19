@@ -889,7 +889,7 @@ void ZFUIScrollView::viewEventOnWheelEvent(ZF_IN ZFUIWheelEvent *wheelEvent)
             }
         }
         if((this->scrollContentOffsetLeft() <= 0 && wheelX > 0)
-                || (this->scrollContentOffsetRight() <= 0 && wheelX < 0))
+            || (this->scrollContentOffsetRight() <= 0 && wheelX < 0))
         {
             wheelX = 0;
         }

@@ -11,9 +11,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-_ZFP_MtdURHolder::_ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass_,
-                                   ZF_IN const zfchar *methodName_,
-                                   ZF_IN const zfchar *methodExtSig_
+_ZFP_MtdURHolder::_ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass,
+                                   ZF_IN const zfchar *methodName,
+                                   ZF_IN const zfchar *methodExtSig
                                    , ZF_IN_OPT const zfchar *methodParamTypeId0 /* = zfnull */
                                    , ZF_IN_OPT const zfchar *methodParamTypeId1 /* = zfnull */
                                    , ZF_IN_OPT const zfchar *methodParamTypeId2 /* = zfnull */
@@ -23,15 +23,12 @@ _ZFP_MtdURHolder::_ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass_,
                                    , ZF_IN_OPT const zfchar *methodParamTypeId6 /* = zfnull */
                                    , ZF_IN_OPT const zfchar *methodParamTypeId7 /* = zfnull */
                                    )
-: _methodOwnerClass(ownerClass_)
-, _methodName(methodName_)
-, _methodExtSig(methodExtSig_)
-, _methodInternalId()
-, _method(zfnull)
+: _method(zfnull)
 {
-    zfCoreAssertWithMessageTrim(_methodOwnerClass != zfnull, zfTextA("[ZFMethodUserRegister] null class"));
-    zfCoreAssertWithMessageTrim(!_methodName.isEmpty(), zfTextA("[ZFMethodUserRegister] null methodName"));
-    _ZFP_ZFMethodInstanceSig(_methodInternalId, _methodOwnerClass->className(), _methodName, _methodExtSig
+    zfCoreAssertWithMessageTrim(ownerClass != zfnull, zfTextA("[ZFMethodUserRegister] null class"));
+    zfCoreAssertWithMessageTrim(methodName != zfnull && *methodName != '\0', zfTextA("[ZFMethodUserRegister] null methodName"));
+    zfstring methodInternalId;
+    _ZFP_ZFMethodInstanceSig(methodInternalId, ownerClass->className(), methodName, methodExtSig
         , methodParamTypeId0
         , methodParamTypeId1
         , methodParamTypeId2
@@ -42,13 +39,13 @@ _ZFP_MtdURHolder::_ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass_,
         , methodParamTypeId7
         );
 
-    _method = _ZFP_ZFMethodInstanceFind(_methodInternalId);
+    _method = _ZFP_ZFMethodInstanceFind(methodInternalId);
     zfCoreAssertWithMessageTrim(_method == zfnull,
         zfTextA("[ZFMethodUserRegister] registering a method that already registered, class: %s, methodName: %s, methodExtSig: %s"),
-        zfsCoreZ2A(_methodOwnerClass->className()),
-        zfsCoreZ2A(_methodName.cString()),
-        zfsCoreZ2A(_methodExtSig.cString()));
-    _method = _ZFP_ZFMethodInstanceAccess(_methodInternalId);
+        zfsCoreZ2A(ownerClass->className()),
+        zfsCoreZ2A(methodName),
+        zfsCoreZ2A(methodExtSig));
+    _method = _ZFP_ZFMethodInstanceAccess(methodInternalId);
 }
 
 void ZFMethodUserUnregister(ZF_IN const ZFMethod *method)

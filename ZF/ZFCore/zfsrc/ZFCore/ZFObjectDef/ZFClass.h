@@ -29,6 +29,7 @@ zfclassFwd ZFProperty;
 
 typedef ZFObject *(* _ZFP_ZFObjectConstructor)(void);
 typedef void (* _ZFP_ZFObjectDestructor)(ZF_IN ZFObject *obj);
+typedef void (* _ZFP_ZFObjectCheckInitImplementationListCallback)(ZF_IN_OUT ZFClass *cls);
 typedef ZFInterface * (*_ZFP_ZFObjectToInterfaceCastCallback)(ZF_IN ZFObject * const &obj);
 
 // ============================================================
@@ -80,18 +81,6 @@ public:
                                            ZF_IN const ZFCallerInfo &callerInfo);
     /** @brief see #newInstanceForName */
     static zfautoObject newInstanceForNameWithoutLeakTest(ZF_IN const zfchar *className);
-
-    /**
-     * @brief get all class currently registered
-     */
-    static void allClass(ZF_OUT ZFCoreArray<const ZFClass *> &ret);
-    /** @brief see #allClass */
-    static inline ZFCoreArrayPOD<const ZFClass *> allClass(void)
-    {
-        ZFCoreArrayPOD<const ZFClass *> ret;
-        ZFClass::allClass(ret);
-        return ret;
-    }
 
     // ============================================================
     // instance observer
@@ -479,8 +468,8 @@ public:
                                          ZF_IN const ZFClass *parent,
                                          ZF_IN _ZFP_ZFObjectConstructor constructor,
                                          ZF_IN _ZFP_ZFObjectDestructor destructor,
-                                         ZF_IN_OPT zfbool isInterface = zffalse);
-    static void _ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const zfchar *name);
+                                         ZF_IN zfbool isInterface);
+    static void _ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const ZFClass *cls);
     ZFClass(void);
     ~ZFClass(void);
     zfbool _ZFP_ZFClass_interfaceNeedRegister(void);
@@ -491,7 +480,7 @@ public:
     ZFInterface *_ZFP_ZFClass_interfaceCast(ZF_IN ZFObject * const &obj,
                                             ZF_IN const ZFClass *interfaceClass) const;
 
-    static ZFClass *_ZFP_ZFClassInitFinish(ZF_IN ZFClass *cls);
+    static void _ZFP_ZFClassInitFinish(ZF_IN ZFClass *cls);
     static void _ZFP_ZFClassInitFinish_parentListCache(ZF_IN ZFClass *cls);
     static void _ZFP_ZFClassInitFinish_parentInterfaceListCache(ZF_IN ZFClass *cls);
     static void _ZFP_ZFClassInitFinish_interfaceCastListCache(ZF_IN ZFClass *cls);
@@ -527,22 +516,38 @@ private:
     const ZFClass *classParentCache;
 };
 
+// ============================================================
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFClassRegisterHolder
 {
 public:
-    _ZFP_ZFClassRegisterHolder(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN ZFClass *cls)
-    : ZFCoreLibDestroyFlag(ZFCoreLibDestroyFlag)
-    , cls(cls)
-    {
-    }
-    ~_ZFP_ZFClassRegisterHolder(void)
-    {
-        ZFClass::_ZFP_ZFClassUnregister(this->ZFCoreLibDestroyFlag, this->cls->className());
-    }
+    _ZFP_ZFClassRegisterHolder(ZF_IN const zfchar *name,
+                               ZF_IN const ZFClass *parent,
+                               ZF_IN _ZFP_ZFObjectConstructor constructor,
+                               ZF_IN _ZFP_ZFObjectDestructor destructor,
+                               ZF_IN _ZFP_ZFObjectCheckInitImplementationListCallback checkInitImplListCallback,
+                               ZF_IN_OPT zfbool isInterface = zffalse);
+    ~_ZFP_ZFClassRegisterHolder(void);
 public:
-    zfbool *ZFCoreLibDestroyFlag;
+    zfbool ZFCoreLibDestroyFlag;
     ZFClass *cls;
 };
+
+// ============================================================
+zfclassFwd ZFFilterForZFClass;
+/**
+ * @brief get all class currently registered, for debug use only
+ */
+extern ZF_ENV_EXPORT void ZFClassGetAll(ZF_OUT ZFCoreArray<const ZFClass *> &ret,
+                                        ZF_IN_OPT const ZFFilterForZFClass *classFilter = zfnull);
+/**
+ * @brief get all class currently registered, for debug use only
+ */
+inline ZFCoreArrayPOD<const ZFClass *> ZFClassGetAll(ZF_IN_OPT const ZFFilterForZFClass *classFilter = zfnull)
+{
+    ZFCoreArrayPOD<const ZFClass *> ret;
+    ZFClassGetAll(ret, classFilter);
+    return ret;
+}
 
 // ============================================================
 ZF_NAMESPACE_BEGIN(ZFGlobalEvent)

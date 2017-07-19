@@ -11,10 +11,11 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(ZF_IN const ZFCorePointerBase &p)
+zfautoObject _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(ZF_IN void *v, ZF_IN DeleteCallback deleteCallback)
 {
     zfblockedAllocWithoutLeakTest(_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder, holder);
-    holder->v = p.refNew();
+    holder->v = v;
+    holder->deleteCallback = deleteCallback;
     return zfautoObjectCreateWithoutLeakTest(holder);
 }
 
@@ -36,10 +37,7 @@ void ZFPropertyUserUnregister(ZF_IN const ZFProperty *zfproperty)
     ZFMethodUserUnregister(zfproperty->getterMethod());
 
     zfproperty->propertyOwnerClass()->_ZFP_ZFClass_removeConst()->_ZFP_ZFClass_propertyUnregister(zfproperty);
-    _ZFP_ZFPropertyInstanceCleanup(_ZFP_ZFPropertyInstanceSig(
-            zfproperty->propertyOwnerClass()->className(),
-            zfproperty->propertyName()
-        ));
+    _ZFP_ZFPropertyInstanceCleanup(zfproperty);
 }
 
 ZF_NAMESPACE_GLOBAL_END

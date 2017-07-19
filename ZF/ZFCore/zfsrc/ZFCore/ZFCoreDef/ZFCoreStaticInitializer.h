@@ -19,30 +19,31 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_SI_DummyBase
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_SI_Base
 {
 public:
-    virtual ~_ZFP_SI_DummyBase(void)
+    virtual ~_ZFP_SI_Base(void)
     {
     }
+    virtual const zfchar *_ZFP_SI_name(void) const zfpurevirtual;
 };
-typedef _ZFP_SI_DummyBase *(*_ZFP_SI_Constructor)(void);
-extern ZF_ENV_EXPORT _ZFP_SI_DummyBase *&_ZFP_SI_instanceHolderAccess(ZF_IN const zfchar *name,
-                                                                      ZF_IN _ZFP_SI_Constructor constructor);
-extern ZF_ENV_EXPORT void _ZFP_SI_instanceCleanup(ZF_IN const zfchar *name);
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_SI_InstanceCleanupHolder
+typedef _ZFP_SI_Base *(*_ZFP_SI_Constructor)(void);
+extern ZF_ENV_EXPORT _ZFP_SI_Base *&_ZFP_SI_instanceAccess(ZF_IN const zfchar *name,
+                                                           ZF_IN _ZFP_SI_Constructor constructor);
+extern ZF_ENV_EXPORT void _ZFP_SI_instanceCleanup(ZF_IN _ZFP_SI_Base *instance);
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_SI_Holder
 {
 public:
-    _ZFP_SI_InstanceCleanupHolder(ZF_IN const zfchar *name)
-    : _name(name)
+    _ZFP_SI_Holder(ZF_IN const zfchar *name, ZF_IN _ZFP_SI_Constructor constructor)
+    : instance(_ZFP_SI_instanceAccess(name, constructor))
     {
     }
-    ~_ZFP_SI_InstanceCleanupHolder(void)
+    ~_ZFP_SI_Holder(void)
     {
-        _ZFP_SI_instanceCleanup(_name);
+        _ZFP_SI_instanceCleanup(this->instance);
     }
-private:
-    const zfchar *_name;
+public:
+    _ZFP_SI_Base *&instance;
 };
 
 // ============================================================
@@ -79,20 +80,21 @@ private:
  *   you may check it by #ZFFrameworkStateCheck
  */
 #define ZF_STATIC_INITIALIZER_INIT(Name) \
-    zfclassNotPOD _ZFP_SI_##Name : zfextendsNotPOD _ZFP_SI_DummyBase \
+    zfclassNotPOD _ZFP_SI_##Name : zfextendsNotPOD _ZFP_SI_Base \
     { \
     public: \
-        static _ZFP_SI_DummyBase *_ZFP_SI_constructor_##Name(void) \
+        static _ZFP_SI_Base *_ZFP_SI_constructor_##Name(void) \
         { \
             return zfnew(_ZFP_SI_##Name); \
         } \
         static _ZFP_SI_##Name *_ZFP_SI_instanceAccess(void) \
         { \
-            static _ZFP_SI_DummyBase *&instance = _ZFP_SI_instanceHolderAccess( \
-                zfText(#Name), \
-                _ZFP_SI_##Name::_ZFP_SI_constructor_##Name); \
-            static _ZFP_SI_InstanceCleanupHolder _cleanupHolder(zfText(#Name)); \
-            return ZFCastStatic(_ZFP_SI_##Name *, instance); \
+            static _ZFP_SI_Holder d(zfText(#Name), _ZFP_SI_##Name::_ZFP_SI_constructor_##Name); \
+            return ZFCastStatic(_ZFP_SI_##Name *, d.instance); \
+        } \
+        virtual const zfchar *_ZFP_SI_name(void) const \
+        { \
+            return zfText(#Name); \
         } \
     public: \
         _ZFP_SI_##Name(void)

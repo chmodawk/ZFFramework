@@ -27,15 +27,11 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdURHolder
 {
 public:
-    const ZFClass *_methodOwnerClass;
-    zfstring _methodName;
-    zfstring _methodExtSig;
-    zfstring _methodInternalId;
     ZFMethod *_method;
 public:
-    _ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass_,
-                     ZF_IN const zfchar *methodName_,
-                     ZF_IN const zfchar *methodExtSig_
+    _ZFP_MtdURHolder(ZF_IN const ZFClass *ownerClass,
+                     ZF_IN const zfchar *methodName,
+                     ZF_IN const zfchar *methodExtSig
                      , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
                      , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
                      , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
@@ -152,12 +148,11 @@ public:
                 { \
                     holder._method->_ZFP_ZFMethodNeedInit = zffalse; \
                     holder._method->_ZFP_ZFMethod_init( \
-                        holder._methodInternalId, \
                         zftrue, \
                         ZFCastReinterpret(ZFFuncAddrType, fn), \
                         _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
                         _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsWhatType), \
-                        holder._methodName, \
+                        methodNameString_, \
                         ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
                         zfText(#ReturnType), \
                         ParamExpandOrEmpty0( \
@@ -211,7 +206,7 @@ public:
                         zfnull \
                         ); \
                     holder._method->_ZFP_ZFMethod_initClassMemberType( \
-                        holder._methodOwnerClass, \
+                        ownerClass_, \
                         _ZFP_ZFMethod_initClassMemberType_privilege(PublicOrProtectedOrPrivate) \
                         ); \
                 } \

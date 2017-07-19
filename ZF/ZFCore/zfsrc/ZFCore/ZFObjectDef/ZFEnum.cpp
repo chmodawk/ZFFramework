@@ -157,6 +157,7 @@ public:
 };
 _ZFP_ZFEnumData::_ZFP_ZFEnumData(void)
 : needInitFlag(zftrue)
+, ownerClass(zfnull)
 {
     d = zfnew(_ZFP_ZFEnumDataPrivate);
 }
@@ -167,9 +168,7 @@ _ZFP_ZFEnumData::~_ZFP_ZFEnumData(void)
 }
 void _ZFP_ZFEnumData::add(ZF_IN zfbool isEnableDuplicateValue,
                           ZF_IN zfuint value,
-                          ZF_IN const zfchar *name,
-                          ZF_IN const zfchar *fullName,
-                          ZF_IN const ZFClass *ownerClass)
+                          ZF_IN const zfchar *name)
 {
     zfCoreAssert(value != ZFEnumInvalid());
     _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
@@ -180,13 +179,13 @@ void _ZFP_ZFEnumData::add(ZF_IN zfbool isEnableDuplicateValue,
             zfsFromInt<zfstringA>(value).cString(),
             zfsCoreZ2A(name),
             zfsCoreZ2A(it->second.name),
-            zfsCoreZ2A(ownerClass->className()));
+            zfsCoreZ2A(this->ownerClass->className()));
         zfsChange(it->second.name, (const zfchar *)zfnull);
         zfsChange(it->second.fullName, (const zfchar *)zfnull);
     }
     _ZFP_ZFEnumDataPrivateNameData nameData;
     nameData.name = zfsCopy(name);
-    nameData.fullName = zfsCopy(fullName);
+    nameData.fullName = zfsConnect(this->ownerClass->className(), zfText("::"), name);
     (d->d)[value] = nameData;
 }
 zfindex _ZFP_ZFEnumData::enumCount(void) const
@@ -283,16 +282,17 @@ const zfchar *_ZFP_ZFEnumData::enumNameForValue(ZF_IN zfuint value) const
     return ZFEnumNameInvalid();
 }
 
-_ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(const zfchar *name)
+_ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass *ownerClass)
 {
     zfCoreMutexLocker();
-    _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataMap.get<_ZFP_ZFEnumData *>(name);
+    _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataMap.get<_ZFP_ZFEnumData *>(ownerClass->className());
     if(d != zfnull)
     {
         return d;
     }
     d = zfnew(_ZFP_ZFEnumData);
-    _ZFP_ZFEnumDataMap.set(name, ZFCorePointerForObject<_ZFP_ZFEnumData *>(d));
+    _ZFP_ZFEnumDataMap.set(ownerClass->className(), ZFCorePointerForObject<_ZFP_ZFEnumData *>(d));
+    d->ownerClass = ownerClass;
     return d;
 }
 

@@ -88,7 +88,7 @@ ZFImpl_ZFLua_implSetupCallback_DEFINE(ZFPropertyTypeWrapper, {
             .addCFunction(zfTextA("_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper"), _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper)
         ;
 
-        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClass::allClass();
+        ZFCoreArrayPOD<const ZFClass *> allClass = ZFClassGetAll();
         if(!allClass.isEmpty())
         {
             const ZFClass *target = ZFPropertyTypeWrapper::ClassData();

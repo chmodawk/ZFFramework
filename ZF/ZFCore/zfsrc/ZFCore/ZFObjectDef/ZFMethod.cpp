@@ -12,8 +12,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-void ZFMethod::_ZFP_ZFMethod_init(ZF_IN const zfchar *methodInternalId,
-                                  ZF_IN zfbool methodIsUserRegister,
+void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
                                   ZF_IN ZFFuncAddrType invoker,
                                   ZF_IN ZFMethodGenericInvoker methodGenericInvoker,
                                   ZF_IN const zfchar *methodIsWhatType,
@@ -24,7 +23,6 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN const zfchar *methodInternalId,
 {
     zfCoreAssert(invoker != zfnull && methodGenericInvoker != zfnull);
 
-    this->_ZFP_ZFMethod_methodInternalId = methodInternalId;
     this->_ZFP_ZFMethod_methodIsUserRegister = methodIsUserRegister;
     this->_ZFP_ZFMethod_invoker = invoker;
     this->_ZFP_ZFMethod_invokerOrg = invoker;
@@ -313,6 +311,7 @@ ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalId)
     {
         v = zfnew(_ZFP_ZFMethodMapData);
         _ZFP_ZFMethodMap.set(methodInternalId, ZFCorePointerForObject<_ZFP_ZFMethodMapData *>(v));
+        v->method._ZFP_ZFMethod_methodInternalId = methodInternalId;
     }
     else
     {
