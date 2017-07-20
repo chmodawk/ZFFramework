@@ -11,49 +11,12 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-_ZFP_MtdFURHolder::_ZFP_MtdFURHolder(ZF_IN const zfchar *methodNamespace,
-                                     ZF_IN const zfchar *methodName,
-                                     ZF_IN const zfchar *methodExtSig
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId0 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId1 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId2 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId3 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId4 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId5 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId6 /* = zfnull */
-                                     , ZF_IN_OPT const zfchar *methodParamTypeId7 /* = zfnull */
-                                     )
-: _method(zfnull)
-{
-    zfCoreAssertWithMessageTrim(methodName != zfnull && *methodName != '\0', zfTextA("[ZFMethodFuncUserRegister] null methodName"));
-    zfstring methodInternalId;
-    _ZFP_ZFMethodInstanceSig(methodInternalId, methodNamespace, methodName, methodExtSig
-        , methodParamTypeId0
-        , methodParamTypeId1
-        , methodParamTypeId2
-        , methodParamTypeId3
-        , methodParamTypeId4
-        , methodParamTypeId5
-        , methodParamTypeId6
-        , methodParamTypeId7
-        );
-
-    _method = _ZFP_ZFMethodInstanceFind(methodInternalId);
-    zfCoreAssertWithMessageTrim(_method == zfnull,
-        zfTextA("[ZFMethodFuncUserRegister] registering a method that already registered, methodNamespace: %s, methodName: %s, methodExtSig: %s"),
-        zfsCoreZ2A(methodNamespace),
-        zfsCoreZ2A(methodName),
-        zfsCoreZ2A(methodExtSig));
-    _method = _ZFP_ZFMethodInstanceAccess(methodInternalId);
-}
-
 void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *method)
 {
     if(method == zfnull)
     {
         return ;
     }
-    zfCoreMutexLocker();
     zfCoreAssertWithMessageTrim(method->methodIsUserRegister(),
             zfTextA("[ZFMethodFuncUserUnregister] method %s is not user registered"),
             zfsCoreZ2A(method->objectInfo().cString())
@@ -63,9 +26,7 @@ void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *method)
             zfsCoreZ2A(method->objectInfo().cString())
         );
 
-    _ZFP_ZFMethodFuncUnregister(method);
-    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, zfnull, method);
-    _ZFP_ZFMethodInstanceCleanup(method);
+    _ZFP_ZFMethodUnregister(method);
 }
 
 ZF_NAMESPACE_GLOBAL_END

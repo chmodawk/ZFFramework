@@ -25,19 +25,13 @@ void ZFPropertyUserUnregister(ZF_IN const ZFProperty *zfproperty)
     {
         return ;
     }
-    zfCoreMutexLocker();
+
     zfCoreAssertWithMessageTrim(zfproperty->propertyIsUserRegister(),
             zfTextA("[ZFPropertyUserUnregister] property %s is not user registered"),
             zfsCoreZ2A(zfproperty->objectInfo().cString())
         );
 
-    _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, zfproperty, zfnull);
-
-    ZFMethodUserUnregister(zfproperty->setterMethod());
-    ZFMethodUserUnregister(zfproperty->getterMethod());
-
-    zfproperty->propertyOwnerClass()->_ZFP_ZFClass_removeConst()->_ZFP_ZFClass_propertyUnregister(zfproperty);
-    _ZFP_ZFPropertyInstanceCleanup(zfproperty);
+    _ZFP_ZFPropertyUnregister(zfproperty);
 }
 
 ZF_NAMESPACE_GLOBAL_END

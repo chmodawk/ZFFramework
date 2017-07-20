@@ -1451,7 +1451,10 @@ void _ZFP_ZFClassDataChangeNotify(ZF_IN ZFClassDataChangeType changeType,
         }
         else if(changedMethod != zfnull)
         {
-            changedMethod->methodOwnerClass()->_ZFP_ZFClass_classDataChangeNotify();
+            if(changedMethod->methodOwnerClass() != zfnull)
+            {
+                changedMethod->methodOwnerClass()->_ZFP_ZFClass_classDataChangeNotify();
+            }
         }
 
         ZFClassDataChangeData data;

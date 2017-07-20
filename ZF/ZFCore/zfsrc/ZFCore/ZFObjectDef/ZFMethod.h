@@ -262,7 +262,7 @@ public:
                             ZF_IN const zfchar *methodName,
                             ZF_IN const zfchar *returnTypeId,
                             ZF_IN const zfchar *returnTypeName,
-                            /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with empty string */
+                            /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
                             ...);
     void _ZFP_ZFMethod_initClassMemberType(ZF_IN const ZFClass *methodOwnerClass,
                                            ZF_IN ZFMethodPrivilegeType privilegeType);
@@ -586,7 +586,7 @@ public:
         return const_cast<ZFMethod *>(this);
     }
 
-private:
+public:
     // general
     zfstring _ZFP_ZFMethod_methodInternalId;
     zfbool _ZFP_ZFMethod_methodIsUserRegister;
@@ -612,90 +612,72 @@ private:
 
     // for func type
     zfstring _ZFP_ZFMethod_methodNamespace;
-private:
-    friend ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalId);
 };
 
 // ============================================================
-extern ZF_ENV_EXPORT void _ZFP_ZFMethodInstanceSig(ZF_OUT zfstring &ret,
-                                                   ZF_IN const zfchar *methodScope,
-                                                   ZF_IN const zfchar *methodName,
-                                                   ZF_IN const zfchar *methodExtSig
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                                                   , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                                                   );
-inline zfstring _ZFP_ZFMethodInstanceSig(ZF_IN const zfchar *methodScope,
-                                         ZF_IN const zfchar *methodName,
-                                         ZF_IN const zfchar *methodExtSig
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                                         , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                                         )
-{
-    zfstring ret;
-    _ZFP_ZFMethodInstanceSig(ret, methodScope, methodName, methodExtSig
-            , methodParamTypeId0
-            , methodParamTypeId1
-            , methodParamTypeId2
-            , methodParamTypeId3
-            , methodParamTypeId4
-            , methodParamTypeId5
-            , methodParamTypeId6
-            , methodParamTypeId7
-        );
-    return ret;
-}
-extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodInstanceFind(ZF_IN const zfchar *methodInternalId);
-extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalId);
-extern ZF_ENV_EXPORT zfbool _ZFP_ZFMethodInstanceCleanup(ZF_IN const zfchar *methodInternalId);
-extern ZF_ENV_EXPORT zfbool _ZFP_ZFMethodInstanceCleanup(ZF_IN const ZFMethod *method);
-zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFMethodInstanceHolder
+extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodRegister(ZF_IN zfbool methodIsUserRegister
+                                                     , ZF_IN ZFFuncAddrType methodInvoker
+                                                     , ZF_IN ZFMethodGenericInvoker methodGenericInvoker
+                                                     , ZF_IN const zfchar *methodIsWhatType
+                                                     , ZF_IN const ZFClass *methodOwnerClass
+                                                     , ZF_IN ZFMethodPrivilegeType methodPrivilegeType
+                                                     , ZF_IN const zfchar *methodNamespace
+                                                     , ZF_IN const zfchar *methodExtSig
+                                                     , ZF_IN const zfchar *methodName
+                                                     , ZF_IN const zfchar *returnTypeId
+                                                     , ZF_IN const zfchar *returnTypeName
+                                                     /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                                     , ...
+                                                     );
+extern ZF_ENV_EXPORT ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
+                                                      , ZF_IN ZFFuncAddrType methodInvoker
+                                                      , ZF_IN ZFMethodGenericInvoker methodGenericInvoker
+                                                      , ZF_IN const zfchar *methodIsWhatType
+                                                      , ZF_IN const ZFClass *methodOwnerClass
+                                                      , ZF_IN ZFMethodPrivilegeType methodPrivilegeType
+                                                      , ZF_IN const zfchar *methodNamespace
+                                                      , ZF_IN const zfchar *methodExtSig
+                                                      , ZF_IN const zfchar *methodName
+                                                      , ZF_IN const zfchar *returnTypeId
+                                                      , ZF_IN const zfchar *returnTypeName
+                                                      /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                                      , ZF_IN va_list vaList
+                                                      );
+extern ZF_ENV_EXPORT void _ZFP_ZFMethodUnregister(ZF_IN const ZFMethod *method);
+
+zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFMethodRegisterHolder
 {
 public:
-    _ZFP_ZFMethodInstanceHolder(ZF_IN const zfchar *methodInternalId)
-    : method(_ZFP_ZFMethodInstanceAccess(methodInternalId))
-    {
-    }
-    _ZFP_ZFMethodInstanceHolder(ZF_IN const zfchar *methodScope,
-                                ZF_IN const zfchar *methodName,
-                                ZF_IN const zfchar *methodExtSig
-                                , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                                , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                                )
-    : method(_ZFP_ZFMethodInstanceAccess(_ZFP_ZFMethodInstanceSig(methodScope, methodName, methodExtSig
-            , methodParamTypeId0
-            , methodParamTypeId1
-            , methodParamTypeId2
-            , methodParamTypeId3
-            , methodParamTypeId4
-            , methodParamTypeId5
-            , methodParamTypeId6
-            , methodParamTypeId7
-            )))
-    {
-    }
-    ~_ZFP_ZFMethodInstanceHolder(void)
-    {
-        _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, zfnull, this->method);
-        _ZFP_ZFMethodInstanceCleanup(this->method);
-    }
+    _ZFP_ZFMethodRegisterHolder(ZF_IN zfbool methodIsUserRegister
+                                , ZF_IN ZFFuncAddrType methodInvoker
+                                , ZF_IN ZFMethodGenericInvoker methodGenericInvoker
+                                , ZF_IN const zfchar *methodIsWhatType
+                                , ZF_IN const ZFClass *methodOwnerClass
+                                , ZF_IN ZFMethodPrivilegeType methodPrivilegeType
+                                , ZF_IN const zfchar *methodNamespace
+                                , ZF_IN const zfchar *methodExtSig
+                                , ZF_IN const zfchar *methodName
+                                , ZF_IN const zfchar *returnTypeId
+                                , ZF_IN const zfchar *returnTypeName
+                                /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                , ...
+                                );
+    _ZFP_ZFMethodRegisterHolder(ZF_IN zfbool dummy
+                                , ZF_IN zfbool methodIsUserRegister
+                                , ZF_IN ZFFuncAddrType methodInvoker
+                                , ZF_IN ZFMethodGenericInvoker methodGenericInvoker
+                                , ZF_IN const zfchar *methodIsWhatType
+                                , ZF_IN const ZFClass *methodOwnerClass
+                                , ZF_IN ZFMethodPrivilegeType methodPrivilegeType
+                                , ZF_IN const zfchar *methodNamespace
+                                , ZF_IN const zfchar *methodExtSig
+                                , ZF_IN const zfchar *methodName
+                                , ZF_IN const zfchar *returnTypeId
+                                , ZF_IN const zfchar *returnTypeName
+                                /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                , ZF_IN va_list vaList
+                                );
+    ~_ZFP_ZFMethodRegisterHolder(void);
 public:
     ZFMethod *method;
 };

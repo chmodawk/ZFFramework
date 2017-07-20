@@ -167,6 +167,7 @@ static ZFProperty *_ZFP_ZFPropertyInstanceAccess(ZF_IN const zfchar *propertyInt
     {
         v = zfnew(_ZFP_ZFPropertyMapData);
         _ZFP_ZFPropertyMap.set(propertyInternalId, ZFCorePointerForObject<_ZFP_ZFPropertyMapData *>(v));
+        v->propertyInfo._ZFP_ZFProperty_propertyInternalId = propertyInternalId;
     }
     else
     {
@@ -275,6 +276,14 @@ void _ZFP_ZFPropertyUnregister(ZF_IN const ZFProperty *propertyInfo)
 {
     zfCoreMutexLocker();
     _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, propertyInfo, zfnull);
+
+    if(propertyInfo->propertyIsUserRegister())
+    {
+        ZFMethodUserUnregister(propertyInfo->setterMethod());
+        ZFMethodUserUnregister(propertyInfo->getterMethod());
+        propertyInfo->propertyOwnerClass()->_ZFP_ZFClass_removeConst()->_ZFP_ZFClass_propertyUnregister(propertyInfo);
+    }
+
     _ZFP_ZFPropertyInstanceCleanup(propertyInfo);
 }
 

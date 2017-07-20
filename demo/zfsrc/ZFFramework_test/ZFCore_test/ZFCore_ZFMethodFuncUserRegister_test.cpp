@@ -25,10 +25,6 @@ protected:
             this->testCaseOutputSeparator();
             this->testCaseOutput(zfText("try execute dynamically registered method"));
 
-            ZFMethodFuncUserRegister_1(fffm, {
-                    return v + 1;
-                }, zfindex, fff, ZFMP_IN(zfindex, v));
-
             ZFMethodFuncUserRegisterDetail_1(method, zfself::func1, zfText("ZFCore_ZFMethodFuncUserRegister_testNamespace"),
                 zfstring, zfText("funcDynamic")
                 , ZFMP_IN(zfstring const &, param0)
@@ -116,13 +112,20 @@ protected:
                 << ZFMethodFuncGet(zfText("ZFCore_ZFMethodFuncUserRegister_testNamespace"), zfText("funcDynamic"));
 
             this->testCaseOutput(zfText("all list:"));
-            for(zfindex i = 0; i <= ZFMETHOD_MAX_PARAM; ++i)
+            for(zfindex i = 0; i <= 8; ++i)
             {
                 this->testCaseOutput(zfText("  %s"),
                     ZFMethodFuncGet(
                             zfText("ZFCore_ZFMethodFuncUserRegister_testNamespace"),
                             zfstringWithFormat(zfText("funcDynamic%zi"), i)
                         )->objectInfo().cString()
+                    );
+            }
+
+            for(zfindex i = 0; i <= 8; ++i)
+            {
+                ZFMethodFuncUserUnregister(ZFMethodFuncGet(zfText("ZFCore_ZFMethodFuncUserRegister_testNamespace"),
+                        zfstringWithFormat(zfText("funcDynamic%zi"), i))
                     );
             }
         }

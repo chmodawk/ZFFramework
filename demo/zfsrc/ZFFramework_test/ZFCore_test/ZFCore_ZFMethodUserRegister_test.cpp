@@ -120,10 +120,15 @@ protected:
             zfLogTrimT() << zfText("after unregister, method:") << zfself::ClassData()->methodForName(zfText("funcDynamic"));
 
             this->testCaseOutput(zfText("all list:"));
-            for(zfindex i = 0; i <= ZFMETHOD_MAX_PARAM; ++i)
+            for(zfindex i = 0; i <= 8; ++i)
             {
                 this->testCaseOutput(zfText("  %s"),
                     zfself::ClassData()->methodForName(zfstringWithFormat(zfText("funcDynamic%zi"), i))->objectInfo().cString());
+            }
+
+            for(zfindex i = 0; i <= 8; ++i)
+            {
+                ZFMethodUserUnregister(zfself::ClassData()->methodForName(zfstringWithFormat(zfText("funcDynamic%zi"), i)));
             }
         }
 

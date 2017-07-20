@@ -20,25 +20,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 #define _ZFP_ZFMethodFuncUserRegister_methodExtSig zfText("MtdFUR")
 
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdFURHolder
-{
-public:
-    ZFMethod *_method;
-public:
-    _ZFP_MtdFURHolder(ZF_IN const zfchar *methodNamespace,
-                      ZF_IN const zfchar *methodName,
-                      ZF_IN const zfchar *methodExtSig
-                      , ZF_IN_OPT const zfchar *methodParamTypeId0 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId1 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId2 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId3 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId4 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId5 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId6 = zfnull
-                      , ZF_IN_OPT const zfchar *methodParamTypeId7 = zfnull
-                      );
-};
-
 #define _ZFP_ZFMethodFuncUserRegister(...) \
     ZFM_EXPAND(_ZFP_ZFMethodFuncUserRegister_(__VA_ARGS__))
 #define _ZFP_ZFMethodFuncUserRegister_(resultMethod, methodInvokerAction, \
@@ -102,7 +83,7 @@ public:
         zfclassNotPOD _ZFP_MtdFUR \
         { \
         public: \
-            typedef ReturnType (*MethodTypeChecker)(const ZFMethod *, ZFObject * \
+            typedef ReturnType (*Ck)(const ZFMethod *, ZFObject * \
                     ParamExpandOrEmpty0(ZFM_COMMA() ParamType0) \
                     ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
                     ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -123,90 +104,70 @@ public:
                 , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
                 , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
                 ) \
-            static const ZFMethod *methodRegister(ZF_IN const zfchar *methodNamespaceString_, ZF_IN const zfchar *methodNameString_) \
-            { \
-                zfCoreMutexLocker(); \
-                _ZFP_MtdFUR::MethodTypeChecker fn = methodInvoker; \
-                _ZFP_MtdFURHolder holder( \
-                        methodNamespaceString_, methodNameString_, _ZFP_ZFMethodFuncUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
-                        ParamExpandOrEmpty0(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty1(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty2(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty3(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty4(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty5(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty6(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId()) \
-                        ParamExpandOrEmpty7(ZFM_COMMA() ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId()) \
-                    ); \
-                \
-                if(holder._method->_ZFP_ZFMethodNeedInit) \
-                { \
-                    holder._method->_ZFP_ZFMethodNeedInit = zffalse; \
-                    holder._method->_ZFP_ZFMethod_init( \
-                        zftrue, \
-                        ZFCastReinterpret(ZFFuncAddrType, fn), \
-                        _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _), \
-                        _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic), \
-                        methodNameString_, \
-                        ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId(), \
-                        zfText(#ReturnType), \
-                        ParamExpandOrEmpty0( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType0), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix0()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 0), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty1( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType1), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix1()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 1), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty2( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType2), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix2()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 2), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty3( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType3), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix3()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 3), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty4( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType4), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix4()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 4), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty5( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType5), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix5()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 5), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty6( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType6), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix6()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 6), \
-                            ZFM_EMPTY()) \
-                        ParamExpandOrEmpty7( \
-                            ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId(), \
-                            zfText(#ParamType7), \
-                            ZFM_TOSTRING_DIRECT(DefaultValueFix7()), \
-                            _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 7), \
-                            ZFM_EMPTY()) \
-                        zfnull \
-                        ); \
-                    holder._method->_ZFP_ZFMethod_initFuncType(methodNamespaceString_); \
-                    _ZFP_ZFMethodFuncRegister(holder._method); \
-                } \
-                return holder._method; \
-            } \
         }; \
-        resultMethod = _ZFP_MtdFUR::methodRegister(methodNamespaceString, methodNameString); \
+        \
+        _ZFP_MtdFUR::Ck fn = methodInvoker; \
+        resultMethod = _ZFP_ZFMethodRegister(zftrue \
+                , ZFCastReinterpret(ZFFuncAddrType, fn) \
+                , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _) \
+                , _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic) \
+                , zfnull \
+                , ZFMethodPrivilegeTypePublic \
+                , methodNamespaceString \
+                , _ZFP_ZFMethodFuncUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
+                , methodNameString \
+                , ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId() \
+                , zfText(#ReturnType) \
+                ParamExpandOrEmpty0(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType0) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix0()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 0) \
+                    ) \
+                ParamExpandOrEmpty1(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType1) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix1()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 1) \
+                    ) \
+                ParamExpandOrEmpty2(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType2) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix2()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 2) \
+                    ) \
+                ParamExpandOrEmpty3(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType3) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix3()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 3) \
+                    ) \
+                ParamExpandOrEmpty4(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType4) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix4()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 4) \
+                    ) \
+                ParamExpandOrEmpty5(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType5) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix5()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 5) \
+                    ) \
+                ParamExpandOrEmpty6(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType6) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix6()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 6) \
+                    ) \
+                ParamExpandOrEmpty7(ZFM_EMPTY() \
+                        , ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId() \
+                        , zfText(#ParamType7) \
+                        , ZFM_TOSTRING_DIRECT(DefaultValueFix7()) \
+                        , _ZFP_MtdFUR:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 7) \
+                    ) \
+                , zfnull \
+            ); \
     } \
     ZFUNUSED(resultMethod)
 

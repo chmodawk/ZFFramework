@@ -227,7 +227,7 @@ ZF_GLOBAL_INITIALIZER_END(ZFLeakTestDataHolder)
 static _ZFP_ZFLeakTestSectionData *_ZFP_ZFLeakTestActivatingSection = zfnull;
 zfbool _ZFP_ZFLeakTestEnableCache = zffalse;
 ZFOutputCallback _ZFP_ZFLeakTestOutputCallbackDefault;
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFLeakTestOutputCallbackDefaultInit, ZFLevelZFFrameworkEssential)
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFLeakTestOutputCallbackDefaultInit, ZFLevelZFFrameworkNormal)
 {
     _ZFP_ZFLeakTestOutputCallbackDefault = ZFOutputCallbackDefault();
 }
