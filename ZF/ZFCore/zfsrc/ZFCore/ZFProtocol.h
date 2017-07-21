@@ -469,11 +469,11 @@ extern ZF_ENV_EXPORT void _ZFP_ZFProtocolImplAccess(void);
  * @brief statically register the protocol interface, must be placed in source file
  */
 #define ZFPROTOCOL_INTERFACE_REGISTER(ModuleName) \
-    ZF_STATIC_INITIALIZER_INIT(ZFProtocolInterfaceRegister_##ModuleName) \
+    ZF_STATIC_REGISTER_INIT(ZFProtocolInterfaceRegister_##ModuleName) \
     { \
         ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolDataRegister(); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFProtocolInterfaceRegister_##ModuleName)
+    ZF_STATIC_REGISTER_END(ZFProtocolInterfaceRegister_##ModuleName)
 
 // ============================================================
 /**
@@ -601,11 +601,11 @@ private:
     _ZFP_ZFPROTOCOL_IMPLEMENTATION_END_(ImplementationName, ImplementationClass)
 
 #define _ZFP_ZFPROTOCOL_IMPLEMENTATION_REGISTER_(ImplementationName, ImplementationClass) \
-    ZF_STATIC_INITIALIZER_INIT(ZFProtocolImplRegister_##ImplementationClass) \
+    ZF_STATIC_REGISTER_INIT(ZFProtocolImplRegister_##ImplementationClass) \
     { \
         ImplementationClass::_ZFP_ZFProtocolRegister(); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFProtocolImplRegister_##ImplementationClass)
+    ZF_STATIC_REGISTER_END(ZFProtocolImplRegister_##ImplementationClass)
 #define _ZFP_ZFPROTOCOL_IMPLEMENTATION_REGISTER(ImplementationName, ImplementationClass) \
     _ZFP_ZFPROTOCOL_IMPLEMENTATION_REGISTER_(ImplementationName, ImplementationClass)
 

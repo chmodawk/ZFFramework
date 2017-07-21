@@ -426,7 +426,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
             ); \
         return _methodHolder.method; \
     } \
-    ZF_STATIC_INITIALIZER_INIT(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
+    ZF_STATIC_REGISTER_INIT(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
     { \
         (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName((void (*)( \
                ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
@@ -439,7 +439,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
                ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
             ))zfnull)); \
     } \
-    ZF_STATIC_INITIALIZER_END(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
+    ZF_STATIC_REGISTER_END(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
     ReturnType (MethodName)( \
         ParamExpandOrEmpty0(            ParamType0 param0) \
         ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \

@@ -216,11 +216,11 @@ public:
  */
 #define ZFOBJECT_REGISTER(T_ZFObject) \
     ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(T_ZFObject, const ZFClass *, ClassData) \
-    ZF_STATIC_INITIALIZER_INIT(ObjR_##T_ZFObject) \
+    ZF_STATIC_REGISTER_INIT(ObjR_##T_ZFObject) \
     { \
         T_ZFObject::_ZFP_ZFObjectGetClass()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \
     } \
-    ZF_STATIC_INITIALIZER_END(ObjR_##T_ZFObject)
+    ZF_STATIC_REGISTER_END(ObjR_##T_ZFObject)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFObjectDeclare_h_

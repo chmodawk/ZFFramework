@@ -428,16 +428,16 @@ public:
     { \
         return ZFComparerCheckEqual(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
     } \
-    ZF_STATIC_INITIALIZER_INIT(PropTIReg_##TypeName) \
+    ZF_STATIC_REGISTER_INIT(PropTIReg_##TypeName) \
     { \
         _ZFP_ZFPropertyTypeIdDataRegister(ZFPropertyTypeId_##TypeName(), \
             zfnew(ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName>)); \
     } \
-    ZF_STATIC_INITIALIZER_DESTROY(PropTIReg_##TypeName) \
+    ZF_STATIC_REGISTER_DESTROY(PropTIReg_##TypeName) \
     { \
         _ZFP_ZFPropertyTypeIdDataUnregister(ZFPropertyTypeId_##TypeName()); \
     } \
-    ZF_STATIC_INITIALIZER_END(PropTIReg_##TypeName)
+    ZF_STATIC_REGISTER_END(PropTIReg_##TypeName)
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DECLARE(TypeName, Type) \

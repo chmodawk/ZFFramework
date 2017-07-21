@@ -800,11 +800,11 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  * -  ZFPROPERTY_REGISTER is declared
  */
 #define ZFPROPERTY_REGISTER(OwnerClass, Type, Name) \
-    ZF_STATIC_INITIALIZER_INIT(PropR_##OwnerClass##_##Name) \
+    ZF_STATIC_REGISTER_INIT(PropR_##OwnerClass##_##Name) \
     { \
         (void)OwnerClass::_ZFP_Prop_##Name(); \
     } \
-    ZF_STATIC_INITIALIZER_END(PropR_##OwnerClass##_##Name) \
+    ZF_STATIC_REGISTER_END(PropR_##OwnerClass##_##Name) \
     ZFMETHOD_REGISTER(OwnerClass, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name)) \
     ZFMETHOD_REGISTER(OwnerClass, _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name))
 

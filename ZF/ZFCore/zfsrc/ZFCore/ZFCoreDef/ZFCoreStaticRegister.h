@@ -23,6 +23,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *
  * usage:
  * @code
+ *   // in cpp files only
  *   ZF_STATIC_REGISTER_INIT(YourName)
  *   {
  *       // your register code
@@ -36,15 +37,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @note for different register step, the order is not ensured
  * @note for internal use only, for app level,
  *   use #ZF_GLOBAL_INITIALIZER_INIT or #ZF_STATIC_INITIALIZER_INIT instead
- *
- *
- * REMARKS:
- * this macro can be used in header files,
- * but not recommended,
- * since it would create global static object to perform the static register,
- * which would easily cause "too many sections" "file too big" error under Windows,
- * may or may not have other further side effect on other condition,
- * try not to abuse it in header
  */
 #define ZF_STATIC_REGISTER_INIT(Name) \
     /** @cond ZFPrivateDoc */ \

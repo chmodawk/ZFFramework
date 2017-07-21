@@ -178,3 +178,15 @@ void _ZFP_ZFSynchronizeUnlockWithLog(ZF_IN const ZFCallerInfo &callerInfo)
 
 ZF_NAMESPACE_GLOBAL_END
 
+#if 1 // ZFObject related method register
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(void, zfsynchronizeLock)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_0(void, zfsynchronizeUnlock)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, zfsynchronizedObjectLock, ZFMP_IN(ZFObject *, obj))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(void, zfsynchronizedObjectUnlock, ZFMP_IN(ZFObject *, obj))
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
+

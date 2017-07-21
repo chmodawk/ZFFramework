@@ -166,11 +166,11 @@ public:
     ZFIDMAP_DETAIL_REGISTER(YourModuleName, Scope, Id, YourIdName)
 /** @brief see #ZFIDMAP */
 #define ZFIDMAP_DETAIL_REGISTER(YourModuleName, Scope, prefix, YourIdName) \
-    ZF_STATIC_INITIALIZER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
+    ZF_STATIC_REGISTER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
         (void)Scope::prefix##YourIdName(); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
+    ZF_STATIC_REGISTER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     static zfidentity _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName( \
         ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
     { \
@@ -197,11 +197,11 @@ public:
     ZFIDMAP_GLOBAL_DETAIL_REGISTER(YourModuleName, Scope, Id, YourIdName)
 /** @brief see #ZFIDMAP */
 #define ZFIDMAP_GLOBAL_DETAIL_REGISTER(YourModuleName, Scope, prefix, YourIdName) \
-    ZF_STATIC_INITIALIZER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
+    ZF_STATIC_REGISTER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
         (void)Scope::prefix##YourIdName(); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
+    ZF_STATIC_REGISTER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     static zfidentity _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName( \
         ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
     { \
