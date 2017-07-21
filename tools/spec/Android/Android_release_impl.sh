@@ -15,7 +15,10 @@ RELEASE_PATH=$ZF_ROOT_PATH/_release/Android
 
 sh "$ZF_TOOLS_PATH/common/file_exist.sh" "$RELEASE_PATH/module/$PROJ_NAME/libs" "*.jar"
 if test "$?" = "0" ; then
-    exit 0
+    sh "$ZF_TOOLS_PATH/common/file_exist.sh" "$RELEASE_PATH/module/$PROJ_NAME/libs" "*.so"
+    if test "$?" = "0" ; then
+        exit 0
+    fi
 fi
 
 sh "$ZF_TOOLS_PATH/spec/Android/release.sh" $PROJ_NAME $PROJ_PATH $PROJ_NAME ${PROJ_NAME}_jni
