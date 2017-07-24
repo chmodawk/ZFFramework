@@ -18,80 +18,95 @@ zfclassLikePOD _ZFP_SI_ItemData
 public:
     zfindex refCount;
     zfstring name;
-    _ZFP_SI_Base *instance;
+    void *instance;
+    _ZFP_SI_Destructor destructor;
 public:
     _ZFP_SI_ItemData(void)
     : refCount(1)
     , name()
     , instance(zfnull)
+    , destructor(zfnull)
     {
     }
     ~_ZFP_SI_ItemData(void)
     {
         if(this->instance != zfnull)
         {
-            zfdelete(this->instance);
+            this->destructor(this->instance);
         }
     }
 };
-#define _ZFP_SI_DataArrayType ZFCoreArray<ZFCorePointerForObject<_ZFP_SI_ItemData *> >
 
-zfclassNotPOD _ZFP_SI_Data
+zfclassLikePOD _ZFP_SI_Data
 {
 public:
-    _ZFP_SI_DataArrayType data;
-
+    ZFCoreArrayPOD<_ZFP_SI_ItemData *> datas;
 public:
-    _ZFP_SI_Base *&access(ZF_IN const zfchar *name,
-                          ZF_IN _ZFP_SI_Constructor constructor)
+    ~_ZFP_SI_Data(void)
     {
-        for(zfindex i = 0; i < this->data.count(); ++i)
+        ZFCoreArrayPOD<_ZFP_SI_ItemData *> tmp = datas;
+        datas = ZFCoreArrayPOD<_ZFP_SI_ItemData *>();
+        for(zfindex i = 0; i < tmp.count(); ++i)
         {
-            _ZFP_SI_ItemData &itemData = *(this->data[i].pointerValueGet());
-            if(zfscmpTheSame(itemData.name.cString(), name))
+            zfdelete(tmp[i]);
+        }
+    }
+public:
+    void *instanceAccess(ZF_IN const zfchar *name,
+                         ZF_IN _ZFP_SI_Constructor constructor,
+                         ZF_IN _ZFP_SI_Destructor destructor)
+    {
+        zfCoreMutexLocker();
+        for(zfindex i = 0; i < this->datas.count(); ++i)
+        {
+            if(this->datas[i]->name.compare(name) == 0)
             {
-                ++(itemData.refCount);
-                return itemData.instance;
+                ++(this->datas[i]->refCount);
+                return this->datas[i]->instance;
             }
         }
-        _ZFP_SI_ItemData *itemData = zfnew(_ZFP_SI_ItemData);
-        itemData->name = name;
-        itemData->instance = constructor();
-        this->data.add(ZFCorePointerForObject<_ZFP_SI_ItemData *>(itemData));
-        return itemData->instance;
+        _ZFP_SI_ItemData *item = zfnew(_ZFP_SI_ItemData);
+        item->name = name;
+        item->instance = constructor();
+        item->destructor = destructor;
+        this->datas.add(item);
+        return item->instance;
     }
-    void cleanup(ZF_IN const zfchar *name)
+    void instanceCleanup(ZF_IN void *instance)
     {
-        for(zfindex i = 0; i < this->data.count(); ++i)
+        zfCoreMutexLocker();
+        for(zfindex i = 0; i < this->datas.count(); ++i)
         {
-            _ZFP_SI_ItemData &itemData = *(this->data[i].pointerValueGet());
-            if(zfscmpTheSame(itemData.name.cString(), name))
+            if(this->datas[i]->instance == instance)
             {
-                --(itemData.refCount);
-                if(itemData.refCount == 0)
+                --(this->datas[i]->refCount);
+                if(this->datas[i]->refCount == 0)
                 {
-                    this->data.remove(i);
+                    _ZFP_SI_ItemData *t = this->datas[i];
+                    this->datas.remove(i);
+                    zfdelete(t);
+                    return ;
                 }
-                break;
             }
         }
     }
 };
-static _ZFP_SI_Data &_ZFP_SI_dataRef_(void)
+
+static _ZFP_SI_Data &_ZFP_SI_data(void)
 {
     static _ZFP_SI_Data d;
     return d;
 }
-#define _ZFP_SI_dataRef _ZFP_SI_dataRef_()
 
-_ZFP_SI_Base *&_ZFP_SI_instanceAccess(ZF_IN const zfchar *name,
-                                      ZF_IN _ZFP_SI_Constructor constructor)
+_ZFP_SI_Holder::_ZFP_SI_Holder(ZF_IN const zfchar *name,
+                               ZF_IN _ZFP_SI_Constructor constructor,
+                               ZF_IN _ZFP_SI_Destructor destructor)
+: instance(_ZFP_SI_data().instanceAccess(name, constructor, destructor))
 {
-    return _ZFP_SI_dataRef.access(name, constructor);
 }
-void _ZFP_SI_instanceCleanup(ZF_IN _ZFP_SI_Base *instance)
+_ZFP_SI_Holder::~_ZFP_SI_Holder(void)
 {
-    _ZFP_SI_dataRef.cleanup(instance->_ZFP_SI_name());
+    _ZFP_SI_data().instanceCleanup(this->instance);
 }
 
 ZF_NAMESPACE_GLOBAL_END

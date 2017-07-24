@@ -29,6 +29,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+#define _ZFP_ZFOBJECT_METHOD_REG 1
+
 ZF_NAMESPACE_GLOBAL_END
+
 #endif // #ifndef _ZFI_ZFObjectImpl_h_
 

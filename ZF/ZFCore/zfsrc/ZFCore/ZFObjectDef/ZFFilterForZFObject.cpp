@@ -75,7 +75,7 @@ zfbool ZFFilterForZFObject::filterOnCheckActive(ZF_IN ZFObject * const &e) const
 
 ZF_NAMESPACE_GLOBAL_END
 
-#if 1 // ZFObject related method register
+#if _ZFP_ZFOBJECT_METHOD_REG
 #include "../ZFObject.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 

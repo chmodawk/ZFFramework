@@ -149,6 +149,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public: \
         zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
         { \
+            zfCoreMutexLocker(); \
             if(Name##_PropV.propertyAccessed()) \
             { \
                 zfself::_ZFP_PropV_##Name _holder; \
@@ -158,7 +159,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                         ZFCastZFObjectUnchecked(ZFObject *, _holder.propertyInit(this, zffalse))); \
                 } \
                 return (ZFComparerDefault( \
-                        this->_ZFP_ZFPROPERTY_GETTER_NAME_INTERNAL(Type, Name)(), _holder.propertyInit(this, zffalse)) \
+                        this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(this, zffalse)) \
                     == ZFCompareTheSame); \
             } \
             else \
@@ -218,6 +219,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public: \
         zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
         { \
+            zfCoreMutexLocker(); \
             if(Name##_PropV.propertyAccessed()) \
             { \
                 zfself::_ZFP_PropV_##Name _holder; \
@@ -226,7 +228,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                     *(Type *)outInitValue = _holder.propertyInit(this, zffalse); \
                 } \
                 return (ZFComparerDefault( \
-                        this->_ZFP_ZFPROPERTY_GETTER_NAME_INTERNAL(Type, Name)(), _holder.propertyInit(this, zffalse)) \
+                        this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(this, zffalse)) \
                     == ZFCompareTheSame); \
             } \
             else \
@@ -273,7 +275,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public: \
         virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT void *outInitValue) \
         { \
-            zfCoreMutexLocker(); \
             return _ZFP_PropCbIsInitAW_##Name<zfself, \
                     ZFM_CLASS_HAS_MEMBER(_, _ZFP_propCbIsInitAC_##Name, zfself) \
                 >::action(this, outInitValue); \
@@ -355,32 +356,17 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFPROPERTY_LIFE_CYCLE_EVENTS(Type, Name)
 
 // ============================================================
-#define _ZFP_ZFPROPERTY_VALUE_REF(Name) \
-    (Name##_PropV.propertyInit(this))
-
-#define _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name) \
-    Name##Set
-#define _ZFP_ZFPROPERTY_SETTER_NAME_INTERNAL(Type, Name) \
-    Name##SetInternal
-
-#define _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name) \
-    Name
-#define _ZFP_ZFPROPERTY_GETTER_NAME_INTERNAL(Type, Name) \
-    Name##Internal
+#define _ZFP_ZFPROPERTY_VALUE_REF(Name) (Name##_PropV.propertyInit(this))
+#define _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name) Name##Set
+#define _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name) Name
 
 // ============================================================
-#define _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_public protected
-#define _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_protected protected
-#define _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_private private
-#define _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_(ForAccessType) \
-    _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_##ForAccessType
-#define _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(ForAccessType) \
-    _ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE_(ForAccessType)
-
-// ============================================================
-#define _ZFP_ZFPROPERTY_SETTER_INTERNAL_RETAIN(AccessType, Type, Name) \
+#define _ZFP_ZFPROPERTY_SETTER_RETAIN(AccessType, Type, Name) \
     AccessType: \
-        inline void _ZFP_ZFPROPERTY_SETTER_NAME_INTERNAL(Type, Name)(Type const &propertyValue) \
+        ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
+            AccessType, ZFMethodIsVirtual, \
+            void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
+            ZFMP_IN(Type const &, propertyValue)) \
         { \
             zfCoreMutexLock(); \
             Type &valuePointerRef = _ZFP_ZFPROPERTY_VALUE_REF(Name); /* must access first */ \
@@ -399,10 +385,14 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             this->_ZFP_propL_onUpdate_##Name(valueRef, valueOld); \
             zfCoreMutexUnlock(); \
             toObject()->_ZFP_ZFObject_objectPropertyValueOnUpdate(zfself::_ZFP_Prop_##Name(), &valueOld); \
-        }
-#define _ZFP_ZFPROPERTY_SETTER_INTERNAL_ASSIGN(AccessType, Type, Name) \
+        } \
+    public:
+#define _ZFP_ZFPROPERTY_SETTER_ASSIGN(AccessType, Type, Name) \
     AccessType: \
-        inline void _ZFP_ZFPROPERTY_SETTER_NAME_INTERNAL(Type, Name)(Type const &propertyValue) \
+        ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
+            AccessType, ZFMethodIsVirtual, \
+            void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
+            ZFMP_IN(Type const &, propertyValue)) \
         { \
             zfCoreMutexLock(); \
             Type &valueRef = _ZFP_ZFPROPERTY_VALUE_REF(Name); \
@@ -417,87 +407,18 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             this->_ZFP_propL_onUpdate_##Name(valueRef, valueOld); \
             zfCoreMutexUnlock(); \
             toObject()->_ZFP_ZFObject_objectPropertyValueOnUpdate(zfself::_ZFP_Prop_##Name(), &valueOld); \
-        }
-#define _ZFP_ZFPROPERTY_GETTER_INTERNAL(AccessType, Type, Name) \
-    AccessType: \
-        inline Type const &_ZFP_ZFPROPERTY_GETTER_NAME_INTERNAL(Type, Name)(void) \
-        { \
-            zfCoreMutexLocker(); \
-            return _ZFP_ZFPROPERTY_VALUE_REF(Name); \
-        }
-
-// ============================================================
-#define _ZFP_ZFPROPERTY_SETTER(AccessType, Type, Name) \
-    AccessType: \
-        ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
-            AccessType, ZFMethodIsVirtual, \
-            void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
-            ZFMP_IN(Type const &, propertyValue)) \
-        { \
-            _ZFP_PropSetterW_##Name<zfself, \
-                    ZFM_CLASS_HAS_MEMBER(_, _ZFP_propSetterC_##Name, zfself) \
-                >::action(this, propertyValue); \
         } \
-    private: \
-        ZFM_CLASS_HAS_MEMBER_DECLARE(_, _ZFP_propSetterC_##Name, void (T::*F)(ZF_IN Type const &)) \
-        template<typename T_Owner, int hasCustom> \
-        zfclassNotPOD _ZFP_PropSetterW_##Name \
-        { \
-        public: \
-            static inline void action(ZF_IN T_Owner *owner, ZF_IN Type const &propertyValue) \
-            { \
-                owner->_ZFP_propSetterI_##Name(propertyValue); \
-            } \
-        }; \
-        template<typename T_Owner> \
-        zfclassNotPOD _ZFP_PropSetterW_##Name<T_Owner, 1> \
-        { \
-        public: \
-            static inline void action(ZF_IN T_Owner *owner, ZF_IN Type const &propertyValue) \
-            { \
-                owner->_ZFP_propSetterC_##Name(propertyValue); \
-            } \
-        }; \
-    public: \
-        inline void _ZFP_propSetterI_##Name(ZF_IN Type const &propertyValue) \
-        { \
-            this->_ZFP_ZFPROPERTY_SETTER_NAME_INTERNAL(Type, Name)(propertyValue); \
-        }
+    public:
 #define _ZFP_ZFPROPERTY_GETTER(AccessType, Type, Name) \
     AccessType: \
         ZFMETHOD_DECLARE_NO_AUTOREGISTER_0( \
             AccessType, ZFMethodIsVirtual, \
             Type const &, _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)) \
         { \
-            return _ZFP_PropGetterW_##Name<zfself, \
-                    ZFM_CLASS_HAS_MEMBER(_, _ZFP_propGetterC_##Name, zfself) \
-                >::action(this); \
+            zfCoreMutexLocker(); \
+            return _ZFP_ZFPROPERTY_VALUE_REF(Name); \
         } \
-    private: \
-        ZFM_CLASS_HAS_MEMBER_DECLARE(_, _ZFP_propGetterC_##Name, Type const & (T::*F)(void)) \
-        template<typename T_Owner, int hasCustom> \
-        zfclassNotPOD _ZFP_PropGetterW_##Name \
-        { \
-        public: \
-            static inline Type const &action(ZF_IN T_Owner *owner) \
-            { \
-                return owner->_ZFP_propGetterI_##Name(); \
-            } \
-        }; \
-        template<typename T_Owner> \
-        zfclassNotPOD _ZFP_PropGetterW_##Name<T_Owner, 1> \
-        { \
-        public: \
-            static inline Type const &action(ZF_IN T_Owner *owner) \
-            { \
-                return owner->_ZFP_propGetterC_##Name(); \
-            } \
-        }; \
-    public: \
-        inline Type const &_ZFP_propGetterI_##Name(void) \
-        { \
-            return this->_ZFP_ZFPROPERTY_GETTER_NAME_INTERNAL(Type, Name)(); \
-        }
+    public:
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_WRAPPER(Type, Name, lifeCycleName, constFix) \
@@ -601,7 +522,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  *   it's not quite necessary to register it
  * -  you may customize the accessibility for getter and setter,
  *   or add default value for setter,
- *   or set your custom setter,
  *   by using ZFPROPERTY_XXX_DETAIL:\n
  *   ZFPROPERTY_RETAIN_DETAIL(
  *       Type, Name, ZFPropertyInitValueOrNoInitValue,
@@ -629,35 +549,10 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  *     };
  *   @endcode
  *   @note for a retain property, it'll be released automatically when it's owner is dealloced
- * -  to override a property in subclass, you should use
- *   #ZFPROPERTY_OVERRIDE_SETTER_DECLARE and/or #ZFPROPERTY_OVERRIDE_GETTER_DECLARE
- *   @code
- *     // OwnerClass.h
- *     zfclass OwnerClass : zfextends Base
- *     {
- *         ...
- *         ZFPROPERTY_OVERRIDE_SETTER_DECLARE(zfcharA, OverridePropertyInHeader)
- *         { // actual setter here, defined in header file
- *             // use zfsuper::XXXSet to set
- *             zfsuper::OverridePropertyInHeaderSet(propertyValue);
- *         }
- *         ZFPROPERTY_OVERRIDE_SETTER_DECLARE(zfcharA, OverridePropertyInCppFile);
- *     };
- *
- *     // OwnerClass.cpp
- *     ZFPROPERTY_OVERRIDE_SETTER_DEFINE(OwnerClass, zfcharA, OverridePropertyInCppFile)
- *     {
- *         // setter that defined in cpp file
- *         OverridePropertyInCppFileSet(propertyValue);
- *     }
- *   @endcode
+ * -  to override a property in subclass, you may use #ZFPROPERTY_OVERRIDE_ON_XXX
  *   @warning you must not declare two property with same name in child and base class
  *   @note overrided property won't be included in it's ZFClass,
  *     it's only a method override, no new ZFMethod or ZFProperty would be declared in child class
- *   @warning AccessType and Type for the overrided property must be the same
- *     declared in base class
- *   @warning you should never override a property's getter and setter except by
- *     ZFPROPERTY_OVERRIDE_XXX
  * -  to add Doxygen docs, you should:
  *   @code
  *    / **
@@ -701,12 +596,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     Type, Name, ZFPropertyInitValueOrNoInitValue, \
     SetterAccessType, GetterAccessType) \
         _ZFP_ZFPROPERTY_GETTER(GetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_GETTER_INTERNAL(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(GetterAccessType), Type, Name) \
         /** @brief see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER(SetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER_INTERNAL_RETAIN(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(SetterAccessType), Type, Name) \
+        _ZFP_ZFPROPERTY_SETTER_RETAIN(SetterAccessType, Type, Name) \
         _ZFP_ZFPROPERTY_DECLARE_RETAIN(Type, ZFPropertyTypeId_ZFObject, Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     public:
@@ -722,12 +613,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     Type, Name, ZFPropertyInitValueOrNoInitValue, \
     SetterAccessType, GetterAccessType) \
         _ZFP_ZFPROPERTY_GETTER(GetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_GETTER_INTERNAL(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(GetterAccessType), Type, Name) \
         /** @brief see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER(SetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER_INTERNAL_RETAIN(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(SetterAccessType), Type, Name) \
+        _ZFP_ZFPROPERTY_SETTER_RETAIN(SetterAccessType, Type, Name) \
         _ZFP_ZFPROPERTY_DECLARE_RETAIN(Type, ZFPropertyTypeId_none, Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     public:
@@ -756,12 +643,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     Type, Name, ZFPropertyInitValueOrNoInitValue, \
     SetterAccessType, GetterAccessType) \
         _ZFP_ZFPROPERTY_GETTER(GetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_GETTER_INTERNAL(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(GetterAccessType), Type, Name) \
         /** @brief see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER(SetterAccessType, Type, Name) \
-        /** @brief internal setter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER_INTERNAL_ASSIGN(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(SetterAccessType), Type, Name) \
+        _ZFP_ZFPROPERTY_SETTER_ASSIGN(SetterAccessType, Type, Name) \
         _ZFP_ZFPROPERTY_DECLARE_ASSIGN(Type, ZFPropertyTypeIdData<zftTraitsType<Type>::TraitsRemoveReference>::PropertyTypeId(), Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     public:
@@ -777,12 +660,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     Type, Name, ZFPropertyInitValueOrNoInitValue, \
     SetterAccessType, GetterAccessType) \
         _ZFP_ZFPROPERTY_GETTER(GetterAccessType, Type, Name) \
-        /** @brief internal getter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_GETTER_INTERNAL(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(GetterAccessType), Type, Name) \
         /** @brief see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER(SetterAccessType, Type, Name) \
-        /** @brief internal setter, see @ref Name */ \
-        _ZFP_ZFPROPERTY_SETTER_INTERNAL_ASSIGN(_ZFP_ZFPROPERTY_INTERNAL_ACCESSTYPE(SetterAccessType), Type, Name) \
+        _ZFP_ZFPROPERTY_SETTER_ASSIGN(SetterAccessType, Type, Name) \
         _ZFP_ZFPROPERTY_DECLARE_ASSIGN(Type, ZFPropertyTypeId_none, Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     public:
@@ -836,22 +715,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public:
 
 // ============================================================
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_SETTER_DECLARE(Type, Name) \
-    public: \
-        void _ZFP_propSetterC_##Name(ZF_IN Type const &propertyValue)
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_SETTER_DEFINE(OwnerClass, Type, Name) \
-    void OwnerClass::_ZFP_propSetterC_##Name(ZF_IN Type const &propertyValue)
-
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_GETTER_DECLARE(Type, Name) \
-    public: \
-        Type const &_ZFP_propGetterC_##Name(void)
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_GETTER_DEFINE(OwnerClass, Type, Name) \
-    Type const &OwnerClass::_ZFP_propGetterC_##Name(void)
-
 /** @brief see #ZFPROPERTY_RETAIN */
 #define ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DECLARE(Type, Name) \
     public: \
@@ -970,34 +833,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
      _ZFP_ZFPROPERTY_LIFE_CYCLE_CUSTOM_DEFINE(OwnerClass, Type, Name, onUpdate, ZFM_EXPAND)
 
 // ============================================================
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_SETTER_DECLARE(AccessType, Type, Name) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_1( \
-        AccessType, ZFMethodIsVirtual, \
-        void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
-        ZFMP_IN(Type const &, propertyValue))
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_SETTER_DEFINE(OwnerClass, Type, Name) \
-    ZFMETHOD_OVERRIDE_DEFINE_1( \
-        OwnerClass, void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
-        ZFMP_IN(Type const &, propertyValue))
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_SETTER_CALL_SUPER(SuperOwnerClass, Type, Name) \
-    SuperOwnerClass::_ZFP_ZFPROPERTY_SETTER_NAME(Type, Name)(propertyValue)
-
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_GETTER_DECLARE(AccessType, Type, Name) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_0( \
-        AccessType, ZFMethodIsVirtual, \
-        Type const &, _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name))
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_GETTER_DEFINE(OwnerClass, Type, Name) \
-    ZFMETHOD_OVERRIDE_DEFINE_0( \
-        OwnerClass, Type const &, _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name))
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_OVERRIDE_GETTER_CALL_SUPER(SuperOwnerClass, Type, Name) \
-    SuperOwnerClass::_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)()
-
 /**
  * @brief override property's init value checker
  *

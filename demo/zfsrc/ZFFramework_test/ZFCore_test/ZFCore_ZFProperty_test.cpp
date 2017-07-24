@@ -17,54 +17,11 @@ zfclass _ZFP_ZFCore_ZFProperty_test_TestBase : zfextends ZFObject
 public:
     // retain
     ZFPROPERTY_RETAIN(ZFObject *, propertyRetain)
-
-    ZFPROPERTY_RETAIN(ZFObject *, propertyRetainCustomSetter)
-    ZFPROPERTY_CUSTOM_SETTER_DECLARE(ZFObject *, propertyRetainCustomSetter)
-    {
-        zfLogT() << propertyValue;
-        this->propertyRetainCustomSetterSetInternal(propertyValue);
-    }
-
     ZFPROPERTY_RETAIN_READONLY(ZFObject *, propertyRetainReadonly, ZFPropertyNoInitValue)
-
-    ZFPROPERTY_RETAIN_READONLY(ZFObject *, propertyRetainReadonlyCustomSetter, ZFPropertyNoInitValue)
-    ZFPROPERTY_CUSTOM_SETTER_DECLARE(ZFObject *, propertyRetainReadonlyCustomSetter)
-    {
-        zfLogT() << propertyValue;
-        this->propertyRetainReadonlyCustomSetterSetInternal(propertyValue);
-    }
 
     // assign
     ZFPROPERTY_ASSIGN(zfstring, propertyAssign)
-
-    ZFPROPERTY_ASSIGN(zfstring, propertyAssignCustomSetter)
-    ZFPROPERTY_CUSTOM_SETTER_DECLARE(zfstring, propertyAssignCustomSetter)
-    {
-        zfLogT() << propertyValue;
-        this->propertyAssignCustomSetterSetInternal(propertyValue);
-    }
-
     ZFPROPERTY_ASSIGN_READONLY(zfstring, propertyAssignReadonly, ZFPropertyNoInitValue)
-
-    ZFPROPERTY_ASSIGN_READONLY(zfstring, propertyAssignReadonlyCustomSetter, ZFPropertyNoInitValue)
-    ZFPROPERTY_CUSTOM_SETTER_DECLARE(zfstring, propertyAssignReadonlyCustomSetter)
-    {
-        zfLogT() << propertyValue;
-        this->propertyAssignReadonlyCustomSetterSetInternal(propertyValue);
-    }
-
-    // override
-    ZFPROPERTY_RETAIN(ZFObject *, propertyOverride)
-    ZFPROPERTY_CUSTOM_SETTER_DECLARE(ZFObject *, propertyOverride)
-    {
-        zfLogT() << zfText("setterInBase") << propertyValue;
-        this->propertyOverrideSetInternal(propertyValue);
-    }
-    ZFPROPERTY_CUSTOM_GETTER_DECLARE(ZFObject *, propertyOverride)
-    {
-        zfLogT() << zfText("getterInBase");
-        return this->propertyOverrideInternal();
-    }
 };
 
 zfclass _ZFP_ZFCore_ZFProperty_test_TestChild: zfextends _ZFP_ZFCore_ZFProperty_test_TestBase
@@ -72,21 +29,8 @@ zfclass _ZFP_ZFCore_ZFProperty_test_TestChild: zfextends _ZFP_ZFCore_ZFProperty_
     ZFOBJECT_DECLARE(_ZFP_ZFCore_ZFProperty_test_TestChild, _ZFP_ZFCore_ZFProperty_test_TestBase)
 
 public:
-    ZFPROPERTY_OVERRIDE_SETTER_DECLARE(public, ZFObject *, propertyOverride)
-    {
-        zfLogT() << zfText("setterInChild") << propertyValue;
-        zfsuper::propertyOverrideSet(propertyValue);
-    }
-    ZFPROPERTY_OVERRIDE_GETTER_DECLARE(public, ZFObject *, propertyOverride);
-
-public:
     ZFPROPERTY_ASSIGN(zfstring, propertyInChild)
 };
-ZFPROPERTY_OVERRIDE_GETTER_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestChild, ZFObject *, propertyOverride)
-{
-    zfLogT() << zfText("getterInChild");
-    return zfsuper::propertyOverride();
-}
 
 // ============================================================
 zfclass ZFCore_ZFProperty_test : zfextends ZFFramework_test_TestCase
@@ -134,18 +78,10 @@ protected:
             p->propertyRetainSet(zflineAlloc(ZFObject));
             zfLogT() << p->propertyRetain();
 
-            p->propertyRetainCustomSetterSet(zflineAlloc(ZFObject));
-            zfLogT() << p->propertyRetainCustomSetter();
-
 #if 0 // this should not compile
             p->propertyRetainReadonlySet(zflineAlloc(ZFObject));
 #endif
             zfLogT() << p->propertyRetainReadonly();
-
-#if 0 // this should not compile
-            p->propertyRetainReadonlyCustomSetterSet(zflineAlloc(ZFObject));
-#endif
-            zfLogT() << p->propertyRetainReadonlyCustomSetter();
 
             // assign
             zfLogTrimT();
@@ -154,24 +90,10 @@ protected:
             p->propertyAssignSet(zfstring());
             zfLogT() << p->propertyAssign();
 
-            p->propertyAssignCustomSetterSet(zfstring());
-            zfLogT() << p->propertyAssignCustomSetter();
-
 #if 0 // this should not compile
             p->propertyAssignReadonlySet(zfstring());
 #endif
             zfLogT() << p->propertyAssignReadonly();
-
-#if 0 // this should not compile
-            p->propertyAssignReadonlyCustomSetterSet(zfstring());
-#endif
-            zfLogT() << p->propertyAssignReadonlyCustomSetter();
-
-            // override
-            zfLogTrimT();
-            zfLogTrimT() << zfText("override property");
-            p->propertyOverrideSet(zfnull);
-            p->propertyOverride();
 
             // copy
             this->testCaseOutputSeparator();

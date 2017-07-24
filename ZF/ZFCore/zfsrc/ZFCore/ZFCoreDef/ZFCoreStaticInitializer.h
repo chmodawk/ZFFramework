@@ -19,31 +19,17 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_SI_Base
-{
-public:
-    virtual ~_ZFP_SI_Base(void)
-    {
-    }
-    virtual const zfchar *_ZFP_SI_name(void) const zfpurevirtual;
-};
-typedef _ZFP_SI_Base *(*_ZFP_SI_Constructor)(void);
-extern ZF_ENV_EXPORT _ZFP_SI_Base *&_ZFP_SI_instanceAccess(ZF_IN const zfchar *name,
-                                                           ZF_IN _ZFP_SI_Constructor constructor);
-extern ZF_ENV_EXPORT void _ZFP_SI_instanceCleanup(ZF_IN _ZFP_SI_Base *instance);
+typedef void *(*_ZFP_SI_Constructor)(void);
+typedef void (*_ZFP_SI_Destructor)(ZF_IN void *p);
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_SI_Holder
 {
 public:
-    _ZFP_SI_Holder(ZF_IN const zfchar *name, ZF_IN _ZFP_SI_Constructor constructor)
-    : instance(_ZFP_SI_instanceAccess(name, constructor))
-    {
-    }
-    ~_ZFP_SI_Holder(void)
-    {
-        _ZFP_SI_instanceCleanup(this->instance);
-    }
+    _ZFP_SI_Holder(ZF_IN const zfchar *name,
+                   ZF_IN _ZFP_SI_Constructor constructor,
+                   ZF_IN _ZFP_SI_Destructor destructor);
+    ~_ZFP_SI_Holder(void);
 public:
-    _ZFP_SI_Base *&instance;
+    void *instance;
 };
 
 // ============================================================
@@ -80,21 +66,23 @@ public:
  *   you may check it by #ZFFrameworkStateCheck
  */
 #define ZF_STATIC_INITIALIZER_INIT(Name) \
-    zfclassNotPOD _ZFP_SI_##Name : zfextendsNotPOD _ZFP_SI_Base \
+    zfclassNotPOD _ZFP_SI_##Name \
     { \
     public: \
-        static _ZFP_SI_Base *_ZFP_SI_constructor_##Name(void) \
+        static void *_ZFP_SI_constructor_##Name(void) \
         { \
-            return zfnew(_ZFP_SI_##Name); \
+            return (void *)zfnew(_ZFP_SI_##Name); \
+        } \
+        static void _ZFP_SI_destructor_##Name(ZF_IN void *p) \
+        { \
+            return zfdelete(ZFCastStatic(_ZFP_SI_##Name *, p)); \
         } \
         static _ZFP_SI_##Name *_ZFP_SI_instanceAccess(void) \
         { \
-            static _ZFP_SI_Holder d(zfText(#Name), _ZFP_SI_##Name::_ZFP_SI_constructor_##Name); \
+            static _ZFP_SI_Holder d(zfText(#Name), \
+                _ZFP_SI_##Name::_ZFP_SI_constructor_##Name, \
+                _ZFP_SI_##Name::_ZFP_SI_destructor_##Name); \
             return ZFCastStatic(_ZFP_SI_##Name *, d.instance); \
-        } \
-        virtual const zfchar *_ZFP_SI_name(void) const \
-        { \
-            return zfText(#Name); \
         } \
     public: \
         _ZFP_SI_##Name(void)
@@ -102,7 +90,7 @@ public:
  * @brief see #ZF_STATIC_INITIALIZER_INIT
  */
 #define ZF_STATIC_INITIALIZER_DESTROY(Name) \
-        virtual ~_ZFP_SI_##Name(void)
+        ~_ZFP_SI_##Name(void)
 /**
  * @brief see #ZF_STATIC_INITIALIZER_INIT
  */

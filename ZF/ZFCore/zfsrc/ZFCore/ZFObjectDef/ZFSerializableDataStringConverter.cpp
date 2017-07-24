@@ -455,7 +455,7 @@ zfbool ZFSerializableDataToOutput(ZF_IN_OUT const ZFOutputCallback &output,
 
 ZF_NAMESPACE_GLOBAL_END
 
-#if 1 // ZFObject related method register
+#if _ZFP_ZFOBJECT_METHOD_REG
 #include "../ZFObject.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
