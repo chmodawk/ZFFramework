@@ -1,6 +1,4 @@
-project should follow this structure:
-
-(`~` stands for root path of ZFFramework)
+# project dir structure
 
 ```
 // for ZF libs
@@ -8,6 +6,18 @@ project should follow this structure:
     zfproj/
         Android/
             LibName_jni/
+                jni/
+                res/
+                src/
+                AndroidManifest.xml
+        AndroidStudio/
+            LibName/
+                gradle/
+                jni_LibName/
+                    src/
+                    build.gradle
+                    CMakeLists.txt
+                build.gradle
         iOS/
             LibName/
                 LibName.xcodeproj/
@@ -22,7 +32,21 @@ project should follow this structure:
     zfproj/
         Android/
             ImplLibName_impl/
+                res/
+                AndroidManifest.xml
             ImplLibName_impl_jni/
+                jni/
+                res/
+                src/
+                AndroidManifest.xml
+        AndroidStudio/
+            ImplLibName_impl/
+                gradle/
+                jni_ImplLibName_impl/
+                    src/
+                    build.gradle
+                    CMakeLists.txt
+                build.gradle
         iOS/
             ImplLibName_impl/
                 ImplLibName_impl.xcodeproj/
@@ -31,5 +55,51 @@ project should follow this structure:
                 ImplLibName_impl.pro
     zfres/
     zfsrc/
+```
+
+# release dir structure
+
+```
+~/_release/
+    Android/
+        all/
+        module/
+            LibName/
+                assets/
+                libs/
+                    armeabi/
+                        libLibName.so
+                    LibName.jar
+    AndroidStudio/
+        all/
+        module/
+            LibName/
+                libs/
+                    include/
+                    libs/
+                        armeabi/
+                            libLibName.so
+                    LibName.jar
+                src/
+                    main/
+                        assets/
+    iOS/
+        all/
+        module/
+            LibName/
+                include/
+                lib/
+                    libLibName.a
+                zfres/
+    Qt_MacOS/
+    Qt_Posix
+    Qt_Windows/
+        all/
+        module/
+            LibName/
+                include/
+                lib/
+                    libLibName.[a|so|dll|dylib]
+                zfres/
 ```
 

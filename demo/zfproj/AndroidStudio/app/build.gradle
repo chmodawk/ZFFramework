@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+def ZF_ROOT_PATH = this.projectDir.getAbsolutePath() + '/../../../../../ZFFramework'
+android {
+    compileSdkVersion 24
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+        ndk {
+            // abiFilters "arm64-v8a", "armeabi", "armeabi-v7a", "mips", "mips64", "x86", "x86_64"
+            abiFilters "armeabi"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs += 'libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFCore/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAlgorithm/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUtility/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIKit/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAddition/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWidget/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFLua/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWebKit/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZF_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZF_loader_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFCore_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAlgorithm_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIKit_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFLua_impl/libs/libs'
+            jniLibs.srcDirs += ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWebKit_impl/libs/libs'
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFCore/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAlgorithm/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUtility/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIKit/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAddition/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWidget/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFLua/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWebKit/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZF_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZF_loader_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFCore_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFAlgorithm_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIKit_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFLua_impl/libs', include: ['*.jar'])
+    compile fileTree(dir: ZF_ROOT_PATH + '/_release/AndroidStudio/module/ZFUIWebKit_impl/libs', include: ['*.jar'])
+}
+
+import org.apache.tools.ant.taskdefs.condition.Os
+task ZFCheckRelease << {
+    if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+        exec {
+            executable "cmd.exe"
+            args "/c", ZF_ROOT_PATH + "/tools/release/release_AndroidStudio_check.bat"
+        }
+    }
+    else {
+        exec {
+            executable "sh"
+            args ZF_ROOT_PATH + "/tools/release/release_AndroidStudio_check.sh"
+        }
+    }
+}
+preBuild.dependsOn ZFCheckRelease
+
