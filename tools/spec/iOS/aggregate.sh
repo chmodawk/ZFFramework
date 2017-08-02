@@ -65,11 +65,11 @@ lipo -create "$DEVICE_DIR/lib$PROJ_NAME.a" "$SIMULATOR_DIR/lib$PROJ_NAME.a" -out
 
 # copy headers
 if [[ $HEADER_SRC_PATH != "" && $HEADER_DST_PATH != "" ]]; then
-    sh $ZF_TOOLS_PATH/common/copy_header.sh $HEADER_SRC_PATH $HEADER_DST_PATH
+    sh $ZF_TOOLS_PATH/util/copy_header.sh $HEADER_SRC_PATH $HEADER_DST_PATH
 fi
 
 # copy res
 if [[ $RES_SRC_PATH != "" && $RES_DST_PATH != "" ]]; then
-    sh $ZF_TOOLS_PATH/common/copy_res.sh $RES_SRC_PATH $RES_DST_PATH
+    sh $ZF_TOOLS_PATH/util/copy_res.sh $RES_SRC_PATH $RES_DST_PATH
 fi
 

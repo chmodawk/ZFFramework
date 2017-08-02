@@ -136,11 +136,11 @@ RCC_DIR = $${DESTDIR}/.rcc
 UI_DIR = $${DESTDIR}/.ui
 
 win32 {
-    _ZF_copy_res = $$system_path($$ZF_TOOLS_PATH/common/copy_res.bat)
-    _ZF_install_lib = $$system_path($$ZF_TOOLS_PATH/common/install_lib.bat)
+    _ZF_copy_res = $$system_path($$ZF_TOOLS_PATH/util/copy_res.bat)
+    _ZF_install_lib = $$system_path($$ZF_TOOLS_PATH/util/install_lib.bat)
 } else {
-    _ZF_copy_res = sh $$system_path($$ZF_TOOLS_PATH/common/copy_res.sh)
-    _ZF_install_lib = sh $$system_path($$ZF_TOOLS_PATH/common/install_lib.sh)
+    _ZF_copy_res = sh $$system_path($$ZF_TOOLS_PATH/util/copy_res.sh)
+    _ZF_install_lib = sh $$system_path($$ZF_TOOLS_PATH/util/install_lib.sh)
 }
 
 equals(ZF_BUILD_STATIC_LIB, 1) {

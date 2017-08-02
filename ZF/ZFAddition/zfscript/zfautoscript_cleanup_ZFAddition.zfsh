@@ -1,3 +1,3 @@
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFAddition"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFAddition_jni"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFAddition"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\util\cleanup_proj.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfproj" "ZFAddition_jni"
 

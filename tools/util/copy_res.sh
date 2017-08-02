@@ -16,3 +16,7 @@ if test -e "$SRC_PATH"; then
     cp -rf "$SRC_PATH/." "$DST_PATH/" >/dev/null 2>&1
 fi
 
+find "$DST_PATH" -type d -name "_repo" 2>/dev/null | xargs rm -rf >/dev/null 2>&1
+find "$DST_PATH" -type d -name "_tmp" 2>/dev/null | xargs rm -rf >/dev/null 2>&1
+find "$DST_PATH" -depth -type d -empty -exec rm -rf {} ';' >/dev/null 2>&1
+

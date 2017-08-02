@@ -34,5 +34,5 @@ if not "%LIB_PROJ_DIR_NAME_OR_DUMMY%" == "DUMMY" (
 
 call "%ZF_TOOLS_PATH%\spec\Android\res_copy.bat" "%PROJ_PATH%\zfres" "%RELEASE_PATH%\module\%PROJ_NAME%\assets\zfres" >nul 2>&1
 call "%ZF_TOOLS_PATH%\spec\Android\res_fix.bat" "%RELEASE_PATH%\module\%PROJ_NAME%\assets\zfres" >nul 2>&1
-call "%ZF_TOOLS_PATH%\common\copy_header.bat" "%PROJ_PATH%\zfsrc" "%RELEASE_PATH%\module\%PROJ_NAME%\libs\include" >nul 2>&1
+call "%ZF_TOOLS_PATH%\util\copy_header.bat" "%PROJ_PATH%\zfsrc" "%RELEASE_PATH%\module\%PROJ_NAME%\libs\include" >nul 2>&1
 

@@ -31,5 +31,5 @@ if "$LIB_PROJ_DIR_NAME_OR_DUMMY" != "DUMMY" (
 
 sh "$ZF_TOOLS_PATH/spec/Android/res_copy.sh" $PROJ_NAME "$PROJ_PATH/zfres" "$RELEASE_PATH/module/$PROJ_NAME/assets/zfres" >/dev/null 2>&1
 sh "$ZF_TOOLS_PATH/spec/Android/res_fix.sh" "$RELEASE_PATH/module/$PROJ_NAME/assets/zfres" >/dev/null 2>&1
-sh "$ZF_TOOLS_PATH/common/copy_header.sh" "$PROJ_PATH/zfsrc" "$RELEASE_PATH/module/$PROJ_NAME/libs/include" >/dev/null 2>&1
+sh "$ZF_TOOLS_PATH/util/copy_header.sh" "$PROJ_PATH/zfsrc" "$RELEASE_PATH/module/$PROJ_NAME/libs/include" >/dev/null 2>&1
 

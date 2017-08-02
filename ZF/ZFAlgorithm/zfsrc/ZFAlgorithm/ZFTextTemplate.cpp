@@ -10,6 +10,11 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+static const zfchar _ZFP_ZFTextTemplate_tagL = '(';
+static const zfchar _ZFP_ZFTextTemplate_tagR = ')';
+static const zfchar *_ZFP_ZFTextTemplate_header = zfText("(ZFTT_");
+static const zfindex _ZFP_ZFTextTemplate_headerSize = zfslen(_ZFP_ZFTextTemplate_header);
+
 // ============================================================
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_ZFTextTemplateIndexDataState
 {
@@ -25,8 +30,6 @@ public:
     }
 };
 
-static const zfchar *_ZFP_ZFTextTemplate_header = zfText("{ZFTT_");
-static const zfindex _ZFP_ZFTextTemplate_headerSize = zfslen(_ZFP_ZFTextTemplate_header);
 static void _ZFP_ZFTextTemplateApply_replaceData(ZF_IN const ZFTextTemplateParam &param,
                                                  ZF_IN_OUT ZFCoreMap &stateMap,
                                                  ZF_IN const ZFOutputCallback &output,
@@ -137,12 +140,12 @@ ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFTextTemplateApply,
 static zfindex _ZFP_ZFTextTemplateApply_keyLength(ZF_IN const zfchar *pEnd,
                                                   ZF_IN const zfchar *p)
 {
-    if(*p == ' ' || *p == '\t' || *p == '}')
+    if(*p == ' ' || *p == '\t' || *p == _ZFP_ZFTextTemplate_tagR)
     {
         return zfindexMax;
     }
     const zfchar *t = p;
-    while(t < pEnd && *t != '}') {++t;}
+    while(t < pEnd && *t != _ZFP_ZFTextTemplate_tagR) {++t;}
     if(t >= pEnd)
     {
         return zfindexMax;
@@ -193,7 +196,7 @@ static void _ZFP_ZFTextTemplateApply_enableData(ZF_IN const ZFTextTemplateParam 
                                                 ZF_IN_OUT zfindex &size,
                                                 ZF_IN_OUT zfindex &condCount)
 { // {ZFTT_C_myCond}...{ZFTT_CE}
-    if(pEnd - p >= 2 && p[0] == 'E' && p[1] == '}')
+    if(pEnd - p >= 2 && p[0] == 'E' && p[1] == _ZFP_ZFTextTemplate_tagR)
     {
         p += 2;
         if(condCount > 0)
@@ -248,7 +251,7 @@ static void _ZFP_ZFTextTemplateApply_enableData(ZF_IN const ZFTextTemplateParam 
             continue;
         }
         ++p;
-        if(pEnd - p >= 2 && p[0] == 'E' && p[1] == '}')
+        if(pEnd - p >= 2 && p[0] == 'E' && p[1] == _ZFP_ZFTextTemplate_tagR)
         {
             p += 2;
             if(condCountOffset == 0)

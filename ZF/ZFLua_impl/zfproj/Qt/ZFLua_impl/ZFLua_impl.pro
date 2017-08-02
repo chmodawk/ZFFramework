@@ -119,15 +119,15 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    _ZF_copy_lib = $$system_path($$ZF_TOOLS_PATH/common/copy_lib.bat)
-    _ZF_copy_header = $$system_path($$ZF_TOOLS_PATH/common/copy_header.bat)
-    _ZF_copy_res = $$system_path($$ZF_TOOLS_PATH/common/copy_res.bat)
+    _ZF_copy_lib = $$system_path($$ZF_TOOLS_PATH/util/copy_lib.bat)
+    _ZF_copy_header = $$system_path($$ZF_TOOLS_PATH/util/copy_header.bat)
+    _ZF_copy_res = $$system_path($$ZF_TOOLS_PATH/util/copy_res.bat)
     _ZF_copy_check = $$system_path($$ZF_TOOLS_PATH/common/copy_check.bat)
     _ZF_LIB_SRC_PATH = $$system_path($$OUT_PWD/$$_ZF_BUILD_TYPE)
 } else {
-    _ZF_copy_lib = sh $$system_path($$ZF_TOOLS_PATH/common/copy_lib.sh)
-    _ZF_copy_header = sh $$system_path($$ZF_TOOLS_PATH/common/copy_header.sh)
-    _ZF_copy_res = sh $$system_path($$ZF_TOOLS_PATH/common/copy_res.sh)
+    _ZF_copy_lib = sh $$system_path($$ZF_TOOLS_PATH/util/copy_lib.sh)
+    _ZF_copy_header = sh $$system_path($$ZF_TOOLS_PATH/util/copy_header.sh)
+    _ZF_copy_res = sh $$system_path($$ZF_TOOLS_PATH/util/copy_res.sh)
     _ZF_copy_check = sh $$system_path($$ZF_TOOLS_PATH/common/copy_check.sh)
     _ZF_LIB_SRC_PATH = $$system_path($$OUT_PWD)
 }
