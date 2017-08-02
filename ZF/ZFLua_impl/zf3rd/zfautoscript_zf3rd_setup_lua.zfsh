@@ -1,7 +1,5 @@
 <ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/LuaDist/lua" "<ZF_WORK_DIR>\_repo\lua" --depth=1 -b lua-5.3
 
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_template.h" "<ZF_WORK_DIR>\..\zfsrc\ZFImpl\_repo\lua\ZFImpl_ZFLua_lua.h"
-
 <ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\lua\src" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua"
 
 <ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_exist.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua" "luaconf.h"
