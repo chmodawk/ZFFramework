@@ -62,9 +62,7 @@ static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
 
 // ============================================================
 ZFImpl_ZFLua_implSetupCallback_DEFINE(zfLog, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("zfLog"), _ZFP_ZFImpl_ZFLua_zfLog)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfLog"), _ZFP_ZFImpl_ZFLua_zfLog);
     }, {
     })
 

@@ -18,26 +18,26 @@ public:
     zfoverride
     ZFObject *objectOnInit(void)
     {
-        zfLogT();
+        zfLogT() << (void *)this;
         return zfsuper::objectOnInit();
     }
     zfoverride
     void objectOnDealloc(void)
     {
-        zfLogT();
+        zfLogT() << (void *)this;
         zfsuper::objectOnDealloc();
     }
     zfoverride
     void objectOnRetain(void)
     {
         zfsuper::objectOnRetain();
-        zfLogT() << this->objectRetainCount();
+        zfLogT() << (void *)this << this->objectRetainCount();
     }
     zfoverride
     void objectOnRelease(void)
     {
         zfsuper::objectOnRelease();
-        zfLogT() << this->objectRetainCount();
+        zfLogT() << (void *)this << this->objectRetainCount();
     }
 
 public:

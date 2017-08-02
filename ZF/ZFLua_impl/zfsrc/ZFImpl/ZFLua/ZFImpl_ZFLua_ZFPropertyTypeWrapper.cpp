@@ -53,7 +53,7 @@ static int _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper(ZF_IN lua_State *L)
         }
     }
 
-    luabridge::UserdataValue<zfautoObject>::push(L, ret);
+    ZFImpl_ZFLua_luaPush(L, ret);
     ZFImpl_ZFLua_implSetupObject(L);
     return 1;
 }
@@ -84,9 +84,7 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper_class
     }
 }
 ZFImpl_ZFLua_implSetupCallback_DEFINE(ZFPropertyTypeWrapper, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper"), _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper"), _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper);
 
         ZFCoreArrayPOD<const ZFClass *> allClass = ZFClassGetAll();
         if(!allClass.isEmpty())

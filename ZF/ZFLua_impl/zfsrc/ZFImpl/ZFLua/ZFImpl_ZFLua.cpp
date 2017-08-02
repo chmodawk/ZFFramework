@@ -17,14 +17,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFImpl_ZFLua_luaStateHolder, ZFLevelAppEssential)
 {
-    L = luaL_newstate();
-    luaL_openlibs(L);
+    L = ZFImpl_ZFLua_luaOpen();
     ZFImpl_ZFLua_luaStateAttach(L);
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_ZFLua_luaStateHolder)
 {
     ZFImpl_ZFLua_luaStateDetach(L);
-    lua_close(L);
+    ZFImpl_ZFLua_luaClose(L);
 }
 lua_State *L;
 ZF_GLOBAL_INITIALIZER_END(ZFImpl_ZFLua_luaStateHolder)
@@ -57,18 +56,7 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
     d->attachedState[L] = zftrue;
     d->attachedStateList.add(L);
 
-    // zfautoObject
-    luabridge::getGlobalNamespace(L)
-        .beginClass<zfautoObject>(zfTextA("zfautoObject"))
-            .addConstructor<void (*)(void)>()
-            /*
-             * required since luabridge's safe protection,
-             * these functions would be changed later, by ZFImpl_ZFLua_implSetupObject
-             */
-            .addFunction(zfTextA("__eq"), (zfbool (zfautoObject::*)(zfautoObject const &) const)&zfautoObject::operator ==)
-            .addFunction(zfTextA("__tostring"), (zfbool (zfautoObject::*)(zfautoObject const &) const)&zfautoObject::operator ==)
-        .endClass()
-    ;
+    ZFImpl_ZFLua_luaClassRegister<zfautoObject>(L, zfText("zfautoObject"));
 
     // zfnull
     zfclassNotPOD _ZFP_ZFImpl_ZFLua_zfnullHolder
@@ -79,9 +67,7 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
             return zfautoObjectNull;
         }
     };
-    luabridge::getGlobalNamespace(L)
-        .addFunction(zfTextA("_ZFP_ZFImpl_ZFLua_zfnull"), _ZFP_ZFImpl_ZFLua_zfnullHolder::action)
-    ;
+    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfnull"), _ZFP_ZFImpl_ZFLua_zfnullHolder::action);
     ZFImpl_ZFLua_execute(L, zfText(
             "zfnull = _ZFP_ZFImpl_ZFLua_zfnull()\n"
         ));
@@ -181,10 +167,8 @@ void ZFImpl_ZFLua_implSetupObject(ZF_IN_OUT lua_State *L, ZF_IN_OPT zfint objInd
     {
         lua_pop(L, 1);
 
-        luabridge::getGlobalNamespace(L)
-            .addFunction(zfTextA("_ZFP_ZFImpl_ZFLua_zfautoObject_eq"), _ZFP_ZFImpl_ZFLua_zfautoObject_eq)
-            .addFunction(zfTextA("_ZFP_ZFImpl_ZFLua_zfautoObject_tostring"), _ZFP_ZFImpl_ZFLua_zfautoObject_tostring)
-        ;
+        ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfautoObject_eq"), _ZFP_ZFImpl_ZFLua_zfautoObject_eq);
+        ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfautoObject_tostring"), _ZFP_ZFImpl_ZFLua_zfautoObject_tostring);
         ZFImpl_ZFLua_execute(L, zfText(
                 "function _ZFP_ZFImpl_ZFLua_implSetupObject_index(obj, k)\n"
                 "    return function(obj, ...)\n"
@@ -475,7 +459,7 @@ zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,
 {
     if(lua_isuserdata(L, luaStackOffset))
     {
-        param = *luabridge::Userdata::get<zfautoObject>(L, luaStackOffset, true);
+        param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
         return zftrue;
     }
     else
@@ -499,7 +483,7 @@ zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
         return zffalse;
     }
 
-    zfautoObject const &param = *luabridge::Userdata::get<zfautoObject>(L, luaStackOffset, true);
+    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
     if(param == zfautoObjectNull)
     {
         return allowEmpty;
@@ -541,7 +525,7 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
         return zffalse;
     }
 
-    zfautoObject const &param = *luabridge::Userdata::get<zfautoObject>(L, luaStackOffset, true);
+    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
     if(param == zfautoObjectNull)
     {
         return allowEmpty;
@@ -579,7 +563,7 @@ zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
         return zfautoObjectNull;
     }
 
-    zfautoObject const &param = *luabridge::Userdata::get<zfautoObject>(L, luaStackOffset, true);
+    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
     if(param == zfautoObjectNull)
     {
         return (allowEmpty ? ZFValue::intValueCreate(0) : zfautoObjectNull);

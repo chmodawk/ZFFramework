@@ -34,9 +34,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_toString(ZF_IN lua_State *L)
 }
 
 ZFImpl_ZFLua_implSetupCallback_DEFINE(zfl_toString, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("zfl_toString"), _ZFP_ZFImpl_ZFLua_zfl_toString)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_toString"), _ZFP_ZFImpl_ZFLua_zfl_toString);
     }, {
     })
 

@@ -94,7 +94,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
                 , paramListTmp[7]
             ))
         {
-            luabridge::UserdataValue<zfautoObject>::push(L, ret);
+            ZFImpl_ZFLua_luaPush(L, ret);
             ZFImpl_ZFLua_implSetupObject(L);
             return 1;
         }
@@ -176,7 +176,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
             { \
                 if(dispatchInfo.returnValue != ZFImpl_ZFLua_implDispatchReturnValueNotSet) \
                 { \
-                    luabridge::UserdataValue<zfautoObject>::push(L, dispatchInfo.returnValue); \
+                    ZFImpl_ZFLua_luaPush(L, dispatchInfo.returnValue); \
                     ZFImpl_ZFLua_implSetupObject(L); \
                     return 1; \
                 } \
@@ -500,11 +500,9 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
 
 // ============================================================
 ZFImpl_ZFLua_implSetupCallback_DEFINE(zfl_call, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("zfl_call"), _ZFP_ZFImpl_ZFLua_zfl_call)
-            .addCFunction(zfTextA("zfl_callStatic"), _ZFP_ZFImpl_ZFLua_zfl_callStatic)
-            .addCFunction(zfTextA("zfl_callStatic2"), _ZFP_ZFImpl_ZFLua_zfl_callStatic2)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_call"), _ZFP_ZFImpl_ZFLua_zfl_call);
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_callStatic"), _ZFP_ZFImpl_ZFLua_zfl_callStatic);
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_callStatic2"), _ZFP_ZFImpl_ZFLua_zfl_callStatic2);
     }, {
     })
 

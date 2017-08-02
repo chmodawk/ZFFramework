@@ -16,8 +16,7 @@
 
 #include "ZFLua.h"
 
-#include "ZFImpl/_repo/lua/ZFImpl_ZFLua_lua.h"
-#include "ZFImpl/_repo/LuaBridge/LuaBridge.h"
+#include "../../../zfsrc_ext/ZFImpl/_repo/ELuna.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -522,6 +521,46 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
 extern ZF_ENV_EXPORT zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
                                                         ZF_IN zfint luaStackOffset,
                                                         ZF_IN_OPT zfbool allowEmpty = zffalse);
+
+// ============================================================
+// wrapper for impl
+inline lua_State *ZFImpl_ZFLua_luaOpen(void)
+{
+    return ELuna::openLua();
+}
+inline void ZFImpl_ZFLua_luaClose(ZF_IN lua_State *L)
+{
+    ELuna::closeLua(L);
+}
+
+template<typename T>
+inline void ZFImpl_ZFLua_luaClassRegister(ZF_IN lua_State *L, ZF_IN const zfchar *name)
+{
+    ELuna::registerClass<T>(L, zfsCoreZ2A(name), ELuna::constructor<zfautoObject>);
+}
+template<typename F>
+inline void ZFImpl_ZFLua_luaFunctionRegister(ZF_IN lua_State *L, ZF_IN const zfchar *name, ZF_IN F f)
+{
+    ELuna::registerFunction(L, zfsCoreZ2A(name), f);
+}
+inline void ZFImpl_ZFLua_luaCFunctionRegister(ZF_IN lua_State *L, ZF_IN const zfchar *name, ZF_IN int (*f)(lua_State *))
+{
+    lua_register(L, zfsCoreZ2A(name), f);
+}
+
+inline void ZFImpl_ZFLua_luaPush(ZF_IN lua_State *L, ZF_IN zfautoObject &v)
+{
+    ELuna::convert2LuaType<zfautoObject>::convertType(L, v);
+}
+inline void ZFImpl_ZFLua_luaPush(ZF_IN lua_State *L, ZF_IN const zfautoObject &v)
+{
+    zfautoObject t = v;
+    ELuna::convert2LuaType<zfautoObject>::convertType(L, t);
+}
+inline const zfautoObject &ZFImpl_ZFLua_luaRead(ZF_IN lua_State *L, ZF_IN zfint luaStackOffset)
+{
+    return ELuna::convert2CppType<zfautoObject const &>::convertType(L, luaStackOffset);
+}
 
 ZF_NAMESPACE_GLOBAL_END
 

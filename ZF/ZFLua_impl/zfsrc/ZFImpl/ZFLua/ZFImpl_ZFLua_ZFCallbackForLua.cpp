@@ -24,10 +24,10 @@ public:
         if(lua_isfunction(L, -1))
         {
             zfblockedAllocWithoutLeakTest(v_ZFListenerData, listenerDataTmp, listenerData);
-            luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectCreateWithoutLeakTest(listenerDataTmp));
+            ZFImpl_ZFLua_luaPush(L, zfautoObjectCreateWithoutLeakTest(listenerDataTmp));
             ZFImpl_ZFLua_implSetupObject(L);
 
-            luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectCreateWithoutLeakTest(userData));
+            ZFImpl_ZFLua_luaPush(L, zfautoObjectCreateWithoutLeakTest(userData));
             ZFImpl_ZFLua_implSetupObject(L);
 
             lua_pcall(L, 2, 0, 0);
@@ -61,16 +61,14 @@ static int _ZFP_ZFImpl_ZFLua_ZFCallbackForLua(ZF_IN lua_State *L)
     zfblockedAllocWithoutLeakTest(v_ZFCallback, ret);
     ret->zfv = ZFCallbackForMemberMethod(holder, ZFMethodAccess(_ZFP_I_ZFImpl_ZFLua_ZFCallbackForLuaHolder, callback));
     ret->zfv.callbackOwnerObjectRetain();
-    luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectCreateWithoutLeakTest(ret));
+    ZFImpl_ZFLua_luaPush(L, zfautoObjectCreateWithoutLeakTest(ret));
     ZFImpl_ZFLua_implSetupObject(L);
     return 1;
 }
 
 // ============================================================
 ZFImpl_ZFLua_implSetupCallback_DEFINE(ZFCallbackForLua, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("ZFCallbackForLua"), _ZFP_ZFImpl_ZFLua_ZFCallbackForLua)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("ZFCallbackForLua"), _ZFP_ZFImpl_ZFLua_ZFCallbackForLua);
     }, {
     })
 

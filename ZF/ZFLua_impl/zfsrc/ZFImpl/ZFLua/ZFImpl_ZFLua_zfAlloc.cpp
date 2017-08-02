@@ -30,11 +30,11 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
             {
                 if(clsWrapper->zfv == zfnull)
                 {
-                    luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectNull);
+                    ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
                     ZFImpl_ZFLua_implSetupObject(L);
                     return 1;
                 }
-                luabridge::UserdataValue<zfautoObject>::push(L, clsWrapper->zfv->newInstance());
+                ZFImpl_ZFLua_luaPush(L, clsWrapper->zfv->newInstance());
                 ZFImpl_ZFLua_implSetupObject(L);
                 return 1;
             }
@@ -52,24 +52,24 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
     const ZFClass *cls = ZFClass::classForName(className);
     if(cls == zfnull)
     {
-        luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }
     if(cls->classIsAbstract())
     {
-        luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }
     zfautoObject ret = cls->newInstance(ZFCallerInfo(ZF_CALLER_FILE, zfTextA("zfAlloc"), ZF_CALLER_LINE));
     if(ret == zfautoObjectNull)
     {
-        luabridge::UserdataValue<zfautoObject>::push(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }
-    luabridge::UserdataValue<zfautoObject>::push(L, ret);
+    ZFImpl_ZFLua_luaPush(L, ret);
     ZFImpl_ZFLua_implSetupObject(L);
 
     return 1;
@@ -77,9 +77,7 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
 
 // ============================================================
 ZFImpl_ZFLua_implSetupCallback_DEFINE(zfAlloc, {
-        luabridge::getGlobalNamespace(L)
-            .addCFunction(zfTextA("zfAlloc"), _ZFP_ZFImpl_ZFLua_zfAlloc)
-        ;
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfAlloc"), _ZFP_ZFImpl_ZFLua_zfAlloc);
     }, {
     })
 
