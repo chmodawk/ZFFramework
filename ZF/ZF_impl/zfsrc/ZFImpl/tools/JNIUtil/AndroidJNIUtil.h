@@ -33,7 +33,7 @@ namespace AndroidJNIUtil {
 #endif
 
 /** @cond ZFPrivateDoc */
-extern ZF_ENV_EXPORT std::string &_AndroidLogTagDefault(void);
+extern _JNI_EXPORT JNIUtil::JNIString &_AndroidLogTagDefault(void);
 /** @endcond */
 /**
  * @brief default log tag, could be changed at runtime
@@ -42,7 +42,7 @@ extern ZF_ENV_EXPORT std::string &_AndroidLogTagDefault(void);
 /**
  * @brief change the default log tag
  */
-extern ZF_ENV_EXPORT void AndroidLogTagDefaultSet(const char *s);
+extern _JNI_EXPORT void AndroidLogTagDefaultSet(const char *s);
 
 /**
  * @brief log with level, tag and fmt

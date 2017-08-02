@@ -3,9 +3,9 @@
 
 namespace AndroidJNIUtil {
 
-std::string &_AndroidLogTagDefault(void)
+JNIUtil::JNIString &_AndroidLogTagDefault(void)
 {
-    static std::string _s = "JNI log";
+    static JNIUtil::JNIString _s = "JNI log";
     return _s;
 }
 void AndroidLogTagDefaultSet(const char *s)

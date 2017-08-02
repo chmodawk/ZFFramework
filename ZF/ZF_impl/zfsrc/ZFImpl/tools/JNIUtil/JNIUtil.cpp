@@ -1,8 +1,75 @@
 #include "JNIUtil.h"
 #include <assert.h>
+#include <string>
+#include <vector>
 
 #if NEED_JNIUTIL
 namespace JNIUtil {
+
+// ============================================================
+// wrapper
+JNIString::JNIString(void)
+: _d(new std::string())
+{
+}
+JNIString::JNIString(JNIString const &ref)
+: _d(new std::string(*(const std::string *)ref._d))
+{
+}
+JNIString::JNIString(const char *s)
+: _d(new std::string(s))
+{
+}
+JNIString::~JNIString(void)
+{
+    delete (std::string *)_d;
+}
+JNIString &JNIString::operator =(JNIString const &ref)
+{
+    *(std::string *)_d = *(const std::string *)ref._d;
+    return *this;
+}
+JNIString &JNIString::operator =(const char *s)
+{
+    *(std::string *)_d = s;
+    return *this;
+}
+const char *JNIString::c_str(void) const
+{
+    return ((std::string *)_d)->c_str();
+}
+JNIString::operator const char *(void) const
+{
+    return this->c_str();
+}
+JNIString &JNIString::operator += (char c)
+{
+    *(std::string *)_d += c;
+    return *this;
+}
+JNIString &JNIString::operator += (const char *s)
+{
+    *(std::string *)_d += s;
+    return *this;
+}
+void JNIString::clear(void)
+{
+    ((std::string *)_d)->clear();
+}
+
+JNIParamTypeContainer::JNIParamTypeContainer(void)
+: _d(new std::vector<JNIType>())
+{
+}
+JNIParamTypeContainer::~JNIParamTypeContainer(void)
+{
+    delete (std::vector<JNIType> *)_d;
+}
+JNIParamTypeContainer &JNIParamTypeContainer::add(const JNIType &paramType)
+{
+    ((std::vector<JNIType> *)_d)->push_back(paramType);
+    return *this;
+}
 
 // ============================================================
 static JavaVM *gs_javaVM = NULL;
@@ -43,7 +110,7 @@ JNIEnv *JNIGetJNIEnv(void)
     return jniEnv;
 }
 
-void JNIConvertClassNameToClassSig(std::string &ret, const char *className)
+void JNIConvertClassNameToClassSig(JNIString &ret, const char *className)
 {
     if(className == NULL || *className == '\0')
     {
@@ -66,7 +133,7 @@ void JNIConvertClassNameToClassSig(std::string &ret, const char *className)
     ret += ';';
 }
 
-void JNIConvertClassNameFromClassSig(std::string &ret, const char *classSig)
+void JNIConvertClassNameFromClassSig(JNIString &ret, const char *classSig)
 {
     if(classSig == NULL || *classSig == '\0')
     {
@@ -88,7 +155,7 @@ void JNIConvertClassNameFromClassSig(std::string &ret, const char *classSig)
     }
 }
 
-void JNIConvertClassNameForFindClass(std::string &ret, const char *className)
+void JNIConvertClassNameForFindClass(JNIString &ret, const char *className)
 {
     if(className == NULL || *className == '\0')
     {
@@ -126,8 +193,8 @@ class _JNITypePrivate
 {
 public:
     JNIType::Type type;
-    std::string classNameOrArrayElementTypeId;
-    std::string typeId;
+    JNIString classNameOrArrayElementTypeId;
+    JNIString typeId;
     bool needUpdateTypeId;
 
 public:
@@ -243,14 +310,15 @@ const char *JNIType::getId(void) const
 }
 
 // ============================================================
-std::string JNIGetMethodSig(const JNIType &returnType,
-                            const std::vector<JNIType> &paramTypeList)
+JNIString JNIGetMethodSig(const JNIType &returnType,
+                          const JNIParamTypeContainer &paramTypeList)
 {
-    std::string s;
+    std::vector<JNIType> &p = *(std::vector<JNIType> *)paramTypeList._d;
+    JNIString s;
     s += "(";
-    for(std::size_t i = 0; i < paramTypeList.size(); ++i)
+    for(std::size_t i = 0; i < p.size(); ++i)
     {
-        const JNIType &t = paramTypeList[i];
+        const JNIType &t = p[i];
         s += t.getId();
     }
     s += ")";

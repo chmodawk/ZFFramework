@@ -6,8 +6,15 @@
 #ifndef _JNIUtil_h_
 #define _JNIUtil_h_
 
+// ============================================================
+#if 1
 #include "ZFCore.h"
+#define _JNI_EXPORT ZF_ENV_EXPORT
+#else
+#define _JNI_EXPORT
+#endif
 
+// ============================================================
 #ifndef NEED_JNIUTIL
     #if (defined(ANDROID) || defined(__ANDROID__) || defined(JNI_VERSION_1_1) || defined(JNIEXPORT) || defined(JNICALL))
         /**
@@ -19,12 +26,7 @@
 
 #if NEED_JNIUTIL
 #include <stdlib.h>
-#include <string>
-#include <vector>
 #include <jni.h>
-#endif
-
-#if NEED_JNIUTIL
 
 #if defined(__cplusplus) || defined(c_plusplus)
     #define _JNI_EXTERN_C extern "C"
@@ -35,26 +37,68 @@
 namespace JNIUtil {
 
 // ============================================================
+// wrapper
+/**
+ * @brief workaround to prevent export stl containers
+ */
+class _JNI_EXPORT JNIString
+{
+public:
+    JNIString(void);
+    JNIString(JNIString const &ref);
+    JNIString(const char *s);
+    ~JNIString(void);
+    JNIString &operator =(JNIString const &ref);
+    JNIString &operator =(const char *s);
+    const char *c_str(void) const;
+    operator const char *(void) const;
+    JNIString &operator += (char c);
+    JNIString &operator += (const char *s);
+    void clear(void);
+public:
+    void *_d;
+};
+
+class JNIType;
+/**
+ * @brief wrapper for JNIGetMethodSig
+ */
+class _JNI_EXPORT JNIParamTypeContainer
+{
+public:
+    JNIParamTypeContainer(void);
+    ~JNIParamTypeContainer(void);
+private:
+    JNIParamTypeContainer(const JNIParamTypeContainer &ref);
+    JNIParamTypeContainer &operator = (const JNIParamTypeContainer &ref);
+public:
+    /** @brief see #JNIGetMethodSig */
+    JNIParamTypeContainer &add(const JNIType &paramType);
+public:
+    void *_d;
+};
+
+// ============================================================
 // common
 /**
  * @brief init jni jniEnv, must be called in your JNI_OnLoad
  */
-extern ZF_ENV_EXPORT bool JNIInit(JavaVM *javaVM, jint version = JNI_VERSION_1_1);
+extern _JNI_EXPORT bool JNIInit(JavaVM *javaVM, jint version = JNI_VERSION_1_1);
 
 /**
  * @brief global java vm
  */
-extern ZF_ENV_EXPORT JavaVM *JNIGetJavaVM(void);
+extern _JNI_EXPORT JavaVM *JNIGetJavaVM(void);
 
 /**
  * @brief get desired version passed from JNIInit, or -1 if init failed
  */
-extern ZF_ENV_EXPORT jint JNIGetDesiredVersion(void);
+extern _JNI_EXPORT jint JNIGetDesiredVersion(void);
 
 /**
  * @brief get JNIEnv for current thread
  */
-extern ZF_ENV_EXPORT JNIEnv *JNIGetJNIEnv(void);
+extern _JNI_EXPORT JNIEnv *JNIGetJNIEnv(void);
 
 /**
  * @brief convert class name to JNI class sig
@@ -63,11 +107,11 @@ extern ZF_ENV_EXPORT JNIEnv *JNIGetJNIEnv(void);
  * to "Lcom/example/OutterClass$InnerClass;"\n
  * class name can be get by SomeClass.class.getName() in your jave code
  */
-extern ZF_ENV_EXPORT void JNIConvertClassNameToClassSig(std::string &ret, const char *className);
+extern _JNI_EXPORT void JNIConvertClassNameToClassSig(JNIString &ret, const char *className);
 /** @brief see #JNIConvertClassNameToClassSig */
-inline std::string JNIConvertClassNameToClassSig(const char *className)
+inline JNIString JNIConvertClassNameToClassSig(const char *className)
 {
-    std::string ret;
+    JNIString ret;
     JNIConvertClassNameToClassSig(ret, className);
     return ret;
 }
@@ -78,11 +122,11 @@ inline std::string JNIConvertClassNameToClassSig(const char *className)
  * for example, convert "Lcom/example/OutterClass$InnerClass;"
  * to "com.example.OutterClass$InnerClass"
  */
-extern ZF_ENV_EXPORT void JNIConvertClassNameFromClassSig(std::string &ret, const char *classSig);
+extern _JNI_EXPORT void JNIConvertClassNameFromClassSig(JNIString &ret, const char *classSig);
 /** @brief see #JNIConvertClassNameFromClassSig */
-inline std::string JNIConvertClassNameFromClassSig(const char *className)
+inline JNIString JNIConvertClassNameFromClassSig(const char *className)
 {
-    std::string ret;
+    JNIString ret;
     JNIConvertClassNameFromClassSig(ret, className);
     return ret;
 }
@@ -94,11 +138,11 @@ inline std::string JNIConvertClassNameFromClassSig(const char *className)
  * to "com/example/OutterClass$InnerClass"\n
  * class name can be get by SomeClass.class.getName() in your jave code
  */
-extern ZF_ENV_EXPORT void JNIConvertClassNameForFindClass(std::string &ret, const char *className);
+extern _JNI_EXPORT void JNIConvertClassNameForFindClass(JNIString &ret, const char *className);
 /** @brief see #JNIConvertClassNameForFindClass */
-inline std::string JNIConvertClassNameForFindClass(const char *className)
+inline JNIString JNIConvertClassNameForFindClass(const char *className)
 {
-    std::string ret;
+    JNIString ret;
     JNIConvertClassNameForFindClass(ret, className);
     return ret;
 }
@@ -110,11 +154,11 @@ inline std::string JNIConvertClassNameForFindClass(const char *className)
 
 // ============================================================
 // JNI types
-class ZF_ENV_EXPORT _JNITypePrivate;
+class _JNITypePrivate;
 /**
  * @brief JNI type utility
  */
-class ZF_ENV_EXPORT JNIType
+class _JNI_EXPORT JNIType
 {
 public:
     typedef enum
@@ -213,27 +257,6 @@ private:
     _JNITypePrivate *d;
 };
 
-/**
- * @brief wrapper to create a std::vector for JNIGetMethodSig
- */
-class ZF_ENV_EXPORT JNIParamTypeContainer
-{
-public:
-    /** @brief see #JNIGetMethodSig */
-    JNIParamTypeContainer &add(const JNIType &paramType)
-    {
-        this->d.push_back(paramType);
-        return *this;
-    }
-    /** @brief see #JNIGetMethodSig */
-    operator const std::vector<JNIType> &(void) const
-    {
-        return this->d;
-    }
-private:
-    std::vector<JNIType> d;
-};
-
 // ============================================================
 // signature utilities
 /**
@@ -250,8 +273,8 @@ private:
  *       );
  * @endcode
  */
-extern ZF_ENV_EXPORT std::string JNIGetMethodSig(const JNIType &returnType,
-                                                 const std::vector<JNIType> &paramTypeList);
+extern _JNI_EXPORT JNIString JNIGetMethodSig(const JNIType &returnType,
+                                             const JNIParamTypeContainer &paramTypeList);
 
 /** @cond ZFPrivateDoc */
 #define _JNI_METHOD_DECLARE(ReturnType, OwnerClassId, MethodName, ...) \
@@ -353,7 +376,7 @@ void *_ZFP_JNIConvertPointerFromJNIType(JNIEnv *jniEnv, jbyteArray d);
 // local/global ref cleaner
 /** @cond ZFPrivateDoc */
 namespace JNIUtilPrivate {
-    class ZF_ENV_EXPORT JNIAutoDeleteHolder
+    class _JNI_EXPORT JNIAutoDeleteHolder
     {
     public:
         JNIAutoDeleteHolder(JNIEnv *jniEnv,

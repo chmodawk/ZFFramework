@@ -24,7 +24,7 @@ namespace JNIUtil {
     #define JNIUtilWrap_Released(obj, callerFile, callerFunction, callerLine, actionName) obj
 #endif
 #ifndef JNIUtilWrap_FuncCalled
-    #define JNIUtilWrap_FuncCalled(callerFile, callerFunction, callerLine, actionName) 1
+    #define JNIUtilWrap_FuncCalled(callerFile, callerFunction, callerLine, actionName) NULL
 #endif
 
 // ============================================================
@@ -36,7 +36,7 @@ namespace JNIUtil {
 
 /** @cond ZFPrivateDoc */
 namespace JNIUtilMethodWrapperPrivate {
-    class ZF_ENV_EXPORT JNIAutoDeleteHolder
+    class _JNI_EXPORT JNIAutoDeleteHolder
     {
     public:
         JNIAutoDeleteHolder(JNIEnv *jniEnv,
@@ -1291,7 +1291,7 @@ namespace JNIUtil
 /**
  * @brief util object to hold jobject and delete automatically by DeleteGlobalRef
  */
-class ZF_ENV_EXPORT JNIObjectHolder
+class _JNI_EXPORT JNIObjectHolder
 {
 public:
     /** @cond ZFPrivateDoc */
