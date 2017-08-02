@@ -12,7 +12,7 @@ echo   unity_build.bat TARGET_FILE [SRC_DIRS, ...]
 exit /b 1
 :run
 
-del /s/q %TARGET_FILE%.tmp >nul 2>&1
+del /f/s/q %TARGET_FILE%.tmp >nul 2>&1
 md %TARGET_FILE%.tmp >nul 2>&1
 rmdir /s/q %TARGET_FILE%.tmp >nul 2>&1
 
@@ -37,7 +37,7 @@ goto :SRC_DIR_LOOP
 :SRC_DIR_LOOP_END
 
 setlocal enabledelayedexpansion
-del /s/q %TARGET_FILE%.tmp2 >nul 2>&1
+del /f/s/q %TARGET_FILE%.tmp2 >nul 2>&1
 >nul 2>&1 (
     rem ensure file exist
     echo /* auto generated file */>%TARGET_FILE%.tmp2
@@ -46,17 +46,17 @@ del /s/q %TARGET_FILE%.tmp2 >nul 2>&1
         echo !v!>>%TARGET_FILE%.tmp2
     )
 )
-del /s/q %TARGET_FILE%.tmp >nul 2>&1
+del /f/s/q %TARGET_FILE%.tmp >nul 2>&1
 move %TARGET_FILE%.tmp2 %TARGET_FILE%.tmp >nul 2>&1
 
 echo n|comp %TARGET_FILE% %TARGET_FILE%.tmp >nul 2>&1
 if not "%errorlevel%" == "0" (
     rem changed
-    del /s/q %TARGET_FILE% >nul 2>&1
+    del /f/s/q %TARGET_FILE% >nul 2>&1
     move %TARGET_FILE%.tmp %TARGET_FILE% >nul 2>&1
 ) else (
     rem not changed
 )
-del /s/q %TARGET_FILE%.tmp >nul 2>&1
-del /s/q %TARGET_FILE%.tmp2 >nul 2>&1
+del /f/s/q %TARGET_FILE%.tmp >nul 2>&1
+del /f/s/q %TARGET_FILE%.tmp2 >nul 2>&1
 

@@ -16,9 +16,9 @@ exit /b 1
 
 rem ============================================================
 rem Windows
-del /s/q "%PROJ_ROOT%\*.ncb" >nul 2>&1
-del /s/q "%PROJ_ROOT%\*.suo" >nul 2>&1
-del /s/q "%PROJ_ROOT%\*.vcproj.*.user" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.ncb" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.suo" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.vcproj.*.user" >nul 2>&1
 
 exit /b 0
 

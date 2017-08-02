@@ -24,7 +24,7 @@ if not "%errorlevel%" == "0" (
 )
 call "%ZF_TOOLS_PATH%\common\file_exist.bat" "%RELEASE_PATH%\module\%PROJ_NAME%\libs" "*.so"
 if "%errorlevel%" == "0" (
-    goto :EOF
+    exit /b 0
 )
 :build
 

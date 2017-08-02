@@ -17,3 +17,5 @@ else
     rsync -rut "$SRC_PATH" "$DST_PATH" >/dev/null 2>&1
 fi
 
+exit 0
+

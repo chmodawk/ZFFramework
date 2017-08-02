@@ -22,8 +22,8 @@ rem Qt
     )
 )
 
-del /s/q "%PROJ_ROOT%\*.pro.user" >nul 2>&1
-del /s/q "%PROJ_ROOT%\*.pro.user.*" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.pro.user" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.pro.user.*" >nul 2>&1
 
 exit /b 0
 

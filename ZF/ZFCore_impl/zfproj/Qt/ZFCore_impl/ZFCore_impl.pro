@@ -120,15 +120,13 @@ win32 {
     _ZF_copy_lib = $$system_path($$ZF_TOOLS_PATH/common/copy_lib.bat)
     _ZF_copy_header = $$system_path($$ZF_TOOLS_PATH/common/copy_header.bat)
     _ZF_copy_res = $$system_path($$ZF_TOOLS_PATH/common/copy_res.bat)
+    _ZF_copy_check = $$system_path($$ZF_TOOLS_PATH/common/copy_check.bat)
+    _ZF_LIB_SRC_PATH = $$system_path($$OUT_PWD/$$_ZF_BUILD_TYPE)
 } else {
     _ZF_copy_lib = sh $$system_path($$ZF_TOOLS_PATH/common/copy_lib.sh)
     _ZF_copy_header = sh $$system_path($$ZF_TOOLS_PATH/common/copy_header.sh)
     _ZF_copy_res = sh $$system_path($$ZF_TOOLS_PATH/common/copy_res.sh)
-}
-
-win32 {
-    _ZF_LIB_SRC_PATH = $$system_path($$OUT_PWD/$$_ZF_BUILD_TYPE)
-} else {
+    _ZF_copy_check = sh $$system_path($$ZF_TOOLS_PATH/common/copy_check.sh)
     _ZF_LIB_SRC_PATH = $$system_path($$OUT_PWD)
 }
 
@@ -197,4 +195,5 @@ for(path, ZF_PROJ_HEADER_PATH) {
 for(path, ZF_PROJ_RES_PATH) {
     QMAKE_POST_LINK += $$_ZF_copy_res $$system_path($$path) $$system_path($$ZF_ROOT_PATH/_release/$$_ZF_QT_TYPE/module/$$ZF_PROJ_NAME/zfres) $$escape_expand(\\n\\t)
 }
+QMAKE_POST_LINK += $$_ZF_copy_check $$system_path($$ZF_ROOT_PATH/_release/$$_ZF_QT_TYPE/module/$$ZF_PROJ_NAME) $$system_path($$ZF_ROOT_PATH/_release/$$_ZF_QT_TYPE/all) $$escape_expand(\\n\\t)
 

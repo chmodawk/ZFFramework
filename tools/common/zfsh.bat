@@ -17,7 +17,7 @@ for %%a in (%ZFSH_PATH%\..) do set ZFSH_WORK_DIR=%%~fa
 for %%a in (%ZFSH_PATH%) do set TMP_PATH=%%~nxa
 set TMP_PATH=%ZF_ROOT_PATH%\_tmp\zfsh_tmp_%TMP_PATH%.bat
 
-del /s/q "%TMP_PATH%" >nul 2>&1
+del /f/s/q "%TMP_PATH%" >nul 2>&1
 for %%a in (%TMP_PATH%\..) do set TMP_PATH_PARENT=%%~fa
 mkdir %TMP_PATH_PARENT% >nul 2>&1
 
@@ -71,6 +71,6 @@ for /f "tokens=*" %%a in (%ZFSH_PATH%) do (
 for /f "tokens=1,* delims= " %%a in ("%*") do set ALL_BUT_FIRST=%%b
 call "%TMP_PATH%" %ALL_BUT_FIRST%
 set RESULT=%errorlevel%
-del /s/q "%TMP_PATH%" >nul 2>&1
+del /f/s/q "%TMP_PATH%" >nul 2>&1
 exit /b %RESULT%
 

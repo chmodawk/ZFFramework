@@ -12,7 +12,7 @@ LOCAL_PATH := $(call my-dir)
 ifeq ($(OS),Windows_NT)
     ZF_ROOT_PATH = ..\..\..\..\..\ZFFramework
     $(info $(shell call ..\..\..\ZFSetup.bat))
-    $(info $(shell call $(ZF_ROOT_PATH)\tools\release\release_Android_check.bat))
+    $(info $(shell call $(ZF_ROOT_PATH)\tools\release\release_Android.bat))
     $(info $(shell call $(ZF_ROOT_PATH)\tools\common\zfsh_if_exist.bat ..\..\..\zfscript\zfmodule_setup.zfsh Android))
 
     $(info $(shell call $(ZF_ROOT_PATH)\tools\spec\Android\res_copy.bat ..\..\..\zfres assets\zfres >nul 2>&1))
@@ -44,7 +44,7 @@ ifeq ($(OS),Windows_NT)
 else
     ZF_ROOT_PATH = ../../../../../ZFFramework
     $(info $(shell sh ../../../ZFSetup.sh))
-    $(info $(shell sh $(ZF_ROOT_PATH)/tools/release/release_Android_check.sh))
+    $(info $(shell sh $(ZF_ROOT_PATH)/tools/release/release_Android.sh))
     $(info $(shell sh $(ZF_ROOT_PATH)/tools/common/zfsh_if_exist.sh ../../../zfscript/zfmodule_setup.zfsh Android))
 
     $(info $(shell sh $(ZF_ROOT_PATH)/tools/spec/Android/res_copy.sh ../../../zfres assets/zfres >/dev/null 2>&1))

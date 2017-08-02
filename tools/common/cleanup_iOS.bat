@@ -22,7 +22,7 @@ rem iOS
     )
 )
 
-del /s/q "%PROJ_ROOT%\*.DS_Store" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\*.DS_Store" >nul 2>&1
 
 exit /b 0
 

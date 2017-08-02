@@ -24,3 +24,5 @@ if exist "%SRC_PATH%\*" (
     )
 )
 
+exit /b 0
+

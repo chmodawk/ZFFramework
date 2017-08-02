@@ -18,7 +18,7 @@ exit /b 1
 
 rem ============================================================
 rem common
-del /s/q "%PROJ_ROOT%\zfgensrc_*" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\zfgensrc_*" >nul 2>&1
 
 rem ============================================================
 rem Windows
@@ -27,6 +27,7 @@ call "%ZF_TOOLS_PATH%\common\cleanup_Windows.bat" "%PROJ_ROOT%\Windows" "%PROJ_N
 rem ============================================================
 rem Android
 call "%ZF_TOOLS_PATH%\common\cleanup_Android.bat" "%PROJ_ROOT%\Android" "%PROJ_NAME%"
+call "%ZF_TOOLS_PATH%\common\cleanup_AndroidStudio.bat" "%PROJ_ROOT%\AndroidStudio" "%PROJ_NAME%"
 
 rem ============================================================
 rem iOS

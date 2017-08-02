@@ -10,7 +10,7 @@ if test "x-$PROJ_ROOT" = "x-" || test "x-$PROJ_NAME" = "x-" ; then
     exit 1
 fi
 
-rm -rf "$PROJ_ROOT/$PROJ_NAME/assets" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/$PROJ_NAME/assets/zfres" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/bin" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/gen" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/lib" >/dev/null 2>&1

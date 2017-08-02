@@ -15,7 +15,7 @@ exit /b 1
 >nul 2>&1 (
     for /f "delims=" %%i in ('dir /a-d /b /s %RES_PATH%') do (
         if not "%%~xi" == ".mp2" (
-            del /s/q %%~nxi.mp2 >nul 2>&1
+            del /f/s/q %%~nxi.mp2 >nul 2>&1
             ren %%i %%~nxi.mp2
         )
     )

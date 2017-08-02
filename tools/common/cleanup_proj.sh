@@ -23,6 +23,7 @@ sh "$ZF_TOOLS_PATH/common/cleanup_Windows.sh" "$PROJ_ROOT/Windows" "$PROJ_NAME"
 # ============================================================
 # Android
 sh "$ZF_TOOLS_PATH/common/cleanup_Android.sh" "$PROJ_ROOT/Android" "$PROJ_NAME"
+sh "$ZF_TOOLS_PATH/common/cleanup_AndroidStudio.sh" "$PROJ_ROOT/AndroidStudio" "$PROJ_NAME"
 
 # ============================================================
 # iOS

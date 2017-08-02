@@ -17,6 +17,6 @@ exit /b 1
 :run
 
 mkdir "%DST_PATH%" >nul 2>&1
-del "%DST_PATH%\%PROJ_NAME%.jar" >nul 2>&1
+del /f/s/q "%DST_PATH%\%PROJ_NAME%.jar" >nul 2>&1
 copy "%PROJ_PATH%\bin\classes.jar" "%DST_PATH%\%PROJ_NAME%.jar"
 

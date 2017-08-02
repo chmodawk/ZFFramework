@@ -12,7 +12,7 @@ echo   rm.bat TARGET_PATH
 exit /b 1
 :run
 
-del /f/q "%TARGET_PATH%" >nul 2>&1
+del /f/s/q "%TARGET_PATH%" >nul 2>&1
 rmdir /s/q "%TARGET_PATH%" >nul 2>&1
 exit /b 0
 

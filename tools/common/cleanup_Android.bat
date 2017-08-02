@@ -16,7 +16,7 @@ exit /b 1
 
 rem ============================================================
 rem Android
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\assets" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\assets\zfres" >nul 2>&1
 rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\bin" >nul 2>&1
 rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\gen" >nul 2>&1
 rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\lib" >nul 2>&1
