@@ -92,9 +92,9 @@ inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(T_Unknown &ret,
 #define _ZFP_ZFCastZFObjectTypeZFInterface 2
 #define _ZFP_ZFCastZFObjectTypeUnknown 3
 
-#define _ZFP_ZFCastZFObjectType(Type) \
-    (ZFM_CLASS_HAS_MEMBER(_ZFP_ZFCastZFObject, ClassData, typename zftTraitsType<Type>::TraitsType) \
-        ? (zftTypeIsTypeOf<typename zftTraitsType<Type>::TraitsType, ZFObject>::TypeIsTypeOf \
+#define _ZFP_ZFCastZFObjectType(TraitsType) \
+    (ZFM_CLASS_HAS_MEMBER(_ZFP_ZFCastZFObject, ClassData, TraitsType) \
+        ? (zftTypeIsTypeOf<TraitsType, ZFObject>::TypeIsTypeOf \
                 ? _ZFP_ZFCastZFObjectTypeZFObject \
                 : _ZFP_ZFCastZFObjectTypeZFInterface \
             ) \
@@ -243,10 +243,12 @@ template<typename T_To>
 template<typename T_From>
 inline T_To _ZFP_ZFCastZFObject<T_To>::_ZFP_cast(T_From const &obj)
 {
+    typedef typename zftTraitsType<T_To>::TraitsType T_ToTmp;
+    typedef typename zftTraitsType<T_From>::TraitsType T_FromTmp;
     return _ZFP_ZFCastZFObjectHolder<
             zftTypeIsTypeOf<typename zftTraitsType<T_From>::TraitsType, typename zftTraitsType<T_To>::TraitsType>::TypeIsTypeOf,
             T_To, T_From,
-            _ZFP_ZFCastZFObjectType(T_To), _ZFP_ZFCastZFObjectType(T_From)
+            _ZFP_ZFCastZFObjectType(T_ToTmp), _ZFP_ZFCastZFObjectType(T_FromTmp)
         >::_ZFP_cast(obj);
 }
 template<>
@@ -395,10 +397,12 @@ template<typename T_To>
 template<typename T_From>
 inline T_To _ZFP_ZFCastZFObjectUnchecked<T_To>::_ZFP_cast(T_From const &obj)
 {
+    typedef typename zftTraitsType<T_To>::TraitsType T_ToTmp;
+    typedef typename zftTraitsType<T_From>::TraitsType T_FromTmp;
     return _ZFP_ZFCastZFObjectUncheckedHolder<
             zftTypeIsTypeOf<typename zftTraitsType<T_From>::TraitsType, typename zftTraitsType<T_To>::TraitsType>::TypeIsTypeOf,
             T_To, T_From,
-            _ZFP_ZFCastZFObjectType(T_To), _ZFP_ZFCastZFObjectType(T_From)
+            _ZFP_ZFCastZFObjectType(T_ToTmp), _ZFP_ZFCastZFObjectType(T_FromTmp)
         >::_ZFP_cast(obj);
 }
 template<>

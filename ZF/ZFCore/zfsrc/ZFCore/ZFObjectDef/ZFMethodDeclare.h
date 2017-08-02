@@ -298,52 +298,52 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
                     , zfnull \
                     , ZFM_TOSTRING(DECLARE_LINE) \
                     , ZFM_TOSTRING(MethodName) \
-                    , ZFPropertyTypeIdData<typename zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId() \
+                    , ZFPropertyTypeIdData<zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId() \
                     , zfText(#ReturnType) \
                     ParamExpandOrEmpty0(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType0) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix0()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 0) \
                         ) \
                     ParamExpandOrEmpty1(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType1) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix1()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 1) \
                         ) \
                     ParamExpandOrEmpty2(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType2) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix2()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 2) \
                         ) \
                     ParamExpandOrEmpty3(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType3) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix3()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 3) \
                         ) \
                     ParamExpandOrEmpty4(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType4) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix4()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 4) \
                         ) \
                     ParamExpandOrEmpty5(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType5) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix5()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 5) \
                         ) \
                     ParamExpandOrEmpty6(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType6) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix6()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 6) \
                         ) \
                     ParamExpandOrEmpty7(ZFM_EMPTY() \
-                            , ZFPropertyTypeIdData<typename zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId() \
+                            , ZFPropertyTypeIdData<zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId() \
                             , zfText(#ParamType7) \
                             , ZFM_TOSTRING_DIRECT(DefaultValueFix7()) \
                             , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(MethodName##_##DECLARE_LINE, 7) \

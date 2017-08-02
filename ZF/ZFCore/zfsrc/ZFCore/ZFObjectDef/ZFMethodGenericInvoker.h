@@ -150,16 +150,17 @@ public:
                 , param6
                 , param7
             );
-        if(ZFPropertyTypeIdData<typename zftTraitsType<T_ReturnType>::TraitsRemoveReference>::ValueStore(ret, retTmp))
+        typedef typename zftTraitsType<T_ReturnType>::TraitsRemoveReference T_ReturnTypeTmp;
+        if(ZFPropertyTypeIdData<T_ReturnTypeTmp>::ValueStore(ret, retTmp))
         {
             return zftrue;
         }
         else
         {
             zfstring info;
-            ZFCoreElementInfoGetter<typename zftTraitsType<T_ReturnType>::TraitsRemoveReference>::elementInfoGetter(info, retTmp);
+            ZFCoreElementInfoGetter<T_ReturnTypeTmp>::elementInfoGetter(info, retTmp);
             _ZFP_MtdGIRetError(errorHint,
-                ZFPropertyTypeIdData<typename zftTraitsType<T_ReturnType>::TraitsRemoveReference>::PropertyTypeId(),
+                ZFPropertyTypeIdData<T_ReturnTypeTmp>::PropertyTypeId(),
                 info);
             return zffalse;
         }

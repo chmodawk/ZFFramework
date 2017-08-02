@@ -170,7 +170,8 @@ public:
     template<typename T_RawType>
     inline T_RawType holdedDataRef(void)
     {
-        return *ZFCastStatic(typename zftTraitsType<T_RawType>::TraitsConstPointer, this->holdedData);
+        typedef typename zftTraitsType<T_RawType>::TraitsConstPointer T_RawTypeConstPointer;
+        return *ZFCastStatic(T_RawTypeConstPointer, this->holdedData);
     }
 
 public:
@@ -275,7 +276,8 @@ public:
     template<typename T_RawType>
     inline T_RawType holdedDataRef(void)
     {
-        return *ZFCastStatic(typename zftTraitsType<T_RawType>::TraitsPointer, this->holdedData);
+        typedef typename zftTraitsType<T_RawType>::TraitsPointer T_RawTypePointer;
+        return *ZFCastStatic(T_RawTypePointer, this->holdedData);
     }
 
 protected:

@@ -78,10 +78,6 @@ ZF_ENV_SENSITIVE("old MSVC spec, not for production, for compatibility test only
         class _ZFP_zfstlhashmap : public stdext::hash_map<T_Key, T_Value, _ZFP_zfstlhashmap_hashCompare<T_Key, T_Hash, T_EqualTo> >
         {
         };
-    #elif (defined(ANDROID) || defined(__ANDROID__)) // Android JNI stl_port
-        #define zfstlhashmap std::tr1::unordered_map
-
-        #include <unordered_map>
     #else
         #define zfstlhashmap std::unordered_map
 
