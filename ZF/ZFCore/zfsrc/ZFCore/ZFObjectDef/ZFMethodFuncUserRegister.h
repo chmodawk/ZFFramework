@@ -280,7 +280,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(MtdFURReg_##registerSig, ZFLevelZFFrameworkNormal) \
+    ZF_STATIC_REGISTER_INIT(MtdFURReg_##registerSig) \
     { \
         _ZFP_ZFMethodFuncUserRegisterDetail(resultMethod, methodInvoker, methodNamespaceString, \
             ReturnType, methodNameString \
@@ -295,12 +295,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             ); \
         this->_method = resultMethod; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(MtdFURReg_##registerSig) \
+    ZF_STATIC_REGISTER_DESTROY(MtdFURReg_##registerSig) \
     { \
         ZFMethodFuncUserUnregister(this->_method); \
     } \
     const ZFMethod *_method; \
-    ZF_GLOBAL_INITIALIZER_END(MtdFURReg_##registerSig)
+    ZF_STATIC_REGISTER_END(MtdFURReg_##registerSig)
 
 // ============================================================
 /** @brief see #ZFMethodFuncUserRegister_0 */

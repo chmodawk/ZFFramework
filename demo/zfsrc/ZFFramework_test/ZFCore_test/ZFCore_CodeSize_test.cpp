@@ -11,18 +11,18 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-// 40969005
-#define _ZFP_ZFCore_CodeSize_test_Dummy_ENABLE                  0 // 117696, 41086701
-#define _ZFP_ZFCore_CodeSize_test_StaticRegister_ENABLE         0 // 80992, 41049997
-#define _ZFP_ZFCore_CodeSize_test_StaticInit_ENABLE             0 // 322784, 41291789
-#define _ZFP_ZFCore_CodeSize_test_GlobalInit_ENABLE             0 // 161184, 41130189
-#define _ZFP_ZFCore_CodeSize_test_Object_ENABLE                 0 // 1086944, 42055949
-#define _ZFP_ZFCore_CodeSize_test_Method_ENABLE                 0 // 322832, 41291837
-#define _ZFP_ZFCore_CodeSize_test_MethodFunc_ENABLE             0 // 364480, 41333485
-#define _ZFP_ZFCore_CodeSize_test_MethodUserRegister_ENABLE     0 // 438128, 41407133
-#define _ZFP_ZFCore_CodeSize_test_MethodFuncUserRegister_ENABLE 0 // 459876, 41428881
-#define _ZFP_ZFCore_CodeSize_test_Property_ENABLE               0 // 2029600, 42998605
-#define _ZFP_ZFCore_CodeSize_test_PropertyUserRegister_ENABLE   0 // 830848, 41799853
+// 36964978
+#define _ZFP_ZFCore_CodeSize_test_Dummy_ENABLE                  0 // 117824, 37082802
+#define _ZFP_ZFCore_CodeSize_test_StaticRegister_ENABLE         0 // 81136, 37046114
+#define _ZFP_ZFCore_CodeSize_test_StaticInit_ENABLE             0 // 322768, 37287746
+#define _ZFP_ZFCore_CodeSize_test_GlobalInit_ENABLE             0 // 165440, 37130418
+#define _ZFP_ZFCore_CodeSize_test_Object_ENABLE                 0 // 891504, 37856482
+#define _ZFP_ZFCore_CodeSize_test_Method_ENABLE                 0 // 321328, 37286306
+#define _ZFP_ZFCore_CodeSize_test_MethodFunc_ENABLE             0 // 364448, 37329426
+#define _ZFP_ZFCore_CodeSize_test_MethodUserRegister_ENABLE     0 // 347872, 37312850
+#define _ZFP_ZFCore_CodeSize_test_MethodFuncUserRegister_ENABLE 0 // 360896, 37325874
+#define _ZFP_ZFCore_CodeSize_test_Property_ENABLE               0 // 1865568, 38830546
+#define _ZFP_ZFCore_CodeSize_test_PropertyUserRegister_ENABLE   0 // 736848, 37701826
 
 // ============================================================
 // dummy object

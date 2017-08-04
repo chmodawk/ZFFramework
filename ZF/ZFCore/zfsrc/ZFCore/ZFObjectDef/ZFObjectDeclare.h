@@ -97,11 +97,6 @@ public:
 #define _ZFP_ZFOBJECT_DECLARE_OBJECT(ChildClass, SuperClass) \
     public: \
         typedef enum {_ZFP_ZFObjectCanAlloc = 1} _ZFP_ZFObjectCanAllocChecker; \
-    private: \
-        static void _ZFP_ZFObjectDeleteCallback(void *obj) \
-        { \
-            ZFCastStatic(ChildClass *, obj)->~ChildClass(); \
-        } \
     public: \
         zfpoolDeclareFriend() \
         static ZFObject *_ZFP_ZFObject_constructor(void) \
@@ -215,10 +210,22 @@ public:
  * @see ZFOBJECT_DECLARE, ZFClass
  */
 #define ZFOBJECT_REGISTER(T_ZFObject) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(T_ZFObject, const ZFClass *, ClassData) \
     ZF_STATIC_REGISTER_INIT(ObjR_##T_ZFObject) \
     { \
         T_ZFObject::_ZFP_ZFObjectGetClass()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \
+        ZFMethodUserRegisterDetail_0(resultMethod, &invoker, T_ZFObject::ClassData(), \
+            public, ZFMethodIsStatic, \
+            const ZFClass *, zfText("ClassData")); \
+        this->method = resultMethod; \
+    } \
+    ZF_STATIC_REGISTER_DESTROY(ObjR_##T_ZFObject) \
+    { \
+        ZFMethodUserUnregister(this->method); \
+    } \
+    const ZFMethod *method; \
+    static const ZFClass *invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
+    { \
+        return T_ZFObject::ClassData(); \
     } \
     ZF_STATIC_REGISTER_END(ObjR_##T_ZFObject)
 

@@ -80,7 +80,7 @@ ZF_NAMESPACE_GLOBAL_END
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZF_STATIC_INITIALIZER_INIT(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
+ZF_STATIC_REGISTER_INIT(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
 {
     appEventHolder = [_ZFP_ZFImpl_sys_iOS_AppEventHolder new];
 
@@ -90,13 +90,13 @@ ZF_STATIC_INITIALIZER_INIT(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
     [[NSNotificationCenter defaultCenter] addObserver:appEventHolder selector:@selector(appOnResume) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:appEventHolder selector:@selector(appOnReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
 }
-ZF_STATIC_INITIALIZER_DESTROY(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
+ZF_STATIC_REGISTER_DESTROY(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
 {
     [[NSNotificationCenter defaultCenter] removeObserver:appEventHolder];
     appEventHolder = nil;
 }
 _ZFP_ZFImpl_sys_iOS_AppEventHolder *appEventHolder;
-ZF_STATIC_INITIALIZER_END(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
+ZF_STATIC_REGISTER_END(_ZFP_ZFImpl_sys_iOS_AppEventHolder)
 
 ZF_NAMESPACE_GLOBAL_END
 

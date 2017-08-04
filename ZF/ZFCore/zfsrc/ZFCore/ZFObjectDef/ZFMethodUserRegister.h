@@ -405,7 +405,7 @@ inline T_Wrapper const &_ZFP_MtdUR_zfv(const T_Wrapper *zfv)
     , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
     , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
     ) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(MtdUR_##registerSig, ZFLevelZFFrameworkNormal) \
+    ZF_STATIC_REGISTER_INIT(MtdUR_##registerSig) \
     { \
         _ZFP_ZFMethodUserRegisterDetail(result, methodInvoker, ownerClass, \
             PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
@@ -421,12 +421,12 @@ inline T_Wrapper const &_ZFP_MtdUR_zfv(const T_Wrapper *zfv)
             ); \
         this->_method = result; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(MtdUR_##registerSig) \
+    ZF_STATIC_REGISTER_DESTROY(MtdUR_##registerSig) \
     { \
         ZFMethodUserUnregister(this->_method); \
     } \
     const ZFMethod *_method; \
-    ZF_GLOBAL_INITIALIZER_END(MtdUR_##registerSig)
+    ZF_STATIC_REGISTER_END(MtdUR_##registerSig)
 
 // ============================================================
 /** @brief see #ZFMethodUserRegister_0 */

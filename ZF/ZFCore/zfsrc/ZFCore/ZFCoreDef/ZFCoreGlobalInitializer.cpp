@@ -675,6 +675,14 @@ static const _ZFP_GI_Data *_ZFP_GI_dependencyCheck(ZFCoreArrayPOD<_ZFP_GI_Data *
 }
 void _ZFP_GI_notifyInstanceCreated(ZF_IN const _ZFP_GI_Data *data)
 {
+    if(ZFFrameworkStateCheck(ZFLevelZFFrameworkStatic) == ZFFrameworkStateNotAvailable)
+    {
+        zfCoreCriticalMessageTrim(
+                zfTextA("ZFGlobalInitializer %s accessed before ZFFrameworkInit")
+            , zfsCoreZ2A(data->name.cString()));
+        return ;
+    }
+
     _ZFP_GI_DataContainer &d = _ZFP_GI_dataContainerInstance;
     // check higher level initialized?
     const _ZFP_GI_Data *dependency = zfnull;

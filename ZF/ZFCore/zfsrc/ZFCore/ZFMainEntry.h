@@ -40,11 +40,11 @@ extern ZF_ENV_EXPORT void _ZFP_ZFMainRegister(ZF_IN _ZFP_ZFMainFuncType func);
  */
 #define ZFMAIN_ENTRY(paramName) \
     zfint _ZFMain(ZF_IN_OPT ZFArray *paramName = zfnull); \
-    ZF_STATIC_INITIALIZER_INIT(ZFMainEntryRegister) \
+    ZF_STATIC_REGISTER_INIT(ZFMainEntryRegister) \
     { \
         _ZFP_ZFMainRegister(_ZFMain); \
     } \
-    ZF_STATIC_INITIALIZER_END(ZFMainEntryRegister) \
+    ZF_STATIC_REGISTER_END(ZFMainEntryRegister) \
     zfint _ZFMain(ZF_IN_OPT ZFArray *paramName)
 
 /**

@@ -18,11 +18,11 @@ const zfdouble zffloatEpsilonT<zfdouble>::v = zfdoubleEpsilon;
 const zflongdouble zffloatEpsilonT<zflongdouble>::v = zflongdoubleEpsilon;
 
 // ============================================================
-ZF_STATIC_INITIALIZER_INIT(ZFCoreUtilMathDataHolder)
+ZF_STATIC_REGISTER_INIT(ZFCoreUtilMathDataHolder)
 {
     srand((zfuint)time(zfnull));
 }
-ZF_STATIC_INITIALIZER_END(ZFCoreUtilMathDataHolder)
+ZF_STATIC_REGISTER_END(ZFCoreUtilMathDataHolder)
 
 zfuint zfmRand(void)
 {

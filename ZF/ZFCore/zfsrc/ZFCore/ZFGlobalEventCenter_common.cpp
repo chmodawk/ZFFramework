@@ -23,17 +23,17 @@ static void _ZFP_ZFGlobalEventCenter_common_AppOnDestroy(void)
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventAppOnDestroy());
 }
 
-ZF_STATIC_INITIALIZER_INIT(_ZFP_ZFGlobalEventCenter_common_register)
+ZF_STATIC_REGISTER_INIT(_ZFP_ZFGlobalEventCenter_common_register)
 {
     ZFFrameworkInitFinishCallbacks.add(_ZFP_ZFGlobalEventCenter_common_AppOnCreate);
     ZFFrameworkCleanupPrepareCallbacks.add(_ZFP_ZFGlobalEventCenter_common_AppOnDestroy);
 }
-ZF_STATIC_INITIALIZER_DESTROY(_ZFP_ZFGlobalEventCenter_common_register)
+ZF_STATIC_REGISTER_DESTROY(_ZFP_ZFGlobalEventCenter_common_register)
 {
     ZFFrameworkInitFinishCallbacks.removeElement(_ZFP_ZFGlobalEventCenter_common_AppOnCreate);
     ZFFrameworkCleanupPrepareCallbacks.removeElement(_ZFP_ZFGlobalEventCenter_common_AppOnDestroy);
 }
-ZF_STATIC_INITIALIZER_END(_ZFP_ZFGlobalEventCenter_common_register)
+ZF_STATIC_REGISTER_END(_ZFP_ZFGlobalEventCenter_common_register)
 
 ZF_NAMESPACE_GLOBAL_END
 

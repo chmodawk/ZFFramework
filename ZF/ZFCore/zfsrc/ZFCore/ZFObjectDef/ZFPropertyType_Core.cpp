@@ -19,13 +19,13 @@ public:
     ZFPropertyTypeSerializeToCallback serializeToCallback;
 };
 
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFPropertyTypeIdHolder, ZFLevelZFFrameworkStatic)
+ZF_STATIC_INITIALIZER_INIT(ZFPropertyTypeIdHolder)
 {
 }
 public:
     ZFCoreMap propertyTypeMap; // _ZFP_ZFPropertyTypeData
-ZF_GLOBAL_INITIALIZER_END(ZFPropertyTypeIdHolder)
-#define _ZFP_ZFPropertyTypeMap (ZF_GLOBAL_INITIALIZER_INSTANCE(ZFPropertyTypeIdHolder)->propertyTypeMap)
+ZF_STATIC_INITIALIZER_END(ZFPropertyTypeIdHolder)
+#define _ZFP_ZFPropertyTypeMap (ZF_STATIC_INITIALIZER_INSTANCE(ZFPropertyTypeIdHolder)->propertyTypeMap)
 
 // ============================================================
 void _ZFP_ZFPropertyTypeRegister(ZF_IN const zfchar *typeIdName,

@@ -376,7 +376,7 @@ public:
         , Func_ZFPropertyCallbackIsInitValue \
         , Func_ZFPropertyCallbackCompare \
     ) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(PropUR_##ownerClassSig##_##propertyName, ZFLevelZFFrameworkNormal) \
+    ZF_STATIC_REGISTER_INIT(PropUR_##ownerClassSig##_##propertyName) \
     { \
         _ZFP_ZFPropertyUserRegister(result, ownerClassSig::ClassData(), \
             Type, ZFM_TOSTRING(propertyName), ZFPropertyInitValueOrNoInitValue, \
@@ -392,12 +392,12 @@ public:
             ); \
         this->_property = result; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(PropUR_##ownerClassSig##_##propertyName) \
+    ZF_STATIC_REGISTER_DESTROY(PropUR_##ownerClassSig##_##propertyName) \
     { \
         ZFPropertyUserUnregister(this->_property); \
     } \
     const ZFProperty *_property; \
-    ZF_GLOBAL_INITIALIZER_END(PropUR_##ownerClassSig##_##propertyName)
+    ZF_STATIC_REGISTER_END(PropUR_##ownerClassSig##_##propertyName)
 
 // ============================================================
 /**

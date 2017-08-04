@@ -169,28 +169,33 @@ public:
     ZF_STATIC_REGISTER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
         (void)Scope::prefix##YourIdName(); \
+        \
+        { \
+            ZFMethodUserRegisterDetail_0(resultMethod, &i_id, Scope::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfidentity, ZFM_TOSTRING(prefix##YourIdName)); \
+            this->m_id = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_0(resultMethod, &i_idName, Scope::ClassData(), \
+                public, ZFMethodIsStatic, \
+                const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name)); \
+            this->m_idName = resultMethod; \
+        } \
     } \
-    ZF_STATIC_REGISTER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
-    static zfidentity _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName( \
-        ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
+    const ZFMethod *m_id; \
+    static zfidentity i_id(ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
+    {return Scope::prefix##YourIdName();} \
+    \
+    const ZFMethod *m_idName; \
+    static const zfchar *i_idName(ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
+    {return Scope::prefix##YourIdName##_name();} \
+    ZF_STATIC_REGISTER_DESTROY(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
-        return Scope::prefix##YourIdName(); \
+        ZFMethodUserUnregister(this->m_id); \
+        ZFMethodUserUnregister(this->m_idName); \
     } \
-    ZFMETHOD_USER_REGISTER_DETAIL_0(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName, \
-        _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName, Scope::ClassData(), \
-        public, ZFMethodIsStatic, \
-        zfidentity, ZFM_TOSTRING(prefix##YourIdName) \
-    ) \
-    static const zfchar *_ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName##_name( \
-        ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
-    { \
-        return Scope::prefix##YourIdName##_name(); \
-    } \
-    ZFMETHOD_USER_REGISTER_DETAIL_0(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName##_name, \
-        _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName##_name, Scope::ClassData(), \
-        public, ZFMethodIsStatic, \
-        const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name) \
-    )
+    ZF_STATIC_REGISTER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName)
 
 /** @brief see #ZFIDMAP */
 #define ZFIDMAP_GLOBAL_REGISTER(YourModuleName, Scope, YourIdName) \
@@ -200,26 +205,31 @@ public:
     ZF_STATIC_REGISTER_INIT(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
         (void)Scope::prefix##YourIdName(); \
+        \
+        { \
+            ZFMethodFuncUserRegisterDetail_0(resultMethod, &i_id, ZFM_TOSTRING(Scope), \
+                zfidentity, ZFM_TOSTRING(prefix##YourIdName)); \
+            this->m_id = resultMethod; \
+        } \
+        { \
+            ZFMethodFuncUserRegisterDetail_0(resultMethod, &i_idName, ZFM_TOSTRING(Scope), \
+                const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name)); \
+            this->m_idName = resultMethod; \
+        } \
     } \
+    ZF_STATIC_REGISTER_DESTROY(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
+    { \
+        ZFMethodUserUnregister(this->m_id); \
+        ZFMethodUserUnregister(this->m_idName); \
+    } \
+    const ZFMethod *m_id; \
+    static zfidentity i_id(ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
+    {return Scope::prefix##YourIdName();} \
+    \
+    const ZFMethod *m_idName; \
+    static const zfchar *i_idName(ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
+    {return Scope::prefix##YourIdName##_name();} \
     ZF_STATIC_REGISTER_END(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
-    static zfidentity _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName( \
-        ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
-    { \
-        return Scope::prefix##YourIdName(); \
-    } \
-    ZFMETHOD_FUNC_USER_REGISTER_DETAIL_0(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName, \
-        _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName, ZFM_TOSTRING(Scope), \
-        zfidentity, ZFM_TOSTRING(prefix##YourIdName) \
-    ) \
-    static const zfchar *_ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName##_name( \
-        ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
-    { \
-        return Scope::prefix##YourIdName##_name(); \
-    } \
-    ZFMETHOD_FUNC_USER_REGISTER_DETAIL_0(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName##_name, \
-        _ZFP_ZFIdMap_##YourModuleName##_##Scope##_##prefix##YourIdName##_name, ZFM_TOSTRING(Scope), \
-        const zfchar *, ZFM_TOSTRING(prefix##YourIdName##_name) \
-    )
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFIdMap_h_

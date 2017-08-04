@@ -179,18 +179,18 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             return TypeName##ToSerializableData(serializableData, v, outErrorHint); \
         } \
     }; \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(PropId_##TypeName, ZFLevelZFFrameworkNormal) \
+    ZF_STATIC_REGISTER_INIT(PropId_##TypeName) \
     { \
         _ZFP_ZFPropertyTypeRegister( \
             ZFPropertyTypeId_##TypeName(), \
             _ZFP_ZFPropertyTypeRegisterHolder_##TypeName::serializeFrom, \
             _ZFP_ZFPropertyTypeRegisterHolder_##TypeName::serializeTo); \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(PropId_##TypeName) \
+    ZF_STATIC_REGISTER_DESTROY(PropId_##TypeName) \
     { \
         _ZFP_ZFPropertyTypeUnregister(ZFPropertyTypeId_##TypeName()); \
     } \
-    ZF_GLOBAL_INITIALIZER_END(PropId_##TypeName) \
+    ZF_STATIC_REGISTER_END(PropId_##TypeName) \
     zfbool TypeName##FromSerializableData(ZF_OUT Type &v, \
                                           ZF_IN const ZFSerializableData &serializableData, \
                                           ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */, \
@@ -209,7 +209,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     _ZFP_ZFPROPERTY_TYPE_DEFINE_METHOD_REGISTER(TypeName, Type)
 
 #define _ZFP_ZFPROPERTY_TYPE_DEFINE_METHOD_REGISTER(TypeName, Type) \
-    ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(PropMtdReg_##TypeName, ZFLevelZFFrameworkNormal) \
+    ZF_STATIC_REGISTER_INIT(PropMtdReg_##TypeName) \
     { \
         ZFMethodFuncUserRegister_4(method_FromSerializable, { \
                 return TypeName##FromSerializableData(v, serializableData, outErrorHint, outErrorPos); \
@@ -257,7 +257,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             ); \
         _method_ToString2 = method_ToString2; \
     } \
-    ZF_GLOBAL_INITIALIZER_DESTROY(PropMtdReg_##TypeName) \
+    ZF_STATIC_REGISTER_DESTROY(PropMtdReg_##TypeName) \
     { \
         ZFMethodFuncUserUnregister(_method_FromSerializable); \
         ZFMethodFuncUserUnregister(_method_ToSerializable); \
@@ -273,7 +273,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         const ZFMethod *_method_FromString; \
         const ZFMethod *_method_ToString; \
         const ZFMethod *_method_ToString2; \
-    ZF_GLOBAL_INITIALIZER_END(PropMtdReg_##TypeName)
+    ZF_STATIC_REGISTER_END(PropMtdReg_##TypeName)
 
 /** @brief see #ZFPROPERTY_TYPE_DECLARE */
 #define ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(TypeName, Type, convertFromStringAction, convertToStringAction) \

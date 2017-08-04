@@ -52,17 +52,17 @@ static void _ZFP_ZFObjectMutexImplCleanupCallback_ZFMutex(ZF_IN ZFObjectMutexImp
 {
     ZFPROTOCOL_ACCESS(ZFObjectMutex)->nativeMutexDestroy(mutexImpl);
 }
-ZF_STATIC_INITIALIZER_INIT(ZFObjectMutexImpl_ZFMutex)
+ZF_STATIC_REGISTER_INIT(ZFObjectMutexImpl_ZFMutex)
 {
     ZFObjectMutexImplSet(_ZFP_ZFObjectMutexImplCheckCallback_ZFMutex,
                          _ZFP_ZFObjectMutexImplInitCallback_ZFMutex,
                          _ZFP_ZFObjectMutexImplCleanupCallback_ZFMutex);
 }
-ZF_STATIC_INITIALIZER_DESTROY(ZFObjectMutexImpl_ZFMutex)
+ZF_STATIC_REGISTER_DESTROY(ZFObjectMutexImpl_ZFMutex)
 {
     ZFObjectMutexImplSet();
 }
-ZF_STATIC_INITIALIZER_END(ZFObjectMutexImpl_ZFMutex)
+ZF_STATIC_REGISTER_END(ZFObjectMutexImpl_ZFMutex)
 #endif
 
 // ============================================================

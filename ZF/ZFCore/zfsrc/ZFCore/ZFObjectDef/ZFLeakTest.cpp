@@ -42,10 +42,8 @@ ZF_STATIC_INITIALIZER_DESTROY(ZFLeakTestGlobalExcludeData)
 _ZFP_ZFLeakTestGlobalExcludeNameType excludeNames;
 _ZFP_ZFLeakTestGlobalExcludeInstanceType excludeInstances;
 ZF_STATIC_INITIALIZER_END(ZFLeakTestGlobalExcludeData)
-#define _ZFP_ZFLeakTestGlobalExcludeNames \
-    (ZF_STATIC_INITIALIZER_INSTANCE(ZFLeakTestGlobalExcludeData)->excludeNames)
-#define _ZFP_ZFLeakTestGlobalExcludeInstances \
-    (ZF_STATIC_INITIALIZER_INSTANCE(ZFLeakTestGlobalExcludeData)->excludeInstances)
+#define _ZFP_ZFLeakTestGlobalExcludeNames (ZF_STATIC_INITIALIZER_INSTANCE(ZFLeakTestGlobalExcludeData)->excludeNames)
+#define _ZFP_ZFLeakTestGlobalExcludeInstances (ZF_STATIC_INITIALIZER_INSTANCE(ZFLeakTestGlobalExcludeData)->excludeInstances)
 
 void ZFLeakTestExcludeNameAdd(ZF_IN const zfchar *name)
 {

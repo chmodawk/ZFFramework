@@ -492,17 +492,144 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
     _ZFP_ZFENUM_CONVERTER_DEFINE(ChildEnum) \
     ZFOBJECT_REGISTER(ChildEnum) \
     ZFOBJECT_REGISTER(ChildEnum##Editable) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(ChildEnum, zfuint, EnumDefault) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfidentity, hashForValue, ZFMP_IN(zfuint, value)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(ChildEnum, zfindex, EnumCount) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfindex, EnumIndexForValue, ZFMP_IN(zfuint, value)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfuint, EnumValueAtIndex, ZFMP_IN(zfindex, index)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, const zfchar *, EnumNameAtIndex, ZFMP_IN(zfindex, index)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, const zfchar *, EnumFullNameAtIndex, ZFMP_IN(zfindex, index)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfbool, EnumContainValue, ZFMP_IN(zfuint, value)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, zfuint, EnumValueForName, ZFMP_IN(const zfchar *, name)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_1(ChildEnum, const zfchar *, EnumNameForValue, ZFMP_IN(zfuint, value)) \
-    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ChildEnum##Editable, void, enumValueSet, ZFMP_IN(zfuint, value))
+    ZF_STATIC_REGISTER_INIT(EnumReg_##ChildEnum) \
+    { \
+        { \
+            ZFMethodUserRegisterDetail_0(resultMethod, &i_EnumDefault, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfuint, zfText("EnumDefault")); \
+            this->m_EnumDefault = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_hashForValue, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfidentity, zfText("hashForValue"), \
+                ZFMP_IN(zfuint, value)); \
+            this->m_hashForValue = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_0(resultMethod, &i_EnumCount, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfindex, zfText("EnumCount")); \
+            this->m_EnumCount = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumIndexForValue, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfindex, zfText("EnumIndexForValue"), \
+                ZFMP_IN(zfuint, value)); \
+            this->m_EnumIndexForValue = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumValueAtIndex, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfuint, zfText("EnumValueAtIndex"), \
+                ZFMP_IN(zfindex, index)); \
+            this->m_EnumValueAtIndex = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumNameAtIndex, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                const zfchar *, zfText("EnumNameAtIndex"), \
+                ZFMP_IN(zfindex, index)); \
+            this->m_EnumNameAtIndex = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumFullNameAtIndex, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                const zfchar *, zfText("EnumFullNameAtIndex"), \
+                ZFMP_IN(zfindex, index)); \
+            this->m_EnumFullNameAtIndex = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumContainValue, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfbool, zfText("EnumContainValue"), \
+                ZFMP_IN(zfuint, value)); \
+            this->m_EnumContainValue = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumValueForName, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                zfuint, zfText("EnumValueForName"), \
+                ZFMP_IN(const zfchar *, name)); \
+            this->m_EnumValueForName = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_EnumNameForValue, ChildEnum::ClassData(), \
+                public, ZFMethodIsStatic, \
+                const zfchar *, zfText("EnumNameForValue"), \
+                ZFMP_IN(zfuint, value)); \
+            this->m_EnumNameForValue = resultMethod; \
+        } \
+        { \
+            ZFMethodUserRegisterDetail_1(resultMethod, &i_enumValueSet, ChildEnum::ClassData(), \
+                public, ZFMethodIsVirtual, \
+                void, zfText("enumValueSet"), \
+                ZFMP_IN(zfuint, value)); \
+            this->m_enumValueSet = resultMethod; \
+        } \
+    } \
+    ZF_STATIC_REGISTER_DESTROY(EnumReg_##ChildEnum) \
+    { \
+        ZFMethodUserUnregister(this->m_EnumDefault); \
+        ZFMethodUserUnregister(this->m_hashForValue); \
+        ZFMethodUserUnregister(this->m_EnumCount); \
+        ZFMethodUserUnregister(this->m_EnumIndexForValue); \
+        ZFMethodUserUnregister(this->m_EnumValueAtIndex); \
+        ZFMethodUserUnregister(this->m_EnumNameAtIndex); \
+        ZFMethodUserUnregister(this->m_EnumFullNameAtIndex); \
+        ZFMethodUserUnregister(this->m_EnumContainValue); \
+        ZFMethodUserUnregister(this->m_EnumValueForName); \
+        ZFMethodUserUnregister(this->m_EnumNameForValue); \
+        ZFMethodUserUnregister(this->m_enumValueSet); \
+    } \
+    \
+    const ZFMethod *m_EnumDefault; \
+    static zfuint i_EnumDefault(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
+    {return ChildEnum::EnumDefault();} \
+    \
+    const ZFMethod *m_hashForValue; \
+    static zfidentity i_hashForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
+    {return ChildEnum::hashForValue(value);} \
+    \
+    const ZFMethod *m_EnumCount; \
+    static zfindex i_EnumCount(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
+    {return ChildEnum::EnumCount();} \
+    \
+    const ZFMethod *m_EnumIndexForValue; \
+    static zfindex i_EnumIndexForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
+    {return ChildEnum::EnumIndexForValue(value);} \
+    \
+    const ZFMethod *m_EnumValueAtIndex; \
+    static zfuint i_EnumValueAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
+    {return ChildEnum::EnumValueAtIndex(index);} \
+    \
+    const ZFMethod *m_EnumNameAtIndex; \
+    static const zfchar *i_EnumNameAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
+    {return ChildEnum::EnumNameAtIndex(index);} \
+    \
+    const ZFMethod *m_EnumFullNameAtIndex; \
+    static const zfchar *i_EnumFullNameAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
+    {return ChildEnum::EnumFullNameAtIndex(index);} \
+    \
+    const ZFMethod *m_EnumContainValue; \
+    static zfbool i_EnumContainValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
+    {return ChildEnum::EnumContainValue(value);} \
+    \
+    const ZFMethod *m_EnumValueForName; \
+    static zfuint i_EnumValueForName(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN const zfchar *name) \
+    {return ChildEnum::EnumValueForName(name);} \
+    \
+    const ZFMethod *m_EnumNameForValue; \
+    static const zfchar *i_EnumNameForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
+    {return ChildEnum::EnumNameForValue(value);} \
+    \
+    const ZFMethod *m_enumValueSet; \
+    static void i_enumValueSet(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
+    {return invokerObject->to<ChildEnum##Editable *>()->enumValueSet(value);} \
+    \
+    ZF_STATIC_REGISTER_END(EnumReg_##ChildEnum)
 
 // ============================================================
 // zfflags conversion
