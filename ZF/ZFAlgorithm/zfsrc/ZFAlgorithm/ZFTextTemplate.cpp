@@ -10,9 +10,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-static const zfchar _ZFP_ZFTextTemplate_tagL = '(';
-static const zfchar _ZFP_ZFTextTemplate_tagR = ')';
-static const zfchar *_ZFP_ZFTextTemplate_header = zfText("(ZFTT_");
+static const zfchar _ZFP_ZFTextTemplate_tagL = '{';
+static const zfchar _ZFP_ZFTextTemplate_tagR = '}';
+static const zfchar *_ZFP_ZFTextTemplate_header = zfText("{ZFTT_");
 static const zfindex _ZFP_ZFTextTemplate_headerSize = zfslen(_ZFP_ZFTextTemplate_header);
 
 // ============================================================
