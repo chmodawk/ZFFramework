@@ -83,8 +83,9 @@ protected:
         startButton->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner);
         startButton->buttonLabelTextStringSet(zfText("start"));
 
-        ZFLISTENER_LOCAL(onStart, {
-            ZFObject *testObject = userData->tagGet(zfText("testObject"));
+        ZFLISTENER_LOCAL_BEGIN(onStart) {
+            ZFUIKit_ZFUISerializePerformance_test *owner = userData->tagGet<ZFObjectHolder *>(zfText("owner"))->holdedObj;
+            zfautoObject testObject = owner->prepareTestObject();
             ZFUITextView *outputView = userData->tagGet<ZFUITextView *>(zfText("outputView"));
             outputView->textContentStringSet(zfText("running..."));
             ZFSerializableData data = ZFObjectToSerializableData(testObject);
@@ -121,30 +122,74 @@ protected:
 
             ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFUISerializePerformance_test_toData"));
             ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFUISerializePerformance_test_fromData"));
-        })
-        zfautoObject testObject = this->prepareTestObject();
+        } ZFLISTENER_LOCAL_END(onStart)
         zfblockedAlloc(ZFObject, userData);
-        userData->tagSet(zfText("testObject"), testObject.toObject());
+        userData->tagSet(zfText("owner"), this->objectHolder());
         userData->tagSet(zfText("outputView"), outputView);
         startButton->observerAdd(ZFUIButton::EventButtonOnClick(), onStart, userData);
+
+        this->prepareSettingButton(window);
     }
 
 private:
+    void prepareSettingButton(ZF_IN ZFUIWindow *window)
+    {
+        zfblockedAlloc(ZFArrayEditable, settings);
+
+        { // auto scroll x
+            zfblockedAlloc(ZFUIKit_test_SettingData, setting);
+            settings->add(setting);
+            setting->userDataSet(this->objectHolder());
+            ZFLISTENER_LOCAL(buttonTextGetter, {
+                ZFStringEditable *text = listenerData.param0->to<ZFStringEditable *>();
+                text->stringValueSet(zfText("change test object"));
+            })
+            setting->buttonTextGetterSet(buttonTextGetter);
+            ZFLISTENER_LOCAL(buttonClickListener, {
+                ZFUIKit_ZFUISerializePerformance_test *t = userData->to<ZFObjectHolder *>()->holdedObj;
+                t->testObjectType = ((t->testObjectType + 1) % t->testObjectTypeCount);
+            })
+            setting->buttonClickListenerSet(buttonClickListener);
+        }
+
+        ZFUIKit_test_prepareSettingButtonWithTestWindow(window, settings);
+    }
+
+public:
+    zfoverride
+    virtual ZFObject *objectOnInit(void)
+    {
+        zfsuper::objectOnInit();
+        this->testObjectType = 0;
+        this->testObjectTypeCount = 3;
+        return this;
+    }
+    zfindex testObjectType;
+    zfindex testObjectTypeCount;
     zfautoObject prepareTestObject(void)
     {
-#if 0
-        zfblockedAlloc(_ZFP_ZFUISerializePerformance_test_TestObject, v);
-        v->modifyProperty();
-        return zfautoObjectCreate(v);
-#elif 0
-        zfblockedAlloc(ZFUIImageView, v);
-        v->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRed).toAny());
-        return zfautoObjectCreate(v);
-#else
-        zfblockedAlloc(ZFUIKit_test_Button, v);
-        v->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRandom());
-        return zfautoObjectCreate(v);
-#endif
+        switch(this->testObjectType)
+        {
+            case 0:
+            {
+                zfblockedAlloc(ZFUIKit_test_Button, v);
+                v->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRandom());
+                return zfautoObjectCreate(v);
+            }
+            case 1:
+            {
+                zfblockedAlloc(ZFUIImageView, v);
+                v->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRed).toAny());
+                return zfautoObjectCreate(v);
+            }
+            case 2:
+            default:
+            {
+                zfblockedAlloc(_ZFP_ZFUISerializePerformance_test_TestObject, v);
+                v->modifyProperty();
+                return zfautoObjectCreate(v);
+            }
+        }
     }
 };
 ZFOBJECT_REGISTER(ZFUIKit_ZFUISerializePerformance_test)

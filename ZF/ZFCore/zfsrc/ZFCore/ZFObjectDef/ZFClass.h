@@ -472,6 +472,7 @@ public:
     static void _ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const ZFClass *cls);
     ZFClass(void);
     ~ZFClass(void);
+    /** @endcond */
     zfbool _ZFP_ZFClass_interfaceNeedRegister(void);
     void _ZFP_ZFClass_interfaceRegister(ZF_IN const ZFClass *cls,
                                         ...);
@@ -505,7 +506,6 @@ public:
     void _ZFP_ZFClass_propertyInitStepRegister(ZF_IN const ZFProperty *property) const;
     zfbool _ZFP_ZFClass_propertyInitStepIsTheSame(ZF_IN const ZFProperty *property,
                                                   ZF_IN const ZFClass *refClass) const;
-    /** @endcond */
 
 public:
     zfbool _ZFP_ZFClassNeedInitImplementationList;

@@ -139,7 +139,7 @@ public:
      * param1 is the page manager
      */
     ZFOBSERVER_EVENT(PageAfterResume)
-     /**
+    /**
      * @brief see #ZFObject::observerNotify
      *
      * called when page attached\n

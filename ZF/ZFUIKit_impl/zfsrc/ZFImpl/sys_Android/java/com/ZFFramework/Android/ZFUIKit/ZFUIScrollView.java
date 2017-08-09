@@ -107,7 +107,7 @@ public class ZFUIScrollView extends ZFUIView {
                                                 int atIndex) {
          ZFUIScrollView nativeViewTmp = (ZFUIScrollView)nativeView;
          nativeViewTmp._contentLayout.removeViewAt(atIndex);
-     }
+    }
 
     private static class ScrollContentLayout extends ZFUIView {
         protected ScrollContentLayout(Context context) {

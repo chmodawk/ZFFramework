@@ -97,7 +97,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                                              ZFPropertyInitValueOrNoInitValue) \
     public: \
         typedef Type _ZFP_PropVT_##Name; \
-        typedef zfautoObject _ZFP_PropAT_##Name; \
+        typedef zfautoObject _ZFP_PropHT_##Name; \
     private: \
         zffinal zfclassNotPOD _ZFP_PropV_##Name \
         { \
@@ -106,6 +106,10 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             : value(zfnull), valueHolder() \
             { \
                 zfself::_ZFP_Prop_##Name(); \
+            } \
+            ~_ZFP_PropV_##Name(void) \
+            { \
+                zfpoolDelete(this->value); \
             } \
         public: \
             zfself::_ZFP_PropVT_##Name &propertyInit(ZF_IN zfself *owner, \
@@ -143,11 +147,11 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         private: \
             zfself::_ZFP_PropVT_##Name *value; \
         public: \
-            zfautoObject valueHolder; \
+            zfself::_ZFP_PropHT_##Name valueHolder; \
         }; \
         zfself::_ZFP_PropV_##Name Name##_PropV; \
     public: \
-        zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
+        zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
         { \
             zfCoreMutexLocker(); \
             if(Name##_PropV.propertyAccessed()) \
@@ -155,7 +159,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                 zfself::_ZFP_PropV_##Name _holder; \
                 if(outInitValue != zfnull) \
                 { \
-                    *(zfautoObject *)outInitValue = zfautoObjectCreateWithoutLeakTest( \
+                    *outInitValue = zfautoObjectCreateWithoutLeakTest( \
                         ZFCastZFObjectUnchecked(ZFObject *, _holder.propertyInit(this, zffalse))); \
                 } \
                 return (ZFComparerDefault( \
@@ -172,7 +176,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                                              ZFPropertyInitValueOrNoInitValue) \
     public: \
         typedef Type _ZFP_PropVT_##Name; \
-        typedef Type _ZFP_PropAT_##Name; \
+        typedef Type _ZFP_PropHT_##Name; \
     private: \
         zffinal zfclassNotPOD _ZFP_PropV_##Name \
         { \
@@ -181,6 +185,10 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             : value(zfnull) \
             { \
                 zfself::_ZFP_Prop_##Name(); \
+            } \
+            ~_ZFP_PropV_##Name(void) \
+            { \
+                zfpoolDelete(this->value); \
             } \
         public: \
             zfself::_ZFP_PropVT_##Name &propertyInit(ZF_IN zfself *owner, \
@@ -217,7 +225,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         }; \
         zfself::_ZFP_PropV_##Name Name##_PropV; \
     public: \
-        zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT void *outInitValue) \
+        zfbool _ZFP_propCbIsInitAI_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
         { \
             zfCoreMutexLocker(); \
             if(Name##_PropV.propertyAccessed()) \
@@ -225,7 +233,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                 zfself::_ZFP_PropV_##Name _holder; \
                 if(outInitValue != zfnull) \
                 { \
-                    *(Type *)outInitValue = _holder.propertyInit(this, zffalse); \
+                    *outInitValue = _holder.propertyInit(this, zffalse); \
                 } \
                 return (ZFComparerDefault( \
                         this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(this, zffalse)) \
@@ -251,14 +259,14 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                                                ZF_IN ZFObject *ownerObj, \
                                                ZF_OUT_OPT void *outInitValue) \
         { \
-            return ZFCastZFObjectUnchecked(zfself *, ownerObj)->_ZFP_propCbIsInitA_##Name(outInitValue); \
+            return ZFCastZFObjectUnchecked(zfself *, ownerObj)->_ZFP_propCbIsInitA_##Name((zfself::_ZFP_PropHT_##Name *)outInitValue); \
         } \
-        ZFM_CLASS_HAS_MEMBER_DECLARE(_, _ZFP_propCbIsInitAC_##Name, zfbool (T::*F)(void *)) \
+        ZFM_CLASS_HAS_MEMBER_DECLARE(_, _ZFP_propCbIsInitAC_##Name, zfbool (T::*F)(zfself::_ZFP_PropHT_##Name *)) \
         template<typename T_Owner, int hasCustom> \
         zfclassNotPOD _ZFP_PropCbIsInitAW_##Name \
         { \
         public: \
-            static inline zfbool action(ZF_IN T_Owner *owner, ZF_OUT_OPT void *outInitValue) \
+            static inline zfbool action(ZF_IN T_Owner *owner, ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
             { \
                 return owner->_ZFP_propCbIsInitAI_##Name(outInitValue); \
             } \
@@ -267,13 +275,13 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         zfclassNotPOD _ZFP_PropCbIsInitAW_##Name<T_Owner, 1> \
         { \
         public: \
-            static inline zfbool action(ZF_IN T_Owner *owner, ZF_OUT_OPT void *outInitValue) \
+            static inline zfbool action(ZF_IN T_Owner *owner, ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
             { \
                 return owner->_ZFP_propCbIsInitAC_##Name(outInitValue); \
             } \
         }; \
     public: \
-        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT void *outInitValue) \
+        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
         { \
             return _ZFP_PropCbIsInitAW_##Name<zfself, \
                     ZFM_CLASS_HAS_MEMBER(_, _ZFP_propCbIsInitAC_##Name, zfself) \
@@ -370,9 +378,9 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         { \
             zfCoreMutexLock(); \
             Type &valuePointerRef = _ZFP_ZFPROPERTY_VALUE_REF(Name); /* must access first */ \
-            zfautoObject &valueRef = this->Name##_PropV.valueHolder; \
-            zfautoObject valueOld = valueRef; \
-            zfautoObject valueNew = zflockfree_zfautoObjectCreate(ZFObjectToObject(propertyValue)); \
+            zfself::_ZFP_PropHT_##Name &valueRef = this->Name##_PropV.valueHolder; \
+            zfself::_ZFP_PropHT_##Name valueOld = valueRef; \
+            zfself::_ZFP_PropHT_##Name valueNew = zflockfree_zfautoObjectCreate(ZFObjectToObject(propertyValue)); \
             this->_ZFP_propL_onDetach_##Name(valueNew, valueOld); \
             toObject()->_ZFP_ZFObject_objectPropertyValueDetach(zfself::_ZFP_Prop_##Name(), zffalse); \
             this->_ZFP_propL_onDealloc_##Name(valueNew, valueOld); \
@@ -425,8 +433,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     private: \
         ZFM_CLASS_HAS_MEMBER_DECLARE(_, _ZFP_propLAC_##lifeCycleName##_##Name, \
                 void (T::*F)( \
-                        ZF_IN_OUT zfself::_ZFP_PropAT_##Name constFix(const) &propertyValue, \
-                        ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld \
+                        ZF_IN_OUT zfself::_ZFP_PropHT_##Name constFix(const) &propertyValue, \
+                        ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld \
                     ) \
             ) \
         template<typename T_Owner, int hasCustom> \
@@ -435,8 +443,8 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         public: \
             static inline void action( \
                 ZF_IN T_Owner *owner, \
-                ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-                ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld) \
+                ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+                ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld) \
             { \
             } \
         }; \
@@ -446,16 +454,16 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         public: \
             static inline void action( \
                 ZF_IN T_Owner *owner, \
-                ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-                ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld) \
+                ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+                ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld) \
             { \
                 owner->_ZFP_propLAC_##lifeCycleName##_##Name(propertyValue, propertyValueOld); \
             } \
         }; \
     public: \
         virtual inline void _ZFP_propL_##lifeCycleName##_##Name( \
-            ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-            ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld) \
+            ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+            ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld) \
         { \
             _ZFP_PropLAW_##lifeCycleName##_##Name<zfself, \
                     ZFM_CLASS_HAS_MEMBER(_, _ZFP_propLAC_##lifeCycleName##_##Name, zfself) \
@@ -465,22 +473,22 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_CUSTOM_DECLARE(Type, Name, lifeCycleName, constFix) \
     public: \
         void _ZFP_propLAC_##lifeCycleName##_##Name( \
-            ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-            ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld)
+            ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+            ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_CUSTOM_DEFINE(OwnerClass, Type, Name, lifeCycleName, constFix) \
     void OwnerClass::_ZFP_propLAC_##lifeCycleName##_##Name( \
-        ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-        ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld)
+        ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+        ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_OVERRIDE_DECLARE(Type, Name, lifeCycleName, constFix) \
     public: \
         virtual void _ZFP_propL_##lifeCycleName##_##Name( \
-            ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-            ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld)
+            ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+            ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_OVERRIDE_DEFINE(OwnerClass, Type, Name, lifeCycleName, constFix) \
     void OwnerClass::_ZFP_propL_##lifeCycleName##_##Name( \
-        ZF_IN_OUT _ZFP_PropAT_##Name constFix(const) &propertyValue, \
-        ZF_IN zfself::_ZFP_PropAT_##Name const &propertyValueOld)
+        ZF_IN_OUT _ZFP_PropHT_##Name constFix(const) &propertyValue, \
+        ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_OVERRIDE_CALL_SUPER(SuperOwnerClass, Type, Name, lifeCycleName, constFix) \
     SuperOwnerClass::_ZFP_propL_##lifeCycleName##_##Name(propertyValue, propertyValueOld)
 
@@ -549,7 +557,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  *     };
  *   @endcode
  *   @note for a retain property, it'll be released automatically when it's owner is dealloced
- * -  to override a property in subclass, you may use #ZFPROPERTY_OVERRIDE_ON_XXX
+ * -  to override a property in subclass, you may use ZFPROPERTY_OVERRIDE_ON_XXX
  *   @warning you must not declare two property with same name in child and base class
  *   @note overrided property won't be included in it's ZFClass,
  *     it's only a method override, no new ZFMethod or ZFProperty would be declared in child class
@@ -718,10 +726,10 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
 /** @brief see #ZFPROPERTY_RETAIN */
 #define ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DECLARE(Type, Name) \
     public: \
-        zfbool _ZFP_propCbIsInitAC_##Name(ZF_OUT_OPT void *outInitValue)
+        zfbool _ZFP_propCbIsInitAC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 /** @brief see #ZFPROPERTY_RETAIN */
 #define ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DEFINE(OwnerClass, Type, Name) \
-    zfbool OwnerClass::_ZFP_propCbIsInitAC_##Name(ZF_OUT_OPT void *outInitValue)
+    zfbool OwnerClass::_ZFP_propCbIsInitAC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 
 /** @brief see #ZFPROPERTY_RETAIN */
 #define ZFPROPERTY_CUSTOM_VALUE_COMPARER_DECLARE(Type, Name) \
@@ -841,10 +849,10 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  */
 #define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE(Type, Name) \
     public: \
-        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT void *outInitValue)
+        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 /** @brief see #ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE */
 #define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DEFINE(OwnerClass, Type, Name) \
-    zfbool OwnerClass::_ZFP_propCbIsInitA_##Name(ZF_OUT_OPT void *outInitValue)
+    zfbool OwnerClass::_ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 /** @brief see #ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE */
 #define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_CALL_SUPER(SuperOwnerClass, Type, Name) \
     SuperOwnerClass::_ZFP_propCbIsInitA_##Name(outInitValue)

@@ -108,7 +108,7 @@ public:
             return ;
         }
         #endif
-     }
+    }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFEnvInfo_frameworkInfoImpl_default)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFEnvInfo_frameworkInfoImpl_default)
 

@@ -890,6 +890,8 @@ ZFClass::~ZFClass(void)
     zfdelete(d);
     d = zfnull;
 }
+/** @endcond */
+
 ZFClass *ZFClass::_ZFP_ZFClassRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
                                        ZF_IN const zfchar *name,
                                        ZF_IN const ZFClass *parent,
@@ -1379,7 +1381,6 @@ zfbool ZFClass::_ZFP_ZFClass_propertyInitStepIsTheSame(ZF_IN const ZFProperty *p
     }
     return zftrue;
 }
-/** @endcond */
 
 // ============================================================
 _ZFP_ZFClassRegisterHolder::_ZFP_ZFClassRegisterHolder(ZF_IN const zfchar *name,
