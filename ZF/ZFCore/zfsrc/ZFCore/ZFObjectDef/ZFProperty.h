@@ -227,6 +227,23 @@ public:
     const ZFMethod *_ZFP_ZFProperty_getterMethod;
     const ZFClass *_ZFP_ZFProperty_propertyClassOfRetainProperty;
     _ZFP_ZFPropertyCallbackDealloc _ZFP_ZFProperty_callbackDealloc;
+public:
+    // zfbool (Owner::*)(ZF_OUT_OPT PropHolderType *outInitValue);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomIsInitValue;
+    // ZFCompareResult (Owner::*)(ZF_IN ZFObject *anotherObj);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomCompare;
+    // void (Owner::*)(ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnInit;
+    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnDealloc;
+    // void (Owner::*)(ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnVerify;
+    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnAttach;
+    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnDetach;
+    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnUpdate;
 };
 
 // ============================================================
