@@ -16,6 +16,8 @@
 
 #include "ZFUIWidgetDef.h"
 #include "ZFUIButton.h"
+#include "ZFUIOnScreenKeyboardAutoResize.h"
+#include "ZFUIOnScreenKeyboardAutoFit.h"
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
@@ -209,15 +211,22 @@ public:
 
     /**
      * @brief whether automatically fix frame accorrding to #ZFUIOnScreenKeyboardAutoResizeStart,
-     *   false by default
+     *   true by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, dialogWindowAutoResize, ZFPropertyInitValue(zffalse))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, dialogWindowAutoResize, ZFPropertyInitValue(zftrue))
 
     /**
      * @brief whether automatically fix frame accorrding to #ZFUIOnScreenKeyboardAutoFitStart,
-     *   true by default
+     *   false by default
+     *
+     * auto fit settings can be changed by #dialogWindowAutoFit
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, dialogWindowAutoFit, ZFPropertyInitValue(zftrue))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, dialogWindowAutoFit, ZFPropertyInitValue(zffalse))
+    /** @brief see #dialogWindowAutoFit */
+    virtual ZFUIOnScreenKeyboardAutoFitLayout *dialogWindowAutoFitLayout(void)
+    {
+        return ZFCastZFObject(ZFUIOnScreenKeyboardAutoFitLayout *, this->dialogWindow()->viewDelegate());
+    }
 
 public:
     /**

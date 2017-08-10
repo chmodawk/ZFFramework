@@ -25,7 +25,8 @@ zfclassFwd _ZFP_ZFUIOnScreenKeyboardAutoFitLayoutPrivate;
  * @brief a scroll container that automatically fits content's position
  *   accorrding #ZFUIOnScreenKeyboardState
  *
- * recommended set as #ZFUIView::viewDelegateClass
+ * recommended set as #ZFUIView::viewDelegateClass,
+ * you may use #ZFUIOnScreenKeyboardAutoFitStart for short
  */
 zfclass ZF_ENV_EXPORT ZFUIOnScreenKeyboardAutoFitLayout : zfextends ZFUIView
 {
@@ -47,10 +48,10 @@ public:
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfbool, autoFitFocusedViewToVisible);
 
     /**
-     * @brief whether allow manually scroll when auto fit enabled, false by default
+     * @brief whether allow manually scroll when auto fit enabled, true by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, autoFitScrollEnable,
-                                ZFPropertyInitValue(zffalse))
+                                ZFPropertyInitValue(zftrue))
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfbool, autoFitScrollEnable);
 
 public:
@@ -89,8 +90,13 @@ private:
 // ============================================================
 /**
  * @brief util method to apply #ZFUIOnScreenKeyboardAutoFitLayout to a window
+ *
+ * applied to #ZFUIView::viewDelegateClass,
+ * you must not change the window's #ZFUIView::viewDelegate during using the auto fit layout\n
+ * \n
+ * #ZFUIOnScreenKeyboardAutoFitStop would be applied automatically when owner window destroyed
  */
-extern ZF_ENV_EXPORT void ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window);
+extern ZF_ENV_EXPORT ZFUIOnScreenKeyboardAutoFitLayout *ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window);
 /** @brief see #ZFUIOnScreenKeyboardAutoFitStart */
 extern ZF_ENV_EXPORT void ZFUIOnScreenKeyboardAutoFitStop(ZF_IN ZFUIWindow *window);
 

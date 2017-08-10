@@ -10,9 +10,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfclass ZFUIWidget_ZFUIOnScreenKeyboardAutoFitLayout_test : zfextends ZFFramework_test_TestCase
+zfclass ZFUIWidget_ZFUIOnScreenKeyboardAutoResize_test : zfextends ZFFramework_test_TestCase
 {
-    ZFOBJECT_DECLARE(ZFUIWidget_ZFUIOnScreenKeyboardAutoFitLayout_test, ZFFramework_test_TestCase)
+    ZFOBJECT_DECLARE(ZFUIWidget_ZFUIOnScreenKeyboardAutoResize_test, ZFFramework_test_TestCase)
 
 protected:
     zfoverride
@@ -24,8 +24,7 @@ protected:
         ZFUIView *container = zfnull;
         ZFUIKit_test_prepareTestWindow(window, container, this);
 
-        ZFUIOnScreenKeyboardAutoFitLayout *layout = ZFUIOnScreenKeyboardAutoFitStart(window);
-        this->prepareSettingButton(window, layout);
+        ZFUIOnScreenKeyboardAutoResizeStart(window);
 
         container->viewBackgroundColorSet(ZFUIColorGreen);
         for(zfindex i = 0; i < 3; ++i)
@@ -40,21 +39,8 @@ protected:
         container->childAtIndex(1)->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
         container->childAtIndex(2)->layoutParam()->layoutAlignSet(ZFUIAlign::e_BottomInner);
     }
-
-private:
-    void prepareSettingButton(ZF_IN ZFUIWindow *window,
-                              ZF_IN ZFUIOnScreenKeyboardAutoFitLayout *layout)
-    {
-        zfblockedAlloc(ZFArrayEditable, settings);
-
-        ZFUIKit_test_prepareSettingForBoolProperty(settings, layout, ZFPropertyAccess(ZFUIOnScreenKeyboardAutoFitLayout, autoFitEnable));
-        ZFUIKit_test_prepareSettingForBoolProperty(settings, layout, ZFPropertyAccess(ZFUIOnScreenKeyboardAutoFitLayout, autoFitFocusedViewToVisible));
-        ZFUIKit_test_prepareSettingForBoolProperty(settings, layout, ZFPropertyAccess(ZFUIOnScreenKeyboardAutoFitLayout, autoFitScrollEnable));
-
-        ZFUIKit_test_prepareSettingButtonWithTestWindow(window, settings);
-    }
 };
-ZFOBJECT_REGISTER(ZFUIWidget_ZFUIOnScreenKeyboardAutoFitLayout_test)
+ZFOBJECT_REGISTER(ZFUIWidget_ZFUIOnScreenKeyboardAutoResize_test)
 
 ZF_NAMESPACE_GLOBAL_END
 

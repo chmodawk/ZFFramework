@@ -333,18 +333,27 @@ void ZFUIOnScreenKeyboardAutoFitLayout::viewDelegateLayoutOnLayoutPrepare(ZF_IN 
 }
 
 // ============================================================
-void ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window)
+ZFUIOnScreenKeyboardAutoFitLayout *ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window)
 {
     if(window != zfnull)
     {
+        zfCoreAssertWithMessageTrim(window->viewDelegate() == zfnull,
+            zfText("[ZFUIOnScreenKeyboardAutoFitStart] you must not set window's viewDelegate when using auto fit"));
         window->viewDelegateClassSet(ZFUIOnScreenKeyboardAutoFitLayout::ClassData()->className());
+        return window->viewDelegate<ZFUIOnScreenKeyboardAutoFitLayout *>();
     }
+    return zfnull;
 }
 void ZFUIOnScreenKeyboardAutoFitStop(ZF_IN ZFUIWindow *window)
 {
     if(window != zfnull)
     {
-        window->viewDelegateClassSet(zfstring());
+        zfCoreAssertWithMessageTrim(
+            window->viewDelegate() == zfnull
+            || ZFCastZFObject(ZFUIOnScreenKeyboardAutoFitLayout *, window->viewDelegate()) != zfnull,
+            zfText("[ZFUIOnScreenKeyboardAutoFitStop] stopped with unknown viewDelegate: %s"),
+            zfsCoreZ2A(window->viewDelegate()->objectInfoOfInstance().cString()));
+        window->viewDelegateClassSet(zfText(""));
     }
 }
 

@@ -10,9 +10,6 @@
 #include "ZFUIButton.h"
 #include "ZFUIViewLayout.h"
 
-#include "ZFUIOnScreenKeyboardAutoResize.h"
-#include "ZFUIOnScreenKeyboardAutoFit.h"
-
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
