@@ -15,8 +15,8 @@ mkdir -p "$ZF_ROOT_PATH/_release/AndroidStudio/module/$PROJ_NAME/libs/libs" >/de
 cp -rf "$PROJ_PATH/build/intermediates/bundles/default/jni/." "$ZF_ROOT_PATH/_release/AndroidStudio/module/$PROJ_NAME/libs/libs/" >/dev/null 2>&1
 sh "$ZF_ROOT_PATH/tools/util/copy_header.sh" "$PROJ_PATH/../../../zfsrc" "$ZF_ROOT_PATH/_release/AndroidStudio/module/$PROJ_NAME/libs/include" >/dev/null 2>&1
 
-JAR_FILE_SIZE=`du -b "$PROJ_PATH/build/intermediates/bundles/default/classes.jar" | awk '{print $1}'`
-if test $JAR_FILE_SIZE -ge 1024 ; then
+JAR_FILE_SIZE=`du -k "$PROJ_PATH/build/intermediates/bundles/default/classes.jar" 2>/dev/null | awk '{print $1}' 2>/dev/null`
+if test ! "x-$JAR_FILE_SIZE" = "x-" && test $JAR_FILE_SIZE -ge 1 ; then
     cp "$PROJ_PATH/build/intermediates/bundles/default/classes.jar" "$ZF_ROOT_PATH/_release/AndroidStudio/module/$PROJ_NAME/libs/$PROJ_NAME.jar" >/dev/null 2>&1
 fi
 
