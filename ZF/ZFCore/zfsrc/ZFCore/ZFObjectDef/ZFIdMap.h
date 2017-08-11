@@ -219,8 +219,8 @@ public:
     } \
     ZF_STATIC_REGISTER_DESTROY(ZFIdMap_##YourModuleName##_##Scope##_##YourIdName) \
     { \
-        ZFMethodUserUnregister(this->m_id); \
-        ZFMethodUserUnregister(this->m_idName); \
+        ZFMethodFuncUserUnregister(this->m_id); \
+        ZFMethodFuncUserUnregister(this->m_idName); \
     } \
     const ZFMethod *m_id; \
     static zfidentity i_id(ZF_IN const ZFMethod *method, ZF_IN ZFObject *obj) \
