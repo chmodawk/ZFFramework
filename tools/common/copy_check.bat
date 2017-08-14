@@ -19,7 +19,6 @@ if exist "%SRC_PATH%\*" (
     xcopy /s/e/y/r/h/d "%SRC_PATH%" "%DST_PATH%" >nul 2>&1
 ) else (
     for /f %%i in ("%SRC_PATH%") do (
-        mkdir "%%~dpi" >nul 2>&1
         echo f | xcopy /y/r/h/d "%%~fi" "%DST_PATH%" >nul 2>&1
     )
 )

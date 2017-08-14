@@ -1,20 +1,20 @@
 -DZF_ENV_NAMESPACE_GLOBAL_DISABLE=1
 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
 
--I./ZF/ZFCore/zfsrc
--I./ZF/ZFAlgorithm/zfsrc
--I./ZF/ZFUtility/zfsrc
--I./ZF/ZFUIKit/zfsrc
--I./ZF/ZFAddition/zfsrc
--I./ZF/ZFUIWidget/zfsrc
--I./ZF/ZFLua/zfsrc
--I./ZF/ZFUIWebKit/zfsrc
+-I../ZFFramework/ZF/ZFCore/zfsrc
+-I../ZFFramework/ZF/ZFAlgorithm/zfsrc
+-I../ZFFramework/ZF/ZFUtility/zfsrc
+-I../ZFFramework/ZF/ZFUIKit/zfsrc
+-I../ZFFramework/ZF/ZFAddition/zfsrc
+-I../ZFFramework/ZF/ZFUIWidget/zfsrc
+-I../ZFFramework/ZF/ZFLua/zfsrc
+-I../ZFFramework/ZF/ZFUIWebKit/zfsrc
 
--I./ZF/ZF_impl/zfsrc
--I./ZF/ZF_loader_impl/zfsrc
--I./ZF/ZFCore_impl/zfsrc
--I./ZF/ZFAlgorithm_impl/zfsrc
--I./ZF/ZFUIKit_impl/zfsrc
--I./ZF/ZFLua_impl/zfsrc
--I./ZF/ZFUIWebKit_impl/zfsrc
+-I../ZFFramework/ZF/ZF_impl/zfsrc
+-I../ZFFramework/ZF/ZF_loader_impl/zfsrc
+-I../ZFFramework/ZF/ZFCore_impl/zfsrc
+-I../ZFFramework/ZF/ZFAlgorithm_impl/zfsrc
+-I../ZFFramework/ZF/ZFUIKit_impl/zfsrc
+-I../ZFFramework/ZF/ZFLua_impl/zfsrc
+-I../ZFFramework/ZF/ZFUIWebKit_impl/zfsrc
 

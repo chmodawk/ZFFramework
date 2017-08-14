@@ -15,13 +15,13 @@ rm -rf "$PROJ_ROOT/.idea" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/build" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/local.properties" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/*.iml" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/lib/.externalNativeBuild" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/lib/build" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/lib/*.iml" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/app/.externalNativeBuild" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/app/build" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/app/*.iml" >/dev/null 2>&1
-rm -rf "$PROJ_ROOT/app/src/main/assets/zfres" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zflib/.externalNativeBuild" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zflib/build" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zflib/*.iml" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zfapp/.externalNativeBuild" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zfapp/build" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zfapp/*.iml" >/dev/null 2>&1
+rm -rf "$PROJ_ROOT/zfapp/src/main/assets/zfres" >/dev/null 2>&1
 
 exit 0
 

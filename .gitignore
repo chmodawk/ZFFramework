@@ -1,28 +1,32 @@
-.svn
-**/_release/
-**/_repo/
-**/_tmp/
-**/private/
-
-**/zfgensrc_*
-
+# spec
+**/private
 /master/ZF_docs/Doxygen/Doxygen.exe
 /master/ZF_docs/Doxygen/libclang.dll
 
-# Android
-**/Android/**/assets/
-**/Android/**/bin/
-**/Android/**/gen/
-**/Android/**/lib/
-**/Android/**/libs/
-**/Android/**/obj/
+# common
+.svn
+**/_release
+**/_repo
+**/_tmp
+**/zfgensrc_*
 
-**/Android/**/*.iml
-**/Android/**/.gradle
-**/Android/**/.idea
-**/Android/**/local.properties
-**/Android/**/build
-**/Android/**/captures
+# Android
+**/Android/**/assets
+**/Android/**/bin
+**/Android/**/gen
+**/Android/**/lib
+**/Android/**/libs
+**/Android/**/obj
+
+# AndroidStudio
+**/AndroidStudio/**/*.externalNativeBuild
+**/AndroidStudio/**/*.gradle
+**/AndroidStudio/**/*.idea
+**/AndroidStudio/**/*.iml
+**/AndroidStudio/**/build
+**/AndroidStudio/**/captures
+**/AndroidStudio/**/local.properties
+**/AndroidStudio/**/src/main/assets
 
 # iOS
 **/.DS_Store
