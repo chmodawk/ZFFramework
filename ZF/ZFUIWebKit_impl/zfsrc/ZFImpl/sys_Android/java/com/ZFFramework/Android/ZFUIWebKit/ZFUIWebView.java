@@ -12,6 +12,7 @@ import java.lang.ref.WeakReference;
 import com.ZFFramework.Android.ZF.ZFMainEntry;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -23,15 +24,12 @@ public final class ZFUIWebView extends WebView {
         }
 
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view,
-                                                String urlNewString) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             if(_owner.get()._ZFP_webLoading) {
                 _owner.get()._ZFP_webRedirect = true;
             }
-
             _owner.get()._ZFP_webLoading = true;
-            view.loadUrl(urlNewString);
-            return false;
+            return super.shouldOverrideUrlLoading(view, request);
         }
 
         @Override
