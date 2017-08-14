@@ -19,10 +19,10 @@
 **/Android/**/obj
 
 # AndroidStudio
-**/AndroidStudio/**/*.externalNativeBuild
-**/AndroidStudio/**/*.gradle
-**/AndroidStudio/**/*.idea
 **/AndroidStudio/**/*.iml
+**/AndroidStudio/**/.externalNativeBuild
+**/AndroidStudio/**/.gradle
+**/AndroidStudio/**/.idea
 **/AndroidStudio/**/build
 **/AndroidStudio/**/captures
 **/AndroidStudio/**/local.properties
