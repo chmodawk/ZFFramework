@@ -449,12 +449,12 @@ void ZFUIButton::buttonSimulateClick(ZF_IN_OPT ZFUIEvent *event /* = zfnull */)
 
 void ZFUIButton::viewEventOnMouseEvent(ZF_IN ZFUIMouseEvent *mouseEvent)
 {
-    zfsuper::viewEventOnMouseEvent(mouseEvent);
-
     if(mouseEvent->mouseButton == ZFUIMouseButton::e_MouseButtonLeft)
     {
         d->viewEventOnMouseEvent(mouseEvent);
     }
+
+    zfsuper::viewEventOnMouseEvent(mouseEvent);
 }
 void ZFUIButton::viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent)
 {

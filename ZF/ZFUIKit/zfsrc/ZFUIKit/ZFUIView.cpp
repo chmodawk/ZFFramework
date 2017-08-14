@@ -2346,7 +2346,7 @@ void ZFUIView::viewEventOnMouseEvent(ZF_IN ZFUIMouseEvent *mouseEvent)
 {
     if(this->viewUIEnable())
     {
-        if(mouseEvent->mouseAction == ZFUIMouseAction::e_MouseDown
+        if(mouseEvent->mouseAction == ZFUIMouseAction::e_MouseUp
             && this->viewFocusable()
             && this->viewFocusObtainWhenClick())
         {
