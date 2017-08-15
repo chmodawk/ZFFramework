@@ -142,7 +142,7 @@ public:
             _ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow *nativeWindow = [_ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow new];
             nativeWindow.ownerZFUISysWindow = this->_mainWindow;
 
-            this->notifyOnCreate(this->_mainWindow, (__bridge void *)nativeWindow);
+            this->notifyOnCreate(this->_mainWindow, (__bridge_retained void *)nativeWindow);
 
             ZFImpl_sys_iOS_rootWindow().rootViewController = nativeWindow;
             [ZFImpl_sys_iOS_rootWindow() makeKeyAndVisible];
@@ -197,7 +197,7 @@ public:
         nativeModalWindow.ownerZFUISysWindow = modalWindow;
 
         [(__bridge UIViewController *)ownerWindow->nativeWindow() presentViewController:nativeModalWindow animated:YES completion:nil];
-        this->notifyOnCreate(modalWindow, (__bridge void *)nativeModalWindow);
+        this->notifyOnCreate(modalWindow, (__bridge_retained void *)nativeModalWindow);
 
         return modalWindow;
     }

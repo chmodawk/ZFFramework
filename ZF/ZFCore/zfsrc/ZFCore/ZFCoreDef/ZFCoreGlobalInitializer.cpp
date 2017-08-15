@@ -810,7 +810,7 @@ _ZFP_GI_Reg::~_ZFP_GI_Reg(void)
 }
 void *_ZFP_GI_Reg::instanceAccess(void)
 {
-    if(d->instance == zfnull)
+    if(d->instance == zfnull || *(d->instance) == zfnull)
     {
         d->instance = _ZFP_GI_instanceAccess(d->name, d->level);
     }
