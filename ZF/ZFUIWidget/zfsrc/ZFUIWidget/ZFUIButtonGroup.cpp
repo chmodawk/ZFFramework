@@ -165,7 +165,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIButtonGroup, zfindex, buttonTabChecked)
         }
         if(propertyValueOld != zfindexMax)
         {
-            this->buttonAtIndex(propertyValue)->buttonCheckedSet(zftrue);
+            this->buttonAtIndex(propertyValueOld)->buttonCheckedSet(zffalse);
         }
         if(this->buttonTabChecked() != zfindexMax)
         {
