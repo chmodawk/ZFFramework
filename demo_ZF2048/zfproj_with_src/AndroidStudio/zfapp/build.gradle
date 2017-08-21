@@ -61,47 +61,47 @@ task ZFCopyRes {
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFCore/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFCore/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAlgorithm/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAlgorithm/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUtility/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUtility/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIKit/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIKit/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAddition/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAddition/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIWidget/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIWidget/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZF_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZF_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZF_loader_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZF_loader_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFCore_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFCore_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAlgorithm_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFAlgorithm_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "cmd.exe"
-                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIKit_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args "/c", ZF_ROOT_PATH + "/tools/common/copy_check.bat", ZF_ROOT_PATH + "/ZF/ZFUIKit_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
         }
         else {
@@ -115,47 +115,47 @@ task ZFCopyRes {
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFCore/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFCore/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAlgorithm/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAlgorithm/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUtility/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUtility/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIKit/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIKit/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAddition/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAddition/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIWidget/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIWidget/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZF_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZF_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZF_loader_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZF_loader_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFCore_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFCore_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAlgorithm_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFAlgorithm_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
             exec {
                 executable "sh"
-                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIKit_impl/zfproj/AndroidStudio/zflib/src/main/assets/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
+                args ZF_ROOT_PATH + "/tools/common/copy_check.sh", ZF_ROOT_PATH + "/ZF/ZFUIKit_impl/zfres", this.projectDir.getAbsolutePath() + "/src/main/assets/zfres"
             }
         }
     }
