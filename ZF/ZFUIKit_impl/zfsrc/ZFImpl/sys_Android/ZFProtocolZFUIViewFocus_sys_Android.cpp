@@ -90,8 +90,11 @@ JNI_METHOD_DECLARE(void, ZFImpl_sys_Android_JNI_ID_ZFUIViewFocus, native_1notify
                    JNIEnv *jniEnv, jclass jniCls,
                    JNIPointer zfjniPointerOwnerZFUIView)
 {
-    ZFPROTOCOL_ACCESS(ZFUIViewFocus)->notifyViewFocusChanged(
-        ZFCastZFObject(ZFUIView *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUIView)));
+    ZFUIView *view = ZFCastZFObject(ZFUIView *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUIView));
+    if(!ZFBitTest(view->objectInstanceState(), ZFObjectInstanceStateOnDealloc))
+    {
+        ZFPROTOCOL_ACCESS(ZFUIViewFocus)->notifyViewFocusChanged(view);
+    }
 }
 
 #endif // #if ZF_ENV_sys_Android

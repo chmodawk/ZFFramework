@@ -121,6 +121,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
         separator->viewBackgroundColorSet(ZFUIColorGray);
     }
 
+    ZFUIViewFocusNextMove(window);
     return zfautoObjectCreate(containerView);
 }
 
@@ -230,6 +231,7 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModule(ZF_IN ZFUIView *conta
         {
             _ZFP_ZFFramework_test_prepareTestCaseSubModuleTest(containerView, subModuleData->subModuleName, subModuleData->testCases[i]);
         }
+        ZFUIViewFocusNextMove(subModuleWindow);
     })
     zfblockedAlloc(_ZFP_ZFFramework_test_TestCaseSubModuleData, subModuleData);
     subModuleData->subModuleName = subModuleName;

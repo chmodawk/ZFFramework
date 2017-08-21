@@ -487,7 +487,6 @@ zfbool ZFUIViewFocusResolveKeyEvent(ZF_IN ZFUIView *view,
         *nextFocus = zfnull;
     }
     ZFUIViewFocusNextParam param;
-    param.focusEndParentSet(endParent);
     switch(keyEvent->keyCode)
     {
         case ZFUIKeyCode::e_kLeft:
@@ -537,6 +536,7 @@ zfbool ZFUIViewFocusResolveKeyEvent(ZF_IN ZFUIView *view,
     {
         return zftrue;
     }
+    param.focusEndParentSet(endParent);
     ZFUIView *next = ZFUIViewFocusNextMove(view, param);
     if(nextFocus != zfnull)
     {
