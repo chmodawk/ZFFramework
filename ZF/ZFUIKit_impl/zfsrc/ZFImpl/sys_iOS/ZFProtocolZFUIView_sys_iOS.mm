@@ -344,41 +344,17 @@ static void _ZFP_ZFUIViewImpl_sys_iOS_notifyViewFocusChanged(ZF_IN UIView *nativ
 }
 @end
 
-static BOOL _ZFP_ZFUIViewImpl_sys_iOS_methodSwizzlePrepare_func_becomeFirstResponder(id obj, SEL selector)
-{
-    return YES;
-}
-static BOOL _ZFP_ZFUIViewImpl_sys_iOS_methodSwizzlePrepare_func_resignFirstResponder(id obj, SEL selector)
-{
-    return YES;
-}
 static void _ZFP_ZFUIViewImpl_sys_iOS_methodSwizzlePrepare(void)
 {
     {
         Method methodOrg =  class_getInstanceMethod([UIView class], @selector(becomeFirstResponder));
-        BOOL addSuccess = class_addMethod(
-            [UIView class],
-            @selector(becomeFirstResponder),
-            (IMP)_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzlePrepare_func_becomeFirstResponder,
-            method_getTypeEncoding(methodOrg));
-        if(!addSuccess)
-        {
-            Method methodNew = class_getInstanceMethod([UIView class], @selector(_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzling_becomeFirstResponder));
-            method_exchangeImplementations(methodOrg, methodNew);
-        }
+        Method methodNew = class_getInstanceMethod([UIView class], @selector(_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzling_becomeFirstResponder));
+        method_exchangeImplementations(methodOrg, methodNew);
     }
     {
         Method methodOrg =  class_getInstanceMethod([UIView class], @selector(resignFirstResponder));
-        BOOL addSuccess = class_addMethod(
-            [UIView class],
-            @selector(resignFirstResponder),
-            (IMP)_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzlePrepare_func_resignFirstResponder,
-            method_getTypeEncoding(methodOrg));
-        if(!addSuccess)
-        {
-            Method methodNew = class_getInstanceMethod([UIView class], @selector(_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzling_resignFirstResponder));
-            method_exchangeImplementations(methodOrg, methodNew);
-        }
+        Method methodNew = class_getInstanceMethod([UIView class], @selector(_ZFP_ZFUIViewImpl_sys_iOS_methodSwizzling_resignFirstResponder));
+        method_exchangeImplementations(methodOrg, methodNew);
     }
 }
 

@@ -455,7 +455,10 @@ void ZFUITextEdit::viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent)
 void ZFUITextEdit::viewFocusOnChange(void)
 {
     zfsuper::viewFocusOnChange();
-    this->textEditNotifyConfirm();
+    if(!this->viewFocused())
+    {
+        this->textEditNotifyConfirm();
+    }
 }
 
 zfbool ZFUITextEdit::internalViewShouldLayout(ZF_IN ZFUIView *internalView)
