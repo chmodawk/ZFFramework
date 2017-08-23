@@ -52,41 +52,47 @@ ZFOUTPUT_TYPE(ZFXmlItem, {output << v.objectInfo();})
 /**
  * @brief parse xml formated data to serializable
  */
-extern ZF_ENV_EXPORT zfbool ZFXmlParseToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                         ZF_IN const ZFXmlItem &xmlElement,
-                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                         ZF_OUT_OPT ZFXmlItem *outErrorPos = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlParseToSerializableData,
+                        ZFMP_OUT(ZFSerializableData &, serializableData),
+                        ZFMP_IN(const ZFXmlItem &, xmlElement),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
+                        ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 /**
  * @brief see #ZFXmlParseToSerializableData
  */
-extern ZF_ENV_EXPORT ZFSerializableData ZFXmlParseToSerializableData(ZF_IN const ZFXmlItem &xmlElement,
-                                                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                                     ZF_OUT_OPT ZFXmlItem *outErrorPos = zfnull);
+ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFXmlParseToSerializableData,
+                        ZFMP_IN(const ZFXmlItem &, xmlElement),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
+                        ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 /**
  * @brief print serializable to xml formated data
  */
-extern ZF_ENV_EXPORT zfbool ZFXmlPrintFromSerializableData(ZF_OUT ZFXmlItem &xmlElement,
-                                                           ZF_IN const ZFSerializableData &serializableData,
-                                                           ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                           ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlPrintFromSerializableData,
+                        ZFMP_OUT(ZFXmlItem &, xmlElement),
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
+                        ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 /**
  * @brief see #ZFXmlPrintFromSerializableData
  */
-extern ZF_ENV_EXPORT ZFXmlItem ZFXmlPrintFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
-                                                              ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                              ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+ZFMETHOD_FUNC_DECLARE_3(ZFXmlItem, ZFXmlPrintFromSerializableData,
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
+                        ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 
 // ============================================================
 /**
  * @brief util method to convert serializable object to xml format
  */
-extern ZF_ENV_EXPORT void ZFXmlPrint(ZF_IN const ZFSerializableData &serializableData,
-                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
-                                     ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlPrint,
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 /** @brief see #ZFXmlPrint */
-extern ZF_ENV_EXPORT void ZFXmlPrint(ZF_IN ZFObject *obj,
-                                     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
-                                     ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlPrint,
+                        ZFMP_IN(ZFObject *, obj),
+                        ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 
 // ============================================================
 /**
@@ -95,9 +101,12 @@ extern ZF_ENV_EXPORT void ZFXmlPrint(ZF_IN ZFObject *obj,
  * this method would automatically setup
  * #ZFSerializableDataTagKeyword_filePath/#ZFSerializableDataTagKeyword_resPath
  */
-extern ZF_ENV_EXPORT zfbool ZFXmlParse(ZF_OUT ZFSerializableData &ret, ZF_IN const ZFInputCallback &input);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFXmlParse,
+                        ZFMP_OUT(ZFSerializableData &, ret),
+                        ZFMP_IN(const ZFInputCallback &, input))
 /** @brief see #ZFXmlParse */
-extern ZF_ENV_EXPORT ZFSerializableData ZFXmlParse(ZF_IN const ZFInputCallback &input);
+ZFMETHOD_FUNC_DECLARE_1(ZFSerializableData, ZFXmlParse,
+                        ZFMP_IN(const ZFInputCallback &, input))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFXmlSerializableConverter_h_

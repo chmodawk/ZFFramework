@@ -45,11 +45,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief object instance state for ZFObject
  */
 typedef enum {
-    ZFObjectInstanceStateOnInit = 0x01, /**< @brief object is under #objectOnInit */
-    ZFObjectInstanceStateOnInitFinish = 0x03, /**< @brief object is under #objectOnInitFinish */
+    ZFObjectInstanceStateOnInit = 0x01, /**< @brief object is under #ZFObject::objectOnInit */
+    ZFObjectInstanceStateOnInitFinish = 0x03, /**< @brief object is under #ZFObject::objectOnInitFinish */
     ZFObjectInstanceStateIdle = 0, /**< @brief object is constructed successfully */
-    ZFObjectInstanceStateOnDeallocPrepare = 0x30, /**< @brief object is under #objectOnDeallocPrepare */
-    ZFObjectInstanceStateOnDealloc = 0x10, /**< @brief object is under #objectOnDealloc */
+    ZFObjectInstanceStateOnDeallocPrepare = 0x30, /**< @brief object is under #ZFObject::objectOnDeallocPrepare */
+    ZFObjectInstanceStateOnDealloc = 0x10, /**< @brief object is under #ZFObject::objectOnDealloc */
 } ZFObjectInstanceState;
 /** @brief string tokens */
 #define ZFTOKEN_ZFObjectInstanceStateOnInit zfText("ZFObjectInstanceStateOnInit")

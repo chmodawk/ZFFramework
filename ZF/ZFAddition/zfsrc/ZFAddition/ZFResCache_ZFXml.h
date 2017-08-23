@@ -23,7 +23,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * it's your responsibility to ensure the result serializable can be used more than once,
  * otherwise, you should copy the result (typically #ZFCopyable)
  */
-extern ZF_ENV_EXPORT zfautoObject ZFResXml(ZF_IN const zfchar *resPath);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFResXml, ZFMP_IN(const zfchar *, resPath))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFResCache_ZFXml_h_

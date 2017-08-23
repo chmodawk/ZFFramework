@@ -7,16 +7,17 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 /**
- * @file ZFCoreTypeMethodRegister.h
+ * @file ZFCoreType_methodRegister.h
  * @brief export some methods for ZFObject core
  */
 
-#ifndef _ZFI_ZFCoreTypeMethodRegister_h_
-#define _ZFI_ZFCoreTypeMethodRegister_h_
+#ifndef _ZFI_ZFCoreType_methodRegister_h_
+#define _ZFI_ZFCoreType_methodRegister_h_
 
 #include "ZFExport.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+/** @cond ZFPrivateDoc */
 ZFEXPORT_VAR_READONLY_DECLARE(zfindexRange, zfindexRangeZero)
 ZFEXPORT_VAR_READONLY_DECLARE(zfindexRange, zfindexRangeMax)
 
@@ -33,7 +34,8 @@ ZFEXPORT_VAR_DECLARE(ZFTokenForContainer, ZFTokenForContainerDefault)
 ZFEXPORT_VAR_READONLY_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerTrim)
 ZFEXPORT_VAR_READONLY_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDetail)
 ZFEXPORT_VAR_DECLARE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDefault)
+/** @endcond */
 
 ZF_NAMESPACE_GLOBAL_END
-#endif // #ifndef _ZFI_ZFCoreTypeMethodRegister_h_
+#endif // #ifndef _ZFI_ZFCoreType_methodRegister_h_
 

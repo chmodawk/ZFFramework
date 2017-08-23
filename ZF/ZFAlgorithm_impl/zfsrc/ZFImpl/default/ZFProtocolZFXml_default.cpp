@@ -37,18 +37,16 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFXmlImpl_default, ZFXml, ZFProtocolLevel::e_Def
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("pugixml"))
 public:
     virtual ZFXmlItem xmlParse(ZF_IN const zfchar *src,
-                               ZF_IN_OPT zfindex size = zfindexMax,
-                               ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault)
+                               ZF_IN_OPT zfindex size = zfindexMax)
     {
         ZFBuffer buf;
         buf.bufferCopy(src, size * sizeof(zfchar));
-        return this->xmlParse(buf, flags);
+        return this->xmlParse(buf);
     }
-    virtual ZFXmlItem xmlParse(ZF_IN const ZFInputCallback &inputCallback,
-                               ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault)
+    virtual ZFXmlItem xmlParse(ZF_IN const ZFInputCallback &inputCallback)
     {
         ZFBuffer buf = ZFInputCallbackReadToBuffer(inputCallback);
-        return this->xmlParse(buf, flags);
+        return this->xmlParse(buf);
     }
     virtual void xmlMemoryPoolRelease(ZF_IN void *token, ZF_IN const zfchar *value)
     {
@@ -60,8 +58,7 @@ public:
         }
     }
 private:
-    ZFXmlItem xmlParse(ZF_IN_OUT ZFBuffer &buf,
-                       ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault)
+    ZFXmlItem xmlParse(ZF_IN_OUT ZFBuffer &buf)
     {
         if(buf.buffer() == zfnull)
         {

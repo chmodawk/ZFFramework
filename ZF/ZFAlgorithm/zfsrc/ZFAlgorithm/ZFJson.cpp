@@ -15,61 +15,86 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFOBJECT_REGISTER(ZFJsonType)
+ZFENUM_DEFINE(ZFJsonType)
 
 // ============================================================
-const ZFJsonParseFlags ZFJsonParseFlagsDefault = {
-};
+/** @cond ZFPrivateDoc */
+zfbool ZFJsonOutputToken::operator == (ZF_IN ZFJsonOutputToken const &ref) const
+{
+    return (zftrue
+            && this->jsonNewLineToken == ref.jsonNewLineToken
+            && this->jsonIndentToken == ref.jsonIndentToken
+            && this->jsonValueSeparatorToken == ref.jsonValueSeparatorToken
+            && this->jsonSeparatorToken == ref.jsonSeparatorToken
+            && this->jsonSeparatorInSameLineToken == ref.jsonSeparatorInSameLineToken
+            && this->jsonKeyTagLeft == ref.jsonKeyTagLeft
+            && this->jsonKeyTagRight == ref.jsonKeyTagRight
+            && this->jsonValueTagLeft == ref.jsonValueTagLeft
+            && this->jsonValueTagRight == ref.jsonValueTagRight
+            && this->jsonObjectTagLeft == ref.jsonObjectTagLeft
+            && this->jsonObjectTagRight == ref.jsonObjectTagRight
+            && this->jsonArrayTagLeft == ref.jsonArrayTagLeft
+            && this->jsonArrayTagRight == ref.jsonArrayTagRight
+        );
+}
+zfbool ZFJsonOutputFlags::operator == (ZF_IN ZFJsonOutputFlags const &ref) const
+{
+    return (zftrue
+            && this->jsonToken == ref.jsonToken
+            && this->jsonGlobalLineBeginToken == ref.jsonGlobalLineBeginToken
+            && this->jsonObjectAddNewLineForContent == ref.jsonObjectAddNewLineForContent
+            && this->jsonObjectTagInSameLineIfNoContent == ref.jsonObjectTagInSameLineIfNoContent
+            && this->jsonArrayAddNewLineForContent == ref.jsonArrayAddNewLineForContent
+            && this->jsonArrayContentTagInSameLine == ref.jsonArrayContentTagInSameLine
+            && this->jsonArrayTagInSameLineIfNoContent == ref.jsonArrayTagInSameLineIfNoContent
+        );
+}
+/** @endcond */
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlags)
 
 // ============================================================
-static ZFJsonOutputFlags _ZFP_ZFJsonOutputFlagsDefaultInstance;
-const ZFJsonOutputFlags &_ZFP_ZFJsonOutputFlagsDefault(void)
+ZFEXPORT_VAR_READONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlagsDefault, ZFJsonOutputFlags())
+
+static ZFJsonOutputFlags _ZFP_ZFJsonOutputFlagsTrim(void)
 {
-    return _ZFP_ZFJsonOutputFlagsDefaultInstance;
+    ZFJsonOutputFlags d;
+    d.jsonToken.jsonNewLineToken.removeAll();
+    d.jsonToken.jsonIndentToken.removeAll();
+    d.jsonToken.jsonValueSeparatorToken = zfText(":");
+    d.jsonToken.jsonSeparatorInSameLineToken = zfText(",");
+    d.jsonObjectAddNewLineForContent = zffalse;
+    d.jsonArrayAddNewLineForContent = zffalse;
+    return d;
 }
-static ZFJsonOutputFlags _ZFP_ZFJsonOutputFlagsTrimInstance;
-const ZFJsonOutputFlags &_ZFP_ZFJsonOutputFlagsTrim(void)
-{
-    return _ZFP_ZFJsonOutputFlagsTrimInstance;
-}
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFJsonOutputFlagsInit, ZFLevelZFFrameworkStatic)
-{
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonToken.jsonNewLineToken.removeAll();
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonToken.jsonIndentToken.removeAll();
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonToken.jsonValueSeparatorToken = zfText(":");
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonToken.jsonSeparatorInSameLineToken = zfText(",");
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonObjectAddNewLineForContent = zffalse;
-    _ZFP_ZFJsonOutputFlagsTrimInstance.jsonArrayAddNewLineForContent = zffalse;
-}
-ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFJsonOutputFlagsInit)
+ZFEXPORT_VAR_READONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlagsTrim, _ZFP_ZFJsonOutputFlagsTrim())
 
 // ============================================================
-static void _ZFP_ZFJsonToOutput_outputIndent(ZF_IN_OUT const ZFOutputCallback &output,
-                                             ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                             ZF_IN zfindex indentLevel)
+static void _ZFP_ZFJsonItemToOutput_outputIndent(ZF_IN_OUT const ZFOutputCallback &output,
+                                                 ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                                 ZF_IN zfindex indentLevel)
 {
     for(zfindex i = 0; i < indentLevel; ++i)
     {
         output << outputFlags.jsonToken.jsonIndentToken;
     }
 }
-static void _ZFP_ZFJsonToOutput_output(ZF_IN_OUT const ZFOutputCallback &output,
-                                       ZF_IN const ZFJsonItem &jsonItem,
-                                       ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                       ZF_IN zfindex indentLevel);
-static void _ZFP_ZFJsonToOutput_output_JsonValue(ZF_IN_OUT const ZFOutputCallback &output,
-                                                 ZF_IN const ZFJsonItem &jsonValue,
-                                                 ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                                 ZF_IN zfindex indentLevel)
+static void _ZFP_ZFJsonItemToOutput_output(ZF_IN_OUT const ZFOutputCallback &output,
+                                           ZF_IN const ZFJsonItem &jsonItem,
+                                           ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                           ZF_IN zfindex indentLevel);
+static void _ZFP_ZFJsonItemToOutput_output_JsonValue(ZF_IN_OUT const ZFOutputCallback &output,
+                                                     ZF_IN const ZFJsonItem &jsonValue,
+                                                     ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                                     ZF_IN zfindex indentLevel)
 {
     output << outputFlags.jsonToken.jsonValueTagLeft;
     ZFJsonEscapeCharEncode(output, jsonValue.jsonValue());
     output << outputFlags.jsonToken.jsonValueTagRight;
 }
-static void _ZFP_ZFJsonToOutput_output_JsonObject(ZF_IN_OUT const ZFOutputCallback &output,
-                                                  ZF_IN const ZFJsonItem &jsonObject,
-                                                  ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                                  ZF_IN zfindex indentLevel)
+static void _ZFP_ZFJsonItemToOutput_output_JsonObject(ZF_IN_OUT const ZFOutputCallback &output,
+                                                      ZF_IN const ZFJsonItem &jsonObject,
+                                                      ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                                      ZF_IN zfindex indentLevel)
 {
     output << outputFlags.jsonToken.jsonObjectTagLeft;
     zfbool first = zftrue;
@@ -86,7 +111,7 @@ static void _ZFP_ZFJsonToOutput_output_JsonObject(ZF_IN_OUT const ZFOutputCallba
                 output << outputFlags.jsonToken.jsonSeparatorToken;
             }
             output << outputFlags.jsonToken.jsonNewLineToken << outputFlags.jsonGlobalLineBeginToken;
-            _ZFP_ZFJsonToOutput_outputIndent(output, outputFlags, indentLevel + 1);
+            _ZFP_ZFJsonItemToOutput_outputIndent(output, outputFlags, indentLevel + 1);
         }
         else
         {
@@ -104,20 +129,20 @@ static void _ZFP_ZFJsonToOutput_output_JsonObject(ZF_IN_OUT const ZFOutputCallba
             << jsonObject.jsonItemIteratorGetKey(it)
             << outputFlags.jsonToken.jsonKeyTagRight;
         output << outputFlags.jsonToken.jsonValueSeparatorToken;
-        _ZFP_ZFJsonToOutput_output(output, jsonObject.jsonItemIteratorGet(it), outputFlags, indentLevel + 1);
+        _ZFP_ZFJsonItemToOutput_output(output, jsonObject.jsonItemIteratorGet(it), outputFlags, indentLevel + 1);
     }
     if(outputFlags.jsonObjectAddNewLineForContent
         && !(outputFlags.jsonObjectTagInSameLineIfNoContent && jsonObject.jsonItemCount() == 0))
     {
         output << outputFlags.jsonToken.jsonNewLineToken << outputFlags.jsonGlobalLineBeginToken;
-        _ZFP_ZFJsonToOutput_outputIndent(output, outputFlags, indentLevel);
+        _ZFP_ZFJsonItemToOutput_outputIndent(output, outputFlags, indentLevel);
     }
     output << outputFlags.jsonToken.jsonObjectTagRight;
 }
-static void _ZFP_ZFJsonToOutput_output_JsonArray(ZF_IN_OUT const ZFOutputCallback &output,
-                                                 ZF_IN const ZFJsonItem &jsonArray,
-                                                 ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                                 ZF_IN zfindex indentLevel)
+static void _ZFP_ZFJsonItemToOutput_output_JsonArray(ZF_IN_OUT const ZFOutputCallback &output,
+                                                     ZF_IN const ZFJsonItem &jsonArray,
+                                                     ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                                     ZF_IN zfindex indentLevel)
 {
     output << outputFlags.jsonToken.jsonArrayTagLeft;
     for(zfindex i = 0; i < jsonArray.jsonObjectCount(); ++i)
@@ -139,9 +164,9 @@ static void _ZFP_ZFJsonToOutput_output_JsonArray(ZF_IN_OUT const ZFOutputCallbac
             if(!outputFlags.jsonArrayContentTagInSameLine)
             {
                 output << outputFlags.jsonToken.jsonNewLineToken << outputFlags.jsonGlobalLineBeginToken;
-                _ZFP_ZFJsonToOutput_outputIndent(output, outputFlags, indentLevel);
+                _ZFP_ZFJsonItemToOutput_outputIndent(output, outputFlags, indentLevel);
             }
-            _ZFP_ZFJsonToOutput_output(output, jsonArray.jsonObjectAtIndex(i), outputFlags, indentLevel + 1);
+            _ZFP_ZFJsonItemToOutput_output(output, jsonArray.jsonObjectAtIndex(i), outputFlags, indentLevel + 1);
         }
         else
         {
@@ -149,32 +174,32 @@ static void _ZFP_ZFJsonToOutput_output_JsonArray(ZF_IN_OUT const ZFOutputCallbac
             {
                 output << outputFlags.jsonToken.jsonSeparatorInSameLineToken;
             }
-            _ZFP_ZFJsonToOutput_output(output, jsonArray.jsonObjectAtIndex(i), outputFlags, indentLevel + 1);
+            _ZFP_ZFJsonItemToOutput_output(output, jsonArray.jsonObjectAtIndex(i), outputFlags, indentLevel + 1);
         }
     }
     if(outputFlags.jsonArrayAddNewLineForContent
         && !(outputFlags.jsonArrayTagInSameLineIfNoContent && jsonArray.jsonObjectCount() == 0))
     {
         output << outputFlags.jsonToken.jsonNewLineToken << outputFlags.jsonGlobalLineBeginToken;
-        _ZFP_ZFJsonToOutput_outputIndent(output, outputFlags, indentLevel);
+        _ZFP_ZFJsonItemToOutput_outputIndent(output, outputFlags, indentLevel);
     }
     output << outputFlags.jsonToken.jsonArrayTagRight;
 }
-static void _ZFP_ZFJsonToOutput_output(ZF_IN_OUT const ZFOutputCallback &output,
-                                       ZF_IN const ZFJsonItem &jsonItem,
-                                       ZF_IN const ZFJsonOutputFlags &outputFlags,
-                                       ZF_IN zfindex indentLevel)
+static void _ZFP_ZFJsonItemToOutput_output(ZF_IN_OUT const ZFOutputCallback &output,
+                                           ZF_IN const ZFJsonItem &jsonItem,
+                                           ZF_IN const ZFJsonOutputFlags &outputFlags,
+                                           ZF_IN zfindex indentLevel)
 {
     switch(jsonItem.jsonType())
     {
         case ZFJsonType::e_JsonValue:
-            _ZFP_ZFJsonToOutput_output_JsonValue(output, jsonItem, outputFlags, indentLevel);
+            _ZFP_ZFJsonItemToOutput_output_JsonValue(output, jsonItem, outputFlags, indentLevel);
             break;
         case ZFJsonType::e_JsonObject:
-            _ZFP_ZFJsonToOutput_output_JsonObject(output, jsonItem, outputFlags, indentLevel);
+            _ZFP_ZFJsonItemToOutput_output_JsonObject(output, jsonItem, outputFlags, indentLevel);
             break;
         case ZFJsonType::e_JsonArray:
-            _ZFP_ZFJsonToOutput_output_JsonArray(output, jsonItem, outputFlags, indentLevel);
+            _ZFP_ZFJsonItemToOutput_output_JsonArray(output, jsonItem, outputFlags, indentLevel);
             break;
         default:
             zfCoreCriticalShouldNotGoHere();
@@ -870,55 +895,118 @@ zfindex ZFJsonItem::jsonObjectFind(ZF_IN const ZFJsonItem &jsonObject) const
 }
 
 // ============================================================
-ZFJsonItem ZFJsonFromInput(ZF_IN const ZFInputCallback &input,
-                           ZF_IN_OPT const ZFJsonParseFlags &flags /* = ZFJsonParseFlagsDefault */)
+ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFJsonItem, ZFJsonItem, {
+        v = ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(src, srcLen);
+        return !v.jsonIsNull();
+    }, {
+        return ZFJsonItemToOutput(ZFOutputCallbackForString(s), v);
+    })
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, objectInfoT, ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfstring, objectInfo)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfindex, objectRetainCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, ZFJsonTypeEnum, jsonType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfbool, jsonIsNull)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, ZFJsonItem, jsonParent)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, const zfchar *, jsonKey)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonValueSet, ZFMP_IN(const zfchar *, value))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, const zfchar *, jsonValue)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, ZFJsonItem, jsonCloneTree)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonItem, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonItemSet, ZFMP_IN(const zfchar *, key), ZFMP_IN(const ZFJsonItem &, jsonItem))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, const zfchar *, jsonItemValue, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonItemValueSet, ZFMP_IN(const zfchar *, key), ZFMP_IN(const zfchar *, value))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonItemRemove, ZFMP_IN(const ZFJsonItem &, jsonItem))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonItemRemove, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, void, jsonItemRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfindex, jsonItemCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfiterator, jsonItemIterator)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, zfiterator, jsonItemIteratorForKey, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, zfbool, jsonItemIteratorIsValid, ZFMP_IN(const zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, zfbool, jsonItemIteratorIsEqual, ZFMP_IN(const zfiterator &, it0), ZFMP_IN(const zfiterator &, it1))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonItemIteratorSet, ZFMP_IN_OUT(zfiterator &, it), ZFMP_IN(const ZFJsonItem &, jsonItem))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonItemIteratorRemove, ZFMP_IN_OUT(zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, const zfchar *, jsonItemIteratorGetKey, ZFMP_IN(const zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonItemIteratorGet, ZFMP_IN(const zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, const zfchar *, jsonItemIteratorNextKey, ZFMP_IN_OUT(zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonItemIteratorNext, ZFMP_IN_OUT(zfiterator &, it))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfindex, jsonObjectCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonObjectAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonObjectAdd, ZFMP_IN(const ZFJsonItem &, jsonObject), ZFMP_IN_OPT(zfindex, atIndex, zfindexMax))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonObjectRemove, ZFMP_IN(const ZFJsonItem &, jsonObject))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonObjectRemoveAtIndex, ZFMP_IN(zfindex, index))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, void, jsonObjectRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, zfindex, jsonObjectFind, ZFMP_IN(const ZFJsonItem &, jsonObject))
+
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_1(ZFJsonItem, ZFJsonItemFromInput, ZFMP_IN(const ZFInputCallback &, input))
 {
-    return ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(input, flags);
+    return ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(input);
 }
-ZFJsonItem ZFJsonFromString(ZF_IN const zfchar *src,
-                            ZF_IN_OPT zfindex length /* = zfindexMax */,
-                            ZF_IN_OPT const ZFJsonParseFlags &flags /* = ZFJsonParseFlagsDefault */)
+ZFMETHOD_FUNC_DEFINE_2(ZFJsonItem, ZFJsonItemFromString,
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, length, zfindexMax))
 {
-    return ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(src, length, flags);
+    return ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(src, length);
 }
 
-zfbool ZFJsonToOutput(ZF_IN_OUT const ZFOutputCallback &output,
-                      ZF_IN const ZFJsonItem &jsonItem,
-                      ZF_IN_OPT const ZFJsonOutputFlags &outputFlags /* = ZFJsonOutputFlagsDefault */)
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFJsonItemToOutput,
+                       ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                       ZFMP_IN(const ZFJsonItem &, jsonItem),
+                       ZFMP_IN_OPT(const ZFJsonOutputFlags &, outputFlags, ZFJsonOutputFlagsDefault()))
 {
     if(output.callbackIsValid() && !jsonItem.jsonIsNull())
     {
         output << outputFlags.jsonGlobalLineBeginToken;
-        _ZFP_ZFJsonToOutput_output(output, jsonItem, outputFlags, 0);
+        _ZFP_ZFJsonItemToOutput_output(output, jsonItem, outputFlags, 0);
         return zftrue;
     }
     return zffalse;
 }
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFJsonItemToString,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN(const ZFJsonItem &, jsonItem),
+                       ZFMP_IN(const ZFJsonOutputFlags &, outputFlags))
+{
+    return ZFJsonItemToOutput(ZFOutputCallbackForString(ret), jsonItem, outputFlags);
+}
+ZFMETHOD_FUNC_DEFINE_2(zfstring, ZFJsonItemToString,
+                       ZFMP_IN(const ZFJsonItem &, jsonItem),
+                       ZFMP_IN(const ZFJsonOutputFlags &, outputFlags))
+{
+    zfstring ret;
+    ZFJsonItemToString(ret, jsonItem, outputFlags);
+    return ret;
+}
 
 // ============================================================
 // escape chars
-void ZFJsonEscapeCharEncode(ZF_OUT zfstring &dst,
-                            ZF_IN const zfchar *src,
-                            ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharEncode,
+                       ZFMP_OUT(zfstring &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFJsonEscapeCharEncode(ZFOutputCallbackForString(dst), src, count);
 }
-void ZFJsonEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
-                            ZF_IN const zfchar *src,
-                            ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharEncode,
+                       ZFMP_OUT(const ZFOutputCallback &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFPROTOCOL_ACCESS(ZFJsonEscapeChar)->jsonEscapeCharEncode(dst, src, count);
 }
 
-void ZFJsonEscapeCharDecode(ZF_OUT zfstring &dst,
-                            ZF_IN const zfchar *src,
-                            ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharDecode,
+                       ZFMP_OUT(zfstring &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFJsonEscapeCharDecode(ZFOutputCallbackForString(dst), src, count);
 }
-void ZFJsonEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
-                            ZF_IN const zfchar *src,
-                            ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharDecode,
+                       ZFMP_OUT(const ZFOutputCallback &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFPROTOCOL_ACCESS(ZFJsonEscapeChar)->jsonEscapeCharDecode(dst, src, count);
 }

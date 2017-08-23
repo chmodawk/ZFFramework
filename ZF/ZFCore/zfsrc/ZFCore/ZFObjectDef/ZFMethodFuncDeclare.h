@@ -328,8 +328,8 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
             , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
             ) \
         static ReturnType methodInvoker( \
-            ZF_IN const ZFMethod *method, \
-            ZF_IN ZFObject *obj \
+            ZF_IN const ZFMethod *invokerMethod, \
+            ZF_IN ZFObject *invokerObject \
             ParamExpandOrEmpty0(ZFM_COMMA() ParamType0 param0) \
             ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \
             ParamExpandOrEmpty2(ZFM_COMMA() ParamType2 param2) \

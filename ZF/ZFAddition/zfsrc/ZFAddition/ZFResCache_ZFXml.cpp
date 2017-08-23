@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject ZFResXml(ZF_IN const zfchar *resPath)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResXml, ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {

@@ -39,10 +39,10 @@ protected:
 
         this->testCaseOutputSeparator();
         this->testCaseOutput(zfText("ZFXml parse from string:"));
-        ZFXmlItem doc = ZFXmlFromString(src);
+        ZFXmlItem doc = ZFXmlItemFromString(src);
 
         this->testCaseOutput(zfText("ZFXml parse from string, result:"));
-        zfLogTrimT() << ZFXmlToString(doc);
+        zfLogTrimT() << ZFXmlItemToString(doc);
 
         this->testCaseOutputSeparator();
         this->testCaseOutput(zfText("ZFXml add element"));
@@ -50,7 +50,7 @@ protected:
         element.xmlNameSet(zfText("testElement"));
         doc.xmlChildAdd(element);
         this->testCaseOutput(zfText("ZFXml add element, result:"));
-        zfLogTrimT() << ZFXmlToString(doc);
+        zfLogTrimT() << ZFXmlItemToString(doc);
 
         this->performanceTest(doc);
 
@@ -64,20 +64,20 @@ private:
         for(zfindex i = 0; i < toDataTimes; ++i)
         {
             zfstring tmp;
-            ZFXmlToOutput(ZFOutputCallbackForString(tmp), xmlItem);
+            ZFXmlItemToOutput(ZFOutputCallbackForString(tmp), xmlItem);
         }
         ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFXmlPerformance_test_toData"));
 
         zfindex fromDataTimes = toDataTimes;
         zfstring xmlString;
-        ZFXmlToOutput(ZFOutputCallbackForString(xmlString), xmlItem);
+        ZFXmlItemToOutput(ZFOutputCallbackForString(xmlString), xmlItem);
         ZFCoreStatistic::invokeTimeAccurateLogBegin(zfText("ZFXmlPerformance_test_fromData"));
         for(zfindex i = 0; i < fromDataTimes; ++i)
         {
-            ZFXmlFromInput(ZFInputCallbackForBuffer(xmlString.cString()));
+            ZFXmlItemFromInput(ZFInputCallbackForBuffer(xmlString.cString()));
         }
         ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFXmlPerformance_test_fromData"));
-        ZFXmlItem xmlItemNew = ZFXmlFromInput(ZFInputCallbackForBuffer(xmlString.cString()));
+        ZFXmlItem xmlItemNew = ZFXmlItemFromInput(ZFInputCallbackForBuffer(xmlString.cString()));
 
         this->testCaseOutputSeparator();
 
@@ -94,7 +94,7 @@ private:
         #if 0
             this->testCaseOutputSeparator();
             this->testCaseOutput(zfText("content: %s"), xmlString.cString());
-            this->testCaseOutput(zfText("newly: %s"), ZFXmlToString(xmlItemNew).cString());
+            this->testCaseOutput(zfText("newly: %s"), ZFXmlItemToString(xmlItemNew).cString());
         #endif
 
         ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFXmlPerformance_test_toData"));

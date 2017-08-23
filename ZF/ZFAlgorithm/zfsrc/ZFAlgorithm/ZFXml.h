@@ -91,13 +91,13 @@ zfclassFwd ZFXmlVisitData;
  *   if not visitEnter, shows that whether we should continue to visit next siblings
  */
 typedef ZFCallbackT<zfbool, const ZFXmlVisitData &> ZFXmlVisitCallback;
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFXmlVisitCallback, ZFXmlVisitCallback)
 
-extern ZF_ENV_EXPORT ZFXmlVisitCallback *_ZFP_ZFXmlVisitCallbackDefault(void);
 /**
  * @brief default visit callback for visiting a xml item,
  *   you can change it at runtime
  */
-#define ZFXmlVisitCallbackDefault (*_ZFP_ZFXmlVisitCallbackDefault())
+ZFEXPORT_VAR_READONLY_DECLARE(ZFXmlVisitCallback, ZFXmlVisitCallbackDefault)
 
 // ============================================================
 // ZFXmlItem
@@ -372,18 +372,7 @@ private:
 private:
     ZFXmlItem(ZF_IN _ZFP_ZFXmlItemPrivate *ref);
 };
-
-// ============================================================
-/**
- * @brief flags used when parsing document
- */
-zfclassPOD ZF_ENV_EXPORT ZFXmlParseFlags
-{
-};
-/**
- * @brief default parse flags
- */
-extern ZF_ENV_EXPORT const ZFXmlParseFlags ZFXmlParseFlagsDefault;
+ZFPROPERTY_TYPE_DECLARE(ZFXmlItem, ZFXmlItem)
 
 // ============================================================
 // ZFXmlVisitData
@@ -503,6 +492,7 @@ public:
     zfstring xmlCommentTagRight; /**< @brief "-->" by default */
 
 public:
+    /** @cond ZFPrivateDoc */
     ZFXmlOutputToken(void)
     : xmlNewLineToken(zfText("\n"))
     , xmlIndentToken(zfText("    "))
@@ -529,6 +519,12 @@ public:
     , xmlCommentTagRight(zfText("-->"))
     {
     }
+    zfbool operator == (ZF_IN ZFXmlOutputToken const &ref) const;
+    zfbool operator != (ZF_IN ZFXmlOutputToken const &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
 
 /**
@@ -575,6 +571,7 @@ public:
     zfbool xmlAttributeUseSingleQuote;
 
 public:
+    /** @cond ZFPrivateDoc */
     ZFXmlOutputFlags(void)
     : xmlToken()
     , xmlGlobalLineBeginToken()
@@ -585,27 +582,32 @@ public:
     , xmlAttributeUseSingleQuote(zffalse)
     {
     }
+    zfbool operator == (ZF_IN ZFXmlOutputFlags const &ref) const;
+    zfbool operator != (ZF_IN ZFXmlOutputFlags const &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
-extern ZF_ENV_EXPORT const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDefault(void);
-extern ZF_ENV_EXPORT const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsTrim(void);
-extern ZF_ENV_EXPORT const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDetailed(void);
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFXmlOutputFlags, ZFXmlOutputFlags)
+
 /**
  * @brief default xml output flags
  */
-#define ZFXmlOutputFlagsDefault _ZFP_ZFXmlOutputFlagsDefault()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFXmlOutputFlags, ZFXmlOutputFlagsDefault)
 /**
  * @brief xml output flags with trim format
  */
-#define ZFXmlOutputFlagsTrim _ZFP_ZFXmlOutputFlagsTrim()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFXmlOutputFlags, ZFXmlOutputFlagsTrim)
 /**
  * @brief xml output flags with detailed format
  */
-#define ZFXmlOutputFlagsDetailed _ZFP_ZFXmlOutputFlagsDetailed()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFXmlOutputFlags, ZFXmlOutputFlagsDetailed)
 
 extern ZF_ENV_EXPORT ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(
     ZF_IN const ZFCallerInfo &callerInfo,
     ZF_IN_OPT const ZFOutputCallback &outputCallback = ZFOutputCallbackDefault(),
-    ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault);
+    ZF_IN_OPT const ZFXmlOutputFlags &flags = ZFXmlOutputFlagsDefault());
 /**
  * @brief create a ZFXmlVisitCallback to output xml DOM tree
  *
@@ -615,36 +617,34 @@ extern ZF_ENV_EXPORT ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(
  */
 #define ZFXmlVisitCallbackForOutput(...) \
     _ZFP_ZFXmlVisitCallbackForOutput(ZFCallerInfoMake(), ##__VA_ARGS__)
+/** @brief see #ZFXmlVisitCallbackForOutput */
+ZFMETHOD_FUNC_DECLARE_2(ZFXmlVisitCallback, ZFXmlVisitCallbackForOutput,
+                        ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 
 // ============================================================
 /**
  * @brief parse xml document, or return an item with null type if fail
  */
-extern ZF_ENV_EXPORT ZFXmlItem ZFXmlFromInput(ZF_IN const ZFInputCallback &callback,
-                                              ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_1(ZFXmlItem, ZFXmlItemFromInput,
+                        ZFMP_IN(const ZFInputCallback &, callback))
 /**
  * @brief parse xml document, or return an item with null type if fail
  */
-extern ZF_ENV_EXPORT ZFXmlItem ZFXmlFromString(ZF_IN const zfchar *src,
-                                               ZF_IN_OPT zfindex size = zfindexMax,
-                                               ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_2(ZFXmlItem, ZFXmlItemFromString,
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, size, zfindexMax))
 /**
  * @brief util method to parse and get first element, or return an item with null type if fail
  */
-inline ZFXmlItem ZFXmlParseFirstElement(ZF_IN const ZFInputCallback &callback,
-                                        ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault)
-{
-    return ZFXmlItem(ZFXmlFromInput(callback, flags).xmlChildElementFirst());
-}
+ZFMETHOD_FUNC_DECLARE_1(ZFXmlItem, ZFXmlParseFirstElement,
+                        ZFMP_IN(const ZFInputCallback &, callback))
 /**
  * @brief util method to parse and get first element, or return an item with null type if fail
  */
-inline ZFXmlItem ZFXmlParseFirstElement(ZF_IN const zfchar *src,
-                                        ZF_IN_OPT zfindex size = zfindexMax,
-                                        ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault)
-{
-    return ZFXmlItem(ZFXmlFromString(src, size, flags).xmlChildElementFirst());
-}
+ZFMETHOD_FUNC_DECLARE_2(ZFXmlItem, ZFXmlParseFirstElement,
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, size, zfindexMax))
 
 // ============================================================
 /**
@@ -653,29 +653,24 @@ inline ZFXmlItem ZFXmlParseFirstElement(ZF_IN const zfchar *src,
  * @note result string is not ensured to be a valid xml string
  *   if source is not valid
  */
-extern ZF_ENV_EXPORT zfbool ZFXmlToOutput(ZF_IN_OUT const ZFOutputCallback &output,
-                                          ZF_IN const ZFXmlItem &xmlItem,
-                                          ZF_IN_OPT const ZFXmlOutputFlags &outputFlags = ZFXmlOutputFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFXmlItemToOutput,
+                        ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                        ZFMP_IN(const ZFXmlItem &, xmlItem),
+                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, outputFlags, ZFXmlOutputFlagsDefault()))
 /**
  * @brief convert xml to string
  *
  * @note result string is not ensured to be a valid xml string
  *   if source is not valid
  */
-inline zfbool ZFXmlToString(ZF_IN_OUT zfstring &ret,
-                            ZF_IN const ZFXmlItem &xmlItem,
-                            ZF_IN_OPT const ZFXmlOutputFlags &outputFlags = ZFXmlOutputFlagsDefault)
-{
-    return ZFXmlToOutput(ZFOutputCallbackForString(ret), xmlItem, outputFlags);
-}
-/** @brief see #ZFXmlToString */
-inline zfstring ZFXmlToString(ZF_IN const ZFXmlItem &xmlItem,
-                              ZF_IN_OPT const ZFXmlOutputFlags &outputFlags = ZFXmlOutputFlagsDefault)
-{
-    zfstring ret;
-    ZFXmlToString(ret, xmlItem, outputFlags);
-    return ret;
-}
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFXmlItemToString,
+                        ZFMP_IN_OUT(zfstring &, ret),
+                        ZFMP_IN(const ZFXmlItem &, xmlItem),
+                        ZFMP_IN(const ZFXmlOutputFlags &, outputFlags))
+/** @brief see #ZFXmlItemToString */
+ZFMETHOD_FUNC_DECLARE_2(zfstring, ZFXmlItemToString,
+                        ZFMP_IN(const ZFXmlItem &, xmlItem),
+                        ZFMP_IN(const ZFXmlOutputFlags &, outputFlags))
 
 // ============================================================
 // escape chars
@@ -693,28 +688,32 @@ inline zfstring ZFXmlToString(ZF_IN const ZFXmlItem &xmlItem,
  *   &#x0; ~ &#xFFFF;   heximal encoded char
  * @endcode
  */
-extern ZF_ENV_EXPORT void ZFXmlEscapeCharEncode(ZF_OUT zfstring &dst,
-                                                ZF_IN const zfchar *src,
-                                                ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharEncode,
+                        ZFMP_OUT(zfstring &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 /**
  * @brief see #ZFXmlEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFXmlEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
-                                                ZF_IN const zfchar *src,
-                                                ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharEncode,
+                        ZFMP_OUT(const ZFOutputCallback &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 
 /**
  * @brief see #ZFXmlEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFXmlEscapeCharDecode(ZF_OUT zfstring &dst,
-                                                ZF_IN const zfchar *src,
-                                                ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharDecode,
+                        ZFMP_OUT(zfstring &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 /**
  * @brief see #ZFXmlEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFXmlEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
-                                                ZF_IN const zfchar *src,
-                                                ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharDecode,
+                        ZFMP_OUT(const ZFOutputCallback &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFXml_h_

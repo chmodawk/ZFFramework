@@ -66,18 +66,6 @@ ZFENUM_END(ZFJsonType)
 
 // ============================================================
 /**
- * @brief flags used when parsing document
- */
-zfclassPOD ZF_ENV_EXPORT ZFJsonParseFlags
-{
-};
-/**
- * @brief default parse flags
- */
-extern ZF_ENV_EXPORT const ZFJsonParseFlags ZFJsonParseFlagsDefault;
-
-// ============================================================
-/**
  * @brief token for output json
  */
 zfclassLikePOD ZF_ENV_EXPORT ZFJsonOutputToken
@@ -119,6 +107,11 @@ public:
     , jsonArrayTagLeft(zfText("["))
     , jsonArrayTagRight(zfText("]"))
     {
+    }
+    zfbool operator == (ZF_IN ZFJsonOutputToken const &ref) const;
+    zfbool operator != (ZF_IN ZFJsonOutputToken const &ref) const
+    {
+        return !this->operator == (ref);
     }
     /** @endcond */
 };
@@ -173,18 +166,22 @@ public:
     , jsonArrayTagInSameLineIfNoContent(zftrue)
     {
     }
+    zfbool operator == (ZF_IN ZFJsonOutputFlags const &ref) const;
+    zfbool operator != (ZF_IN ZFJsonOutputFlags const &ref) const
+    {
+        return !this->operator == (ref);
+    }
     /** @endcond */
 };
-extern ZF_ENV_EXPORT const ZFJsonOutputFlags &_ZFP_ZFJsonOutputFlagsDefault();
-extern ZF_ENV_EXPORT const ZFJsonOutputFlags &_ZFP_ZFJsonOutputFlagsTrim();
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFJsonOutputFlags, ZFJsonOutputFlags)
 /**
- * @brief default output flags for #ZFJsonToOutput
+ * @brief default output flags for #ZFJsonItemToOutput
  */
-#define ZFJsonOutputFlagsDefault _ZFP_ZFJsonOutputFlagsDefault()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFJsonOutputFlags, ZFJsonOutputFlagsDefault)
 /**
- * @brief trim output flags for #ZFJsonToOutput
+ * @brief trim output flags for #ZFJsonItemToOutput
  */
-#define ZFJsonOutputFlagsTrim _ZFP_ZFJsonOutputFlagsTrim()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFJsonOutputFlags, ZFJsonOutputFlagsTrim)
 
 // ============================================================
 // ZFJsonItem
@@ -394,19 +391,19 @@ private:
 private:
     ZFJsonItem(ZF_IN _ZFP_ZFJsonItemPrivate *ref);
 };
+ZFPROPERTY_TYPE_DECLARE(ZFJsonItem, ZFJsonItem)
 
 // ============================================================
 /**
  * @brief parse json, or return an item with null type if fail
  */
-extern ZF_ENV_EXPORT ZFJsonItem ZFJsonFromInput(ZF_IN const ZFInputCallback &input,
-                                                ZF_IN_OPT const ZFJsonParseFlags &flags = ZFJsonParseFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_1(ZFJsonItem, ZFJsonItemFromInput, ZFMP_IN(const ZFInputCallback &, input))
 /**
  * @brief parse json, or return an item with null type if fail
  */
-extern ZF_ENV_EXPORT ZFJsonItem ZFJsonFromString(ZF_IN const zfchar *src,
-                                                 ZF_IN_OPT zfindex length = zfindexMax,
-                                                 ZF_IN_OPT const ZFJsonParseFlags &flags = ZFJsonParseFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_2(ZFJsonItem, ZFJsonItemFromString,
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, length, zfindexMax))
 
 /**
  * @brief convert json to output
@@ -414,29 +411,24 @@ extern ZF_ENV_EXPORT ZFJsonItem ZFJsonFromString(ZF_IN const zfchar *src,
  * @note result string is not ensured to be a valid json string
  *   if source is not valid
  */
-extern ZF_ENV_EXPORT zfbool ZFJsonToOutput(ZF_IN_OUT const ZFOutputCallback &output,
-                                           ZF_IN const ZFJsonItem &jsonItem,
-                                           ZF_IN_OPT const ZFJsonOutputFlags &outputFlags = ZFJsonOutputFlagsDefault);
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFJsonItemToOutput,
+                        ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                        ZFMP_IN(const ZFJsonItem &, jsonItem),
+                        ZFMP_IN_OPT(const ZFJsonOutputFlags &, outputFlags, ZFJsonOutputFlagsDefault()))
 /**
  * @brief convert json to string
  *
  * @note result string is not ensured to be a valid json string
  *   if source is not valid
  */
-inline zfbool ZFJsonToString(ZF_IN_OUT zfstring &ret,
-                             ZF_IN const ZFJsonItem &jsonItem,
-                             ZF_IN_OPT const ZFJsonOutputFlags &outputFlags = ZFJsonOutputFlagsDefault)
-{
-    return ZFJsonToOutput(ZFOutputCallbackForString(ret), jsonItem, outputFlags);
-}
-/** @brief see #ZFJsonToString */
-inline zfstring ZFJsonToString(ZF_IN const ZFJsonItem &jsonItem,
-                               ZF_IN_OPT const ZFJsonOutputFlags &outputFlags = ZFJsonOutputFlagsDefault)
-{
-    zfstring ret;
-    ZFJsonToString(ret, jsonItem, outputFlags);
-    return ret;
-}
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFJsonItemToString,
+                        ZFMP_IN_OUT(zfstring &, ret),
+                        ZFMP_IN(const ZFJsonItem &, jsonItem),
+                        ZFMP_IN(const ZFJsonOutputFlags &, outputFlags))
+/** @brief see #ZFJsonItemToString */
+ZFMETHOD_FUNC_DECLARE_2(zfstring, ZFJsonItemToString,
+                        ZFMP_IN(const ZFJsonItem &, jsonItem),
+                        ZFMP_IN(const ZFJsonOutputFlags &, outputFlags))
 
 // ============================================================
 // escape chars
@@ -455,28 +447,32 @@ inline zfstring ZFJsonToString(ZF_IN const ZFJsonItem &jsonItem,
  *
  * result would be appended to dst
  */
-extern ZF_ENV_EXPORT void ZFJsonEscapeCharEncode(ZF_OUT zfstring &dst,
-                                                 ZF_IN const zfchar *src,
-                                                 ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharEncode,
+                        ZFMP_OUT(zfstring &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 /**
  * @brief see #ZFJsonEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFJsonEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
-                                                 ZF_IN const zfchar *src,
-                                                 ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharEncode,
+                        ZFMP_OUT(const ZFOutputCallback &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 
 /**
  * @brief see #ZFJsonEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFJsonEscapeCharDecode(ZF_OUT zfstring &dst,
-                                                 ZF_IN const zfchar *src,
-                                                 ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharDecode,
+                        ZFMP_OUT(zfstring &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 /**
  * @brief see #ZFJsonEscapeCharEncode
  */
-extern ZF_ENV_EXPORT void ZFJsonEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
-                                                 ZF_IN const zfchar *src,
-                                                 ZF_IN_OPT zfindex count = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharDecode,
+                        ZFMP_OUT(const ZFOutputCallback &, dst),
+                        ZFMP_IN(const zfchar *, src),
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFJson_h_

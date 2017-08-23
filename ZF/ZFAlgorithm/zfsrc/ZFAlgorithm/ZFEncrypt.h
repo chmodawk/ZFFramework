@@ -137,9 +137,9 @@ public:
     /**
      * @brief get encrypt implementation's name
      */
-    virtual void encryptProtocolT(ZF_OUT zfstring &ret);
+    ZFMETHOD_DECLARE_1(void, encryptProtocolT, ZFMP_OUT(zfstring &, ret));
     /** @brief see #encryptProtocol */
-    zffinal inline zfstring encryptProtocol(void)
+    ZFMETHOD_DECLARE_0(zfstring, encryptProtocol)
     {
         zfstring ret;
         this->encryptProtocolT(ret);
@@ -148,9 +148,9 @@ public:
     /**
      * @brief get encrypt implementation's version
      */
-    virtual void encryptProtocolVersionT(ZF_OUT zfstring &ret);
+    ZFMETHOD_DECLARE_1(void, encryptProtocolVersionT, ZFMP_OUT(zfstring &, ret));
     /** @brief see #encryptProtocolVersion */
-    zffinal inline zfstring encryptProtocolVersion(void)
+    ZFMETHOD_DECLARE_0(zfstring, encryptProtocolVersion)
     {
         zfstring ret;
         this->encryptProtocolVersionT(ret);

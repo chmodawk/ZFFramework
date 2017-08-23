@@ -116,11 +116,11 @@ ZFMETHOD_DEFINE_2(ZFEncrypt, zfbool, decrypt,
     return ZFPROTOCOL_ACCESS(ZFEncrypt)->decrypt(output, input, this->encryptKey());
 }
 
-void ZFEncrypt::encryptProtocolT(ZF_OUT zfstring &ret)
+ZFMETHOD_DEFINE_1(ZFEncrypt, void, encryptProtocolT, ZFMP_OUT(zfstring &, ret))
 {
     ZFPROTOCOL_ACCESS(ZFEncrypt)->encryptProtocolT(ret);
 }
-void ZFEncrypt::encryptProtocolVersionT(ZF_OUT zfstring &ret)
+ZFMETHOD_DEFINE_1(ZFEncrypt, void, encryptProtocolVersionT, ZFMP_OUT(zfstring &, ret))
 {
     ZFPROTOCOL_ACCESS(ZFEncrypt)->encryptProtocolVersionT(ret);
 }

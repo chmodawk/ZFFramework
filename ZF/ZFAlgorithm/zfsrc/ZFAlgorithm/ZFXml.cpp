@@ -17,38 +17,77 @@ ZFENUM_DEFINE(ZFXmlType)
 ZFENUM_DEFINE(ZFXmlVisitType)
 
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFXmlVisitData, ZFXmlVisitData)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFXmlVisitCallback, ZFXmlVisitCallback)
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlVisitCallback, ZFXmlVisitCallbackDefault, ZFXmlVisitCallbackForOutput())
 
 // ============================================================
-const ZFXmlParseFlags ZFXmlParseFlagsDefault = {
-};
+/** @cond ZFPrivateDoc */
+zfbool ZFXmlOutputToken::operator == (ZF_IN ZFXmlOutputToken const &ref) const
+{
+    return (zftrue
+            && this->xmlNewLineToken == ref.xmlNewLineToken
+            && this->xmlIndentToken == ref.xmlIndentToken
+            && this->xmlDeclarationTagLeft == ref.xmlDeclarationTagLeft
+            && this->xmlDeclarationTagRight == ref.xmlDeclarationTagRight
+            && this->xmlDOCTYPETagLeft == ref.xmlDOCTYPETagLeft
+            && this->xmlDOCTYPETagRight == ref.xmlDOCTYPETagRight
+            && this->xmlPITagLeft == ref.xmlPITagLeft
+            && this->xmlPITagRight == ref.xmlPITagRight
+            && this->xmlElementBeginTagLeft == ref.xmlElementBeginTagLeft
+            && this->xmlElementBeginTagRight == ref.xmlElementBeginTagRight
+            && this->xmlElementEndTagLeft == ref.xmlElementEndTagLeft
+            && this->xmlElementEndTagRight == ref.xmlElementEndTagRight
+            && this->xmlElementSingleTagLeft == ref.xmlElementSingleTagLeft
+            && this->xmlElementSingleTagRight == ref.xmlElementSingleTagRight
+            && this->xmlAttributeEqualTag == ref.xmlAttributeEqualTag
+            && this->xmlAttributeQuoteTagLeft == ref.xmlAttributeQuoteTagLeft
+            && this->xmlAttributeQuoteTagRight == ref.xmlAttributeQuoteTagRight
+            && this->xmlAttributeSingleQuoteTagLeft == ref.xmlAttributeSingleQuoteTagLeft
+            && this->xmlAttributeSingleQuoteTagRight == ref.xmlAttributeSingleQuoteTagRight
+            && this->xmlTextCDATATagLeft == ref.xmlTextCDATATagLeft
+            && this->xmlTextCDATATagRight == ref.xmlTextCDATATagRight
+            && this->xmlCommentTagLeft == ref.xmlCommentTagLeft
+            && this->xmlCommentTagRight == ref.xmlCommentTagRight
+        );
+}
+zfbool ZFXmlOutputFlags::operator == (ZF_IN ZFXmlOutputFlags const &ref) const
+{
+    return (zftrue
+            && this->xmlToken == ref.xmlToken
+            && this->xmlGlobalLineBeginToken == ref.xmlGlobalLineBeginToken
+            && this->xmlElementAddNewLineAtHeadIfNotSingleLine == ref.xmlElementAddNewLineAtHeadIfNotSingleLine
+            && this->xmlElementAttributeCountBeforeAddNewLine == ref.xmlElementAttributeCountBeforeAddNewLine
+            && this->xmlElementTrimTagIfNoChildren == ref.xmlElementTrimTagIfNoChildren
+            && this->xmlElementEndTagAtSameLineIfNoChildElement == ref.xmlElementEndTagAtSameLineIfNoChildElement
+            && this->xmlAttributeUseSingleQuote == ref.xmlAttributeUseSingleQuote
+        );
+}
+/** @endcond */
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlags)
 
-static ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsDefaultInstance;
-const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDefault(void)
-{
-    return _ZFP_ZFXmlOutputFlagsDefaultInstance;
-}
-static ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsTrimInstance;
-const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsTrim(void)
-{
-    return _ZFP_ZFXmlOutputFlagsTrimInstance;
-}
-static ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsDetailedInstance;
-const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDetailed(void)
-{
-    return _ZFP_ZFXmlOutputFlagsDetailedInstance;
-}
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFXmlOutputFlagsInit, ZFLevelZFFrameworkStatic)
-{
-    _ZFP_ZFXmlOutputFlagsTrimInstance.xmlElementAttributeCountBeforeAddNewLine = zfindexMax;
-    _ZFP_ZFXmlOutputFlagsTrimInstance.xmlElementTrimTagIfNoChildren = zftrue;
-    _ZFP_ZFXmlOutputFlagsTrimInstance.xmlToken.xmlNewLineToken.removeAll();
-    _ZFP_ZFXmlOutputFlagsTrimInstance.xmlToken.xmlIndentToken.removeAll();
+// ============================================================
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDefault, ZFXmlOutputFlags())
 
-    _ZFP_ZFXmlOutputFlagsDetailedInstance.xmlElementAddNewLineAtHeadIfNotSingleLine = zftrue;
-    _ZFP_ZFXmlOutputFlagsDetailedInstance.xmlElementAttributeCountBeforeAddNewLine = 1;
-    _ZFP_ZFXmlOutputFlagsDetailedInstance.xmlElementEndTagAtSameLineIfNoChildElement = zftrue;
+ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsTrim(void)
+{
+    ZFXmlOutputFlags d;
+    d.xmlElementAttributeCountBeforeAddNewLine = zfindexMax;
+    d.xmlElementTrimTagIfNoChildren = zftrue;
+    d.xmlToken.xmlNewLineToken.removeAll();
+    d.xmlToken.xmlIndentToken.removeAll();
+    return d;
 }
-ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFXmlOutputFlagsInit)
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsTrim, _ZFP_ZFXmlOutputFlagsTrim())
+
+ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsDetailed(void)
+{
+    ZFXmlOutputFlags d;
+    d.xmlElementAddNewLineAtHeadIfNotSingleLine = zftrue;
+    d.xmlElementAttributeCountBeforeAddNewLine = 1;
+    d.xmlElementEndTagAtSameLineIfNoChildElement = zftrue;
+    return d;
+}
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDetailed, _ZFP_ZFXmlOutputFlagsDetailed())
 
 // ============================================================
 static zfbool _ZFP_ZFXmlOutputElementUseSingleTag(ZF_IN const ZFXmlItem &element,
@@ -443,7 +482,7 @@ private:
 
 ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(ZF_IN const ZFCallerInfo &callerInfo,
                                                     ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
-                                                    ZF_IN_OPT const ZFXmlOutputFlags &flags /* = ZFXmlOutputFlagsDefault */)
+                                                    ZF_IN_OPT const ZFXmlOutputFlags &flags /* = ZFXmlOutputFlagsDefault() */)
 {
     if(!outputCallback.callbackIsValid())
     {
@@ -459,19 +498,11 @@ ZFXmlVisitCallback _ZFP_ZFXmlVisitCallbackForOutput(ZF_IN const ZFCallerInfo &ca
     zfRelease(owner);
     return callback;
 }
-
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFXmlVisitCallbackDefaultDataHolder, ZFLevelZFFrameworkEssential)
+ZFMETHOD_FUNC_DEFINE_2(ZFXmlVisitCallback, ZFXmlVisitCallbackForOutput,
+                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                       ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 {
-    xmlVisitCallbackDefault = ZFXmlVisitCallbackForOutput();
-}
-public:
-    ZFXmlVisitCallback xmlVisitCallbackDefault;
-ZF_GLOBAL_INITIALIZER_END(ZFXmlVisitCallbackDefaultDataHolder)
-#define _ZFP_ZFXml_xmlVisitCallbackDefault (ZF_GLOBAL_INITIALIZER_INSTANCE(ZFXmlVisitCallbackDefaultDataHolder)->xmlVisitCallbackDefault)
-
-ZFXmlVisitCallback *_ZFP_ZFXmlVisitCallbackDefault(void)
-{
-    return &_ZFP_ZFXml_xmlVisitCallbackDefault;
+    return ZFXmlVisitCallbackForOutput(outputCallback, flags);
 }
 
 // ============================================================
@@ -1466,21 +1497,83 @@ zfbool ZFXmlItem::xmlTextCDATA(void) const
 }
 
 // ============================================================
-ZFXmlItem ZFXmlFromInput(ZF_IN const ZFInputCallback &callback,
-                         ZF_IN_OPT const ZFXmlParseFlags &flags /* = ZFXmlParseFlagsDefault */)
+ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFXmlItem, ZFXmlItem, {
+        v = ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(src, srcLen);
+        return !v.xmlIsNull();
+    }, {
+        return ZFXmlItemToString(s, v, ZFXmlOutputFlagsTrim());
+    })
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, objectInfoT, ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, zfstring, objectInfo)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, zfindex, objectRetainCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlTypeEnum, xmlType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, zfbool, xmlIsNull)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlParent)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlNameSet, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, const zfchar *, xmlName)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlValueSet, ZFMP_IN(const zfchar *, value))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, const zfchar *, xmlValue)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlVisit, ZFMP_IN(const ZFXmlVisitCallback &, callback))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlClone)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlCloneTree)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, void, xmlAttributeAdd, ZFMP_IN(const ZFXmlItem &, addThis), ZFMP_IN_OPT(const ZFXmlItem *, beforeThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_3(v_ZFXmlItem, void, xmlAttributeAdd, ZFMP_IN(const zfchar *, key), ZFMP_IN(const zfchar *, value), ZFMP_IN_OPT(const ZFXmlItem *, beforeThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlAttributeRemove, ZFMP_IN(const ZFXmlItem &, removeThis))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, zfindex, objectRetainCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlAttributeRemove, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, void, xmlAttributeRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, ZFXmlItem, xmlAttribute, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, const zfchar *, xmlAttributeValue, ZFMP_IN(const zfchar *, name))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlAttributeFirst)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlAttributeLast)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlAttributeNext)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, ZFXmlItem, xmlAttributePrev)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, void, xmlAttributeSort)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, void, xmlAttributeSortRecursively)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, void, xmlChildAdd, ZFMP_IN(const ZFXmlItem &, addThis), ZFMP_IN_OPT(const ZFXmlItem *, beforeThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlChildRemove, ZFMP_IN(const ZFXmlItem &, removeThis))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, void, xmlChildRemoveAll)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, ZFXmlItem, xmlChildFirst, ZFMP_IN_OPT(const zfchar *, name, zfnull), ZFMP_IN_OPT(const ZFXmlItem *, afterThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, ZFXmlItem, xmlChildLast, ZFMP_IN_OPT(const zfchar *, name, zfnull), ZFMP_IN_OPT(const ZFXmlItem *, beforeThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, ZFXmlItem, xmlChildElementFirst, ZFMP_IN_OPT(const zfchar *, name, zfnull), ZFMP_IN_OPT(const ZFXmlItem *, afterThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFXmlItem, ZFXmlItem, xmlChildElementLast, ZFMP_IN_OPT(const zfchar *, name, zfnull), ZFMP_IN_OPT(const ZFXmlItem *, beforeThis, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, ZFXmlItem, xmlSiblingNext, ZFMP_IN_OPT(const zfchar *, name, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, ZFXmlItem, xmlSiblingPrev, ZFMP_IN_OPT(const zfchar *, name, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, ZFXmlItem, xmlSiblingElementNext, ZFMP_IN_OPT(const zfchar *, name, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, ZFXmlItem, xmlSiblingElementPrev, ZFMP_IN_OPT(const zfchar *, name, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFXmlItem, void, xmlTextCDATASet, ZFMP_IN(zfbool, xmlTextCDATA))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFXmlItem, zfbool, xmlTextCDATA)
+
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_1(ZFXmlItem, ZFXmlItemFromInput,
+                       ZFMP_IN(const ZFInputCallback &, callback))
 {
-    return ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(callback, flags);
+    return ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(callback);
 }
-ZFXmlItem ZFXmlFromString(ZF_IN const zfchar *src,
-                          ZF_IN_OPT zfindex size /* = zfindexMax */,
-                          ZF_IN_OPT const ZFXmlParseFlags &flags /* = ZFXmlParseFlagsDefault */)
+ZFMETHOD_FUNC_DEFINE_2(ZFXmlItem, ZFXmlItemFromString,
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, size, zfindexMax))
 {
-    return ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(src, size, flags);
+    return ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(src, size);
 }
 
-zfbool ZFXmlToOutput(ZF_IN_OUT const ZFOutputCallback &output,
-                     ZF_IN const ZFXmlItem &xmlItem,
-                     ZF_IN_OPT const ZFXmlOutputFlags &outputFlags /* = ZFXmlOutputFlagsDefault */)
+ZFMETHOD_FUNC_DEFINE_1(ZFXmlItem, ZFXmlParseFirstElement,
+                       ZFMP_IN(const ZFInputCallback &, callback))
+{
+    return ZFXmlItem(ZFXmlItemFromInput(callback).xmlChildElementFirst());
+}
+ZFMETHOD_FUNC_DEFINE_2(ZFXmlItem, ZFXmlParseFirstElement,
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, size, zfindexMax))
+{
+    return ZFXmlItem(ZFXmlItemFromString(src, size).xmlChildElementFirst());
+}
+
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFXmlItemToOutput,
+                       ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                       ZFMP_IN(const ZFXmlItem &, xmlItem),
+                       ZFMP_IN_OPT(const ZFXmlOutputFlags &, outputFlags, ZFXmlOutputFlagsDefault()))
 {
     if(!output.callbackIsValid() || xmlItem.xmlIsNull())
     {
@@ -1490,30 +1583,50 @@ zfbool ZFXmlToOutput(ZF_IN_OUT const ZFOutputCallback &output,
     return zftrue;
 }
 
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFXmlItemToString,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN(const ZFXmlItem &, xmlItem),
+                       ZFMP_IN(const ZFXmlOutputFlags &, outputFlags))
+{
+    return ZFXmlItemToOutput(ZFOutputCallbackForString(ret), xmlItem, outputFlags);
+}
+ZFMETHOD_FUNC_DEFINE_2(zfstring, ZFXmlItemToString,
+                       ZFMP_IN(const ZFXmlItem &, xmlItem),
+                       ZFMP_IN(const ZFXmlOutputFlags &, outputFlags))
+{
+    zfstring ret;
+    ZFXmlItemToString(ret, xmlItem, outputFlags);
+    return ret;
+}
+
 // ============================================================
 // escape chars
-void ZFXmlEscapeCharEncode(ZF_OUT zfstring &dst,
-                           ZF_IN const zfchar *src,
-                           ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharEncode,
+                       ZFMP_OUT(zfstring &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFXmlEscapeCharEncode(ZFOutputCallbackForString(dst), src, count);
 }
-void ZFXmlEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
-                           ZF_IN const zfchar *src,
-                           ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharEncode,
+                       ZFMP_OUT(const ZFOutputCallback &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFPROTOCOL_ACCESS(ZFXmlEscapeChar)->xmlEscapeCharEncode(dst, src, count);
 }
 
-void ZFXmlEscapeCharDecode(ZF_OUT zfstring &dst,
-                           ZF_IN const zfchar *src,
-                           ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharDecode,
+                       ZFMP_OUT(zfstring &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFXmlEscapeCharDecode(ZFOutputCallbackForString(dst), src, count);
 }
-void ZFXmlEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
-                           ZF_IN const zfchar *src,
-                           ZF_IN_OPT zfindex count /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharDecode,
+                       ZFMP_OUT(const ZFOutputCallback &, dst),
+                       ZFMP_IN(const zfchar *, src),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
 {
     ZFPROTOCOL_ACCESS(ZFXmlEscapeChar)->xmlEscapeCharDecode(dst, src, count);
 }

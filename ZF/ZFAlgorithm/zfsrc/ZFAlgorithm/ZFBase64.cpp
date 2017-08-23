@@ -17,8 +17,9 @@ ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosNone, ZFBase64LineBrea
 
 // ============================================================
 // encode
-zfindex ZFBase64EncodeCalcSize(ZF_IN zfindex srcLen,
-                               ZF_IN_OPT zfindex lineBreakPos /* = ZFBase64LineBreakPosNone() */)
+ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFBase64EncodeCalcSize,
+                       ZFMP_IN(zfindex, srcLen),
+                       ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 {
     if(srcLen == zfindexMax)
     {
@@ -121,8 +122,9 @@ ZFMETHOD_FUNC_DEFINE_6(zfbool, ZFBase64Encode,
 
 // ============================================================
 // decode
-zfindex ZFBase64DecodeCalcSize(ZF_IN zfindex srcLen,
-                               ZF_IN_OPT zfindex lineBreakPos /* = ZFBase64LineBreakPosNone() */)
+ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFBase64DecodeCalcSize,
+                       ZFMP_IN(zfindex, srcLen),
+                       ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 {
     if(srcLen == zfindexMax)
     {

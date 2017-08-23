@@ -366,8 +366,8 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             return _ZFP_Mtd_##MethodName##_##DECLARE_LINE(); \
         } \
         static inline ReturnType _ZFP_MtdI_##MethodName##_##DECLARE_LINE( \
-            ZF_IN const ZFMethod *method, \
-            ZF_IN ZFObject *obj \
+            ZF_IN const ZFMethod *invokerMethod, \
+            ZF_IN ZFObject *invokerObject \
             ParamExpandOrEmpty0(ZFM_COMMA() ParamType0 param0) \
             ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \
             ParamExpandOrEmpty2(ZFM_COMMA() ParamType2 param2) \
@@ -378,7 +378,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
             ) \
         { \
-            return ZFCastZFObjectUnchecked(zfself *, obj)->MethodName( \
+            return ZFCastZFObjectUnchecked(zfself *, invokerObject)->MethodName( \
                 ParamExpandOrEmpty0(            param0) \
                 ParamExpandOrEmpty1(ZFM_COMMA() param1) \
                 ParamExpandOrEmpty2(ZFM_COMMA() param2) \

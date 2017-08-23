@@ -48,16 +48,16 @@ protected:
 
         this->testCaseOutputSeparator();
         this->testCaseOutput(zfText("ZFJson parse from string:"));
-        ZFJsonItem json = ZFJsonFromString(src);
+        ZFJsonItem json = ZFJsonItemFromString(src);
 
         this->testCaseOutput(zfText("ZFJson parse from string, result:"));
-        zfLogTrimT() << ZFJsonToString(json);
+        zfLogTrimT() << ZFJsonItemToString(json);
 
         this->testCaseOutputSeparator();
         this->testCaseOutput(zfText("ZFJson add element"));
         json.jsonItemValueSet(zfText("testJsonKey"), zfText("testJsonValue"));
         this->testCaseOutput(zfText("ZFJson add element, result:"));
-        zfLogTrimT() << ZFJsonToString(json);
+        zfLogTrimT() << ZFJsonItemToString(json);
 
         this->performanceTest(json);
 
@@ -71,20 +71,20 @@ private:
         for(zfindex i = 0; i < toDataTimes; ++i)
         {
             zfstring tmp;
-            ZFJsonToOutput(ZFOutputCallbackForString(tmp), jsonItem);
+            ZFJsonItemToOutput(ZFOutputCallbackForString(tmp), jsonItem);
         }
         ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFJsonPerformance_test_toData"));
 
         zfindex fromDataTimes = toDataTimes;
         zfstring jsonString;
-        ZFJsonToOutput(ZFOutputCallbackForString(jsonString), jsonItem);
+        ZFJsonItemToOutput(ZFOutputCallbackForString(jsonString), jsonItem);
         ZFCoreStatistic::invokeTimeAccurateLogBegin(zfText("ZFJsonPerformance_test_fromData"));
         for(zfindex i = 0; i < fromDataTimes; ++i)
         {
-            ZFJsonFromInput(ZFInputCallbackForBuffer(jsonString.cString()));
+            ZFJsonItemFromInput(ZFInputCallbackForBuffer(jsonString.cString()));
         }
         ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFJsonPerformance_test_fromData"));
-        ZFJsonItem jsonItemNew = ZFJsonFromInput(ZFInputCallbackForBuffer(jsonString.cString()));
+        ZFJsonItem jsonItemNew = ZFJsonItemFromInput(ZFInputCallbackForBuffer(jsonString.cString()));
 
         this->testCaseOutputSeparator();
 
@@ -101,7 +101,7 @@ private:
         #if 0
             this->testCaseOutputSeparator();
             this->testCaseOutput(zfText("content: %s"), jsonString.cString());
-            this->testCaseOutput(zfText("newly: %s"), ZFJsonToString(jsonItemNew).cString());
+            this->testCaseOutput(zfText("newly: %s"), ZFJsonItemToString(jsonItemNew).cString());
         #endif
 
         ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFJsonPerformance_test_toData"));

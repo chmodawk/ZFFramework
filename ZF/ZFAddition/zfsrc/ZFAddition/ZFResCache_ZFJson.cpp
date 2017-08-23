@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject ZFResJson(ZF_IN const zfchar *resPath)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {

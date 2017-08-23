@@ -462,7 +462,6 @@ public:
     // ============================================================
     // private
 public:
-    /** @cond ZFPrivateDoc */
     static ZFClass *_ZFP_ZFClassRegister(ZF_IN zfbool *ZFCoreLibDestroyFlag,
                                          ZF_IN const zfchar *name,
                                          ZF_IN const ZFClass *parent,
@@ -470,6 +469,7 @@ public:
                                          ZF_IN _ZFP_ZFObjectDestructor destructor,
                                          ZF_IN zfbool isInterface);
     static void _ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN const ZFClass *cls);
+    /** @cond ZFPrivateDoc */
     ZFClass(void);
     ~ZFClass(void);
     /** @endcond */

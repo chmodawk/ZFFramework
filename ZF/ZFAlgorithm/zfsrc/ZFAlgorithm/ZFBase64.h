@@ -18,28 +18,36 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-/**
- * @brief char table for ZFBase64
- */
+/** @cond ZFPrivateDoc */
 #define ZFBase64TableDefault() zfText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
+/** @endcond */
+/**
+ * @brief char table for ZFBase64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" by default
+ */
 ZFEXPORT_VAR_READONLY_DECLARE(const zfchar *, ZFBase64TableDefault)
 
-/**
- * @brief pad token for ZFBase64
- */
+/** @cond ZFPrivateDoc */
 #define ZFBase64PadDefault() '='
+/** @endcond */
+/**
+ * @brief pad token for ZFBase64, '=' by default
+ */
 ZFEXPORT_VAR_READONLY_DECLARE(zfchar, ZFBase64PadDefault)
 
-/**
- * @brief standard line break position for ZFBase64
- */
+/** @cond ZFPrivateDoc */
 #define ZFBase64LineBreakPosStandard() 76
+/** @endcond */
+/**
+ * @brief standard line break position for ZFBase64, 76 by default
+ */
 ZFEXPORT_VAR_READONLY_DECLARE(zfindex, ZFBase64LineBreakPosStandard)
 
+/** @cond ZFPrivateDoc */
+#define ZFBase64LineBreakPosNone() zfindexMax
+/** @endcond */
 /**
  * @brief no line break for ZFBase64
  */
-#define ZFBase64LineBreakPosNone() zfindexMax
 ZFEXPORT_VAR_READONLY_DECLARE(zfindex, ZFBase64LineBreakPosNone)
 
 // ============================================================
@@ -50,8 +58,9 @@ ZFEXPORT_VAR_READONLY_DECLARE(zfindex, ZFBase64LineBreakPosNone)
  *
  * return zfindexMax if error
  */
-extern ZF_ENV_EXPORT zfindex ZFBase64EncodeCalcSize(ZF_IN zfindex srcLen,
-                                                    ZF_IN_OPT zfindex lineBreakPos = ZFBase64LineBreakPosNone());
+ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64EncodeCalcSize,
+                        ZFMP_IN(zfindex, srcLen),
+                        ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 
 /**
  * @brief encode base64
@@ -82,8 +91,9 @@ ZFMETHOD_FUNC_DECLARE_6(zfbool, ZFBase64Encode,
  *
  * return zfindexMax if error
  */
-extern ZF_ENV_EXPORT zfindex ZFBase64DecodeCalcSize(ZF_IN zfindex srcLen,
-                                                    ZF_IN_OPT zfindex lineBreakPos = ZFBase64LineBreakPosNone());
+ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64DecodeCalcSize,
+                        ZFMP_IN(zfindex, srcLen),
+                        ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 /**
  * @brief encode base64, return byte size written even if error occurred
  *
@@ -125,7 +135,7 @@ public:
 
 public:
     /** @brief see #ZFBase64EncodeCalcSize */
-    virtual inline zfindex base64EncodeCalcSize(ZF_IN zfindex srcLen)
+    ZFMETHOD_DECLARE_1(zfindex, base64EncodeCalcSize, ZFMP_IN(zfindex, srcLen))
     {
         return ZFBase64EncodeCalcSize(srcLen, this->base64LineBreakPos());
     }
@@ -147,7 +157,7 @@ public:
     }
 public:
     /** @brief see #ZFBase64DecodeCalcSize */
-    virtual inline zfindex base64DecodeCalcSize(ZF_IN zfindex srcLen)
+    ZFMETHOD_DECLARE_1(zfindex, base64DecodeCalcSize, ZFMP_IN(zfindex, srcLen))
     {
         return ZFBase64DecodeCalcSize(srcLen, this->base64LineBreakPos());
     }

@@ -21,6 +21,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 #define _ZFP_ZFCoreString_builtin_capacityDefault 16
 
 // ============================================================
+/** @cond ZFPrivateDoc */
 template<typename T_Char>
 zfclassNotPOD _zfstrD
 {
@@ -67,6 +68,7 @@ public:
         }
     }
 };
+/** @endcond */
 /**
  * @brief low level string container
  */

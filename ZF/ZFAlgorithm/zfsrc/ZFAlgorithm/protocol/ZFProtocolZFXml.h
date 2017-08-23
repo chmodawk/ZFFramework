@@ -33,13 +33,11 @@ public:
      * -  CDATA for text node
      */
     virtual ZFXmlItem xmlParse(ZF_IN const zfchar *src,
-                               ZF_IN_OPT zfindex size = zfindexMax,
-                               ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault) zfpurevirtual;
+                               ZF_IN_OPT zfindex size = zfindexMax) zfpurevirtual;
     /**
      * @brief parse xml document
      */
-    virtual ZFXmlItem xmlParse(ZF_IN const ZFInputCallback &inputCallback,
-                               ZF_IN_OPT const ZFXmlParseFlags &flags = ZFXmlParseFlagsDefault) zfpurevirtual;
+    virtual ZFXmlItem xmlParse(ZF_IN const ZFInputCallback &inputCallback) zfpurevirtual;
 
     /**
      * @brief for impl to achieve memory pool logic

@@ -38,18 +38,16 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFJsonImpl_default, ZFJson, ZFProtocolLevel::e_D
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("rapidjson"))
 public:
     virtual ZFJsonItem jsonParse(ZF_IN const zfchar *src,
-                                 ZF_IN_OPT zfindex size = zfindexMax,
-                                 ZF_IN_OPT const ZFJsonParseFlags &flags = ZFJsonParseFlagsDefault)
+                                 ZF_IN_OPT zfindex size = zfindexMax)
     {
         ZFBuffer buf;
         buf.bufferCopy(src, size * sizeof(zfchar));
-        return this->jsonParse(buf, flags);
+        return this->jsonParse(buf);
     }
-    virtual ZFJsonItem jsonParse(ZF_IN const ZFInputCallback &inputCallback,
-                                 ZF_IN_OPT const ZFJsonParseFlags &flags = ZFJsonParseFlagsDefault)
+    virtual ZFJsonItem jsonParse(ZF_IN const ZFInputCallback &inputCallback)
     {
         ZFBuffer buf = ZFInputCallbackReadToBuffer(inputCallback);
-        return this->jsonParse(buf, flags);
+        return this->jsonParse(buf);
     }
     virtual void jsonMemoryPoolRelease(ZF_IN void *token, ZF_IN const zfchar *value)
     {
@@ -61,8 +59,7 @@ public:
         }
     }
 private:
-    ZFJsonItem jsonParse(ZF_IN_OUT ZFBuffer &buf,
-                         ZF_IN_OPT const ZFJsonParseFlags &flags = ZFJsonParseFlagsDefault)
+    ZFJsonItem jsonParse(ZF_IN_OUT ZFBuffer &buf)
     {
         if(buf.buffer() == zfnull)
         {

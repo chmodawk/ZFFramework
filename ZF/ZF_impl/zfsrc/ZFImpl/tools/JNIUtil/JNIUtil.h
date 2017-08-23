@@ -9,7 +9,9 @@
 // ============================================================
 #if 1
 #include "ZFCore.h"
+/** @cond ZFPrivateDoc */
 #define _JNI_EXPORT ZF_ENV_EXPORT
+/** @endcond */
 #else
 #define _JNI_EXPORT
 #endif

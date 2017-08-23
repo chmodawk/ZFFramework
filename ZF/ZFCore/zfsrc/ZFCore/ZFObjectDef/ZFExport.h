@@ -42,7 +42,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * to alias existing var, use #ZFEXPORT_VAR_DEFINE_ALIAS/#ZFEXPORT_VAR_READONLY_DEFINE_ALIAS
  */
 #define ZFEXPORT_VAR_DECLARE(Type, Name) \
-    /** \n */ \
     ZFMETHOD_FUNC_DECLARE_0(Type &, Name) \
     /** @brief see @ref Name */ \
     ZFMETHOD_FUNC_DECLARE_1(void, ZFM_CAT(Name, Set), ZFMP_IN(Type const &, v))
@@ -86,7 +85,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 /** @brief see #ZFEXPORT_VAR_DECLARE */
 #define ZFEXPORT_VAR_READONLY_DECLARE(Type, Name) \
-    /** \n */ \
     ZFMETHOD_FUNC_DECLARE_0(Type const &, Name)
 /** @brief see #ZFEXPORT_VAR_DECLARE */
 #define ZFEXPORT_VAR_READONLY_DEFINE(Type, Name, initValue) \

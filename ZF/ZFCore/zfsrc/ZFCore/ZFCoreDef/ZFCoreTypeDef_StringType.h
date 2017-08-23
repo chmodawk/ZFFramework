@@ -20,14 +20,14 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-/** @brief see #ZFCoreString_impl */
+/** @brief see #_zfstr */
 #ifndef _ZFT_zfstringA
     typedef ZFCoreStringA zfstringA;
 #else
     typedef _ZFT_zfstringA zfstringA;
 #endif
 
-/** @brief see #ZFCoreString_impl */
+/** @brief see #_zfstr */
 #ifndef _ZFT_zfstringW
     typedef ZFCoreStringW zfstringW;
 #else
@@ -37,7 +37,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 #if 1 // you must change these if change zfchar's type
 
-/** @brief see #ZFCoreString_impl */
+/** @brief see #_zfstr */
 #ifndef _ZFT_zfstring
     typedef ZFCoreString zfstring;
 #else
