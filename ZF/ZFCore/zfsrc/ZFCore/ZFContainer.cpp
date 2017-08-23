@@ -157,9 +157,10 @@ void ZFContainer::objectOnDeallocPrepare(void)
     zfsuper::objectOnDeallocPrepare();
 }
 
-void ZFContainer::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
-                                       ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
-                                       ZF_IN_OPT const ZFTokenForContainer &token /* = ZFTokenForContainerDefault() */)
+ZFMETHOD_DEFINE_3(ZFContainer, void, objectInfoOfContentT,
+                  ZFMP_IN_OUT(zfstring &, ret),
+                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                  ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
 {
     zfindex count = 0;
     ret += token.tokenLeft;

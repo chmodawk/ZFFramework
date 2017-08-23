@@ -13,8 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetter_Base64(ZF_IN const zfchar *fileDescriptorData,
                                                                        ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
                                                                        ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                                       ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                                       ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                                       ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     if(dataLen == zfindexMax)
     {

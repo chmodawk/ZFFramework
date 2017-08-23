@@ -67,14 +67,16 @@ void ZFAutoReleasePool::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     ret += zfText(", count: ");
     zfsFromIntT(ret, d->array.count());
 }
-void ZFAutoReleasePool::poolAdd(ZF_IN ZFObject *obj,
-                                ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
+ZFMETHOD_DEFINE_2(ZFAutoReleasePool, void, poolAdd,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
 {
     this->poolAdd(obj, ZFCallerInfoMake(), enableLeakTest);
 }
-void ZFAutoReleasePool::poolAdd(ZF_IN ZFObject *obj,
-                                ZF_IN const ZFCallerInfo &callerInfo,
-                                ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFAutoReleasePool, void, poolAdd,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN(const ZFCallerInfo &, callerInfo),
+                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
 {
     zfCoreAssertWithMessage(obj != this, zfTextA("add autorelease pool to itself isn't allowed"));
 
@@ -101,7 +103,7 @@ void ZFAutoReleasePool::poolAdd(ZF_IN ZFObject *obj,
         d->array.add(data);
     }
 }
-void ZFAutoReleasePool::poolDrain(void)
+ZFMETHOD_DEFINE_0(ZFAutoReleasePool, void, poolDrain)
 {
     if(!d->array.isEmpty())
     {

@@ -30,11 +30,11 @@ protected:
 
         zfstring tmpFilePath = this->testCaseUseTmpFile(zfText("ZFCrc32_Crc32.txt"));
         ZFFileToken fp = ZFFile::fileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
-        if(fp != ZFFileTokenInvalid)
+        if(fp != ZFFileTokenInvalid())
         {
             ZFFile::fileWrite(fp, testString);
             ZFFile::fileClose(fp);
-            fp = ZFFileTokenInvalid;
+            fp = ZFFileTokenInvalid();
         }
         this->testCaseOutput(zfText("write it to file %s, file's CRC32: %x"),
                 tmpFilePath.cString(),

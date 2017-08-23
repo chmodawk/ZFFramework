@@ -27,6 +27,7 @@ public:
         ResAdditionalFileFind,
     } FindStatus;
 public:
+    zfindex refCount;
     zfstring resFindFirstPathSaved;
     ZFFileFindDataContainer d;
     _ZFP_ZFFileFindDataPrivate::FindStatus findStatus;
@@ -55,7 +56,8 @@ public:
 
 public:
     _ZFP_ZFFileFindDataPrivate(void)
-    : resFindFirstPathSaved()
+    : refCount(1)
+    , resFindFirstPathSaved()
     , d()
     , findStatus(NotStarted)
     , resAdditionalPathWithSeparator()
@@ -67,13 +69,42 @@ public:
 // ============================================================
 // ZFFileFindData
 ZFFileFindData::ZFFileFindData(void)
+: d(zfnew(_ZFP_ZFFileFindDataPrivate))
 {
-    d = zfpoolNew(_ZFP_ZFFileFindDataPrivate);
+}
+ZFFileFindData::ZFFileFindData(ZF_IN ZFFileFindData const &ref)
+: d(ref.d)
+{
+    ++(d->refCount);
+}
+ZFFileFindData &ZFFileFindData::operator=(ZF_IN ZFFileFindData const &ref)
+{
+    ++(ref.d->refCount);
+    --(d->refCount);
+    if(d->refCount == 0)
+    {
+        zfdelete(d);
+    }
+    d = ref.d;
+    return *this;
+}
+zfbool ZFFileFindData::operator==(ZF_IN ZFFileFindData const &ref) const
+{
+    return (zftrue
+            && d->resFindFirstPathSaved == ref.d->resFindFirstPathSaved
+            && d->d == ref.d->d
+            && d->findStatus == ref.d->findStatus
+            && d->resAdditionalPathWithSeparator == ref.d->resAdditionalPathWithSeparator
+            && d->dForResAdditionPath == ref.d->dForResAdditionPath
+        );
 }
 ZFFileFindData::~ZFFileFindData(void)
 {
-    zfpoolDelete(d);
-    d = zfnull;
+    --(d->refCount);
+    if(d->refCount == 0)
+    {
+        zfdelete(d);
+    }
 }
 const zfchar *ZFFileFindData::fileParentPath(void) const
 {
@@ -103,6 +134,18 @@ void ZFFileFindData::objectInfoT(ZF_IN_OUT zfstring &ret) const
 }
 
 // ============================================================
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFileFindData, ZFFileFindData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, const zfchar *, fileParentPath)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, const zfchar *, filePath)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, const zfchar *, fileName)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, zfbool, fileIsFolder)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFileFindData, void, objectInfoT, ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, zfstring, objectInfo)
+
+// ============================================================
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileToken, ZFFileTokenInvalid, ZFFileTokenInvalid())
+
+// ============================================================
 zfclassLikePOD _ZFP_ZFFileTokenForRes
 {
 public:
@@ -111,7 +154,7 @@ public:
 
 public:
     _ZFP_ZFFileTokenForRes(void)
-    : fd(ZFFileTokenInvalid)
+    : fd(ZFFileTokenInvalid())
     , resAdditionalPathWithSeparator()
     {
     }
@@ -133,6 +176,9 @@ ZFENUM_FLAGS_DEFINE(ZFFileOpenOption, ZFFileOpenOptionFlags)
 const zfchar ZFFile::fileSeparator = '/';
 const zfchar *ZFFile::fileSeparatorString = zfText("/");
 
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_READONLY(ZFFile, zfchar, fileSeparator)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR_READONLY(ZFFile, const zfchar *, fileSeparatorString)
+
 ZFOBJECT_REGISTER(ZFFile)
 
 ZFOBSERVER_EVENT_REGISTER(ZFFile, SettingPathOnChange)
@@ -142,8 +188,9 @@ ZFOBSERVER_EVENT_REGISTER(ZFFile, CachePathOnChange)
 ZFOBSERVER_EVENT_REGISTER(ZFFile, CachePathBeforeClear)
 ZFOBSERVER_EVENT_REGISTER(ZFFile, CachePathAfterClear)
 
-zfbool ZFFile::filePathFormat(ZF_OUT zfstring &ret,
-                              ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, zfbool, filePathFormat,
+                  ZFMP_OUT(zfstring &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     if(src == zfnull)
     {
@@ -152,7 +199,9 @@ zfbool ZFFile::filePathFormat(ZF_OUT zfstring &ret,
     return _ZFP_ZFFileImpl->filePathFormat(ret, src);
 }
 
-void ZFFile::fileNameOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, void, fileNameOf,
+                  ZFMP_OUT(zfstring &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     zfindex pos = zfstringFindReversely(src, zfindexMax, &ZFFile::fileSeparator, 1);
     if(pos != zfindexMax)
@@ -164,7 +213,9 @@ void ZFFile::fileNameOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
         ret += src;
     }
 }
-void ZFFile::fileNameOfWithoutExt(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, void, fileNameOfWithoutExt,
+                  ZFMP_OUT(zfstring &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     zfindex len = zfslen(src);
     zfindex pos = zfstringFindReversely(src, len, &ZFFile::fileSeparator, 1);
@@ -186,7 +237,9 @@ void ZFFile::fileNameOfWithoutExt(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
         ret += (src + pos);
     }
 }
-void ZFFile::fileExtOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, void, fileExtOf,
+                  ZFMP_OUT(zfstring &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     zfindex pos = zfstringFindReversely(src, zfindexMax, zfText("."), 1);
     if(pos != zfindexMax)
@@ -194,7 +247,9 @@ void ZFFile::fileExtOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
         ret += (src + pos + 1);
     }
 }
-void ZFFile::fileParentPathOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, void, fileParentPathOf,
+                  ZFMP_OUT(zfstring &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     zfindex pos = zfstringFindReversely(src, zfindexMax, &ZFFile::fileSeparator, 1);
     if(pos != zfindexMax)
@@ -202,7 +257,9 @@ void ZFFile::fileParentPathOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src)
         ret.append(src, pos);
     }
 }
-void ZFFile::filePathComponentsOf(ZF_OUT ZFCoreArray<zfstring> &ret, ZF_IN const zfchar *src)
+ZFMETHOD_DEFINE_2(ZFFile, void, filePathComponentsOf,
+                  ZFMP_OUT(ZFCoreArray<zfstring> &, ret),
+                  ZFMP_IN(const zfchar *, src))
 {
     zfindex len = zfslen(src);
     zfindex posL = 0;
@@ -229,7 +286,8 @@ void ZFFile::filePathComponentsOf(ZF_OUT ZFCoreArray<zfstring> &ret, ZF_IN const
     } while(zftrue);
 }
 
-zfbool ZFFile::fileIsExist(ZF_IN const zfchar *path)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileIsExist,
+                  ZFMP_IN(const zfchar *, path))
 {
     if(path == zfnull)
     {
@@ -238,7 +296,8 @@ zfbool ZFFile::fileIsExist(ZF_IN const zfchar *path)
     return _ZFP_ZFFileImpl->fileIsExist(path);
 }
 
-zfbool ZFFile::fileIsFolder(ZF_IN const zfchar *path)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileIsFolder,
+                  ZFMP_IN(const zfchar *, path))
 {
     if(path == zfnull)
     {
@@ -247,9 +306,10 @@ zfbool ZFFile::fileIsFolder(ZF_IN const zfchar *path)
     return _ZFP_ZFFileImpl->fileIsFolder(path);
 }
 
-zfbool ZFFile::filePathCreate(ZF_IN const zfchar *path,
-                              ZF_IN_OPT zfbool autoMakeParent /* = zftrue */,
-                              ZF_IN_OPT zfstring *errPos /* = zfnull */)
+ZFMETHOD_DEFINE_3(ZFFile, zfbool, filePathCreate,
+                  ZFMP_IN(const zfchar *, path),
+                  ZFMP_IN_OPT(zfbool, autoMakeParent, zftrue),
+                  ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
     if(path == zfnull)
     {
@@ -258,11 +318,12 @@ zfbool ZFFile::filePathCreate(ZF_IN const zfchar *path,
     return _ZFP_ZFFileImpl->filePathCreate(path, autoMakeParent, errPos);
 }
 
-zfbool ZFFile::fileCopy(ZF_IN const zfchar *srcPath,
-                        ZF_IN const zfchar *dstPath,
-                        ZF_IN_OPT zfbool isRecursive /* = zftrue */,
-                        ZF_IN_OPT zfbool isForce /* = zffalse */,
-                        ZF_IN_OPT zfstring *errPos /* = zfnull */)
+ZFMETHOD_DEFINE_5(ZFFile, zfbool, fileCopy,
+                  ZFMP_IN(const zfchar *, srcPath),
+                  ZFMP_IN(const zfchar *, dstPath),
+                  ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                  ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                  ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
     if(srcPath == zfnull || dstPath == zfnull)
     {
@@ -271,11 +332,12 @@ zfbool ZFFile::fileCopy(ZF_IN const zfchar *srcPath,
     return _ZFP_ZFFileImpl->fileCopy(srcPath, dstPath, isRecursive, isForce, errPos);
 }
 
-zfbool ZFFile::fileMove(ZF_IN const zfchar *srcPath,
-                        ZF_IN const zfchar *dstPath,
-                        ZF_IN_OPT zfbool isRecursive /* = zftrue */,
-                        ZF_IN_OPT zfbool isForce /* = zffalse */,
-                        ZF_IN_OPT zfstring *errPos /* = zfnull */)
+ZFMETHOD_DEFINE_5(ZFFile, zfbool, fileMove,
+                  ZFMP_IN(const zfchar *, srcPath),
+                  ZFMP_IN(const zfchar *, dstPath),
+                  ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                  ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                  ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
     if(srcPath == zfnull || dstPath == zfnull)
     {
@@ -283,10 +345,11 @@ zfbool ZFFile::fileMove(ZF_IN const zfchar *srcPath,
     }
     return _ZFP_ZFFileImpl->fileMove(srcPath, dstPath, isRecursive, isForce, errPos);
 }
-zfbool ZFFile::fileRemove(ZF_IN const zfchar *path,
-                          ZF_IN_OPT zfbool isRecursive /* = zftrue */,
-                          ZF_IN_OPT zfbool isForce /* = zffalse */,
-                          ZF_IN_OPT zfstring *errPos /* = zfnull */)
+ZFMETHOD_DEFINE_4(ZFFile, zfbool, fileRemove,
+                  ZFMP_IN(const zfchar *, path),
+                  ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                  ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                  ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
     if(path == zfnull)
     {
@@ -295,8 +358,9 @@ zfbool ZFFile::fileRemove(ZF_IN const zfchar *path,
     return _ZFP_ZFFileImpl->fileRemove(path, isRecursive, isForce, errPos);
 }
 
-zfbool ZFFile::fileFindFirst(ZF_IN const zfchar *path,
-                             ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_2(ZFFile, zfbool, fileFindFirst,
+                  ZFMP_IN(const zfchar *, path),
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     if(path == zfnull)
     {
@@ -324,7 +388,8 @@ zfbool ZFFile::fileFindFirst(ZF_IN const zfchar *path,
     }
     return zffalse;
 }
-zfbool ZFFile::fileFindNext(ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileFindNext,
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     switch(fd.d->findStatus)
     {
@@ -343,7 +408,8 @@ zfbool ZFFile::fileFindNext(ZF_IN_OUT ZFFileFindData &fd)
     }
     return _ZFP_ZFFileImpl->fileFindNext(fd.d->d);
 }
-void ZFFile::fileFindClose(ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_1(ZFFile, void, fileFindClose,
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     switch(fd.d->findStatus)
     {
@@ -365,20 +431,21 @@ void ZFFile::fileFindClose(ZF_IN_OUT ZFFileFindData &fd)
 }
 
 // ============================================================
-const zfchar *ZFFile::modulePath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, modulePath)
 {
     return _ZFP_ZFFilePathImpl->modulePath();
 }
-const zfchar *ZFFile::moduleFilePath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, moduleFilePath)
 {
     return _ZFP_ZFFilePathImpl->moduleFilePath();
 }
 
-const zfchar *ZFFile::settingPath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, settingPath)
 {
     return _ZFP_ZFFilePathImpl->settingPath();
 }
-void ZFFile::settingPathSet(ZF_IN const zfchar *path /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFFile, void, settingPathSet,
+                  ZFMP_IN_OPT(const zfchar *, path, zfnull))
 {
     zfstring old = _ZFP_ZFFilePathImpl->settingPath();
     _ZFP_ZFFilePathImpl->settingPathSet(path);
@@ -391,11 +458,12 @@ void ZFFile::settingPathSet(ZF_IN const zfchar *path /* = zfnull */)
     }
 }
 
-const zfchar *ZFFile::storagePath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, storagePath)
 {
     return _ZFP_ZFFilePathImpl->storagePath();
 }
-void ZFFile::storagePathSet(ZF_IN const zfchar *path /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFFile, void, storagePathSet,
+                  ZFMP_IN_OPT(const zfchar *, path, zfnull))
 {
     zfstring old = _ZFP_ZFFilePathImpl->storagePath();
     _ZFP_ZFFilePathImpl->storagePathSet(path);
@@ -408,11 +476,12 @@ void ZFFile::storagePathSet(ZF_IN const zfchar *path /* = zfnull */)
     }
 }
 
-const zfchar *ZFFile::storageSharedPath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, storageSharedPath)
 {
     return _ZFP_ZFFilePathImpl->storageSharedPath();
 }
-void ZFFile::storageSharedPathSet(ZF_IN const zfchar *path /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFFile, void, storageSharedPathSet,
+                  ZFMP_IN_OPT(const zfchar *, path, zfnull))
 {
     zfstring old = _ZFP_ZFFilePathImpl->storageSharedPath();
     _ZFP_ZFFilePathImpl->storageSharedPathSet(path);
@@ -425,11 +494,12 @@ void ZFFile::storageSharedPathSet(ZF_IN const zfchar *path /* = zfnull */)
     }
 }
 
-const zfchar *ZFFile::cachePath(void)
+ZFMETHOD_DEFINE_0(ZFFile, const zfchar *, cachePath)
 {
     return _ZFP_ZFFilePathImpl->cachePath();
 }
-void ZFFile::cachePathSet(ZF_IN const zfchar *path /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFFile, void, cachePathSet,
+                  ZFMP_IN_OPT(const zfchar *, path, zfnull))
 {
     zfstring old = _ZFP_ZFFilePathImpl->cachePath();
     _ZFP_ZFFilePathImpl->cachePathSet(path);
@@ -442,7 +512,7 @@ void ZFFile::cachePathSet(ZF_IN const zfchar *path /* = zfnull */)
     }
 }
 
-void ZFFile::cachePathClear(void)
+ZFMETHOD_DEFINE_0(ZFFile, void, cachePathClear)
 {
     ZFGlobalEventCenter::instance()->observerNotify(ZFFile::EventCachePathBeforeClear());
     _ZFP_ZFFilePathImpl->cachePathClear();
@@ -456,9 +526,10 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFFileCachePathAutoClear, ZFLevelZFFramewo
 ZF_GLOBAL_INITIALIZER_END(ZFFileCachePathAutoClear)
 
 // ============================================================
-ZFFileToken ZFFile::fileOpen(ZF_IN const zfchar *filePath,
-                             ZF_IN_OPT ZFFileOpenOptionFlags flag /* = ZFFileOpenOption::e_Read */,
-                             ZF_IN_OPT zfbool autoCreateParent /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFFile, ZFFileToken, fileOpen,
+                  ZFMP_IN(const zfchar *, filePath),
+                  ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
+                  ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue))
 {
     if(autoCreateParent && (zffalse
         || ZFBitTest(flag, ZFFileOpenOption::e_Create)
@@ -470,29 +541,34 @@ ZFFileToken ZFFile::fileOpen(ZF_IN const zfchar *filePath,
     }
     return _ZFP_ZFFileReadWriteImpl->fileOpen(filePath, flag);
 }
-zfbool ZFFile::fileClose(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileClose,
+                  ZFMP_IN(ZFFileToken, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileClose(token);
 }
-zfindex ZFFile::fileTell(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfindex, fileTell,
+                  ZFMP_IN(ZFFileToken, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileTell(token);
 }
-zfbool ZFFile::fileSeek(ZF_IN ZFFileToken token,
-                        ZF_IN zfindex byteSize,
-                        ZF_IN_OPT ZFSeekPos position /* = ZFSeekPosBegin */)
+ZFMETHOD_DEFINE_3(ZFFile, zfbool, fileSeek,
+                  ZFMP_IN(ZFFileToken, token),
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 {
     return _ZFP_ZFFileReadWriteImpl->fileSeek(token, byteSize, position);
 }
-zfindex ZFFile::fileRead(ZF_IN ZFFileToken token,
-                         ZF_IN void *buf,
-                         ZF_IN zfindex maxByteSize)
+ZFMETHOD_DEFINE_3(ZFFile, zfindex, fileRead,
+                  ZFMP_IN(ZFFileToken, token),
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, maxByteSize))
 {
     return _ZFP_ZFFileReadWriteImpl->fileRead(token, buf, maxByteSize);
 }
-zfindex ZFFile::fileWrite(ZF_IN ZFFileToken token,
-                          ZF_IN const void *src,
-                          ZF_IN_OPT zfindex maxByteSize /* = zfindexMax */)
+ZFMETHOD_DEFINE_3(ZFFile, zfindex, fileWrite,
+                  ZFMP_IN(ZFFileToken, token),
+                  ZFMP_IN(const void *, src),
+                  ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax))
 {
     if(src == zfnull)
     {
@@ -501,21 +577,25 @@ zfindex ZFFile::fileWrite(ZF_IN ZFFileToken token,
     return _ZFP_ZFFileReadWriteImpl->fileWrite(token, src,
         (maxByteSize == zfindexMax) ? (sizeof(zfchar) * zfslen((const zfchar *)src)) : maxByteSize);
 }
-void ZFFile::fileFlush(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, void, fileFlush,
+                  ZFMP_IN(ZFFileToken, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileFlush(token);
 }
-zfbool ZFFile::fileEof(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileEof,
+                  ZFMP_IN(ZFFileToken, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileEof(token);
 }
-zfbool ZFFile::fileError(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, fileError,
+                  ZFMP_IN(ZFFileToken, token))
 {
     return _ZFP_ZFFileReadWriteImpl->fileError(token);
 }
-zfindex ZFFile::fileSize(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfindex, fileSize,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zfindexMax;
     }
@@ -539,7 +619,8 @@ public:
 ZF_GLOBAL_INITIALIZER_END(ZFFileResAdditionalPathDataHolder)
 #define _ZFP_ZFFileResAdditionalPathList (ZF_GLOBAL_INITIALIZER_INSTANCE(ZFFileResAdditionalPathDataHolder)->resAdditionalPathList)
 
-void ZFFile::resAdditionalPathAdd(ZF_IN const zfchar *path)
+ZFMETHOD_DEFINE_1(ZFFile, void, resAdditionalPathAdd,
+                  ZFMP_IN(const zfchar *, path))
 {
     if(path == zfnull || *path == '\0')
     {
@@ -547,7 +628,8 @@ void ZFFile::resAdditionalPathAdd(ZF_IN const zfchar *path)
     }
     _ZFP_ZFFileResAdditionalPathList.add(path);
 }
-void ZFFile::resAdditionalPathRemove(ZF_IN const zfchar *path)
+ZFMETHOD_DEFINE_1(ZFFile, void, resAdditionalPathRemove,
+                  ZFMP_IN(const zfchar *, path))
 {
     if(path == zfnull || *path == '\0')
     {
@@ -555,11 +637,12 @@ void ZFFile::resAdditionalPathRemove(ZF_IN const zfchar *path)
     }
     _ZFP_ZFFileResAdditionalPathList.removeElement(path);
 }
-ZFCoreArray<zfstring> ZFFile::resAdditionalPathList(void)
+ZFMETHOD_DEFINE_0(ZFFile, ZFCoreArray<zfstring>, resAdditionalPathList)
 {
     return _ZFP_ZFFileResAdditionalPathList;
 }
-const zfchar *ZFFile::resAdditionalPathCheck(ZF_IN const zfchar *resPath)
+ZFMETHOD_DEFINE_1(ZFFile, const zfchar *, resAdditionalPathCheck,
+                  ZFMP_IN(const zfchar *, resPath))
 {
     for(zfindex i = 0; i < _ZFP_ZFFileResAdditionalPathList.count(); ++i)
     {
@@ -575,11 +658,12 @@ const zfchar *ZFFile::resAdditionalPathCheck(ZF_IN const zfchar *resPath)
     return zfnull;
 }
 
-zfbool ZFFile::resCopy(ZF_IN const zfchar *resPath,
-                       ZF_IN const zfchar *dstPath,
-                       ZF_IN_OPT zfbool isRecursive /* = zftrue */,
-                       ZF_IN_OPT zfbool isForce /* = zffalse */,
-                       ZF_IN_OPT zfstring *errPos /* = zfnull */)
+ZFMETHOD_DEFINE_5(ZFFile, zfbool, resCopy,
+                  ZFMP_IN(const zfchar *, resPath),
+                  ZFMP_IN(const zfchar *, dstPath),
+                  ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                  ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                  ZFMP_IN_OPT(zfstring *, errPos, zfnull))
 {
     const zfchar *resAdditionalPath = ZFFile::resAdditionalPathCheck(resPath);
     if(resAdditionalPath == zfnull)
@@ -611,11 +695,12 @@ zfbool ZFFile::resCopy(ZF_IN const zfchar *resPath,
         return ret;
     }
 }
-ZFFileToken ZFFile::resOpen(ZF_IN const zfchar *resPath)
+ZFMETHOD_DEFINE_1(ZFFile, ZFFileToken, resOpen,
+                  ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {
-        return ZFFileTokenInvalid;
+        return ZFFileTokenInvalid();
     }
 
     _ZFP_ZFFileTokenForRes *ret = zfnew(_ZFP_ZFFileTokenForRes);
@@ -633,16 +718,17 @@ ZFFileToken ZFFile::resOpen(ZF_IN const zfchar *resPath)
         resPathTmp += resPath;
         ret->fd = _ZFP_ZFFileReadWriteImpl->fileOpen(resPathTmp);
     }
-    if(ret->fd == ZFFileTokenInvalid)
+    if(ret->fd == ZFFileTokenInvalid())
     {
         zfdelete(ret);
         ret = zfnull;
     }
     return (ZFFileToken)ret;
 }
-zfbool ZFFile::resClose(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, resClose,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -658,9 +744,10 @@ zfbool ZFFile::resClose(ZF_IN ZFFileToken token)
         return _ZFP_ZFFileReadWriteImpl->fileClose(resToken->fd);
     }
 }
-zfindex ZFFile::resTell(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfindex, resTell,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -675,11 +762,12 @@ zfindex ZFFile::resTell(ZF_IN ZFFileToken token)
         return _ZFP_ZFFileReadWriteImpl->fileTell(resToken->fd);
     }
 }
-zfbool ZFFile::resSeek(ZF_IN ZFFileToken token,
-                       ZF_IN zfindex byteSize,
-                       ZF_IN_OPT ZFSeekPos position /* = ZFSeekPosBegin */)
+ZFMETHOD_DEFINE_3(ZFFile, zfbool, resSeek,
+                  ZFMP_IN(ZFFileToken, token),
+                  ZFMP_IN(zfindex, byteSize),
+                  ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -694,11 +782,12 @@ zfbool ZFFile::resSeek(ZF_IN ZFFileToken token,
         return _ZFP_ZFFileReadWriteImpl->fileSeek(resToken->fd, byteSize, position);
     }
 }
-zfindex ZFFile::resRead(ZF_IN ZFFileToken token,
-                        ZF_IN void *buf,
-                        ZF_IN zfindex maxByteSize)
+ZFMETHOD_DEFINE_3(ZFFile, zfindex, resRead,
+                  ZFMP_IN(ZFFileToken, token),
+                  ZFMP_IN(void *, buf),
+                  ZFMP_IN(zfindex, maxByteSize))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -713,9 +802,10 @@ zfindex ZFFile::resRead(ZF_IN ZFFileToken token,
         return _ZFP_ZFFileReadWriteImpl->fileRead(resToken->fd, buf, maxByteSize);
     }
 }
-zfbool ZFFile::resEof(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, resEof,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -730,9 +820,10 @@ zfbool ZFFile::resEof(ZF_IN ZFFileToken token)
         return _ZFP_ZFFileReadWriteImpl->fileEof(resToken->fd);
     }
 }
-zfbool ZFFile::resError(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, resError,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zffalse;
     }
@@ -748,8 +839,9 @@ zfbool ZFFile::resError(ZF_IN ZFFileToken token)
     }
 }
 
-zfbool ZFFile::resFindFirst(ZF_IN const zfchar *resPath,
-                            ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_2(ZFFile, zfbool, resFindFirst,
+                  ZFMP_IN(const zfchar *, resPath),
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     if(resPath == zfnull)
     {
@@ -808,7 +900,8 @@ zfbool ZFFile::resFindFirst(ZF_IN const zfchar *resPath,
         }
     }
 }
-zfbool ZFFile::resFindNext(ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_1(ZFFile, zfbool, resFindNext,
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     switch(fd.d->findStatus)
     {
@@ -848,7 +941,8 @@ zfbool ZFFile::resFindNext(ZF_IN_OUT ZFFileFindData &fd)
         }
     }
 }
-void ZFFile::resFindClose(ZF_IN_OUT ZFFileFindData &fd)
+ZFMETHOD_DEFINE_1(ZFFile, void, resFindClose,
+                  ZFMP_IN_OUT(ZFFileFindData &, fd))
 {
     switch(fd.d->findStatus)
     {
@@ -877,9 +971,10 @@ void ZFFile::resFindClose(ZF_IN_OUT ZFFileFindData &fd)
     fd.d->resAdditionalPathWithSeparator.removeAll();
     fd.d->findStatus = _ZFP_ZFFileFindDataPrivate::NotStarted;
 }
-zfindex ZFFile::resSize(ZF_IN ZFFileToken token)
+ZFMETHOD_DEFINE_1(ZFFile, zfindex, resSize,
+                  ZFMP_IN(ZFFileToken, token))
 {
-    if(token == ZFFileTokenInvalid)
+    if(token == ZFFileTokenInvalid())
     {
         return zfindexMax;
     }

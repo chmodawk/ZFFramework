@@ -14,16 +14,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 static zfindex _ZFP_ZFFileSkipBOMAndUpdateFileToken(ZF_IN ZFFileToken fileToken,
-                                                    ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                                                    ZF_IN zfindex autoSkipBOMTableCount,
+                                                    ZF_IN const ZFFileBOMList &autoSkipBOMTable,
                                                     ZF_IN zfbool resType)
 {
     if(!resType)
     {
         zfindex ret = 0;
-        if(autoSkipBOMTable != zfnull)
+        if(!autoSkipBOMTable.isEmpty())
         {
-            for(zfindex i = 0; i < autoSkipBOMTableCount; ++i)
+            for(zfindex i = 0; i < autoSkipBOMTable.count(); ++i)
             {
                 zfbyte tmp[ZFFileBOMMaxSize] = {0};
                 ZFFile::fileRead(fileToken, tmp, ZFFileBOMMaxSize);
@@ -43,9 +42,9 @@ static zfindex _ZFP_ZFFileSkipBOMAndUpdateFileToken(ZF_IN ZFFileToken fileToken,
     else
     {
         zfindex ret = 0;
-        if(autoSkipBOMTable != zfnull)
+        if(!autoSkipBOMTable.isEmpty())
         {
-            for(zfindex i = 0; i < autoSkipBOMTableCount; ++i)
+            for(zfindex i = 0; i < autoSkipBOMTable.count(); ++i)
             {
                 zfbyte tmp[ZFFileBOMMaxSize] = {0};
                 ZFFile::resRead(fileToken, tmp, ZFFileBOMMaxSize);
@@ -71,7 +70,7 @@ static zfindex _ZFP_ZFFileCallbackSeek(ZF_IN_OUT ZFFileToken fileToken,
 {
     if(!resType)
     {
-        if(fileToken == ZFFileTokenInvalid)
+        if(fileToken == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -86,7 +85,7 @@ static zfindex _ZFP_ZFFileCallbackSeek(ZF_IN_OUT ZFFileToken fileToken,
     }
     else
     {
-        if(fileToken == ZFFileTokenInvalid)
+        if(fileToken == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -106,7 +105,7 @@ static zfindex _ZFP_ZFFileCallbackTell(ZF_IN ZFFileToken fileToken,
 {
     if(!resType)
     {
-        if(fileToken == ZFFileTokenInvalid)
+        if(fileToken == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -114,7 +113,7 @@ static zfindex _ZFP_ZFFileCallbackTell(ZF_IN ZFFileToken fileToken,
     }
     else
     {
-        if(fileToken == ZFFileTokenInvalid)
+        if(fileToken == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -133,17 +132,17 @@ public:
     {
         zfsuper::objectOnInit();
         this->autoFlushSize = 0;
-        this->token = ZFFileTokenInvalid;
+        this->token = ZFFileTokenInvalid();
         this->notFlushedCount = 0;
         return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
-            this->token = ZFFileTokenInvalid;
+            this->token = ZFFileTokenInvalid();
         }
         zfsuper::objectOnDealloc();
     }
@@ -152,12 +151,12 @@ public:
     virtual zfbool openFile(ZF_IN const zfchar *filePath,
                             ZF_IN ZFFileOpenOptionFlags flags)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
         }
         this->token = ZFFile::fileOpen(filePath, flags);
-        return (this->token != ZFFileTokenInvalid);
+        return (this->token != ZFFileTokenInvalid());
     }
 
     ZFMETHOD_DECLARE_2(zfindex, onOutput,
@@ -205,17 +204,17 @@ public:
     virtual ZFObject *objectOnInit(void)
     {
         zfsuper::objectOnInit();
-        this->token = ZFFileTokenInvalid;
+        this->token = ZFFileTokenInvalid();
         this->BOMSize = 0;
         return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
-            this->token = ZFFileTokenInvalid;
+            this->token = ZFFileTokenInvalid();
         }
         zfsuper::objectOnDealloc();
     }
@@ -223,19 +222,18 @@ public:
 public:
     virtual zfbool openFile(ZF_IN const zfchar *filePath,
                             ZF_IN ZFFileOpenOptionFlags flags,
-                            ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                            ZF_IN zfindex autoSkipBOMTableCount)
+                            ZF_IN const ZFFileBOMList &autoSkipBOMTable)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
         }
         this->token = ZFFile::fileOpen(filePath, flags);
-        if(this->token != ZFFileTokenInvalid && autoSkipBOMTable != zfnull)
+        if(this->token != ZFFileTokenInvalid() && !autoSkipBOMTable.isEmpty())
         {
-            this->BOMSize = _ZFP_ZFFileSkipBOMAndUpdateFileToken(this->token, autoSkipBOMTable, autoSkipBOMTableCount, zffalse);
+            this->BOMSize = _ZFP_ZFFileSkipBOMAndUpdateFileToken(this->token, autoSkipBOMTable, zffalse);
         }
-        return (this->token != ZFFileTokenInvalid);
+        return (this->token != ZFFileTokenInvalid());
     }
 
     ZFMETHOD_DECLARE_2(zfindex, onInput,
@@ -277,35 +275,34 @@ public:
     virtual ZFObject *objectOnInit(void)
     {
         zfsuper::objectOnInit();
-        this->token = ZFFileTokenInvalid;
+        this->token = ZFFileTokenInvalid();
         return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::resClose(this->token);
-            this->token = ZFFileTokenInvalid;
+            this->token = ZFFileTokenInvalid();
         }
         zfsuper::objectOnDealloc();
     }
 
 public:
     virtual zfbool openFile(ZF_IN const zfchar *resFilePath,
-                            ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                            ZF_IN zfindex autoSkipBOMTableCount)
+                            ZF_IN const ZFFileBOMList &autoSkipBOMTable)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::resClose(this->token);
         }
         this->token = ZFFile::resOpen(resFilePath);
-        if(this->token != ZFFileTokenInvalid && autoSkipBOMTable != zfnull)
+        if(this->token != ZFFileTokenInvalid() && !autoSkipBOMTable.isEmpty())
         {
-            this->BOMSize = _ZFP_ZFFileSkipBOMAndUpdateFileToken(this->token, autoSkipBOMTable, autoSkipBOMTableCount, zftrue);
+            this->BOMSize = _ZFP_ZFFileSkipBOMAndUpdateFileToken(this->token, autoSkipBOMTable, zftrue);
         }
-        return (this->token != ZFFileTokenInvalid);
+        return (this->token != ZFFileTokenInvalid());
     }
 
     ZFMETHOD_DECLARE_2(zfindex, onInput,
@@ -453,11 +450,10 @@ static zfbool _ZFP_ZFOutputCallbackForFile_parseImplData(ZF_IN const ZFSerializa
 static ZFInputCallback _ZFP_ZFInputCallbackForFile_create(ZF_IN const ZFCallerInfo &callerInfo,
                                                           ZF_IN const zfchar *filePath,
                                                           ZF_IN ZFFileOpenOptionFlags flags,
-                                                          ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                                                          ZF_IN zfindex autoSkipBOMTableCount)
+                                                          ZF_IN const ZFFileBOMList &autoSkipBOMTable)
 {
     _ZFP_ZFInputCallbackForFileOwner *inputOwner = zfAlloc(_ZFP_ZFInputCallbackForFileOwner);
-    if(!inputOwner->openFile(filePath, flags, autoSkipBOMTable, autoSkipBOMTableCount))
+    if(!inputOwner->openFile(filePath, flags, autoSkipBOMTable))
     {
         zfRelease(inputOwner);
         return ZFCallbackNullDetail(callerInfo);
@@ -477,22 +473,13 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
                                                       ZF_IN const zfchar *callbackIdType,
                                                       ZF_IN const zfchar *callbackIdFilePath,
                                                       ZF_IN ZFFileOpenOptionFlags flags,
-                                                      ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                                                      ZF_IN zfindex autoSkipBOMTableCount)
+                                                      ZF_IN const ZFFileBOMList &autoSkipBOMTable)
 {
     {
         zfstring callbackId;
         callbackId += callbackIdType;
-        callbackId += zfText("[");
-        for(zfindex i = 0; i < autoSkipBOMTableCount; ++i)
-        {
-            if(i != 0)
-            {
-                callbackId += zfText(", ");
-            }
-            ZFFileBOMToString(callbackId, autoSkipBOMTable[i]);
-        }
-        callbackId += zfText("]:");
+        ZFFileBOMListToString(callbackId, autoSkipBOMTable);
+        callbackId += zfText(":");
         callbackId += callbackIdFilePath;
         ret.callbackIdSet(callbackId);
     }
@@ -522,10 +509,10 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
                 customData.elementAdd(flagsData);
             }
 
-            if(autoSkipBOMTableCount != 1 || autoSkipBOMTable[0] != ZFFileBOMUTF8)
+            if(autoSkipBOMTable.objectCompare(ZFFileBOMListDefault()) != ZFCompareTheSame)
             {
                 ZFSerializableData autoSkipBOMTableData;
-                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable, autoSkipBOMTableCount)))
+                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
                 {
                     break;
                 }
@@ -546,7 +533,7 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
                                                         ZF_IN const zfchar *filePathKeyName,
                                                         ZF_OUT const zfchar *&filePath,
                                                         ZF_OUT ZFFileOpenOptionFlags &flags,
-                                                        ZF_OUT ZFCoreArrayPOD<ZFFileBOM> &autoSkipBOMTable,
+                                                        ZF_OUT ZFFileBOMList &autoSkipBOMTable,
                                                         ZF_OUT zfstring *outErrorHint,
                                                         ZF_OUT ZFSerializableData *outErrorPos)
 {
@@ -589,7 +576,7 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
         }
         else
         {
-            autoSkipBOMTable.add(ZFFileBOMUTF8);
+            autoSkipBOMTable.addFrom(ZFFileBOMListDefault());
         }
     }
     serializableData.resolveMark();
@@ -599,11 +586,10 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
 // ============================================================
 static ZFInputCallback _ZFP_ZFInputCallbackForResFile_create(ZF_IN const ZFCallerInfo &callerInfo,
                                                              ZF_IN const zfchar *resFilePath,
-                                                             ZF_IN const ZFFileBOM *autoSkipBOMTable,
-                                                             ZF_IN zfindex autoSkipBOMTableCount)
+                                                             ZF_IN const ZFFileBOMList &autoSkipBOMTable)
 {
     _ZFP_ZFInputCallbackForResFileOwner *inputOwner = zfAlloc(_ZFP_ZFInputCallbackForResFileOwner);
-    if(!inputOwner->openFile(resFilePath, autoSkipBOMTable, autoSkipBOMTableCount))
+    if(!inputOwner->openFile(resFilePath, autoSkipBOMTable))
     {
         zfRelease(inputOwner);
         return ZFCallbackNullDetail(callerInfo);
@@ -664,11 +650,10 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
 ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo,
                                             ZF_IN const zfchar *filePath,
                                             ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                            ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                            ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                            ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     ZFInputCallback ret = _ZFP_ZFInputCallbackForFile_create(callerInfo,
-        filePath, flags, autoSkipBOMTable, autoSkipBOMTableCount);
+        filePath, flags, autoSkipBOMTable);
     if(!ret.callbackIsValid())
     {
         return ret;
@@ -678,14 +663,14 @@ ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo
         ZFSerializableKeyword_ZFFileCallback_filePath, filePath,
         zfText("ZFInputCallbackForFile"), filePath,
         flags,
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
     return ret;
 }
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
-    ZFCoreArrayPOD<ZFFileBOM> autoSkipBOMTable;
+    ZFFileBOMList autoSkipBOMTable;
     if(!_ZFP_ZFInputCallbackForFile_parseImplData(
             serializableData,
             ZFSerializableKeyword_ZFFileCallback_filePath, filePath,
@@ -697,7 +682,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         return zffalse;
     }
 
-    result = ZFInputCallbackForFile(filePath, flags, autoSkipBOMTable.arrayBuf(), autoSkipBOMTable.count());
+    result = ZFInputCallbackForFile(filePath, flags, autoSkipBOMTable);
     if(!result.callbackIsValid())
     {
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
@@ -711,11 +696,10 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
 // ZFInputCallbackForResFile
 ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                ZF_IN const zfchar *resFilePath,
-                                               ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                               ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                               ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     ZFInputCallback ret = _ZFP_ZFInputCallbackForResFile_create(callerInfo,
-        resFilePath, autoSkipBOMTable, autoSkipBOMTableCount);
+        resFilePath, autoSkipBOMTable);
     if(!ret.callbackIsValid())
     {
         return ret;
@@ -725,7 +709,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const ZFCallerInfo &callerI
         ZFSerializableKeyword_ZFFileCallback_filePath, resFilePath,
         zfText("ZFInputCallbackForResFile"), resFilePath,
         ZFFileOpenOption::e_Read,
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
     return ret;
 }
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForResFile)
@@ -733,7 +717,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
     ZFUNUSED(flags);
-    ZFCoreArrayPOD<ZFFileBOM> autoSkipBOMTable;
+    ZFFileBOMList autoSkipBOMTable;
     if(!_ZFP_ZFInputCallbackForFile_parseImplData(
             serializableData,
             ZFSerializableKeyword_ZFFileCallback_filePath, filePath,
@@ -745,7 +729,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         return zffalse;
     }
 
-    result = ZFInputCallbackForResFile(filePath, autoSkipBOMTable.arrayBuf(), autoSkipBOMTable.count());
+    result = ZFInputCallbackForResFile(filePath, autoSkipBOMTable);
     if(!result.callbackIsValid())
     {
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
@@ -854,8 +838,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &calle
                                                  ZF_IN const ZFSerializableData &dataToCheckParentPath,
                                                  ZF_IN const zfchar *localPath,
                                                  ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                 ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                 ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                 ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     zfstring fileAbsPath;
     zfbool isResFile = zffalse;
@@ -868,12 +851,12 @@ ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &calle
     if(isResFile)
     {
         ret = _ZFP_ZFInputCallbackForResFile_create(callerInfo,
-            fileAbsPath, autoSkipBOMTable, autoSkipBOMTableCount);
+            fileAbsPath, autoSkipBOMTable);
     }
     else
     {
         ret = _ZFP_ZFInputCallbackForFile_create(callerInfo,
-            fileAbsPath, flags, autoSkipBOMTable, autoSkipBOMTableCount);
+            fileAbsPath, flags, autoSkipBOMTable);
     }
     if(!ret.callbackIsValid())
     {
@@ -884,14 +867,14 @@ ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &calle
         ZFSerializableKeyword_ZFFileCallback_localPath, localPath,
         zfText("ZFInputCallbackForLocalFile"), fileAbsPath,
         ZFFileOpenOption::e_Read,
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
     return ret;
 }
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile)
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
-    ZFCoreArrayPOD<ZFFileBOM> autoSkipBOMTable;
+    ZFFileBOMList autoSkipBOMTable;
     if(!_ZFP_ZFInputCallbackForFile_parseImplData(
             serializableData,
             ZFSerializableKeyword_ZFFileCallback_localPath, filePath,
@@ -903,7 +886,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         return zffalse;
     }
 
-    result = ZFInputCallbackForLocalFile(serializableData, filePath, flags, autoSkipBOMTable.arrayBuf(), autoSkipBOMTable.count());
+    result = ZFInputCallbackForLocalFile(serializableData, filePath, flags, autoSkipBOMTable);
     if(!result.callbackIsValid())
     {
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,

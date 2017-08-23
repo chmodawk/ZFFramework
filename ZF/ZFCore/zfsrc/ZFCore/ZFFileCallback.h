@@ -101,8 +101,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                                  ZF_IN const zfchar *filePath,
                                                                  ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
-                                                                 ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable = &ZFFileBOMUTF8,
-                                                                 ZF_IN_OPT zfindex autoSkipBOMTableCount = 1);
+                                                                 ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -111,7 +110,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
  *   <node>
  *       <zfstring category="filePath" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Read by default
- *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMUTF8 by default
+ *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMListDefault by default
  *   </node>
  * @endcode
  */
@@ -125,9 +124,8 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
  * param:
  * -  (const zfchar *)filePath: file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
- * -  (const ZFFileBOM *)autoSkipBOMTable: BOM to skip,
- *   if not null, BOM would be discarded and BOM's size would be ignored while calculating the file's size
- * -  (zfindex)autoSkipBOMTableCount autoSkipBOMTable's count
+ * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
+ *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
  *
  * auto open and auto close files, may return a null callback if open file error\n
  * auto setup callback cache id with res file path
@@ -139,8 +137,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
 // ZFInputCallbackForResFile
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                                     ZF_IN const zfchar *resFilePath,
-                                                                    ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable = &ZFFileBOMUTF8,
-                                                                    ZF_IN_OPT zfindex autoSkipBOMTableCount = 1);
+                                                                    ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -149,7 +146,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const 
  *   <node>
  *       <zfstring category="filePath" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Read by default
- *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMUTF8 by default
+ *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMListDefault by default
  *   </node>
  * @endcode
  */
@@ -163,9 +160,8 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const 
  *
  * param:
  * -  (const zfchar *)resFilePath: resource file path to use
- * -  (const ZFFileBOM *)autoSkipBOMTable: BOM to skip,
- *   if not null, BOM would be discarded and BOM's size would be ignored while calculating the file's size
- * -  (zfindex)autoSkipBOMTableCount autoSkipBOMTable's count
+ * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
+ *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
  *
  * auto open and auto close files, may return a null callback if open file error
  */
@@ -216,8 +212,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
                                                                       ZF_IN const ZFSerializableData &dataToCheckParentPath,
                                                                       ZF_IN const zfchar *filePath,
                                                                       ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
-                                                                      ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable = &ZFFileBOMUTF8,
-                                                                      ZF_IN_OPT zfindex autoSkipBOMTableCount = 1);
+                                                                      ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -226,7 +221,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
  *   <node>
  *       <zfstring category="localPath" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Read by default
- *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMUTF8 by default
+ *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMListDefault by default
  *   </node>
  * @endcode
  */
@@ -241,9 +236,8 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
  * -  (const ZFSerializableData &)dataToCheckParentPath: see #ZFSerializableDataTagKeyword_filePath
  * -  (const zfchar *)localPath: local file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
- * -  (const ZFFileBOM *)autoSkipBOMTable: BOM to skip,
- *   if not null, BOM would be discarded and BOM's size would be ignored while calculating the file's size
- * -  (zfindex)autoSkipBOMTableCount autoSkipBOMTable's count
+ * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
+ *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
  *
  * auto open and auto close files, may return a null callback if open file error\n
  * auto setup callback cache id with res file path

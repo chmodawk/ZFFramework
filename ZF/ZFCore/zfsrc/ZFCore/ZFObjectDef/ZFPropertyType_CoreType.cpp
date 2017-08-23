@@ -858,6 +858,9 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFMethodPrivilegeType, ZFMethodPrivil
     })
 
 // ============================================================
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFComparerForZFObject, ZFComparer<ZFObject *>::Comparer)
+
+// ============================================================
 ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFObjectInstanceState, ZFObjectInstanceState, {
         const zfchar *tokens[] = ZFM_EXPAND({
             ZFTOKEN_ZFObjectInstanceStateOnInit,

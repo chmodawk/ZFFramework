@@ -38,10 +38,10 @@ public:
     }
     ~_ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
-            this->token = ZFFileTokenInvalid;
+            this->token = ZFFileTokenInvalid();
         }
         ZFFile::fileRemove(this->tmpFileName.cString(), zfHint("recursive")zffalse, zfHint("force")zftrue);
     }
@@ -49,7 +49,7 @@ public:
 public:
     zfbool callbackIsValid(void)
     {
-        return (this->token != ZFFileTokenInvalid);
+        return (this->token != ZFFileTokenInvalid());
     }
 
     void resetInput(void)
@@ -67,7 +67,7 @@ public:
                        ZFMP_IN(void *, buf),
                        ZFMP_IN(zfindex, count))
     {
-        if(this->token == ZFFileTokenInvalid)
+        if(this->token == ZFFileTokenInvalid())
         {
             return 0;
         }
@@ -87,7 +87,7 @@ public:
                        ZFMP_IN(const void *, buf),
                        ZFMP_IN(zfindex, count))
     {
-        if(this->token == ZFFileTokenInvalid)
+        if(this->token == ZFFileTokenInvalid())
         {
             return 0;
         }

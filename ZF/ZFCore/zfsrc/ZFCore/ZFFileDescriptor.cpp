@@ -35,8 +35,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
                                                       ZF_IN const zfchar *fileDescriptor,
                                                       ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax */,
                                                       ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                      ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                      ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                      ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     ZFInputCallback ret = ZFCallbackNullDetail(callerInfo);
     if(fileDescriptor == zfnull)
@@ -74,22 +73,14 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
     ret = callbackData->inputCallbackGetter(
         dataStart, dataLength,
         flags,
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
     ret.callbackCallerInfoSet(callerInfo);
 
     {
         zfstring callbackId;
         callbackId += zfText("ZFInputCallbackForFileDescriptor");
-        callbackId += zfText("[");
-        for(zfindex i = 0; i < autoSkipBOMTableCount; ++i)
-        {
-            if(i != 0)
-            {
-                callbackId += zfText(", ");
-            }
-            ZFFileBOMToString(callbackId, autoSkipBOMTable[i]);
-        }
-        callbackId += zfText("]:");
+        ZFFileBOMListToString(callbackId, autoSkipBOMTable);
+        callbackId += zfText(":");
         callbackId.append(fileDescriptor, fileDescriptorLen);
         ret.callbackIdSet(callbackId);
     }
@@ -119,10 +110,10 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
                 customData.elementAdd(flagsData);
             }
 
-            if(autoSkipBOMTableCount != 1 || autoSkipBOMTable[0] != ZFFileBOMUTF8)
+            if(autoSkipBOMTable.objectCompare(ZFFileBOMListDefault()) != ZFCompareTheSame)
             {
                 ZFSerializableData autoSkipBOMTableData;
-                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable, autoSkipBOMTableCount)))
+                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
                 {
                     break;
                 }
@@ -164,8 +155,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         }
     }
 
-    ZFCoreArrayPOD<ZFFileBOM> BOMList;
-    BOMList.add(ZFFileBOMUTF8);
+    ZFFileBOMList BOMList;
     {
         const ZFSerializableData *autoSkipBOMTableData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_autoSkipBOMTable);
         zfstring BOMStringList;
@@ -183,11 +173,15 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
                 return zffalse;
             }
         }
+        else
+        {
+            BOMList.addFrom(ZFFileBOMListDefault());
+        }
     }
 
     serializableData.resolveMark();
 
-    result = ZFInputCallbackForFileDescriptor(fileDescriptor, zfindexMax, flags, BOMList.arrayBuf(), BOMList.count());
+    result = ZFInputCallbackForFileDescriptor(fileDescriptor, zfindexMax, flags, BOMList);
     return zftrue;
 }
 

@@ -33,32 +33,25 @@ public:
      */
     zfbyte BOM[ZFFileBOMMaxSize];
 };
-
-ZFCORETYPE_STRING_CONVERTER_DECLARE(ZFFileBOM, ZFFileBOM)
-
-ZFCORETYPE_STRING_CONVERTER_DECLARE(ZFFileBOMList, ZFCoreArrayPOD<ZFFileBOM>)
-/**
- * @brief see #ZFFileBOMListToString
- */
-extern ZF_ENV_EXPORT zfbool ZFFileBOMListToString(ZF_IN_OUT zfstring &ret,
-                                                  ZF_IN const ZFFileBOM *BOMList,
-                                                  ZF_IN zfindex BOMListCount);
-/** @brief see #ZFFileBOMListToString */
-inline zfstring ZFFileBOMListToString(ZF_IN const ZFFileBOM *BOMList,
-                                      ZF_IN zfindex BOMListCount)
-{
-    zfstring ret;
-    ZFFileBOMListToString(ret, BOMList, BOMListCount);
-    return ret;
-}
-
+ZFPROPERTY_TYPE_DECLARE(ZFFileBOM, ZFFileBOM)
+ZFOUTPUT_TYPE(ZFFileBOM, {output << ZFFileBOMToString(v);})
 ZFCORE_POD_COMPARER_DECLARE(ZFFileBOM)
 
-extern ZF_ENV_EXPORT const ZFFileBOM &_ZFP_ZFFileBOMUTF8(void);
+/** @brief list of file BOM */
+typedef ZFCoreArrayPOD<ZFFileBOM> ZFFileBOMList;
+ZFCORETYPE_STRING_CONVERTER_DECLARE(ZFFileBOMList, ZFFileBOMList)
+
+// ============================================================
 /**
  * @brief UTF8 BOM
  */
-#define ZFFileBOMUTF8 (_ZFP_ZFFileBOMUTF8())
+ZFEXPORT_VAR_READONLY_DECLARE(ZFFileBOM, ZFFileBOMUTF8)
+
+// ============================================================
+/**
+ * @brief default file BOM list, #ZFFileBOMUTF8 by default
+ */
+ZFEXPORT_VAR_READONLY_DECLARE(ZFFileBOMList, ZFFileBOMListDefault)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFFileBOM_h_

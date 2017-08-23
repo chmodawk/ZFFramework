@@ -63,9 +63,7 @@ public:
      */
     void *nativeFd;
 public:
-    /**
-     * @brief main constructor
-     */
+    /** @cond ZFPrivateDoc */
     ZFFileFindDataContainer(void)
     : parentPath()
     , path()
@@ -74,6 +72,21 @@ public:
     , nativeFd(zfnull)
     {
     }
+    zfbool operator == (ZF_IN ZFFileFindDataContainer const &ref) const
+    {
+        return (zftrue
+                && this->parentPath == ref.parentPath
+                && this->path == ref.path
+                && this->name == ref.name
+                && this->fileIsFolder == ref.fileIsFolder
+                && this->nativeFd == ref.nativeFd
+            );
+    }
+    zfbool operator != (ZF_IN ZFFileFindDataContainer const &ref) const
+    {
+        return !this->operator== (ref);
+    }
+    /** @endcond */
 };
 
 /**

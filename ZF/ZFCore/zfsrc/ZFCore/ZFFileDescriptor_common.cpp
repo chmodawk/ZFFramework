@@ -14,13 +14,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetter_NativeLocal(ZF_IN const zfchar *fileDescriptorData,
                                                                             ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
                                                                             ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                                            ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                                            ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                                            ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     return ZFInputCallbackForFile(
         ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()),
         flags,
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
 }
 static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_NativeLocal(ZF_IN const zfchar *fileDescriptorData,
                                                                               ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
@@ -36,8 +35,7 @@ static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_NativeLocal(ZF
     static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetter_##FileDescriptorType(ZF_IN const zfchar *fileDescriptorData, \
                                                                                          ZF_IN_OPT zfindex dataLen /* = zfindexMax */, \
                                                                                          ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */, \
-                                                                                         ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */, \
-                                                                                         ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */) \
+                                                                                         ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */) \
     { \
         return ZFInputCallbackForFile(zfsConnectLineFree( \
                 ZFFile::FileDescriptorType(), \
@@ -45,7 +43,7 @@ static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_NativeLocal(ZF
                 ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()) \
             ), \
             flags, \
-            autoSkipBOMTable, autoSkipBOMTableCount); \
+            autoSkipBOMTable); \
     }
 #define _ZFP_ZFFileDescriptorOutputCallbackGetter(FileDescriptorType) \
     static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_##FileDescriptorType(ZF_IN const zfchar *fileDescriptorData, \
@@ -64,12 +62,11 @@ static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_NativeLocal(ZF
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetterForResFile(ZF_IN const zfchar *fileDescriptorData,
                                                                           ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
                                                                           ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                                          ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                                          ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                                          ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     return ZFInputCallbackForResFile(
         (dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString(),
-        autoSkipBOMTable, autoSkipBOMTableCount);
+        autoSkipBOMTable);
 }
 
 _ZFP_ZFFileDescriptorInputCallbackGetter(modulePath)
@@ -90,8 +87,7 @@ _ZFP_ZFFileDescriptorOutputCallbackGetter(cachePath)
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetterForText(ZF_IN const zfchar *fileDescriptorData,
                                                                        ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
                                                                        ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                                       ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                                       ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */)
+                                                                       ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     return ZFInputCallbackForBuffer(fileDescriptorData, dataLen);
 }

@@ -30,11 +30,11 @@ protected:
 
         zfstring tmpFilePath = this->testCaseUseTmpFile(zfText("ZFMd5_Md5.txt"));
         ZFFileToken fp = ZFFile::fileOpen(tmpFilePath, ZFFileOpenOption::e_Write);
-        if(fp != ZFFileTokenInvalid)
+        if(fp != ZFFileTokenInvalid())
         {
             ZFFile::fileWrite(fp, testString);
             ZFFile::fileClose(fp);
-            fp = ZFFileTokenInvalid;
+            fp = ZFFileTokenInvalid();
         }
         this->testCaseOutput(zfText("write it to file %s, file's MD5: %s"),
                 tmpFilePath.cString(),

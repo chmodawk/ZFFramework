@@ -64,7 +64,7 @@ public:
         else
         {
             zfCoreCriticalShouldNotGoHere();
-            return ZFFileTokenInvalid;
+            return ZFFileTokenInvalid();
         }
 
         #if ZF_ENV_sys_Windows
@@ -83,7 +83,7 @@ public:
     }
     virtual zfbool fileClose(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zftrue;
         }
@@ -92,7 +92,7 @@ public:
 
     virtual zfindex fileTell(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -107,7 +107,7 @@ public:
                             ZF_IN zfindex byteSize,
                             ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zffalse;
         }
@@ -139,7 +139,7 @@ public:
                              ZF_IN void *buf,
                              ZF_IN zfindex maxByteSize)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return 0;
         }
@@ -166,7 +166,7 @@ public:
                               ZF_IN const void *src,
                               ZF_IN zfindex maxByteSize)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return 0;
         }
@@ -174,7 +174,7 @@ public:
     }
     virtual void fileFlush(ZF_IN ZFFileToken token)
     {
-        if(token != ZFFileTokenInvalid)
+        if(token != ZFFileTokenInvalid())
         {
             fflush((FILE *)token);
         }

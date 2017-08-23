@@ -177,7 +177,7 @@ static zfbool _ZFP_ZFTextTemplateRun_applyFile(ZF_IN_OUT zfstring &path,
     zfchar *bufEnd = zfnull;
     {
         ZFFileToken token = ZFFile::fileOpen(path, ZFFileOpenOption::e_Read);
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             zfstringAppend(outErrorHint, zfText("failed to open file %s"), path.cString());
             return zffalse;

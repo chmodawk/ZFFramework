@@ -133,14 +133,14 @@ public:
             if(d->token == zfnull)
             {
                 zfdelete(d);
-                d = ZFFileTokenInvalid;
+                d = ZFFileTokenInvalid();
             }
         }
         return d;
     }
     virtual zfbool resClose(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zffalse;
         }
@@ -152,7 +152,7 @@ public:
     }
     virtual zfindex resTell(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zfindexMax;
         }
@@ -163,7 +163,7 @@ public:
                            ZF_IN zfindex byteSize,
                            ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zffalse;
         }
@@ -195,7 +195,7 @@ public:
                             ZF_IN void *buf,
                             ZF_IN zfindex maxByteSize)
     {
-        if(token == ZFFileTokenInvalid || maxByteSize == 0)
+        if(token == ZFFileTokenInvalid() || maxByteSize == 0)
         {
             return 0;
         }
@@ -218,7 +218,7 @@ public:
     }
     virtual zfbool resEof(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zffalse;
         }
@@ -227,7 +227,7 @@ public:
     }
     virtual zfbool resError(ZF_IN ZFFileToken token)
     {
-        if(token == ZFFileTokenInvalid)
+        if(token == ZFFileTokenInvalid())
         {
             return zffalse;
         }

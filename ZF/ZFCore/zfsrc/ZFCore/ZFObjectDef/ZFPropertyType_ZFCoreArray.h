@@ -584,6 +584,38 @@ public:
 
 /** @endcond */
 
+// ============================================================
+/** @brief convert array from string */
+template<typename T_Type>
+zfbool ZFCoreArrayFromString(ZF_OUT ZFCoreArray<T_Type> &v,
+                             ZF_IN const zfchar *src,
+                             ZF_IN_OPT zfindex srcLen = zfindexMax)
+{
+    return _ZFP_PropTID_CA<T_Type>::PropertyFromString(v, src, srcLen);
+}
+/** @brief convert array to string */
+template<typename T_Type>
+zfbool ZFCoreArrayToString(ZF_OUT zfstring &ret,
+                           ZF_IN ZFCoreArray<T_Type> const &v)
+{
+    return _ZFP_PropTID_CA<T_Type>::PropertyToString(ret, v);
+}
+/** @brief convert array to string */
+template<typename T_Type>
+zfstring ZFCoreArrayToString(ZF_IN ZFCoreArray<T_Type> const &v)
+{
+    zfstring ret;
+    if(ZFCoreArrayToString(ret, v))
+    {
+        return ret;
+    }
+    else
+    {
+        return zfstring();
+    }
+}
+
+// ============================================================
 /** @brief convert array from serializable data */
 template<typename T_Type>
 zfbool ZFCoreArrayFromSerializableData(ZF_OUT ZFCoreArray<T_Type> &v,

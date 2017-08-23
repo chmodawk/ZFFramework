@@ -24,9 +24,17 @@ zfclassFwd _ZFP_ZFFileFindDataPrivate;
  */
 zffinal zfclassLikePOD ZF_ENV_EXPORT ZFFileFindData
 {
-    ZFCLASS_DISALLOW_COPY_CONSTRUCTOR(ZFFileFindData)
 public:
+    /** @cond ZFPrivateDoc */
     ZFFileFindData(void);
+    ZFFileFindData(ZF_IN ZFFileFindData const &ref);
+    ZFFileFindData &operator=(ZF_IN ZFFileFindData const &ref);
+    zfbool operator==(ZF_IN ZFFileFindData const &ref) const;
+    zfbool operator!=(ZF_IN ZFFileFindData const &ref) const
+    {
+        return !this->operator==(ref);
+    }
+    /** @endcond */
     ~ZFFileFindData(void);
 
 public:
@@ -66,7 +74,7 @@ private:
     _ZFP_ZFFileFindDataPrivate *d;
     friend zfclass ZFFile;
 };
-
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFFileFindData, ZFFileFindData)
 ZFOUTPUT_TYPE(ZFFileFindData, {output << v.objectInfo();})
 
 // ============================================================
@@ -110,10 +118,13 @@ ZFENUM_FLAGS_DECLARE(ZFFileOpenOption, ZFFileOpenOptionFlags)
  * ensured void *, for implementations to store datas
  */
 typedef void * ZFFileToken;
+/** @cond ZFPrivateDoc */
+#define ZFFileTokenInvalid() zfnull
+/** @endcond */
 /**
  * @brief invalid token
  */
-#define ZFFileTokenInvalid zfnull
+ZFEXPORT_VAR_READONLY_DECLARE(ZFFileToken, ZFFileTokenInvalid)
 
 /**
  * @brief file utility
@@ -136,7 +147,7 @@ public:
 
 public:
     /**
-     * @brief format path according ZFFile::fileSeparator
+     * @brief format path according #ZFFile::fileSeparator
      *
      * it's ensured that no separator would be added to tail
      * (so if src is "/", result is just a empty string)\n
@@ -146,8 +157,9 @@ public:
      * null src is treated as error,
      * while empty string is not
      */
-    static zfbool filePathFormat(ZF_OUT zfstring &ret,
-                                 ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(zfbool, filePathFormat,
+                              ZFMP_OUT(zfstring &, ret),
+                              ZFMP_IN(const zfchar *, src));
 
     /**
      * @brief get file name from path or empty if error,
@@ -155,9 +167,12 @@ public:
      *
      * path should be well formed, use #filePathFormat if necessary
      */
-    static void fileNameOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(void, fileNameOf,
+                              ZFMP_OUT(zfstring &, ret),
+                              ZFMP_IN(const zfchar *, src));
     /** @brief see #fileNameOf */
-    static inline zfstring fileNameOf(ZF_IN const zfchar *src)
+    ZFMETHOD_DECLARE_STATIC_1(zfstring, fileNameOf,
+                              ZFMP_IN(const zfchar *, src))
     {
         zfstring ret;
         ZFFile::fileNameOf(ret, src);
@@ -169,9 +184,12 @@ public:
      *
      * path should be well formed, use #filePathFormat if necessary
      */
-    static void fileNameOfWithoutExt(ZF_OUT zfstring &ret, ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(void, fileNameOfWithoutExt,
+                              ZFMP_OUT(zfstring &, ret),
+                              ZFMP_IN(const zfchar *, src));
     /** @brief see #fileNameOfWithoutExt */
-    static inline zfstring fileNameOfWithoutExt(ZF_IN const zfchar *src)
+    ZFMETHOD_DECLARE_STATIC_1(zfstring, fileNameOfWithoutExt,
+                              ZFMP_IN(const zfchar *, src))
     {
         zfstring ret;
         ZFFile::fileNameOfWithoutExt(ret, src);
@@ -184,9 +202,12 @@ public:
      *
      * path should be well formed, use #filePathFormat if necessary
      */
-    static void fileExtOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(void, fileExtOf,
+                              ZFMP_OUT(zfstring &, ret),
+                              ZFMP_IN(const zfchar *, src));
     /** @brief see #fileExtOf */
-    static inline zfstring fileExtOf(ZF_IN const zfchar *src)
+    ZFMETHOD_DECLARE_STATIC_1(zfstring, fileExtOf,
+                              ZFMP_IN(const zfchar *, src))
     {
         zfstring ret;
         ZFFile::fileExtOf(ret, src);
@@ -198,9 +219,12 @@ public:
      * return empty string if no parent found\n
      * path should be well formed, use #filePathFormat if necessary
      */
-    static void fileParentPathOf(ZF_OUT zfstring &ret, ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(void, fileParentPathOf,
+                              ZFMP_OUT(zfstring &, ret),
+                              ZFMP_IN(const zfchar *, src));
     /** @brief see #fileParentPathOf */
-    static inline zfstring fileParentPathOf(ZF_IN const zfchar *src)
+    ZFMETHOD_DECLARE_STATIC_1(zfstring, fileParentPathOf,
+                              ZFMP_IN(const zfchar *, src))
     {
         zfstring ret;
         ZFFile::fileParentPathOf(ret, src);
@@ -212,9 +236,12 @@ public:
      *
      * path should be well formed, use #filePathFormat if necessary
      */
-    static void filePathComponentsOf(ZF_OUT ZFCoreArray<zfstring> &ret, ZF_IN const zfchar *src);
+    ZFMETHOD_DECLARE_STATIC_2(void, filePathComponentsOf,
+                              ZFMP_OUT(ZFCoreArray<zfstring> &, ret),
+                              ZFMP_IN(const zfchar *, src));
     /** @brief see #filePathComponentsOf */
-    static inline ZFCoreArray<zfstring> filePathComponentsOf(ZF_IN const zfchar *src)
+    ZFMETHOD_DECLARE_STATIC_1(ZFCoreArray<zfstring>, filePathComponentsOf,
+                              ZFMP_IN(const zfchar *, src))
     {
         ZFCoreArray<zfstring> ret;
         ZFFile::filePathComponentsOf(ret, src);
@@ -224,18 +251,21 @@ public:
     /**
      * @brief return true if file specified by path is exist
      */
-    static zfbool fileIsExist(ZF_IN const zfchar *path);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileIsExist,
+                              ZFMP_IN(const zfchar *, path));
     /**
      * @brief return true if file specified by path is a directory
      */
-    static zfbool fileIsFolder(ZF_IN const zfchar *path);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileIsFolder,
+                              ZFMP_IN(const zfchar *, path));
 
     /**
      * @brief make directory
      */
-    static zfbool filePathCreate(ZF_IN const zfchar *path,
-                                 ZF_IN_OPT zfbool autoMakeParent = zftrue,
-                                 ZF_IN_OPT zfstring *errPos = zfnull);
+    ZFMETHOD_DECLARE_STATIC_3(zfbool, filePathCreate,
+                              ZFMP_IN(const zfchar *, path),
+                              ZFMP_IN_OPT(zfbool, autoMakeParent, zftrue),
+                              ZFMP_IN_OPT(zfstring *, errPos, zfnull));
 
     /**
      * @brief copy a file or directory from srcPath to dstPath
@@ -247,28 +277,31 @@ public:
      * would return false if dst has a child file with the same path in src)\n
      * override file if dst is an existing file and isForce is zftrue
      */
-    static zfbool fileCopy(ZF_IN const zfchar *srcPath,
-                           ZF_IN const zfchar *dstPath,
-                           ZF_IN_OPT zfbool isRecursive = zftrue,
-                           ZF_IN_OPT zfbool isForce = zffalse,
-                           ZF_IN_OPT zfstring *errPos = zfnull);
+    ZFMETHOD_DECLARE_STATIC_5(zfbool, fileCopy,
+                              ZFMP_IN(const zfchar *, srcPath),
+                              ZFMP_IN(const zfchar *, dstPath),
+                              ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                              ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                              ZFMP_IN_OPT(zfstring *, errPos, zfnull));
     /**
      * @brief move a file or directory from srcPath to dstPath, similar to fileCopy
      */
-    static zfbool fileMove(ZF_IN const zfchar *srcPath,
-                           ZF_IN const zfchar *dstPath,
-                           ZF_IN_OPT zfbool isRecursive = zftrue,
-                           ZF_IN_OPT zfbool isForce = zffalse,
-                           ZF_IN_OPT zfstring *errPos = zfnull);
+    ZFMETHOD_DECLARE_STATIC_5(zfbool, fileMove,
+                              ZFMP_IN(const zfchar *, srcPath),
+                              ZFMP_IN(const zfchar *, dstPath),
+                              ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                              ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                              ZFMP_IN_OPT(zfstring *, errPos, zfnull));
     /**
      * @brief delete a file or directory from srcPath to dstPath
      *
      * fail if isRecursive is zffalse and dst is a folder
      */
-    static zfbool fileRemove(ZF_IN const zfchar *path,
-                             ZF_IN_OPT zfbool isRecursive = zftrue,
-                             ZF_IN_OPT zfbool isForce = zffalse,
-                             ZF_IN_OPT zfstring *errPos = zfnull);
+    ZFMETHOD_DECLARE_STATIC_4(zfbool, fileRemove,
+                              ZFMP_IN(const zfchar *, path),
+                              ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                              ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                              ZFMP_IN_OPT(zfstring *, errPos, zfnull));
 
     /**
      * @brief find file or directory, similar to FindFirstFile under Windows
@@ -294,18 +327,21 @@ public:
      *   you must save it if need future use
      * @see ZFFileFindData, fileFindFirst, fileFindNext, fileFindClose
      */
-    static zfbool fileFindFirst(ZF_IN const zfchar *path,
-                                ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_2(zfbool, fileFindFirst,
+                              ZFMP_IN(const zfchar *, path),
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
 
     /**
      * @see ZFFileFindData, fileFindFirst, fileFindClose
      */
-    static zfbool fileFindNext(ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileFindNext,
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
 
     /**
      * @see ZFFileFindData, fileFindFirst, fileFindNext
      */
-    static void fileFindClose(ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_1(void, fileFindClose,
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
 
     // ============================================================
     // file path
@@ -313,30 +349,31 @@ public:
     /**
      * @brief get module's parent's path, e.g. "/path"
      *
-     * path is ensured to use ZFFile::fileSeparator as separator,
+     * path is ensured to use #ZFFile::fileSeparator as separator,
      * and no extra separator would be added to tail
      */
-    static const zfchar *modulePath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, modulePath);
     /**
      * @brief get module's path, e.g. "/path/module.exe"
      *
-     * path is ensured to use ZFFile::fileSeparator as separator\n
+     * path is ensured to use #ZFFile::fileSeparator as separator\n
      * it's not ensured module path is actually executable's path,
      * use other path types for data storage such as settingPath
      */
-    static const zfchar *moduleFilePath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, moduleFilePath);
 
     /**
      * @brief get a proper data path that app can save settings to
      *
-     * path is ensured to use ZFFile::fileSeparator as separator,
+     * path is ensured to use #ZFFile::fileSeparator as separator,
      * and no extra separator would be added to tail
      */
-    static const zfchar *settingPath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, settingPath);
     /**
      * @brief change the data path, null to use defalut path
      */
-    static void settingPathSet(ZF_IN const zfchar *path = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(void, settingPathSet,
+                              ZFMP_IN_OPT(const zfchar *, path, zfnull));
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -349,14 +386,15 @@ public:
     /**
      * @brief get a proper storage path that app can write files to
      *
-     * path is ensured to use ZFFile::fileSeparator as separator,
+     * path is ensured to use #ZFFile::fileSeparator as separator,
      * and no extra separator would be added to tail
      */
-    static const zfchar *storagePath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, storagePath);
     /**
      * @brief change the storage path, null to use defalut path
      */
-    static void storagePathSet(ZF_IN const zfchar *path = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(void, storagePathSet,
+                              ZFMP_IN_OPT(const zfchar *, path, zfnull));
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -373,14 +411,15 @@ public:
      * note, this path may or may not be writable,
      * maybe external storage path or user's home path,
      * write with causion and only if necessary\n
-     * path is ensured to use ZFFile::fileSeparator as separator,
+     * path is ensured to use #ZFFile::fileSeparator as separator,
      * and no extra separator would be added to tail
      */
-    static const zfchar *storageSharedPath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, storageSharedPath);
     /**
      * @brief change the storage path, null to use defalut path
      */
-    static void storageSharedPathSet(ZF_IN const zfchar *path = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(void, storageSharedPathSet,
+                              ZFMP_IN_OPT(const zfchar *, path, zfnull));
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -395,14 +434,15 @@ public:
      *
      * cache is used for temp files only,
      * may or may not be deleted automatically\n
-     * path is ensured to use ZFFile::fileSeparator as separator,
+     * path is ensured to use #ZFFile::fileSeparator as separator,
      * and no extra separator would be added to tail
      */
-    static const zfchar *cachePath(void);
+    ZFMETHOD_DECLARE_STATIC_0(const zfchar *, cachePath);
     /**
      * @brief change the cache path, null to use defalut path
      */
-    static void cachePathSet(ZF_IN const zfchar *path = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(void, cachePathSet,
+                              ZFMP_IN_OPT(const zfchar *, path, zfnull));
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -417,7 +457,7 @@ public:
      * note, this method is ensured called during #ZFFrameworkCleanup
      * as level #ZFLevelZFFrameworkLow
      */
-    static void cachePathClear(void);
+    ZFMETHOD_DECLARE_STATIC_0(void, cachePathClear);
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -437,24 +477,28 @@ public:
     /**
      * @brief open a file for read or write
      */
-    static ZFFileToken fileOpen(ZF_IN const zfchar *filePath,
-                                ZF_IN_OPT ZFFileOpenOptionFlags flag = ZFFileOpenOption::e_Read,
-                                ZF_IN_OPT zfbool autoCreateParent = zftrue);
+    ZFMETHOD_DECLARE_STATIC_3(ZFFileToken, fileOpen,
+                              ZFMP_IN(const zfchar *, filePath),
+                              ZFMP_IN_OPT(ZFFileOpenOptionFlags, flag, ZFFileOpenOption::e_Read),
+                              ZFMP_IN_OPT(zfbool, autoCreateParent, zftrue));
     /**
      * @brief close and save the file if need, return false if save failed
      */
-    static zfbool fileClose(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileClose,
+                              ZFMP_IN(ZFFileToken, token));
 
     /**
      * @brief get current file's position or zfindexMax if error
      */
-    static zfindex fileTell(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfindex, fileTell,
+                              ZFMP_IN(ZFFileToken, token));
     /**
      * @brief similar to fileSeek, return false if seek out of range
      */
-    static zfbool fileSeek(ZF_IN ZFFileToken token,
-                           ZF_IN zfindex byteSize,
-                           ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin);
+    ZFMETHOD_DECLARE_STATIC_3(zfbool, fileSeek,
+                              ZFMP_IN(ZFFileToken, token),
+                              ZFMP_IN(zfindex, byteSize),
+                              ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin));
 
     /**
      * @brief read file
@@ -486,9 +530,10 @@ public:
      *   you must make sure the file is UTF8 encoded without BOM,
      *   otherwise, you must process the file's encoding and BOM manually
      */
-    static zfindex fileRead(ZF_IN ZFFileToken token,
-                            ZF_IN void *buf,
-                            ZF_IN zfindex maxByteSize);
+    ZFMETHOD_DECLARE_STATIC_3(zfindex, fileRead,
+                              ZFMP_IN(ZFFileToken, token),
+                              ZFMP_IN(void *, buf),
+                              ZFMP_IN(zfindex, maxByteSize));
 
     /**
      * @brief write file, see #ZFFile::fileRead
@@ -513,21 +558,25 @@ public:
      * which means fileWrite should be stopped when reached 0x00 in src,
      * usually to output a UTF8 string
      */
-    static zfindex fileWrite(ZF_IN ZFFileToken token,
-                             ZF_IN const void *src,
-                             ZF_IN_OPT zfindex maxByteSize = zfindexMax);
+    ZFMETHOD_DECLARE_STATIC_3(zfindex, fileWrite,
+                              ZFMP_IN(ZFFileToken, token),
+                              ZFMP_IN(const void *, src),
+                              ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax));
     /**
      * @brief flush the file, useful only for files opened for write
      */
-    static void fileFlush(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(void, fileFlush,
+                              ZFMP_IN(ZFFileToken, token));
     /**
      * @brief see #ZFFile::fileRead
      */
-    static zfbool fileEof(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileEof,
+                              ZFMP_IN(ZFFileToken, token));
     /**
      * @brief see #ZFFile::fileRead
      */
-    static zfbool fileError(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, fileError,
+                              ZFMP_IN(ZFFileToken, token));
 
 public:
     /**
@@ -537,7 +586,8 @@ public:
      * return zfindexMax if error\n
      * note that result is not ensured if file is opened in append mode
      */
-    static zfindex fileSize(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfindex, fileSize,
+                              ZFMP_IN(ZFFileToken, token));
 
     // ============================================================
     // resource files
@@ -559,11 +609,13 @@ public:
      * such as #ZFFile::resCopy, #ZFFile::resOpen, #ZFFile::resRead\n
      * typically, additional resource path should be modified during startup only
      */
-    static void resAdditionalPathAdd(ZF_IN const zfchar *path);
+    ZFMETHOD_DECLARE_STATIC_1(void, resAdditionalPathAdd,
+                              ZFMP_IN(const zfchar *, path));
     /** @brief see #resAdditionalPathAdd */
-    static void resAdditionalPathRemove(ZF_IN const zfchar *path);
+    ZFMETHOD_DECLARE_STATIC_1(void, resAdditionalPathRemove,
+                              ZFMP_IN(const zfchar *, path));
     /** @brief see #resAdditionalPathAdd */
-    static ZFCoreArray<zfstring> resAdditionalPathList(void);
+    ZFMETHOD_DECLARE_STATIC_0(ZFCoreArray<zfstring>, resAdditionalPathList);
     /**
      * @brief see #resAdditionalPathAdd
      *
@@ -572,17 +624,19 @@ public:
      * if return value is not null,
      * the final file path should be "return value + '/' + resPath"
      */
-    static const zfchar *resAdditionalPathCheck(ZF_IN const zfchar *resPath);
+    ZFMETHOD_DECLARE_STATIC_1(const zfchar *, resAdditionalPathCheck,
+                              ZFMP_IN(const zfchar *, resPath));
 
 public:
     /**
      * @brief res version of #fileCopy
      */
-    static zfbool resCopy(ZF_IN const zfchar *resPath,
-                          ZF_IN const zfchar *dstPath,
-                          ZF_IN_OPT zfbool isRecursive = zftrue,
-                          ZF_IN_OPT zfbool isForce = zffalse,
-                          ZF_IN_OPT zfstring *errPos = zfnull);
+    ZFMETHOD_DECLARE_STATIC_5(zfbool, resCopy,
+                              ZFMP_IN(const zfchar *, resPath),
+                              ZFMP_IN(const zfchar *, dstPath),
+                              ZFMP_IN_OPT(zfbool, isRecursive, zftrue),
+                              ZFMP_IN_OPT(zfbool, isForce, zffalse),
+                              ZFMP_IN_OPT(zfstring *, errPos, zfnull));
 
     /**
      * @brief open a resource file for read only, see #fileOpen
@@ -602,60 +656,71 @@ public:
      * note that the token is defined same type as the one used by #ZFFile::fileOpen,
      * it's your responsibility to make sure not to misuse it
      */
-    static ZFFileToken resOpen(ZF_IN const zfchar *resPath);
+    ZFMETHOD_DECLARE_STATIC_1(ZFFileToken, resOpen,
+                              ZFMP_IN(const zfchar *, resPath));
     /**
      * @brief see #resOpen #fileClose
      */
-    static zfbool resClose(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, resClose,
+                              ZFMP_IN(ZFFileToken, token));
 
     /**
      * @brief see #resOpen #fileTell
      */
-    static zfindex resTell(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfindex, resTell,
+                              ZFMP_IN(ZFFileToken, token));
     /**
      * @brief see #resOpen #fileSeek
      */
-    static zfbool resSeek(ZF_IN ZFFileToken token,
-                          ZF_IN zfindex byteSize,
-                          ZF_IN_OPT ZFSeekPos position = ZFSeekPosBegin);
+    ZFMETHOD_DECLARE_STATIC_3(zfbool, resSeek,
+                              ZFMP_IN(ZFFileToken, token),
+                              ZFMP_IN(zfindex, byteSize),
+                              ZFMP_IN_OPT(ZFSeekPos, position, ZFSeekPosBegin));
 
     /**
      * @brief see #resOpen #fileRead
      */
-    static zfindex resRead(ZF_IN ZFFileToken token,
-                           ZF_IN void *buf,
-                           ZF_IN zfindex maxByteSize);
+    ZFMETHOD_DECLARE_STATIC_3(zfindex, resRead,
+                              ZFMP_IN(ZFFileToken, token),
+                              ZFMP_IN(void *, buf),
+                              ZFMP_IN(zfindex, maxByteSize));
 
     /**
      * @brief see #resOpen #fileEof
      */
-    static zfbool resEof(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, resEof,
+                              ZFMP_IN(ZFFileToken, token));
     /**
      * @brief see #resOpen #fileEof
      */
-    static zfbool resError(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, resError,
+                              ZFMP_IN(ZFFileToken, token));
 
     /**
      * @see see #resOpen, #fileFindFirst
      *
      * use empty string to find resource's root directory
      */
-    static zfbool resFindFirst(ZF_IN const zfchar *resPath,
-                               ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_2(zfbool, resFindFirst,
+                              ZFMP_IN(const zfchar *, resPath),
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
     /**
      * @see see #resOpen, #fileFindNext
      */
-    static zfbool resFindNext(ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_1(zfbool, resFindNext,
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
     /**
      * @see see #resOpen, #fileFindClose
      */
-    static void resFindClose(ZF_IN_OUT ZFFileFindData &fd);
+    ZFMETHOD_DECLARE_STATIC_1(void, resFindClose,
+                              ZFMP_IN_OUT(ZFFileFindData &, fd));
 
 public:
     /**
      * @brief see #resOpen, #fileSize
      */
-    static zfindex resSize(ZF_IN ZFFileToken token);
+    ZFMETHOD_DECLARE_STATIC_1(zfindex, resSize,
+                              ZFMP_IN(ZFFileToken, token));
 };
 
 // ============================================================
@@ -672,7 +737,7 @@ public:
     }
     ~ZFFileBlockedCloseHolder(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::fileClose(this->token);
         }
@@ -700,7 +765,7 @@ public:
     }
     ~ZFFileBlockedResCloseHolder(void)
     {
-        if(this->token != ZFFileTokenInvalid)
+        if(this->token != ZFFileTokenInvalid())
         {
             ZFFile::resClose(this->token);
         }

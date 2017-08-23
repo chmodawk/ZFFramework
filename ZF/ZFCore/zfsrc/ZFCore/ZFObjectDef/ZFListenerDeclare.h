@@ -37,11 +37,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     ZFMETHOD_OVERRIDE_DECLARE_2(void, listenerName, \
                                 ZFMP_IN(const ZFListenerData &, listenerData), \
                                 ZFMP_IN(ZFObject *, userData))
-/** @brief see #ZFLISTENER_DECLARE */
-#define ZFLISTENER_OVERRIDE_DEFINE(OwnerClass, listenerName) \
-    ZFMETHOD_OVERRIDE_DEFINE_2(OwnerClass, void, listenerName, \
-                               ZFMP_IN(const ZFListenerData &, listenerData), \
-                               (ZFObject *, userData))
 
 /**
  * @brief util macro to expand as\n

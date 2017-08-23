@@ -451,29 +451,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7 DefaultValueFix7()) \
             )
 
-#define _ZFP_ZFMETHOD_OVERRIDE_DEFINE(...) \
-    ZFM_EXPAND(_ZFP_ZFMETHOD_OVERRIDE_DEFINE_(__VA_ARGS__))
-#define _ZFP_ZFMETHOD_OVERRIDE_DEFINE_(OwnerClass, ReturnType, MethodName \
-    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
-    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
-    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
-    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
-    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
-    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
-    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
-    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
-    ) \
-    ReturnType OwnerClass::MethodName( \
-        ParamExpandOrEmpty0(            ParamType0 param0) \
-        ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \
-        ParamExpandOrEmpty2(ZFM_COMMA() ParamType2 param2) \
-        ParamExpandOrEmpty3(ZFM_COMMA() ParamType3 param3) \
-        ParamExpandOrEmpty4(ZFM_COMMA() ParamType4 param4) \
-        ParamExpandOrEmpty5(ZFM_COMMA() ParamType5 param5) \
-        ParamExpandOrEmpty6(ZFM_COMMA() ParamType6 param6) \
-        ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
-        )
-
 #define _ZFP_ZFMETHOD_REGISTER(...) \
     _ZFP_ZFMETHOD_REGISTER_(__VA_ARGS__)
 #define _ZFP_ZFMETHOD_REGISTER_(OwnerClass, MethodName, DECLARE_LINE) \
@@ -768,19 +745,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_0(OwnerClass, ReturnType, MethodName \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
-        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
 
 // ============================================================
 // 1 param method declare
@@ -874,20 +838,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_1(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
         , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
@@ -1000,21 +950,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_2(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
@@ -1137,22 +1072,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_3(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
@@ -1286,23 +1205,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_4(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
@@ -1446,24 +1348,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_5(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
@@ -1617,25 +1501,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_6(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
@@ -1799,26 +1664,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_7(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
@@ -1992,27 +1837,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
         PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
         ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DEFINE_8(OwnerClass, ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    , ZFMP_7 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DEFINE(OwnerClass, ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \

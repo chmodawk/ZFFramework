@@ -11,7 +11,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOM, ZFFileBOM, {
+ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFileBOM, ZFFileBOM, {
         if(srcLen == zfindexMax)
         {
             srcLen = zfslen(src);
@@ -40,23 +40,7 @@ ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOM, ZFFileBOM, {
         return zftrue;
     })
 
-zfbool ZFFileBOMListToString(ZF_IN_OUT zfstring &ret,
-                             ZF_IN const ZFFileBOM *BOMList,
-                             ZF_IN zfindex BOMListCount)
-{
-    ret += zfText("(");
-    for(zfindex i = 0; i < BOMListCount; ++i)
-    {
-        if(i != 0)
-        {
-            ret += zfText(", ");
-        }
-        ZFFileBOMToString(ret, BOMList[i]);
-    }
-    ret += zfText(")");
-    return zftrue;
-}
-ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOMList, ZFCoreArrayPOD<ZFFileBOM>, {
+ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOMList, ZFFileBOMList, {
         ZFCoreArrayPOD<zfindexRange> pos;
         if(!zfCoreDataPairSplitString(pos, zfindexMax, src, srcLen))
         {
@@ -74,14 +58,35 @@ ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOMList, ZFCoreArrayPOD<ZFFileBOM>, {
         }
         return zftrue;
     }, {
-        return ZFFileBOMListToString(s, v.arrayBuf(), v.count());
+        s += zfText("(");
+        for(zfindex i = 0; i < v.count(); ++i)
+        {
+            if(i != 0)
+            {
+                s += zfText(", ");
+            }
+            ZFFileBOMToString(s, v[i]);
+        }
+        s += zfText(")");
+        return zftrue;
     })
 
-const ZFFileBOM &_ZFP_ZFFileBOMUTF8(void)
+// ============================================================
+static ZFFileBOM _ZFP_ZFFileBOMUTF8(void)
 {
-    static ZFFileBOM BOM = {{0xEF, 0xBB, 0xBF}};
+    ZFFileBOM BOM = {{0xEF, 0xBB, 0xBF}};
     return BOM;
 }
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOM, ZFFileBOMUTF8, _ZFP_ZFFileBOMUTF8())
+
+// ============================================================
+static ZFFileBOMList _ZFP_ZFFileBOMListDefault(void)
+{
+    ZFFileBOMList ret;
+    ret.add(ZFFileBOMUTF8());
+    return ret;
+}
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOMList, ZFFileBOMListDefault, _ZFP_ZFFileBOMListDefault())
 
 ZF_NAMESPACE_GLOBAL_END
 

@@ -16,7 +16,6 @@
 
 #include "ZFCore/ZFArray.h"
 #include "ZFCore/ZFAutoReleasePool.h"
-#include "ZFCore/ZFByteOrder.h"
 #include "ZFCore/ZFCacheable.h"
 #include "ZFCore/ZFContainer.h"
 #include "ZFCore/ZFCoreDef.h"

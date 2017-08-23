@@ -22,8 +22,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
                                                                            ZF_IN const zfchar *fileDescriptor,
                                                                            ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax,
                                                                            ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
-                                                                           ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable = &ZFFileBOMUTF8,
-                                                                           ZF_IN_OPT zfindex autoSkipBOMTableCount = 1);
+                                                                           ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -32,7 +31,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
  *   <node>
  *       <zfstring category="fileDescriptor" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Read by default
- *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMUTF8 by default
+ *       <zfstring category="autoSkipBOMTable" ... /> // optional, ZFFileBOMListDefault by default
  *   </node>
  * @endcode
  */
@@ -54,9 +53,8 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
  * -  (const zfchar *)fileDescriptor file's descriptor type, such as "Res:path/file.ext"
  * -  (zfindex)fileDescriptorLen length of fileDescriptor
  * -  (ZFFileOpenOptionFlags)flags optional, file's open flag
- * -  (const ZFFileBOM *)autoSkipBOMTable: BOM to skip,
- *   if not null, BOM would be discarded and BOM's size would be ignored while calculating the file's size
- * -  (zfindex)autoSkipBOMTableCount autoSkipBOMTable's count
+ * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
+ *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
  */
 #define ZFInputCallbackForFileDescriptor(fileDescriptor, ...) \
     _ZFP_ZFInputCallbackForFileDescriptor(ZFCallerInfoMake(), \
@@ -104,8 +102,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_
 typedef ZFInputCallback (*ZFFileDescriptorInputCallbackGetter)(ZF_IN const zfchar *fileDescriptorData,
                                                                ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
                                                                ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
-                                                               ZF_IN_OPT const ZFFileBOM *autoSkipBOMTable /* = &ZFFileBOMUTF8 */,
-                                                               ZF_IN_OPT zfindex autoSkipBOMTableCount /* = 1 */);
+                                                               ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */);
 /**
  * @brief see #ZFFileDescriptorTypeRegister
  */
