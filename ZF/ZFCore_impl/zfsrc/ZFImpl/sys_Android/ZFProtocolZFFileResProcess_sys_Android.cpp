@@ -133,7 +133,7 @@ public:
             if(d->token == zfnull)
             {
                 zfdelete(d);
-                d = ZFFileTokenInvalid();
+                d = zfnull;
             }
         }
         return d;
