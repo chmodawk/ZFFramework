@@ -6,6 +6,7 @@
  * Distributed under MIT license:
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
+#include "ZFCoreType_methodRegister.h"
 #include "ZFPropertyType_CoreType.h"
 #include "ZFObjectImpl.h"
 
@@ -175,10 +176,10 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfuint, zfVersionGetInt, ZFMP_IN(const zf
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, zfVersionSet, ZFMP_IN_OUT(zfstring &, version), ZFMP_IN(zfindex, subVersionIndex), ZFMP_IN(const zfchar *, subVersion), ZFMP_IN_OPT(const zfchar *, emptySubVersion, zfText("0")))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, zfVersionSetInt, ZFMP_IN_OUT(zfstring &, version), ZFMP_IN(zfindex, subVersionIndex), ZFMP_IN(zfuint, subVersion), ZFMP_IN_OPT(const zfchar *, emptySubVersion, zfText("0")))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFCompareResult, zfVersionCompare, ZFMP_IN(const zfchar *, version0), ZFMP_IN(const zfchar *, version1))
-ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_MAIN, ZFVERSION_MAIN())
-ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_SUB, ZFVERSION_SUB())
-ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_MINOR, ZFVERSION_MINOR())
-ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_BUILD, ZFVERSION_BUILD())
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_MAIN, ZFVERSION_MAIN())
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_SUB, ZFVERSION_SUB())
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_MINOR, ZFVERSION_MINOR())
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_BUILD, ZFVERSION_BUILD())
 
 // ============================================================
 // ZFTokenForContainer
