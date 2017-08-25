@@ -404,7 +404,7 @@ public:
     /**
      * @brief true if empty
      */
-    virtual zfbool isEmpty(void);
+    ZFMETHOD_DECLARE_0(zfbool, isEmpty);
     /**
      * @brief get the length of the string
      *
@@ -414,11 +414,11 @@ public:
      * "sizeof(zfchar) * length()"
      * @see wordCount
      */
-    virtual zfindex length(void);
+    ZFMETHOD_DECLARE_0(zfindex, length);
     /**
      * @brief get the logical word count instead of byte size
      */
-    virtual zfindex wordCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, wordCount);
     /**
      * @brief get the string, ensured to be non-null
      *
@@ -426,7 +426,7 @@ public:
      * @note the returned string is not ensured alive during owner ZFString's life-time,
      *   you should not store the returned pointer value
      */
-    virtual const zfchar *stringValue(void);
+    ZFMETHOD_DECLARE_0(const zfchar *, stringValue);
     /**
      * @brief get the nativeString, you must not change its content,
      *   ensured to be non-null, create if necessary
@@ -486,9 +486,9 @@ public:
     virtual void objectOnDealloc(void) {zfsuper::objectOnDealloc();}
 
 public:
-    zfoverride
-    virtual void stringValueSet(ZF_IN_OPT const zfchar *s = zfnull,
-                                ZF_IN_OPT ZFStringStorageTypeEnum storageType = ZFStringStorageType::EnumDefault())
+    ZFMETHOD_DECLARE_2(void, stringValueSet,
+                       ZFMP_IN_OPT(const zfchar *, s, zfnull),
+                       ZFMP_IN_OPT(ZFStringStorageTypeEnum, storageType, ZFStringStorageType::EnumDefault()))
     {
         zfsuper::stringValueSet(s, storageType);
     }
@@ -503,13 +503,6 @@ public:
         zfsuper::stringValueSet(another);
     }
 };
-
-// ============================================================
-extern ZF_ENV_EXPORT ZFString *_ZFP_ZFStringEmpty(void);
-/**
- * @brief a global empty string
- */
-#define ZFStringEmpty _ZFP_ZFStringEmpty()
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFString_h_

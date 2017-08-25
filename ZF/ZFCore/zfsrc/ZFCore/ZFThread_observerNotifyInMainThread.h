@@ -26,21 +26,24 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * the task can be canceled by #ZFObserverNotifyInMainThreadCancel if not actually started
  * @note obj, customSender, params would be retained during running
  */
-extern ZF_ENV_EXPORT zfidentity ZFObserverNotifyInMainThreadWithCustomSender(ZF_IN ZFObject *customSender,
-                                                                             ZF_IN ZFObject *obj,
-                                                                             ZF_IN const zfidentity &eventId,
-                                                                             ZF_IN_OPT ZFObject *param0 = zfnull,
-                                                                             ZF_IN_OPT ZFObject *param1 = zfnull);
+ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
+                        ZFMP_IN(ZFObject *, customSender),
+                        ZFMP_IN(ZFObject *, obj),
+                        ZFMP_IN(const zfidentity &, eventId),
+                        ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 /** @brief see #ZFObserverNotifyInMainThreadWithCustomSender */
-inline zfidentity ZFObserverNotifyInMainThread(ZF_IN ZFObject *obj,
-                                               ZF_IN const zfidentity &eventId,
-                                               ZF_IN_OPT ZFObject *param0 = zfnull,
-                                               ZF_IN_OPT ZFObject *param1 = zfnull)
+ZFMETHOD_FUNC_DECLARE_INLINE_4(zfidentity, ZFObserverNotifyInMainThread,
+                               ZFMP_IN(ZFObject *, obj),
+                               ZFMP_IN(const zfidentity &, eventId),
+                               ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                               ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 {
     return ZFObserverNotifyInMainThreadWithCustomSender(obj, obj, eventId, param0, param1);
 }
 /** @brief see #ZFObserverNotifyInMainThreadWithCustomSender */
-extern ZF_ENV_EXPORT void ZFObserverNotifyInMainThreadCancel(ZF_IN zfidentity taskId);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFObserverNotifyInMainThreadCancel,
+                        ZFMP_IN(zfidentity, taskId))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFThread_observerNotifyInMainThread_h_

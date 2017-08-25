@@ -25,10 +25,11 @@ public:
 ZF_GLOBAL_INITIALIZER_END(ZFSerializableDataIODataHolder)
 
 // ============================================================
-zfbool ZFSerializableDataFromIO(ZF_OUT ZFSerializableData &serializableData,
-                                ZF_IN const zfchar *ioType,
-                                ZF_IN const ZFInputCallback &input,
-                                ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFSerializableDataFromIO,
+                       ZFMP_OUT(ZFSerializableData &, serializableData),
+                       ZFMP_IN(const zfchar *, ioType),
+                       ZFMP_IN(const ZFInputCallback &, input),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 {
     if(!input.callbackIsValid())
     {
@@ -43,10 +44,26 @@ zfbool ZFSerializableDataFromIO(ZF_OUT ZFSerializableData &serializableData,
     }
     return fromCallback(serializableData, input, outErrorHint);
 }
-zfbool ZFSerializableDataToIO(ZF_IN_OUT const ZFOutputCallback &output,
-                              ZF_IN const zfchar *ioType,
-                              ZF_IN const ZFSerializableData &serializableData,
-                              ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_3(ZFSerializableData, ZFSerializableDataFromIO,
+                       ZFMP_IN(const zfchar *, ioType),
+                       ZFMP_IN(const ZFInputCallback &, input),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+{
+    ZFSerializableData ret;
+    if(ZFSerializableDataFromIO(ret, ioType, input, outErrorHint))
+    {
+        return ret;
+    }
+    else
+    {
+        return ZFSerializableData();
+    }
+}
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFSerializableDataToIO,
+                       ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                       ZFMP_IN(const zfchar *, ioType),
+                       ZFMP_IN(const ZFSerializableData &, serializableData),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 {
     if(!output.callbackIsValid())
     {

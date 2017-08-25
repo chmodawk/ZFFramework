@@ -47,7 +47,7 @@ public:
             zfHint("param0")zfnull,
             zfHint("param1")zfnull,
             zfHint("owner")owner,
-            ZFThreadTaskRequestMergeCallbackIgnoreNewTask);
+            ZFThreadTaskRequestMergeCallbackIgnoreNewTask());
     }
 private:
     static ZFLISTENER_PROTOTYPE_EXPAND(requestOnResolve)

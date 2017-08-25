@@ -395,16 +395,17 @@ void ZFThread::nativeThreadUnregister(ZF_IN void *token)
     }
 }
 
-ZFThread *ZFThread::mainThread(void)
+ZFMETHOD_DEFINE_0(ZFThread, ZFThread *, mainThread)
 {
     return _ZFP_ZFThreadImpl->mainThread();
 }
-ZFThread *ZFThread::currentThread(void)
+ZFMETHOD_DEFINE_0(ZFThread, ZFThread *, currentThread)
 {
     return _ZFP_ZFThreadImpl->currentThread();
 }
 
-void ZFThread::sleep(ZF_IN const zftimet &miliSecs)
+ZFMETHOD_DEFINE_1(ZFThread, void, sleep,
+                  ZFMP_IN(const zftimet &, miliSecs))
 {
     _ZFP_ZFThreadImpl->sleep(miliSecs);
 }
@@ -473,9 +474,10 @@ void ZFThread::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     }
 }
 
-void ZFThread::threadStart(ZF_IN_OPT ZFObject *userData /* = zfnull */,
-                           ZF_IN_OPT ZFObject *param0 /* = zfnull */,
-                           ZF_IN_OPT ZFObject *param1 /* = zfnull */)
+ZFMETHOD_DEFINE_3(ZFThread, void, threadStart,
+                  ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                  ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                  ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 {
     zfidentity taskIdTmp = _ZFP_ZFThreadExecuteInNewThread(
         this->threadRunnable().callbackIsValid()
@@ -491,15 +493,15 @@ void ZFThread::threadStart(ZF_IN_OPT ZFObject *userData /* = zfnull */,
         _ZFP_ZFThread_d->taskId = taskIdTmp;
     }
 }
-zfbool ZFThread::threadStarted(void)
+ZFMETHOD_DEFINE_0(ZFThread, zfbool, threadStarted)
 {
     return _ZFP_ZFThread_d->startFlag;
 }
-zfbool ZFThread::threadRunning(void)
+ZFMETHOD_DEFINE_0(ZFThread, zfbool, threadRunning)
 {
     return _ZFP_ZFThread_d->runningFlag;
 }
-void ZFThread::threadStop(void)
+ZFMETHOD_DEFINE_0(ZFThread, void, threadStop)
 {
     if(_ZFP_ZFThread_d->startFlag)
     {
@@ -507,19 +509,20 @@ void ZFThread::threadStop(void)
         ZFThreadExecuteCancel(_ZFP_ZFThread_d->taskId);
     }
 }
-zfbool ZFThread::threadStopRequested(void)
+ZFMETHOD_DEFINE_0(ZFThread, zfbool, threadStopRequested)
 {
     return _ZFP_ZFThread_d->stopRequestedFlag;
 }
 
-void ZFThread::threadWait(void)
+ZFMETHOD_DEFINE_0(ZFThread, void, threadWait)
 {
     if(_ZFP_ZFThread_d->semaWaitHolder != zfnull)
     {
         _ZFP_ZFThread_d->semaWaitHolder->semaphoreWaitLocked();
     }
 }
-zfbool ZFThread::threadWait(ZF_IN const zftimet &miliSecs)
+ZFMETHOD_DEFINE_1(ZFThread, zfbool, threadWait,
+                  ZFMP_IN(const zftimet &, miliSecs))
 {
     if(_ZFP_ZFThread_d->semaWaitHolder != zfnull)
     {
@@ -528,25 +531,27 @@ zfbool ZFThread::threadWait(ZF_IN const zftimet &miliSecs)
     return zftrue;
 }
 
-zfbool ZFThread::isMainThread(void)
+ZFMETHOD_DEFINE_0(ZFThread, zfbool, isMainThread)
 {
     return zffalse;
 }
 
-void ZFThread::autoReleasePoolAdd(ZF_IN ZFObject *obj,
-                                  ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
+ZFMETHOD_DEFINE_2(ZFThread, void, autoReleasePoolAdd,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
 {
     _ZFP_ZFThread_d->autoReleasePool->poolAdd(obj, enableLeakTest);
 }
 
-void ZFThread::autoReleasePoolAdd(ZF_IN ZFObject *obj,
-                                  ZF_IN const ZFCallerInfo &callerInfo,
-                                  ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFThread, void, autoReleasePoolAdd,
+                  ZFMP_IN(ZFObject *, obj),
+                  ZFMP_IN(const ZFCallerInfo &, callerInfo),
+                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
 {
     _ZFP_ZFThread_d->autoReleasePool->poolAdd(obj, callerInfo, enableLeakTest);
 }
 
-void ZFThread::autoReleasePoolDrain(void)
+ZFMETHOD_DEFINE_0(ZFThread, void, autoReleasePoolDrain)
 {
     _ZFP_ZFThread_d->autoReleasePool->poolDrain();
 }
@@ -587,11 +592,12 @@ ZFMETHOD_DEFINE_2(ZFThread, void, threadOnRun,
 
 // ============================================================
 // thread execute
-zfidentity ZFThreadExecuteInMainThread(ZF_IN const ZFListener &runnable,
-                                       ZF_IN_OPT ZFObject *userData /* = zfnull */,
-                                       ZF_IN_OPT const ZFListenerData &listenerData /* = ZFListenerData() */,
-                                       ZF_IN_OPT ZFObject *owner /* = zfnull */,
-                                       ZF_IN_OPT zfbool waitUntilDone /* = zffalse */)
+ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFThreadExecuteInMainThread,
+                       ZFMP_IN(const ZFListener &, runnable),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                       ZFMP_IN_OPT(ZFObject *, owner, zfnull),
+                       ZFMP_IN_OPT(zfbool, waitUntilDone, zffalse))
 {
     if(!runnable.callbackIsValid())
     {
@@ -646,6 +652,11 @@ zfidentity ZFThreadExecuteInMainThread(ZF_IN const ZFListener &runnable,
 
     return taskId;
 }
+ZFMETHOD_FUNC_DEFINE_INLINE_4(zfidentity, ZFThreadExecuteInMainThreadWaitUntilDone,
+                              ZFMP_IN(const ZFListener &, runnable),
+                              ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                              ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                              ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 static zfidentity _ZFP_ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnable,
                                                   ZF_IN ZFObject *userData,
@@ -702,10 +713,11 @@ static zfidentity _ZFP_ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnab
         zfnull);
     return taskId;
 }
-zfidentity ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnable,
-                                      ZF_IN_OPT ZFObject *userData /* = zfnull */,
-                                      ZF_IN_OPT const ZFListenerData &listenerData /* = ZFListenerData() */,
-                                      ZF_IN_OPT ZFObject *owner /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_4(zfidentity, ZFThreadExecuteInNewThread,
+                       ZFMP_IN(const ZFListener &, runnable),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                       ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 {
     if(!runnable.callbackIsValid())
     {
@@ -725,11 +737,12 @@ zfidentity ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnable,
     return taskId;
 }
 
-zfidentity ZFThreadExecuteInMainThreadAfterDelay(ZF_IN zftimet delay,
-                                                 ZF_IN const ZFListener &runnable,
-                                                 ZF_IN_OPT ZFObject *userData /* = zfnull */,
-                                                 ZF_IN_OPT const ZFListenerData &listenerData /* = ZFListenerData() */,
-                                                 ZF_IN_OPT ZFObject *owner /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
+                       ZFMP_IN(zftimet, delay),
+                       ZFMP_IN(const ZFListener &, runnable),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                       ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 {
     if(delay <= 0)
     {
@@ -819,7 +832,8 @@ static void _ZFP_ZFThreadDoCancelTask(ZF_IN _ZFP_I_ZFThreadRunnableData *runnabl
 
     _ZFP_ZFThreadRunnableCleanup(runnableData);
 }
-void ZFThreadExecuteCancel(ZF_IN zfidentity taskId)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteCancel,
+                       ZFMP_IN(zfidentity, taskId))
 {
     if(zfidentityIsValid(taskId))
     {
@@ -843,7 +857,8 @@ void ZFThreadExecuteCancel(ZF_IN zfidentity taskId)
         }
     }
 }
-void ZFThreadExecuteCancel(ZF_IN const ZFListener &runnable)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteCancel,
+                       ZFMP_IN(const ZFListener &, runnable))
 {
     if(runnable.callbackIsValid())
     {
@@ -866,7 +881,8 @@ void ZFThreadExecuteCancel(ZF_IN const ZFListener &runnable)
         }
     }
 }
-void ZFThreadExecuteCancelByOwner(ZF_IN ZFObject *owner)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteCancelByOwner,
+                       ZFMP_IN(ZFObject *, owner))
 {
     if(owner != zfnull)
     {
@@ -890,7 +906,8 @@ void ZFThreadExecuteCancelByOwner(ZF_IN ZFObject *owner)
     }
 }
 
-void ZFThreadExecuteWait(ZF_IN zfidentity taskId)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteWait,
+                       ZFMP_IN(zfidentity, taskId))
 {
     if(zfidentityIsValid(taskId))
     {
@@ -929,8 +946,9 @@ void ZFThreadExecuteWait(ZF_IN zfidentity taskId)
         }
     }
 }
-zfbool ZFThreadExecuteWait(ZF_IN zfidentity taskId,
-                           ZF_IN const zftimet &miliSecs)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFThreadExecuteWait,
+                       ZFMP_IN(zfidentity, taskId),
+                       ZFMP_IN(const zftimet &, miliSecs))
 {
     if(zfidentityIsValid(taskId))
     {
@@ -970,9 +988,10 @@ zfbool ZFThreadExecuteWait(ZF_IN zfidentity taskId,
     return zffalse;
 }
 
-void ZFThreadExecuteObserverAdd(ZF_IN zfidentity taskId,
-                                ZF_IN const zfidentity &eventId,
-                                ZF_IN const ZFListener &callback)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFThreadExecuteObserverAdd,
+                       ZFMP_IN(zfidentity, taskId),
+                       ZFMP_IN(const zfidentity &, eventId),
+                       ZFMP_IN(const ZFListener &, callback))
 {
     if(eventId != ZFThread::EventThreadOnStart()
         && eventId != ZFThread::EventThreadOnStop()
@@ -1004,9 +1023,10 @@ void ZFThreadExecuteObserverAdd(ZF_IN zfidentity taskId,
         }
     }
 }
-void ZFThreadExecuteObserverRemove(ZF_IN zfidentity taskId,
-                                   ZF_IN const zfidentity &eventId,
-                                   ZF_IN const ZFListener &callback)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFThreadExecuteObserverRemove,
+                       ZFMP_IN(zfidentity, taskId),
+                       ZFMP_IN(const zfidentity &, eventId),
+                       ZFMP_IN(const ZFListener &, callback))
 {
     if(eventId != ZFThread::EventThreadOnStart()
         && eventId != ZFThread::EventThreadOnStop()

@@ -67,6 +67,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     { \
         _ZFP_v_##Name = v; \
     } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
     extern ZF_ENV_EXPORT void ZFExportVarEnsureInit_##Name(void);
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */
@@ -91,6 +92,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     { \
         AliasName##Set(v); \
     } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
     extern ZF_ENV_EXPORT void ZFExportVarEnsureInit_##Name(void);
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */
@@ -112,6 +114,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     ZFMETHOD_FUNC_DECLARE_INLINE_1(void, Name##Set, ZFMP_IN(Type const &, v)) \
     { \
         ValueRef = v; \
+    } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
+    inline void ZFExportVarEnsureInit_##Name(void) \
+    { \
     }
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */
@@ -129,6 +135,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     { \
         return _ZFP_v_##Name; \
     } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
     extern ZF_ENV_EXPORT void ZFExportVarEnsureInit_##Name(void);
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */
@@ -147,6 +154,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     { \
         return (AliasName)(); \
     } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
     extern ZF_ENV_EXPORT void ZFExportVarEnsureInit_##Name(void);
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */
@@ -162,6 +170,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     ZFMETHOD_FUNC_DECLARE_INLINE_0(Type const &, Name) \
     { \
         return ValueRef; \
+    } \
+    /** @brief see #ZFEXPORT_VAR_DECLARE */ \
+    inline void ZFExportVarEnsureInit_##Name(void) \
+    { \
     }
 
 /** @brief see #ZFEXPORT_VAR_DECLARE */

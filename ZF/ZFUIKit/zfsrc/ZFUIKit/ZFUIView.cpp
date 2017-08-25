@@ -2380,7 +2380,7 @@ void ZFUIView::viewPropertyUpdateRequest(void)
         zfHint("param0")zfnull,
         zfHint("param1")zfnull,
         zfHint("owner")this,
-        zfHint("mergeCallback")ZFThreadTaskRequestMergeCallbackIgnoreOldTask);
+        zfHint("mergeCallback")ZFThreadTaskRequestMergeCallbackIgnoreOldTask());
 }
 
 void ZFUIView::viewPropertyOnUpdate(void)

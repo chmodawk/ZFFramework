@@ -82,19 +82,20 @@ public:
     /**
      * @brief return main thread
      */
-    static ZFThread *mainThread(void);
+    ZFMETHOD_DECLARE_STATIC_0(ZFThread *, mainThread);
     /**
      * @brief return current thread,
      *   or zfnull if thread isn't started or registered by ZFThread
      *   or not registered by #ZFThread::nativeThreadRegister
      */
-    static ZFThread *currentThread(void);
+    ZFMETHOD_DECLARE_STATIC_0(ZFThread *, currentThread);
 
     /**
      * @brief make current thread sleep for miliSecs,
      *   note this method may be not accurate
      */
-    static void sleep(ZF_IN const zftimet &miliSecs);
+    ZFMETHOD_DECLARE_STATIC_1(void, sleep,
+                              ZFMP_IN(const zftimet &, miliSecs));
 
     // ============================================================
     // thread instance method
@@ -130,17 +131,18 @@ public:
     /**
      * @brief start thread, do nothing if already started
      */
-    virtual void threadStart(ZF_IN_OPT ZFObject *userData = zfnull,
-                             ZF_IN_OPT ZFObject *param0 = zfnull,
-                             ZF_IN_OPT ZFObject *param1 = zfnull);
+    ZFMETHOD_DECLARE_3(void, threadStart,
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param1, zfnull));
     /**
      * @brief return true if start is called and hasn't been stopped or end
      */
-    virtual zfbool threadStarted(void);
+    ZFMETHOD_DECLARE_0(zfbool, threadStarted);
     /**
      * @brief return true only if thread is running
      */
-    virtual zfbool threadRunning(void);
+    ZFMETHOD_DECLARE_0(zfbool, threadRunning);
     /**
      * @brief request stop the thread, may not be stopped immediately
      *
@@ -148,18 +150,18 @@ public:
      * otherwise, whether the thread is continue running or stopped, is up to the runnable
      * @see threadStopRequested
      */
-    virtual void threadStop(void);
+    ZFMETHOD_DECLARE_0(void, threadStop);
     /**
      * @brief return true if stop is called after start
      */
-    virtual zfbool threadStopRequested(void);
+    ZFMETHOD_DECLARE_0(zfbool, threadStopRequested);
 
     /**
      * @brief wait until thread finished running
      *
      * return immediately if thread isn't running
      */
-    virtual void threadWait(void);
+    ZFMETHOD_DECLARE_0(void, threadWait);
 
     /**
      * @brief wait until thread finished running, or timeout
@@ -168,30 +170,33 @@ public:
      * @return true if wait success or thread isn't running\n
      *         false if wait timeout or error
      */
-    virtual zfbool threadWait(ZF_IN const zftimet &miliSecs);
+    ZFMETHOD_DECLARE_1(zfbool, threadWait,
+                       ZFMP_IN(const zftimet &, miliSecs));
 
     /**
      * @brief return true if current thread is main thread
      *
      * subclass should not override this method
      */
-    virtual zfbool isMainThread(void);
+    ZFMETHOD_DECLARE_0(zfbool, isMainThread);
     /**
      * @brief add object to auto release pool attached to this thread
      *
      * usually this method is called by #zfautoRelease
      * @see ZFAutoReleasePool
      */
-    virtual void autoReleasePoolAdd(ZF_IN ZFObject *obj,
-                                    ZF_IN_OPT zfbool enableLeakTest = zftrue);
+    ZFMETHOD_DECLARE_2(void, autoReleasePoolAdd,
+                       ZFMP_IN(ZFObject *, obj),
+                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
     /**
      * @brief add object to auto release pool attached to this thread with location info,
      *   used by ZFLeakTest
      * @see ZFAutoReleasePool
      */
-    virtual void autoReleasePoolAdd(ZF_IN ZFObject *obj,
-                                    ZF_IN const ZFCallerInfo &callerInfo,
-                                    ZF_IN_OPT zfbool enableLeakTest = zftrue);
+    ZFMETHOD_DECLARE_3(void, autoReleasePoolAdd,
+                       ZFMP_IN(ZFObject *, obj),
+                       ZFMP_IN(const ZFCallerInfo &, callerInfo),
+                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
     /**
      * @brief manually drain auto release pool
      *
@@ -199,7 +204,7 @@ public:
      * called automatically after each time that runnable ends
      * @see ZFAutoReleasePool
      */
-    virtual void autoReleasePoolDrain(void);
+    ZFMETHOD_DECLARE_0(void, autoReleasePoolDrain);
     zffinal void _ZFP_ZFThreadAutoReleasePoolAdd(ZF_IN ZFObject *obj,
                                                  ZF_IN const ZFCallerInfo &callerInfo,
                                                  ZF_IN zfbool enableLeakTest);

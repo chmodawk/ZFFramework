@@ -25,30 +25,22 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * recommended to use file extension as ioType,
  * recommended to define ioType as macro which named "ZFSerializableDataIOType_YourType"
  */
-extern ZF_ENV_EXPORT zfbool ZFSerializableDataFromIO(ZF_OUT ZFSerializableData &serializableData,
-                                                     ZF_IN const zfchar *ioType,
-                                                     ZF_IN const ZFInputCallback &input,
-                                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFSerializableDataFromIO,
+                        ZFMP_OUT(ZFSerializableData &, serializableData),
+                        ZFMP_IN(const zfchar *, ioType),
+                        ZFMP_IN(const ZFInputCallback &, input),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 /** @brief see #ZFSerializableDataFromIO */
-inline ZFSerializableData ZFSerializableDataFromIO(ZF_IN const zfchar *ioType,
-                                                   ZF_IN const ZFInputCallback &input,
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull)
-{
-    ZFSerializableData ret;
-    if(ZFSerializableDataFromIO(ret, ioType, input, outErrorHint))
-    {
-        return ret;
-    }
-    else
-    {
-        return ZFSerializableData();
-    }
-}
+ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFSerializableDataFromIO,
+                        ZFMP_IN(const zfchar *, ioType),
+                        ZFMP_IN(const ZFInputCallback &, input),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 /** @brief see #ZFSerializableDataFromIO */
-extern ZF_ENV_EXPORT zfbool ZFSerializableDataToIO(ZF_IN_OUT const ZFOutputCallback &output,
-                                                   ZF_IN const zfchar *ioType,
-                                                   ZF_IN const ZFSerializableData &serializableData,
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFSerializableDataToIO,
+                        ZFMP_IN_OUT(const ZFOutputCallback &, output),
+                        ZFMP_IN(const zfchar *, ioType),
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 
 // ============================================================
 /** @brief see #ZFSERIALIZABLEDATAIO_DEFINE */

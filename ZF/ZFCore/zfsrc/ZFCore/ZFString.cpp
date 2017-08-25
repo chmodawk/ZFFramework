@@ -292,11 +292,11 @@ void ZFString::charBufferCheckCopy(void)
     }
 }
 
-zfbool ZFString::isEmpty(void)
+ZFMETHOD_DEFINE_0(ZFString, zfbool, isEmpty)
 {
     return (this->length() == 0);
 }
-zfindex ZFString::length(void)
+ZFMETHOD_DEFINE_0(ZFString, zfindex, length)
 {
     if(d->cachedLength == zfindexMax)
     {
@@ -304,7 +304,7 @@ zfindex ZFString::length(void)
     }
     return d->cachedLength;
 }
-zfindex ZFString::wordCount(void)
+ZFMETHOD_DEFINE_0(ZFString, zfindex, wordCount)
 {
     if(d->cachedWordCount == zfindexMax)
     {
@@ -313,7 +313,7 @@ zfindex ZFString::wordCount(void)
     }
     return d->cachedWordCount;
 }
-const zfchar *ZFString::stringValue(void)
+ZFMETHOD_DEFINE_0(ZFString, const zfchar *, stringValue)
 {
     switch(d->storageType)
     {
@@ -413,23 +413,6 @@ void ZFString::stringValueSet(ZF_IN ZFString *another)
     }
     ++(d->refCount);
     _ZFP_ZFString_cleanup(dTmp);
-}
-
-// ============================================================
-static ZFString *_ZFP_ZFStringEmptyInstance = zfnull;
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFStringEmptyHolder, ZFLevelZFFrameworkEssential)
-{
-    _ZFP_ZFStringEmptyInstance = zfAlloc(ZFString);
-}
-ZF_GLOBAL_INITIALIZER_DESTROY(ZFStringEmptyHolder)
-{
-    zfRelease(_ZFP_ZFStringEmptyInstance);
-    _ZFP_ZFStringEmptyInstance = zfnull;
-}
-ZF_GLOBAL_INITIALIZER_END(ZFStringEmptyHolder)
-ZFString *_ZFP_ZFStringEmpty(void)
-{
-    return _ZFP_ZFStringEmptyInstance;
 }
 
 ZF_NAMESPACE_GLOBAL_END

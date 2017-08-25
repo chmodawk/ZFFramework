@@ -248,13 +248,13 @@ void ZFUIDialogForChoice::choiceListOnChange(void)
 {
     zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestData, taskRequestData);
     taskRequestData->taskCallbackSet(d->updateTaskListener);
-    d->updateTaskId = ZFThreadTaskRequest(taskRequestData, ZFThreadTaskRequestMergeCallbackIgnoreOldTask);
+    d->updateTaskId = ZFThreadTaskRequest(taskRequestData, ZFThreadTaskRequestMergeCallbackIgnoreOldTask());
 }
 void ZFUIDialogForChoice::choiceSelectedListOnChange(void)
 {
     zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestData, taskRequestData);
     taskRequestData->taskCallbackSet(d->updateTaskListener);
-    d->updateTaskId = ZFThreadTaskRequest(taskRequestData, ZFThreadTaskRequestMergeCallbackIgnoreOldTask);
+    d->updateTaskId = ZFThreadTaskRequest(taskRequestData, ZFThreadTaskRequestMergeCallbackIgnoreOldTask());
 
     this->choiceChangeNotify();
 }

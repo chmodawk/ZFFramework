@@ -10,14 +10,16 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfstring ZFSerializableDataIOFileDescriptorDetect(ZF_IN const zfchar *fileDescriptor)
+ZFMETHOD_FUNC_DEFINE_1(zfstring, ZFSerializableDataIOFileDescriptorDetect,
+                       ZFMP_IN(const zfchar *, fileDescriptor))
 {
     return ZFFile::fileExtOf(fileDescriptor);
 }
 
-zfbool ZFSerializableDataFromFileDescriptor(ZF_OUT ZFSerializableData &serializableData,
-                                            ZF_IN const zfchar *fileDescriptor,
-                                            ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFSerializableDataFromFileDescriptor,
+                       ZFMP_OUT(ZFSerializableData &, serializableData),
+                       ZFMP_IN(const zfchar *, fileDescriptor),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 {
     zfstring ioType = ZFSerializableDataIOFileDescriptorDetect(fileDescriptor);
     if(ioType.isEmpty())
@@ -33,9 +35,24 @@ zfbool ZFSerializableDataFromFileDescriptor(ZF_OUT ZFSerializableData &serializa
     }
     return ZFSerializableDataFromIO(serializableData, ioType, input, outErrorHint);
 }
-zfbool ZFSerializableDataToFileDescriptor(ZF_IN const zfchar *fileDescriptor,
-                                          ZF_IN const ZFSerializableData &serializableData,
-                                          ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_2(ZFSerializableData, ZFSerializableDataFromFileDescriptor,
+                       ZFMP_IN(const zfchar *, fileDescriptor),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+{
+    ZFSerializableData ret;
+    if(ZFSerializableDataFromFileDescriptor(ret, fileDescriptor, outErrorHint))
+    {
+        return ret;
+    }
+    else
+    {
+        return ZFSerializableData();
+    }
+}
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFSerializableDataToFileDescriptor,
+                       ZFMP_IN(const zfchar *, fileDescriptor),
+                       ZFMP_IN(const ZFSerializableData &, serializableData),
+                       ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 {
     zfstring ioType = ZFSerializableDataIOFileDescriptorDetect(fileDescriptor);
     if(ioType.isEmpty())

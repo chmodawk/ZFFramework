@@ -24,7 +24,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *
  * detect by #ZFFile::fileExtOf
  */
-extern ZF_ENV_EXPORT zfstring ZFSerializableDataIOFileDescriptorDetect(ZF_IN const zfchar *fileDescriptor);
+ZFMETHOD_FUNC_DECLARE_1(zfstring, ZFSerializableDataIOFileDescriptorDetect,
+                        ZFMP_IN(const zfchar *, fileDescriptor))
 
 /**
  * @brief see #ZFSerializableDataFromIO, #ZFInputCallbackForFileDescriptor
@@ -34,23 +35,14 @@ extern ZF_ENV_EXPORT zfstring ZFSerializableDataIOFileDescriptorDetect(ZF_IN con
  * -# open input by #ZFInputCallbackForFileDescriptor
  * -# load serializableData by #ZFSerializableDataFromIO
  */
-extern ZF_ENV_EXPORT zfbool ZFSerializableDataFromFileDescriptor(ZF_OUT ZFSerializableData &serializableData,
-                                                                 ZF_IN const zfchar *fileDescriptor,
-                                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull);
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFSerializableDataFromFileDescriptor,
+                        ZFMP_OUT(ZFSerializableData &, serializableData),
+                        ZFMP_IN(const zfchar *, fileDescriptor),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 /** @brief see #ZFSerializableDataFromFileDescriptor */
-inline ZFSerializableData ZFSerializableDataFromFileDescriptor(ZF_IN const zfchar *fileDescriptor,
-                                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull)
-{
-    ZFSerializableData ret;
-    if(ZFSerializableDataFromFileDescriptor(ret, fileDescriptor, outErrorHint))
-    {
-        return ret;
-    }
-    else
-    {
-        return ZFSerializableData();
-    }
-}
+ZFMETHOD_FUNC_DECLARE_2(ZFSerializableData, ZFSerializableDataFromFileDescriptor,
+                        ZFMP_IN(const zfchar *, fileDescriptor),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 /**
  * @brief see #ZFSerializableDataToFileDescriptor
  *
@@ -59,9 +51,10 @@ inline ZFSerializableData ZFSerializableDataFromFileDescriptor(ZF_IN const zfcha
  * -# open output by #ZFOutputCallbackForFileDescriptor
  * -# write serializableData to output by #ZFSerializableDataToIO
  */
-extern ZF_ENV_EXPORT zfbool ZFSerializableDataToFileDescriptor(ZF_IN const zfchar *fileDescriptor,
-                                                               ZF_IN const ZFSerializableData &serializableData,
-                                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull);
+ZFMETHOD_FUNC_DECLARE_3(zfbool, ZFSerializableDataToFileDescriptor,
+                        ZFMP_IN(const zfchar *, fileDescriptor),
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSerializableDataIO_fileDescriptor_h_

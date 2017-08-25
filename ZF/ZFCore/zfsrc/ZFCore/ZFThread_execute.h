@@ -29,18 +29,20 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * while owner won't
  * @see ZFThreadExecuteInNewThread, ZFThreadExecuteCancel
  */
-extern ZF_ENV_EXPORT zfidentity ZFThreadExecuteInMainThread(ZF_IN const ZFListener &runnable,
-                                                            ZF_IN_OPT ZFObject *userData = zfnull,
-                                                            ZF_IN_OPT const ZFListenerData &listenerData = ZFListenerData(),
-                                                            ZF_IN_OPT ZFObject *owner = zfnull,
-                                                            ZF_IN_OPT zfbool waitUntilDone = zffalse);
+ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFThreadExecuteInMainThread,
+                        ZFMP_IN(const ZFListener &, runnable),
+                        ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                        ZFMP_IN_OPT(ZFObject *, owner, zfnull),
+                        ZFMP_IN_OPT(zfbool, waitUntilDone, zffalse))
 /**
  * @brief util method for #ZFThreadExecuteInMainThread
  */
-inline zfidentity ZFThreadExecuteInMainThreadWaitUntilDone(ZF_IN const ZFListener &runnable,
-                                                           ZF_IN_OPT ZFObject *userData = zfnull,
-                                                           ZF_IN_OPT const ZFListenerData &listenerData = ZFListenerData(),
-                                                           ZF_IN_OPT ZFObject *owner = zfnull)
+ZFMETHOD_FUNC_DECLARE_INLINE_4(zfidentity, ZFThreadExecuteInMainThreadWaitUntilDone,
+                               ZFMP_IN(const ZFListener &, runnable),
+                               ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                               ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                               ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 {
     return ZFThreadExecuteInMainThread(runnable, userData, listenerData, owner, zftrue);
 }
@@ -54,41 +56,47 @@ inline zfidentity ZFThreadExecuteInMainThreadWaitUntilDone(ZF_IN const ZFListene
  *   instead of create new ZFThread instance,
  *   since we may have thread pool for performance
  */
-extern ZF_ENV_EXPORT zfidentity ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnable,
-                                                           ZF_IN_OPT ZFObject *userData = zfnull,
-                                                           ZF_IN_OPT const ZFListenerData &listenerData = ZFListenerData(),
-                                                           ZF_IN_OPT ZFObject *owner = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfidentity, ZFThreadExecuteInNewThread,
+                        ZFMP_IN(const ZFListener &, runnable),
+                        ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                        ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 /**
  * @brief exeute in main thread after delay, directly schedule an #ZFThreadExecuteInMainThread if (delay <= 0)
  */
-extern ZF_ENV_EXPORT zfidentity ZFThreadExecuteInMainThreadAfterDelay(ZF_IN zftimet delay,
-                                                                      ZF_IN const ZFListener &runnable,
-                                                                      ZF_IN_OPT ZFObject *userData = zfnull,
-                                                                      ZF_IN_OPT const ZFListenerData &listenerData = ZFListenerData(),
-                                                                      ZF_IN_OPT ZFObject *owner = zfnull);
+ZFMETHOD_FUNC_DECLARE_5(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
+                        ZFMP_IN(zftimet, delay),
+                        ZFMP_IN(const ZFListener &, runnable),
+                        ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                        ZFMP_IN_OPT(const ZFListenerData &, listenerData, ZFListenerData()),
+                        ZFMP_IN_OPT(ZFObject *, owner, zfnull))
 
 /**
  * @brief cancel execute of task
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteCancel(ZF_IN zfidentity taskId);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancel,
+                        ZFMP_IN(zfidentity, taskId))
 
 /**
  * @brief cancel all execute task of runnable, ignoring the params, see #ZFThreadExecuteCancel
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteCancel(ZF_IN const ZFListener &runnable);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancel,
+                        ZFMP_IN(const ZFListener &, runnable))
 
 /**
  * @brief cancel all execute task of owner, see #ZFThreadExecuteCancel
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteCancelByOwner(ZF_IN ZFObject *owner);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteCancelByOwner,
+                        ZFMP_IN(ZFObject *, owner))
 
 /**
  * @brief wait thread task until done
  *
  * return immediately if the task is running in main thread
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteWait(ZF_IN zfidentity taskId);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadExecuteWait,
+                        ZFMP_IN(zfidentity, taskId))
 /**
  * @brief wait thread task until done
  *
@@ -96,8 +104,9 @@ extern ZF_ENV_EXPORT void ZFThreadExecuteWait(ZF_IN zfidentity taskId);
  * or false if wait timeout or no such task\n
  * return false immediately if the task is running in main thread
  */
-extern ZF_ENV_EXPORT zfbool ZFThreadExecuteWait(ZF_IN zfidentity taskId,
-                                                ZF_IN const zftimet &miliSecs);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFThreadExecuteWait,
+                        ZFMP_IN(zfidentity, taskId),
+                        ZFMP_IN(const zftimet &, miliSecs))
 
 /**
  * @brief attach observer to the tasks started by ZFThreadExecuteXxx, see #ZFObject::observerNotify
@@ -109,15 +118,17 @@ extern ZF_ENV_EXPORT zfbool ZFThreadExecuteWait(ZF_IN zfidentity taskId,
  * -  #ZFThread::EventThreadOnStop
  * -  #ZFThread::EventThreadOnCancel
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteObserverAdd(ZF_IN zfidentity taskId,
-                                                     ZF_IN const zfidentity &eventId,
-                                                     ZF_IN const ZFListener &callback);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFThreadExecuteObserverAdd,
+                        ZFMP_IN(zfidentity, taskId),
+                        ZFMP_IN(const zfidentity &, eventId),
+                        ZFMP_IN(const ZFListener &, callback))
 /**
  * @brief see #ZFThreadExecuteObserverAdd
  */
-extern ZF_ENV_EXPORT void ZFThreadExecuteObserverRemove(ZF_IN zfidentity taskId,
-                                                        ZF_IN const zfidentity &eventId,
-                                                        ZF_IN const ZFListener &callback);
+ZFMETHOD_FUNC_DECLARE_3(void, ZFThreadExecuteObserverRemove,
+                        ZFMP_IN(zfidentity, taskId),
+                        ZFMP_IN(const zfidentity &, eventId),
+                        ZFMP_IN(const ZFListener &, callback))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFThread_execute_h_

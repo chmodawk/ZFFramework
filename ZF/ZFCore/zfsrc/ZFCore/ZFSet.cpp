@@ -34,18 +34,20 @@ void ZFSet::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
-zfindex ZFSet::count(void)
+ZFMETHOD_DEFINE_0(ZFSet, zfindex, count)
 {
     return d->count();
 }
-zfbool ZFSet::isEmpty(void)
+ZFMETHOD_DEFINE_0(ZFSet, zfbool, isEmpty)
 {
     return d->isEmpty();
 }
-zfbool ZFSet::isContain(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFSet, zfbool, isContain,
+                  ZFMP_IN(ZFObject *, obj))
 {
     return d->isContain(obj);
 }
+
 void ZFSet::add(ZF_IN ZFObject *obj)
 {
     zfCoreAssertWithMessage(obj != zfnull, zfTextA("insert null object"));
@@ -100,36 +102,42 @@ void ZFSet::removeAll(void)
 }
 
 // ============================================================
-zfiterator ZFSet::iterator(void)
+ZFMETHOD_DEFINE_0(ZFSet, zfiterator, iterator)
 {
     return d->iterator();
 }
 
-zfiterator ZFSet::iteratorFind(ZF_IN ZFObject *value)
+ZFMETHOD_DEFINE_1(ZFSet, zfiterator, iteratorFind,
+                  ZFMP_IN(ZFObject *, value))
 {
     return d->iteratorForKey(value);
 }
 
-zfbool ZFSet::iteratorIsValid(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFSet, zfbool, iteratorIsValid,
+                  ZFMP_IN(const zfiterator &, it))
 {
     return d->iteratorIsValid(it);
 }
-zfbool ZFSet::iteratorIsEqual(ZF_IN const zfiterator &it0,
-                              ZF_IN const zfiterator &it1)
+ZFMETHOD_DEFINE_2(ZFSet, zfbool, iteratorIsEqual,
+                  ZFMP_IN(const zfiterator &, it0),
+                  ZFMP_IN(const zfiterator &, it1))
 {
     return d->iteratorIsEqual(it0, it1);
 }
 
-ZFObject *ZFSet::iteratorGet(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFSet, ZFObject *, iteratorGet,
+                  ZFMP_IN(const zfiterator &, it))
 {
     return d->iteratorGetKey(it);
 }
 
-ZFObject *ZFSet::iteratorNext(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFSet, ZFObject *, iteratorNext,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     return d->iteratorNextKey(it);
 }
-ZFObject *ZFSet::iteratorPrev(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFSet, ZFObject *, iteratorPrev,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     return d->iteratorPrevKey(it);
 }

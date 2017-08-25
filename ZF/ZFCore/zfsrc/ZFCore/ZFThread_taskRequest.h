@@ -59,25 +59,33 @@ public:
     /** @brief see #ZFThreadTaskRequest */
     ZFThreadTaskRequestData *taskRequestDataMerged;
 };
+
+// ============================================================
 extern ZF_ENV_EXPORT const ZFListener &_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask(void);
 extern ZF_ENV_EXPORT const ZFListener &_ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask(void);
 extern ZF_ENV_EXPORT const ZFListener &_ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge(void);
+/** @cond ZFPrivateDoc */
+#define ZFThreadTaskRequestMergeCallbackIgnoreOldTask() _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask()
+#define ZFThreadTaskRequestMergeCallbackIgnoreNewTask() _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask()
+#define ZFThreadTaskRequestMergeCallbackDoNotMerge() _ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge()
+#define ZFThreadTaskRequestMergeCallbackDefault() ZFThreadTaskRequestMergeCallbackIgnoreOldTask()
+/** @endcond */
 /**
  * @brief see #ZFThreadTaskRequest, simply ignore old task and replace with new task
  */
-#define ZFThreadTaskRequestMergeCallbackIgnoreOldTask _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreOldTask()
+ZFEXPORT_VAR_READONLY_VALUEREF_DECLARE(ZFListener, ZFThreadTaskRequestMergeCallbackIgnoreOldTask, ZFThreadTaskRequestMergeCallbackIgnoreOldTask())
 /**
  * @brief see #ZFThreadTaskRequest, simply ignore new task and use the old one
  */
-#define ZFThreadTaskRequestMergeCallbackIgnoreNewTask _ZFP_ZFThreadTaskRequestMergeCallbackIgnoreNewTask()
+ZFEXPORT_VAR_READONLY_VALUEREF_DECLARE(ZFListener, ZFThreadTaskRequestMergeCallbackIgnoreNewTask, ZFThreadTaskRequestMergeCallbackIgnoreNewTask())
 /**
  * @brief see #ZFThreadTaskRequest, don't merge and add as new task
  */
-#define ZFThreadTaskRequestMergeCallbackDoNotMerge _ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge()
+ZFEXPORT_VAR_READONLY_VALUEREF_DECLARE(ZFListener, ZFThreadTaskRequestMergeCallbackDoNotMerge, ZFThreadTaskRequestMergeCallbackDoNotMerge())
 /**
  * @brief see #ZFThreadTaskRequest, #ZFThreadTaskRequestMergeCallbackIgnoreOldTask by default
  */
-#define ZFThreadTaskRequestMergeCallbackDefault ZFThreadTaskRequestMergeCallbackIgnoreOldTask
+ZFEXPORT_VAR_READONLY_ALIAS_DECLARE(ZFListener, ZFThreadTaskRequestMergeCallbackDefault, ZFThreadTaskRequestMergeCallbackIgnoreOldTask)
 
 // ============================================================
 // task request
@@ -107,45 +115,42 @@ extern ZF_ENV_EXPORT const ZFListener &_ZFP_ZFThreadTaskRequestMergeCallbackDoNo
  * to disable merge, set taskRequestDataMerged to null, and old/new task would be scheduled separately\n
  * or, you may use the pre-defined callbacks such as #ZFThreadTaskRequestMergeCallbackDoNotMerge
  */
-extern ZF_ENV_EXPORT zfidentity ZFThreadTaskRequest(ZF_IN ZFThreadTaskRequestData *taskRequestData,
-                                                    ZF_IN_OPT const ZFListener &mergeCallback = ZFThreadTaskRequestMergeCallbackDefault);
+ZFMETHOD_FUNC_DECLARE_2(zfidentity, ZFThreadTaskRequest,
+                        ZFMP_IN(ZFThreadTaskRequestData *, taskRequestData),
+                        ZFMP_IN_OPT(const ZFListener &, mergeCallback, ZFThreadTaskRequestMergeCallbackDefault()))
 /** @brief see #ZFThreadTaskRequest */
-inline zfidentity ZFThreadTaskRequest(ZF_IN const ZFListener &taskCallback,
-                                      ZF_IN_OPT ZFObject *taskUserData = zfnull,
-                                      ZF_IN_OPT ZFObject *taskParam0 = zfnull,
-                                      ZF_IN_OPT ZFObject *taskParam1 = zfnull,
-                                      ZF_IN_OPT ZFObject *taskOwner = zfnull,
-                                      ZF_IN_OPT const ZFListener &taskMergeCallback = ZFThreadTaskRequestMergeCallbackDefault)
-{
-    zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestData, taskRequestData);
-    taskRequestData->taskCallbackSet(taskCallback);
-    taskRequestData->taskUserDataSet(taskUserData);
-    taskRequestData->taskParam0Set(taskParam0);
-    taskRequestData->taskParam1Set(taskParam1);
-    taskRequestData->taskOwnerSet(taskOwner);
-    return ZFThreadTaskRequest(taskRequestData, taskMergeCallback);
-}
+ZFMETHOD_FUNC_DECLARE_6(zfidentity, ZFThreadTaskRequest,
+                        ZFMP_IN(const ZFListener &, taskCallback),
+                        ZFMP_IN_OPT(ZFObject *, taskUserData, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, taskParam0, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, taskParam1, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, taskOwner, zfnull),
+                        ZFMP_IN_OPT(const ZFListener &, taskMergeCallback, ZFThreadTaskRequestMergeCallbackDefault()))
 /**
  * @brief see #ZFThreadTaskRequest
  */
-extern ZF_ENV_EXPORT void ZFThreadTaskCancel(ZF_IN zfidentity taskId);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadTaskCancel,
+                        ZFMP_IN(zfidentity, taskId))
 /**
  * @brief see #ZFThreadTaskRequest
  */
-extern ZF_ENV_EXPORT void ZFThreadTaskCancelExactly(ZF_IN const ZFListener &task,
-                                                    ZF_IN_OPT ZFObject *userData = zfnull,
-                                                    ZF_IN_OPT ZFObject *param0 = zfnull,
-                                                    ZF_IN_OPT ZFObject *param1 = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(void, ZFThreadTaskCancelExactly,
+                        ZFMP_IN(const ZFListener &, task),
+                        ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                        ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 /**
  * @brief see #ZFThreadTaskRequest
  */
-extern ZF_ENV_EXPORT void ZFThreadTaskCancel(ZF_IN const ZFListener &task);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadTaskCancel,
+                        ZFMP_IN(const ZFListener &, task))
 /**
  * @brief see #ZFThreadTaskRequest
  *
  * owner would be compared by pointer value
  */
-extern ZF_ENV_EXPORT void ZFThreadTaskCancelWithOwner(ZF_IN ZFObject *owner);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFThreadTaskCancelWithOwner,
+                        ZFMP_IN(ZFObject *, owner))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFThread_taskRequest_h_

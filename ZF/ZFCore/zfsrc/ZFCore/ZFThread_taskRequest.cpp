@@ -144,9 +144,14 @@ const ZFListener &_ZFP_ZFThreadTaskRequestMergeCallbackDoNotMerge(void)
 {
     return *_ZFP_ZFThread_mergeCallbackDoNotMerge;
 }
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackIgnoreOldTask, ZFThreadTaskRequestMergeCallbackIgnoreOldTask())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackIgnoreNewTask, ZFThreadTaskRequestMergeCallbackIgnoreNewTask())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackDoNotMerge, ZFThreadTaskRequestMergeCallbackDoNotMerge())
+ZFEXPORT_VAR_READONLY_ALIAS_DEFINE(ZFListener, ZFThreadTaskRequestMergeCallbackDefault, ZFThreadTaskRequestMergeCallbackIgnoreOldTask)
 
-zfidentity ZFThreadTaskRequest(ZF_IN ZFThreadTaskRequestData *taskRequestData,
-                               ZF_IN_OPT const ZFListener &mergeCallback /* = ZFThreadTaskRequestMergeCallbackDefault */)
+ZFMETHOD_FUNC_DEFINE_2(zfidentity, ZFThreadTaskRequest,
+                       ZFMP_IN(ZFThreadTaskRequestData *, taskRequestData),
+                       ZFMP_IN_OPT(const ZFListener &, mergeCallback, ZFThreadTaskRequestMergeCallbackDefault()))
 {
     if(taskRequestData == zfnull || !taskRequestData->taskCallback().callbackIsValid())
     {
@@ -171,7 +176,7 @@ zfidentity ZFThreadTaskRequest(ZF_IN ZFThreadTaskRequestData *taskRequestData,
         }
     }
     zfidentity taskId = zfidentityInvalid;
-    if(oldTaskIndex != zfindexMax && mergeCallback != ZFThreadTaskRequestMergeCallbackDoNotMerge)
+    if(oldTaskIndex != zfindexMax && mergeCallback != ZFThreadTaskRequestMergeCallbackDoNotMerge())
     {
         zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestMergeCallbackData, mergeCallbackData);
         mergeCallbackData->taskRequestDataOld = _ZFP_ZFThread_taskDatas->get<ZFThreadTaskRequestData *>(oldTaskIndex);
@@ -211,7 +216,24 @@ zfidentity ZFThreadTaskRequest(ZF_IN ZFThreadTaskRequestData *taskRequestData,
     }
     return taskId;
 }
-void ZFThreadTaskCancel(ZF_IN zfidentity taskId)
+ZFMETHOD_FUNC_DEFINE_6(zfidentity, ZFThreadTaskRequest,
+                       ZFMP_IN(const ZFListener &, taskCallback),
+                       ZFMP_IN_OPT(ZFObject *, taskUserData, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, taskParam0, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, taskParam1, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, taskOwner, zfnull),
+                       ZFMP_IN_OPT(const ZFListener &, taskMergeCallback, ZFThreadTaskRequestMergeCallbackDefault()))
+{
+    zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestData, taskRequestData);
+    taskRequestData->taskCallbackSet(taskCallback);
+    taskRequestData->taskUserDataSet(taskUserData);
+    taskRequestData->taskParam0Set(taskParam0);
+    taskRequestData->taskParam1Set(taskParam1);
+    taskRequestData->taskOwnerSet(taskOwner);
+    return ZFThreadTaskRequest(taskRequestData, taskMergeCallback);
+}
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadTaskCancel,
+                       ZFMP_IN(zfidentity, taskId))
 {
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
     if(lockAvailable)
@@ -234,10 +256,11 @@ void ZFThreadTaskCancel(ZF_IN zfidentity taskId)
         zfsynchronizedObjectUnlock(_ZFP_ZFThread_mutex);
     }
 }
-void ZFThreadTaskCancelExactly(ZF_IN const ZFListener &task,
-                               ZF_IN_OPT ZFObject *userData /* = zfnull */,
-                               ZF_IN_OPT ZFObject *param0 /* = zfnull */,
-                               ZF_IN_OPT ZFObject *param1 /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_4(void, ZFThreadTaskCancelExactly,
+                       ZFMP_IN(const ZFListener &, task),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 {
     if(!task.callbackIsValid())
     {
@@ -268,7 +291,8 @@ void ZFThreadTaskCancelExactly(ZF_IN const ZFListener &task,
         zfsynchronizedObjectUnlock(_ZFP_ZFThread_mutex);
     }
 }
-void ZFThreadTaskCancel(ZF_IN const ZFListener &task)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadTaskCancel,
+                       ZFMP_IN(const ZFListener &, task))
 {
     if(!task.callbackIsValid())
     {
@@ -296,7 +320,8 @@ void ZFThreadTaskCancel(ZF_IN const ZFListener &task)
         zfsynchronizedObjectUnlock(_ZFP_ZFThread_mutex);
     }
 }
-void ZFThreadTaskCancelWithOwner(ZF_IN ZFObject *owner)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadTaskCancelWithOwner,
+                       ZFMP_IN(ZFObject *, owner))
 {
     if(owner == zfnull)
     {

@@ -95,11 +95,12 @@ private:
     }
 ZF_GLOBAL_INITIALIZER_END(ZFObserverNotifyInMainThreadDataHolder)
 
-zfidentity ZFObserverNotifyInMainThreadWithCustomSender(ZF_IN ZFObject *customSender,
-                                                        ZF_IN ZFObject *obj,
-                                                        ZF_IN const zfidentity &eventId,
-                                                        ZF_IN_OPT ZFObject *param0 /* = zfnull */,
-                                                        ZF_IN_OPT ZFObject *param1 /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
+                       ZFMP_IN(ZFObject *, customSender),
+                       ZFMP_IN(ZFObject *, obj),
+                       ZFMP_IN(const zfidentity &, eventId),
+                       ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param1, zfnull))
 {
     if(obj == zfnull)
     {
@@ -118,7 +119,7 @@ zfidentity ZFObserverNotifyInMainThreadWithCustomSender(ZF_IN ZFObject *customSe
             zfnull,
             zfnull,
             zfnull,
-            ZFThreadTaskRequestMergeCallbackDoNotMerge);
+            ZFThreadTaskRequestMergeCallbackDoNotMerge());
     }
     else
     {
@@ -126,7 +127,13 @@ zfidentity ZFObserverNotifyInMainThreadWithCustomSender(ZF_IN ZFObject *customSe
         return zfidentityInvalid;
     }
 }
-void ZFObserverNotifyInMainThreadCancel(ZF_IN zfidentity taskId)
+ZFMETHOD_FUNC_DEFINE_INLINE_4(zfidentity, ZFObserverNotifyInMainThread,
+                              ZFMP_IN(ZFObject *, obj),
+                              ZFMP_IN(const zfidentity &, eventId),
+                              ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                              ZFMP_IN_OPT(ZFObject *, param1, zfnull))
+ZFMETHOD_FUNC_DEFINE_1(void, ZFObserverNotifyInMainThreadCancel,
+                       ZFMP_IN(zfidentity, taskId))
 {
     ZFThreadTaskCancel(taskId);
 }
