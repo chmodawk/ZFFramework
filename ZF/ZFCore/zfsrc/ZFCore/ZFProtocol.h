@@ -801,7 +801,7 @@ extern ZF_ENV_EXPORT ZFProtocol *ZFProtocolForName(ZF_IN const zfchar *name,
  */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFProtocolIsAvailable,
                         ZFMP_IN(const zfchar *, name),
-                        ZFMP_IN_OPT(const zfchar *, desiredImpl, zfnull));
+                        ZFMP_IN_OPT(const zfchar *, desiredImpl, zfnull))
 
 // ============================================================
 /**
@@ -840,7 +840,7 @@ extern ZF_ENV_EXPORT ZFCoreArray<ZFProtocolImplInfoData> ZFProtocolImplInfoDataG
  * @brief util method to #ZFProtocolImplInfoDataGet
  */
 ZFMETHOD_FUNC_DECLARE_1(void, ZFProtocolImplInfoDataPrint,
-                        ZFMP_IN_OPT(const ZFOutputCallback &, callback, ZFOutputCallbackDefault()));
+                        ZFMP_IN_OPT(const ZFOutputCallback &, callback, ZFOutputCallbackDefault()))
 /**
  * @brief util method to #ZFProtocolImplInfoDataGet
  */
