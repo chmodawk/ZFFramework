@@ -10,10 +10,10 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFEXPORT_VAR_READONLY_DEFINE(const zfchar *, ZFBase64TableDefault, ZFBase64TableDefault())
-ZFEXPORT_VAR_READONLY_DEFINE(zfchar, ZFBase64PadDefault, ZFBase64PadDefault())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosStandard, ZFBase64LineBreakPosStandard())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosNone, ZFBase64LineBreakPosNone())
+ZFEXPORT_VAR_READONLY_DEFINE(const zfchar *, ZFBase64TableDefault, zfText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"))
+ZFEXPORT_VAR_READONLY_DEFINE(zfchar, ZFBase64PadDefault, '=')
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosStandard, 76)
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosNone, zfindexMax)
 
 // ============================================================
 // encode

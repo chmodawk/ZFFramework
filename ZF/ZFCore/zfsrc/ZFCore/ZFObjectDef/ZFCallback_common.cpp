@@ -885,7 +885,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerIn
 }
 
 // ============================================================
-// ZFIOBridgeCallbackAbs
+// ZFIOBridgeCallback
 
 // ============================================================
 // ZFIOBridgeCallbackUsingBuffer
@@ -940,12 +940,12 @@ public:
 
 /** @cond ZFPrivateDoc */
 ZFIOBridgeCallbackUsingBuffer::ZFIOBridgeCallbackUsingBuffer(void)
-: ZFIOBridgeCallbackAbs()
+: ZFIOBridgeCallback()
 {
     d = zfAllocWithoutLeakTest(_ZFP_ZFIOBridgeCallbackUsingBufferPrivate);
 }
 ZFIOBridgeCallbackUsingBuffer::ZFIOBridgeCallbackUsingBuffer(ZF_IN const ZFIOBridgeCallbackUsingBuffer &ref)
-: ZFIOBridgeCallbackAbs(ref)
+: ZFIOBridgeCallback(ref)
 {
     d = zfnull;
     this->operator=(ref);

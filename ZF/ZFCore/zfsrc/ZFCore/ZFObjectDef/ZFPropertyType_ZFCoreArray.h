@@ -211,7 +211,7 @@ public:
                                                       ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
     {
         ZFCoreArray<T_Type> tmp;
-        if(!FromSD(tmp, serializableData, outErrorHint, outErrorPos))
+        if(!PropertyFromSerializableData(tmp, serializableData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -232,7 +232,7 @@ public:
                 v_ZFCoreArray::ClassData()->className());
             return zffalse;
         }
-        return ToSD(serializableData,
+        return PropertyToSerializableData(serializableData,
             t->zfv ? (*(ZFCoreArray<T_Type> *)t->zfv) : ZFCoreArray<T_Type>(),
             outErrorHint);
     }
@@ -241,7 +241,7 @@ public:
                                             ZF_IN_OPT zfindex srcLen = zfindexMax)
     {
         ZFCoreArray<T_Type> tmp;
-        if(!FromStr(tmp, src, srcLen))
+        if(!PropertyFromString(tmp, src, srcLen))
         {
             return zffalse;
         }
@@ -258,7 +258,7 @@ public:
         {
             return zffalse;
         }
-        return ToStr(s, t->zfv ? (*(ZFCoreArray<T_Type> *)t->zfv) : ZFCoreArray<T_Type>());
+        return PropertyToString(s, t->zfv ? (*(ZFCoreArray<T_Type> *)t->zfv) : ZFCoreArray<T_Type>());
     }
     static zfbool PropertyFromSerializableData(ZF_OUT ZFCoreArray<T_Type> &v,
                                                ZF_IN const ZFSerializableData &serializableData,

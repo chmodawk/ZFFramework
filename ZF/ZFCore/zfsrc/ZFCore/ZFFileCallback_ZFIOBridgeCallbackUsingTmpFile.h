@@ -22,9 +22,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ZFIOBridgeCallbackUsingTmpFile
 zfclassFwd _ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate;
 /**
- * @brief see #ZFIOBridgeCallbackAbs
+ * @brief see #ZFIOBridgeCallback
  */
-zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallbackUsingTmpFile : zfextendsLikePOD ZFIOBridgeCallbackAbs
+zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallbackUsingTmpFile : zfextendsLikePOD ZFIOBridgeCallback
 {
 public:
     /** @cond ZFPrivateDoc */

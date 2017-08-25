@@ -160,8 +160,8 @@ ZFEXPORT_ENUM_DEFINE(ZFCompareResult, ZFCompareUncomparable, ZFCompareSmaller, Z
 ZFEXPORT_ENUM_DEFINE(ZFSeekPos, ZFSeekPosBegin, ZFSeekPosCur, ZFSeekPosCurReversely, ZFSeekPosEnd)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_zfindexRange, zfindex, start)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_zfindexRange, zfindex, count)
-ZFEXPORT_VAR_READONLY_DEFINE(zfindexRange, zfindexRangeZero, zfindexRangeZero())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindexRange, zfindexRangeMax, zfindexRangeMax())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindexRange, zfindexRangeZero, zfindexRangeZero())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindexRange, zfindexRangeMax, zfindexRangeMax())
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfindexRange, zfindexRangeMake, ZFMP_IN(zfindex, start), ZFMP_IN(zfindex, count))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFCompareResult, zfindexRangeIsEqual, ZFMP_IN(const zfindexRange &, e0), ZFMP_IN(const zfindexRange &, e1))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfbool, zfindexRangeContain, ZFMP_IN(const zfindexRange &, range), ZFMP_IN(zfindex, index))
@@ -175,10 +175,10 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfuint, zfVersionGetInt, ZFMP_IN(const zf
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, zfVersionSet, ZFMP_IN_OUT(zfstring &, version), ZFMP_IN(zfindex, subVersionIndex), ZFMP_IN(const zfchar *, subVersion), ZFMP_IN_OPT(const zfchar *, emptySubVersion, zfText("0")))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(void, zfVersionSetInt, ZFMP_IN_OUT(zfstring &, version), ZFMP_IN(zfindex, subVersionIndex), ZFMP_IN(zfuint, subVersion), ZFMP_IN_OPT(const zfchar *, emptySubVersion, zfText("0")))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFCompareResult, zfVersionCompare, ZFMP_IN(const zfchar *, version0), ZFMP_IN(const zfchar *, version1))
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_MAIN, ZFVERSION_MAIN())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_SUB, ZFVERSION_SUB())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_MINOR, ZFVERSION_MINOR())
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFVERSION_BUILD, ZFVERSION_BUILD())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_MAIN, ZFVERSION_MAIN())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_SUB, ZFVERSION_SUB())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_MINOR, ZFVERSION_MINOR())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(zfindex, ZFVERSION_BUILD, ZFVERSION_BUILD())
 
 // ============================================================
 // ZFTokenForContainer
@@ -188,10 +188,10 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForContainer, const zfchar *, to
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForContainer, const zfchar *, tokenValueLeft)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForContainer, const zfchar *, tokenValueRight)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForContainer, const zfchar *, tokenEtc)
-ZFEXPORT_VAR_READONLY_DEFINE(ZFTokenForContainer, ZFTokenForContainerTrim, ZFTokenForContainerTrim())
-ZFEXPORT_VAR_READONLY_DEFINE(ZFTokenForContainer, ZFTokenForContainerDetail, ZFTokenForContainerDetail())
-ZFEXPORT_VAR_READONLY_DEFINE(ZFTokenForContainer, ZFTokenForContainerPlainList, ZFTokenForContainerPlainList())
-ZFEXPORT_VAR_DEFINE(ZFTokenForContainer, ZFTokenForContainerDefault, ZFTokenForContainerDefault())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFTokenForContainer, ZFTokenForContainerTrim, ZFTokenForContainerTrim())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFTokenForContainer, ZFTokenForContainerDetail, ZFTokenForContainerDetail())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFTokenForContainer, ZFTokenForContainerPlainList, ZFTokenForContainerPlainList())
+ZFEXPORT_VAR_VALUEREF_DEFINE(ZFTokenForContainer, ZFTokenForContainerDefault, ZFTokenForContainerDefault())
 
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfchar *, tokenLeft)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfchar *, tokenRight)
@@ -204,9 +204,9 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfch
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfchar *, tokenValueLeft)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfchar *, tokenValueRight)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_VAR(v_ZFTokenForKeyValueContainer, const zfchar *, tokenEtc)
-ZFEXPORT_VAR_READONLY_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerTrim, ZFTokenForKeyValueContainerTrim())
-ZFEXPORT_VAR_READONLY_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDetail, ZFTokenForKeyValueContainerDetail())
-ZFEXPORT_VAR_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDefault, ZFTokenForKeyValueContainerDefault())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerTrim, ZFTokenForKeyValueContainerTrim())
+ZFEXPORT_VAR_READONLY_VALUEREF_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDetail, ZFTokenForKeyValueContainerDetail())
+ZFEXPORT_VAR_VALUEREF_DEFINE(ZFTokenForKeyValueContainer, ZFTokenForKeyValueContainerDefault, ZFTokenForKeyValueContainerDefault())
 
 // ============================================================
 // ZFFilterForNumber

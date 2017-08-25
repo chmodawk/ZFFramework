@@ -21,7 +21,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief global log level, #ZFDebugLevel::EnumDefault by default
  */
-extern ZF_ENV_EXPORT ZFDebugLevelEnum zfLogLevel;
+ZFEXPORT_VAR_DECLARE(ZFDebugLevelEnum, zfLogLevel)
 
 extern ZF_ENV_EXPORT ZFMutex *_ZFP_ZFLogMutex(void);
 /**
@@ -99,10 +99,13 @@ public:
 // ============================================================
 // other convenient method
 extern ZF_ENV_EXPORT zfstring _ZFP_zfLogCurTimeString(void);
+/** @cond ZFPrivateDoc */
+#define zfLogCurTimeString() (_ZFP_zfLogCurTimeString().cString())
+/** @endcond */
 /**
  * @brief get a string contains current time with format HH:mm:ss.SSS
  */
-#define zfLogCurTimeString() (_ZFP_zfLogCurTimeString().cString())
+ZFMETHOD_FUNC_DECLARE_0(const zfchar *, zfLogCurTimeString)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLog_h_

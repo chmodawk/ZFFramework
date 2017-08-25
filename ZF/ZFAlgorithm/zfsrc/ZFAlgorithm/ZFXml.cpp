@@ -68,26 +68,26 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlags)
 // ============================================================
 ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDefault, ZFXmlOutputFlags())
 
-ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsTrim(void)
+static const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsTrimInit(void)
 {
-    ZFXmlOutputFlags d;
+    static ZFXmlOutputFlags d;
     d.xmlElementAttributeCountBeforeAddNewLine = zfindexMax;
     d.xmlElementTrimTagIfNoChildren = zftrue;
     d.xmlToken.xmlNewLineToken.removeAll();
     d.xmlToken.xmlIndentToken.removeAll();
     return d;
 }
-ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsTrim, _ZFP_ZFXmlOutputFlagsTrim())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsTrim, _ZFP_ZFXmlOutputFlagsTrimInit())
 
-ZFXmlOutputFlags _ZFP_ZFXmlOutputFlagsDetailed(void)
+static const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsDetailedInit(void)
 {
-    ZFXmlOutputFlags d;
+    static ZFXmlOutputFlags d;
     d.xmlElementAddNewLineAtHeadIfNotSingleLine = zftrue;
     d.xmlElementAttributeCountBeforeAddNewLine = 1;
     d.xmlElementEndTagAtSameLineIfNoChildElement = zftrue;
     return d;
 }
-ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDetailed, _ZFP_ZFXmlOutputFlagsDetailed())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDetailed, _ZFP_ZFXmlOutputFlagsDetailedInit())
 
 // ============================================================
 static zfbool _ZFP_ZFXmlOutputElementUseSingleTag(ZF_IN const ZFXmlItem &element,

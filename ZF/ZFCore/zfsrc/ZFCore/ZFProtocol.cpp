@@ -145,8 +145,9 @@ ZFProtocol *ZFProtocolForName(ZF_IN const zfchar *name,
     }
     return zfnull;
 }
-zfbool ZFProtocolIsAvailable(ZF_IN const zfchar *name,
-                             ZF_IN_OPT const zfchar *desiredImpl /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFProtocolIsAvailable,
+                       ZFMP_IN(const zfchar *, name),
+                       ZFMP_IN_OPT(const zfchar *, desiredImpl, zfnull))
 {
     return (ZFProtocolForName(name, desiredImpl) != zfnull);
 }
@@ -251,7 +252,8 @@ void ZFProtocolImplInfoDataPrint(ZF_IN const ZFProtocolImplInfoData &data,
         }
     }
 }
-void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback /* = ZFOutputCallbackDefault() */)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFProtocolImplInfoDataPrint,
+                       ZFMP_IN_OPT(const ZFOutputCallback &, callback, ZFOutputCallbackDefault()))
 {
     if(!callback.callbackIsValid())
     {

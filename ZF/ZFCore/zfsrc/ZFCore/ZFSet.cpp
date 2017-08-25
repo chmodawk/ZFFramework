@@ -78,7 +78,7 @@ void ZFSet::addFrom(ZF_IN ZFContainer *another)
 
 void ZFSet::removeElement(ZF_IN ZFObject *obj)
 {
-    ZFKeyValuePairAutoRelease tmp = d->removeAndGetPair(obj);
+    ZFKeyValuePairHolder tmp = d->removeAndGetPair(obj);
     if(tmp.key.toObject() != zfnull)
     {
         this->contentOnRemove(tmp.key.toObject());

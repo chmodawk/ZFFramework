@@ -54,34 +54,38 @@ public:
     /**
      * @brief return number of content
      */
-    virtual zfindex count(void);
+    ZFMETHOD_DECLARE_0(zfindex, count);
 
     /**
      * @brief return true if empty or false if not empty
      */
-    virtual zfbool isEmpty(void);
+    ZFMETHOD_DECLARE_0(zfbool, isEmpty);
 
     /**
      * @brief return true if contain pKey
      */
-    virtual zfbool isContain(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(zfbool, isContain,
+                       ZFMP_IN(ZFObject *, pKey));
 
     /**
      * @brief get element by key or null if no such key
      */
-    virtual ZFObject *get(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(ZFObject *, get,
+                       ZFMP_IN(ZFObject *, pKey));
     /**
      * @brief get element pair, return all null if not find,
      *   otherwise, original key and value's pair would be returned
      */
-    virtual ZFKeyValuePair getPair(ZF_IN ZFObject *pKey);
+    ZFMETHOD_DECLARE_1(ZFKeyValuePair, getPair,
+                       ZFMP_IN(ZFObject *, pKey));
 
     /**
      * @brief get a copy of all key
      */
-    virtual void allKeyT(ZF_OUT ZFCoreArray<ZFObject *> &ret);
+    ZFMETHOD_DECLARE_1(void, allKeyT,
+                       ZFMP_OUT(ZFCoreArray<ZFObject *> &, ret));
     /** @brief see #allKey */
-    virtual inline ZFCoreArrayPOD<ZFObject *> allKey(void)
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFObject *>, allKey)
     {
         ZFCoreArrayPOD<ZFObject *> ret;
         this->allKeyT(ret);
@@ -91,9 +95,10 @@ public:
     /**
      * @brief get a copy of all value
      */
-    virtual void allValueT(ZF_OUT ZFCoreArray<ZFObject *> &ret);
+    ZFMETHOD_DECLARE_1(void, allValueT,
+                       ZFMP_OUT(ZFCoreArray<ZFObject *> &, ret));
     /** @brief see #allValue */
-    virtual inline ZFCoreArrayPOD<ZFObject *> allValue(void)
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFObject *>, allValue)
     {
         ZFCoreArrayPOD<ZFObject *> ret;
         this->allValueT(ret);
@@ -103,9 +108,10 @@ public:
     /**
      * @brief get a copy of all key value pair
      */
-    virtual void allPairT(ZF_OUT ZFCoreArray<ZFKeyValuePair> &ret);
+    ZFMETHOD_DECLARE_1(void, allPairT,
+                       ZFMP_OUT(ZFCoreArray<ZFKeyValuePair> &, ret));
     /** @brief see #allPair */
-    virtual ZFCoreArrayPOD<ZFKeyValuePair> allPair(void)
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFKeyValuePair>, allPair)
     {
         ZFCoreArrayPOD<ZFKeyValuePair> ret;
         this->allPairT(ret);
@@ -204,7 +210,7 @@ protected:
     /**
      * @brief remove and get pair
      */
-    virtual ZFKeyValuePairAutoRelease removeAndGetPair(ZF_IN ZFObject *pKey);
+    virtual ZFKeyValuePairHolder removeAndGetPair(ZF_IN ZFObject *pKey);
     /**
      * @brief remove all content
      */
@@ -224,34 +230,40 @@ protected:
     // ZFIterable
 public:
     /** @brief see #zfiterator */
-    virtual zfiterator iterator(void);
+    ZFMETHOD_DECLARE_0(zfiterator, iterator);
 
     /** @brief see #zfiterator */
-    virtual zfiterator iteratorFind(ZF_IN ZFObject *value)
+    ZFMETHOD_DECLARE_1(zfiterator, iteratorFind,
+                       ZFMP_IN(ZFObject *, value))
     {
         return this->iteratorForKey(value);
     }
 
     /** @brief see #zfiterator */
-    virtual zfbool iteratorIsValid(ZF_IN const zfiterator &it);
+    ZFMETHOD_DECLARE_1(zfbool, iteratorIsValid,
+                       ZFMP_IN(const zfiterator &, it));
     /** @brief see #zfiterator */
-    virtual zfbool iteratorIsEqual(ZF_IN const zfiterator &it0,
-                                   ZF_IN const zfiterator &it1);
+    ZFMETHOD_DECLARE_2(zfbool, iteratorIsEqual,
+                       ZFMP_IN(const zfiterator &, it0),
+                       ZFMP_IN(const zfiterator &, it1));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorGet(ZF_IN const zfiterator &it)
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorGet,
+                       ZFMP_IN(const zfiterator &, it))
     {
         return this->iteratorGetValue(it);
     }
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorNext(ZF_IN_OUT zfiterator &it)
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorNext,
+                       ZFMP_IN_OUT(zfiterator &, it))
     {
         return this->iteratorNextValue(it);
     }
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorPrev(ZF_IN_OUT zfiterator &it)
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorPrev,
+                       ZFMP_IN_OUT(zfiterator &, it))
     {
         return this->iteratorPrevValue(it);
     }
@@ -274,34 +286,44 @@ protected:
     // ZFIterableKeyValue
 public:
     /** @brief see #zfiterator */
-    virtual zfiterator iteratorForKey(ZF_IN ZFObject *key);
+    ZFMETHOD_DECLARE_1(zfiterator, iteratorForKey,
+                       ZFMP_IN(ZFObject *, key));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorGetKey(ZF_IN const zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorGetKey,
+                       ZFMP_IN(const zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorGetValue(ZF_IN const zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorGetValue,
+                       ZFMP_IN(const zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFKeyValuePair iteratorGetPair(ZF_IN const zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorGetPair,
+                       ZFMP_IN(const zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorNextKey(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorNextKey,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorNextValue(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorNextValue,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFKeyValuePair iteratorNextPair(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorNextPair,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorPrevKey(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorPrevKey,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFObject *iteratorPrevValue(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFObject *, iteratorPrevValue,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
     /** @brief see #zfiterator */
-    virtual ZFKeyValuePair iteratorPrevPair(ZF_IN_OUT zfiterator &it);
+    ZFMETHOD_DECLARE_1(ZFKeyValuePair, iteratorPrevPair,
+                       ZFMP_IN_OUT(zfiterator &, it));
 
 protected:
     /** @brief see #zfiterator */
@@ -323,36 +345,35 @@ zfclass ZF_ENV_EXPORT ZFMapEditable : zfextends ZFMap, zfimplements ZFIterableEd
     ZFIMPLEMENTS_DECLARE(ZFIterableEditable, ZFIterableKeyValueEditable)
 
 public:
-    zfoverride
-    virtual void addFrom(ZF_IN ZFKeyValueContainer *another)
+    ZFMETHOD_DECLARE_1(void, addFrom,
+                       ZFMP_IN(ZFKeyValueContainer *, another))
     {
         zfsuper::addFrom(another);
     }
 
-    zfoverride
-    virtual void set(ZF_IN ZFObject *pKey,
-                     ZF_IN ZFObject *pValue)
+    ZFMETHOD_DECLARE_2(void, set,
+                       ZFMP_IN(ZFObject *, pKey),
+                       ZFMP_IN(ZFObject *, pValue))
     {
         zfsuper::set(pKey, pValue);
     }
 
-    zfoverride
-    virtual void remove(ZF_IN ZFObject *pKey)
+    ZFMETHOD_DECLARE_1(void, remove,
+                       ZFMP_IN(ZFObject *, pKey))
     {
         zfsuper::remove(pKey);
     }
-    zfoverride
-    virtual zfautoObject removeAndGet(ZF_IN ZFObject *pKey)
+    ZFMETHOD_DECLARE_1(zfautoObject, removeAndGet,
+                       ZFMP_IN(ZFObject *, pKey))
     {
         return zfsuper::removeAndGet(pKey);
     }
-    zfoverride
-    virtual ZFKeyValuePairAutoRelease removeAndGetPair(ZF_IN ZFObject *pKey)
+    ZFMETHOD_DECLARE_1(ZFKeyValuePairHolder, removeAndGetPair,
+                       ZFMP_IN(ZFObject *, pKey))
     {
         return zfsuper::removeAndGetPair(pKey);
     }
-    zfoverride
-    virtual void removeAll(void)
+    ZFMETHOD_DECLARE_0(void, removeAll)
     {
         zfsuper::removeAll();
     }
@@ -371,20 +392,23 @@ public:
     // ZFIterable
 public:
     /** @brief see #zfiterator */
-    virtual void iteratorSet(ZF_IN_OUT zfiterator &it,
-                             ZF_IN ZFObject *value)
+    ZFMETHOD_DECLARE_2(void, iteratorSet,
+                       ZFMP_IN_OUT(zfiterator &, it),
+                       ZFMP_IN(ZFObject *, value))
     {
         zfsuper::iteratorSet(it, value);
     }
     /** @brief see #zfiterator */
-    virtual void iteratorRemove(ZF_IN_OUT zfiterator &it)
+    ZFMETHOD_DECLARE_1(void, iteratorRemove,
+                       ZFMP_IN_OUT(zfiterator &, it))
     {
         zfsuper::iteratorRemove(it);
     }
 
     /** @brief see #zfiterator */
-    virtual void iteratorAdd(ZF_IN ZFObject *value,
-                             ZF_IN_OPT const zfiterator &it = zfiteratorInvalid)
+    ZFMETHOD_DECLARE_2(void, iteratorAdd,
+                       ZFMP_IN(ZFObject *, value),
+                       ZFMP_IN_OPT(const zfiterator &, it, zfiteratorInvalid))
     {
         zfsuper::iteratorAdd(value, it);
     }
@@ -393,9 +417,10 @@ public:
     // ZFIterableKeyValue
 public:
     /** @brief see #zfiterator */
-    virtual void iteratorAddKeyValue(ZF_IN ZFObject *key,
-                                     ZF_IN ZFObject *value,
-                                     ZF_IN_OPT const zfiterator &it = zfiteratorInvalid)
+    ZFMETHOD_DECLARE_3(void, iteratorAddKeyValue,
+                       ZFMP_IN(ZFObject *, key),
+                       ZFMP_IN(ZFObject *, value),
+                       ZFMP_IN_OPT(const zfiterator &, it, zfiteratorInvalid))
     {
         zfsuper::iteratorAddKeyValue(key, value, it);
     }

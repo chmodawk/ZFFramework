@@ -18,33 +18,21 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-/** @cond ZFPrivateDoc */
-#define ZFBase64TableDefault() zfText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
-/** @endcond */
 /**
  * @brief char table for ZFBase64, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/" by default
  */
 ZFEXPORT_VAR_READONLY_DECLARE(const zfchar *, ZFBase64TableDefault)
 
-/** @cond ZFPrivateDoc */
-#define ZFBase64PadDefault() '='
-/** @endcond */
 /**
  * @brief pad token for ZFBase64, '=' by default
  */
 ZFEXPORT_VAR_READONLY_DECLARE(zfchar, ZFBase64PadDefault)
 
-/** @cond ZFPrivateDoc */
-#define ZFBase64LineBreakPosStandard() 76
-/** @endcond */
 /**
  * @brief standard line break position for ZFBase64, 76 by default
  */
 ZFEXPORT_VAR_READONLY_DECLARE(zfindex, ZFBase64LineBreakPosStandard)
 
-/** @cond ZFPrivateDoc */
-#define ZFBase64LineBreakPosNone() zfindexMax
-/** @endcond */
 /**
  * @brief no line break for ZFBase64
  */

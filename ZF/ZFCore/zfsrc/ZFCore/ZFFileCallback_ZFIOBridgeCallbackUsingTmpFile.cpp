@@ -104,12 +104,12 @@ public:
 
 /** @cond ZFPrivateDoc */
 ZFIOBridgeCallbackUsingTmpFile::ZFIOBridgeCallbackUsingTmpFile(void)
-: ZFIOBridgeCallbackAbs()
+: ZFIOBridgeCallback()
 {
     d = zfAllocWithoutLeakTest(_ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate);
 }
 ZFIOBridgeCallbackUsingTmpFile::ZFIOBridgeCallbackUsingTmpFile(ZF_IN const ZFIOBridgeCallbackUsingTmpFile &ref)
-: ZFIOBridgeCallbackAbs(ref)
+: ZFIOBridgeCallback(ref)
 {
     d = zfRetainWithoutLeakTest(ref.d);
 }

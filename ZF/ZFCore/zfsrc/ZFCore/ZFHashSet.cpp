@@ -34,15 +34,16 @@ void ZFHashSet::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
-zfindex ZFHashSet::count(void)
+ZFMETHOD_DEFINE_0(ZFHashSet, zfindex, count)
 {
     return d->count();
 }
-zfbool ZFHashSet::isEmpty(void)
+ZFMETHOD_DEFINE_0(ZFHashSet, zfbool, isEmpty)
 {
     return d->isEmpty();
 }
-zfbool ZFHashSet::isContain(ZF_IN ZFObject *obj)
+ZFMETHOD_DEFINE_1(ZFHashSet, zfbool, isContain,
+                  ZFMP_IN(ZFObject *, obj))
 {
     return d->isContain(obj);
 }
@@ -78,7 +79,7 @@ void ZFHashSet::addFrom(ZF_IN ZFContainer *another)
 
 void ZFHashSet::removeElement(ZF_IN ZFObject *obj)
 {
-    ZFKeyValuePairAutoRelease tmp = d->removeAndGetPair(obj);
+    ZFKeyValuePairHolder tmp = d->removeAndGetPair(obj);
     if(tmp.key.toObject() != zfnull)
     {
         this->contentOnRemove(tmp.key.toObject());
@@ -100,36 +101,42 @@ void ZFHashSet::removeAll(void)
 }
 
 // ============================================================
-zfiterator ZFHashSet::iterator(void)
+ZFMETHOD_DEFINE_0(ZFHashSet, zfiterator, iterator)
 {
     return d->iterator();
 }
 
-zfiterator ZFHashSet::iteratorFind(ZF_IN ZFObject *value)
+ZFMETHOD_DEFINE_1(ZFHashSet, zfiterator, iteratorFind,
+                  ZFMP_IN(ZFObject *, value))
 {
     return d->iteratorForKey(value);
 }
 
-zfbool ZFHashSet::iteratorIsValid(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashSet, zfbool, iteratorIsValid,
+                  ZFMP_IN(const zfiterator &, it))
 {
     return d->iteratorIsValid(it);
 }
-zfbool ZFHashSet::iteratorIsEqual(ZF_IN const zfiterator &it0,
-                                  ZF_IN const zfiterator &it1)
+ZFMETHOD_DEFINE_2(ZFHashSet, zfbool, iteratorIsEqual,
+                  ZFMP_IN(const zfiterator &, it0),
+                  ZFMP_IN(const zfiterator &, it1))
 {
     return d->iteratorIsEqual(it0, it1);
 }
 
-ZFObject *ZFHashSet::iteratorGet(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashSet, ZFObject *, iteratorGet,
+                  ZFMP_IN(const zfiterator &, it))
 {
     return d->iteratorGetKey(it);
 }
 
-ZFObject *ZFHashSet::iteratorNext(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashSet, ZFObject *, iteratorNext,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     return d->iteratorNextKey(it);
 }
-ZFObject *ZFHashSet::iteratorPrev(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashSet, ZFObject *, iteratorPrev,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     return d->iteratorPrevKey(it);
 }

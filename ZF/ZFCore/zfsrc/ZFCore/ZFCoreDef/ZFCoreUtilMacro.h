@@ -491,14 +491,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     zfclassNotPOD _ZFP_ZFM_CLASS_HAS_MEMBER_##NameSpace##_##memberName \
     { \
     private: \
-        template <typename T, T> struct _Fix; \
-        template <typename T> \
-        zfclassNotPOD _Sig \
-        { \
-        public: \
-            typedef memberSig; \
-        }; \
-        template<typename T> static char _has(_Fix<typename _Sig<T>::F, &T::memberName> *); \
+        template <typename T, memberSig> struct _Fix {}; \
+        template<typename T> static char _has(_Fix<T, &T::memberName> *); \
         template<typename T> static int _has(...); \
     public: \
         enum { value = (sizeof(_has<T_Owner>(0)) == sizeof(char)) }; \

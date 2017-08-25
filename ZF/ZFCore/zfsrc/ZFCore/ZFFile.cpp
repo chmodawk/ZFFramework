@@ -143,7 +143,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFFileFindData, void, objectInfoT, Z
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFFileFindData, zfstring, objectInfo)
 
 // ============================================================
-ZFEXPORT_VAR_READONLY_DEFINE(ZFFileToken, ZFFileTokenInvalid, ZFFileTokenInvalid())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileToken, ZFFileTokenInvalid, zfnull)
 
 // ============================================================
 zfclassLikePOD _ZFP_ZFFileTokenForRes

@@ -18,6 +18,7 @@
 #include "ZFFileCallback.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+// ============================================================
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                                            ZF_IN const zfchar *fileDescriptor,
                                                                            ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax,
@@ -45,6 +46,11 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
 #define ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_flags zfText("flags")
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_autoSkipBOMTable zfText("autoSkipBOMTable")
+
+/** @cond ZFPrivateDoc */
+#define ZFInputCallbackForFileDescriptor(fileDescriptor, ...) \
+    _ZFP_ZFInputCallbackForFileDescriptor(ZFCallerInfoMake(), fileDescriptor, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief create a input callback from file descriptor, see #ZFFileDescriptorTypeRegister
  *
@@ -56,10 +62,13 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
  * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
  *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
  */
-#define ZFInputCallbackForFileDescriptor(fileDescriptor, ...) \
-    _ZFP_ZFInputCallbackForFileDescriptor(ZFCallerInfoMake(), \
-        fileDescriptor, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_4(ZFInputCallback, ZFInputCallbackForFileDescriptor,
+                        ZFMP_IN(const zfchar *, fileDescriptor),
+                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
+                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 
+// ============================================================
 extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                                              ZF_IN const zfchar *fileDescriptor,
                                                                              ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax,
@@ -83,6 +92,11 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_
 #define ZFSerializableKeyword_ZFOutputCallbackForFileDescriptor_fileDescriptor zfText("fileDescriptor")
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFOutputCallbackForFileDescriptor_flags zfText("flags")
+
+/** @cond ZFPrivateDoc */
+#define ZFOutputCallbackForFileDescriptor(fileDescriptor, ...) \
+    _ZFP_ZFOutputCallbackForFileDescriptor(ZFCallerInfoMake(), fileDescriptor, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief create a output callback from file descriptor, see #ZFFileDescriptorTypeRegister
  *
@@ -92,10 +106,12 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_
  * -  (zfindex)fileDescriptorLen length of fileDescriptor
  * -  (ZFFileOpenOptionFlags)flags optional, file's open flag
  */
-#define ZFOutputCallbackForFileDescriptor(fileDescriptor, ...) \
-    _ZFP_ZFOutputCallbackForFileDescriptor(ZFCallerInfoMake(), \
-        fileDescriptor, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_3(ZFOutputCallback, ZFOutputCallbackForFileDescriptor,
+                        ZFMP_IN(const zfchar *, fileDescriptor),
+                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create))
 
+// ============================================================
 /**
  * @brief see #ZFFileDescriptorTypeRegister
  */

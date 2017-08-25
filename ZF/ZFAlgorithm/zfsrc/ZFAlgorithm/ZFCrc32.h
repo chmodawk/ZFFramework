@@ -17,17 +17,11 @@
 #include "ZFAlgorithmDef.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-/** @cond ZFPrivateDoc */
-#define ZFCrc32ValueZero() ((zfflags)0x0)
-/** @endcond */
 /**
  * @brief init value for continous calculation, see #zfCrc32Calc
  */
 ZFEXPORT_VAR_READONLY_DECLARE(zfflags, ZFCrc32ValueZero)
 
-/** @cond ZFPrivateDoc */
-#define ZFCrc32ValueInvalid() ((zfflags)0xFFFFFFFF)
-/** @endcond */
 /**
  * @brief invalid value for CRC32
  */

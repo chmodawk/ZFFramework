@@ -75,7 +75,7 @@ public:
         } \
         static void _ZFP_SI_destructor_##Name(ZF_IN void *p) \
         { \
-            return zfdelete(ZFCastStatic(_ZFP_SI_##Name *, p)); \
+            zfdelete(ZFCastStatic(_ZFP_SI_##Name *, p)); \
         } \
         static _ZFP_SI_##Name *_ZFP_SI_instanceAccess(void) \
         { \

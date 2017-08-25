@@ -35,23 +35,18 @@ static zfindex _ZFP_ZFOutputCallbackForConsoleFunction(ZF_IN const void *s, ZF_I
     }
     return zfindexMax;
 }
-ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFOutputCallbackForConsoleDataHolder, ZFLevelZFFrameworkEssential)
+
+ZFEXPORT_VAR_READONLY_DEFINE(ZFOutputCallback, ZFOutputCallbackForConsole, ZFCallbackForRawFunction(_ZFP_ZFOutputCallbackForConsoleFunction))
+ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFOutputCallbackForConsoleInit, ZFLevelZFFrameworkEssential)
 {
-    this->outputCallbackForConsole = ZFCallbackForRawFunction(_ZFP_ZFOutputCallbackForConsoleFunction);
-    ZFOutputCallbackDefaultSet(this->outputCallbackForConsole);
+    ZFExportVarEnsureInit_ZFOutputCallbackForConsole();
+    ZFOutputCallbackDefaultSet(ZFOutputCallbackForConsole());
 }
-ZF_GLOBAL_INITIALIZER_DESTROY(ZFOutputCallbackForConsoleDataHolder)
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFOutputCallbackForConsoleInit)
 {
     ZFOutputCallbackDefaultSet(ZFCallbackNull());
 }
-public:
-    ZFOutputCallback outputCallbackForConsole;
-ZF_GLOBAL_INITIALIZER_END(ZFOutputCallbackForConsoleDataHolder)
-
-const ZFOutputCallback &_ZFP_ZFOutputCallbackForConsole(void)
-{
-    return ZF_GLOBAL_INITIALIZER_INSTANCE(ZFOutputCallbackForConsoleDataHolder)->outputCallbackForConsole;
-}
+ZF_GLOBAL_INITIALIZER_END(ZFOutputCallbackForConsoleInit)
 
 ZF_NAMESPACE_GLOBAL_END
 

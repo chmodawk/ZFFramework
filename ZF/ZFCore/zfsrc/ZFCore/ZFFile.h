@@ -118,9 +118,6 @@ ZFENUM_FLAGS_DECLARE(ZFFileOpenOption, ZFFileOpenOptionFlags)
  * ensured void *, for implementations to store datas
  */
 typedef void * ZFFileToken;
-/** @cond ZFPrivateDoc */
-#define ZFFileTokenInvalid() zfnull
-/** @endcond */
 /**
  * @brief invalid token
  */

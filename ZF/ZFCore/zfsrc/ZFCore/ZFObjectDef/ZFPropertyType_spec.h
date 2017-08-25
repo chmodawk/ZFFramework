@@ -106,6 +106,15 @@ public:
     {
         return ZFObjectFromSerializableData(v, serializableData, outErrorHint, outErrorPos);
     }
+    static zfbool PropertyFromSerializableData(ZF_OUT T_Type &v,
+                                               ZF_IN const ZFSerializableData &serializableData,
+                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                               ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            zfText("not supported"));
+        return zffalse;
+    }
     static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData,
                                              ZF_IN T_Type const &v,
                                              ZF_OUT_OPT zfstring *outErrorHint = zfnull)
@@ -115,6 +124,10 @@ public:
     static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
     {
         return ZFObjectFromString(v, src, srcLen);
+    }
+    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    {
+        return zffalse;
     }
     static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN T_Type const &v)
     {
@@ -191,6 +204,15 @@ public:
     {
         return ZFObjectFromSerializableData(v, serializableData, outErrorHint, outErrorPos);
     }
+    static zfbool PropertyFromSerializableData(ZF_OUT ZFAny &v,
+                                               ZF_IN const ZFSerializableData &serializableData,
+                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                               ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            zfText("not supported"));
+        return zffalse;
+    }
     static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData,
                                              ZF_IN ZFAny const &v,
                                              ZF_OUT_OPT zfstring *outErrorHint = zfnull)
@@ -200,6 +222,10 @@ public:
     static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
     {
         return ZFObjectFromString(v, src, srcLen);
+    }
+    static zfbool PropertyFromString(ZF_OUT ZFAny &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    {
+        return zffalse;
     }
     static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN ZFAny const &v)
     {
@@ -281,6 +307,15 @@ public:
     {
         return ZFObjectFromSerializableData(v, serializableData, outErrorHint, outErrorPos);
     }
+    static zfbool PropertyFromSerializableData(ZF_OUT ZFAnyT<T_Type> &v,
+                                               ZF_IN const ZFSerializableData &serializableData,
+                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                               ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
+    {
+        ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
+            zfText("not supported"));
+        return zffalse;
+    }
     static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData,
                                              ZF_IN ZFAnyT<T_Type> const &v,
                                              ZF_OUT_OPT zfstring *outErrorHint = zfnull)
@@ -290,6 +325,10 @@ public:
     static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
     {
         return ZFObjectFromString(v, src, srcLen);
+    }
+    static zfbool PropertyFromString(ZF_OUT ZFAnyT<T_Type> &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    {
+        return zffalse;
     }
     static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN ZFAnyT<T_Type> const &v)
     {

@@ -50,18 +50,20 @@ static void _ZFP_fileList(ZF_IN zfbool resFile,
     }
 }
 
-void fileList(ZF_IN_OPT const zfchar *path /* = zfText(".") */,
-              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
-              ZF_IN_OPT const zfchar *headToken /* = zfnull */,
-              ZF_IN_OPT const zfchar *indentToken /* = zfText("  ") */)
+ZFMETHOD_FUNC_DEFINE_DETAIL_4(ZFFileUtil, void, fileList,
+                              ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
+                              ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                              ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
+                              ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
 {
     _ZFP_fileList(zffalse, path, outputCallback, headToken, indentToken, 0);
 }
 
-void resFileList(ZF_IN_OPT const zfchar *path /* = zfText(".") */,
-                 ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */,
-                 ZF_IN_OPT const zfchar *headToken /* = zfnull */,
-                 ZF_IN_OPT const zfchar *indentToken /* = zfText("  ") */)
+ZFMETHOD_FUNC_DEFINE_DETAIL_4(ZFFileUtil, void, resFileList,
+                              ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
+                              ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                              ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
+                              ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
 {
     _ZFP_fileList(zftrue, path, outputCallback, headToken, indentToken, 0);
 }

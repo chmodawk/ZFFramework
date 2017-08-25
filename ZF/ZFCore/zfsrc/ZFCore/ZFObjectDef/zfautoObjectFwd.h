@@ -136,23 +136,12 @@ public:
     {
         return (this->toObject() != ref.toObject());
     }
-    zfbool operator == (ZF_IN int p) const
-    {
-        return (this->toObject() == zfnull && p == 0);
-    }
-    zfbool operator != (ZF_IN int p) const
-    {
-        return !(this->toObject() == zfnull && p == 0);
-    }
     template<typename T_ZFObject>
-    zfbool operator == (ZF_IN T_ZFObject const &p) const
-    {
-        return (this->toObject() == ZFCastZFObjectUnchecked(ZFObject *, p));
-    }
+    zfbool operator == (ZF_IN T_ZFObject const &p) const;
     template<typename T_ZFObject>
     zfbool operator != (ZF_IN T_ZFObject const &p) const
     {
-        return (this->toObject() != ZFCastZFObjectUnchecked(ZFObject *, p));
+        return !this->operator==(p);
     }
     /** @endcond */
 

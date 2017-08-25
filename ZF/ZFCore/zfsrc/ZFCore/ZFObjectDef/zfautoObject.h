@@ -181,11 +181,53 @@ ZFAUTOOBJECT_DECLARE(zflockfree_zfautoObjectCreateMarkCached, {
     })
 
 // ============================================================
+ZFM_CLASS_HAS_MEMBER_DECLARE(zfautoObject, toObject, ZFObject *(T::*F)(void))
+template<typename T, int T_isZFObject>
+zfclassNotPOD _ZFP_zfautoObjectWrap
+{
+public:
+    static void assign(ZF_IN_OUT zfautoObject &v, ZF_IN T const &p)
+    {
+        v.operator = (zfautoObjectCreate(ZFCastZFObjectUnchecked(ZFObject *, p)));
+    }
+    static zfbool equal(ZF_IN const zfautoObject &v, ZF_IN T const &p)
+    {
+        return (v.toObject() == ZFCastZFObjectUnchecked(ZFObject *, p));
+    }
+};
+template<typename T>
+zfclassNotPOD _ZFP_zfautoObjectWrap<T, 0>
+{
+public:
+    static void assign(ZF_IN_OUT zfautoObject &v, ZF_IN T const &p)
+    {
+        if(p == 0)
+        {
+            v.operator = (zfautoObjectNull);
+        }
+    }
+    static zfbool equal(ZF_IN const zfautoObject &v, ZF_IN T const &p)
+    {
+        return (v.toObject() == zfnull && p == 0);
+    }
+};
 /** @cond ZFPrivateDoc */
 template<typename T_ZFObject>
 zfautoObject &zfautoObject::operator = (ZF_IN T_ZFObject const &p)
 {
-    return this->operator = (zfautoObjectCreate(ZFCastZFObjectUnchecked(ZFObject *, p)));
+    _ZFP_zfautoObjectWrap<
+            T_ZFObject,
+            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraitsType<T_ZFObject>::TraitsType) ? 1 : 0
+        >::assign(*this, p);
+    return *this;
+}
+template<typename T_ZFObject>
+zfbool zfautoObject::operator == (ZF_IN T_ZFObject const &p) const
+{
+    return _ZFP_zfautoObjectWrap<
+            T_ZFObject,
+            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraitsType<T_ZFObject>::TraitsType) ? 1 : 0
+        >::equal(*this, p);
 }
 /** @endcond */
 

@@ -10,8 +10,8 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFEXPORT_VAR_READONLY_DEFINE(zfflags, ZFCrc32ValueZero, ZFCrc32ValueZero())
-ZFEXPORT_VAR_READONLY_DEFINE(zfflags, ZFCrc32ValueInvalid, ZFCrc32ValueInvalid())
+ZFEXPORT_VAR_READONLY_DEFINE(zfflags, ZFCrc32ValueZero, ((zfflags)0x0))
+ZFEXPORT_VAR_READONLY_DEFINE(zfflags, ZFCrc32ValueInvalid, ((zfflags)0xFFFFFFFF))
 
 // ============================================================
 // ZFCrc32 initializer

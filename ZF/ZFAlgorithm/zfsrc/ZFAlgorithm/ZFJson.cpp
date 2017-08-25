@@ -55,9 +55,9 @@ ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlags)
 // ============================================================
 ZFEXPORT_VAR_READONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlagsDefault, ZFJsonOutputFlags())
 
-static ZFJsonOutputFlags _ZFP_ZFJsonOutputFlagsTrim(void)
+static const ZFJsonOutputFlags &_ZFP_ZFJsonOutputFlagsTrimInit(void)
 {
-    ZFJsonOutputFlags d;
+    static ZFJsonOutputFlags d;
     d.jsonToken.jsonNewLineToken.removeAll();
     d.jsonToken.jsonIndentToken.removeAll();
     d.jsonToken.jsonValueSeparatorToken = zfText(":");
@@ -66,7 +66,7 @@ static ZFJsonOutputFlags _ZFP_ZFJsonOutputFlagsTrim(void)
     d.jsonArrayAddNewLineForContent = zffalse;
     return d;
 }
-ZFEXPORT_VAR_READONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlagsTrim, _ZFP_ZFJsonOutputFlagsTrim())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFJsonOutputFlags, ZFJsonOutputFlagsTrim, _ZFP_ZFJsonOutputFlagsTrimInit())
 
 // ============================================================
 static void _ZFP_ZFJsonItemToOutput_outputIndent(ZF_IN_OUT const ZFOutputCallback &output,

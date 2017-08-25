@@ -18,11 +18,10 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-extern ZF_ENV_EXPORT const ZFOutputCallback &_ZFP_ZFOutputCallbackForConsole(void);
 /**
  * @brief default output callback to output to console, source must be zfchar *string
  */
-#define ZFOutputCallbackForConsole _ZFP_ZFOutputCallbackForConsole()
+ZFEXPORT_VAR_READONLY_DECLARE(ZFOutputCallback, ZFOutputCallbackForConsole)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFOutputCallbackForConsole_h_

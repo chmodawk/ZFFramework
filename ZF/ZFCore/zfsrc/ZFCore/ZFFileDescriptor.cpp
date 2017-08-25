@@ -31,6 +31,7 @@ static _ZFP_ZFFileDescriptorCallbackData *_ZFP_ZFFileDescriptorTypeFind(ZF_IN co
     return _ZFP_ZFFileDescriptorTypeMap.get<_ZFP_ZFFileDescriptorCallbackData *>(fileDescriptorType);
 }
 
+// ============================================================
 ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                       ZF_IN const zfchar *fileDescriptor,
                                                       ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax */,
@@ -132,6 +133,14 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
 
     return ret;
 }
+ZFMETHOD_FUNC_DEFINE_4(ZFInputCallback, ZFInputCallbackForFileDescriptor,
+                       ZFMP_IN(const zfchar *, fileDescriptor),
+                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                       ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
+                       ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
+{
+    return ZFInputCallbackForFileDescriptor(fileDescriptor, fileDescriptorLen, flags, autoSkipBOMTable);
+}
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFileDescriptor)
 {
     const ZFSerializableData *fileDescriptorData = ZFSerializableUtil::requireElementByCategory(
@@ -185,6 +194,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     return zftrue;
 }
 
+// ============================================================
 ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                         ZF_IN const zfchar *fileDescriptor,
                                                         ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax */,
@@ -263,6 +273,13 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
     }
 
     return ret;
+}
+ZFMETHOD_FUNC_DEFINE_3(ZFOutputCallback, ZFOutputCallbackForFileDescriptor,
+                       ZFMP_IN(const zfchar *, fileDescriptor),
+                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                       ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create))
+{
+    return ZFOutputCallbackForFileDescriptor(fileDescriptor, fileDescriptorLen, flags);
 }
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFileDescriptor)
 {

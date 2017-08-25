@@ -82,6 +82,10 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
 #define ZFCallbackSerializeCustomType_ZFOutputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForFile)
 
+/** @cond ZFPrivateDoc */
+#define ZFOutputCallbackForFile(filePath, ...) \
+    _ZFP_ZFOutputCallbackForFile(ZFCallerInfoMake(), filePath, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief util to create a file output callback
  *
@@ -93,8 +97,10 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
  *
  * auto open and auto close files, may return a null callback if open file error
  */
-#define ZFOutputCallbackForFile(filePath, ...) \
-    _ZFP_ZFOutputCallbackForFile(ZFCallerInfoMake(), filePath, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_3(ZFOutputCallback, ZFOutputCallbackForFile,
+                        ZFMP_IN(const zfchar *, filePath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
+                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
 
 // ============================================================
 // ZFInputCallbackForFile
@@ -118,6 +124,10 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
 #define ZFCallbackSerializeCustomType_ZFInputCallbackForFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForFile)
 
+/** @cond ZFPrivateDoc */
+#define ZFInputCallbackForFile(filePath, ...) \
+    _ZFP_ZFInputCallbackForFile(ZFCallerInfoMake(), filePath, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief util to create a file input callback
  *
@@ -130,8 +140,10 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFile(ZF_IN const ZFC
  * auto open and auto close files, may return a null callback if open file error\n
  * auto setup callback cache id with res file path
  */
-#define ZFInputCallbackForFile(filePath, ...) \
-    _ZFP_ZFInputCallbackForFile(ZFCallerInfoMake(), filePath, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_3(ZFInputCallback, ZFInputCallbackForFile,
+                        ZFMP_IN(const zfchar *, filePath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
+                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 
 // ============================================================
 // ZFInputCallbackForResFile
@@ -154,6 +166,10 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const 
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
 #define ZFCallbackSerializeCustomType_ZFInputCallbackForResFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForResFile)
 
+/** @cond ZFPrivateDoc */
+#define ZFInputCallbackForResFile(resFilePath, ...) \
+    _ZFP_ZFInputCallbackForResFile(ZFCallerInfoMake(), resFilePath, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief util to create a resource file input callback,
  *   see #ZFFile::resOpen for what resource file is
@@ -165,8 +181,9 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForResFile(ZF_IN const 
  *
  * auto open and auto close files, may return a null callback if open file error
  */
-#define ZFInputCallbackForResFile(resFilePath, ...) \
-    _ZFP_ZFInputCallbackForResFile(ZFCallerInfoMake(), resFilePath, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_2(ZFInputCallback, ZFInputCallbackForResFile,
+                        ZFMP_IN(const zfchar *, resFilePath),
+                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 
 // ============================================================
 // ZFOutputCallbackForLocalFile
@@ -191,6 +208,10 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
 #define ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile)
 
+/** @cond ZFPrivateDoc */
+#define ZFOutputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
+    _ZFP_ZFOutputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief util to create a file output callback
  *
@@ -203,8 +224,11 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
  *
  * auto open and auto close files, may return a null callback if open file error
  */
-#define ZFOutputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
-    _ZFP_ZFOutputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_4(ZFOutputCallback, ZFOutputCallbackForLocalFile,
+                        ZFMP_IN(const ZFSerializableData &, dataToCheckParentPath),
+                        ZFMP_IN(const zfchar *, localPath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
+                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
 
 // ============================================================
 // ZFInputCallbackForLocalFile
@@ -229,6 +253,10 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
 /** @brief see #ZFCallbackSerializeCustomTypeRegister */
 #define ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile)
 
+/** @cond ZFPrivateDoc */
+#define ZFInputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
+    _ZFP_ZFInputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+/** @endcond */
 /**
  * @brief util to create a file input callback
  *
@@ -242,8 +270,11 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
  * auto open and auto close files, may return a null callback if open file error\n
  * auto setup callback cache id with res file path
  */
-#define ZFInputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
-    _ZFP_ZFInputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+ZFMETHOD_FUNC_DECLARE_4(ZFInputCallback, ZFInputCallbackForLocalFile,
+                        ZFMP_IN(const ZFSerializableData &, dataToCheckParentPath),
+                        ZFMP_IN(const zfchar *, filePath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
+                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFFileCallback_h_

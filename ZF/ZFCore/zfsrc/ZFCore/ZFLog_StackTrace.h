@@ -20,30 +20,35 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief true if #zfLogStackTrace and #zfLogCallerInfo is available
  */
-extern ZF_ENV_EXPORT zfbool zfLogStackTraceAvailable(void);
+ZFMETHOD_FUNC_DECLARE_0(zfbool, zfLogStackTraceAvailable);
 
 /**
  * @brief get the function call stack
  *
  * output may be different depending on the OS and implementation
  */
-extern ZF_ENV_EXPORT void zfLogStackTrace(ZF_OUT zfstring &ret,
-                                          ZF_IN_OPT const zfchar *prefix = zfnull,
-                                          ZF_IN_OPT zfindex ignoreLevel = 0,
-                                          ZF_IN_OPT zfindex maxLevel = 20);
+ZFMETHOD_FUNC_DECLARE_4(void, zfLogStackTrace,
+                        ZFMP_OUT(zfstring &, ret),
+                        ZFMP_IN_OPT(const zfchar *, prefix, zfnull),
+                        ZFMP_IN_OPT(zfindex, ignoreLevel, 0),
+                        ZFMP_IN_OPT(zfindex, maxLevel, 20));
 /** @brief see #zfLogStackTrace */
-extern ZF_ENV_EXPORT zfstring zfLogStackTrace(ZF_IN_OPT const zfchar *prefix = zfnull,
-                                              ZF_IN_OPT zfindex ignoreLevel = 0,
-                                              ZF_IN_OPT zfindex maxLevel = 20);
+ZFMETHOD_FUNC_DECLARE_3(zfstring, zfLogStackTrace,
+                        ZFMP_IN_OPT(const zfchar *, prefix, zfnull),
+                        ZFMP_IN_OPT(zfindex, ignoreLevel, 0),
+                        ZFMP_IN_OPT(zfindex, maxLevel, 20));
 
 /**
  * @brief get the caller's info
  *
  * see #zfLogStackTrace for how to make it available
  */
-extern ZF_ENV_EXPORT void zfLogCallerInfo(ZF_OUT zfstring &ret, ZF_IN_OPT zfindex ignoreLevel = 0);
+ZFMETHOD_FUNC_DECLARE_2(void, zfLogCallerInfo,
+                        ZFMP_OUT(zfstring &, ret),
+                        ZFMP_IN_OPT(zfindex, ignoreLevel, 0));
 /** @brief see zfLogCallerInfo */
-extern ZF_ENV_EXPORT zfstring zfLogCallerInfo(ZF_IN_OPT zfindex ignoreLevel = 0);
+ZFMETHOD_FUNC_DECLARE_1(zfstring, zfLogCallerInfo,
+                        ZFMP_IN_OPT(zfindex, ignoreLevel, 0));
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLog_StackTrace_h_

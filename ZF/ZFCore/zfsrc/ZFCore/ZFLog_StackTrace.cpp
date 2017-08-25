@@ -11,15 +11,16 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfbool zfLogStackTraceAvailable(void)
+ZFMETHOD_FUNC_DEFINE_0(zfbool, zfLogStackTraceAvailable)
 {
     return (ZFPROTOCOL_TRY_ACCESS(ZFLogStackTrace) != zfnull);
 }
 
-void zfLogStackTrace(ZF_OUT zfstring &ret,
-                     ZF_IN_OPT const zfchar *prefix /* = zfnull */,
-                     ZF_IN_OPT zfindex ignoreLevel /* = 0 */,
-                     ZF_IN_OPT zfindex maxLevel /* = 20 */)
+ZFMETHOD_FUNC_DEFINE_4(void, zfLogStackTrace,
+                       ZFMP_OUT(zfstring &, ret),
+                       ZFMP_IN_OPT(const zfchar *, prefix, zfnull),
+                       ZFMP_IN_OPT(zfindex, ignoreLevel, 0),
+                       ZFMP_IN_OPT(zfindex, maxLevel, 20))
 {
     if(ZFPROTOCOL_TRY_ACCESS(ZFLogStackTrace) != zfnull)
     {
@@ -42,9 +43,10 @@ void zfLogStackTrace(ZF_OUT zfstring &ret,
         ret += '\n';
     }
 }
-zfstring zfLogStackTrace(ZF_IN_OPT const zfchar *prefix /* = zfnull */,
-                         ZF_IN_OPT zfindex ignoreLevel /* = 0 */,
-                         ZF_IN_OPT zfindex maxLevel /* = 20 */)
+ZFMETHOD_FUNC_DEFINE_3(zfstring, zfLogStackTrace,
+                       ZFMP_IN_OPT(const zfchar *, prefix, zfnull),
+                       ZFMP_IN_OPT(zfindex, ignoreLevel, 0),
+                       ZFMP_IN_OPT(zfindex, maxLevel, 20))
 {
     zfstring ret;
     if(ZFPROTOCOL_TRY_ACCESS(ZFLogStackTrace) != zfnull)
@@ -70,7 +72,9 @@ zfstring zfLogStackTrace(ZF_IN_OPT const zfchar *prefix /* = zfnull */,
     return ret;
 }
 
-void zfLogCallerInfo(ZF_OUT zfstring &ret, ZF_IN_OPT zfindex ignoreLevel /* = 0 */)
+ZFMETHOD_FUNC_DEFINE_2(void, zfLogCallerInfo,
+                       ZFMP_OUT(zfstring &, ret),
+                       ZFMP_IN_OPT(zfindex, ignoreLevel, 0))
 {
     if(ZFPROTOCOL_TRY_ACCESS(ZFLogStackTrace) != zfnull)
     {
@@ -81,7 +85,8 @@ void zfLogCallerInfo(ZF_OUT zfstring &ret, ZF_IN_OPT zfindex ignoreLevel /* = 0 
         ret += zfText("<zfLogCallerInfo is currently unsupported>");
     }
 }
-zfstring zfLogCallerInfo(ZF_IN_OPT zfindex ignoreLevel /* = 0 */)
+ZFMETHOD_FUNC_DEFINE_1(zfstring, zfLogCallerInfo,
+                       ZFMP_IN_OPT(zfindex, ignoreLevel, 0))
 {
     zfstring ret;
     if(ZFPROTOCOL_TRY_ACCESS(ZFLogStackTrace) != zfnull)

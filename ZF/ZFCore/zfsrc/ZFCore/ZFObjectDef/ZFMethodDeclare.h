@@ -452,7 +452,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             )
 
 #define _ZFP_ZFMETHOD_REGISTER(...) \
-    _ZFP_ZFMETHOD_REGISTER_(__VA_ARGS__)
+    ZFM_EXPAND(_ZFP_ZFMETHOD_REGISTER_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_REGISTER_(OwnerClass, MethodName, DECLARE_LINE) \
     ZF_STATIC_REGISTER_INIT(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE) \
     { \
@@ -460,7 +460,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     } \
     ZF_STATIC_REGISTER_END(MtdR_##OwnerClass##_##MethodName##_##DECLARE_LINE)
 #define _ZFP_ZFMETHOD_REGISTER_DETAIL(...) \
-    _ZFP_ZFMETHOD_REGISTER_DETAIL_(__VA_ARGS__)
+    ZFM_EXPAND(_ZFP_ZFMETHOD_REGISTER_DETAIL_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_REGISTER_DETAIL_(OwnerClass, MethodName, DECLARE_LINE \
         , ParamExpandOrEmpty0, ParamType0 \
         , ParamExpandOrEmpty1, ParamType1 \

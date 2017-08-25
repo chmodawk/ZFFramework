@@ -426,7 +426,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const Z
     _ZFP_ZFInputCallbackForBuffer(ZFCallerInfoMake(), zftrue, buf, ##__VA_ARGS__)
 
 // ============================================================
-// ZFIOBridgeCallbackAbs
+// ZFIOBridgeCallback
 /**
  * @brief a util class to make a buffer to bridge input and output
  *
@@ -435,19 +435,19 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const Z
  *   void outputFunc(ZF_IN const ZFOutputCallback &callback) {...}
  *   void inputFunc(ZF_IN const ZFInputCallback &callback) {...}
  *
- *   ZFIOBridgeCallbackAbs bridge;
+ *   ZFIOBridgeCallbackXXX bridge;
  *   outputFunc(bridge); // output data to bridge's internal buffer
  *   inputFunc(bridge); // input data from bridge's internal buffer
  * @endcode
  */
-zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallbackAbs
+zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallback
 {
 public:
     /** @cond ZFPrivateDoc */
-    ZFIOBridgeCallbackAbs(void) {}
-    ZFIOBridgeCallbackAbs(ZF_IN const ZFIOBridgeCallbackAbs &ref) {}
+    ZFIOBridgeCallback(void) {}
+    ZFIOBridgeCallback(ZF_IN const ZFIOBridgeCallback &ref) {}
     /** @endcond */
-    virtual ~ZFIOBridgeCallbackAbs(void) {}
+    virtual ~ZFIOBridgeCallback(void) {}
 
 public:
     /**
@@ -491,9 +491,9 @@ public:
 // ZFIOBridgeCallbackUsingBuffer
 zfclassFwd _ZFP_ZFIOBridgeCallbackUsingBufferPrivate;
 /**
- * @brief see #ZFIOBridgeCallbackAbs
+ * @brief see #ZFIOBridgeCallback
  */
-zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallbackUsingBuffer : zfextendsLikePOD ZFIOBridgeCallbackAbs
+zfclassLikePOD ZF_ENV_EXPORT ZFIOBridgeCallbackUsingBuffer : zfextendsLikePOD ZFIOBridgeCallback
 {
 public:
     /** @cond ZFPrivateDoc */

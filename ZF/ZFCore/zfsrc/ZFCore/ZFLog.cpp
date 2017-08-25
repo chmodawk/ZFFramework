@@ -12,7 +12,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFDebugLevelEnum zfLogLevel = ZFDebugLevel::EnumDefault();
+ZFEXPORT_VAR_DEFINE(ZFDebugLevelEnum, zfLogLevel, ZFDebugLevel::EnumDefault())
 
 // ============================================================
 zfclass _ZFP_I_ZFLogMutex : zfextends ZFMutex
@@ -110,7 +110,7 @@ _ZFP_zfLogTAccess::~_ZFP_zfLogTAccess(void)
 
     // restore global settings
     // must after callback's dealloc
-    _ZFP_ZFLogGlobalSession.debugLevelSet(zfLogLevel);
+    _ZFP_ZFLogGlobalSession.debugLevelSet(zfLogLevel());
     _ZFP_ZFLogGlobalSession.autoSpaceSet(zftrue);
     _ZFP_ZFLogGlobalSession.autoEndlSet(zftrue);
 
@@ -130,6 +130,10 @@ zfstring _ZFP_zfLogCurTimeString(void)
         ti.second,
         ti.miliSecond);
     return s;
+}
+ZFMETHOD_FUNC_DEFINE_0(const zfchar *, zfLogCurTimeString)
+{
+    return zfLogCurTimeString();
 }
 
 ZF_NAMESPACE_GLOBAL_END

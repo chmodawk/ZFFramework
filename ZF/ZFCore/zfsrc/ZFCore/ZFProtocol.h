@@ -799,8 +799,9 @@ extern ZF_ENV_EXPORT ZFProtocol *ZFProtocolForName(ZF_IN const zfchar *name,
  * second param desiredImpl can be assigned to check whether the protocol matches what you want,
  * see #ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT
  */
-extern ZF_ENV_EXPORT zfbool ZFProtocolIsAvailable(ZF_IN const zfchar *name,
-                                                  ZF_IN_OPT const zfchar *desiredImpl = zfnull);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFProtocolIsAvailable,
+                        ZFMP_IN(const zfchar *, name),
+                        ZFMP_IN_OPT(const zfchar *, desiredImpl, zfnull));
 
 // ============================================================
 /**
@@ -838,7 +839,8 @@ extern ZF_ENV_EXPORT ZFCoreArray<ZFProtocolImplInfoData> ZFProtocolImplInfoDataG
 /**
  * @brief util method to #ZFProtocolImplInfoDataGet
  */
-extern ZF_ENV_EXPORT void ZFProtocolImplInfoDataPrint(ZF_IN_OPT const ZFOutputCallback &callback = ZFOutputCallbackDefault());
+ZFMETHOD_FUNC_DECLARE_1(void, ZFProtocolImplInfoDataPrint,
+                        ZFMP_IN_OPT(const ZFOutputCallback &, callback, ZFOutputCallbackDefault()));
 /**
  * @brief util method to #ZFProtocolImplInfoDataGet
  */

@@ -72,22 +72,24 @@ void ZFHashMap::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
-zfindex ZFHashMap::count(void)
+ZFMETHOD_DEFINE_0(ZFHashMap, zfindex, count)
 {
     return d->data.size();
 }
 
-zfbool ZFHashMap::isEmpty(void)
+ZFMETHOD_DEFINE_0(ZFHashMap, zfbool, isEmpty)
 {
     return d->data.empty();
 }
 
-zfbool ZFHashMap::isContain(ZF_IN ZFObject *pKey)
+ZFMETHOD_DEFINE_1(ZFHashMap, zfbool, isContain,
+                  ZFMP_IN(ZFObject *, pKey))
 {
     return (pKey != zfnull && d->data.find(pKey) != d->data.end());
 }
 
-ZFObject *ZFHashMap::get(ZF_IN ZFObject *pKey)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, get,
+                  ZFMP_IN(ZFObject *, pKey))
 {
     if(pKey != zfnull)
     {
@@ -99,9 +101,10 @@ ZFObject *ZFHashMap::get(ZF_IN ZFObject *pKey)
     }
     return zfnull;
 }
-ZFKeyValuePair ZFHashMap::getPair(ZF_IN ZFObject *pKey)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFKeyValuePair, getPair,
+                  ZFMP_IN(ZFObject *, pKey))
 {
-    ZFKeyValuePair ret = ZFKeyValuePairZero;
+    ZFKeyValuePair ret = ZFKeyValuePairZero();
     if(pKey != zfnull)
     {
         _ZFP_ZFHashMapPrivate::MapType::const_iterator it = d->data.find(pKey);
@@ -114,7 +117,8 @@ ZFKeyValuePair ZFHashMap::getPair(ZF_IN ZFObject *pKey)
     return ret;
 }
 
-void ZFHashMap::allKeyT(ZF_OUT ZFCoreArray<ZFObject *> &ret)
+ZFMETHOD_DEFINE_1(ZFHashMap, void, allKeyT,
+                  ZFMP_OUT(ZFCoreArray<ZFObject *> &, ret))
 {
     if(!this->isEmpty())
     {
@@ -125,7 +129,8 @@ void ZFHashMap::allKeyT(ZF_OUT ZFCoreArray<ZFObject *> &ret)
         }
     }
 }
-void ZFHashMap::allValueT(ZF_OUT ZFCoreArray<ZFObject *> &ret)
+ZFMETHOD_DEFINE_1(ZFHashMap, void, allValueT,
+                  ZFMP_OUT(ZFCoreArray<ZFObject *> &, ret))
 {
     if(!this->isEmpty())
     {
@@ -136,7 +141,8 @@ void ZFHashMap::allValueT(ZF_OUT ZFCoreArray<ZFObject *> &ret)
         }
     }
 }
-void ZFHashMap::allPairT(ZF_OUT ZFCoreArray<ZFKeyValuePair> &ret)
+ZFMETHOD_DEFINE_1(ZFHashMap, void, allPairT,
+                  ZFMP_OUT(ZFCoreArray<ZFKeyValuePair> &, ret))
 {
     if(!this->isEmpty())
     {
@@ -158,7 +164,7 @@ void ZFHashMap::addFrom(ZF_IN ZFKeyValueContainer *another)
         return ;
     }
 
-    ZFKeyValuePair pair = ZFKeyValuePairZero;
+    ZFKeyValuePair pair = ZFKeyValuePairZero();
     for(zfiterator it = another->iterator(); another->iteratorIsValid(it); )
     {
         pair = another->iteratorNextPair(it);
@@ -261,9 +267,9 @@ zfautoObject ZFHashMap::removeAndGet(ZF_IN ZFObject *pKey)
     }
     return zfautoObjectNull;
 }
-ZFKeyValuePairAutoRelease ZFHashMap::removeAndGetPair(ZF_IN ZFObject *pKey)
+ZFKeyValuePairHolder ZFHashMap::removeAndGetPair(ZF_IN ZFObject *pKey)
 {
-    ZFKeyValuePairAutoRelease ret;
+    ZFKeyValuePairHolder ret;
     if(pKey != zfnull)
     {
         _ZFP_ZFHashMapPrivate::MapType::iterator it = d->data.find(pKey);
@@ -315,20 +321,22 @@ static void *_ZFP_ZFHashMap_iteratorCopyCallback(ZF_IN void *data)
     return zfnew(_ZFP_ZFHashMapPrivate::MapType::iterator,
         *ZFCastStatic(_ZFP_ZFHashMapPrivate::MapType::iterator *, data));
 }
-zfiterator ZFHashMap::iterator(void)
+ZFMETHOD_DEFINE_0(ZFHashMap, zfiterator, iterator)
 {
     return zfiterator(zfnew(_ZFP_ZFHashMapPrivate::MapType::iterator, d->data.begin()),
         _ZFP_ZFHashMap_iteratorDeleteCallback,
         _ZFP_ZFHashMap_iteratorCopyCallback);
 }
 
-zfbool ZFHashMap::iteratorIsValid(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, zfbool, iteratorIsValid,
+                  ZFMP_IN(const zfiterator &, it))
 {
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     return (data != zfnull && *data != d->data.end());
 }
-zfbool ZFHashMap::iteratorIsEqual(ZF_IN const zfiterator &it0,
-                                  ZF_IN const zfiterator &it1)
+ZFMETHOD_DEFINE_2(ZFHashMap, zfbool, iteratorIsEqual,
+                  ZFMP_IN(const zfiterator &, it0),
+                  ZFMP_IN(const zfiterator &, it1))
 {
     return zfiterator::iteratorIsEqual<_ZFP_ZFHashMapPrivate::MapType::iterator *>(it0, it1);
 }
@@ -363,25 +371,29 @@ void ZFHashMap::iteratorRemove(ZF_IN_OUT zfiterator &it)
         zfRelease(tmpValue);
     }
 }
-zfiterator ZFHashMap::iteratorForKey(ZF_IN ZFObject *key)
+ZFMETHOD_DEFINE_1(ZFHashMap, zfiterator, iteratorForKey,
+                  ZFMP_IN(ZFObject *, key))
 {
     return zfiterator(zfnew(_ZFP_ZFHashMapPrivate::MapType::iterator, d->data.find(key)),
         _ZFP_ZFHashMap_iteratorDeleteCallback,
         _ZFP_ZFHashMap_iteratorCopyCallback);
 }
-ZFObject *ZFHashMap::iteratorGetKey(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorGetKey,
+                  ZFMP_IN(const zfiterator &, it))
 {
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     return ((data != zfnull && *data != d->data.end()) ? (*data)->first : zfnull);
 }
-ZFObject *ZFHashMap::iteratorGetValue(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorGetValue,
+                  ZFMP_IN(const zfiterator &, it))
 {
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     return ((data != zfnull && *data != d->data.end()) ? (*data)->second : zfnull);
 }
-ZFKeyValuePair ZFHashMap::iteratorGetPair(ZF_IN const zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFKeyValuePair, iteratorGetPair,
+                  ZFMP_IN(const zfiterator &, it))
 {
-    ZFKeyValuePair ret = ZFKeyValuePairZero;
+    ZFKeyValuePair ret = ZFKeyValuePairZero();
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     if(data != zfnull && *data != d->data.end())
     {
@@ -390,7 +402,8 @@ ZFKeyValuePair ZFHashMap::iteratorGetPair(ZF_IN const zfiterator &it)
     }
     return ret;
 }
-ZFObject *ZFHashMap::iteratorNextKey(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorNextKey,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     if(data != zfnull && *data != d->data.end())
@@ -401,7 +414,8 @@ ZFObject *ZFHashMap::iteratorNextKey(ZF_IN_OUT zfiterator &it)
     }
     return zfnull;
 }
-ZFObject *ZFHashMap::iteratorNextValue(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorNextValue,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     if(data != zfnull && *data != d->data.end())
@@ -412,9 +426,10 @@ ZFObject *ZFHashMap::iteratorNextValue(ZF_IN_OUT zfiterator &it)
     }
     return zfnull;
 }
-ZFKeyValuePair ZFHashMap::iteratorNextPair(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFKeyValuePair, iteratorNextPair,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
-    ZFKeyValuePair ret = ZFKeyValuePairZero;
+    ZFKeyValuePair ret = ZFKeyValuePairZero();
     _ZFP_ZFHashMapPrivate::MapType::iterator *data = it.data<_ZFP_ZFHashMapPrivate::MapType::iterator *>();
     if(data != zfnull && *data != d->data.end())
     {
@@ -425,19 +440,22 @@ ZFKeyValuePair ZFHashMap::iteratorNextPair(ZF_IN_OUT zfiterator &it)
     }
     return ret;
 }
-ZFObject *ZFHashMap::iteratorPrevKey(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorPrevKey,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     zfCoreCriticalNotSupported();
     return zfnull;
 }
-ZFObject *ZFHashMap::iteratorPrevValue(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFObject *, iteratorPrevValue,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
     zfCoreCriticalNotSupported();
     return zfnull;
 }
-ZFKeyValuePair ZFHashMap::iteratorPrevPair(ZF_IN_OUT zfiterator &it)
+ZFMETHOD_DEFINE_1(ZFHashMap, ZFKeyValuePair, iteratorPrevPair,
+                  ZFMP_IN_OUT(zfiterator &, it))
 {
-    ZFKeyValuePair ret = ZFKeyValuePairZero;
+    ZFKeyValuePair ret = ZFKeyValuePairZero();
     zfCoreCriticalNotSupported();
     return ret;
 }

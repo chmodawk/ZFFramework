@@ -72,21 +72,21 @@ ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOMList, ZFFileBOMList, {
     })
 
 // ============================================================
-static ZFFileBOM _ZFP_ZFFileBOMUTF8(void)
+static const ZFFileBOM &_ZFP_ZFFileBOMUTF8Init(void)
 {
-    ZFFileBOM BOM = {{0xEF, 0xBB, 0xBF}};
+    static ZFFileBOM BOM = {{0xEF, 0xBB, 0xBF}};
     return BOM;
 }
-ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOM, ZFFileBOMUTF8, _ZFP_ZFFileBOMUTF8())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOM, ZFFileBOMUTF8, _ZFP_ZFFileBOMUTF8Init())
 
 // ============================================================
-static ZFFileBOMList _ZFP_ZFFileBOMListDefault(void)
+static const ZFFileBOMList &_ZFP_ZFFileBOMListDefaultInit(void)
 {
-    ZFFileBOMList ret;
+    static ZFFileBOMList ret;
     ret.add(ZFFileBOMUTF8());
     return ret;
 }
-ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOMList, ZFFileBOMListDefault, _ZFP_ZFFileBOMListDefault())
+ZFEXPORT_VAR_READONLY_DEFINE(ZFFileBOMList, ZFFileBOMListDefault, _ZFP_ZFFileBOMListDefaultInit())
 
 ZF_NAMESPACE_GLOBAL_END
 

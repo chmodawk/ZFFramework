@@ -151,12 +151,14 @@ public:
     /**
      * @brief return a short string describe the content
      */
-    virtual void objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
-                                      ZF_IN_OPT zfindex maxCount = zfindexMax,
-                                      ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault());
+    ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()));
     /** @brief see #objectInfoOfContentT */
-    virtual inline zfstring objectInfoOfContent(ZF_IN_OPT zfindex maxCount = zfindexMax,
-                                                ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault())
+    ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                       ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
     {
         zfstring ret;
         this->objectInfoOfContentT(ret, maxCount, token);
