@@ -68,6 +68,7 @@ public:
 
 // ============================================================
 // ZFFileFindData
+/** @cond ZFPrivateDoc */
 ZFFileFindData::ZFFileFindData(void)
 : d(zfnew(_ZFP_ZFFileFindDataPrivate))
 {
@@ -106,6 +107,7 @@ ZFFileFindData::~ZFFileFindData(void)
         zfdelete(d);
     }
 }
+/** @endcond */
 const zfchar *ZFFileFindData::fileParentPath(void) const
 {
     return d->d.parentPath.cString();

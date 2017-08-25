@@ -10,6 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_NAMESPACE_BEGIN(ZFFileUtil)
+/** @cond ZFPrivateDoc */ // ZFDoxygenBugFix: all uppercase macro not skipped within namespace
 
 static void _ZFP_fileList(ZF_IN zfbool resFile,
                           ZF_IN const zfchar *path,
@@ -68,6 +69,7 @@ ZFMETHOD_FUNC_DEFINE_WITH_NAMESPACE_4(ZFFileUtil, void, resFileList,
     _ZFP_fileList(zftrue, path, outputCallback, headToken, indentToken, 0);
 }
 
+/** @endcond */
 ZF_NAMESPACE_END(ZFFileUtil)
 ZF_NAMESPACE_GLOBAL_END
 
