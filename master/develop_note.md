@@ -113,13 +113,13 @@ we are trying hard to achive script binding by reflection dynamically and automa
     ```
     var obj = MyZFObjectType::zfAlloc();
     var objParam = zfAlloc("SomeType");
-    var result = obj.myFunc(v_zfint(1), v_zfstring("2"), v_YourType("encodedData"), objParam);
+    var result = obj.myFunc(zfint(1), zfstring("2"), YourType("encodedData"), objParam);
     var result = obj.myFunc(1, "2", "encodedData", objParam);
     ```
 
     1. `zfAlloc` should be binded automatically by reflecting all `ZFClass` types
-    1. `v_YourType` would be binded by ZFPROPERTY_TYPE_DECLARE series
-    1. `v_YourType` can be serialized from encoded string data if it's serializable
+    1. `YourType` would be binded by ZFPROPERTY_TYPE_DECLARE series
+    1. `YourType` can be serialized from encoded string data if it's serializable
       (declared by ZFPROPERTY_TYPE_DECLARE)
     1. `myFunc` should be binded automatically by reflecting all `ZFMethod` from `ZFClass` types
     1. finally, `myFunc` would be invoked with all ZFObject type as params and result

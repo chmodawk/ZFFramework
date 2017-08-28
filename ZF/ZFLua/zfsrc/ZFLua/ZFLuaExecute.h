@@ -32,6 +32,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * \n
  * here is a list of functions available in lua to communicate with ZFFramework:
  * -  `zfAlloc("ClassName")`
+ *   or `ClassName()`
  *   or `ClassName.zfAlloc()`\n
  *   alloc a ZFObject type (no extra init param supported)\n
  *   "ClassName" can be #v_ZFClass, or converted by #ZFImpl_ZFLua_toString
@@ -55,18 +56,20 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     -  #ZFLuaFuncNamespaceGlobal
  *     -  empty string
  * -  value holder
- *   -  `value = v_YourTypeName("yourTypeData")`
- *     or `value = v_YourTypeName()`\n
+ *   -  `value = YourTypeName("yourTypeData")`
+ *     or `value = zfAlloc("YourTypeName")`
+ *     or `value = YourTypeName()`
+ *     or `value = YourTypeName.zfAlloc()`\n
  *     create a non-ZFObject type registered by #ZFPROPERTY_TYPE_DECLARE,
- *     return the associated `v_YourTypeName` that holds the value\n
+ *     return the associated `YourTypeName` that holds the value\n
  *     "YourTypeName" represents the type name in #ZFPROPERTY_TYPE_DECLARE\n
  *     "yourTypeData" store string datas that would be decoded by YourTypeNameFromString\n
  *     "yourTypeData" are converted by #ZFImpl_ZFLua_toString
  *   -  `value:yourFunc()`
- *     or `v_YourTypeName.YourFunc()`\n
+ *     or `YourTypeName.YourFunc()`\n
  *     for non-ZFObject types that wrapped by #ZFPROPERTY_TYPE_DECLARE,
  *     you may use #ZFMETHOD_USER_REGISTER_0 series to register methods
- *     to its wrapper type `v_YourTypeName`,
+ *     to its wrapper type `YourTypeName`,
  *     then the methods can be invoked directly to your value type
  * -  value converter
  *   -  `zfl_toValue(v)`\n

@@ -158,7 +158,7 @@ void invokeTimeAccurateLogBegin(ZF_IN const zfchar *key)
     {
         ++(data->invokeCount);
 
-        if(data->invokeStartTime != ZFTimeValueZero)
+        if(data->invokeStartTime != ZFTimeValueZero())
         {
             ++(data->reentrantCount);
         }
@@ -181,7 +181,7 @@ void invokeTimeAccurateLogEnd(ZF_IN const zfchar *key)
         else
         {
             data->invokeTotalTime += ZFTime::currentTimeValue() - data->invokeStartTime;
-            data->invokeStartTime = ZFTimeValueZero;
+            data->invokeStartTime = ZFTimeValueZero();
         }
     }
 }
@@ -213,7 +213,7 @@ ZFTimeValue invokeTimeAccurateGetAverageTime(ZF_IN const zfchar *key)
     {
         return data->invokeTotalTime / data->invokeCount;
     }
-    return ZFTimeValueZero;
+    return ZFTimeValueZero();
 }
 ZFTimeValue invokeTimeAccurateGetTotalTime(ZF_IN const zfchar *key)
 {
@@ -223,17 +223,17 @@ ZFTimeValue invokeTimeAccurateGetTotalTime(ZF_IN const zfchar *key)
     {
         return data->invokeTotalTime;
     }
-    return ZFTimeValueZero;
+    return ZFTimeValueZero();
 }
 void invokeTimeAccurateGetSummary(ZF_OUT zfstring &ret, ZF_IN const zfchar *key)
 {
     ZFCoreMap &m = _ZFP_ZFCoreStatisticInvokeTimeAccurateDataMap();
     _ZFP_ZFCoreStatisticInvokeTimeDataHolder<ZFTimeValue> *data = m.get<_ZFP_ZFCoreStatisticInvokeTimeDataHolder<ZFTimeValue> *>(key);
     zfindex invokeCount = ((data == zfnull) ? 0 : data->invokeCount);
-    ZFTimeValue invokeTotalTime = ((data == zfnull) ? ZFTimeValueZero : data->invokeTotalTime);
+    ZFTimeValue invokeTotalTime = ((data == zfnull) ? ZFTimeValueZero() : data->invokeTotalTime);
     if(invokeCount > 1)
     {
-        ZFTimeValue invokeAverageTime = ((invokeCount == 0) ? ZFTimeValueZero : invokeTotalTime / invokeCount);
+        ZFTimeValue invokeAverageTime = ((invokeCount == 0) ? ZFTimeValueZero() : invokeTotalTime / invokeCount);
         zfstringAppend(ret, zfText("[%s] invoke count: %s, total: %s, average: %s"),
             (key == zfnull) ? ZFTOKEN_zfnull : key,
             zfsFromInt(invokeCount).cString(),

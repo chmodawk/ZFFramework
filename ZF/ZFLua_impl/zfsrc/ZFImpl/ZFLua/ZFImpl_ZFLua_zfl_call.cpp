@@ -382,6 +382,12 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic(ZF_IN lua_State *L)
         _ZFP_ZFImpl_ZFLua_zfl_callStatic_methodScopeFix(methodScope);
         zfstring methodName(methodSig.cString() + methodSigPos[1].start, methodSigPos[1].count);
         const ZFClass *cls = ZFClass::classForName(methodScope);
+        if(cls == zfnull)
+        {
+            zfstring classNameTmp = ZFImpl_ZFLua_PropTypePrefixLen;
+            classNameTmp += methodScope;
+            cls = ZFClass::classForName(classNameTmp);
+        }
 
         _ZFP_ZFImpl_ZFLua_zfl_call_implDispatch(
             zftrue, methodScope, cls, zfnull,
@@ -471,6 +477,12 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
         }
 
         const ZFClass *cls = ZFClass::classForName(methodScope);
+        if(cls == zfnull)
+        {
+            zfstring classNameTmp = ZFImpl_ZFLua_PropTypePrefixLen;
+            classNameTmp += methodScope;
+            cls = ZFClass::classForName(classNameTmp);
+        }
 
         _ZFP_ZFImpl_ZFLua_zfl_call_implDispatch(
             zftrue, methodScope, cls, zfnull,

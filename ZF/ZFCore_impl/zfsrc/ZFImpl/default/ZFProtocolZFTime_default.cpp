@@ -351,7 +351,7 @@ public:
     }
     virtual const ZFTimeValue &timeZoneLocal(void)
     {
-        static ZFTimeValue _tv = ZFTimeValueZero;
+        static ZFTimeValue _tv = ZFTimeValueZero();
         #if ZF_ENV_sys_Windows
             TIME_ZONE_INFORMATION tzInfo;
             if(GetTimeZoneInformation(&tzInfo) != TIME_ZONE_ID_INVALID)

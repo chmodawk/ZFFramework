@@ -52,6 +52,12 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
     const ZFClass *cls = ZFClass::classForName(className);
     if(cls == zfnull)
     {
+        zfstring classNameTmp = ZFImpl_ZFLua_PropTypePrefix;
+        classNameTmp += className;
+        cls = ZFClass::classForName(classNameTmp);
+    }
+    if(cls == zfnull)
+    {
         ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;

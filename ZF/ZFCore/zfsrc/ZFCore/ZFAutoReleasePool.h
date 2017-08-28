@@ -59,22 +59,20 @@ public:
     /**
      * @brief add an object which would be auto released upon pool's drain or delete
      */
-    ZFMETHOD_DECLARE_2(void, poolAdd,
-                       ZFMP_IN(ZFObject *, obj),
-                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
+    virtual void poolAdd(ZF_IN ZFObject *obj,
+                         ZF_IN_OPT zfbool enableLeakTest = zftrue);
     /**
      * @brief add with owner info, used by leak test
      */
-    ZFMETHOD_DECLARE_3(void, poolAdd,
-                       ZFMP_IN(ZFObject *, obj),
-                       ZFMP_IN(const ZFCallerInfo &, callerInfo),
-                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
+    virtual void poolAdd(ZF_IN ZFObject *obj,
+                         ZF_IN const ZFCallerInfo &callerInfo,
+                         ZF_IN_OPT zfbool enableLeakTest = zftrue);
     /**
      * @brief manually drain a pool, all object in the pool would be released immediately
      * @note you must make sure all object in pool are safe to release
      *   when draining the pool
      */
-    ZFMETHOD_DECLARE_0(void, poolDrain);
+    virtual void poolDrain();
 
 private:
     _ZFP_ZFAutoReleasePoolPrivate *d;

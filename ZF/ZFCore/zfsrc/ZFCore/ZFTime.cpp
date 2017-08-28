@@ -13,9 +13,20 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // ZFTimeValue
-const ZFTimeValue ZFTimeValueZero = {zftimetZero, zftimetZero};
+ZFEXPORT_VAR_READONLY_DEFINE(ZFTimeValue, ZFTimeValueZero, ZFTimeValueMake(zftimetZero, zftimetZero))
 
-void ZFTimeValueNormalize(ZF_IN_OUT ZFTimeValue &v)
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFTimeValue, ZFTimeValueMake,
+                              ZFMP_IN(const zftimet &, sec),
+                              ZFMP_IN(const zftimet &, usec))
+
+ZFMETHOD_FUNC_DEFINE_INLINE_1(ZFTimeValue, ZFTimeValueFromMiliSeconds,
+                              ZFMP_IN(zftimet, t))
+
+ZFMETHOD_FUNC_DEFINE_INLINE_1(zftimet, ZFTimeValueToMiliSeconds,
+                              ZFMP_IN(const ZFTimeValue &, v))
+
+ZFMETHOD_FUNC_DEFINE_1(void, ZFTimeValueNormalize,
+                       ZFMP_IN_OUT(ZFTimeValue &, v))
 {
     while(v.usec >= 1000000LL)
     {
@@ -39,54 +50,34 @@ void ZFTimeValueNormalize(ZF_IN_OUT ZFTimeValue &v)
     }
 }
 
-void ZFTimeValueDec(ZF_OUT ZFTimeValue &result,
-                    ZF_IN const ZFTimeValue &tv1,
-                    ZF_IN const ZFTimeValue &tv2)
-{
-    result.sec = tv1.sec - tv2.sec;
-    result.usec = tv1.usec - tv2.usec;
-    ZFTimeValueNormalize(result);
-}
-ZFTimeValue ZFTimeValueDec(ZF_IN const ZFTimeValue &tv1,
-                           ZF_IN const ZFTimeValue &tv2)
-{
-    ZFTimeValue result;
-    ZFTimeValueDec(result, tv1, tv2);
-    return result;
-}
-void ZFTimeValueInc(ZF_OUT ZFTimeValue &result,
-                    ZF_IN const ZFTimeValue &tv1,
-                    ZF_IN const ZFTimeValue &tv2)
-{
-    result.sec = tv1.sec + tv2.sec;
-    result.usec = tv1.usec + tv2.usec;
-    ZFTimeValueNormalize(result);
-}
-ZFTimeValue ZFTimeValueInc(ZF_IN const ZFTimeValue &tv1,
-                           ZF_IN const ZFTimeValue &tv2)
-{
-    ZFTimeValue result;
-    ZFTimeValueInc(result, tv1, tv2);
-    return result;
-}
-void ZFTimeValueMul(ZF_OUT ZFTimeValue &result,
-                    ZF_IN const ZFTimeValue &tv,
-                    ZF_IN zfindex v)
-{
-    result.sec = tv.sec * v;
-    result.usec = tv.usec * v;
-    ZFTimeValueNormalize(result);
-}
-ZFTimeValue ZFTimeValueMul(ZF_IN const ZFTimeValue &tv,
-                           ZF_IN zfindex v)
-{
-    ZFTimeValue result;
-    ZFTimeValueMul(result, tv, v);
-    return result;
-}
-void ZFTimeValueDiv(ZF_OUT ZFTimeValue &result,
-                    ZF_IN const ZFTimeValue &tv,
-                    ZF_IN zfindex v)
+ZFMETHOD_FUNC_DEFINE_INLINE_3(void, ZFTimeValueDec,
+                              ZFMP_OUT(ZFTimeValue &, result),
+                              ZFMP_IN(const ZFTimeValue &, tv1),
+                              ZFMP_IN(const ZFTimeValue &, tv2))
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFTimeValue, ZFTimeValueDec,
+                              ZFMP_IN(const ZFTimeValue &, tv1),
+                              ZFMP_IN(const ZFTimeValue &, tv2))
+
+ZFMETHOD_FUNC_DEFINE_INLINE_3(void, ZFTimeValueInc,
+                              ZFMP_OUT(ZFTimeValue &, result),
+                              ZFMP_IN(const ZFTimeValue &, tv1),
+                              ZFMP_IN(const ZFTimeValue &, tv2))
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFTimeValue, ZFTimeValueInc,
+                              ZFMP_IN(const ZFTimeValue &, tv1),
+                              ZFMP_IN(const ZFTimeValue &, tv2))
+
+ZFMETHOD_FUNC_DEFINE_INLINE_3(void, ZFTimeValueMul,
+                              ZFMP_OUT(ZFTimeValue &, result),
+                              ZFMP_IN(const ZFTimeValue &, tv),
+                              ZFMP_IN(zfindex, v))
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFTimeValue, ZFTimeValueMul,
+                              ZFMP_IN(const ZFTimeValue &, tv),
+                              ZFMP_IN(zfindex, v))
+
+ZFMETHOD_FUNC_DEFINE_3(void, ZFTimeValueDiv,
+                       ZFMP_OUT(ZFTimeValue &, result),
+                       ZFMP_IN(const ZFTimeValue &, tv),
+                       ZFMP_IN(zfindex, v))
 {
     zfCoreAssertWithMessage(v != 0, zfTextA("divided by 0"));
     result.usec = tv.usec / v;
@@ -95,16 +86,13 @@ void ZFTimeValueDiv(ZF_OUT ZFTimeValue &result,
     result.usec += (zft_zftimet)((secTmp - result.sec) * 1000000LL);
     ZFTimeValueNormalize(result);
 }
-ZFTimeValue ZFTimeValueDiv(ZF_IN const ZFTimeValue &tv,
-                           ZF_IN zfindex v)
-{
-    ZFTimeValue result;
-    ZFTimeValueDiv(result, tv, v);
-    return result;
-}
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFTimeValue, ZFTimeValueDiv,
+                              ZFMP_IN(const ZFTimeValue &, tv),
+                              ZFMP_IN(zfindex, v))
 
-ZFCompareResult ZFTimeValueCompare(ZF_IN const ZFTimeValue &tv1,
-                                   ZF_IN const ZFTimeValue &tv2)
+ZFMETHOD_FUNC_DEFINE_2(ZFCompareResult, ZFTimeValueCompare,
+                       ZFMP_IN(const ZFTimeValue &, tv1),
+                       ZFMP_IN(const ZFTimeValue &, tv2))
 {
     if(tv1.sec == tv2.sec)
     {
@@ -131,7 +119,9 @@ ZFCompareResult ZFTimeValueCompare(ZF_IN const ZFTimeValue &tv1,
     }
 }
 
-zfbool ZFTimeValueToStringFriendly(ZF_IN_OUT zfstring &s, ZF_IN ZFTimeValue const &v)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFTimeValueToStringFriendly,
+                       ZFMP_IN_OUT(zfstring &, s),
+                       ZFMP_IN(ZFTimeValue const &, v))
 {
     ZFTimeInfo ti;
     if(ZFTime::timeInfoFromTimeValue(ti, v))
@@ -167,6 +157,8 @@ zfbool ZFTimeValueToStringFriendly(ZF_IN_OUT zfstring &s, ZF_IN ZFTimeValue cons
     }
     return zftrue;
 }
+ZFMETHOD_FUNC_DEFINE_INLINE_1(zfstring, ZFTimeValueToStringFriendly,
+                              ZFMP_IN(ZFTimeValue const &, v))
 
 zfbool operator <(ZF_IN const ZFTimeValue &v0, ZF_IN const ZFTimeValue &v1)
 {
@@ -238,9 +230,22 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFTimeValue, ZFTimeValue, {
 
 // ============================================================
 // ZFTimeInfo
-const ZFTimeInfo ZFTimeInfoZero = {0, 0, 0, 0, 0, 0, 0, 0};
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFTimeInfo, ZFTimeInfo)
+ZFEXPORT_VAR_READONLY_DEFINE(ZFTimeInfo, ZFTimeInfoZero, ZFTimeInfoMake(0, 0, 0, 0, 0, 0, 0, 0))
 
-zfbool ZFTimeInfoToString(ZF_IN_OUT zfstring &s, ZF_IN ZFTimeInfo const &v)
+ZFMETHOD_FUNC_DEFINE_INLINE_8(ZFTimeInfo, ZFTimeInfoMake,
+                              ZFMP_IN(zfint const &, year),
+                              ZFMP_IN(zfuint const &, month),
+                              ZFMP_IN(zfuint const &, day),
+                              ZFMP_IN(zfuint const &, hour),
+                              ZFMP_IN(zfuint const &, minute),
+                              ZFMP_IN(zfuint const &, second),
+                              ZFMP_IN(zfuint const &, miliSecond),
+                              ZFMP_IN(zfuint const &, microSecond))
+
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFTimeInfoToString,
+                       ZFMP_IN_OUT(zfstring &, s),
+                       ZFMP_IN(ZFTimeInfo const &, v))
 {
     zfstringAppend(s, zfText("%d-%02u-%02u %02u:%02u:%02u.%03u %03u"),
         v.year, v.month + 1, v.day + 1,
@@ -248,6 +253,8 @@ zfbool ZFTimeInfoToString(ZF_IN_OUT zfstring &s, ZF_IN ZFTimeInfo const &v)
         v.miliSecond, v.microSecond);
     return zftrue;
 }
+ZFMETHOD_FUNC_DEFINE_INLINE_1(zfstring, ZFTimeInfoToString,
+                              ZFMP_IN(ZFTimeInfo const &, v))
 
 // ============================================================
 #define _ZFP_ZFTimeImpl ZFPROTOCOL_ACCESS(ZFTime)
@@ -262,18 +269,18 @@ public:
     ZFTimeInfo ti;
 public:
     _ZFP_ZFTimePrivate(void)
-    : tv(ZFTimeValueZero)
-    , tz(ZFTimeValueZero)
-    , tvAppliedTimeZone(ZFTimeValueZero)
-    , ti(ZFTimeInfoZero)
+    : tv(ZFTimeValueZero())
+    , tz(ZFTimeValueZero())
+    , tvAppliedTimeZone(ZFTimeValueZero())
+    , ti(ZFTimeInfoZero())
     {
     }
     void clear(void)
     {
-        this->tv = ZFTimeValueZero;
-        this->tz = ZFTimeValueZero;
-        this->tvAppliedTimeZone = ZFTimeValueZero;
-        this->ti = ZFTimeInfoZero;
+        this->tv = ZFTimeValueZero();
+        this->tz = ZFTimeValueZero();
+        this->tvAppliedTimeZone = ZFTimeValueZero();
+        this->ti = ZFTimeInfoZero();
     }
     void copyFrom(_ZFP_ZFTimePrivate *p)
     {
@@ -332,12 +339,12 @@ zfbool ZFTime::serializableOnSerializeFromData(ZF_IN const ZFSerializableData &s
 {
     if(!zfsuperI(ZFSerializable)::serializableOnSerializeFromData(serializableData, outErrorHint, outErrorPos)) {return zffalse;}
 
-    ZFTimeValue timeValue = ZFTimeValueZero;
+    ZFTimeValue timeValue = ZFTimeValueZero();
     ZFSerializableUtilSerializeAttributeFromData(serializableData, outErrorHint, outErrorPos,
         check, ZFSerializableKeyword_ZFTime_timeValue, ZFTimeValue, timeValue);
     this->timeValueSet(timeValue);
 
-    ZFTimeValue timeZone = ZFTimeValueZero;
+    ZFTimeValue timeZone = ZFTimeValueZero();
     ZFSerializableUtilSerializeAttributeFromData(serializableData, outErrorHint, outErrorPos,
         check, ZFSerializableKeyword_ZFTime_timeZone, ZFTimeValue, timeZone);
     this->timeZoneSet(timeZone);
@@ -352,24 +359,26 @@ zfbool ZFTime::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &seria
     zfself *ref = ZFCastZFObject(zfself *, referencedOwnerOrNull);
 
     ZFSerializableUtilSerializeAttributeToData(serializableData, outErrorHint, ref,
-        ZFSerializableKeyword_ZFTime_timeValue, ZFTimeValue, this->timeValue(), ref->timeValue(), ZFTimeValueZero);
+        ZFSerializableKeyword_ZFTime_timeValue, ZFTimeValue, this->timeValue(), ref->timeValue(), ZFTimeValueZero());
 
     ZFSerializableUtilSerializeAttributeToData(serializableData, outErrorHint, ref,
-        ZFSerializableKeyword_ZFTime_timeZone, ZFTimeValue, this->timeZone(), ref->timeZone(), ZFTimeValueZero);
+        ZFSerializableKeyword_ZFTime_timeZone, ZFTimeValue, this->timeZone(), ref->timeZone(), ZFTimeValueZero());
 
     return zftrue;
 }
 
-zfbool ZFTime::leapYear(ZF_IN zfint year)
+ZFMETHOD_DEFINE_1(ZFTime, zfbool, leapYear,
+                  ZFMP_IN(zfint, year))
 {
     return _ZFP_ZFTimeImpl->leapYear(year);
 }
-zfint ZFTime::leapYearBetween(ZF_IN zfint year1,
-                              ZF_IN zfint year2)
+ZFMETHOD_DEFINE_2(ZFTime, zfint, leapYearBetween,
+                  ZFMP_IN(zfint, year1),
+                  ZFMP_IN(zfint, year2))
 {
     return _ZFP_ZFTimeImpl->leapYearBetween(year1, year2);
 }
-zftimet ZFTime::timestamp(void)
+ZFMETHOD_DEFINE_0(ZFTime, zftimet, timestamp)
 {
     return _ZFP_ZFTimeImpl->timestamp();
 }
@@ -486,25 +495,28 @@ ZFCompareResult ZFTime::objectCompare(ZF_IN ZFObject *anotherObj)
 
     return ZFTimeValueCompare(this->timeValueAppliedTimeZone(), another->timeValueAppliedTimeZone());
 }
-zfbool ZFTime::timeValueSet(ZF_IN const ZFTimeValue &tv)
+
+ZFMETHOD_DEFINE_1(ZFTime, zfbool, timeValueSet,
+                  ZFMP_IN(const ZFTimeValue &, tv))
 {
     d->timeValueSet(tv);
     return _ZFP_ZFTimeImpl->timeInfoFromTimeValue(d->ti, d->tvAppliedTimeZone);
 }
-const ZFTimeValue &ZFTime::timeValue(void)
+ZFMETHOD_DEFINE_0(ZFTime, const ZFTimeValue &, timeValue)
 {
     return d->tv;
 }
 
-zfbool ZFTime::timeZoneSet(ZF_IN_OPT const ZFTimeValue &timeZone /* = zfself::timeZoneLocal() */)
+ZFMETHOD_DEFINE_1(ZFTime, zfbool, timeZoneSet,
+                  ZFMP_IN_OPT(const ZFTimeValue &, timeZone, zfself::timeZoneLocal()))
 {
     return d->timeZoneSet(timeZone);
 }
-const ZFTimeValue &ZFTime::timeZone(void)
+ZFMETHOD_DEFINE_0(ZFTime, const ZFTimeValue &, timeZone)
 {
     return d->tz;
 }
-const ZFTimeValue &ZFTime::timeValueAppliedTimeZone(void)
+ZFMETHOD_DEFINE_0(ZFTime, const ZFTimeValue &, timeValueAppliedTimeZone)
 {
     return d->tvAppliedTimeZone;
 }
@@ -521,53 +533,54 @@ zfbool ZFTime::timeInfoSet(ZF_IN zfint year,
 {
     return d->timeInfoSet(ZFTimeInfoMake(year, month, day, hour, minute, second, miliSecond, microSecond), tz);
 }
-zfbool ZFTime::timeInfoSet(ZF_IN const ZFTimeInfo &ti,
-                        ZF_IN_OPT const ZFTimeValue &tz /* = ZFTime::timeZoneLocal() */)
+ZFMETHOD_DEFINE_2(ZFTime, zfbool, timeInfoSet,
+                  ZFMP_IN(const ZFTimeInfo &, ti),
+                  ZFMP_IN_OPT(const ZFTimeValue &, tz, ZFTime::timeZoneLocal()))
 {
     return d->timeInfoSet(ti, tz);
 }
-const ZFTimeInfo &ZFTime::timeInfo(void)
+ZFMETHOD_DEFINE_0(ZFTime, const ZFTimeInfo &, timeInfo)
 {
     return d->ti;
 }
 
-zfint ZFTime::timeInfoYear(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfint, timeInfoYear)
 {
     return d->ti.year;
 }
-zfuint ZFTime::timeInfoMonth(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoMonth)
 {
     return d->ti.month;
 }
-zfuint ZFTime::timeInfoDay(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoDay)
 {
     return d->ti.day;
 }
-zfuint ZFTime::timeInfoDayOfWeek(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoDayOfWeek)
 {
     return _ZFP_ZFTimeImpl->timeInfoDayOfWeek(d->tvAppliedTimeZone, d->ti);
 }
-zfuint ZFTime::timeInfoDayOfYear(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoDayOfYear)
 {
     return _ZFP_ZFTimeImpl->timeInfoDayOfYear(d->tvAppliedTimeZone, d->ti);
 }
-zfuint ZFTime::timeInfoHour(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoHour)
 {
     return d->ti.hour;
 }
-zfuint ZFTime::timeInfoMinute(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoMinute)
 {
     return d->ti.minute;
 }
-zfuint ZFTime::timeInfoSecond(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoSecond)
 {
     return d->ti.second;
 }
-zfuint ZFTime::timeInfoMiliSecond(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoMiliSecond)
 {
     return d->ti.miliSecond;
 }
-zfuint ZFTime::timeInfoMicroSecond(void)
+ZFMETHOD_DEFINE_0(ZFTime, zfuint, timeInfoMicroSecond)
 {
     return d->ti.microSecond;
 }

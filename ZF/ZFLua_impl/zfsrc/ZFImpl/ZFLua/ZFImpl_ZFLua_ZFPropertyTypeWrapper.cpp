@@ -65,7 +65,7 @@ static void _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapperSetup(ZF_IN lua_State *L, ZF_
             "    data = data or \"\"\n"
             "    return _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper(\"%s\", data)\n"
             "end\n"
-        ), cls->className(), cls->className());
+        ), cls->className() + ZFImpl_ZFLua_PropTypePrefixLen, cls->className());
     ZFImpl_ZFLua_execute(L, code);
 }
 static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper_classOnChange)

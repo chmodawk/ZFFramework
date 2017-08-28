@@ -82,7 +82,7 @@ void *ZFTimer::nativeTimer(void)
     return d->nativeTimer;
 }
 
-void ZFTimer::timerStart(void)
+ZFMETHOD_DEFINE_0(ZFTimer, void, timerStart)
 {
     if(d->timerStarted)
     {
@@ -95,7 +95,7 @@ void ZFTimer::timerStart(void)
     d->timerActivatedCount = 0;
     ZFPROTOCOL_ACCESS(ZFTimer)->timerStart(this);
 }
-void ZFTimer::timerStop(void)
+ZFMETHOD_DEFINE_0(ZFTimer, void, timerStop)
 {
     if(d->timerStarted)
     {
@@ -104,12 +104,12 @@ void ZFTimer::timerStop(void)
     }
 }
 
-zfbool ZFTimer::timerStarted(void)
+ZFMETHOD_DEFINE_0(ZFTimer, zfbool, timerStarted)
 {
     return d->timerStarted;
 }
 
-zfindex ZFTimer::timerActivatedCount(void)
+ZFMETHOD_DEFINE_0(ZFTimer, zfindex, timerActivatedCount)
 {
     return d->timerActivatedCount;
 }

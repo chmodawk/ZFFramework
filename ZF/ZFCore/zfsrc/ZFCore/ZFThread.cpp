@@ -536,22 +536,20 @@ ZFMETHOD_DEFINE_0(ZFThread, zfbool, isMainThread)
     return zffalse;
 }
 
-ZFMETHOD_DEFINE_2(ZFThread, void, autoReleasePoolAdd,
-                  ZFMP_IN(ZFObject *, obj),
-                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
+void ZFThread::autoReleasePoolAdd(ZF_IN ZFObject *obj,
+                                  ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
 {
     _ZFP_ZFThread_d->autoReleasePool->poolAdd(obj, enableLeakTest);
 }
 
-ZFMETHOD_DEFINE_3(ZFThread, void, autoReleasePoolAdd,
-                  ZFMP_IN(ZFObject *, obj),
-                  ZFMP_IN(const ZFCallerInfo &, callerInfo),
-                  ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue))
+void ZFThread::autoReleasePoolAdd(ZF_IN ZFObject *obj,
+                                  ZF_IN const ZFCallerInfo &callerInfo,
+                                  ZF_IN_OPT zfbool enableLeakTest /* = zftrue */)
 {
     _ZFP_ZFThread_d->autoReleasePool->poolAdd(obj, callerInfo, enableLeakTest);
 }
 
-ZFMETHOD_DEFINE_0(ZFThread, void, autoReleasePoolDrain)
+void ZFThread::autoReleasePoolDrain()
 {
     _ZFP_ZFThread_d->autoReleasePool->poolDrain();
 }

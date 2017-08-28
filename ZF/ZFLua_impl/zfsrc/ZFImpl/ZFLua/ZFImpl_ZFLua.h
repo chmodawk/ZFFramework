@@ -440,6 +440,10 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
     } while(zffalse)
 
 // ============================================================
+#define ZFImpl_ZFLua_PropTypePrefix zfText("v_")
+#define ZFImpl_ZFLua_PropTypePrefixLen 2
+
+// ============================================================
 /**
  * @brief run lua code, L must be first initialized by #ZFImpl_ZFLua_luaStateAttach
  */

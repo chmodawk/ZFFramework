@@ -185,18 +185,16 @@ public:
      * usually this method is called by #zfautoRelease
      * @see ZFAutoReleasePool
      */
-    ZFMETHOD_DECLARE_2(void, autoReleasePoolAdd,
-                       ZFMP_IN(ZFObject *, obj),
-                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
+    virtual void autoReleasePoolAdd(ZF_IN ZFObject *obj,
+                                    ZF_IN_OPT zfbool enableLeakTest = zftrue);
     /**
      * @brief add object to auto release pool attached to this thread with location info,
      *   used by ZFLeakTest
      * @see ZFAutoReleasePool
      */
-    ZFMETHOD_DECLARE_3(void, autoReleasePoolAdd,
-                       ZFMP_IN(ZFObject *, obj),
-                       ZFMP_IN(const ZFCallerInfo &, callerInfo),
-                       ZFMP_IN_OPT(zfbool, enableLeakTest, zftrue));
+    virtual void autoReleasePoolAdd(ZF_IN ZFObject *obj,
+                                    ZF_IN const ZFCallerInfo &callerInfo,
+                                    ZF_IN_OPT zfbool enableLeakTest = zftrue);
     /**
      * @brief manually drain auto release pool
      *
@@ -204,7 +202,7 @@ public:
      * called automatically after each time that runnable ends
      * @see ZFAutoReleasePool
      */
-    ZFMETHOD_DECLARE_0(void, autoReleasePoolDrain);
+    virtual void autoReleasePoolDrain();
     zffinal void _ZFP_ZFThreadAutoReleasePoolAdd(ZF_IN ZFObject *obj,
                                                  ZF_IN const ZFCallerInfo &callerInfo,
                                                  ZF_IN zfbool enableLeakTest);

@@ -94,7 +94,7 @@ protected:
         this->testCaseOutput(zfText("current time:"));
         this->testCaseOutput(_ZFP_ZFCore_ZFTime_test_printZFTime(t));
 
-        zfblockedAlloc(ZFTime, t2, ZFTimeValueZero);
+        zfblockedAlloc(ZFTime, t2, ZFTimeValueZero());
         this->testCaseOutput(zfText("zero time:"));
         this->testCaseOutput(_ZFP_ZFCore_ZFTime_test_printZFTime(t2));
 

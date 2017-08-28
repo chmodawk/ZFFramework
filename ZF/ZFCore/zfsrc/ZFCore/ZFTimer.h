@@ -153,22 +153,22 @@ public:
     /**
      * @brief start the timer
      */
-    virtual void timerStart(void);
+    ZFMETHOD_DECLARE_0(void, timerStart);
     /**
      * @brief stop the timer
      */
-    virtual void timerStop(void);
+    ZFMETHOD_DECLARE_0(void, timerStop);
     /**
      * @brief true if started
      */
-    virtual zfbool timerStarted(void);
+    ZFMETHOD_DECLARE_0(zfbool, timerStarted);
 
 public:
     /**
      * @brief get timer's current fired count, with 1 as first fired time's value,
      *   keep after timer stop, but reset before timer start
      */
-    virtual zfindex timerActivatedCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, timerActivatedCount);
 
 public:
     zffinal void _ZFP_ZFTimer_timerOnStart(void);
