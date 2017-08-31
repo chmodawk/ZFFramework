@@ -12,7 +12,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-void ZFLuaGC(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFLuaGC)
 {
     ZFPROTOCOL_ACCESS(ZFLua)->luaGC();
 }

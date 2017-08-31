@@ -307,13 +307,13 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     ZFUISize labelSize = ZFUISizeZero;
     if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
     {
-        labelSize = labelView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight);
+        labelSize = labelView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize iconSize = ZFUISizeZero;
     if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
     {
-        iconSize = iconView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight);
+        iconSize = iconView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize backgroundSize = ZFUISizeZero;
@@ -336,7 +336,7 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                 sizeHintBg.height = 0;
             }
         }
-        backgroundSize = backgroundView->layoutMeasure(sizeHintBg, ZFUISizeParamWrapWidthWrapHeight);
+        backgroundSize = backgroundView->layoutMeasure(sizeHintBg, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize contentSize = ZFUISizeZero;
@@ -403,13 +403,13 @@ void ZFUIButtonBasic::internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &bound
     ZFUISize labelSize = ZFUISizeZero;
     if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
     {
-        labelSize = labelView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight);
+        labelSize = labelView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize iconSize = ZFUISizeZero;
     if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
     {
-        iconSize = iconView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight);
+        iconSize = iconView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUIRect contentFrame = ZFUIRectZero;

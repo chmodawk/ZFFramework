@@ -70,13 +70,14 @@ public:
      * you must take good care when calling this method\n
      * main thread has no need to register
      */
-    static void *nativeThreadRegister(void);
+    ZFMETHOD_DECLARE_STATIC_0(void *, nativeThreadRegister);
     /**
      * @brief see #nativeThreadRegister
      *
      * it's safe to unregister in different thread using token
      */
-    static void nativeThreadUnregister(ZF_IN void *token);
+    ZFMETHOD_DECLARE_STATIC_1(void, nativeThreadUnregister,
+                              ZFMP_IN(void *, token));
 
 public:
     /**

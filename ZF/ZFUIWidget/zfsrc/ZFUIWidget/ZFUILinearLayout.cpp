@@ -133,7 +133,7 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *
             {
                 child->layoutMeasure(
                     ZFUISizeMake(layoutParam->sizeHint().width, sizeHintTmp),
-                    ZFUISizeParamWrapWidthWrapHeight);
+                    ZFUISizeParamWrapWidthWrapHeight());
                 sizeHintTmp = child->layoutMeasuredSize().height;
                 if(sizeHintTmp < ret.height)
                 {
@@ -186,7 +186,7 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *pa
             {
                 child->layoutMeasure(
                     ZFUISizeMake(sizeHintTmp, layoutParam->sizeHint().height),
-                    ZFUISizeParamWrapWidthWrapHeight);
+                    ZFUISizeParamWrapWidthWrapHeight());
                 sizeHintTmp = child->layoutMeasuredSize().width;
                 if(sizeHintTmp < ret.width)
                 {

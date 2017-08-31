@@ -16,7 +16,8 @@ ZFOBJECT_REGISTER(ZFUIOnScreenKeyboardState)
 
 ZFOBSERVER_EVENT_REGISTER(ZFUIOnScreenKeyboardState, KeyboardStateOnChange)
 
-ZFUIOnScreenKeyboardState *ZFUIOnScreenKeyboardState::instanceForSysWindow(ZF_IN_OPT ZFUISysWindow *windowSysWindow /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFUIOnScreenKeyboardState, ZFUIOnScreenKeyboardState *, instanceForSysWindow,
+                  ZFMP_IN_OPT(ZFUISysWindow *, windowSysWindow, zfnull))
 {
     if(windowSysWindow == zfnull)
     {
@@ -32,30 +33,32 @@ ZFUIOnScreenKeyboardState *ZFUIOnScreenKeyboardState::instanceForSysWindow(ZF_IN
     }
     return ret;
 }
-ZFUIOnScreenKeyboardState *ZFUIOnScreenKeyboardState::instanceForView(ZF_IN_OPT ZFUIView *view /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFUIOnScreenKeyboardState, ZFUIOnScreenKeyboardState *, instanceForView,
+                  ZFMP_IN_OPT(ZFUIView *, view, zfnull))
 {
     return ZFUIOnScreenKeyboardState::instanceForSysWindow(ZFUIWindow::sysWindowForView(view));
 }
 
-ZFUISysWindow *ZFUIOnScreenKeyboardState::windowSysWindow(void)
+ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, ZFUISysWindow *, windowSysWindow)
 {
     return _ZFP_ZFUIOnScreenKeyboardState_windowSysWindow;
 }
 
-zfbool ZFUIOnScreenKeyboardState::keyboardShowing(void)
+ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, zfbool, keyboardShowing)
 {
     return this->_ZFP_ZFUIOnScreenKeyboardState_keyboardShowing;
 }
-const ZFUIRect &ZFUIOnScreenKeyboardState::keyboardFrame(void)
+ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, const ZFUIRect &, keyboardFrame)
 {
     return this->_ZFP_ZFUIOnScreenKeyboardState_keyboardFrame;
 }
-const ZFUIRect &ZFUIOnScreenKeyboardState::keyboardFramePrev(void)
+ZFMETHOD_DEFINE_0(ZFUIOnScreenKeyboardState, const ZFUIRect &, keyboardFramePrev)
 {
     return this->_ZFP_ZFUIOnScreenKeyboardState_keyboardFramePrev;
 }
 
-void ZFUIOnScreenKeyboardState::keyboardFixClientFrameT(ZF_OUT ZFUIRect &clientFrame)
+ZFMETHOD_DEFINE_1(ZFUIOnScreenKeyboardState, void, keyboardFixClientFrameT,
+                  ZFMP_OUT(ZFUIRect &, clientFrame))
 {
     zffloat scale = this->windowSysWindow()->rootView()->scaleGetFixed();
     ZFPROTOCOL_ACCESS(ZFUIOnScreenKeyboardState)->keyboardFixClientFrame(

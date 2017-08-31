@@ -261,7 +261,7 @@ ZFUIAlignEnum ZFUIAlignGetY(ZF_IN const ZFUIAlignFlags &align)
 
 // ============================================================
 // ZFUIColor
-const ZFUIColor ZFUIColorZero = ((ZFUIColor)0x00000000);
+ZFEXPORT_VAR_READONLY_DEFINE(ZFUIColor, ZFUIColorZero, ((ZFUIColor)0x00000000))
 ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFUIColor, ZFUIColor, {
         zft_zfuint32 c = 0;
         do
@@ -304,6 +304,14 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFUIColor, ZFUIColor, {
             ZFUIColorGetB(v));
         return zftrue;
     })
+
+ZFMETHOD_FUNC_DEFINE_INLINE_4(ZFUIColor, ZFUIColorMake,
+                              ZFMP_IN(zfuint, a),
+                              ZFMP_IN(zfuint, r),
+                              ZFMP_IN(zfuint, g),
+                              ZFMP_IN(zfuint, b))
+ZFMETHOD_FUNC_DEFINE_INLINE_1(ZFUIColor, ZFUIColorMake,
+                              ZFMP_IN(zft_zfuint32, c))
 
 // ============================================================
 ZFENUM_DEFINE(ZFUIOrientation)

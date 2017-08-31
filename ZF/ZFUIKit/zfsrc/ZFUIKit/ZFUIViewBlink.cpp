@@ -78,7 +78,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
         zfblockedAllocWithoutLeakTest(_ZFP_ZFUIViewBlinkView, t);
         view->internalForegroundViewAdd(t);
         view->tagSetMarkCached(_ZFP_ZFUIViewBlink_tag_blinkView, t);
-        t->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        t->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         blinkView = t;
     }
     blinkView->imageContentSet((blinkParam.blinkImage() != zfnull)

@@ -67,7 +67,7 @@ ZFObject *ZFUIWindow::objectOnInit(void)
     d = zfpoolNew(_ZFP_ZFUIWindowPrivate);
     d->windowSysWindow = ZFUISysWindow::mainWindow();
     d->windowLayoutParam = zfAlloc(ZFUIViewLayoutParam);
-    d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     return this;
 }
 void ZFUIWindow::objectOnDealloc(void)

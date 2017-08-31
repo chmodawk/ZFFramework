@@ -38,14 +38,14 @@ static void _ZFP_ZFUIListCellView_measureContent(ZF_IN ZFUIListCellView *view,
                                                  ZF_OUT ZFUISize &cellCenterSize,
                                                  ZF_OUT ZFUISize &cellAccessorySize)
 {
-    view->cellIconContainer()->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight);
+    view->cellIconContainer()->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     cellIconSize = view->cellIconContainer()->layoutMeasuredSize();
     if(cellIconSize.width > 0)
     {
         cellIconSize = ZFUISizeApplyMarginReversely(cellIconSize, view->cellIconContainer()->layoutParam()->layoutMargin());
     }
 
-    view->cellAccessoryContainer()->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight);
+    view->cellAccessoryContainer()->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     cellAccessorySize = view->cellAccessoryContainer()->layoutMeasuredSize();
     if(cellAccessorySize.width > 0)
     {
@@ -62,7 +62,7 @@ static void _ZFP_ZFUIListCellView_measureContent(ZF_IN ZFUIListCellView *view,
             cellCenterSizeHint.width = 0;
         }
     }
-    view->cellCenterContainer()->layoutMeasure(cellCenterSizeHint, ZFUISizeParamFillWidthWrapHeight);
+    view->cellCenterContainer()->layoutMeasure(cellCenterSizeHint, ZFUISizeParamFillWidthWrapHeight());
     cellCenterSize = view->cellCenterContainer()->layoutMeasuredSize();
     cellCenterSize.width += ZFUIMarginGetX(view->cellCenterContainer()->layoutParam()->layoutMargin());
 }

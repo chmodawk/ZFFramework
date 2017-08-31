@@ -94,6 +94,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     -  #ZFObject, would be converted by #ZFObject::objectInfo
  *     -  lua string type, converted by #ZFImpl_ZFLua_toString
  *     -  any lua type, converted by #ZFImpl_ZFLua_luaObjectInfo
+ *
+ *     note: the va_args support params up to #ZFMETHOD_MAX_PARAM
  *   -  `zfl_tableInfo(v)`
  *     or `zfl_tableInfoPrint`\n
  *     return string that represents the table
@@ -104,10 +106,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * -  for dynamically loaded library, all types would also be registered normally,
  *   however, won't be automatically unregistered when unloaded
  */
-extern ZF_ENV_EXPORT zfbool ZFLuaExecute(ZF_IN const ZFInputCallback &input);
+ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFLuaExecute,
+                        ZFMP_IN(const ZFInputCallback &, input))
 /** @brief see #ZFLuaExecute */
-extern ZF_ENV_EXPORT zfbool ZFLuaExecute(ZF_IN const zfchar *buf,
-                                         ZF_IN_OPT zfindex bufLen = zfindexMax);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFLuaExecute,
+                        ZFMP_IN(const zfchar *, buf),
+                        ZFMP_IN_OPT(zfindex, bufLen, zfindexMax))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLuaExecute_h_

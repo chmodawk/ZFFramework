@@ -61,7 +61,7 @@ public:
     /**
      * @brief native animation
      */
-    virtual void *nativeAnimation(void);
+    ZFMETHOD_DECLARE_0(void *, nativeAnimation);
 
     // ============================================================
     // property

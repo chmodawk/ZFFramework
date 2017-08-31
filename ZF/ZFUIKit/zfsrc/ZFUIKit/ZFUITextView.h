@@ -105,7 +105,7 @@ public:
      * note that implementation may have no text shadow support
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIColor, textShadowColor,
-                                ZFPropertyInitValue(ZFUIColorTransparent))
+                                ZFPropertyInitValue(ZFUIColorTransparent()))
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIColor, textShadowColor);
 
     /**

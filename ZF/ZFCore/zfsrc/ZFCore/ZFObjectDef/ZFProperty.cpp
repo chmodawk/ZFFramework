@@ -79,7 +79,7 @@ void ZFProperty::_ZFP_ZFPropertyInit(ZF_IN zfbool propertyIsUserRegister,
     this->_ZFP_ZFProperty_name = name;
     this->_ZFP_ZFProperty_typeName = typeName;
     if(propertyClassOfRetainProperty == zfnull && zfscmpTheSame(typeIdName, ZFPropertyTypeId_ZFObject))
-    {
+    { // assign property with ZFObject type, is not serializable
         this->_ZFP_ZFProperty_typeId = ZFPropertyTypeId_none;
     }
     else

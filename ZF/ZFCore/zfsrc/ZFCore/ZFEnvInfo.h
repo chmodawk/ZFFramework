@@ -26,12 +26,12 @@ ZF_NAMESPACE_BEGIN(ZFEnvInfo)
 /**
  * @brief util method to get summary info
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_1(ZFEnvInfo, void, envSummary,
-                                       ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, void, envSummary,
+                                ZFMP_IN_OUT(zfstring &, ret))
 /**
  * @brief name of native system, e.g. "iOS", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0(ZFEnvInfo, zfstring, envSummary)
+ZFMETHOD_FUNC_DECLARE_WITH_NS_0(ZFEnvInfo, zfstring, envSummary)
 
 /**
  * @brief register a callback to output custom env info, see #envSummary
@@ -44,41 +44,41 @@ extern ZF_ENV_EXPORT void envSummaryCallbackUnregister(ZF_IN const zfchar *name)
 /**
  * @brief name of native system, e.g. "iOS", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_1(ZFEnvInfo, void, systemName,
-                                       ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, void, systemName,
+                                ZFMP_IN_OUT(zfstring &, ret))
 /**
  * @brief name of native system, e.g. "iOS", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0(ZFEnvInfo, zfstring, systemName)
+ZFMETHOD_FUNC_DECLARE_WITH_NS_0(ZFEnvInfo, zfstring, systemName)
 /**
  * @brief version of native system, e.g. "9.0.1", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_1(ZFEnvInfo, void, systemVersion,
-                                       ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, void, systemVersion,
+                                ZFMP_IN_OUT(zfstring &, ret))
 /**
  * @brief version of native system, e.g. "9.0.1", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0(ZFEnvInfo, zfstring, systemVersion)
+ZFMETHOD_FUNC_DECLARE_WITH_NS_0(ZFEnvInfo, zfstring, systemVersion)
 
 // ============================================================
 /**
  * @brief name of native framework, e.g. "Qt", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_1(ZFEnvInfo, void, frameworkName,
-                                       ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, void, frameworkName,
+                                ZFMP_IN_OUT(zfstring &, ret))
 /**
  * @brief name of native framework, e.g. "Qt", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0(ZFEnvInfo, zfstring, frameworkName)
+ZFMETHOD_FUNC_DECLARE_WITH_NS_0(ZFEnvInfo, zfstring, frameworkName)
 /**
  * @brief version of native framework, e.g. "9.0.1", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_1(ZFEnvInfo, void, frameworkVersion,
-                                       ZFMP_IN_OUT(zfstring &, ret))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, void, frameworkVersion,
+                                ZFMP_IN_OUT(zfstring &, ret))
 /**
  * @brief version of native framework, e.g. "9.0.1", empty if not available
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0(ZFEnvInfo, zfstring, frameworkVersion)
+ZFMETHOD_FUNC_DECLARE_WITH_NS_0(ZFEnvInfo, zfstring, frameworkVersion)
 
 ZF_NAMESPACE_END(ZFEnvInfo)
 ZF_NAMESPACE_GLOBAL_END

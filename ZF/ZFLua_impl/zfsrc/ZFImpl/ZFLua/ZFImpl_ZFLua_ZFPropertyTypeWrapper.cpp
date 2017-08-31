@@ -17,7 +17,7 @@ static int _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper(ZF_IN lua_State *L)
     if(!ZFImpl_ZFLua_toString(className, L, 1))
     {
         ZFLuaErrorOccurredTrim(zfText("[ZFPropertyTypeWrapper] unable to access class name, expect string type, got %s"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
     const ZFClass *cls = ZFClass::classForName(className);

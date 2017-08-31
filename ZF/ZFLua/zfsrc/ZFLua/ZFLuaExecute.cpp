@@ -12,13 +12,15 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-zfbool ZFLuaExecute(ZF_IN const ZFInputCallback &input)
+ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFLuaExecute,
+                       ZFMP_IN(const ZFInputCallback &, input))
 {
     ZFBuffer buf = ZFInputCallbackReadToBuffer(input);
     return ZFLuaExecute(buf.bufferAsString(), buf.bufferAsStringLength());
 }
-zfbool ZFLuaExecute(ZF_IN const zfchar *buf,
-                    ZF_IN_OPT zfindex bufLen /* = zfindexMax */)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFLuaExecute,
+                       ZFMP_IN(const zfchar *, buf),
+                       ZFMP_IN_OPT(zfindex, bufLen, zfindexMax))
 {
     zfstring errHint;
     if(!ZFPROTOCOL_ACCESS(ZFLua)->luaExecute(buf, bufLen, &errHint))

@@ -37,7 +37,7 @@ zfclassFwd _ZFP_I_ZFStyleable_PropertyTypeHolder;
  */
 zfinterface ZF_ENV_EXPORT ZFStyleable : zfextends ZFInterface
 {
-    ZFINTERFACE_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFStyleable, ZFSerializable, ZFCopyable)
+    ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(ZFStyleable, ZFSerializable, ZFCopyable)
 
 protected:
     /** @cond ZFPrivateDoc */

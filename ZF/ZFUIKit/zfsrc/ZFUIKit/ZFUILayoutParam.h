@@ -72,8 +72,9 @@ ZFCORE_POD_COMPARER_DECLARE(ZFUISizeParam)
 /**
  * @brief make a ZFUISizeParam
  */
-inline ZFUISizeParam ZFUISizeParamMake(ZF_IN ZFUISizeTypeEnum const &width,
-                                       ZF_IN ZFUISizeTypeEnum const &height)
+ZFMETHOD_FUNC_DECLARE_INLINE_2(ZFUISizeParam, ZFUISizeParamMake,
+                               ZFMP_IN(ZFUISizeTypeEnum const &, width),
+                               ZFMP_IN(ZFUISizeTypeEnum const &, height))
 {
     ZFUISizeParam ret = {width, height};
     return ret;
@@ -81,7 +82,8 @@ inline ZFUISizeParam ZFUISizeParamMake(ZF_IN ZFUISizeTypeEnum const &width,
 /**
  * @brief make a ZFUISizeParam
  */
-inline ZFUISizeParam ZFUISizeParamMake(ZF_IN ZFUISizeTypeEnum const &v)
+ZFMETHOD_FUNC_DECLARE_INLINE_1(ZFUISizeParam, ZFUISizeParamMake,
+                               ZFMP_IN(ZFUISizeTypeEnum const &, v))
 {
     ZFUISizeParam ret = {v, v};
     return ret;
@@ -90,19 +92,19 @@ inline ZFUISizeParam ZFUISizeParamMake(ZF_IN ZFUISizeTypeEnum const &v)
 /**
  * @brief #ZFUISizeParamMake(#ZFUISizeType::e_Wrap, #ZFUISizeType::e_Wrap)
  */
-extern ZF_ENV_EXPORT const ZFUISizeParam ZFUISizeParamWrapWidthWrapHeight;
+ZFEXPORT_VAR_READONLY_DECLARE(ZFUISizeParam, ZFUISizeParamWrapWidthWrapHeight)
 /**
  * @brief #ZFUISizeParamMake(#ZFUISizeType::e_Fill, #ZFUISizeType::e_Wrap)
  */
-extern ZF_ENV_EXPORT const ZFUISizeParam ZFUISizeParamFillWidthWrapHeight;
+ZFEXPORT_VAR_READONLY_DECLARE(ZFUISizeParam, ZFUISizeParamFillWidthWrapHeight)
 /**
  * @brief #ZFUISizeParamMake(#ZFUISizeType::e_Wrap, #ZFUISizeType::e_Fill)
  */
-extern ZF_ENV_EXPORT const ZFUISizeParam ZFUISizeParamWrapWidthFillHeight;
+ZFEXPORT_VAR_READONLY_DECLARE(ZFUISizeParam, ZFUISizeParamWrapWidthFillHeight)
 /**
  * @brief #ZFUISizeParamMake(#ZFUISizeType::e_Fill, #ZFUISizeType::e_Fill)
  */
-extern ZF_ENV_EXPORT const ZFUISizeParam ZFUISizeParamFillWidthFillHeight;
+ZFEXPORT_VAR_READONLY_DECLARE(ZFUISizeParam, ZFUISizeParamFillWidthFillHeight)
 
 // ============================================================
 // ZFUILayoutParam

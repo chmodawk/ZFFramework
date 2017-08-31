@@ -31,7 +31,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *
  * the variable are exported as #ZFMETHOD_FUNC_DECLARE_0,
  * and can only be exported to global #ZFMethodFuncNamespaceGlobal namespace,
- * for other namespace, you may declare #ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_0 manually\n
+ * for other namespace, you may declare #ZFMETHOD_FUNC_DECLARE_WITH_NS_0 manually\n
  * usage:
  * @code
  *   // in header file

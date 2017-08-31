@@ -67,15 +67,15 @@ protected:
 
         zfblockedAlloc(ZFUIView, outputViewContainer);
         container->childAdd(outputViewContainer);
-        outputViewContainer->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        outputViewContainer->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         outputViewContainer->layoutParam()->layoutMarginSet(ZFUIMarginMake(0, 50, 0, 0));
-        outputViewContainer->viewBackgroundColorSet(ZFUIColorBlack);
+        outputViewContainer->viewBackgroundColorSet(ZFUIColorBlack());
 
         zfblockedAlloc(ZFUITextView, outputView);
         outputViewContainer->childAdd(outputView);
-        outputView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        outputView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         outputView->textSingleLineSet(zffalse);
-        outputView->textColorSet(ZFUIColorWhite);
+        outputView->textColorSet(ZFUIColorWhite());
         outputView->textContentStringSet(zfText("press start"));
 
         zfblockedAlloc(ZFUIKit_test_Button, startButton);
@@ -179,7 +179,7 @@ public:
             case 1:
             {
                 zfblockedAlloc(ZFUIImageView, v);
-                v->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRed).toAny());
+                v->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRed()).toAny());
                 return zfautoObjectCreate(v);
             }
             case 2:

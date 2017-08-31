@@ -190,7 +190,7 @@ zfclassFwd _ZFP_I_ZFSerializablePropertyTypeHolder;
  */
 zfinterface ZF_ENV_EXPORT ZFSerializable : zfextends ZFInterface
 {
-    ZFINTERFACE_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFSerializable, ZFInterface)
+    ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(ZFSerializable, ZFInterface)
 
     // ============================================================
     // edit mode

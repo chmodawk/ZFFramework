@@ -354,10 +354,10 @@ public:
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUISize, viewSizeMax);
 
     /**
-     * @brief background color, ZFUIColorTransparent by default
+     * @brief background color, #ZFUIColorTransparent by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIColor, viewBackgroundColor,
-                                ZFPropertyInitValue(ZFUIColorTransparent))
+                                ZFPropertyInitValue(ZFUIColorTransparent()))
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIColor, viewBackgroundColor);
 
     // ============================================================

@@ -441,16 +441,75 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
 // utils
 void ZFImpl_ZFLua_luaObjectInfoT(ZF_OUT zfstring &ret,
                                  ZF_IN lua_State *L,
-                                 ZF_IN zfint luaStackOffset)
+                                 ZF_IN zfint luaStackOffset,
+                                 ZF_IN_OPT zfbool printLuaType /* = zffalse */)
 {
-    ret += zfText("(");
-    ret += zfsCoreA2Z(luaL_typename(L, luaStackOffset));
-    ret += zfText(")");
-
-    const char *info = lua_tolstring(L, luaStackOffset, NULL);
-    if(info != NULL)
+    if(printLuaType)
     {
-        ret += zfsCoreA2Z(info);
+        ret += zfText("(");
+        ret += zfsCoreA2Z(luaL_typename(L, luaStackOffset));
+        ret += zfText(")");
+    }
+
+    switch(lua_type(L, luaStackOffset))
+    {
+        case LUA_TNIL:
+            ret += zfText("nil");
+            break;
+        case LUA_TBOOLEAN:
+            zfboolToString(ret, (lua_toboolean(L, luaStackOffset) != 0));
+            break;
+        case LUA_TLIGHTUSERDATA:
+        case LUA_TUSERDATA:
+            {
+                zfautoObject obj;
+                if(ZFImpl_ZFLua_toObject(obj, L, luaStackOffset))
+                {
+                    ZFObjectInfoT(ret, obj);
+                }
+                else
+                {
+                    zfsFromPointerT(ret, lua_topointer(L, luaStackOffset));
+                }
+            }
+            break;
+        case LUA_TNUMBER:
+            zfdoubleToString(ret, (zfdouble)(zft_zfdouble)lua_tonumber(L, luaStackOffset));
+            break;
+        case LUA_TSTRING:
+            ret += ZFStringA2Z(lua_tostring(L, luaStackOffset));
+            break;
+        case LUA_TTABLE:
+            lua_getglobal(L, "zfl_tableInfo");
+            if(lua_isnil(L, -1))
+            {
+                lua_pop(L, 1);
+                zfsFromPointerT(ret, lua_topointer(L, luaStackOffset));
+            }
+            else
+            {
+                if(luaStackOffset < 0)
+                {
+                    lua_pushvalue(L, luaStackOffset - 1);
+                }
+                else
+                {
+                    lua_pushvalue(L, luaStackOffset);
+                }
+                lua_call(L, 1, 1);
+                ret += ZFStringA2Z(lua_tostring(L, -1));
+                lua_pop(L, 1);
+            }
+            break;
+        case LUA_TFUNCTION:
+            zfsFromPointerT(ret, lua_topointer(L, luaStackOffset));
+            break;
+        case LUA_TTHREAD:
+            zfsFromPointerT(ret, lua_topointer(L, luaStackOffset));
+            break;
+        default:
+            ret += zfText("<Unknown>");
+            break;
     }
 }
 zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,

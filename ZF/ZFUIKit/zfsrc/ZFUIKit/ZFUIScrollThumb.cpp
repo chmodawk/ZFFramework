@@ -90,7 +90,8 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIScrollThumbRegister, ZFLevelZFFramewor
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIScrollThumbRegister)
 
-void ZFUIScrollThumbHorizontalClassSet(ZF_IN const ZFClass *cls)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIScrollThumbHorizontalClassSet,
+                       ZFMP_IN(const ZFClass *, cls))
 {
     if(cls != zfnull && !cls->classIsTypeOf(ZFUIScrollThumb::ClassData()))
     {
@@ -106,12 +107,13 @@ void ZFUIScrollThumbHorizontalClassSet(ZF_IN const ZFClass *cls)
     }
     _ZFP_ZFUIScrollThumbHorizontal_cls = cls;
 }
-const ZFClass *ZFUIScrollThumbHorizontalClass(void)
+ZFMETHOD_FUNC_DEFINE_0(const ZFClass *, ZFUIScrollThumbHorizontalClass)
 {
     return _ZFP_ZFUIScrollThumbHorizontal_cls;
 }
 
-void ZFUIScrollThumbVerticalClassSet(ZF_IN const ZFClass *cls)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIScrollThumbVerticalClassSet,
+                       ZFMP_IN(const ZFClass *, cls))
 {
     if(cls != zfnull && !cls->classIsTypeOf(ZFUIScrollThumb::ClassData()))
     {
@@ -127,7 +129,7 @@ void ZFUIScrollThumbVerticalClassSet(ZF_IN const ZFClass *cls)
     }
     _ZFP_ZFUIScrollThumbVertical_cls = cls;
 }
-const ZFClass *ZFUIScrollThumbVerticalClass(void)
+ZFMETHOD_FUNC_DEFINE_0(const ZFClass *, ZFUIScrollThumbVerticalClass)
 {
     return _ZFP_ZFUIScrollThumbVertical_cls;
 }

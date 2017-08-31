@@ -21,20 +21,20 @@ ZF_NAMESPACE_BEGIN(ZFFileUtil)
 /**
  * @brief list all files, usually for debug use
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_4(ZFFileUtil, void, fileList,
-                                       ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
-                                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
-                                       ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
-                                       ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_4(ZFFileUtil, void, fileList,
+                                ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
+                                ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                                ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
+                                ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
 
 /**
  * @brief list all resource files, usually for debug use
  */
-ZFMETHOD_FUNC_DECLARE_WITH_NAMESPACE_4(ZFFileUtil, void, resFileList,
-                                       ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
-                                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
-                                       ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
-                                       ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
+ZFMETHOD_FUNC_DECLARE_WITH_NS_4(ZFFileUtil, void, resFileList,
+                                ZFMP_IN_OPT(const zfchar *, path, zfText(".")),
+                                ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
+                                ZFMP_IN_OPT(const zfchar *, headToken, zfnull),
+                                ZFMP_IN_OPT(const zfchar *, indentToken, zfText("  ")))
 
 ZF_NAMESPACE_END(ZFFileUtil)
 ZF_NAMESPACE_GLOBAL_END

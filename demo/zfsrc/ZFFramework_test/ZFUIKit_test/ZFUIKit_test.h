@@ -21,7 +21,7 @@ zfclass ZFUIKit_test_Window : zfextends ZFUIWindow
 
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIColor, viewBackgroundColor)
     {
-        propertyValue = ZFUIColorWhite;
+        propertyValue = ZFUIColorWhite();
     }
 };
 
@@ -32,12 +32,12 @@ zfclass ZFUIKit_test_Button : zfextends ZFUIButtonBasic
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUIImageView *, buttonBackgroundStyleNormal);
-        propertyValue.to<ZFUIImageView *>()->viewBackgroundColorSet(ZFUIColorGreen);
+        propertyValue.to<ZFUIImageView *>()->viewBackgroundColorSet(ZFUIColorGreen());
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleHighlighted)
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUIImageView *, buttonBackgroundStyleHighlighted);
-        propertyValue.to<ZFUIImageView *>()->viewBackgroundColorSet(ZFUIColorBlue);
+        propertyValue.to<ZFUIImageView *>()->viewBackgroundColorSet(ZFUIColorBlue());
     }
 };
 
@@ -59,7 +59,7 @@ protected:
     {
         zfsuper::layoutParamOnUpdate(layoutParam);
 
-        layoutParam->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        layoutParam->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         layoutParam->layoutAlignSet(ZFUIAlign::e_TopInner);
     }
     zfoverride
@@ -70,7 +70,7 @@ protected:
         zfint contentHeight = 0;
         zfint space = 4;
         ZFUISize childMeasureSizeHint = ZFUISizeMake(bounds.size.width - space * 2, -1);
-        ZFUISizeParam childMeasureSizeParam = ZFUISizeParamFillWidthWrapHeight;
+        ZFUISizeParam childMeasureSizeParam = ZFUISizeParamFillWidthWrapHeight();
 
         for(zfindex i = 0; i < this->childCount(); ++i)
         {

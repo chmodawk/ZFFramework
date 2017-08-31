@@ -123,7 +123,7 @@ ZFObject *ZFUISysWindow::objectOnInit(void)
     d = zfpoolNew(_ZFP_ZFUISysWindowPrivate);
     d->windowRootView = zfAlloc(ZFUIRootView);
     d->windowLayoutParam = zfAllocWithoutLeakTest(ZFUIViewLayoutParam);
-    d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     d->impl->updateSuggestedWindowLayoutParam(this);
     d->windowLayoutParam->observerAdd(ZFUILayoutParam::EventLayoutParamOnChange(), d->windowLayoutParamOnChangeListener, this->objectHolder());
     return this;

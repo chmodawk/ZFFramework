@@ -23,7 +23,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 zfclass ZF_ENV_EXPORT ZFEvent : zfextends ZFObject, zfimplements ZFCacheable
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFEvent, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFEvent, ZFObject)
     ZFIMPLEMENTS_DECLARE(ZFCacheable)
 
 protected:

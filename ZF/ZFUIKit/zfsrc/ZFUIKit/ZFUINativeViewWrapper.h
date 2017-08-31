@@ -54,11 +54,12 @@ public:
     /**
      * @brief see #ZFUINativeViewWrapper
      */
-    virtual void wrappedNativeViewSet(ZF_IN void *wrappedNativeView);
+    ZFMETHOD_DECLARE_1(void, wrappedNativeViewSet,
+                       ZFMP_IN(void *, wrappedNativeView));
     /**
      * @brief see #ZFUINativeViewWrapper
      */
-    virtual void *wrappedNativeView(void);
+    ZFMETHOD_DECLARE_0(void *, wrappedNativeView);
 
 protected:
     zfoverride

@@ -10,7 +10,8 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject ZFUIImageLoadFromInputWithCache(ZF_IN const ZFInputCallback &input)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
+                       ZFMP_IN(const ZFInputCallback &, input))
 {
     if(input.callbackId() == zfnull)
     {
@@ -32,8 +33,9 @@ zfautoObject ZFUIImageLoadFromInputWithCache(ZF_IN const ZFInputCallback &input)
     return cached;
 }
 
-zfautoObject ZFUIImageLoadFromColorWithCache(ZF_IN const ZFUIColor &color,
-                                             ZF_IN_OPT const ZFUISize &size /* = ZFUISizeZero */)
+ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
+                       ZFMP_IN(const ZFUIColor &, color),
+                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
 {
     zfstring key = zfstringWithFormat(zfText("ZFUIImageLoadFromInputWithCache:%s %s"), ZFUIColorToString(color).cString(), ZFUISizeToString(size).cString());
     zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);

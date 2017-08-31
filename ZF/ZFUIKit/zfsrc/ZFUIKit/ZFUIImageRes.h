@@ -21,13 +21,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief load image from resource with cache logic
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageRes(ZF_IN const zfchar *resPath);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageRes,
+                        ZFMP_IN(const zfchar *, resPath))
 /**
  * @brief load image from resource xml files with cache logic
  *
  * the xml file should contain serializable data which is able to be serialized to an image
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageResXml(ZF_IN const zfchar *resPath);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageResXml,
+                        ZFMP_IN(const zfchar *, resPath))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageRes_h_

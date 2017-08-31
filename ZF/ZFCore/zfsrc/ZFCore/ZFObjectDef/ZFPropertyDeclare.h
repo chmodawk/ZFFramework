@@ -355,7 +355,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
 // ============================================================
 #define _ZFP_ZFPROPERTY_SETTER_RETAIN(AccessType, Type, Name) \
     AccessType: \
-        ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
+        ZFMETHOD_DECLARE_NO_AUTOREG_1( \
             AccessType, ZFMethodIsVirtual, \
             void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
             ZFMP_IN(Type const &, propertyValue)) \
@@ -387,7 +387,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public:
 #define _ZFP_ZFPROPERTY_SETTER_ASSIGN(AccessType, Type, Name) \
     AccessType: \
-        ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
+        ZFMETHOD_DECLARE_NO_AUTOREG_1( \
             AccessType, ZFMethodIsVirtual, \
             void, _ZFP_ZFPROPERTY_SETTER_NAME(Type, Name), \
             ZFMP_IN(Type const &, propertyValue)) \
@@ -415,7 +415,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public:
 #define _ZFP_ZFPROPERTY_GETTER(AccessType, Type, Name) \
     AccessType: \
-        ZFMETHOD_DECLARE_NO_AUTOREGISTER_0( \
+        ZFMETHOD_DECLARE_NO_AUTOREG_0( \
             AccessType, ZFMethodIsVirtual, \
             Type const &, _ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)) \
         { \
@@ -706,7 +706,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
 
 // ============================================================
 /** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DECLARE(Type, Name) \
+#define ZFPROPERTY_CUSTOM_INIT_CHECKER_DECLARE(Type, Name) \
     private: \
         zfclassNotPOD _ZFP_propCbIsInitReg_##Name \
         { \
@@ -721,7 +721,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public: \
         zfbool _ZFP_propCbIsInitC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 /** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DEFINE(OwnerClass, Type, Name) \
+#define ZFPROPERTY_CUSTOM_INIT_CHECKER_DEFINE(OwnerClass, Type, Name) \
     zfbool OwnerClass::_ZFP_propCbIsInitC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
 
 /** @brief see #ZFPROPERTY_RETAIN */
@@ -848,14 +848,14 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
  * proto type:\n
  *   zfbool isInitValue(void)
  */
-#define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE(Type, Name) \
+#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE(Type, Name) \
     public: \
         virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-/** @brief see #ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DEFINE(OwnerClass, Type, Name) \
+/** @brief see #ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE */
+#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_DEFINE(OwnerClass, Type, Name) \
     zfbool OwnerClass::_ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-/** @brief see #ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_INIT_VALUE_CHECKER_CALL_SUPER(SuperOwnerClass, Type, Name) \
+/** @brief see #ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE */
+#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_CALL_SUPER(SuperOwnerClass, Type, Name) \
     SuperOwnerClass::_ZFP_propCbIsInitA_##Name(outInitValue)
 
 /**

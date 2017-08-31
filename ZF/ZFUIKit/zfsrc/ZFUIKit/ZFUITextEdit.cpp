@@ -203,8 +203,8 @@ ZFObject *ZFUITextEdit::objectOnInit(void)
         return zfnull;
     }
     this->internalImplViewAdd(textPlaceHolderTmp);
-    textPlaceHolderTmp->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
-    textPlaceHolderTmp->serializableRefLayoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    textPlaceHolderTmp->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
+    textPlaceHolderTmp->serializableRefLayoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
     return this;
 }

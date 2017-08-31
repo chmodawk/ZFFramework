@@ -891,7 +891,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerIn
 // ZFIOBridgeCallbackUsingBuffer
 zfclass _ZFP_ZFIOBridgeCallbackUsingBufferPrivate : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(_ZFP_ZFIOBridgeCallbackUsingBufferPrivate, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(_ZFP_ZFIOBridgeCallbackUsingBufferPrivate, ZFObject)
 
 public:
     ZFCoreArrayPOD<zfbyte> ioBuf;

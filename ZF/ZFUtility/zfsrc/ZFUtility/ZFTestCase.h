@@ -32,7 +32,7 @@ zfclassFwd _ZFP_ZFTestCasePrivate;
  */
 zfabstract ZF_ENV_EXPORT ZFTestCase : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ABSTRACT_ALLOW_CUSTOM_CONSTRUCTOR(ZFTestCase, ZFObject)
+    ZFOBJECT_DECLARE_ABSTRACT_WITH_CUSTOM_CTOR(ZFTestCase, ZFObject)
 
 public:
     /**

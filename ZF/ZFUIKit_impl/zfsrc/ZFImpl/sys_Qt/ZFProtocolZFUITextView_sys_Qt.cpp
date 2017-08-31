@@ -23,7 +23,7 @@ public:
     _ZFP_ZFUITextViewImpl_sys_Qt_TextView(void)
     : QLabel()
     {
-        this->_ZFP_textColorSet(ZFUIColorBlack);
+        this->_ZFP_textColorSet(ZFUIColorBlack());
         this->_ZFP_textSizeSet(14);
         this->setWordWrap(false);
         this->setGraphicsEffect(zfnull);
@@ -48,7 +48,7 @@ public:
     }
     void _ZFP_textShadowUpdate(ZF_IN const ZFUIColor &textShadowColor, ZF_IN const ZFUISize &textShadowOffset)
     {
-        if(textShadowColor == ZFUIColorTransparent)
+        if(textShadowColor == ZFUIColorTransparent())
         {
             this->setGraphicsEffect(zfnull);
         }

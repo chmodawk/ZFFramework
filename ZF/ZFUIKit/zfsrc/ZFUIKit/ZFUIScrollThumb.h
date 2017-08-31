@@ -95,21 +95,23 @@ private:
  *
  * set to null to use default
  */
-extern ZF_ENV_EXPORT void ZFUIScrollThumbHorizontalClassSet(ZF_IN const ZFClass *cls);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIScrollThumbHorizontalClassSet,
+                        ZFMP_IN(const ZFClass *, cls))
 /**
  * @brief get the class of default scroll thumb
  */
-extern ZF_ENV_EXPORT const ZFClass *ZFUIScrollThumbHorizontalClass(void);
+ZFMETHOD_FUNC_DECLARE_0(const ZFClass *, ZFUIScrollThumbHorizontalClass)
 /**
  * @brief change default scroll thumb class
  *
  * set to null to use default
  */
-extern ZF_ENV_EXPORT void ZFUIScrollThumbVerticalClassSet(ZF_IN const ZFClass *cls);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIScrollThumbVerticalClassSet,
+                        ZFMP_IN(const ZFClass *, cls))
 /**
  * @brief get the class of default scroll thumb
  */
-extern ZF_ENV_EXPORT const ZFClass *ZFUIScrollThumbVerticalClass(void);
+ZFMETHOD_FUNC_DECLARE_0(const ZFClass *, ZFUIScrollThumbVerticalClass)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIScrollThumb_h_

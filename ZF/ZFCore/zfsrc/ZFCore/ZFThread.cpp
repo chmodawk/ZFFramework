@@ -82,7 +82,7 @@ typedef enum {
 } _ZFP_ZFThreadRunState;
 zfclass _ZFP_I_ZFThreadRunnableData : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(_ZFP_I_ZFThreadRunnableData, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(_ZFP_I_ZFThreadRunnableData, ZFObject)
 
 public:
     zfidentity taskId;
@@ -375,13 +375,14 @@ ZFOBSERVER_EVENT_REGISTER(ZFThread, ThreadOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFThread, ThreadOnStop)
 ZFOBSERVER_EVENT_REGISTER(ZFThread, ThreadOnCancel)
 
-void *ZFThread::nativeThreadRegister(void)
+ZFMETHOD_DEFINE_0(ZFThread, void *, nativeThreadRegister)
 {
     ZFThread *zfThread = zfAllocWithoutLeakTest(_ZFP_ZFThreadUserRegisteredThread);
     zfThread->_ZFP_ZFThread_d->semaWaitHolder = zfAllocWithoutLeakTest(ZFSemaphore);
     return _ZFP_ZFThreadImpl->nativeThreadRegister(zfThread);
 }
-void ZFThread::nativeThreadUnregister(ZF_IN void *token)
+ZFMETHOD_DEFINE_1(ZFThread, void, nativeThreadUnregister,
+                  ZFMP_IN(void *, token))
 {
     if(token != zfnull)
     {

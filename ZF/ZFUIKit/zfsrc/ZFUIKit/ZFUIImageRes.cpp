@@ -10,7 +10,8 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject ZFUIImageRes(ZF_IN const zfchar *resPath)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageRes,
+                       ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {
@@ -33,7 +34,8 @@ zfautoObject ZFUIImageRes(ZF_IN const zfchar *resPath)
     return cached;
 }
 
-zfautoObject ZFUIImageResXml(ZF_IN const zfchar *resPath)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
+                       ZFMP_IN(const zfchar *, resPath))
 {
     if(resPath == zfnull)
     {

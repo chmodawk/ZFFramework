@@ -28,16 +28,18 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * newSize is applied with #ZFUIGlobalStyle::imageScale\n
  * this method would create a new image even if size not changed
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageScale(ZF_IN ZFUIImage *image,
-                                                 ZF_IN const ZFUISize &newSize,
-                                                 ZF_IN_OPT zfbool newSizeInPixelUnit = zffalse);
+ZFMETHOD_FUNC_DECLARE_3(zfautoObject, ZFUIImageScale,
+                        ZFMP_IN(ZFUIImage *, image),
+                        ZFMP_IN(const ZFUISize &, newSize),
+                        ZFMP_IN_OPT(zfbool, newSizeInPixelUnit, zffalse))
 
 // ============================================================
 // ZFUIImageLoadFromNativeImage
 /**
  * @brief create image from native image
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromNativeImage(ZF_IN void *nativeImage);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
+                        ZFMP_IN(void *, nativeImage))
 
 // ============================================================
 // fileDescriptor
@@ -60,7 +62,8 @@ extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromNativeImage(ZF_IN void *nativ
  * @brief load image from input, input should contain the image's binary data
  * @note this method has no cache logic
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCallback &input);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInput,
+                        ZFMP_IN(const ZFInputCallback &, input))
 
 // ============================================================
 // color
@@ -90,8 +93,9 @@ extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCall
  * size is applied with #ZFUIGlobalStyle::imageScale
  * @note this method has no cache logic
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromColor(ZF_IN const ZFUIColor &color,
-                                                         ZF_IN_OPT const ZFUISize &size = ZFUISizeZero);
+ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadFromColor,
+                        ZFMP_IN(const ZFUIColor &, color),
+                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageIO_h_

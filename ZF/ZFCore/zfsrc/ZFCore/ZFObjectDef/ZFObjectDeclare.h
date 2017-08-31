@@ -155,7 +155,7 @@ public:
  * NOTE: never abuse this macro,
  * and strongly recommended not to allow ZFObject create on stack (i.e. public constructors)
  */
-#define ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ChildClass, SuperClass) \
+#define ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ChildClass, SuperClass) \
     _ZFP_ZFOBJECT_DECLARE(ChildClass, SuperClass) \
     _ZFP_ZFOBJECT_DECLARE_OBJECT(ChildClass, SuperClass) \
     public:
@@ -171,9 +171,9 @@ public:
     _ZFP_ZFOBJECT_DECLARE_PROTECTED_CONSTRUCTOR(ChildClass, SuperClass) \
     public:
 /**
- * @brief see #ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR
+ * @brief see #ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR
  */
-#define ZFOBJECT_DECLARE_ABSTRACT_ALLOW_CUSTOM_CONSTRUCTOR(ChildClass, SuperClass) \
+#define ZFOBJECT_DECLARE_ABSTRACT_WITH_CUSTOM_CTOR(ChildClass, SuperClass) \
     _ZFP_ZFOBJECT_DECLARE(ChildClass, SuperClass) \
     _ZFP_ZFOBJECT_DECLARE_ABSTRACT(ChildClass, SuperClass) \
     public:

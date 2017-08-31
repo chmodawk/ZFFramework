@@ -426,7 +426,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_0(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_0(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     ) \
@@ -459,7 +459,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_0( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_0( \
     methodNamespace, \
     ReturnType, methodName \
     ) \
@@ -562,7 +562,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_1(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_1(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -597,7 +597,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_1( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_1( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -706,7 +706,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_2(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_2(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -743,7 +743,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_2( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_2( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -858,7 +858,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_3(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_3(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -897,7 +897,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_3( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_3( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1018,7 +1018,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_4(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_4(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1059,7 +1059,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_4( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_4( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1186,7 +1186,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_5(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_5(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1229,7 +1229,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_5( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_5( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1362,7 +1362,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_6(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_6(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1407,7 +1407,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_6( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_6( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1546,7 +1546,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_7(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_7(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1593,7 +1593,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_7( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_7( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1738,7 +1738,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NAMESPACE_8(methodInvokerAction, \
+#define ZFMETHOD_FUNC_USER_REGISTER_WITH_NS_8(methodInvokerAction, \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \
@@ -1787,7 +1787,7 @@ extern ZF_ENV_EXPORT void ZFMethodFuncUserUnregister(ZF_IN const ZFMethod *metho
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
         )
 /** @brief see #ZFMethodFuncUserRegister_0 */
-#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_8( \
+#define ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_8( \
     methodNamespace, \
     ReturnType, methodName \
     , ZFMP_0 \

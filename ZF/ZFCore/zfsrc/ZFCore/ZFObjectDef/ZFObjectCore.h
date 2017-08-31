@@ -637,7 +637,7 @@ public:
      *   take good care of other virtual function call,
      *   use zfself::func() instead of this->func() if necessary,
      *   or use #objectOnInitFinish/#objectOnDeallocPrepare,
-     *   or declare your own constructor with #ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR
+     *   or declare your own constructor with #ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR
      * @note due to limitations of C++,
      *   if your parent type declared objectOnInit with different params,
      *   and your child type want to override part of those objectOnInit,

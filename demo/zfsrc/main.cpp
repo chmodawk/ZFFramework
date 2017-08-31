@@ -74,7 +74,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
 
     zfblockedAlloc(ZFUIKit_test_ListView, containerView);
     window->childAdd(containerView);
-    containerView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    containerView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
     {
         zfblockedAlloc(ZFUIKit_test_Button, button);
@@ -87,7 +87,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
                 zfstringWithFormat(zfText("autoLeakTest %s"), _autoLeakTestOn ? zfText("on") : zfText("off")));
         })
         button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton);
-        button->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed);
+        button->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed());
         button->buttonSimulateClick();
     }
 
@@ -108,7 +108,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
                 zfstringWithFormat(zfText("stateAni %s"), ZFUIViewStateAniAutoApplyStarted() ? zfText("on") : zfText("off")));
         })
         button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton);
-        button->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed);
+        button->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed());
         ZFUIViewStateAniAutoApplyStart();
         button->buttonSimulateClick();
     }
@@ -118,7 +118,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
         containerView->childAdd(separator);
         separator->viewSizeMinSet(ZFUISizeMake(0, 5));
         separator->viewSizeMaxSet(ZFUISizeMake(-1, 5));
-        separator->viewBackgroundColorSet(ZFUIColorGray);
+        separator->viewBackgroundColorSet(ZFUIColorGray());
     }
 
     ZFUIViewFocusNextMove(window);
@@ -204,11 +204,11 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModule(ZF_IN ZFUIView *conta
         _ZFP_ZFFramework_test_TestCaseSubModuleData *subModuleData = userData->toAny();
 
         zfblockedAlloc(ZFUIWindow, subModuleWindow);
-        subModuleWindow->viewBackgroundColorSet(ZFUIColorWhite);
+        subModuleWindow->viewBackgroundColorSet(ZFUIColorWhite());
         subModuleWindow->windowShow();
         zfblockedAlloc(ZFUIKit_test_ListView, containerView);
         subModuleWindow->childAdd(containerView);
-        containerView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        containerView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
         {
             zfblockedAlloc(ZFUIKit_test_Button, closeButton);
@@ -218,13 +218,13 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModule(ZF_IN ZFUIView *conta
                 userData->to<ZFObjectHolder *>()->holdedObj.to<ZFUIWindow *>()->windowHide();
             })
             closeButton->observerAdd(ZFUIButton::EventButtonOnClick(), closeButtonOnClick, subModuleWindow->objectHolder());
-            closeButton->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed);
+            closeButton->buttonBackgroundStyle()->viewBackgroundColorSet(ZFUIColorRed());
 
             zfblockedAlloc(ZFUIView, separator);
             containerView->childAdd(separator);
             separator->viewSizeMinSet(ZFUISizeMake(0, 5));
             separator->viewSizeMaxSet(ZFUISizeMake(-1, 5));
-            separator->viewBackgroundColorSet(ZFUIColorGray);
+            separator->viewBackgroundColorSet(ZFUIColorGray());
         }
 
         for(zfindex i = 0; i < subModuleData->testCases.count(); ++i)

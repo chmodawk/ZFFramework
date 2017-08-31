@@ -42,7 +42,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /** @brief type wrapper for #ZFPropertyTypeIdData::Value */
 zfclass ZF_ENV_EXPORT v_ZFCoreArray : zfextends ZFPropertyTypeWrapper
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(v_ZFCoreArray, ZFPropertyTypeWrapper)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_ZFCoreArray, ZFPropertyTypeWrapper)
 public:
     /** @brief the value, see #ZFPropertyTypeIdData::Value */
     ZFCoreArrayBase *zfv;

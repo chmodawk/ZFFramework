@@ -27,12 +27,12 @@ protected:
         ZFUIOnScreenKeyboardAutoFitLayout *layout = ZFUIOnScreenKeyboardAutoFitStart(window);
         this->prepareSettingButton(window, layout);
 
-        container->viewBackgroundColorSet(ZFUIColorGreen);
+        container->viewBackgroundColorSet(ZFUIColorGreen());
         for(zfindex i = 0; i < 3; ++i)
         {
             zfblockedAlloc(ZFUITextEdit, view);
             container->childAdd(view);
-            view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+            view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
             view->viewBackgroundColorSet(ZFUIColorRandom());
             view->layoutParam()->layoutMarginSet(ZFUIMarginMake(10));
         }

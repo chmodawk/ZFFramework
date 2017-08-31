@@ -24,17 +24,17 @@ zfclass ZF2048AppButton : zfextends ZFUIButtonBasic
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleNormal)
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUITextView *, buttonLabelStyleNormal);
-        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue);
+        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue());
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleHighlighted)
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUITextView *, buttonLabelStyleHighlighted);
-        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue);
+        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue());
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUITextView *, buttonLabelStyleDisabled)
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUITextView *, buttonLabelStyleDisabled);
-        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue);
+        propertyValue.to<ZFUITextView *>()->textColorSet(ZFUIColorBlue());
     }
 
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonBackgroundStyleNormal)

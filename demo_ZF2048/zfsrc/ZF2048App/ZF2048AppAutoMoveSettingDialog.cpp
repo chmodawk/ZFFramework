@@ -72,7 +72,7 @@ public:
         this->childAdd(this->actionList());
         this->actionList()->cellSizeHintSet(-1);
         this->actionList()->viewSizeMinSet(ZFUISizeMake(0, 120));
-        this->actionList()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->actionList()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->actionList()->layoutParam()->sizeHintSet(ZFUISizeMake(200, 150));
 
         this->actionList()->listAdapterSet(this->actionListAdapter());

@@ -17,7 +17,8 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIKeyboardState, KeyPressedOnChange)
 
 ZFOBJECT_SINGLETON_DEFINE_DETAIL(ZFUIKeyboardState, ZFUIKeyboardState, ZFUIKeyboardState, instance, ZFLevelZFFrameworkHigh)
 
-zfbool ZFUIKeyboardState::keyPressed(ZF_IN ZFUIKeyCodeEnum keyCode)
+ZFMETHOD_DEFINE_1(ZFUIKeyboardState, zfbool, keyPressed,
+                  ZFMP_IN(ZFUIKeyCodeEnum, keyCode))
 {
     ZFPROTOCOL_INTERFACE_CLASS(ZFUIKeyboardState) *impl = ZFPROTOCOL_TRY_ACCESS(ZFUIKeyboardState);
     if(impl != zfnull)
@@ -26,7 +27,8 @@ zfbool ZFUIKeyboardState::keyPressed(ZF_IN ZFUIKeyCodeEnum keyCode)
     }
     return zffalse;
 }
-zfbool ZFUIKeyboardState::keyPressedRaw(ZF_IN zfflags keyCodeRaw)
+ZFMETHOD_DEFINE_1(ZFUIKeyboardState, zfbool, keyPressedRaw,
+                  ZFMP_IN(zfflags, keyCodeRaw))
 {
     ZFPROTOCOL_INTERFACE_CLASS(ZFUIKeyboardState) *impl = ZFPROTOCOL_TRY_ACCESS(ZFUIKeyboardState);
     if(impl != zfnull)

@@ -19,7 +19,9 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIScrollerRegister, ZFLevelZFFrameworkHi
     _ZFP_ZFUIScroller_cls = ZFUIScrollerDefault::ClassData();
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIScrollerRegister)
-void ZFUIScrollerClassSet(ZF_IN const ZFClass *cls)
+
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIScrollerClassSet,
+                       ZFMP_IN(const ZFClass *, cls))
 {
     if(cls != zfnull && !cls->classIsTypeOf(ZFUIScroller::ClassData()))
     {
@@ -35,7 +37,7 @@ void ZFUIScrollerClassSet(ZF_IN const ZFClass *cls)
     }
     _ZFP_ZFUIScroller_cls = cls;
 }
-const ZFClass *ZFUIScrollerClass(void)
+ZFMETHOD_FUNC_DEFINE_0(const ZFClass *, ZFUIScrollerClass)
 {
     return _ZFP_ZFUIScroller_cls;
 }

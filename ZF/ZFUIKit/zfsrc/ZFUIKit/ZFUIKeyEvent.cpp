@@ -25,5 +25,11 @@ void ZFUIKeyEvent::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     }
 }
 
+// ============================================================
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIKeyEvent, zfidentity, keyId)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIKeyEvent, ZFUIKeyActionEnum, keyAction)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIKeyEvent, ZFUIKeyCodeEnum, keyCode)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIKeyEvent, zfflags, keyCodeRaw)
+
 ZF_NAMESPACE_GLOBAL_END
 

@@ -77,7 +77,7 @@ void ZFTimer::objectOnDeallocPrepare(void)
     zfsuper::objectOnDeallocPrepare();
 }
 
-void *ZFTimer::nativeTimer(void)
+ZFMETHOD_DEFINE_0(ZFTimer, void *, nativeTimer)
 {
     return d->nativeTimer;
 }
@@ -143,7 +143,10 @@ void ZFTimer::_ZFP_ZFTimer_timerOnStop(void)
 }
 
 // ============================================================
-zfautoObject ZFTimerExecute(ZF_IN const ZFTimerExecuteParam &param)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFTimerExecuteParam, ZFTimerExecuteParam)
+
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFTimerExecute,
+                       ZFMP_IN(const ZFTimerExecuteParam &, param))
 {
     if(param.timerInterval() <= 0 || !param.timerCallback().callbackIsValid())
     {

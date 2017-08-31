@@ -42,7 +42,7 @@ void ZFUIKit_test_prepareTestWindow(ZF_OUT ZFUIWindow *&window,
     container = zfAlloc(ZFUIView);
     zfblockedRelease(container);
     window->childAdd(container);
-    container->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    container->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     container->layoutParam()->layoutMarginSet(ZFUIMarginMake(0, 50, 0, 0));
 }
 
@@ -73,7 +73,7 @@ zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings)
 
     zfblockedAlloc(ZFUIKit_test_ListView, listView);
     window->childAdd(listView);
-    listView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    listView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     listView->layoutParam()->layoutMarginSet(ZFUIMarginMake(0, 50, 0, 0));
     for(zfindex i = 0; i < settings->count(); ++i)
     {

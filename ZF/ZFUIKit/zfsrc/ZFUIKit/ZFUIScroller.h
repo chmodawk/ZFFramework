@@ -171,11 +171,12 @@ public:
  *
  * use null to use default scroller
  */
-extern ZF_ENV_EXPORT void ZFUIScrollerClassSet(ZF_IN const ZFClass *cls);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIScrollerClassSet,
+                        ZFMP_IN(const ZFClass *, cls))
 /**
  * @brief get the class of default scroller
  */
-extern ZF_ENV_EXPORT const ZFClass *ZFUIScrollerClass(void);
+ZFMETHOD_FUNC_DECLARE_0(const ZFClass *, ZFUIScrollerClass)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIScroller_h_

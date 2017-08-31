@@ -40,11 +40,13 @@ public:
     /**
      * @brief true is key is pressed
      */
-    virtual zfbool keyPressed(ZF_IN ZFUIKeyCodeEnum keyCode);
+    ZFMETHOD_DECLARE_1(zfbool, keyPressed,
+                       ZFMP_IN(ZFUIKeyCodeEnum, keyCode));
     /**
      * @brief true is key is pressed
      */
-    virtual zfbool keyPressedRaw(ZF_IN zfflags keyCodeRaw);
+    ZFMETHOD_DECLARE_1(zfbool, keyPressedRaw,
+                       ZFMP_IN(zfflags, keyCodeRaw));
 
 protected:
     zfoverride

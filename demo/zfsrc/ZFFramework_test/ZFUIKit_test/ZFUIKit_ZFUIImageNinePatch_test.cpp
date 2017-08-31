@@ -56,7 +56,7 @@ private:
             ZFLISTENER_LOCAL(buttonClickListener, {
                 ZFUIImageView *imageView = userData->tagGet<ZFObjectHolder *>(zfText("imageView"))->holdedObj;
                 zfbool fill = (imageView->layoutParam()->sizeParam().width == ZFUISizeType::e_Fill);
-                imageView->layoutParam()->sizeParamSet(fill ? ZFUISizeParamWrapWidthWrapHeight : ZFUISizeParamFillWidthFillHeight);
+                imageView->layoutParam()->sizeParamSet(fill ? ZFUISizeParamWrapWidthWrapHeight() : ZFUISizeParamFillWidthFillHeight());
             })
             setting->buttonClickListenerSet(buttonClickListener);
         }

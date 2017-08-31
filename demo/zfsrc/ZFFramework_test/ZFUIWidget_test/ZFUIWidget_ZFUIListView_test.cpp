@@ -83,15 +83,15 @@ protected:
 
         zfblockedAlloc(ZFUIListView, listView);
         container->childAdd(listView);
-        listView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        listView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         listView->layoutParam()->layoutMarginSet(ZFUIMarginMake(40));
-        listView->viewBackgroundColorSet(ZFUIColorRed);
+        listView->viewBackgroundColorSet(ZFUIColorRed());
         listView->listAdapterSet(this->listAdapter());
         {
             zfblockedAlloc(ZFUIListCellUpdaterBasic, cellUpdater);
             listView->cellUpdater()->add(cellUpdater);
             cellUpdater->separatorSizeSet(5);
-            cellUpdater->separatorColorSet(ZFUIColorRed);
+            cellUpdater->separatorColorSet(ZFUIColorRed());
         }
 
         this->setupScrollListener(listView);

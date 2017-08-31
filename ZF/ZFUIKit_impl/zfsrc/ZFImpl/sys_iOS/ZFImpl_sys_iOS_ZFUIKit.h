@@ -84,7 +84,7 @@ extern ZF_ENV_EXPORT UIColor *ZFImpl_sys_iOS_ZFUIKit_ZFUIColorToUIColor(ZF_IN co
 extern ZF_ENV_EXPORT void ZFImpl_sys_iOS_ZFUIKit_ZFUIColorFromUIColor(ZF_OUT ZFUIColor &ret, ZF_IN UIColor *uiColor);
 inline ZFUIColor ZFImpl_sys_iOS_ZFUIKit_ZFUIColorFromUIColor(ZF_IN UIColor *uiColor)
 {
-    ZFUIColor ret = ZFUIColorZero;
+    ZFUIColor ret = ZFUIColorZero();
     ZFImpl_sys_iOS_ZFUIKit_ZFUIColorFromUIColor(ret, uiColor);
     return ret;
 }

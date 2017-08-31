@@ -431,7 +431,7 @@ public:
      * @brief get the nativeString, you must not change its content,
      *   ensured to be non-null, create if necessary
      */
-    virtual void *nativeString(void);
+    ZFMETHOD_DECLARE_0(void *, nativeString);
 
 protected:
     /**
@@ -492,13 +492,13 @@ public:
     {
         zfsuper::stringValueSet(s, storageType);
     }
-    zfoverride
-    virtual void nativeStringSet(ZF_IN void *nativeString)
+    ZFMETHOD_DECLARE_1(void, nativeStringSet,
+                       ZFMP_IN(void *, nativeString))
     {
         zfsuper::nativeStringSet(nativeString);
     }
-    zfoverride
-    virtual void stringValueSet(ZF_IN ZFString *another)
+    ZFMETHOD_DECLARE_1(void, stringValueSet,
+                       ZFMP_IN(ZFString *, another))
     {
         zfsuper::stringValueSet(another);
     }

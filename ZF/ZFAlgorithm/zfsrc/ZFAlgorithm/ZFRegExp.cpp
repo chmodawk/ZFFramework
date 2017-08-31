@@ -223,7 +223,7 @@ ZFCompareResult ZFRegExp::objectCompare(ZF_IN ZFObject *anotherObj)
     return ZFCompareUncomparable;
 }
 
-void *ZFRegExp::nativeRegExp(void)
+ZFMETHOD_DEFINE_0(ZFRegExp, void *, nativeRegExp)
 {
     return d->nativeRegExp;
 }

@@ -44,7 +44,7 @@ public:
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUITextView *, buttonLabelStyleNormal);
         ZFUITextView *value = propertyValue.to<ZFUITextView *>();
-        value->textColorSet(ZFUIColorWhite);
+        value->textColorSet(ZFUIColorWhite());
         value->textSingleLineSet(zffalse);
         value->textSizeAutoChangeMinSizeSet(0);
     }

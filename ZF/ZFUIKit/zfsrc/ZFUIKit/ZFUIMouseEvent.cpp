@@ -52,5 +52,11 @@ void ZFUIMouseEvent::eventOnApplyScaleReversely(ZF_IN zffloat scale)
     this->mousePoint = ZFUIPointApplyScaleReversely(this->mousePoint, scale);
 }
 
+// ============================================================
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIMouseEvent, zfidentity, mouseId)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIMouseEvent, ZFUIMouseActionEnum, mouseAction)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIMouseEvent, ZFUIPoint, mousePoint)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIMouseEvent, ZFUIMouseButtonEnum, mouseButton)
+
 ZF_NAMESPACE_GLOBAL_END
 

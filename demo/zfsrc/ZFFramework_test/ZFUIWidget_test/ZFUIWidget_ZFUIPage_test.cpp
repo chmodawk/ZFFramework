@@ -31,7 +31,7 @@ protected:
         this->_mainView()->layoutOrientationSet(ZFUIOrientation::e_Top);
 
         this->_mainView()->childAdd(this->_titleView());
-        this->_titleView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        this->_titleView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         this->_titleView()->viewBackgroundColorSet(ZFUIColorRandom());
         this->_titleView()->layoutOrientationSet(ZFUIOrientation::e_Left);
         this->_titleView()->viewSizeMinSet(ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeButton()));
@@ -54,7 +54,7 @@ protected:
         this->_titleCenterView()->textAlignSet(ZFUIAlign::e_Center);
 
         this->_mainView()->childAdd(this->_contentView());
-        this->_contentView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->_contentView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->_contentView()->viewBackgroundColorSet(ZFUIColorRandom());
         this->_contentView()->buttonLabelTextStringSet(zfstringWithFormat(zfText("belong to %s"), this->pageGroupId().cString()));
         {
@@ -151,16 +151,16 @@ protected:
         zfsuper::managerOnCreate();
 
         this->_container()->childAdd(this->_mainView());
-        this->_mainView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->_mainView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->_mainView()->layoutOrientationSet(ZFUIOrientation::e_Top);
         this->_mainView()->layoutParam()->layoutMarginSet(ZFUIMarginMake(20));
 
         this->_mainView()->childAdd(this->_pageContainer());
-        this->_pageContainer()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->_pageContainer()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->_pageContainer()->layoutParam<ZFUILinearLayoutParam *>()->layoutWeightSet(1);
 
         this->_mainView()->childAdd(this->_buttonLayout());
-        this->_buttonLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        this->_buttonLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         this->_buttonLayout()->layoutOrientationSet(ZFUIOrientation::e_Left);
 
         for(zfindex i = 0; i < 4; ++i)
@@ -248,7 +248,7 @@ protected:
 
         ZFUIWidget_ZFUIPage_test_Page *pageTmp = page->toAny();
         this->_pageContainer()->childAdd(pageTmp->_mainView());
-        pageTmp->_mainView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        pageTmp->_mainView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     }
     zfoverride
     virtual void pageOnDetach(ZF_IN ZFUIPage *page,

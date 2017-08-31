@@ -87,10 +87,10 @@ ZFEXPORT_ENUM_DEFINE(ZFLevel
 // ============================================================
 // ZFCoreStatistic
 ZF_NAMESPACE_BEGIN(ZFCoreStatistic)
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_1(ZFCoreStatistic, void, invokeCountLog, ZFMP_IN(const zfchar *, key))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_1(ZFCoreStatistic, void, invokeCountRemove, ZFMP_IN(const zfchar *, key))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_0(ZFCoreStatistic, void, invokeCountRemoveAll)
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NAMESPACE_1(ZFCoreStatistic, zfindex, invokeCountGet, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_1(ZFCoreStatistic, void, invokeCountLog, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_1(ZFCoreStatistic, void, invokeCountRemove, ZFMP_IN(const zfchar *, key))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_0(ZFCoreStatistic, void, invokeCountRemoveAll)
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_1(ZFCoreStatistic, zfindex, invokeCountGet, ZFMP_IN(const zfchar *, key))
 ZF_NAMESPACE_END(ZFCoreStatistic)
 
 // ============================================================

@@ -41,7 +41,7 @@ public:
 /** @brief see #ZFThreadTaskRequest */
 zfclass ZF_ENV_EXPORT ZFThreadTaskRequestMergeCallbackData : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFThreadTaskRequestMergeCallbackData, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFThreadTaskRequestMergeCallbackData, ZFObject)
 
 protected:
     ZFThreadTaskRequestMergeCallbackData(void)

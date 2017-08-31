@@ -73,7 +73,7 @@ private:
         for(zfindex i = 0; i < this->buttonGroup->buttonCount(); ++i)
         {
             ZFUIButton *button = this->buttonGroup->buttonAtIndex(i);
-            button->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight);
+            button->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
             if(size.width < button->layoutMeasuredSize().width)
             {
                 size.width = button->layoutMeasuredSize().width;

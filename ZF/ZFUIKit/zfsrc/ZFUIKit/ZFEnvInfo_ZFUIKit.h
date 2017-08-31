@@ -54,7 +54,8 @@ ZF_NAMESPACE_BEGIN(ZFEnvInfo)
 /**
  * @brief device type, #ZFEnvDeviceUIType::e_Desktop if not available
  */
-extern ZF_ENV_EXPORT ZFEnvDeviceUITypeEnum deviceUIType(ZF_IN_OPT ZFEnvDeviceUITypeEnum defaultValue = ZFEnvDeviceUIType::e_Desktop);
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFEnvInfo, ZFEnvDeviceUITypeEnum, deviceUIType,
+                                ZFMP_IN_OPT(ZFEnvDeviceUITypeEnum, defaultValue, ZFEnvDeviceUIType::e_Desktop))
 
 ZF_NAMESPACE_END(ZFEnvInfo)
 ZF_NAMESPACE_GLOBAL_END

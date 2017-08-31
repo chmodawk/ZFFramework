@@ -26,7 +26,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_toString(ZF_IN lua_State *L)
     if(!ZFImpl_ZFLua_toString(ret, L, 1))
     {
         ZFLuaErrorOccurredTrim(zfText("[zfl_toString] unknown param type, got %s"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
     lua_pushstring(L, zfsCoreZ2A(ret.cString()));

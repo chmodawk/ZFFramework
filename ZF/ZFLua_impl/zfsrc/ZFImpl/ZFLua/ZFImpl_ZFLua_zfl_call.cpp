@@ -213,7 +213,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
     if(!ZFImpl_ZFLua_toObject(obj, L, 1))
     {
         ZFLuaErrorOccurredTrim(zfText("[zfl_call] failed to access caller object, expect zfautoObject, got %s"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
 
@@ -236,7 +236,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_call] failed to get param%d, expect zfautoObject, got %s"),
                     i,
-                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1).cString());
+                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1, zftrue).cString());
                 return luaL_error(L, "");
             }
             paramList[i] = zfautoObjectCreateWithoutLeakTest(t);
@@ -266,7 +266,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
         if(!ZFImpl_ZFLua_toString(methodSig, L, 2))
         {
             ZFLuaErrorOccurredTrim(zfText("[zfl_call] failed to access function name, expect string type, got %s"),
-                ZFImpl_ZFLua_luaObjectInfo(L, 2).cString());
+                ZFImpl_ZFLua_luaObjectInfo(L, 2, zftrue).cString());
             return luaL_error(L, "");
         }
         if(methodSig.isEmpty())
@@ -335,7 +335,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic(ZF_IN lua_State *L)
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic] failed to get param%d, expect zfautoObject, got %s"),
                     i,
-                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1).cString());
+                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1, zftrue).cString());
                 return luaL_error(L, "");
             }
             paramList[i] = zfautoObjectCreateWithoutLeakTest(t);
@@ -365,7 +365,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic(ZF_IN lua_State *L)
         if(!ZFImpl_ZFLua_toString(methodSig, L, 1))
         {
             ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic] failed to access function name, expect string type, got %s"),
-                ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+                ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
             return luaL_error(L, "");
         }
 
@@ -449,7 +449,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic2] failed to get param%d, expect zfautoObject, got %s"),
                     i,
-                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1).cString());
+                    ZFImpl_ZFLua_luaObjectInfo(L, luaParamOffset + i + 1, zftrue).cString());
                 return luaL_error(L, "");
             }
             paramList[i] = zfautoObjectCreateWithoutLeakTest(t);
@@ -463,7 +463,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
         if(!ZFImpl_ZFLua_toString(methodScope, L, 1))
         {
             ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic2] failed to access method scope, expect string type, got %s"),
-                ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+                ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
             return luaL_error(L, "");
         }
         _ZFP_ZFImpl_ZFLua_zfl_callStatic_methodScopeFix(methodScope);
@@ -472,7 +472,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
         if(!ZFImpl_ZFLua_toString(methodName, L, 2))
         {
             ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic2] failed to access method name, expect string type, got %s"),
-                ZFImpl_ZFLua_luaObjectInfo(L, 2).cString());
+                ZFImpl_ZFLua_luaObjectInfo(L, 2, zftrue).cString());
             return luaL_error(L, "");
         }
 

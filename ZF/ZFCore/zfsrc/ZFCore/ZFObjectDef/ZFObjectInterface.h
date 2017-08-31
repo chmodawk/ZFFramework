@@ -114,7 +114,7 @@ public:
  * but must be declared as protected with no params,
  * and must also declare an virtual protected destructor
  */
-#define ZFINTERFACE_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(InterfaceName, ParentInterfaceHint, ...) \
+#define ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(InterfaceName, ParentInterfaceHint, ...) \
         _ZFP_ZFINTERFACE_DECLARE(InterfaceName, ZFInterface) \
         _ZFP_ZFIMPLEMENTS_DECLARE(ParentInterfaceHint, ##__VA_ARGS__) \
     public:
@@ -122,7 +122,7 @@ public:
  * @brief see #ZFInterface
  */
 #define ZFINTERFACE_DECLARE(InterfaceName, ParentInterfaceHint, ...) \
-        ZFINTERFACE_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(InterfaceName, ParentInterfaceHint, ##__VA_ARGS__) \
+        ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(InterfaceName, ParentInterfaceHint, ##__VA_ARGS__) \
     protected: \
         /** @cond ZFPrivateDoc */ \
         InterfaceName(void) {} \

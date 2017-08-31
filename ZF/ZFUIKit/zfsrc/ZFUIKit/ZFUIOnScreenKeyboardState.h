@@ -23,24 +23,26 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 zffinal zfclass ZF_ENV_EXPORT ZFUIOnScreenKeyboardState : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFUIOnScreenKeyboardState, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFUIOnScreenKeyboardState, ZFObject)
 
 public:
     /**
      * @brief access keyboard state for sys window
      */
-    static ZFUIOnScreenKeyboardState *instanceForSysWindow(ZF_IN_OPT ZFUISysWindow *windowSysWindow = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(ZFUIOnScreenKeyboardState *, instanceForSysWindow,
+                              ZFMP_IN_OPT(ZFUISysWindow *, windowSysWindow, zfnull));
     /**
      * @brief access keyboard state for view
      */
-    static ZFUIOnScreenKeyboardState *instanceForView(ZF_IN_OPT ZFUIView *view = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(ZFUIOnScreenKeyboardState *, instanceForView,
+                              ZFMP_IN_OPT(ZFUIView *, view, zfnull));
 
 public:
     /**
      * @brief owner sys window, null and invalid if not accessed by #instanceForSysWindow
      *   (which is typically not allowed)
      */
-    virtual ZFUISysWindow *windowSysWindow(void);
+    ZFMETHOD_DECLARE_0(ZFUISysWindow *, windowSysWindow);
 
 public:
     /**
@@ -54,26 +56,27 @@ public:
     /**
      * @brief true if the keyboard currently showing
      */
-    virtual zfbool keyboardShowing(void);
+    ZFMETHOD_DECLARE_0(zfbool, keyboardShowing);
     /**
      * @brief current key board frame, #ZFUIRectZero if not show
      */
-    virtual const ZFUIRect &keyboardFrame(void);
+    ZFMETHOD_DECLARE_0(const ZFUIRect &, keyboardFrame);
     /**
      * @brief previous key board frame, #ZFUIRectZero if not show
      */
-    virtual const ZFUIRect &keyboardFramePrev(void);
+    ZFMETHOD_DECLARE_0(const ZFUIRect &, keyboardFramePrev);
 
     /**
      * @brief fix client frame accorrding to current keyboard frame
      *
      * output is the available client frame that won't be covered by the keyboard
      */
-    virtual void keyboardFixClientFrameT(ZF_OUT ZFUIRect &clientFrame);
+    ZFMETHOD_DECLARE_1(void, keyboardFixClientFrameT,
+                       ZFMP_OUT(ZFUIRect &, clientFrame));
     /**
      * @brief see #keyboardFixClientFrame
      */
-    virtual inline ZFUIRect keyboardFixClientFrame(void)
+    ZFMETHOD_DECLARE_0(ZFUIRect, keyboardFixClientFrame)
     {
         ZFUIRect ret = ZFUIRectZero;
         this->keyboardFixClientFrameT(ret);

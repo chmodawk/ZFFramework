@@ -57,7 +57,7 @@ ZFENUM_END(ZFUIMouseButton)
  */
 zffinal zfclass ZF_ENV_EXPORT ZFUIMouseEvent : zfextends ZFUIEvent
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFUIMouseEvent, ZFUIEvent)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFUIMouseEvent, ZFUIEvent)
 
 protected:
     ZFUIMouseEvent(void)

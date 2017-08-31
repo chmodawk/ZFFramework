@@ -25,7 +25,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZF2048App, game);
         window->childAdd(game);
-        game->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        game->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         game->layoutParam()->layoutMarginSet(ZFUIMarginMake(0, 20, 0, 0));
     }
     else
@@ -40,7 +40,7 @@ ZFMAIN_ENTRY(params)
         zfblockedAlloc(ZFUILinearLayout, ll);
         window->childAdd(ll);
         ll->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
-        ll->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        ll->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
 
         zfblockedAlloc(ZFUIButtonBasic, left);
         ll->childAdd(left);

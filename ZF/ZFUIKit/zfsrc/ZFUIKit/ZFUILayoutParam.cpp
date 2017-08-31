@@ -42,10 +42,16 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFUISizeParam, ZFUISizeParam, {
         return zftrue;
     })
 
-const ZFUISizeParam ZFUISizeParamWrapWidthWrapHeight = ZFUISizeParamMake(ZFUISizeType::e_Wrap, ZFUISizeType::e_Wrap);
-const ZFUISizeParam ZFUISizeParamFillWidthWrapHeight = ZFUISizeParamMake(ZFUISizeType::e_Fill, ZFUISizeType::e_Wrap);
-const ZFUISizeParam ZFUISizeParamWrapWidthFillHeight = ZFUISizeParamMake(ZFUISizeType::e_Wrap, ZFUISizeType::e_Fill);
-const ZFUISizeParam ZFUISizeParamFillWidthFillHeight = ZFUISizeParamMake(ZFUISizeType::e_Fill, ZFUISizeType::e_Fill);
+ZFMETHOD_FUNC_DEFINE_INLINE_2(ZFUISizeParam, ZFUISizeParamMake,
+                              ZFMP_IN(ZFUISizeTypeEnum const &, width),
+                              ZFMP_IN(ZFUISizeTypeEnum const &, height))
+ZFMETHOD_FUNC_DEFINE_INLINE_1(ZFUISizeParam, ZFUISizeParamMake,
+                              ZFMP_IN(ZFUISizeTypeEnum const &, v))
+
+ZFEXPORT_VAR_READONLY_DEFINE(ZFUISizeParam, ZFUISizeParamWrapWidthWrapHeight, ZFUISizeParamMake(ZFUISizeType::e_Wrap, ZFUISizeType::e_Wrap))
+ZFEXPORT_VAR_READONLY_DEFINE(ZFUISizeParam, ZFUISizeParamFillWidthWrapHeight, ZFUISizeParamMake(ZFUISizeType::e_Fill, ZFUISizeType::e_Wrap))
+ZFEXPORT_VAR_READONLY_DEFINE(ZFUISizeParam, ZFUISizeParamWrapWidthFillHeight, ZFUISizeParamMake(ZFUISizeType::e_Wrap, ZFUISizeType::e_Fill))
+ZFEXPORT_VAR_READONLY_DEFINE(ZFUISizeParam, ZFUISizeParamFillWidthFillHeight, ZFUISizeParamMake(ZFUISizeType::e_Fill, ZFUISizeType::e_Fill))
 
 // ============================================================
 ZFOBJECT_REGISTER(ZFUILayoutParam)

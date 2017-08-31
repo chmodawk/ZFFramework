@@ -20,13 +20,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief #ZFUIImageLoadFromInput with cache logic
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromInputWithCache(ZF_IN const ZFInputCallback &input);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
+                        ZFMP_IN(const ZFInputCallback &, input))
 
 /**
  * @brief #ZFUIImageLoadFromColor with cache logic
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageLoadFromColorWithCache(ZF_IN const ZFUIColor &color,
-                                                                  ZF_IN_OPT const ZFUISize &size = ZFUISizeZero);
+ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
+                        ZFMP_IN(const ZFUIColor &, color),
+                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageCache_common_h_

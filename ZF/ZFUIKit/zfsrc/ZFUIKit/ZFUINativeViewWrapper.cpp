@@ -38,7 +38,8 @@ void ZFUINativeViewWrapper::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     }
 }
 
-void ZFUINativeViewWrapper::wrappedNativeViewSet(ZF_IN void *wrappedNativeView)
+ZFMETHOD_DEFINE_1(ZFUINativeViewWrapper, void, wrappedNativeViewSet,
+                  ZFMP_IN(void *, wrappedNativeView))
 {
     zfclassNotPOD _ZFP_ZFUINativeViewWrapper_nativeImplViewDestroy
     {
@@ -51,7 +52,7 @@ void ZFUINativeViewWrapper::wrappedNativeViewSet(ZF_IN void *wrappedNativeView)
     };
     this->nativeImplViewSet(wrappedNativeView, _ZFP_ZFUINativeViewWrapper_nativeImplViewDestroy::action);
 }
-void *ZFUINativeViewWrapper::wrappedNativeView(void)
+ZFMETHOD_DEFINE_0(ZFUINativeViewWrapper, void *, wrappedNativeView)
 {
     return this->nativeImplView();
 }

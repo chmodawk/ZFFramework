@@ -332,7 +332,7 @@ ZFMETHOD_DEFINE_0(ZFString, const zfchar *, stringValue)
             return zfnull;
     }
 }
-void *ZFString::nativeString(void)
+ZFMETHOD_DEFINE_0(ZFString, void *, nativeString)
 {
     if(d->nativeString == zfnull)
     {

@@ -110,7 +110,7 @@ ZFCompareResult ZFAnimationNativeView::objectCompare(ZF_IN ZFObject *anotherObj)
     return ZFCompareUncomparable;
 }
 
-void *ZFAnimationNativeView::nativeAnimation(void)
+ZFMETHOD_DEFINE_0(ZFAnimationNativeView, void *, nativeAnimation)
 {
     return d->nativeAni;
 }

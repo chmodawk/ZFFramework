@@ -337,7 +337,7 @@ void ZFUIDialog::dialogShow(void)
 
     d->viewUIEnableTreeSet(zffalse);
     this->dialogBeforeShow();
-    if(this->dialogWindowColor() != ZFUIColorTransparent && this->dialogWindowAutoDim())
+    if(this->dialogWindowColor() != ZFUIColorTransparent() && this->dialogWindowAutoDim())
     {
         d->dialogWindowAniShow->aniTargetSet(d->dialogWindowBg);
         d->dialogWindowAniShow->observerAdd(ZFObserverAddParam()
@@ -381,7 +381,7 @@ void ZFUIDialog::dialogHide(void)
 
     d->viewUIEnableTreeSet(zffalse);
     this->dialogBeforeHide();
-    if(this->dialogWindowColor() != ZFUIColorTransparent && this->dialogWindowAutoDim())
+    if(this->dialogWindowColor() != ZFUIColorTransparent() && this->dialogWindowAutoDim())
     {
         d->dialogWindowAniHide->aniTargetSet(d->dialogWindowBg);
         d->dialogWindowAniHide->observerAdd(ZFObserverAddParam()
@@ -464,17 +464,17 @@ ZFObject *ZFUIDialog::objectOnInit(void)
 
     d->dialogWindowBg = zfAllocWithoutLeakTest(ZFUIView);
     d->internalBackgroundViewAdd(d->dialogWindowBg);
-    d->dialogWindowBg->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    d->dialogWindowBg->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
     zfblockedAlloc(_ZFP_ZFUIDialogContentHolder, dialogContentHolder);
     d->childAdd(dialogContentHolder);
     dialogContentHolder->pimplOwner = d;
-    dialogContentHolder->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    dialogContentHolder->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     dialogContentHolder->viewUIEnableSet(zffalse);
 
     d->dialogClickMask = zfAllocWithoutLeakTest(_ZFP_I_ZFUIDialog_DialogClickMask);
     dialogContentHolder->childAdd(d->dialogClickMask);
-    d->dialogClickMask->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    d->dialogClickMask->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     d->dialogClickMask->observerAdd(ZFUIButton::EventButtonOnClick(),
         ZFCallbackForMemberMethod(d, ZFMethodAccess(_ZFP_ZFUIDialogPrivate, dialogClickMaskOnClick)));
 

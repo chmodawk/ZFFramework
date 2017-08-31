@@ -298,11 +298,11 @@ static ZFLISTENER_PROTOTYPE_EXPAND(globalImageScaleOnChange)
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIImageScaleChangeListenerHolder)
 
-const ZFUISize &ZFUIImage::imageSize(void)
+ZFMETHOD_DEFINE_0(ZFUIImage, const ZFUISize &, imageSize)
 {
     return d->imageSize;
 }
-const ZFUISize &ZFUIImage::imageSizeFixed(void)
+ZFMETHOD_DEFINE_0(ZFUIImage, const ZFUISize &, imageSizeFixed)
 {
     return d->imageSizeFixed;
 }
@@ -374,7 +374,7 @@ void ZFUIImage::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     ZFUISizeToString(ret, this->imageSize());
 }
 
-void *ZFUIImage::nativeImage(void)
+ZFMETHOD_DEFINE_0(ZFUIImage, void *, nativeImage)
 {
     return d->nativeImage;
 }
@@ -425,8 +425,9 @@ const ZFSerializableData *ZFUIImage::imageSerializableData(void)
 }
 
 // ============================================================
-zfbool ZFUIImageEncodeFromBase64(ZF_IN_OUT ZFUIImage *image,
-                                 ZF_IN const ZFInputCallback &inputCallback)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromBase64,
+                       ZFMP_IN_OUT(ZFUIImage *, image),
+                       ZFMP_IN(const ZFInputCallback &, inputCallback))
 {
     ZFIOBridgeCallbackUsingTmpFile io;
     if(image != zfnull && ZFBase64Decode(io.outputCallback(), inputCallback))
@@ -443,7 +444,8 @@ zfbool ZFUIImageEncodeFromBase64(ZF_IN_OUT ZFUIImage *image,
     }
     return zffalse;
 }
-zfautoObject ZFUIImageEncodeFromBase64(ZF_IN const ZFInputCallback &inputCallback)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromBase64,
+                       ZFMP_IN(const ZFInputCallback &, inputCallback))
 {
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     if(ZFUIImageEncodeFromBase64(ret, inputCallback))
@@ -455,8 +457,9 @@ zfautoObject ZFUIImageEncodeFromBase64(ZF_IN const ZFInputCallback &inputCallbac
         return zfautoObjectNull;
     }
 }
-zfbool ZFUIImageEncodeToBase64(ZF_OUT const ZFOutputCallback &outputCallback,
-                               ZF_IN ZFUIImage *image)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToBase64,
+                       ZFMP_OUT(const ZFOutputCallback &, outputCallback),
+                       ZFMP_IN(ZFUIImage *, image))
 {
     if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
     {
@@ -469,8 +472,9 @@ zfbool ZFUIImageEncodeToBase64(ZF_OUT const ZFOutputCallback &outputCallback,
     }
     return zffalse;
 }
-zfbool ZFUIImageEncodeFromBinary(ZF_IN_OUT ZFUIImage *image,
-                                 ZF_IN const ZFInputCallback &inputCallback)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeFromBinary,
+                       ZFMP_IN_OUT(ZFUIImage *, image),
+                       ZFMP_IN(const ZFInputCallback &, inputCallback))
 {
     if(image != zfnull && inputCallback.callbackIsValid())
     {
@@ -486,7 +490,8 @@ zfbool ZFUIImageEncodeFromBinary(ZF_IN_OUT ZFUIImage *image,
     }
     return zffalse;
 }
-zfautoObject ZFUIImageEncodeFromBinary(ZF_IN const ZFInputCallback &inputCallback)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromBinary,
+                       ZFMP_IN(const ZFInputCallback &, inputCallback))
 {
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     if(ZFUIImageEncodeFromBinary(ret, inputCallback))
@@ -498,8 +503,9 @@ zfautoObject ZFUIImageEncodeFromBinary(ZF_IN const ZFInputCallback &inputCallbac
         return zfautoObjectNull;
     }
 }
-zfbool ZFUIImageEncodeToBinary(ZF_OUT const ZFOutputCallback &outputCallback,
-                               ZF_IN ZFUIImage *image)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToBinary,
+                       ZFMP_OUT(const ZFOutputCallback &, outputCallback),
+                       ZFMP_IN(ZFUIImage *, image))
 {
     if(image != zfnull && image->nativeImage() != zfnull && outputCallback.callbackIsValid())
     {

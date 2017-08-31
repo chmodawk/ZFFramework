@@ -180,13 +180,13 @@ void ZFUIScrollThumbDefault::scrollThumbInit(void)
     if(this->scrollThumbHorizontal())
     {
         d->thumbView->layoutParam()->layoutAlignSet(ZFUIAlign::e_LeftInner | ZFUIAlign::e_BottomInner);
-        d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         d->thumbView->imageContentSet(this->scrollThumbImageHorizontal());
     }
     else
     {
         d->thumbView->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner | ZFUIAlign::e_RightInner);
-        d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         d->thumbView->imageContentSet(this->scrollThumbImageVertical());
     }
 

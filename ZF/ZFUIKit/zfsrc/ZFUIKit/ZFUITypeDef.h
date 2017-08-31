@@ -1027,7 +1027,7 @@ inline ZF_ENV_EXPORT zfbool ZFUIOrientationIsHorizontal(ZF_IN ZFUIOrientationEnu
 ZFT_INT_STRONG_WITH_BIT(zft_zfuint32, ZFUIColor)
 
 /** @brief 0x00000000 */
-extern ZF_ENV_EXPORT const ZFUIColor ZFUIColorZero;
+ZFEXPORT_VAR_READONLY_DECLARE(ZFUIColor, ZFUIColorZero)
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE
@@ -1054,8 +1054,22 @@ inline zfbool ZFUIColorIsEqual(ZF_IN ZFUIColor const &v0, ZF_IN ZFUIColor const 
 /**
  * @brief make a color
  */
-#define ZFUIColorMake(a, r, g, b) \
-    ZFUIColor((((zfuint)(a) & 0xFF) << 24) | (((zfuint)(r) & 0xFF) << 16) | (((zfuint)(g) & 0xFF) << 8) | ((zfuint)(b) & 0xFF))
+ZFMETHOD_FUNC_DECLARE_INLINE_4(ZFUIColor, ZFUIColorMake,
+                               ZFMP_IN(zfuint, a),
+                               ZFMP_IN(zfuint, r),
+                               ZFMP_IN(zfuint, g),
+                               ZFMP_IN(zfuint, b))
+{
+    return ZFUIColor(((a & 0xFF) << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF));
+}
+/**
+ * @brief make a color
+ */
+ZFMETHOD_FUNC_DECLARE_INLINE_1(ZFUIColor, ZFUIColorMake,
+                               ZFMP_IN(zft_zfuint32, c))
+{
+    return ZFUIColor(c);
+}
 
 /**
  * @brief get alpha from a #ZFUIColor as zfuint

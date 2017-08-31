@@ -689,7 +689,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_0( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_0( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     ) \
@@ -786,7 +786,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_1( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_1( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -893,7 +893,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_2( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_2( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1010,7 +1010,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_3( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_3( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1137,7 +1137,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_4( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_4( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1275,7 +1275,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_5( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_5( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1423,7 +1423,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_6( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_6( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1581,7 +1581,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_7( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_7( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \
@@ -1749,7 +1749,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
         )
 /** @brief see #ZFMethod */
-#define ZFMETHOD_DECLARE_NO_AUTOREGISTER_8( \
+#define ZFMETHOD_DECLARE_NO_AUTOREG_8( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
     , ZFMP_0 \

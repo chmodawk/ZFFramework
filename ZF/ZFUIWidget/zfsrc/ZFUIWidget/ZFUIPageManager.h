@@ -48,7 +48,7 @@ zfclassFwd _ZFP_ZFUIPageManagerPrivate;
  */
 zfinterface ZF_ENV_EXPORT ZFUIPageManager : zfextends ZFInterface
 {
-    ZFINTERFACE_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFUIPageManager, ZFInterface)
+    ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(ZFUIPageManager, ZFInterface)
 
     // ============================================================
     // observers

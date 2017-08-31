@@ -46,8 +46,8 @@ ZFObject *ZF2048UIBlock::objectOnInit(void)
     this->blockTitle()->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
     this->blockTitle()->viewVisibleSet(zffalse);
     this->blockTitle()->textAlignSet(ZFUIAlign::e_Center);
-    this->blockTitle()->textColorSet(ZFUIColorWhite);
-    this->blockTitle()->textShadowColorSet(ZFUIColorGrayDark);
+    this->blockTitle()->textColorSet(ZFUIColorWhite());
+    this->blockTitle()->textShadowColorSet(ZFUIColorGrayDark());
     this->blockTitle()->textAppearanceSet(ZFUITextAppearance::e_Bold);
     this->blockTitle()->textSizeSet(24);
     return this;

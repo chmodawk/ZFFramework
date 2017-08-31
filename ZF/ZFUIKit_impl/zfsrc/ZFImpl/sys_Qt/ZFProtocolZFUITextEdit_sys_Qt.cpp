@@ -41,7 +41,7 @@ public:
     {
         this->connect(this, SIGNAL(textChanged(QString)), this, SLOT(_ZFP_textChanged(QString)));
         this->connect(this, SIGNAL(cursorPositionChanged(int,int)), this, SLOT(_ZFP_textSelectRangeOnChange(int,int)));
-        this->_ZFP_textColorSet(ZFUIColorBlack);
+        this->_ZFP_textColorSet(ZFUIColorBlack());
         this->setFrame(false);
         this->setAttribute(Qt::WA_MacShowFocusRect, false);
 
@@ -66,7 +66,7 @@ public:
     }
     void _ZFP_textShadowUpdate(ZF_IN const ZFUIColor &textShadowColor, ZF_IN const ZFUISize &textShadowOffset)
     {
-        if(textShadowColor == ZFUIColorTransparent)
+        if(textShadowColor == ZFUIColorTransparent())
         {
             this->setGraphicsEffect(zfnull);
         }

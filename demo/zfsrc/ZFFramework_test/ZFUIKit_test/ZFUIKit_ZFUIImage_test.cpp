@@ -26,7 +26,7 @@ protected:
 
         zfblockedAlloc(ZFUIImageView, view);
         container->childAdd(view);
-        view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
         // encode image to binary and load it again to test
         zfautoObject imageHolder = ZFUIImageRes(zfText("test_normal.png"));

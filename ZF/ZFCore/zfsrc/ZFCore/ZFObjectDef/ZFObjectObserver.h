@@ -385,7 +385,7 @@ inline void ZFObserverEventGetId(ZF_OUT ZFCoreArrayPOD<zfidentity> &idValues, ZF
  *   // in header files
  *   ZF_NAMESPACE_BEGIN(YourNamespace)
  *   / ** @brief you can add doxygen docs here * /
- *   ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(YourNamespace, YourEvent)
+ *   ZFOBSERVER_EVENT_GLOBAL_WITH_NS(YourNamespace, YourEvent)
  *   ZF_NAMESPACE_END(YourNamespace)
  *
  *   // optional, in cpp files only, required only if you need ZFObserverEventGetId/ZFObserverEventGetName
@@ -397,14 +397,14 @@ inline void ZFObserverEventGetId(ZF_OUT ZFCoreArrayPOD<zfidentity> &idValues, ZF
  * unlike #ZFOBSERVER_EVENT, this macro would declare event outside of class scope,
  * typically you should use #ZFOBSERVER_EVENT_GLOBAL which have "ZFGlobalEvent" as namespace
  */
-#define ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(GlobalNamespace, YourEvent) \
+#define ZFOBSERVER_EVENT_GLOBAL_WITH_NS(GlobalNamespace, YourEvent) \
     ZFIDMAP_GLOBAL_DETAIL(ZFObserverEvent, GlobalNamespace, Event, YourEvent)
 
 /**
- * @brief global event with namespace "ZFGlobalEvent", see #ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE
+ * @brief global event with namespace "ZFGlobalEvent", see #ZFOBSERVER_EVENT_GLOBAL_WITH_NS
  */
 #define ZFOBSERVER_EVENT_GLOBAL(YourEvent) \
-    ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFGlobalEvent, YourEvent)
+    ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFGlobalEvent, YourEvent)
 
 /** @brief see #ZFOBSERVER_EVENT */
 #define ZFOBSERVER_EVENT_REGISTER(Scope, YourEvent) \

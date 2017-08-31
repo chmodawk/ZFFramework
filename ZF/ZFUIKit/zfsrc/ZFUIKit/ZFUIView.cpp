@@ -1702,7 +1702,7 @@ zfindex ZFUIView::layoutRequestOverride(void)
 void ZFUIView::_ZFP_ZFUIView_notifyLayoutRootView(ZF_IN const ZFUIRect &bounds)
 {
     ++_ZFP_ZFUIView_layoutRequestOverrideFlag;
-    this->layoutMeasure(bounds.size, ZFUISizeParamFillWidthFillHeight);
+    this->layoutMeasure(bounds.size, ZFUISizeParamFillWidthFillHeight());
     this->layout(bounds);
     --_ZFP_ZFUIView_layoutRequestOverrideFlag;
 }

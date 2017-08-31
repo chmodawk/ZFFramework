@@ -27,7 +27,7 @@ static ZFUIView *_ZFP_ZFUIListCellUpdaterBasic_setupSeparator(ZF_IN ZFUIListCell
         zfRelease(separatorView);
 
         separatorView->layoutParamSet(zflineAllocWithoutLeakTest(ZFUIViewLayoutParam));
-        separatorView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        separatorView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
         separatorView->viewUIEnableTreeSet(zffalse);
     }

@@ -455,19 +455,21 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
 // ============================================================
 // utils
 /**
- * @brief get object info, for debug use only
+ * @brief get raw lua object info
  */
 extern ZF_ENV_EXPORT void ZFImpl_ZFLua_luaObjectInfoT(ZF_OUT zfstring &ret,
                                                       ZF_IN lua_State *L,
-                                                      ZF_IN zfint luaStackOffset);
+                                                      ZF_IN zfint luaStackOffset,
+                                                      ZF_IN_OPT zfbool printLuaType = zffalse);
 /**
- * @brief get object info, for debug use only
+ * @brief get raw lua object info
  */
 inline zfstring ZFImpl_ZFLua_luaObjectInfo(ZF_IN lua_State *L,
-                                           ZF_IN zfint luaStackOffset)
+                                           ZF_IN zfint luaStackOffset,
+                                           ZF_IN_OPT zfbool printLuaType = zffalse)
 {
     zfstring ret;
-    ZFImpl_ZFLua_luaObjectInfoT(ret, L, luaStackOffset);
+    ZFImpl_ZFLua_luaObjectInfoT(ret, L, luaStackOffset, printLuaType);
     return ret;
 }
 /**

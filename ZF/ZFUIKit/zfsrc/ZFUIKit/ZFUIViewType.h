@@ -245,7 +245,7 @@ public:
      * @brief see #ZFUIViewLayoutParam, default is #ZFUISizeParamWrapWidthWrapHeight
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUISizeParam, sizeParam,
-                                ZFPropertyInitValue(ZFUISizeParamWrapWidthWrapHeight))
+                                ZFPropertyInitValue(ZFUISizeParamWrapWidthWrapHeight()))
     /**
      * @brief see #ZFUIViewLayoutParam, default is (ZFUIAlign::e_LeftInner | ZFUIAlign::e_TopInner)
      */

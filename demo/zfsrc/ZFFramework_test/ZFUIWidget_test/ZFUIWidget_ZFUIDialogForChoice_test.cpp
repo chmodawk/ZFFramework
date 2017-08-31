@@ -48,7 +48,7 @@ protected:
 
         zfblockedAlloc(ZFUIKit_test_Button, showButton);
         container->childAdd(showButton);
-        showButton->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        showButton->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         ZFLISTENER_LOCAL(showButtonOnClick, {
             userData->to<ZFObjectHolder *>()->holdedObj.to<ZFUIDialogForChoice *>()->dialogShow();
         })

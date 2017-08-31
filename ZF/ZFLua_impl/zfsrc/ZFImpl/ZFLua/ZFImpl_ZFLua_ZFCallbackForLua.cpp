@@ -50,7 +50,7 @@ static int _ZFP_ZFImpl_ZFLua_ZFCallbackForLua(ZF_IN lua_State *L)
     {
         ZFLuaErrorOccurredTrim(
             zfText("[ZFCallbackForLua] expect lua function as param, got %s"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
 

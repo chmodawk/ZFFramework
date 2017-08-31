@@ -85,7 +85,7 @@ public:
 
 public:
     /** @brief for internal use only */
-    virtual void *nativeTimer(void);
+    ZFMETHOD_DECLARE_0(void *, nativeTimer);
 
 public:
     /**
@@ -226,14 +226,37 @@ public:
      * @brief automatically stop timer when reach max count, 0 means no limit, 0 by default
      */
     ZFCORE_PARAM_WITH_INIT(zfindex, timerActivateCountMax, 0)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN const ZFTimerExecuteParam &ref) const
+    {
+        return (zftrue
+                && this->timerInterval() == ref.timerInterval()
+                && this->timerDelay() == ref.timerDelay()
+                && this->timerActivateInMainThread() == ref.timerActivateInMainThread()
+                && this->timerParam0() == ref.timerParam0()
+                && this->timerParam1() == ref.timerParam1()
+                && this->userData() == ref.userData()
+                && this->timerCallback() == ref.timerCallback()
+                && this->timerActivateCountMax() == ref.timerActivateCountMax()
+            );
+    }
+    zfbool operator != (ZF_IN const ZFTimerExecuteParam &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFTimerExecuteParam, ZFTimerExecuteParam)
 /**
  * @brief util method to start a timer
  *
  * return the started timer if success or null otherwise,
  * the started timer would be released automatically when stopped
  */
-extern ZF_ENV_EXPORT zfautoObject ZFTimerExecute(ZF_IN const ZFTimerExecuteParam &param);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFTimerExecute,
+                        ZFMP_IN(const ZFTimerExecuteParam &, param))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFTimer_h_

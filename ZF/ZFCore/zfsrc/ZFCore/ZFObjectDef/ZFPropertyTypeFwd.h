@@ -254,7 +254,7 @@ public:
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
     zfclass ZF_ENV_EXPORT v_##TypeName : zfextends ZFPropertyTypeWrapper \
     { \
-        ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(v_##TypeName, ZFPropertyTypeWrapper) \
+        ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_##TypeName, ZFPropertyTypeWrapper) \
     public: \
         /** @brief the value, see #ZFPropertyTypeIdData::Value */ \
         _ZFP_ZFPropertyTypeWrapper_##TypeName zfv; \
@@ -445,7 +445,7 @@ public:
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
     zfclass ZF_ENV_EXPORT v_##TypeName : zfextends ZFPropertyTypeWrapper \
     { \
-        ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(v_##TypeName, ZFPropertyTypeWrapper) \
+        ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_##TypeName, ZFPropertyTypeWrapper) \
     public: \
         /** @brief the value, see #ZFPropertyTypeIdData::Value */ \
         _ZFP_ZFPropertyTypeWrapper_##TypeName zfv; \

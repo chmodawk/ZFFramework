@@ -16,8 +16,8 @@ ZFMETHOD_FUNC_DEFINE_0(void, ZFCore_ZFMethodFunc_test_func)
 }
 
 ZF_NAMESPACE_BEGIN(ZFCore_ZFMethodFunc_test_namespace)
-ZFMETHOD_FUNC_DEFINE_WITH_NAMESPACE_0(ZFCore_ZFMethodFunc_test_namespace,
-                                      void, ZFCore_ZFMethodFunc_test_func)
+ZFMETHOD_FUNC_DEFINE_WITH_NS_0(ZFCore_ZFMethodFunc_test_namespace,
+                               void, ZFCore_ZFMethodFunc_test_func)
 {
     zfLogT();
 }

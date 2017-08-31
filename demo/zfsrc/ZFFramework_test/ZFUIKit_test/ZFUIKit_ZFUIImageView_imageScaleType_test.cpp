@@ -22,18 +22,18 @@ public:
     virtual ZFObject *objectOnInit(void)
     {
         zfsuper::objectOnInit();
-        this->viewBackgroundColorSet(ZFUIColorYellow);
+        this->viewBackgroundColorSet(ZFUIColorYellow());
 
         zfautoObject imageSmall = ZFUIImageRes(zfText("test_normal.png"));
         zfautoObject imageLarge = ZFUIImageScale(imageSmall.toAny(), ZFUISizeMake(600));
 
         this->childAdd(this->imageViewSmall());
         this->imageViewSmall()->imageContentSet(imageSmall.toAny());
-        this->imageViewSmall()->viewBackgroundColorSet(ZFUIColorRed);
+        this->imageViewSmall()->viewBackgroundColorSet(ZFUIColorRed());
 
         this->childAdd(this->imageViewLarge());
         this->imageViewLarge()->imageContentSet(imageLarge.toAny());
-        this->imageViewLarge()->viewBackgroundColorSet(ZFUIColorBlue);
+        this->imageViewLarge()->viewBackgroundColorSet(ZFUIColorBlue());
 
         return this;
     }
@@ -75,7 +75,7 @@ protected:
 
         zfblockedAlloc(ZFUIKit_ZFUIImageView_imageScaleType_test_Container, layout);
         container->childAdd(layout);
-        layout->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        layout->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
 
         zfblockedAlloc(ZFArrayEditable, imageViews);
         imageViews->add(layout->imageViewSmall());

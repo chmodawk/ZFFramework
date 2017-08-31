@@ -61,14 +61,14 @@ ZF_NAMESPACE_BEGIN(ZFUIViewStateAniImpl)
  * notified when #ZFUIViewStateAniStart actually started,
  * you may do your own initialize step here
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniOnInit)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniOnInit)
 /**
  * @brief see #ZFObject::observerNotify
  *
  * notified when #ZFUIViewStateAniStart all tasks stopped,
  * you may do your own cleanup step here
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniOnDealloc)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniOnDealloc)
 /**
  * @brief see #ZFObject::observerNotify
  *
@@ -76,7 +76,7 @@ ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniOnDealloc)
  * you may store the attached view for future use\n
  * sender is the view
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAttach)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniViewAttach)
 /**
  * @brief see #ZFObject::observerNotify
  *
@@ -85,7 +85,7 @@ ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAttach)
  * you may do your own cleanup step here\n
  * sender is the view
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewDetach)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniViewDetach)
 /**
  * @brief see #ZFObject::observerNotify
  *
@@ -97,7 +97,7 @@ ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewDetach)
  * if nothing added to param0,
  * no animation would be applied to the view
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAniPrepare)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniViewAniPrepare)
 /**
  * @brief see #ZFObject::observerNotify
  *
@@ -106,7 +106,7 @@ ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAniPrep
  * sender is the view,
  * param0 is the #ZFAnimation
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAniStart)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniViewAniStart)
 /**
  * @brief see #ZFObject::observerNotify
  *
@@ -115,7 +115,7 @@ ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAniStar
  * sender is the view,
  * param0 is the #ZFAnimation
  */
-ZFOBSERVER_EVENT_GLOBAL_WITH_NAMESPACE(ZFUIViewStateAniImpl, StateAniViewAniStop)
+ZFOBSERVER_EVENT_GLOBAL_WITH_NS(ZFUIViewStateAniImpl, StateAniViewAniStop)
 ZF_NAMESPACE_END(ZFUIViewStateAniImpl)
 
 // ============================================================

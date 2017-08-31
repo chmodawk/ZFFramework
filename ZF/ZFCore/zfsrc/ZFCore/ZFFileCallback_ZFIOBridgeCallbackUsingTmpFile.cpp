@@ -13,7 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 zfclass _ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(_ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(_ZFP_ZFIOBridgeCallbackUsingTmpFilePrivate, ZFObject)
 
 private:
     ZFFileToken token;

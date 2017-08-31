@@ -36,7 +36,7 @@ typedef enum {
 // _ZFP_ZFUIScrollViewPrivate
 zfclass _ZFP_ZFUIScrollViewPrivate : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(_ZFP_ZFUIScrollViewPrivate, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(_ZFP_ZFUIScrollViewPrivate, ZFObject)
 
 public:
     ZFPROTOCOL_INTERFACE_CLASS(ZFUIScrollView) *impl;
@@ -971,13 +971,14 @@ static void _ZFP_ZFUIScrollView_scrollChildToVisible(ZF_OUT zfint &offset,
         }
     }
 }
-void ZFUIScrollView::scrollToFitRange(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, void, scrollToFitRange)
 {
     d->xScroll->scrollToFitRange();
     d->yScroll->scrollToFitRange();
     d->scrollerUpdate();
 }
-void ZFUIScrollView::scrollChildToVisible(ZF_IN ZFUIView *child)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollChildToVisible,
+                  ZFMP_IN(ZFUIView *, child))
 {
     if(child == zfnull)
     {
@@ -998,7 +999,8 @@ void ZFUIScrollView::scrollChildToVisible(ZF_IN ZFUIView *child)
     }
 }
 
-void ZFUIScrollView::scrollAreaMarginAdd(ZF_IN const ZFUIMargin &margin)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollAreaMarginAdd,
+                  ZFMP_IN(const ZFUIMargin &, margin))
 {
     if(margin != ZFUIMarginZero)
     {
@@ -1007,7 +1009,8 @@ void ZFUIScrollView::scrollAreaMarginAdd(ZF_IN const ZFUIMargin &margin)
         this->scrollAreaMarginOnChange();
     }
 }
-void ZFUIScrollView::scrollAreaMarginRemove(ZF_IN const ZFUIMargin &margin)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollAreaMarginRemove,
+                  ZFMP_IN(const ZFUIMargin &, margin))
 {
     if(margin != ZFUIMarginZero)
     {
@@ -1016,41 +1019,42 @@ void ZFUIScrollView::scrollAreaMarginRemove(ZF_IN const ZFUIMargin &margin)
         this->scrollAreaMarginOnChange();
     }
 }
-const ZFUIMargin &ZFUIScrollView::scrollAreaMargin(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, const ZFUIMargin &, scrollAreaMargin)
 {
     return d->scrollAreaMargin;
 }
 
-ZFUIRect ZFUIScrollView::scrollArea(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, ZFUIRect, scrollArea)
 {
     return ZFUIRectApplyMargin(ZFUIRectGetBounds(this->layoutedFrame()), d->scrollAreaMargin);
 }
-zfint ZFUIScrollView::scrollAreaLeft(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaLeft)
 {
     return d->scrollAreaMargin.left;
 }
-zfint ZFUIScrollView::scrollAreaTop(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaTop)
 {
     return d->scrollAreaMargin.top;
 }
-zfint ZFUIScrollView::scrollAreaRight(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaRight)
 {
     return this->layoutedFrame().size.width - d->scrollAreaMargin.right;
 }
-zfint ZFUIScrollView::scrollAreaBottom(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaBottom)
 {
     return this->layoutedFrame().size.height - d->scrollAreaMargin.bottom;
 }
-zfint ZFUIScrollView::scrollAreaWidth(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaWidth)
 {
     return this->layoutedFrame().size.width - ZFUIMarginGetX(d->scrollAreaMargin);
 }
-zfint ZFUIScrollView::scrollAreaHeight(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollAreaHeight)
 {
     return this->layoutedFrame().size.height - ZFUIMarginGetY(d->scrollAreaMargin);
 }
 
-void ZFUIScrollView::scrollThumbHorizontalClassSet(ZF_IN const ZFClass *cls)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollThumbHorizontalClassSet,
+                  ZFMP_IN(const ZFClass *, cls))
 {
     if(cls == zfnull || !cls->classIsTypeOf(ZFUIScrollThumb::ClassData()))
     {
@@ -1075,11 +1079,12 @@ void ZFUIScrollView::scrollThumbHorizontalClassSet(ZF_IN const ZFClass *cls)
         }
     }
 }
-const ZFClass *ZFUIScrollView::scrollThumbHorizontalClass(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, const ZFClass *, scrollThumbHorizontalClass)
 {
     return d->xScrollThumbClass;
 }
-void ZFUIScrollView::scrollThumbVerticalClassSet(ZF_IN const ZFClass *cls)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollThumbVerticalClassSet,
+                  ZFMP_IN(const ZFClass *, cls))
 {
     if(cls == zfnull || !cls->classIsTypeOf(ZFUIScrollThumb::ClassData()))
     {
@@ -1104,7 +1109,7 @@ void ZFUIScrollView::scrollThumbVerticalClassSet(ZF_IN const ZFClass *cls)
         }
     }
 }
-const ZFClass *ZFUIScrollView::scrollThumbVerticalClass(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, const ZFClass *, scrollThumbVerticalClass)
 {
     return d->yScrollThumbClass;
 }
@@ -1120,12 +1125,13 @@ void ZFUIScrollView::scrollThumbVerticalOnInit(void)
 
 // ============================================================
 // scroll control
-const ZFClass *ZFUIScrollView::scrollerClass(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, const ZFClass *, scrollerClass)
 {
     return ZFUIScrollerClass();
 }
 
-void ZFUIScrollView::scrollContentFrameSetAnimated(ZF_IN const ZFUIRect &scrollContentFrame)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollContentFrameSetAnimated,
+                  ZFMP_IN(const ZFUIRect &, scrollContentFrame))
 {
     this->scrollContentFrameSetWhileAnimating(ZFUIRectMake(
         this->scrollContentFrame().point.x,
@@ -1144,14 +1150,16 @@ void ZFUIScrollView::scrollContentFrameSetAnimated(ZF_IN const ZFUIRect &scrollC
         }
     }
 }
-void ZFUIScrollView::scrollContentFrameSetWhileAnimating(ZF_IN const ZFUIRect &scrollContentFrame)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollContentFrameSetWhileAnimating,
+                  ZFMP_IN(const ZFUIRect &, scrollContentFrame))
 {
     d->xScroll->scrollContentChanged(scrollContentFrame.point.x, scrollContentFrame.size.width);
     d->yScroll->scrollContentChanged(scrollContentFrame.point.y, scrollContentFrame.size.height);
     d->scrollerUpdate();
 }
-void ZFUIScrollView::scrollByPoint(ZF_IN zfint xPos,
-                                   ZF_IN zfint yPos)
+ZFMETHOD_DEFINE_2(ZFUIScrollView, void, scrollByPoint,
+                  ZFMP_IN(zfint, xPos),
+                  ZFMP_IN(zfint, yPos))
 {
     if(d->state != ZFUIScrollViewState::e_Dragging)
     {
@@ -1169,12 +1177,13 @@ void ZFUIScrollView::scrollByPoint(ZF_IN zfint xPos,
         this->scrollOnScrolledByUser();
     }
 }
-ZFUIPoint ZFUIScrollView::scrollByPointEndPoint(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, ZFUIPoint, scrollByPointEndPoint)
 {
     return ZFUIPointMake(d->xScroll->scrollByPointEndPoint(), d->yScroll->scrollByPointEndPoint());
 }
-void ZFUIScrollView::scrollBySpeed(ZF_IN zfint xSpeedInPixelsPerSecond,
-                                   ZF_IN zfint ySpeedInPixelsPerSecond)
+ZFMETHOD_DEFINE_2(ZFUIScrollView, void, scrollBySpeed,
+                  ZFMP_IN(zfint, xSpeedInPixelsPerSecond),
+                  ZFMP_IN(zfint, ySpeedInPixelsPerSecond))
 {
     if(d->state != ZFUIScrollViewState::e_Dragging)
     {
@@ -1188,25 +1197,26 @@ void ZFUIScrollView::scrollBySpeed(ZF_IN zfint xSpeedInPixelsPerSecond,
         this->scrollOnScrolledByUser();
     }
 }
-zfint ZFUIScrollView::scrollBySpeedCurrentSpeedX(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollBySpeedCurrentSpeedX)
 {
     return d->xScroll->scrollBySpeedCurrentSpeed();
 }
-zfint ZFUIScrollView::scrollBySpeedCurrentSpeedY(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, scrollBySpeedCurrentSpeedY)
 {
     return d->yScroll->scrollBySpeedCurrentSpeed();
 }
-ZFUIPoint ZFUIScrollView::scrollBySpeedEndPointPredicted(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, ZFUIPoint, scrollBySpeedEndPointPredicted)
 {
     return ZFUIPointMake(d->xScroll->scrollBySpeedEndPointPredicted(), d->yScroll->scrollBySpeedEndPointPredicted());
 }
 
-ZFUIPoint ZFUIScrollView::scrollEndPointPredicted(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, ZFUIPoint, scrollEndPointPredicted)
 {
     return ZFUIPointMake(d->xScroll->scrollEndPointPredicted(), d->yScroll->scrollEndPointPredicted());
 }
 
-void ZFUIScrollView::autoScrollStartX(ZF_IN zfint speedInPixelsPerSecond)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, autoScrollStartX,
+                  ZFMP_IN(zfint, speedInPixelsPerSecond))
 {
     if(d->state != ZFUIScrollViewState::e_Dragging)
     {
@@ -1222,7 +1232,8 @@ void ZFUIScrollView::autoScrollStartX(ZF_IN zfint speedInPixelsPerSecond)
         this->scrollOnScrolledByUser();
     }
 }
-void ZFUIScrollView::autoScrollStartY(ZF_IN zfint speedInPixelsPerSecond)
+ZFMETHOD_DEFINE_1(ZFUIScrollView, void, autoScrollStartY,
+                  ZFMP_IN(zfint , speedInPixelsPerSecond))
 {
     if(d->state != ZFUIScrollViewState::e_Dragging)
     {
@@ -1238,7 +1249,7 @@ void ZFUIScrollView::autoScrollStartY(ZF_IN zfint speedInPixelsPerSecond)
         this->scrollOnScrolledByUser();
     }
 }
-void ZFUIScrollView::autoScrollStopX(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, void, autoScrollStopX)
 {
     if(d->autoScrollSpeedX != 0)
     {
@@ -1252,7 +1263,7 @@ void ZFUIScrollView::autoScrollStopX(void)
         }
     }
 }
-void ZFUIScrollView::autoScrollStopY(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, void, autoScrollStopY)
 {
     if(d->autoScrollSpeedY != 0)
     {
@@ -1266,27 +1277,30 @@ void ZFUIScrollView::autoScrollStopY(void)
         }
     }
 }
-zfint ZFUIScrollView::autoScrollSpeedX(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, autoScrollSpeedX)
 {
     return d->autoScrollSpeedX;
 }
-zfint ZFUIScrollView::autoScrollSpeedY(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, zfint, autoScrollSpeedY)
 {
     return d->autoScrollSpeedY;
 }
 
-void ZFUIScrollView::scrollSimulateDragBegin(ZF_IN const ZFUIPoint &mousePos,
-                                             ZF_IN const zftimet &mouseTime)
+ZFMETHOD_DEFINE_2(ZFUIScrollView, void, scrollSimulateDragBegin,
+                  ZFMP_IN(const ZFUIPoint &, mousePos),
+                  ZFMP_IN(const zftimet &, mouseTime))
 {
     this->_ZFP_ZFUIScrollView_notifyDragBegin(mousePos, mouseTime);
 }
-void ZFUIScrollView::scrollSimulateDrag(ZF_IN const ZFUIPoint &mousePos,
-                                        ZF_IN const zftimet &mouseTime)
+ZFMETHOD_DEFINE_2(ZFUIScrollView, void, scrollSimulateDrag,
+                  ZFMP_IN(const ZFUIPoint &, mousePos),
+                  ZFMP_IN(const zftimet &, mouseTime))
 {
     this->_ZFP_ZFUIScrollView_notifyDrag(mousePos, mouseTime);
 }
-void ZFUIScrollView::scrollSimulateDragEnd(ZF_IN const zftimet &mouseTime,
-                                           ZF_IN_OPT zfbool needScrollAni /* = zftrue */)
+ZFMETHOD_DEFINE_2(ZFUIScrollView, void, scrollSimulateDragEnd,
+                  ZFMP_IN(const zftimet &, mouseTime),
+                  ZFMP_IN_OPT(zfbool, needScrollAni, zftrue))
 {
     this->_ZFP_ZFUIScrollView_notifyDragEnd(mouseTime, needScrollAni);
 }
@@ -1309,7 +1323,7 @@ zfbool ZFUIScrollView::scrollOverride(void)
 }
 
 // ============================================================
-ZFUIScrollViewStateEnum ZFUIScrollView::scrollViewState(void)
+ZFMETHOD_DEFINE_0(ZFUIScrollView, ZFUIScrollViewStateEnum, scrollViewState)
 {
     return d->state;
 }

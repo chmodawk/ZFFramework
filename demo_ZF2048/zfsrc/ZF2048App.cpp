@@ -25,7 +25,7 @@ public:
     virtual void objectOnInitFinish(void)
     {
         zfsuper::objectOnInitFinish();
-        this->textColorSet(ZFUIColorBlue);
+        this->textColorSet(ZFUIColorBlue());
     }
 };
 
@@ -70,14 +70,14 @@ public:
             case ZFUIOrientation::e_Bottom:
                 this->mainLayout()->layoutOrientationSet(ZFUIOrientation::e_Top);
                 this->headerLayout()->layoutOrientationSet(ZFUIOrientation::e_Left);
-                this->headerLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+                this->headerLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
                 this->scoreLayout()->layoutOrientationSet(ZFUIOrientation::e_Left);
                 break;
             case ZFUIOrientation::e_Left:
             case ZFUIOrientation::e_Right:
                 this->mainLayout()->layoutOrientationSet(ZFUIOrientation::e_Left);
                 this->headerLayout()->layoutOrientationSet(ZFUIOrientation::e_Top);
-                this->headerLayout()->layoutParam()->sizeParamSet(ZFUISizeParamWrapWidthFillHeight);
+                this->headerLayout()->layoutParam()->sizeParamSet(ZFUISizeParamWrapWidthFillHeight());
                 this->scoreLayout()->layoutOrientationSet(ZFUIOrientation::e_Top);
                 break;
             default:
@@ -207,7 +207,7 @@ public:
     void setupChildren(void)
     {
         this->owner->childAdd(this->mainLayout());
-        this->mainLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->mainLayout()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->mainLayout()->layoutChildSpaceSet(ZFUIGlobalStyle::DefaultStyle()->itemSpace());
 
         this->mainLayout()->childAdd(this->headerLayout());
@@ -237,7 +237,7 @@ public:
         this->headerLayout()->childAdd(this->aboutButton());
 
         this->mainLayout()->childAdd(this->owner->game());
-        this->owner->game()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        this->owner->game()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     }
     void setupSetting_autoMove(void)
     {

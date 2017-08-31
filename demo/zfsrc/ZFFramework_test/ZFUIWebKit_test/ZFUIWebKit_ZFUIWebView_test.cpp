@@ -26,11 +26,16 @@ protected:
 
         zfblockedAlloc(ZFUIWebView, testView);
         container->childAdd(testView);
-        testView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        testView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         testView->layoutParam()->layoutMarginSet(ZFUIMarginMake(40));
-        testView->viewBackgroundColorSet(ZFUIColorRed);
+        testView->viewBackgroundColorSet(ZFUIColorRed());
 
         this->prepareSettingButton(window, testView);
+
+        ZFLISTENER_LOCAL(loadStateOnChange, {
+            zfLogTrimT() << zfText("webLoadingOnChange") << listenerData.sender->to<ZFUIWebView *>()->webLoading();
+        })
+        testView->observerAdd(ZFUIWebView::EventWebLoadStateOnChange(), loadStateOnChange);
 
         testView->webLoadUrl(zfText("http://www.baidu.com"));
     }

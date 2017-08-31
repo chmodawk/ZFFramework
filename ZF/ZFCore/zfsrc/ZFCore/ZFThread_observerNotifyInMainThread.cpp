@@ -14,7 +14,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 zfclass _ZFP_I_ZFObserverNotifyInMainThreadTaskData : zfextends ZFObject, zfimplements ZFCacheable
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(_ZFP_I_ZFObserverNotifyInMainThreadTaskData, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(_ZFP_I_ZFObserverNotifyInMainThreadTaskData, ZFObject)
     ZFIMPLEMENTS_DECLARE(ZFCacheable)
     ZFCACHEABLE_DECLARE(_ZFP_I_ZFObserverNotifyInMainThreadTaskData)
 

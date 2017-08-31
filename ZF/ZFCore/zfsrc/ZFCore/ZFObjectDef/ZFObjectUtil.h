@@ -131,7 +131,7 @@ inline zfidentity ZFObjectHash(ZF_IN ZFObject *obj)
  */
 zffinal zfclass ZF_ENV_EXPORT ZFPointerHolder : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFPointerHolder, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFPointerHolder, ZFObject)
 
 protected:
     ZFPointerHolder(void) : holdedData(zfnull) {}
@@ -218,7 +218,7 @@ zffinal zfclass ZF_ENV_EXPORT ZFTypeHolder : zfextends ZFObject
 {
     // ============================================================
 public:
-    ZFOBJECT_DECLARE_ALLOW_CUSTOM_CONSTRUCTOR(ZFTypeHolder, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFTypeHolder, ZFObject)
 
 protected:
     ZFTypeHolder(void) : holdedData(zfnull), holderType(zfnull) {}

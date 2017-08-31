@@ -95,7 +95,7 @@ inline QColor ZFImpl_sys_Qt_ZFUIKit_ZFUIColorToQColor(ZF_IN const ZFUIColor &col
 extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_ZFUIKit_ZFUIColorFromQColor(ZF_OUT ZFUIColor &ret, ZF_IN const QColor qColor);
 inline ZFUIColor ZFImpl_sys_Qt_ZFUIKit_ZFUIColorFromQColor(ZF_IN const QColor qColor)
 {
-    ZFUIColor ret = ZFUIColorZero;
+    ZFUIColor ret = ZFUIColorZero();
     ZFImpl_sys_Qt_ZFUIKit_ZFUIColorFromQColor(ret, qColor);
     return ret;
 }

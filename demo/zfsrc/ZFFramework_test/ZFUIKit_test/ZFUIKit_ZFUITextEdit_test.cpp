@@ -31,17 +31,17 @@ protected:
 
         zfblockedAlloc(ZFUITextEdit, view);
         container->childAdd(view);
-        view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight);
+        view->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         view->layoutParam()->layoutMarginSet(ZFUIMarginMake(40));
-        view->viewBackgroundColorSet(ZFUIColorRed);
+        view->viewBackgroundColorSet(ZFUIColorRed());
         view->observerAdd(ZFUITextEdit::EventTextOnReturnClick(), onClickReturn);
         view->textPlaceHolder()->textContentStringSet(zfText("first text edit"));
 
         zfblockedAlloc(ZFUITextEdit, view2);
         container->childAdd(view2);
-        view2->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        view2->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         view2->layoutParam()->layoutMarginSet(ZFUIMarginMake(40, 100, 40, 40));
-        view2->viewBackgroundColorSet(ZFUIColorBlue);
+        view2->viewBackgroundColorSet(ZFUIColorBlue());
         view2->observerAdd(ZFUITextEdit::EventTextOnReturnClick(), onClickReturn);
         view2->textPlaceHolder()->textContentStringSet(zfText("second text edit"));
 

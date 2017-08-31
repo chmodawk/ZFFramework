@@ -218,14 +218,14 @@ public:
                 case ZFUIOrientation::e_Right:
                     ret = cell->layoutMeasure(
                             ZFUISizeMake(-1, this->pimplOwner->scrollAreaHeight()),
-                            ZFUISizeParamWrapWidthFillHeight
+                            ZFUISizeParamWrapWidthFillHeight()
                         ).width;
                     break;
                 case ZFUIOrientation::e_Top:
                 case ZFUIOrientation::e_Bottom:
                     ret = cell->layoutMeasure(
                             ZFUISizeMake(this->pimplOwner->scrollAreaWidth(), -1),
-                            ZFUISizeParamFillWidthWrapHeight
+                            ZFUISizeParamFillWidthWrapHeight()
                         ).height;
                     break;
             }

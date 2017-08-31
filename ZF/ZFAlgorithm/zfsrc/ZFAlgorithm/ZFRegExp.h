@@ -209,7 +209,7 @@ public:
     /**
      * @brief for internal use only
      */
-    virtual void *nativeRegExp(void);
+    ZFMETHOD_DECLARE_0(void *, nativeRegExp);
 
 public:
     /**

@@ -26,7 +26,7 @@ protected:
 
         zfblockedAlloc(ZFUIView, testContainer);
         container->childAdd(testContainer);
-        testContainer->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        testContainer->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         testContainer->layoutParam()->layoutMarginSet(ZFUIMarginMake(0, 50, 0, 0));
 
         // use a view that not in view tree to test whether it would cause wrong ani state

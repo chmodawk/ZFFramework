@@ -510,7 +510,7 @@ _ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_compareType(TypeName, Type, originalType) \
-    ZFCompareResult ZFValue::TypeName##ValueCompare(ZF_IN Type const &v) \
+    ZFMETHOD_DEFINE_1(ZFValue, ZFCompareResult, TypeName##ValueCompare, ZFMP_IN(Type const &, v)) \
     { \
         switch(this->valueType()) \
         { \
@@ -557,14 +557,14 @@ ZFCompareResult ZFValue::serializableDataValueCompare(ZF_IN const ZFSerializable
 
 // ============================================================
 #define _ZFP_ZFValue_create_noCache_DEFINE(TypeName, Type, originalType) \
-    zfautoObject ZFValue::TypeName##ValueCreate(ZF_IN Type const &v) \
+    ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
     { \
         zfblockedAlloc(ZFValue, value); \
         value->TypeName##ValueSet(v); \
         return zfautoObjectCreate(value); \
     }
 #define _ZFP_ZFValue_create_hasCache_DEFINE(TypeName, Type, originalType, negativeCount, positiveCount) \
-    zfautoObject ZFValue::TypeName##ValueCreate(ZF_IN Type const &v) \
+    ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
     { \
         zfCoreMutexLocker(); \
         static ZFValue *s_value[negativeCount + 1 + positiveCount] = {0}; \
@@ -583,7 +583,7 @@ ZFCompareResult ZFValue::serializableDataValueCompare(ZF_IN const ZFSerializable
         value->TypeName##ValueSet(v); \
         return zfautoObjectCreate(value); \
     }
-zfautoObject ZFValue::boolValueCreate(ZF_IN zfbool const &v)
+ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, boolValueCreate, ZFMP_IN(zfbool const &, v))
 {
     zfCoreMutexLocker();
     static ZFValue *s_value[2] = {0};
@@ -611,7 +611,8 @@ _ZFP_ZFValue_create_noCache_DEFINE(identity, zfidentity, zft_zfidentity)
 _ZFP_ZFValue_create_noCache_DEFINE(serializableData, ZFSerializableData, void)
 
 // ============================================================
-zfbool ZFValue::valueConvertableTo(ZF_IN ZFValueTypeEnum toType)
+ZFMETHOD_DEFINE_1(ZFValue, zfbool, valueConvertableTo,
+                  ZFMP_IN(ZFValueTypeEnum, toType))
 {
     switch(toType)
     {
@@ -647,7 +648,7 @@ zfbool ZFValue::valueConvertableTo(ZF_IN ZFValueTypeEnum toType)
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_getValue_DEFINE(TypeName, Type, originalType) \
-    Type ZFValue::TypeName##Value(void) \
+    ZFMETHOD_DEFINE_0(ZFValue, Type, TypeName##Value) \
     { \
         switch(this->valueType()) \
         { \
@@ -727,7 +728,7 @@ ZFSerializableData ZFValue::serializableDataValue(void)
  * valid only if sizeof(primitive type) equals to wrapper object
  */
 #define _ZFP_ZFValue_accessValue_DEFINE(TypeName, Type, originalType) \
-    Type const &ZFValue::TypeName##ValueAccess(void) \
+    ZFMETHOD_DEFINE_0(ZFValue, Type const &, TypeName##ValueAccess) \
     { \
         return (Type const &)d->v.value_##TypeName; \
     }
@@ -751,17 +752,18 @@ ZFSerializableData const &ZFValue::serializableDataValueAccess(void)
 }
 
 // ============================================================
-ZFValueTypeEnum ZFValue::valueType(void)
+ZFMETHOD_DEFINE_0(ZFValue, ZFValueTypeEnum, valueType)
 {
     return d->type;
 }
 
-const zfchar *ZFValue::valueTypeName(void)
+ZFMETHOD_DEFINE_0(ZFValue, const zfchar *, valueTypeName)
 {
     return ZFValueType::EnumNameForValue(this->valueType());
 }
 
-void ZFValue::valueStringT(ZF_IN_OUT zfstring &ret)
+ZFMETHOD_DEFINE_1(ZFValue, void, valueStringT,
+                  ZFMP_IN_OUT(zfstring &, ret))
 {
     d->valueStringT(ret);
 }
@@ -833,7 +835,7 @@ void ZFValue::serializableDataValueSet(ZF_IN const ZFSerializableData &v)
 
 // ============================================================
 #define _ZFP_ZFValueEditable_create_DEFINE(TypeName, Type, originalType) \
-    zfautoObject ZFValueEditable::TypeName##ValueCreate(ZF_IN Type const &v) \
+    ZFMETHOD_DEFINE_1(ZFValueEditable, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
     { \
         zfblockedAlloc(ZFValueEditable, ret); \
         ret->TypeName##ValueSet(v); \

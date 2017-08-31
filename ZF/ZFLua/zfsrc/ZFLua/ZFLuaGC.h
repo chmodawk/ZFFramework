@@ -21,7 +21,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief performa garbage collector in lua
  */
-extern ZF_ENV_EXPORT void ZFLuaGC(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFLuaGC)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLuaGC_h_

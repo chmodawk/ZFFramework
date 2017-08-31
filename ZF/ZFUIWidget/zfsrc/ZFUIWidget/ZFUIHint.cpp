@@ -377,7 +377,7 @@ ZFObject *ZFUIHint::objectOnInit(void)
     d->hintWindow->windowLevelSet(ZFUIWindowLevel::e_ZFFrameworkFgHighest);
     d->hintWindow->viewSizeMinSet(ZFUISizeMake(ZFUIGlobalStyle::DefaultStyle()->itemSizeText()));
     d->hintWindow->windowLayoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
-    d->hintWindow->windowLayoutParam()->sizeParamSet(ZFUISizeParamWrapWidthWrapHeight);
+    d->hintWindow->windowLayoutParam()->sizeParamSet(ZFUISizeParamWrapWidthWrapHeight());
     d->hintWindow->windowLayoutParam()->layoutMarginSet(ZFUIMarginMake(ZFUIGlobalStyle::DefaultStyle()->itemMargin()));
     d->hintWindow->viewUIEnableTreeSet(zffalse);
 

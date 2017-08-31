@@ -24,7 +24,7 @@ public:
     ZFPROPERTY_ASSIGN_READONLY(zfstring, propertyAssignReadonly, ZFPropertyNoInitValue)
 
     // custom callback
-    ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DECLARE(ZFObject *, propertyRetain)
+    ZFPROPERTY_CUSTOM_INIT_CHECKER_DECLARE(ZFObject *, propertyRetain)
     {
         if(outInitValue != zfnull) {*outInitValue = zfautoObjectNull;}
         return (this->propertyRetain() == zfnull);
@@ -58,7 +58,7 @@ public:
         zfLogT();
     }
 
-    ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DECLARE(zfstring, propertyAssign);
+    ZFPROPERTY_CUSTOM_INIT_CHECKER_DECLARE(zfstring, propertyAssign);
     ZFPROPERTY_CUSTOM_VALUE_COMPARER_DECLARE(zfstring, propertyAssign);
     ZFPROPERTY_CUSTOM_ON_INIT_DECLARE(zfstring, propertyAssign);
     ZFPROPERTY_CUSTOM_ON_DEALLOC_DECLARE(zfstring, propertyAssign);
@@ -67,7 +67,7 @@ public:
     ZFPROPERTY_CUSTOM_ON_DETACH_DECLARE(zfstring, propertyAssign);
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfstring, propertyAssign);
 };
-ZFPROPERTY_CUSTOM_INIT_VALUE_CHECKER_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
+ZFPROPERTY_CUSTOM_INIT_CHECKER_DEFINE(_ZFP_ZFCore_ZFProperty_test_TestBase, zfstring, propertyAssign)
 {
     if(outInitValue != zfnull) {*outInitValue = zfText("");}
     return this->propertyAssign().isEmpty();

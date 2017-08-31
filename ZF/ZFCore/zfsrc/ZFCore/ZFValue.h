@@ -160,19 +160,20 @@ public:
      * other types would convert by #ZFCastStatic\n
      * a serializable type can only convert to a serializable type
      */
-    virtual zfbool valueConvertableTo(ZF_IN ZFValueTypeEnum toType);
+    ZFMETHOD_DECLARE_1(zfbool, valueConvertableTo,
+                       ZFMP_IN(ZFValueTypeEnum, toType));
 
 public:
     #define _ZFP_ZFValue_method_DECLARE(TypeName, T) \
         public: \
             /** @brief create a new ZFValue */ \
-            static zfautoObject TypeName##ValueCreate(ZF_IN T const &v); \
+            ZFMETHOD_DECLARE_STATIC_1(zfautoObject, TypeName##ValueCreate, ZFMP_IN(T const &, v)); \
             /** @brief see #objectCompare */ \
-            virtual ZFCompareResult TypeName##ValueCompare(ZF_IN T const &v); \
+            ZFMETHOD_DECLARE_1(ZFCompareResult, TypeName##ValueCompare, ZFMP_IN(T const &, v)); \
             /** @brief try to access the value, convert if able, assert fail if not convertable */ \
-            virtual T TypeName##Value(void); \
+            ZFMETHOD_DECLARE_0(T, TypeName##Value); \
             /** @brief directly access value as raw type, no type safe check and you must ensure type is matched */ \
-            virtual T const &TypeName##ValueAccess(void); \
+            ZFMETHOD_DECLARE_0(T const &, TypeName##ValueAccess); \
         protected: \
             /** @brief set new value */ \
             virtual void TypeName##ValueSet(ZF_IN T const &v);
@@ -195,19 +196,20 @@ public:
     /**
      * @brief get the type of ZFValue
      */
-    virtual ZFValueTypeEnum valueType(void);
+    ZFMETHOD_DECLARE_0(ZFValueTypeEnum, valueType);
 
     /**
      * @brief get the type name of ZFValue
      */
-    virtual const zfchar *valueTypeName(void);
+    ZFMETHOD_DECLARE_0(const zfchar *, valueTypeName);
 
     /**
      * @brief return a string describe the value in short
      */
-    virtual void valueStringT(ZF_IN_OUT zfstring &ret);
+    ZFMETHOD_DECLARE_1(void, valueStringT,
+                       ZFMP_IN_OUT(zfstring &, ret));
     /** @brief see #valueStringT */
-    virtual inline zfstring valueString(void)
+    ZFMETHOD_DECLARE_0(zfstring, valueString)
     {
         zfstring ret;
         this->valueStringT(ret);
@@ -250,9 +252,9 @@ public:
 public:
     #define _ZFP_ZFValueEditable_method_DECLARE(TypeName, T) \
         /** @brief create a new ZFValueEditable */ \
-        static zfautoObject TypeName##ValueCreate(ZF_IN T const &v); \
-        zfoverride \
-        virtual void TypeName##ValueSet(ZF_IN T const &v) {zfsuper::TypeName##ValueSet(v);}
+        ZFMETHOD_DECLARE_STATIC_1(zfautoObject, TypeName##ValueCreate, ZFMP_IN(T const &, v)); \
+        ZFMETHOD_DECLARE_1(void, TypeName##ValueSet, ZFMP_IN(T const &, v)) \
+        {zfsuper::TypeName##ValueSet(v);}
 
     _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
     _ZFP_ZFValueEditable_method_DECLARE(bool, zfbool)

@@ -27,7 +27,7 @@ protected:
         zfblockedAlloc(ZFUIFlowLayout, layout);
         container->childAdd(layout);
         layout->layoutParam()->layoutMarginSet(ZFUIMarginMake(40, 40 + ZFUIGlobalStyle::DefaultStyle()->itemSizeButton(), 40, 40));
-        layout->viewBackgroundColorSet(ZFUIColorRed);
+        layout->viewBackgroundColorSet(ZFUIColorRed());
 
         this->prepareAddRemoveButton(container, layout);
 
@@ -120,10 +120,10 @@ private:
 
         ZFUIKit_test_prepareSettingForNormalProperty(settings, layout->layoutParam(), ZFUISizeParam, ZFPropertyAccess(ZFUIViewLayoutParam, sizeParam),
             ZFCoreArrayPODCreate(ZFUISizeParam
-                , ZFUISizeParamWrapWidthWrapHeight
-                , ZFUISizeParamFillWidthWrapHeight
-                , ZFUISizeParamWrapWidthFillHeight
-                , ZFUISizeParamFillWidthFillHeight
+                , ZFUISizeParamWrapWidthWrapHeight()
+                , ZFUISizeParamFillWidthWrapHeight()
+                , ZFUISizeParamWrapWidthFillHeight()
+                , ZFUISizeParamFillWidthFillHeight()
                 ));
 
         ZFUIKit_test_prepareSettingButtonWithTestWindow(window, settings);

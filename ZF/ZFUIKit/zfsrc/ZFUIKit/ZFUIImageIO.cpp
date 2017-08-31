@@ -14,9 +14,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // ZFUIImageScale
-zfautoObject ZFUIImageScale(ZF_IN ZFUIImage *image,
-                            ZF_IN const ZFUISize &newSize,
-                            ZF_IN_OPT zfbool newSizeInPixelUnit /* = zffalse */)
+ZFMETHOD_FUNC_DEFINE_3(zfautoObject, ZFUIImageScale,
+                       ZFMP_IN(ZFUIImage *, image),
+                       ZFMP_IN(const ZFUISize &, newSize),
+                       ZFMP_IN_OPT(zfbool, newSizeInPixelUnit, zffalse))
 {
     if(image == zfnull || image->nativeImage() == zfnull)
     {
@@ -40,7 +41,8 @@ zfautoObject ZFUIImageScale(ZF_IN ZFUIImage *image,
 
 // ============================================================
 // ZFUIImageLoadFromNativeImage
-zfautoObject ZFUIImageLoadFromNativeImage(ZF_IN void *nativeImage)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
+                       ZFMP_IN(void *, nativeImage))
 {
     if(nativeImage == zfnull)
     {
@@ -75,7 +77,8 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_input)
     return zftrue;
 }
 
-zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCallback &input)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInput,
+                       ZFMP_IN(const ZFInputCallback &, input))
 {
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     ZFUIImage *image = ret;
@@ -101,7 +104,7 @@ zfautoObject ZFUIImageLoadFromInput(ZF_IN const ZFInputCallback &input)
 // color
 ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
 {
-    ZFUIColor color = ZFUIColorTransparent;
+    ZFUIColor color = ZFUIColorTransparent();
     { // color
         const ZFSerializableData *categoryData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFUIImageIO_color);
         if(categoryData != zfnull)
@@ -133,7 +136,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
 
     ZFSerializableData imageData;
     {
-        if(!ZFUIColorIsEqual(color, ZFUIColorTransparent))
+        if(!ZFUIColorIsEqual(color, ZFUIColorTransparent()))
         {
             ZFSerializableData categoryData;
             if(!ZFUIColorToSerializableData(categoryData, color, outErrorHint))
@@ -162,8 +165,9 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
 
     return zftrue;
 }
-zfautoObject ZFUIImageLoadFromColor(ZF_IN const ZFUIColor &color,
-                                    ZF_IN_OPT const ZFUISize &size /* = ZFUISizeZero */)
+ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
+                       ZFMP_IN(const ZFUIColor &, color),
+                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
 {
     ZFUISize sizeTmp = ZFUISizeMake(zfmMax(1, size.width), zfmMax(1, size.height));
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImageIO)->imageLoadFromColor(
@@ -185,7 +189,7 @@ zfautoObject ZFUIImageLoadFromColor(ZF_IN const ZFUIColor &color,
     do
     {
         // color
-        if(color != ZFUIColorTransparent)
+        if(color != ZFUIColorTransparent())
         {
             ZFSerializableData categoryData;
             if(!ZFUIColorToSerializableData(categoryData, color))

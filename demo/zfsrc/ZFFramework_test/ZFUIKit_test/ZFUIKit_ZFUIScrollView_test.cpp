@@ -26,9 +26,9 @@ protected:
 
         zfblockedAlloc(ZFUIScrollView, scrollView);
         container->childAdd(scrollView);
-        scrollView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        scrollView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         scrollView->layoutParam()->layoutMarginSet(ZFUIMarginMake(40));
-        scrollView->viewBackgroundColorSet(ZFUIColorRed);
+        scrollView->viewBackgroundColorSet(ZFUIColorRed());
 
         this->setupScrollListener(scrollView);
         this->setupScrollContent(scrollView, ZFUISizeMake(120), ZFUISizeMake(60), ZFUISizeMake(10));
@@ -38,7 +38,7 @@ protected:
         scrollView->childAdd(embededScrollView);
         embededScrollView->layoutParam()->layoutMarginSet(ZFUIMarginMake(80));
         embededScrollView->layoutParam()->sizeHintSet(ZFUISizeMake(200, 100));
-        embededScrollView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+        embededScrollView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         embededScrollView->viewBackgroundColorSet(ZFUIColorMake(192, 0, 0, 255));
 
         this->setupScrollListener(embededScrollView);
@@ -105,7 +105,7 @@ private:
             {
                 zfblockedAlloc(ZFUIButton, btn);
                 scrollView->childAdd(btn);
-                btn->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+                btn->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
                 btn->layoutParam()->sizeHintSet(itemSize);
                 btn->layoutParam()->layoutMarginSet(ZFUIMarginMake(x, y, 0, 0));
                 btn->viewBackgroundColorSet(ZFUIColorRandom(192));

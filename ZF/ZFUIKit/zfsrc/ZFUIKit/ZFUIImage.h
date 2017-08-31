@@ -175,7 +175,7 @@ public:
     /**
      * @brief see #imageScale
      */
-    virtual zffloat imageScaleFixed(void)
+    ZFMETHOD_DECLARE_0(zffloat, imageScaleFixed)
     {
         return (this->imageScale() > 0 ? this->imageScale() : ZFUIGlobalStyle::DefaultStyle()->imageScale());
     }
@@ -183,11 +183,11 @@ public:
      * @brief get size of the image
      * @note #ZFUIImage always use custom scale value, see #ZFUIGlobalStyle::imageScale
      */
-    virtual const ZFUISize &imageSize(void);
+    ZFMETHOD_DECLARE_0(const ZFUISize &, imageSize);
     /**
      * @brief get raw size of the image without scale (in pixel unit)
      */
-    virtual const ZFUISize &imageSizeFixed(void);
+    ZFMETHOD_DECLARE_0(const ZFUISize &, imageSizeFixed);
 
     // ============================================================
     // other
@@ -215,7 +215,7 @@ public:
     /**
      * @brief get native image object
      */
-    virtual void *nativeImage(void);
+    ZFMETHOD_DECLARE_0(void *, nativeImage);
 
 public:
     zffinal void _ZFP_ZFUIImage_imageScaleOnChange(void);
@@ -264,38 +264,44 @@ private:
  * @note this method have no serialize logic,
  *   result image would be serialized by base64 value while serializing to data
  */
-extern ZF_ENV_EXPORT zfbool ZFUIImageEncodeFromBase64(ZF_IN_OUT ZFUIImage *image,
-                                                      ZF_IN const ZFInputCallback &inputCallback);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromBase64,
+                        ZFMP_IN_OUT(ZFUIImage *, image),
+                        ZFMP_IN(const ZFInputCallback &, inputCallback))
 /**
  * @brief see #ZFUIImageEncodeFromBase64
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageEncodeFromBase64(ZF_IN const ZFInputCallback &inputCallback);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageEncodeFromBase64,
+                        ZFMP_IN(const ZFInputCallback &, inputCallback))
 /**
  * @brief save image as binary data (base64 encoded)
  * @note this method have no serialize logic,
  *   result image would be serialized by base64 value while serializing to data
  */
-extern ZF_ENV_EXPORT zfbool ZFUIImageEncodeToBase64(ZF_OUT const ZFOutputCallback &outputCallback,
-                                                    ZF_IN ZFUIImage *image);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeToBase64,
+                        ZFMP_OUT(const ZFOutputCallback &, outputCallback),
+                        ZFMP_IN(ZFUIImage *, image))
 
 /**
  * @brief load image from binary data
  * @note this method have no serialize logic,
  *   result image would be serialized by base64 value while serializing to data
  */
-extern ZF_ENV_EXPORT zfbool ZFUIImageEncodeFromBinary(ZF_IN_OUT ZFUIImage *image,
-                                                      ZF_IN const ZFInputCallback &inputCallback);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeFromBinary,
+                        ZFMP_IN_OUT(ZFUIImage *, image),
+                        ZFMP_IN(const ZFInputCallback &, inputCallback))
 /**
  * @brief see #ZFUIImageEncodeFromBinary
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIImageEncodeFromBinary(ZF_IN const ZFInputCallback &inputCallback);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageEncodeFromBinary,
+                        ZFMP_IN(const ZFInputCallback &, inputCallback))
 /**
  * @brief save image as binary data
  * @note this method have no serialize logic,
  *   result image would be serialized by base64 value while serializing to data
  */
-extern ZF_ENV_EXPORT zfbool ZFUIImageEncodeToBinary(ZF_OUT const ZFOutputCallback &outputCallback,
-                                                    ZF_IN ZFUIImage *image);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFUIImageEncodeToBinary,
+                        ZFMP_OUT(const ZFOutputCallback &, outputCallback),
+                        ZFMP_IN(ZFUIImage *, image))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImage_h_

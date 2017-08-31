@@ -353,7 +353,7 @@ ZFObject *ZF2048Game::objectOnInit(void)
 
     d->gameUI = zfAlloc(ZF2048UIFrame);
     this->childAdd(d->gameUI);
-    d->gameUI->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight);
+    d->gameUI->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     d->gameUI->observerAdd(ZF2048UIFrame::EventFrameOnMove(), d->gameOnMoveListener, this->objectHolder());
 
     return this;

@@ -10,7 +10,8 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
+static int _ZFP_ZFImpl_ZFLua_zfLogAdd(ZF_IN lua_State *L,
+                                      ZF_IN_OUT zfstring &s)
 {
     zfint count = (zfint)lua_gettop(L);
     if(count <= 0)
@@ -23,7 +24,7 @@ static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
     {
         ZFLuaErrorOccurredTrim(
             zfText("[zfLog] unable to access log format, expect string, got %zi"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1).cString());
+            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
 
@@ -46,7 +47,7 @@ static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
     }
 
     /* ZFMETHOD_MAX_PARAM */
-    zfLogTrim(fmt.cString()
+    zfstringAppend(s, fmt.cString()
             , params[0].cString()
             , params[1].cString()
             , params[2].cString()
@@ -58,6 +59,16 @@ static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
         );
 
     return 0;
+}
+static int _ZFP_ZFImpl_ZFLua_zfLog(ZF_IN lua_State *L)
+{
+    zfstring s;
+    int ret = _ZFP_ZFImpl_ZFLua_zfLogAdd(L, s);
+    if(ret == 0)
+    {
+        zfLogTrimT() << s;
+    }
+    return ret;
 }
 
 // ============================================================
