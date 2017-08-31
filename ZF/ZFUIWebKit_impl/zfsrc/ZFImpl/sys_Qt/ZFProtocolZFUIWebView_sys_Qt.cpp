@@ -71,7 +71,7 @@ public:
                                       ZF_IN void *nativeWebView)
     {
         _ZFP_ZFUIWebViewImpl_sys_Qt_View *nativeWebViewTmp = ZFCastStatic(_ZFP_ZFUIWebViewImpl_sys_Qt_View *, nativeWebView);
-        delete nativeWebViewTmp;
+        nativeWebViewTmp->deleteLater();
     }
 
     virtual void webLoadUrl(ZF_IN ZFUIWebView *webView,

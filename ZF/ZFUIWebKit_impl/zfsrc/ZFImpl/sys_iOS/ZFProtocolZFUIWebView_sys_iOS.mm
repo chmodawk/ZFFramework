@@ -11,39 +11,98 @@
 
 #if ZF_ENV_sys_iOS
 
-#import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface _ZFP_ZFUIWebViewImpl_sys_iOS_View : UIWebView<UIWebViewDelegate>
+@interface _ZFP_ZFUIWebViewImpl_sys_iOS_View : WKWebView<WKNavigationDelegate, WKUIDelegate>
+@property (nonatomic, assign) BOOL _ZFP_webLoadingSaved;
 @property (nonatomic, assign) ZFUIWebView *_ZFP_ownerZFUIWebView;
 @property (nonatomic, assign) ZFPROTOCOL_INTERFACE_CLASS(ZFUIWebView) *_ZFP_impl;
 @end
 @implementation _ZFP_ZFUIWebViewImpl_sys_iOS_View
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+- (void)_notifyStateChange:(WKWebView *)webView
 {
-    return YES;
+    if(self._ZFP_webLoadingSaved != webView.loading)
+    {
+        self._ZFP_webLoadingSaved = webView.loading;
+        self._ZFP_impl->notifyWebLoadStateChanged(self._ZFP_ownerZFUIWebView);
+    }
 }
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    self._ZFP_impl->notifyWebLoadStateChanged(self._ZFP_ownerZFUIWebView);
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    self._ZFP_impl->notifyWebLoadStateChanged(self._ZFP_ownerZFUIWebView);
+    [self _notifyStateChange:webView];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation
 {
-    self._ZFP_impl->notifyWebLoadStateChanged(self._ZFP_ownerZFUIWebView);
+    [self _notifyStateChange:webView];
+}
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
+{
+    [self _notifyStateChange:webView];
+}
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation
+{
+    [self _notifyStateChange:webView];
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+{
+    [self _notifyStateChange:webView];
+}
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
+{
+    [self _notifyStateChange:webView];
+}
+- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView
+{
+    [self _notifyStateChange:webView];
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Message" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        completionHandler();
+    }]];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+}
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Message" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        completionHandler(NO);
+    }])];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        completionHandler(YES);
+    }])];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+}
+- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = defaultText;
+    }];
+    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        completionHandler(alertController.textFields[0].text != nil ? alertController.textFields[0].text : @"");
+    }])];
+
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
 }
 @end
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUIWebViewImpl_sys_iOS, ZFUIWebView, ZFProtocolLevel::e_SystemNormal)
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("iOS:UIWebView"))
+    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("iOS:WKWebView"))
 public:
     virtual void *nativeWebViewCreate(ZF_IN ZFUIWebView *webView)
     {
         _ZFP_ZFUIWebViewImpl_sys_iOS_View *nativeWebView = [_ZFP_ZFUIWebViewImpl_sys_iOS_View new];
+        nativeWebView.navigationDelegate = nativeWebView;
+        nativeWebView.UIDelegate = nativeWebView;
         nativeWebView._ZFP_ownerZFUIWebView = webView;
         nativeWebView._ZFP_impl = this;
         return (__bridge_retained void *)nativeWebView;

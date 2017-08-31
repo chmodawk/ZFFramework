@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0C307A08A34C03086369D2884C7C4B38 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4592796FCEEC6F94084CA356415709F8 /* WebKit.framework */; };
 		1F7CB859E4D6ABB1C8EAA6EE0206181C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137AA25ECA095CDF29BF1207BDED58A1 /* Foundation.framework */; };
 		2530879EF009A90A25FD41815B2E5798 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1E3A191967FFA661C1FE512BE8507B /* QuartzCore.framework */; };
 		6577334070E997E280F2667E97CA519D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70C1722DEEDFEE17257D42762042A7E /* CoreGraphics.framework */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		137AA25ECA095CDF29BF1207BDED58A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		22F620278645B172C699389FFADE5226 /* zfgensrc_ZFUIWebKit_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUIWebKit_impl.mm; sourceTree = "<group>"; };
+		4592796FCEEC6F94084CA356415709F8 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		631AACD0158D5668557972B206A81B31 /* zfsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zfsrc; path = ../../../zfsrc; sourceTree = "<group>"; };
 		6B89D6D019D5AE1FC8A831255B8C40A9 /* libZFUIWebKit_impl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZFUIWebKit_impl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC1E3A191967FFA661C1FE512BE8507B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -59,16 +61,26 @@
 				1F7CB859E4D6ABB1C8EAA6EE0206181C /* Foundation.framework in Frameworks */,
 				2530879EF009A90A25FD41815B2E5798 /* QuartzCore.framework in Frameworks */,
 				C2D00E7306E2B1A9D78EECB9228DAD88 /* UIKit.framework in Frameworks */,
+				0C307A08A34C03086369D2884C7C4B38 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C9876E639E9CC9CC8743DF1725C0A38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4592796FCEEC6F94084CA356415709F8 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4A4D4231A02951323E2F455BA900ED9B = {
 			isa = PBXGroup;
 			children = (
 				C55E3AD61EEC87B62066A6F70AA9AEE5 /* Framework */,
+				2C9876E639E9CC9CC8743DF1725C0A38 /* Frameworks */,
 				4A8B947DAEEF919C8C80EC86F658F9B0 /* Products */,
 				B97E149241B27F6DFEE7CCE6CA181C38 /* ProjectFiles */,
 				E07BC88F2533FEC1A9C20D685BD6639A /* ZFUIWebKit_impl */,
