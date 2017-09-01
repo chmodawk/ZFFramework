@@ -14,8 +14,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFENUM_DEFINE(ZFEnvDeviceUIType)
 
 ZF_NAMESPACE_BEGIN(ZFEnvInfo)
+/** @cond ZFPrivateDoc */ // ZFDoxygenBugFix: all uppercase macro not skipped within namespace
 
-// ============================================================
 ZFMETHOD_FUNC_DEFINE_WITH_NS_1(ZFEnvInfo, ZFEnvDeviceUITypeEnum, deviceUIType,
                                ZFMP_IN_OPT(ZFEnvDeviceUITypeEnum, defaultValue, ZFEnvDeviceUIType::e_Desktop))
 {
@@ -29,6 +29,8 @@ ZFMETHOD_FUNC_DEFINE_WITH_NS_1(ZFEnvInfo, ZFEnvDeviceUITypeEnum, deviceUIType,
         return defaultValue;
     }
 }
+
+/** @endcond */
 ZF_NAMESPACE_END(ZFEnvInfo)
 
 // ============================================================

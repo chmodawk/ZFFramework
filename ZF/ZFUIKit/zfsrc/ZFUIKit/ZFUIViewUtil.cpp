@@ -10,6 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_NAMESPACE_BEGIN(ZFUIViewUtil)
+/** @cond ZFPrivateDoc */ // ZFDoxygenBugFix: all uppercase macro not skipped within namespace
 
 ZFMETHOD_FUNC_DEFINE_WITH_NS_1(ZFUIViewUtil, ZFUIView *, viewRoot,
                                ZFMP_IN(ZFUIView *, view))
@@ -153,6 +154,7 @@ ZFMETHOD_FUNC_DEFINE_DETAIL_2(ZFMethodFuncIsInline, ZFUIViewUtil, ZFUIRect, view
                               ZFMP_IN(ZFUIView *, view),
                               ZFMP_IN(ZFUIView *, parent))
 
+/** @endcond */
 ZF_NAMESPACE_END(ZFUIViewUtil)
 ZF_NAMESPACE_GLOBAL_END
 
