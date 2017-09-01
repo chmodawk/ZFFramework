@@ -17,19 +17,19 @@ ZFOBSERVER_EVENT_GLOBAL_REGISTER(ZFGlobalEvent, ViewStateAniAutoApplyPause)
 ZFOBSERVER_EVENT_GLOBAL_REGISTER(ZFGlobalEvent, ViewStateAniAutoApplyResume)
 
 // ============================================================
-zfbool ZFUIViewStateAniAutoApply = zffalse;
+ZFEXPORT_VAR_DEFINE(zfbool, ZFUIViewStateAniAutoApply, zffalse)
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewStateAniAutoApply_settingInit, ZFLevelZFFrameworkLow)
 {
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewStateAniAutoApply_settingInit)
 {
-    ZFUIViewStateAniAutoApply = zffalse;
+    ZFUIViewStateAniAutoApplySet(zffalse);
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniAutoApply_settingInit)
 
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewStateAniAutoApply_autoStart, ZFLevelAppLow)
 {
-    if(ZFUIViewStateAniAutoApply)
+    if(ZFUIViewStateAniAutoApply())
     {
         ZFUIViewStateAniAutoApplyStart();
     }
@@ -62,7 +62,7 @@ public:
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniAutoApplyDataHolder)
 
 // ============================================================
-void ZFUIViewStateAniAutoApplyStart(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniAutoApplyStart)
 {
     ZFUIViewStateAniAutoApplyStop();
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewStateAniAutoApplyDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniAutoApplyDataHolder);
@@ -73,7 +73,7 @@ void ZFUIViewStateAniAutoApplyStart(void)
     ZFObjectGlobalEventObserver().observerAdd(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyStart());
 }
-void ZFUIViewStateAniAutoApplyStop(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniAutoApplyStop)
 {
     ZFUIViewStateAniAutoApplyPauseForTimeCancel();
     if(!_ZFP_ZFUIViewStateAniAutoApply_started)
@@ -87,12 +87,12 @@ void ZFUIViewStateAniAutoApplyStop(void)
     ZFObjectGlobalEventObserver().observerRemove(ZFUIView::EventViewOnAddToParent(), d->taskStartListener);
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyStop());
 }
-zfbool ZFUIViewStateAniAutoApplyStarted(void)
+ZFMETHOD_FUNC_DEFINE_0(zfbool, ZFUIViewStateAniAutoApplyStarted)
 {
     return _ZFP_ZFUIViewStateAniAutoApply_started;
 }
 
-void ZFUIViewStateAniAutoApplyPause(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniAutoApplyPause)
 {
     ++_ZFP_ZFUIViewStateAniAutoApply_paused;
     if(_ZFP_ZFUIViewStateAniAutoApply_paused == 1)
@@ -100,7 +100,7 @@ void ZFUIViewStateAniAutoApplyPause(void)
         ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyPause());
     }
 }
-void ZFUIViewStateAniAutoApplyResume(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniAutoApplyResume)
 {
     zfCoreAssert(_ZFP_ZFUIViewStateAniAutoApply_paused > 0);
     --_ZFP_ZFUIViewStateAniAutoApply_paused;
@@ -109,7 +109,7 @@ void ZFUIViewStateAniAutoApplyResume(void)
         ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventViewStateAniAutoApplyResume());
     }
 }
-zfindex ZFUIViewStateAniAutoApplyPaused(void)
+ZFMETHOD_FUNC_DEFINE_0(zfindex, ZFUIViewStateAniAutoApplyPaused)
 {
     return (!_ZFP_ZFUIViewStateAniAutoApply_started || _ZFP_ZFUIViewStateAniAutoApply_paused);
 }
@@ -137,7 +137,8 @@ public:
     }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniAutoApplyPauseForTimeDataHolder)
 
-void ZFUIViewStateAniAutoApplyPauseForTime(ZF_IN zftimet time /* = zftimetZero */)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIViewStateAniAutoApplyPauseForTime,
+                       ZFMP_IN_OPT(zftimet, time, zftimetZero()))
 {
     if(ZFUIViewStateAniAutoApplyPaused())
     {
@@ -167,7 +168,7 @@ void ZFUIViewStateAniAutoApplyPauseForTime(ZF_IN zftimet time /* = zftimetZero *
     d->delayTimer->objectCachedSet(zftrue);
     d->delayTimer->timerStart();
 }
-void ZFUIViewStateAniAutoApplyPauseForTimeCancel(void)
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniAutoApplyPauseForTimeCancel)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewStateAniAutoApplyPauseForTimeDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniAutoApplyPauseForTimeDataHolder);
     if(!d->started)

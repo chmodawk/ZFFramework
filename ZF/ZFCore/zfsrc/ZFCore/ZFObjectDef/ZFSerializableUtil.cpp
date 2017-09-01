@@ -190,7 +190,7 @@ const ZFSerializableData *checkElementByName(ZF_IN const ZFSerializableData &ser
                                              ZF_IN const zfchar *desiredElementName)
 {
     zfindex index = serializableData.elementFindByName(desiredElementName, zfHint("skipResolved")zftrue);
-    if(index == zfindexMax)
+    if(index == zfindexMax())
     {
         return zfnull;
     }
@@ -216,7 +216,7 @@ const ZFSerializableData *checkElementByCategory(ZF_IN const ZFSerializableData 
                                                  ZF_IN const zfchar *desiredElementCategory)
 {
     zfindex index = serializableData.elementFindByCategory(desiredElementCategory);
-    if(index == zfindexMax)
+    if(index == zfindexMax())
     {
         return zfnull;
     }

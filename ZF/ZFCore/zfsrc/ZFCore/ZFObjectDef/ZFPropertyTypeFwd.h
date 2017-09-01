@@ -65,7 +65,7 @@ public:
      */
     virtual zfbool propertyWrapperFromString(ZF_OUT zfautoObject &v,
                                              ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax) const;
+                                             ZF_IN_OPT zfindex srcLen = zfindexMax()) const;
     /**
      * @brief convert to string
      */
@@ -185,7 +185,7 @@ public:
     /**
      * @brief convert from string, return error pos or empty string if fail
      */
-    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax);
+    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax());
     /**
      * @brief convert to string
      */
@@ -305,7 +305,7 @@ public:
         {return TypeName##ToSerializableData(serializableData, this->zfv, outErrorHint);} \
         zfoverride \
         virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src, \
-                                              ZF_IN_OPT zfindex srcLen = zfindexMax) \
+                                              ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         {return TypeName##FromString(this->zfv, src, srcLen);} \
         zfoverride \
         virtual zfbool wrappedValueToString(ZF_IN_OUT zfstring &s) \
@@ -346,7 +346,7 @@ public:
         { \
             return TypeName##ToSerializableData(serializableData, v, outErrorHint); \
         } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax) \
+        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         { \
             return TypeName##FromString(v, src, srcLen); \
         } \
@@ -504,7 +504,7 @@ public:
         } \
         zfoverride \
         virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src, \
-                                              ZF_IN_OPT zfindex srcLen = zfindexMax) \
+                                              ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         {return zffalse;} \
         zfoverride \
         virtual zfbool wrappedValueToString(ZF_IN_OUT zfstring &s) \
@@ -549,7 +549,7 @@ public:
                 zfText("registered type %s is not serializable"), zfText(#TypeName)); \
             return zffalse; \
         } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax) \
+        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         { \
             return zffalse; \
         } \
@@ -690,7 +690,7 @@ public:
                 zfText("not serializable")); \
             return zffalse; \
         } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax) \
+        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         { \
             return zffalse; \
         } \
@@ -764,7 +764,7 @@ public:
         { \
             return ZFPropertyTypeIdData<ExistType>::PropertyToSerializableData(serializableData, (ExistType)v, outErrorHint); \
         } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax) \
+        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
         { \
             zftValue<ExistType> t; \
             if(ZFPropertyTypeIdData<ExistType>::PropertyFromString(t.zfv, src, srcLen)) \

@@ -24,7 +24,7 @@ public:
     ZFCoreArrayPOD<_ZFP_ZFAutoReleasePoolData> array;
 public:
     _ZFP_ZFAutoReleasePoolPrivate(void)
-    : maxSize(zfindexMax)
+    : maxSize(zfindexMax())
     , array()
     {
     }

@@ -245,14 +245,14 @@ zfbool ZF2048Core::canMoveLeft(void)
     for(zfindex y = 0; y < d->dataHeight; ++y)
     {
         zfindex pos = d->dataWidth - 1;
-        for( ; pos != zfindexMax; --pos)
+        for( ; pos != zfindexMax(); --pos)
         {
             if(d->dataPointerCache[pos][y] != 0)
             {
                 break;
             }
         }
-        while(pos != 0 && pos != zfindexMax)
+        while(pos != 0 && pos != zfindexMax())
         {
             ZF2048Value t0 = d->dataPointerCache[pos][y];
             --pos;
@@ -270,14 +270,14 @@ zfbool ZF2048Core::canMoveTop(void)
     for(zfindex x = 0; x < d->dataWidth; ++x)
     {
         zfindex pos = d->dataHeight - 1;
-        for( ; pos != zfindexMax; --pos)
+        for( ; pos != zfindexMax(); --pos)
         {
             if(d->dataPointerCache[x][pos] != 0)
             {
                 break;
             }
         }
-        while(pos != 0 && pos != zfindexMax)
+        while(pos != 0 && pos != zfindexMax())
         {
             ZF2048Value t0 = d->dataPointerCache[x][pos];
             --pos;
@@ -551,14 +551,14 @@ zfbool ZF2048Core::moveRight(void)
         zfbool posEndMoved = zffalse;
         do
         {
-            for( ; pos != zfindexMax; --pos)
+            for( ; pos != zfindexMax(); --pos)
             {
                 if(d->dataPointerCache[pos][y] != 0)
                 {
                     break;
                 }
             }
-            if(pos == zfindexMax)
+            if(pos == zfindexMax())
             {
                 break;
             }
@@ -637,14 +637,14 @@ zfbool ZF2048Core::moveBottom(void)
         zfbool posEndMoved = zffalse;
         do
         {
-            for( ; pos != zfindexMax; --pos)
+            for( ; pos != zfindexMax(); --pos)
             {
                 if(d->dataPointerCache[x][pos] != 0)
                 {
                     break;
                 }
             }
-            if(pos == zfindexMax)
+            if(pos == zfindexMax())
             {
                 break;
             }
@@ -723,7 +723,7 @@ void ZF2048Core::undo(void)
 
     ZFCoreArrayPOD<ZF2048Action> actionList = d->actionHistory.removeFirstAndGet();
     ZFCoreArrayPOD<zfindex> toBlockFix;
-    for(zfindex i = actionList.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = actionList.count() - 1; i != zfindexMax(); --i)
     {
         const ZF2048Action &action = actionList[i];
         if(action.from == action.to)
@@ -746,7 +746,7 @@ void ZF2048Core::undo(void)
             if(fromIndex != toIndex)
             {
                 toBlockFix.removeElement(fromIndex);
-                if(toBlockFix.find(toIndex) == zfindexMax)
+                if(toBlockFix.find(toIndex) == zfindexMax())
                 {
                     toBlockFix.add(toIndex);
                 }

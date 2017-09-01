@@ -97,7 +97,7 @@ public:
     /**
      * @brief see #EventListAdapterOnReload
      */
-    virtual void listAdapterNotifyReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax)
+    virtual void listAdapterNotifyReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax())
     {
         this->listAdapterOnReload(atIndexOrMax);
     }
@@ -133,10 +133,10 @@ protected:
     /**
      * @brief see #EventListAdapterOnReload
      */
-    virtual inline void listAdapterOnReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax)
+    virtual inline void listAdapterOnReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax())
     {
         this->toObject()->observerNotify(zfself::EventListAdapterOnReload(),
-            (atIndexOrMax == zfindexMax) ? zfnull : ZFValue::indexValueCreate(atIndexOrMax).toObject());
+            (atIndexOrMax == zfindexMax()) ? zfnull : ZFValue::indexValueCreate(atIndexOrMax).toObject());
     }
     /**
      * @brief see #EventListCellOnUpdate
@@ -158,7 +158,7 @@ protected:
      */
     virtual zfautoObject cellCacheOnAccess(ZF_IN zfindex index)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zffinal inline void _ZFP_ZFUIListAdapter_cellCacheOnRecycle(ZF_IN ZFUIListCell *cell)
     {

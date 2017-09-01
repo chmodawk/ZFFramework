@@ -22,7 +22,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief capture ZFUIView to ZFUIImage
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIViewCapture(ZF_IN ZFUIView *view);
+ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIViewCapture,
+                        ZFMP_IN(ZFUIView *, view))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIViewCapture_h_

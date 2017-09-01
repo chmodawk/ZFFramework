@@ -27,7 +27,7 @@ public:
         zfsuper::objectOnInit();
         this->ownerWindow = zfnull;
         this->startCount = 1;
-        this->layoutMarginSaved = ZFUIMarginZero;
+        this->layoutMarginSaved = ZFUIMarginZero();
         this->layoutMarginHasStored = zffalse;
         return this;
     }
@@ -123,7 +123,7 @@ static void _ZFP_ZFUIOnScreenKeyboardAutoResize_apply(ZF_IN ZFUIWindow *window, 
     {
         ZFUIMargin margin = layoutMarginOld;
         ZFUIRect windowFrame = ZFUIRectApplyMargin(ZFUIViewPositionOnScreen(window->viewParent()), margin);
-        ZFUIRect clientFrame = ZFUIRectZero;
+        ZFUIRect clientFrame = ZFUIRectZero();
         state->keyboardFixClientFrameT(clientFrame);
         if(ZFUIRectGetLeft(clientFrame) > ZFUIRectGetLeft(windowFrame))
         {

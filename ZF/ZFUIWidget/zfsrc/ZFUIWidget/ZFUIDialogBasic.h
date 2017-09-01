@@ -224,7 +224,7 @@ public:
      * @brief manually add a button with #ZFUIDialogButtonType::e_Normal type
      */
     virtual void dialogButtonAdd(ZF_IN ZFUIButton *button,
-                                 ZF_IN_OPT zfindex atIndex = zfindexMax) zfpurevirtual;
+                                 ZF_IN_OPT zfindex atIndex = zfindexMax()) zfpurevirtual;
     /**
      * @brief manually remove a specified button, which can be #dialogButton
      */
@@ -332,7 +332,7 @@ public:
     virtual inline zfindex dialogButtonFind(ZF_IN ZFUIButton *dialogButton) {return this->dialogContent()->dialogButtonFind(dialogButton);}
     zfoverride
     virtual inline void dialogButtonAdd(ZF_IN ZFUIButton *button,
-                                        ZF_IN_OPT zfindex atIndex = zfindexMax)
+                                        ZF_IN_OPT zfindex atIndex = zfindexMax())
     {this->dialogContent()->dialogButtonAdd(button, atIndex);}
     zfoverride
     virtual inline void dialogButtonRemove(ZF_IN ZFUIButton *button) {this->dialogContent()->dialogButtonRemove(button);}

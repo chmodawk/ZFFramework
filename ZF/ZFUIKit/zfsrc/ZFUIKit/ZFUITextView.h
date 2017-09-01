@@ -54,14 +54,15 @@ public:
     /**
      * @brief see #textContent, always empty string if not set
      */
-    virtual const zfchar *textContentString(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, textContentString)
     {
         return (this->textContent() ? this->textContent()->stringValue() : zfText(""));
     }
     /**
      * @brief see #textContent
      */
-    virtual void textContentStringSet(ZF_IN const zfchar *s)
+    ZFMETHOD_DECLARE_1(void, textContentStringSet,
+                       ZFMP_IN(const zfchar *, s))
     {
         this->textContentSet((s && *s) ? zflineAlloc(ZFString, s) : zfnull);
     }
@@ -69,7 +70,7 @@ public:
     /**
      * @brief util method to check whether the text is null or empty string
      */
-    virtual inline zfbool textContentIsEmpty(void)
+    ZFMETHOD_DECLARE_0(zfbool, textContentIsEmpty)
     {
         return zfscmpTheSame(this->textContentString(), zfText(""));
     }
@@ -176,14 +177,15 @@ public:
      * and usually have no need to call\n
      * sizeHint shows max size the text view may have, or 0 if no limit
      */
-    virtual ZFUISize measureTextView(ZF_IN_OPT const ZFUISize &sizeHint = ZFUISizeZero);
+    ZFMETHOD_DECLARE_1(ZFUISize, measureTextView,
+                       ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()));
 
     /**
      * @brief get current text size
      *
      * if the view hasn't been layouted, the size may be invalid
      */
-    virtual zfint textSizeCurrent(void);
+    ZFMETHOD_DECLARE_0(zfint, textSizeCurrent);
 
     // ============================================================
     // override

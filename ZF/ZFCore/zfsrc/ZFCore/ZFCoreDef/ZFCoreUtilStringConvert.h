@@ -19,12 +19,12 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
- * @brief check whether the toCompare matches the tokens, return the index in tokens or zfindexMax if not matched
+ * @brief check whether the toCompare matches the tokens, return the index in tokens or zfindexMax() if not matched
  */
 extern ZF_ENV_EXPORT zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
                                            ZF_IN zfindex tokenCount,
                                            ZF_IN const zfchar *toCompare,
-                                           ZF_IN_OPT zfindex toCompareLength = zfindexMax);
+                                           ZF_IN_OPT zfindex toCompareLength = zfindexMax());
 
 // ============================================================
 /**
@@ -34,7 +34,7 @@ extern ZF_ENV_EXPORT zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
     /** @brief util method to convert TypeName from string */ \
     extern ZF_ENV_EXPORT zfbool TypeName##FromString(ZF_OUT Type &v, \
                                                      ZF_IN const zfchar *src, \
-                                                     ZF_IN_OPT zfindex srcLen = zfindexMax); \
+                                                     ZF_IN_OPT zfindex srcLen = zfindexMax()); \
     /** @brief util method to convert TypeName to string */ \
     extern ZF_ENV_EXPORT zfbool TypeName##ToString(ZF_IN_OUT zfstring &s, ZF_IN Type const &v); \
     /** @brief util method to convert TypeName to string */ \
@@ -52,7 +52,7 @@ extern ZF_ENV_EXPORT zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
  *           // proto type:
  *           //   zfbool YourTypeNameFromString(ZF_OUT YourType &v,
  *           //       ZF_IN const zfchar *src,
- *           //       ZF_IN_OPT zfindex srcLen = zfindexMax);
+ *           //       ZF_IN_OPT zfindex srcLen = zfindexMax());
  *       }, {
  *           // proto type:
  *           //   zfbool YourTypeNameToString(ZF_IN_OUT zfstring &s,
@@ -64,7 +64,7 @@ extern ZF_ENV_EXPORT zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
 #define ZFCORETYPE_STRING_CONVERTER_DEFINE(TypeName, Type, convertFromStringAction, convertToStringAction) \
     zfbool TypeName##FromString(ZF_OUT Type &v, \
                                 ZF_IN const zfchar *src, \
-                                ZF_IN_OPT zfindex srcLen /* = zfindexMax */) \
+                                ZF_IN_OPT zfindex srcLen /* = zfindexMax() */) \
     { \
         convertFromStringAction \
     } \

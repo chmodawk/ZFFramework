@@ -581,7 +581,7 @@ zfautoObject ZFSerializableData::serializableDataTagRemoveAndGet(ZF_IN const zfc
             return ret;
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 void ZFSerializableData::serializableDataTagRemoveAll(void)
 {
@@ -782,7 +782,7 @@ void ZFSerializableData::elementAdd(ZF_IN const ZFSerializableData &element,
 {
     zfCoreAssertWithMessage(d != element.d, zfTextA("adding self is not allowed"));
     zfCoreAssertWithMessage(d->serializableDataParent == zfnull, zfTextA("adding a data which already has parent"));
-    if(atIndex == zfindexMax)
+    if(atIndex == zfindexMax())
     {
         atIndex = (zfindex)d->elements.size();
     }
@@ -818,7 +818,7 @@ zfindex ZFSerializableData::elementFindByName(ZF_IN const zfchar *name,
             }
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 zfindex ZFSerializableData::elementFindByCategory(ZF_IN const zfchar *category,
                                                   ZF_IN_OPT zfbool skipResolved /* = zffalse */) const
@@ -834,7 +834,7 @@ zfindex ZFSerializableData::elementFindByCategory(ZF_IN const zfchar *category,
             }
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 
 zfindex ZFSerializableData::elementCount(void) const

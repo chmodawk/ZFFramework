@@ -20,11 +20,11 @@ public:
     virtual zfindex outputCoreLog(ZF_IN const zfcharA *s)
     {
         printf(zfTextA("%s"), s);
-        return zfindexMax;
+        return zfindexMax();
     }
-    virtual zfindex outputLog(ZF_IN const zfchar *s, ZF_IN_OPT zfindex count = zfindexMax)
+    virtual zfindex outputLog(ZF_IN const zfchar *s, ZF_IN_OPT zfindex count = zfindexMax())
     {
-        if(count == zfindexMax)
+        if(count == zfindexMax())
         {
             printf(zfTextA("%s"), ZFStringZ2A(s));
         }
@@ -33,7 +33,7 @@ public:
             zfstring tmp(s, count);
             printf(zfTextA("%s"), ZFStringZ2A(tmp.cString()));
         }
-        return zfindexMax;
+        return zfindexMax();
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFOutputImpl_default)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFOutputImpl_default)

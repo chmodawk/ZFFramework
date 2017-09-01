@@ -30,7 +30,7 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
             {
                 if(clsWrapper->zfv == zfnull)
                 {
-                    ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
+                    ZFImpl_ZFLua_luaPush(L, zfautoObjectNull());
                     ZFImpl_ZFLua_implSetupObject(L);
                     return 1;
                 }
@@ -58,20 +58,20 @@ static int _ZFP_ZFImpl_ZFLua_zfAlloc(ZF_IN lua_State *L)
     }
     if(cls == zfnull)
     {
-        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull());
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }
     if(cls->classIsAbstract())
     {
-        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull());
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }
     zfautoObject ret = cls->newInstance(ZFCallerInfo(ZF_CALLER_FILE, zfTextA("zfAlloc"), ZF_CALLER_LINE));
-    if(ret == zfautoObjectNull)
+    if(ret == zfautoObjectNull())
     {
-        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull);
+        ZFImpl_ZFLua_luaPush(L, zfautoObjectNull());
         ZFImpl_ZFLua_implSetupObject(L);
         return 1;
     }

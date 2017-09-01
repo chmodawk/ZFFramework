@@ -15,11 +15,11 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFXmlEscapeCharImpl_default, ZFXmlEscapeChar, ZF
 public:
     virtual void xmlEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
                                      ZF_IN const zfchar *src,
-                                     ZF_IN_OPT zfindex count = zfindexMax)
+                                     ZF_IN_OPT zfindex count = zfindexMax())
     {
         const zfchar *p = src;
         const zfchar *pLeft = p;
-        const zfchar *pEnd = ((count == zfindexMax) ? (p + zfslen(src)) : (p + count));
+        const zfchar *pEnd = ((count == zfindexMax()) ? (p + zfslen(src)) : (p + count));
         while(p < pEnd)
         {
             if(*p == '<')
@@ -44,11 +44,11 @@ public:
     }
     virtual void xmlEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
                                      ZF_IN const zfchar *src,
-                                     ZF_IN_OPT zfindex count = zfindexMax)
+                                     ZF_IN_OPT zfindex count = zfindexMax())
     {
         const zfchar *p = src;
         const zfchar *pLeft = p;
-        const zfchar *pEnd = ((count == zfindexMax) ? (p + zfslen(src)) : (p + count));
+        const zfchar *pEnd = ((count == zfindexMax()) ? (p + zfslen(src)) : (p + count));
         zfindex encodedCharLen = 0;
         while(p < pEnd)
         {

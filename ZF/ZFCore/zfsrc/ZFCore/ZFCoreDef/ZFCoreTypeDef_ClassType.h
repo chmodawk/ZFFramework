@@ -214,7 +214,7 @@ inline zfint zfmemcmp(const void *p1, const void *p2, zfindex size)
 template<typename T_Element>
 T_Element *zfmemmoveObject(T_Element *dst, const T_Element *src, zfindex count)
 {
-    if(dst && src && count != 0 && count != zfindexMax)
+    if(dst && src && count != 0 && count != zfindexMax())
     {
         if(dst > src && src + count > dst)
         {

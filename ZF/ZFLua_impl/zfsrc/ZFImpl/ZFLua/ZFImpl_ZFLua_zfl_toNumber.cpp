@@ -23,7 +23,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_toNumber(ZF_IN lua_State *L)
     }
 
     zfautoObject ret = ZFImpl_ZFLua_toNumber(L, 1);
-    if(ret == zfautoObjectNull)
+    if(ret == zfautoObjectNull())
     {
         ZFLuaErrorOccurredTrim(zfText("[zfl_toNumber] unknown param type, got %s"),
             ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());

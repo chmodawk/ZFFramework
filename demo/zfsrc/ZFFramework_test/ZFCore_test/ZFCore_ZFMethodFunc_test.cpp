@@ -156,7 +156,7 @@ protected:
         ZFMethodFuncGetAllT(methods, &filter);
         this->testCaseOutput(methods.objectInfoOfContent(
                 ZFCoreElementInfoGetter<const ZFMethod *>::elementInfoGetter,
-                zfindexMax,
+                zfindexMax(),
                 ZFTokenForContainerPlainList()
             ));
 

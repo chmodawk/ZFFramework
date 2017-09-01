@@ -105,7 +105,7 @@ public:
      */
     virtual zfindex enumCount(void) zfpurevirtual;
     /**
-     * @brief get the index of enum value, or zfindexMax if no such enum value
+     * @brief get the index of enum value, or zfindexMax() if no such enum value
      */
     virtual zfindex enumIndexForValue(ZF_IN zfuint value) zfpurevirtual;
     /**
@@ -329,7 +329,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
         { \
             return zfself::_ZFP_ZFEnumDataRef()->enumCount(); \
         } \
-        /** @brief get the index of enum value, or zfindexMax if no such enum value */ \
+        /** @brief get the index of enum value, or zfindexMax() if no such enum value */ \
         static zfindex EnumIndexForValue(ZF_IN zfuint value) \
         { \
             return zfself::_ZFP_ZFEnumDataRef()->enumIndexForValue(value); \
@@ -482,7 +482,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
                 return zftrue; \
             } \
             v = (ChildEnum##Enum)ChildEnum::EnumValueForName( \
-                    (srcLen == zfindexMax) ? src : zfstring(src, srcLen).cString() \
+                    (srcLen == zfindexMax()) ? src : zfstring(src, srcLen).cString() \
                 ); \
             return ((zfuint)v != ZFEnumInvalid()); \
         }, { \
@@ -661,7 +661,7 @@ inline zfstring zfflagsToString(ZF_IN const ZFClass *enumClass,
 extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                                               ZF_IN const ZFClass *enumClass,
                                               ZF_IN const zfchar *src,
-                                              ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                              ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                               ZF_IN_OPT zfchar separatorToken = '|',
                                               ZF_OUT_OPT const zfchar **outErrorPos = zfnull);
 
@@ -679,7 +679,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
     /** @brief see @ref EnumName, return enum object if success */ \
     extern ZF_ENV_EXPORT zfbool EnumName##FromString(ZF_OUT zfautoObject &ret, \
                                                      ZF_IN const zfchar *src, \
-                                                     ZF_IN_OPT zfindex srcLen = zfindexMax); \
+                                                     ZF_IN_OPT zfindex srcLen = zfindexMax()); \
     ZFOUTPUT_TYPE_DECLARE(EnumName##Enum)
 #define _ZFP_ZFENUM_CONVERTER_DEFINE(EnumName) \
     zfbool EnumName##ToString(ZF_IN_OUT zfstring &ret, ZF_IN EnumName *const &value) \
@@ -689,7 +689,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
     } \
     zfbool EnumName##FromString(ZF_OUT zfautoObject &ret, \
                                 ZF_IN const zfchar *src, \
-                                ZF_IN_OPT zfindex srcLen /* = zfindexMax */) \
+                                ZF_IN_OPT zfindex srcLen /* = zfindexMax() */) \
     { \
         if(zfsncmp(src, ZFEnumNameInvalid(), srcLen) == 0) \
         { \
@@ -697,7 +697,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
             return zftrue; \
         } \
         zfuint tmpValue = EnumName::EnumValueForName( \
-            (srcLen == zfindexMax) ? src : zfstring(src, srcLen).cString()); \
+            (srcLen == zfindexMax()) ? src : zfstring(src, srcLen).cString()); \
         if(tmpValue == ZFEnumInvalid()) \
         { \
             return zffalse; \
@@ -795,7 +795,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
 /** @brief see #ZFENUM_FLAGS_DECLARE */
 #define ZFENUM_FLAGS_DEFINE(EnumName, EnumFlagsName) \
     ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(EnumFlagsName, EnumFlagsName, { \
-            zfflags flags = zfflagsZero; \
+            zfflags flags = zfflagsZero(); \
             if(!zfflagsFromString(flags, \
                 EnumName::ClassData(), \
                 src, srcLen)) \

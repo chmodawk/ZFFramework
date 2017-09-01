@@ -70,9 +70,9 @@ void ZFUIListCellView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                        ZF_IN const ZFUISize &sizeHint,
                                        ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUISize cellIconSize = ZFUISizeZero;
-    ZFUISize cellCenterSize = ZFUISizeZero;
-    ZFUISize cellAccessorySize = ZFUISizeZero;
+    ZFUISize cellIconSize = ZFUISizeZero();
+    ZFUISize cellCenterSize = ZFUISizeZero();
+    ZFUISize cellAccessorySize = ZFUISizeZero();
     _ZFP_ZFUIListCellView_measureContent(this, sizeHint, cellIconSize, cellCenterSize, cellAccessorySize);
     ret.width = cellIconSize.width + cellCenterSize.width + cellAccessorySize.width;
     ret.height = zfmMax(zfmMax(cellIconSize.height, cellCenterSize.height), cellAccessorySize.height);
@@ -81,9 +81,9 @@ void ZFUIListCellView::internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &boun
 {
     zfsuper::internalBackgroundViewOnLayout(bounds);
 
-    ZFUISize cellIconSize = ZFUISizeZero;
-    ZFUISize cellCenterSize = ZFUISizeZero;
-    ZFUISize cellAccessorySize = ZFUISizeZero;
+    ZFUISize cellIconSize = ZFUISizeZero();
+    ZFUISize cellCenterSize = ZFUISizeZero();
+    ZFUISize cellAccessorySize = ZFUISizeZero();
     _ZFP_ZFUIListCellView_measureContent(this, bounds.size, cellIconSize, cellCenterSize, cellAccessorySize);
 
     this->cellIconContainer()->layout(ZFUIAlignApply(

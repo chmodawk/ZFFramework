@@ -72,12 +72,12 @@ static zfindex _ZFP_ZFFileCallbackSeek(ZF_IN_OUT ZFFileToken fileToken,
     {
         if(fileToken == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         zfindex fileSize = ZFFile::fileSize(fileToken);
-        if(fileSize == zfindexMax)
+        if(fileSize == zfindexMax())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         zfindex tmp = ZFIOCallbackCalcFSeek(BOMSize, fileSize, ZFFile::fileTell(fileToken), byteSize, pos);
         ZFFile::fileSeek(fileToken, tmp);
@@ -87,12 +87,12 @@ static zfindex _ZFP_ZFFileCallbackSeek(ZF_IN_OUT ZFFileToken fileToken,
     {
         if(fileToken == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         zfindex fileSize = ZFFile::resSize(fileToken);
-        if(fileSize == zfindexMax)
+        if(fileSize == zfindexMax())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         zfindex tmp = ZFIOCallbackCalcFSeek(BOMSize, fileSize, ZFFile::resTell(fileToken), byteSize, pos);
         ZFFile::resSeek(fileToken, tmp);
@@ -107,7 +107,7 @@ static zfindex _ZFP_ZFFileCallbackTell(ZF_IN ZFFileToken fileToken,
     {
         if(fileToken == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         return ZFFile::fileTell(fileToken) - BOMSize;
     }
@@ -115,7 +115,7 @@ static zfindex _ZFP_ZFFileCallbackTell(ZF_IN ZFFileToken fileToken,
     {
         if(fileToken == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         return ZFFile::resTell(fileToken) - BOMSize;
     }
@@ -388,7 +388,7 @@ static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallbac
             customData.elementAdd(flagsData);
         }
 
-        if(autoFlushSize != zfindexMax)
+        if(autoFlushSize != zfindexMax())
         {
             ZFSerializableData autoFlushSizeData;
             if(!zfindexToSerializableData(autoFlushSizeData, autoFlushSize))
@@ -434,7 +434,7 @@ static zfbool _ZFP_ZFOutputCallbackForFile_parseImplData(ZF_IN const ZFSerializa
             return zffalse;
         }
     }
-    autoFlushSize = zfindexMax;
+    autoFlushSize = zfindexMax();
     {
         const ZFSerializableData *autoFlushSizeData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFFileCallback_autoFlushSize);
         if(autoFlushSizeData != zfnull && !zfindexFromSerializableData(autoFlushSize, *autoFlushSizeData, outErrorHint, outErrorPos))
@@ -609,7 +609,7 @@ static ZFInputCallback _ZFP_ZFInputCallbackForResFile_create(ZF_IN const ZFCalle
 ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo,
                                               ZF_IN const zfchar *filePath,
                                               ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOptionCreate */,
-                                              ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax */)
+                                              ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax() */)
 {
     ZFOutputCallback ret = _ZFP_ZFOutputCallbackForFile_create(callerInfo,
         filePath, flags, autoFlushSize);
@@ -623,7 +623,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const ZFCallerInfo &callerIn
 ZFMETHOD_FUNC_DEFINE_3(ZFOutputCallback, ZFOutputCallbackForFile,
                        ZFMP_IN(const zfchar *, filePath),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
-                       ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
 {
     return ZFOutputCallbackForFile(filePath, flags, autoFlushSize);
 }
@@ -631,7 +631,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
-    zfindex autoFlushSize = zfindexMax;
+    zfindex autoFlushSize = zfindexMax();
     if(!_ZFP_ZFOutputCallbackForFile_parseImplData(
             serializableData,
             ZFSerializableKeyword_ZFFileCallback_filePath, filePath,
@@ -808,7 +808,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &cal
                                                    ZF_IN const ZFSerializableData &dataToCheckParentPath,
                                                    ZF_IN const zfchar *localPath,
                                                    ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOptionCreate */,
-                                                   ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax */)
+                                                   ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax() */)
 {
     zfstring fileAbsPath;
     zfbool isResFile = zffalse;
@@ -831,7 +831,7 @@ ZFMETHOD_FUNC_DEFINE_4(ZFOutputCallback, ZFOutputCallbackForLocalFile,
                        ZFMP_IN(const ZFSerializableData &, dataToCheckParentPath),
                        ZFMP_IN(const zfchar *, localPath),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
-                       ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
 {
     return ZFOutputCallbackForLocalFile(dataToCheckParentPath, localPath, flags, autoFlushSize);
 }
@@ -839,7 +839,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
 {
     const zfchar *filePath = zfnull;
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
-    zfindex autoFlushSize = zfindexMax;
+    zfindex autoFlushSize = zfindexMax();
     if(!_ZFP_ZFOutputCallbackForFile_parseImplData(
             serializableData,
             ZFSerializableKeyword_ZFFileCallback_localPath, filePath,

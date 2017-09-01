@@ -27,13 +27,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   so the best solution to check valid position is using delay,
  *   use #ZFThreadTaskRequest is recommended
  */
-extern ZF_ENV_EXPORT void ZFUIViewPositionOnScreen(ZF_OUT ZFUIRect &rect, ZF_IN ZFUIView *view);
+ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewPositionOnScreen,
+                        ZFMP_OUT(ZFUIRect &, rect),
+                        ZFMP_IN(ZFUIView *, view))
 /**
  * @brief get view's position on screen
  */
-inline ZFUIRect ZFUIViewPositionOnScreen(ZF_IN ZFUIView *view)
+ZFMETHOD_FUNC_DECLARE_INLINE_1(ZFUIRect, ZFUIViewPositionOnScreen,
+                               ZFMP_IN(ZFUIView *, view))
 {
-    ZFUIRect rect = ZFUIRectZero;
+    ZFUIRect rect = ZFUIRectZero();
     ZFUIViewPositionOnScreen(rect, view);
     return rect;
 }

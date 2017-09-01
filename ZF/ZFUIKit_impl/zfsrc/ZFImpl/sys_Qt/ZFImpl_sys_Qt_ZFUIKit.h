@@ -50,7 +50,7 @@ inline QPoint ZFImpl_sys_Qt_ZFUIKit_ZFUIPointToQPoint(ZF_IN const ZFUIPoint &poi
 extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_ZFUIKit_ZFUIPointFromQPoint(ZF_OUT ZFUIPoint &ret, ZF_IN const QPoint &qPoint);
 inline ZFUIPoint ZFImpl_sys_Qt_ZFUIKit_ZFUIPointFromQPoint(ZF_IN const QPoint &qPoint)
 {
-    ZFUIPoint ret = ZFUIPointZero;
+    ZFUIPoint ret = ZFUIPointZero();
     ZFImpl_sys_Qt_ZFUIKit_ZFUIPointFromQPoint(ret, qPoint);
     return ret;
 }
@@ -65,7 +65,7 @@ inline QSize ZFImpl_sys_Qt_ZFUIKit_ZFUISizeToQSize(ZF_IN const ZFUISize &size)
 extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_ZFUIKit_ZFUISizeFromQSize(ZF_OUT ZFUISize &ret, ZF_IN const QSize &qSize);
 inline ZFUISize ZFImpl_sys_Qt_ZFUIKit_ZFUISizeFromQSize(ZF_IN const QSize &qSize)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     ZFImpl_sys_Qt_ZFUIKit_ZFUISizeFromQSize(ret, qSize);
     return ret;
 }
@@ -80,7 +80,7 @@ inline QRect ZFImpl_sys_Qt_ZFUIKit_ZFUIRectToQRect(ZF_IN const ZFUIRect &rect)
 extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_ZFUIKit_ZFUIRectFromQRect(ZF_OUT ZFUIRect &ret, ZF_IN const QRect &qRect);
 inline ZFUIRect ZFImpl_sys_Qt_ZFUIKit_ZFUIRectFromQRect(ZF_IN const QRect &qRect)
 {
-    ZFUIRect ret = ZFUIRectZero;
+    ZFUIRect ret = ZFUIRectZero();
     ZFImpl_sys_Qt_ZFUIKit_ZFUIRectFromQRect(ret, qRect);
     return ret;
 }

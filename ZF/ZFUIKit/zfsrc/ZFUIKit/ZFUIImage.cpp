@@ -69,8 +69,8 @@ public:
         }
         else
         {
-            this->imageSizeFixed = ZFUISizeZero;
-            this->imageSize = ZFUISizeZero;
+            this->imageSizeFixed = ZFUISizeZero();
+            this->imageSize = ZFUISizeZero();
         }
     }
     void copyFrom(ZF_IN _ZFP_ZFUIImagePrivate *another)
@@ -80,8 +80,8 @@ public:
             ZFPROTOCOL_ACCESS(ZFUIImage)->nativeImageRelease(this->nativeImage);
             this->nativeImage = zfnull;
         }
-        this->imageSizeFixed = ZFUISizeZero;
-        this->imageSize = ZFUISizeZero;
+        this->imageSizeFixed = ZFUISizeZero();
+        this->imageSize = ZFUISizeZero();
         zfsChange(this->serializableType, (const zfchar *)zfnull);
         if(this->serializableData != zfnull)
         {
@@ -105,8 +105,8 @@ public:
     _ZFP_ZFUIImagePrivate(void)
     : pimplOwner(zfnull)
     , nativeImage(zfnull)
-    , imageSizeFixed(ZFUISizeZero)
-    , imageSize(ZFUISizeZero)
+    , imageSizeFixed(ZFUISizeZero())
+    , imageSize(ZFUISizeZero())
     , serializableType(zfnull)
     , serializableData(zfnull)
     {
@@ -183,8 +183,8 @@ zfbool ZFUIImage::serializableOnSerializeFromData(ZF_IN const ZFSerializableData
     // check
     if(d->nativeImage == zfnull)
     {
-        d->imageSizeFixed = ZFUISizeZero;
-        d->imageSize = ZFUISizeZero;
+        d->imageSizeFixed = ZFUISizeZero();
+        d->imageSize = ZFUISizeZero();
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, zfText("nativeImage not set"));
         return zffalse;
     }
@@ -454,7 +454,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromBase64,
     }
     else
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 }
 ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToBase64,
@@ -500,7 +500,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageEncodeFromBinary,
     }
     else
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 }
 ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFUIImageEncodeToBinary,

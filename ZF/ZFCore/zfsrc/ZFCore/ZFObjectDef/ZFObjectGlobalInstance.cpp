@@ -113,7 +113,7 @@ void ZFObjectGlobalInstanceRemove(ZF_IN ZFCorePointerBase *sp,
 {
     ZFCoreArrayPOD<ZFCorePointerBase *> &instances = _ZFP_ZFObjectGlobalInstanceRef(level);
     zfindex index = instances.find(sp);
-    if(index != zfindexMax)
+    if(index != zfindexMax())
     {
         instances.remove(index);
         sp->refDelete();

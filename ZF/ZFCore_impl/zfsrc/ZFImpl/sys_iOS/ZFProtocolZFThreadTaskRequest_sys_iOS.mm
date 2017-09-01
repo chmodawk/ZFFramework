@@ -32,7 +32,7 @@
 {
     if(self.task.callbackIsValid())
     {
-        self.task.execute(ZFListenerData(zfidentityInvalid, zfnull, self.param0, self.param1));
+        self.task.execute(ZFListenerData(zfidentityInvalid(), zfnull, self.param0, self.param1));
     }
 
     self.param0 = zfnull;

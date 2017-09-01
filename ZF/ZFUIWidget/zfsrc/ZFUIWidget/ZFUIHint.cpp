@@ -78,7 +78,7 @@ protected:
     {
         if(this->childCount() == 0)
         {
-            ret = ZFUISizeZero;
+            ret = ZFUISizeZero();
         }
         else
         {
@@ -116,7 +116,7 @@ public:
     , hintShowing(zffalse)
     , hintDelaying(zffalse)
     , hintAnimating(zfnull)
-    , hintShowDelayTaskId(zfidentityInvalid)
+    , hintShowDelayTaskId(zfidentityInvalid())
     , hintAniShowOnStopListener(ZFCallbackForRawFunction(_ZFP_ZFUIHintPrivate::hintAniShowOnStop))
     , hintShowDelayTimeoutListener(ZFCallbackForRawFunction(_ZFP_ZFUIHintPrivate::hintShowDelayTimeout))
     , hintAniHideOnStopListener(ZFCallbackForRawFunction(_ZFP_ZFUIHintPrivate::hintAniHideOnStop))
@@ -170,7 +170,7 @@ public:
     {
         zfsynchronizedObject(_ZFP_ZFUIHintSyncObj);
         ZFUIHint *hint = userData->to<ZFObjectHolder *>()->holdedObj;
-        hint->d->hintShowDelayTaskId = zfidentityInvalid;
+        hint->d->hintShowDelayTaskId = zfidentityInvalid();
         hint->d->hintDoHide();
     }
     void hintDoHide(void)
@@ -437,10 +437,10 @@ void ZFUIHint::objectOnDealloc(void)
         d->hintAnimating->aniStop();
         ZFPropertyChangeWithoutLeakTest(d->hintAnimating, zfnull);
     }
-    if(d->hintShowDelayTaskId != zfidentityInvalid)
+    if(d->hintShowDelayTaskId != zfidentityInvalid())
     {
         ZFThreadExecuteCancel(d->hintShowDelayTaskId);
-        d->hintShowDelayTaskId = zfidentityInvalid;
+        d->hintShowDelayTaskId = zfidentityInvalid();
     }
     d->hintWindow->windowHide();
     ZFPropertyChangeWithoutLeakTest(d->hintWindow, zfnull);

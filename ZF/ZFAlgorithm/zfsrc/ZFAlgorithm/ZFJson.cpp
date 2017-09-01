@@ -830,10 +830,10 @@ ZFJsonItem ZFJsonItem::jsonObjectAtIndex(ZF_IN zfindex index) const
 }
 
 void ZFJsonItem::jsonObjectAdd(ZF_IN const ZFJsonItem &jsonObject,
-                               ZF_IN_OPT zfindex atIndex /* = zfindexMax */)
+                               ZF_IN_OPT zfindex atIndex /* = zfindexMax() */)
 {
     zfCoreAssert(this->jsonType() == ZFJsonType::e_JsonArray);
-    if(atIndex == zfindexMax)
+    if(atIndex == zfindexMax())
     {
         atIndex = (zfindex)d->jsonObjectArray.size();
     }
@@ -891,7 +891,7 @@ zfindex ZFJsonItem::jsonObjectFind(ZF_IN const ZFJsonItem &jsonObject) const
             }
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 
 // ============================================================
@@ -932,7 +932,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, const zfchar *, jsonItem
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonItemIteratorNext, ZFMP_IN_OUT(zfiterator &, it))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, zfindex, jsonObjectCount)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, ZFJsonItem, jsonObjectAtIndex, ZFMP_IN(zfindex, index))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonObjectAdd, ZFMP_IN(const ZFJsonItem &, jsonObject), ZFMP_IN_OPT(zfindex, atIndex, zfindexMax))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFJsonItem, void, jsonObjectAdd, ZFMP_IN(const ZFJsonItem &, jsonObject), ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonObjectRemove, ZFMP_IN(const ZFJsonItem &, jsonObject))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFJsonItem, void, jsonObjectRemoveAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFJsonItem, void, jsonObjectRemoveAll)
@@ -945,7 +945,7 @@ ZFMETHOD_FUNC_DEFINE_1(ZFJsonItem, ZFJsonItemFromInput, ZFMP_IN(const ZFInputCal
 }
 ZFMETHOD_FUNC_DEFINE_2(ZFJsonItem, ZFJsonItemFromString,
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, length, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, length, zfindexMax()))
 {
     return ZFPROTOCOL_ACCESS(ZFJson)->jsonParse(src, length);
 }
@@ -984,14 +984,14 @@ ZFMETHOD_FUNC_DEFINE_2(zfstring, ZFJsonItemToString,
 ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharEncode,
                        ZFMP_OUT(zfstring &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFJsonEscapeCharEncode(ZFOutputCallbackForString(dst), src, count);
 }
 ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharEncode,
                        ZFMP_OUT(const ZFOutputCallback &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFPROTOCOL_ACCESS(ZFJsonEscapeChar)->jsonEscapeCharEncode(dst, src, count);
 }
@@ -999,14 +999,14 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharEncode,
 ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharDecode,
                        ZFMP_OUT(zfstring &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFJsonEscapeCharDecode(ZFOutputCallbackForString(dst), src, count);
 }
 ZFMETHOD_FUNC_DEFINE_3(void, ZFJsonEscapeCharDecode,
                        ZFMP_OUT(const ZFOutputCallback &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFPROTOCOL_ACCESS(ZFJsonEscapeChar)->jsonEscapeCharDecode(dst, src, count);
 }

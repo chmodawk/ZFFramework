@@ -216,7 +216,7 @@ zfindex _ZFP_zfmSort(ZF_IN T_Holder &holder,
             if(cmpTmp == ZFCompareUncomparable)
             {
                 holder[left] = pivot;
-                return zfindexMax;
+                return zfindexMax();
             }
             else if(cmpTmp == cmpToken)
             {
@@ -231,7 +231,7 @@ zfindex _ZFP_zfmSort(ZF_IN T_Holder &holder,
             if(cmpTmp == ZFCompareUncomparable)
             {
                 holder[right] = pivot;
-                return zfindexMax;
+                return zfindexMax();
             }
             else if(cmpTmp == cmpToken)
             {

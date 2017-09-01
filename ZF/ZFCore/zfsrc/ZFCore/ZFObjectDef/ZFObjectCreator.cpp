@@ -25,7 +25,7 @@ zfautoObject ZFObjectCreate(ZF_IN const zfchar *type,
     _ZFP_ZFObjectCreatorCallback *creatorCallback = _ZFP_ZFObjectCreatorMap.get<_ZFP_ZFObjectCreatorCallback *>(type);
     if(creatorCallback == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     return (*creatorCallback)(data);
 }

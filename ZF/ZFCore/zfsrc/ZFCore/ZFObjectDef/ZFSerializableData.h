@@ -376,7 +376,7 @@ public:
                                    ZF_IN const ZFSerializableData &element);
 
     /**
-     * @brief find element with name or zfindexMax if not found
+     * @brief find element with name or zfindexMax() if not found
      */
     zffinal zfindex elementFindByName(ZF_IN const zfchar *name,
                                       ZF_IN_OPT zfbool skipResolved = zffalse) const;

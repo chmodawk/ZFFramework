@@ -94,12 +94,12 @@ public:
     {
         if(token == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         long result = ftell((FILE *)token);
         if(result == -1)
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         return (zfindex)result;
     }
@@ -143,7 +143,7 @@ public:
         {
             return 0;
         }
-        if(maxByteSize == zfindexMax)
+        if(maxByteSize == zfindexMax())
         {
             zfindex readCount = 0;
             zfindex curReadCount = 0;

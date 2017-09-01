@@ -33,7 +33,7 @@
     {
         self.image = nil;
     }
-    else if(self.ownerZFUIImage->imageNinePatch() == ZFUIMarginZero)
+    else if(self.ownerZFUIImage->imageNinePatch() == ZFUIMarginZero())
     {
         UIImage *nativeImage = (__bridge UIImage *)self.ownerZFUIImage->nativeImage();
         self.image = [UIImage imageWithCGImage:nativeImage.CGImage scale:nativeImage.scale orientation:UIImageOrientationUp];

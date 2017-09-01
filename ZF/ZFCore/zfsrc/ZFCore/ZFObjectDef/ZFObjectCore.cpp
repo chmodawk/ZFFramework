@@ -221,7 +221,7 @@ zfautoObject ZFObject::tagRemoveAndGet(ZF_IN const zfchar *key)
             return ret;
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 void ZFObject::tagRemoveAll(void)
 {

@@ -449,7 +449,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
  */
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                                                  ZF_IN const zfchar *buf,
-                                                 ZF_IN_OPT zfindex bufLen = zfindexMax,
+                                                 ZF_IN_OPT zfindex bufLen = zfindexMax(),
                                                  ZF_OUT_OPT zfstring *errHint = zfnull);
 
 // ============================================================

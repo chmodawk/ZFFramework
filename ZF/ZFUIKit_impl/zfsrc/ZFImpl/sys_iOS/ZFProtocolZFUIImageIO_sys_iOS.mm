@@ -64,7 +64,7 @@ private:
         zfbool sizeChanged = !ZFUISizeIsEqual(scaleToSize, srcSize);
         if([image respondsToSelector:@selector(resizableImageWithCapInsets:resizingMode:)])
         {
-            if(sizeChanged && !ZFUIMarginIsEqual(scaleUseNinePatch, ZFUIMarginZero))
+            if(sizeChanged && !ZFUIMarginIsEqual(scaleUseNinePatch, ZFUIMarginZero()))
             {
                 UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
                 if(scaleUseNinePatch.left + scaleUseNinePatch.right < srcSize.width)
@@ -91,7 +91,7 @@ private:
         }
         else
         {
-            if(ZFUIMarginIsEqual(scaleUseNinePatch, ZFUIMarginZero)
+            if(ZFUIMarginIsEqual(scaleUseNinePatch, ZFUIMarginZero())
                || (scaleUseNinePatch.left + scaleUseNinePatch.right > srcSize.width
                    && scaleUseNinePatch.top + scaleUseNinePatch.bottom > srcSize.height))
             {

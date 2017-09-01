@@ -40,7 +40,7 @@ public:
         {
             (void)this->moduleFilePath();
             zfindex pos = zfstringFindReversely(this->_moduleFilePath, ZFFile::fileSeparator);
-            zfCoreAssert(pos != zfindexMax);
+            zfCoreAssert(pos != zfindexMax());
             this->_modulePath.assign(this->_moduleFilePath, 0, pos);
         }
         return this->_modulePath;

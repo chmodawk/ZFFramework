@@ -159,12 +159,12 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureHorizontal(ZF_IN ZFUIFlowLayout *pare
                                                       ZF_IN const ZFUISize &sizeHint,
                                                       ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     zfindex wrapIndex = 0;
     zfint lineSizeUsed = 0;
     while(wrapIndex < parent->childCount()) // for each line
     {
-        ZFUISize lineSize = ZFUISizeZero;
+        ZFUISize lineSize = ZFUISizeZero();
         zfbool hasLayoutedChild = zffalse;
         zfint parentMarginX = ZFUIMarginGetX(parent->layoutChildMargin());
         zfint parentMarginY = ZFUIMarginGetY(parent->layoutChildMargin());
@@ -237,12 +237,12 @@ static ZFUISize _ZFP_ZFUIFlowLayout_measureVertical(ZF_IN ZFUIFlowLayout *parent
                                                     ZF_IN const ZFUISize &sizeHint,
                                                     ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     zfindex wrapIndex = 0;
     zfint lineSizeUsed = 0;
     while(wrapIndex < parent->childCount()) // for each line
     {
-        ZFUISize lineSize = ZFUISizeZero;
+        ZFUISize lineSize = ZFUISizeZero();
         zfbool hasLayoutedChild = zffalse;
         zfint parentMarginX = ZFUIMarginGetX(parent->layoutChildMargin());
         zfint parentMarginY = ZFUIMarginGetY(parent->layoutChildMargin());

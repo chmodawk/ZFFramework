@@ -104,7 +104,7 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureHorizontal(ZF_IN ZFUILinearLayout *
                                                         ZF_IN const ZFUISize &sizeHint,
                                                         ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     zfbool hasLayoutedChild = zffalse;
     zfint parentMarginX = ZFUIMarginGetX(parent->layoutChildMargin());
     zfint parentMarginY = ZFUIMarginGetY(parent->layoutChildMargin());
@@ -157,7 +157,7 @@ static ZFUISize _ZFP_ZFUILinearLayout_measureVertical(ZF_IN ZFUILinearLayout *pa
                                                       ZF_IN const ZFUISize &sizeHint,
                                                       ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     zfbool hasLayoutedChild = zffalse;
     zfint parentMarginX = ZFUIMarginGetX(parent->layoutChildMargin());
     zfint parentMarginY = ZFUIMarginGetY(parent->layoutChildMargin());

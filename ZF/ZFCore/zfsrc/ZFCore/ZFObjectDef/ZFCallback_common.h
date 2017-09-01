@@ -30,13 +30,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * -  ioSeek, similar to FILE's fileSeek, proto type:\n
  *   zfindex ioSeek(ZF_IN zfindex byteSize,
  *                  ZF_IN ZFSeekPos pos);\n
- *   return newly seeked position or zfindexMax if the callback doesn't support seek or error occurred
+ *   return newly seeked position or zfindexMax() if the callback doesn't support seek or error occurred
  * -  ioTell, similar to FILE's fileTell, proto type:\n
  *   zfindex ioTell(void);\n
- *   return current's index or zfindexMax if the callback doesn't support seek
+ *   return current's index or zfindexMax() if the callback doesn't support seek
  * -  ioSize, calculate callback's size, proto type:\n
  *   zfindex ioSize(void);\n
- *   return size or zfindexMax if the callback doesn't support
+ *   return size or zfindexMax() if the callback doesn't support
  *   @note for input callbacks, the size shows the current available size, may change after a ioSeek or execute call
  *   @note for ouput callbacks, the size shows the contents outputed to the output callback
  */
@@ -68,16 +68,16 @@ public:
      *
      * if seek out of range, no error would occurred and seek would try to seek the proper direction to the end\n
      * for some output callbacks, seek would cause outputed data being removed\n
-     * return newly seeked position or zfindexMax if the callback doesn't support seek
+     * return newly seeked position or zfindexMax() if the callback doesn't support seek
      */
     virtual zfindex ioSeek(ZF_IN zfindex byteSize,
                            ZF_IN_OPT ZFSeekPos pos = ZFSeekPosBegin) const;
     /**
-     * @brief similar to FILE's fileTell, return current's index or zfindexMax if the callback doesn't support seek
+     * @brief similar to FILE's fileTell, return current's index or zfindexMax() if the callback doesn't support seek
      */
     virtual zfindex ioTell(void) const;
     /**
-     * @brief calculate the callback's size or return zfindexMax if not supported
+     * @brief calculate the callback's size or return zfindexMax() if not supported
      */
     virtual zfindex ioSize(void) const;
 _ZFP_ZFCALLBACK_DECLARE_END_NO_ALIAS(ZFIOCallback, ZFCallback)
@@ -92,13 +92,13 @@ _ZFP_ZFCALLBACK_DECLARE_END_NO_ALIAS(ZFIOCallback, ZFCallback)
  *
  * params:
  * -  (const void *) output buffer
- * -  (zfindex) count, or zfindexMax to calculate by src
+ * -  (zfindex) count, or zfindexMax() to calculate by src
  *  (src must be NULL-terminated)
  *
  * return:
  * -  char count written to output,
  *   or 0 if nothing to write or error occurred,
- *   or zfindexMax if the output doesn't care the write result,
+ *   or zfindexMax() if the output doesn't care the write result,
  *   so that only (result < desired) is an error state
  *
  * ADVANCED:\n
@@ -108,13 +108,13 @@ ZFCALLBACK_DECLARE_BEGIN(ZFOutputCallback, ZFIOCallback)
 public:
     /** @brief see #ZFOutputCallback */
     inline zfindex execute(ZF_IN const void *src,
-                           ZF_IN_OPT zfindex count = zfindexMax) const
+                           ZF_IN_OPT zfindex count = zfindexMax()) const
     {
         return ZFCallback::executeExact<zfindex, const void *, zfindex>(src, count);
     }
     /** @brief see #ZFOutputCallback */
     inline zfindex operator()(ZF_IN const void *src,
-                              ZF_IN_OPT zfindex count = zfindexMax) const
+                              ZF_IN_OPT zfindex count = zfindexMax()) const
     {
         return ZFCallback::executeExact<zfindex, const void *, zfindex>(src, count);
     }
@@ -231,7 +231,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForString(ZF_IN const
                                                                      ZF_IN_OUT zfstring &s);
 extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerInfo,
                                                                      ZF_IN void *buf,
-                                                                     ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                                                     ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                                                      ZF_IN_OPT zfbool autoAppendNullToken = zftrue);
 /**
  * @brief create a output callback to output to a zfstring
@@ -248,7 +248,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForBuffer(ZF_IN const
  *
  * params:
  * -  (void *) buffer to write to
- * -  (zfindex) max buffer size or zfindexMax for no limit (you must make sure buffer is enough)
+ * -  (zfindex) max buffer size or zfindexMax() for no limit (you must make sure buffer is enough)
  * -  (zfbool) whether auto append '\0' to tail each time write
  */
 #define ZFOutputCallbackForBuffer(buf, ...) \
@@ -342,13 +342,13 @@ extern ZF_ENV_EXPORT zfbool ZFInputCallbackSkipChars(ZF_OUT zfchar *buf,
 extern ZF_ENV_EXPORT zfindex ZFInputCallbackReadUntil(ZF_IN_OUT zfstring &ret,
                                                       ZF_IN_OUT const ZFInputCallback &input,
                                                       ZF_IN_OPT const zfchar *charSet = zfText(" \t\r\n"),
-                                                      ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                                      ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                                       ZF_OUT_OPT zfchar *firstCharMatchedCharSet = zfnull);
 
 /**
  * @brief util method to check whether the input match the tokens
  *
- * return token's index if match or zfindexMax if no match or error,
+ * return token's index if match or zfindexMax() if no match or error,
  * header white spaces would be skipped automatically\n
  * if no match, this method would try to restore the callback state by ioSeek to original position
  */
@@ -361,7 +361,7 @@ extern ZF_ENV_EXPORT zfindex ZFInputCallbackCheckMatch(ZF_IN const zfchar **toke
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &callerInfo,
                                                                          ZF_IN const ZFInputCallback &inputCallback,
                                                                          ZF_IN_OPT zfindex start = 0,
-                                                                         ZF_IN_OPT zfindex count = zfindexMax,
+                                                                         ZF_IN_OPT zfindex count = zfindexMax(),
                                                                          ZF_IN_OPT zfbool autoRestorePos = zftrue);
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
@@ -371,7 +371,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN c
  *   <node>
  *       <something category="input" ... />
  *       <zfindex category="start" ... /> // optional, 0 by default
- *       <zfindex category="count" ... /> // optional, zfindexMax by default
+ *       <zfindex category="count" ... /> // optional, zfindexMax() by default
  *       <zfbool category="autoRestorePos" ... /> // optional, zftrue by default
  *   </node>
  * @endcode
@@ -394,7 +394,7 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN c
  * params:
  * -  (const ZFInputCallback &) input callback to use
  * -  (zfindex) src's start index
- * -  (zfindex) src's count or zfindexMax to use whole
+ * -  (zfindex) src's count or zfindexMax() to use whole
  * -  (zfbool) whether to restore src input callback's position after result callback deleted
  *
  * seeking the result input callback would ensure in range [start, start + count]\n
@@ -406,15 +406,15 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN c
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerInfo,
                                                                    ZF_IN zfbool copy,
                                                                    ZF_IN const void *src,
-                                                                   ZF_IN_OPT zfindex count = zfindexMax);
+                                                                   ZF_IN_OPT zfindex count = zfindexMax());
 /**
  * @brief create a intput callback input from a const void *,
  *   you must ensure the buffer is alive during the callback's life time
  *
  * params:
  * -  (const void *) src to use
- * -  (zfindex) src's count or zfindexMax to calculate automatically (treated as const zfchar *),
- *   zfindexMax by default
+ * -  (zfindex) src's count or zfindexMax() to calculate automatically (treated as const zfchar *),
+ *   zfindexMax() by default
  */
 #define ZFInputCallbackForBuffer(buf, ...) \
     _ZFP_ZFInputCallbackForBuffer(ZFCallerInfoMake(), zffalse, buf, ##__VA_ARGS__)

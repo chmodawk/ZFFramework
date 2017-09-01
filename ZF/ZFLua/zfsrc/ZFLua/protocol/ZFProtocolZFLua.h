@@ -25,7 +25,7 @@ ZFPROTOCOL_INTERFACE_BEGIN(ZFLua)
 public:
     /** @brief see #ZFLuaExecute */
     virtual zfbool luaExecute(ZF_IN const zfchar *src,
-                              ZF_IN_OPT zfindex srcLen = zfindexMax,
+                              ZF_IN_OPT zfindex srcLen = zfindexMax(),
                               ZF_OUT_OPT zfstring *errorHint = zfnull) zfpurevirtual;
     /** @brief see #ZFLuaGC */
     virtual void luaGC(void) zfpurevirtual;

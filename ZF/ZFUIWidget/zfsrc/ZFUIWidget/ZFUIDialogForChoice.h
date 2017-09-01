@@ -166,7 +166,7 @@ public:
     zffinal void choiceRemove(ZF_IN const zfchar *choiceId)
     {
         zfindex index = this->_ZFP_indexForChoiceId(choiceId);
-        if(index != zfindexMax)
+        if(index != zfindexMax())
         {
             this->choiceRemoveAtIndex(index);
         }
@@ -287,7 +287,7 @@ public:
     zffinal zfbool choiceSelected(ZF_IN const zfchar *choiceId)
     {
         zfindex index = this->_ZFP_indexForChoiceId(choiceId);
-        if(index != zfindexMax)
+        if(index != zfindexMax())
         {
             return this->selected()->isContain(ZFValue::indexValueCreate(index).toObject());
         }
@@ -365,7 +365,7 @@ private:
             case ZFUIDialogForChoiceMode::e_ChoiceSingleQuickly:
                 if(this->selected()->count() > 1)
                 {
-                    this->selected()->remove(1, zfindexMax);
+                    this->selected()->remove(1, zfindexMax());
                     this->choiceSelectedListOnChange();
                 }
                 else if(this->selected()->count() == 0 && !this->list()->isEmpty())
@@ -392,7 +392,7 @@ private:
                 return i;
             }
         }
-        return zfindexMax;
+        return zfindexMax();
     }
     zffinal zfbool _ZFP_singleChoiceMode(void)
     {

@@ -79,7 +79,7 @@ ZFMETHOD_DEFINE_2(ZFArray, zfbool, isContain,
                   ZFMP_IN(ZFObject *, obj),
                   ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
 {
-    return (this->find(obj, comparer) != zfindexMax);
+    return (this->find(obj, comparer) != zfindexMax());
 }
 ZFMETHOD_DEFINE_2(ZFArray, zfindex, find,
                   ZFMP_IN(ZFObject *, obj),
@@ -87,7 +87,7 @@ ZFMETHOD_DEFINE_2(ZFArray, zfindex, find,
 {
     if(comparer == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     for(zfstlsize i = 0; i < d->data.size(); ++i)
     {
@@ -96,7 +96,7 @@ ZFMETHOD_DEFINE_2(ZFArray, zfindex, find,
             return (zfindex)i;
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 ZFMETHOD_DEFINE_2(ZFArray, zfindex, findReversely,
                   ZFMP_IN(ZFObject *, obj),
@@ -104,7 +104,7 @@ ZFMETHOD_DEFINE_2(ZFArray, zfindex, findReversely,
 {
     if(comparer == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     for(zfstlsize i = d->data.size() - 1; i != (zfstlsize)-1; --i)
     {
@@ -113,7 +113,7 @@ ZFMETHOD_DEFINE_2(ZFArray, zfindex, findReversely,
             return (zfindex)i;
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 void ZFArray::add(ZF_IN zfindex indexAddTo,
                   ZF_IN ZFObject *obj)
@@ -416,7 +416,7 @@ void ZFArray::move(ZF_IN zfindex fromIndex, ZF_IN zfindex toIndexOrIndexMax)
         zfCoreCriticalIndexOutOfRange(fromIndex, (zfindex)d->data.size());
         return ;
     }
-    if(toIndexOrIndexMax == zfindexMax)
+    if(toIndexOrIndexMax == zfindexMax())
     {
         toIndexOrIndexMax = (zfindex)(d->data.size() - 1);
     }
@@ -451,7 +451,7 @@ void ZFArray::move(ZF_IN zfindex fromIndex, ZF_IN zfindex toIndexOrIndexMax)
 
 void ZFArray::sort(ZF_IN_OPT zfbool ascending /* = zftrue */,
                    ZF_IN_OPT zfindex start /* = 0 */,
-                   ZF_IN_OPT zfindex count /* = zfindexMax */,
+                   ZF_IN_OPT zfindex count /* = zfindexMax() */,
                    ZF_IN_OPT ZFComparer<ZFObject *>::Comparer comparer /* = ZFComparerCheckEqual */)
 {
     if(d->data.size() > 0 && start + 1 < d->data.size() && count > 1)

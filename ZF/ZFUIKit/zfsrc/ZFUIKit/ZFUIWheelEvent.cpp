@@ -33,5 +33,8 @@ void ZFUIWheelEvent::cacheableOnReset(void)
     this->wheelY = 0;
 }
 
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zfint, wheelX)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWheelEvent, zfint, wheelY)
+
 ZF_NAMESPACE_GLOBAL_END
 

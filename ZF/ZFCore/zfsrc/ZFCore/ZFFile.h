@@ -485,7 +485,7 @@ public:
                               ZFMP_IN(ZFFileToken, token));
 
     /**
-     * @brief get current file's position or zfindexMax if error
+     * @brief get current file's position or zfindexMax() if error
      */
     ZFMETHOD_DECLARE_STATIC_1(zfindex, fileTell,
                               ZFMP_IN(ZFFileToken, token));
@@ -551,14 +551,14 @@ public:
      *   }
      * @endcode
      * \n
-     * maxByteSize could be zfindexMax,
+     * maxByteSize could be zfindexMax(),
      * which means fileWrite should be stopped when reached 0x00 in src,
      * usually to output a UTF8 string
      */
     ZFMETHOD_DECLARE_STATIC_3(zfindex, fileWrite,
                               ZFMP_IN(ZFFileToken, token),
                               ZFMP_IN(const void *, src),
-                              ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax));
+                              ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()));
     /**
      * @brief flush the file, useful only for files opened for write
      */
@@ -580,7 +580,7 @@ public:
      * @brief util method to get file size
      *
      * fileSeek to end, fileTell, then fileSeek to restore,
-     * return zfindexMax if error\n
+     * return zfindexMax() if error\n
      * note that result is not ensured if file is opened in append mode
      */
     ZFMETHOD_DECLARE_STATIC_1(zfindex, fileSize,

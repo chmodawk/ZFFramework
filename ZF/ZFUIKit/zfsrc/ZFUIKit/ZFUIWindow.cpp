@@ -42,7 +42,8 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowLayoutParamOnInit)
 ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOnShow)
 ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOnHide)
 
-ZFUIWindow *ZFUIWindow::windowForView(ZF_IN ZFUIView *forView)
+ZFMETHOD_DEFINE_1(ZFUIWindow, ZFUIWindow *, windowForView,
+                  ZFMP_IN(ZFUIView *, forView))
 {
     while(forView != zfnull && !forView->classData()->classIsSubclassOf(ZFUIWindow::ClassData()))
     {
@@ -55,7 +56,8 @@ ZFUIWindow *ZFUIWindow::windowForView(ZF_IN ZFUIView *forView)
     return zfnull;
 }
 
-ZFUISysWindow *ZFUIWindow::sysWindowForView(ZF_IN ZFUIView *view)
+ZFMETHOD_DEFINE_1(ZFUIWindow, ZFUISysWindow *, sysWindowForView,
+                  ZFMP_IN(ZFUIView *, view))
 {
     ZFUIWindow *window = ZFUIWindow::windowForView(view);
     return ((window != zfnull) ? window->windowSysWindow() : zfnull);
@@ -90,7 +92,8 @@ ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUIWindow, ZFUIWindowLevelEnum, windowLevel)
     zfCoreAssertWithMessage(!this->windowShowing(), zfTextA("you must not change window level while it's showing"));
 }
 
-void ZFUIWindow::windowSysWindowSet(ZF_IN ZFUISysWindow *windowSysWindow)
+ZFMETHOD_DEFINE_1(ZFUIWindow, void, windowSysWindowSet,
+                  ZFMP_IN(ZFUISysWindow *, windowSysWindow))
 {
     if(d->windowSysWindow != windowSysWindow)
     {
@@ -102,12 +105,12 @@ void ZFUIWindow::windowSysWindowSet(ZF_IN ZFUISysWindow *windowSysWindow)
         this->windowSysWindowOnChange(oldSysWindow);
     }
 }
-ZFUISysWindow *ZFUIWindow::windowSysWindow(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, ZFUISysWindow *, windowSysWindow)
 {
     return d->windowSysWindow;
 }
 
-void ZFUIWindow::windowShow(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, void, windowShow)
 {
     zfindex addToIndex = 0;
     ZFCoreArrayPOD<ZFUIView *> tmpArray = this->windowSysWindow()->rootView()->childArray();
@@ -128,7 +131,7 @@ void ZFUIWindow::windowShow(void)
     }
     this->windowSysWindow()->rootView()->childAdd(this, d->windowLayoutParam, addToIndex);
 }
-void ZFUIWindow::windowHide(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, void, windowHide)
 {
     zfRetainWithoutLeakTest(this);
     d->windowRemoveOverrideFlag = zftrue;
@@ -136,12 +139,12 @@ void ZFUIWindow::windowHide(void)
     d->windowRemoveOverrideFlag = zffalse;
     zfReleaseWithoutLeakTest(this);
 }
-zfbool ZFUIWindow::windowShowing(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, zfbool, windowShowing)
 {
     return (this->viewParent() != zfnull);
 }
 
-void ZFUIWindow::windowMoveToTop(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, void, windowMoveToTop)
 {
     if(!this->windowShowing())
     {
@@ -150,14 +153,14 @@ void ZFUIWindow::windowMoveToTop(void)
 
     ZFCoreArrayPOD<ZFUIView *> tmpArray = this->windowSysWindow()->rootView()->childArray();
     ZFUIWindowLevelEnum selfWindowLevel = this->windowLevel();
-    zfindex topIndex = zfindexMax;
-    zfindex selfIndex = zfindexMax;
-    for(zfindex i = tmpArray.count() - 1; i != zfindexMax; --i)
+    zfindex topIndex = zfindexMax();
+    zfindex selfIndex = zfindexMax();
+    for(zfindex i = tmpArray.count() - 1; i != zfindexMax(); --i)
     {
         ZFUIWindow *tmpWindow = ZFCastZFObject(ZFUIWindow *, tmpArray.get(i));
         if(tmpWindow != zfnull)
         {
-            if(topIndex == zfindexMax && tmpWindow->windowLevel() == selfWindowLevel)
+            if(topIndex == zfindexMax() && tmpWindow->windowLevel() == selfWindowLevel)
             {
                 topIndex = i;
             }
@@ -168,12 +171,12 @@ void ZFUIWindow::windowMoveToTop(void)
             }
         }
     }
-    if(topIndex != selfIndex && topIndex != zfindexMax && selfIndex != zfindexMax)
+    if(topIndex != selfIndex && topIndex != zfindexMax() && selfIndex != zfindexMax())
     {
         this->windowSysWindow()->rootView()->childMove(selfIndex, topIndex);
     }
 }
-void ZFUIWindow::windowMoveToBottom(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, void, windowMoveToBottom)
 {
     if(!this->windowShowing())
     {
@@ -182,14 +185,14 @@ void ZFUIWindow::windowMoveToBottom(void)
 
     ZFCoreArrayPOD<ZFUIView *> tmpArray = this->windowSysWindow()->rootView()->childArray();
     ZFUIWindowLevelEnum selfWindowLevel = this->windowLevel();
-    zfindex bottomIndex = zfindexMax;
-    zfindex selfIndex = zfindexMax;
+    zfindex bottomIndex = zfindexMax();
+    zfindex selfIndex = zfindexMax();
     for(zfindex i = 0; i < tmpArray.count(); ++i)
     {
         ZFUIWindow *tmpWindow = ZFCastZFObject(ZFUIWindow *, tmpArray.get(i));
         if(tmpWindow != zfnull)
         {
-            if(bottomIndex == zfindexMax && tmpWindow->windowLevel() == selfWindowLevel)
+            if(bottomIndex == zfindexMax() && tmpWindow->windowLevel() == selfWindowLevel)
             {
                 bottomIndex = i;
             }
@@ -200,13 +203,13 @@ void ZFUIWindow::windowMoveToBottom(void)
             }
         }
     }
-    if(bottomIndex != selfIndex && bottomIndex != zfindexMax && selfIndex != zfindexMax)
+    if(bottomIndex != selfIndex && bottomIndex != zfindexMax() && selfIndex != zfindexMax())
     {
         this->windowSysWindow()->rootView()->childMove(selfIndex, bottomIndex);
     }
 }
 
-ZFUIViewLayoutParam *ZFUIWindow::windowLayoutParam(void)
+ZFMETHOD_DEFINE_0(ZFUIWindow, ZFUIViewLayoutParam *, windowLayoutParam)
 {
     return d->windowLayoutParam;
 }

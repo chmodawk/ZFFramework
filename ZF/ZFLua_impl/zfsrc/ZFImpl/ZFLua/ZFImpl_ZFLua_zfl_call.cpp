@@ -82,7 +82,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
             continue;
         }
 
-        ret = zfautoObjectNull;
+        ret = zfautoObjectNull();
         if(method->methodGenericInvoker()(method, obj, &errorHint, ret
                 , paramListTmp[0]
                 , paramListTmp[1]

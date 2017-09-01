@@ -44,7 +44,7 @@ public:
                              ZF_IN ZFObject *param0,
                              ZF_IN ZFObject *param1)
     {
-        ZFListenerHolder *listenerData = zfAllocWithoutLeakTest(ZFListenerHolder, task, ZFListenerData(zfidentityInvalid, zfnull, param0, param1));
+        ZFListenerHolder *listenerData = zfAllocWithoutLeakTest(ZFListenerHolder, task, ZFListenerData(zfidentityInvalid(), zfnull, param0, param1));
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_taskRequest"),
             JNIGetMethodSig(JNIType::S_void, JNIParamTypeContainer()

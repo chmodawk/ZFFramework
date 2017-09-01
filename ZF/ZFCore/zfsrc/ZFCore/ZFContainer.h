@@ -135,11 +135,11 @@ public:
      */
     ZFMETHOD_DECLARE_3(void, objectInfoOfContentT,
                        ZFMP_IN_OUT(zfstring &, ret),
-                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
                        ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()));
     /** @brief see #objectInfoOfContentT */
     ZFMETHOD_DECLARE_2(zfstring, objectInfoOfContent,
-                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
                        ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
     {
         zfstring ret;

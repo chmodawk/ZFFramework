@@ -32,9 +32,9 @@ inline zfstring zfstringToString(ZF_IN const zfchar *v)
 }
 inline zfbool zfstringFromString(ZF_OUT const zfchar *&v,
                                  ZF_IN const zfchar *src,
-                                 ZF_IN_OPT zfindex srcLen = zfindexMax)
+                                 ZF_IN_OPT zfindex srcLen = zfindexMax())
 {
-    if(srcLen != zfindexMax && src[srcLen] != '\0')
+    if(srcLen != zfindexMax() && src[srcLen] != '\0')
     {
         return zffalse;
     }
@@ -112,7 +112,7 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                                               ZF_IN const zfchar **nameList,
                                               ZF_IN zfindex listCount,
                                               ZF_IN const zfchar *src,
-                                              ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                              ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                               ZF_IN_OPT zfchar separatorToken = '|',
                                               ZF_OUT_OPT const zfchar **outErrorPos = zfnull);
 

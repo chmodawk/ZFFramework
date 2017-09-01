@@ -240,7 +240,7 @@ ZFMETHOD_DEFINE_1(ZFRegExp, zfindex, regExpNamedGroupIndexForName, ZFMP_IN(const
 {
     if(name == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return ZFPROTOCOL_ACCESS(ZFRegExp)->regExpNamedGroupIndexForName(this, name);
 }
@@ -260,7 +260,7 @@ ZFMETHOD_DEFINE_2(ZFRegExp, void, regExpCompile,
 ZFMETHOD_DEFINE_3(ZFRegExp, void, regExpMatch,
                   ZFMP_OUT(ZFRegExpResult &, result),
                   ZFMP_IN(const zfchar *, src),
-                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax))
+                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()))
 {
     result.namedGroups.removeAll();
     ZFPROTOCOL_ACCESS(ZFRegExp)->regExpMatch(this, result, src, srcLength);
@@ -268,7 +268,7 @@ ZFMETHOD_DEFINE_3(ZFRegExp, void, regExpMatch,
 ZFMETHOD_DEFINE_3(ZFRegExp, void, regExpMatchExact,
                   ZFMP_OUT(ZFRegExpResult &, result),
                   ZFMP_IN(const zfchar *, src),
-                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax))
+                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()))
 {
     result.namedGroups.removeAll();
     ZFPROTOCOL_ACCESS(ZFRegExp)->regExpMatchExact(this, result, src, srcLength);
@@ -278,8 +278,8 @@ ZFMETHOD_DEFINE_6(ZFRegExp, void, regExpReplace,
                   ZFMP_OUT(ZFRegExpResult &, result),
                   ZFMP_IN(const zfchar *, src),
                   ZFMP_IN(const zfchar *, replacePattern),
-                  ZFMP_IN_OPT(zfindex, maxReplaceCount, zfindexMax),
-                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax))
+                  ZFMP_IN_OPT(zfindex, maxReplaceCount, zfindexMax()),
+                  ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()))
 {
     result.namedGroups.removeAll();
     ZFPROTOCOL_ACCESS(ZFRegExp)->regExpReplace(this, ret, result, src, replacePattern, maxReplaceCount, srcLength);

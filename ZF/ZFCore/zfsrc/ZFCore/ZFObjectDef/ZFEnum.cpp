@@ -204,7 +204,7 @@ zfindex _ZFP_ZFEnumData::enumIndexForValue(ZF_IN zfuint value) const
         }
         return ret;
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 zfuint _ZFP_ZFEnumData::enumValueAtIndex(ZF_IN zfindex index) const
 {
@@ -372,7 +372,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
 zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                          ZF_IN const ZFClass *enumClass,
                          ZF_IN const zfchar *src,
-                         ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                         ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                          ZF_IN_OPT zfchar separatorToken /* = '|' */,
                          ZF_OUT_OPT const zfchar **outErrorPos /* = zfnull */)
 {
@@ -422,7 +422,7 @@ ZFMETHOD_USER_REGISTER_DETAIL_1(ZFEnum_enumValueSet, _ZFP_ZFEnum_enumValueSet_me
 
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_7(zfbool, zfflagsToString, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_6(zfstring, zfflagsToString, ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(zfbool, zfflagsFromString, ZFMP_OUT(zfflags &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(zfbool, zfflagsFromString, ZFMP_OUT(zfflags &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif

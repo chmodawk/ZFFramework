@@ -193,7 +193,7 @@ protected:
      */
     virtual void sort(ZF_IN_OPT zfbool ascending = zftrue,
                       ZF_IN_OPT zfindex start = 0,
-                      ZF_IN_OPT zfindex count = zfindexMax,
+                      ZF_IN_OPT zfindex count = zfindexMax(),
                       ZF_IN_OPT ZFComparer<ZFObject *>::Comparer comparer = ZFComparerCheckEqual);
 
     // ============================================================
@@ -353,7 +353,7 @@ public:
     ZFMETHOD_DECLARE_4(void, sort,
                        ZFMP_IN_OPT(zfbool, ascending, zftrue),
                        ZFMP_IN_OPT(zfindex, start, 0),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()),
                        ZFMP_IN_OPT(ZFComparer<ZFObject *>::Comparer, comparer, ZFComparerCheckEqual))
     {
         zfsuper::sort(ascending, start, count, comparer);

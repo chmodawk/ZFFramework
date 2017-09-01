@@ -35,7 +35,9 @@ public:
     }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewFocusNextSetDataHolder)
 
-void ZFUIViewFocusNextSet(ZF_IN ZFUIView *from, ZF_IN ZFUIView *nextFocus)
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewFocusNextSet,
+                       ZFMP_IN(ZFUIView *, from),
+                       ZFMP_IN(ZFUIView *, nextFocus))
 {
     if(from == zfnull)
     {
@@ -77,10 +79,13 @@ void _ZFP_ZFUIViewFocusNextSetChain(ZF_IN ZFUIView *view0, ZF_IN ZFUIView *view1
 }
 
 // ============================================================
-ZFFilterForZFObject ZFUIViewFocusNextFilter;
+ZFEXPORT_VAR_DEFINE(ZFFilterForZFObject, ZFUIViewFocusNextFilter, ZFFilterForZFObject())
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewFocusNextFilterDataHolder, ZFLevelZFFrameworkEssential)
 {
-    ZFUIViewFocusNextFilter = ZFFilterForZFObject();
+}
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewFocusNextFilterDataHolder)
+{
+    ZFUIViewFocusNextFilterSet(ZFFilterForZFObject());
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewFocusNextFilterDataHolder)
 
@@ -103,7 +108,7 @@ static void _ZFP_ZFUIViewFocusNextFind(ZF_OUT ZFCoreArrayPOD<_ZFP_ZFUIViewFocusD
                                        ZF_IN zfint offsetX,
                                        ZF_IN zfint offsetY)
 {
-    if(view->viewDelegateForParent() || !ZFUIViewFocusNextFilter.filterCheckActive(view))
+    if(view->viewDelegateForParent() || !ZFUIViewFocusNextFilter().filterCheckActive(view))
     {
         return ;
     }
@@ -214,7 +219,7 @@ void _ZFP_ZFUIViewFocusDataRemoveForX(ZF_IN ZFCoreArrayPOD<_ZFP_ZFUIViewFocusDat
                                       ZF_IN ZFUIView *refView,
                                       ZF_IN const ZFUIPoint &refCenter)
 {
-    for(zfindex i = focusDatas.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = focusDatas.count() - 1; i != zfindexMax(); --i)
     {
         if(focusDatas[i].center.x == refCenter.x
             || zfmAbs(focusDatas[i].center.y - refCenter.y) * _ZFP_ZFUIViewFocusRatioFix > zfmAbs(focusDatas[i].center.x - refCenter.x))
@@ -242,7 +247,7 @@ void _ZFP_ZFUIViewFocusDataRemoveForY(ZF_IN ZFCoreArrayPOD<_ZFP_ZFUIViewFocusDat
                                       ZF_IN ZFUIView *refView,
                                       ZF_IN const ZFUIPoint &refCenter)
 {
-    for(zfindex i = focusDatas.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = focusDatas.count() - 1; i != zfindexMax(); --i)
     {
         if(focusDatas[i].center.y == refCenter.y
             || zfmAbs(focusDatas[i].center.x - refCenter.x) > zfmAbs(focusDatas[i].center.y - refCenter.y) * _ZFP_ZFUIViewFocusRatioFix)
@@ -274,7 +279,7 @@ ZFUIView *_ZFP_ZFUIViewFocusDataFindNext(ZF_IN const ZFCoreArrayPOD<_ZFP_ZFUIVie
     if(ascending)
     {
         zfindex index = focusDatas.find(view, _ZFP_ZFUIViewFocusNextFind_comparerForFind);
-        if(index == zfindexMax)
+        if(index == zfindexMax())
         {
             return (focusDatas.isEmpty() ? zfnull : focusDatas[0].view);
         }
@@ -287,7 +292,7 @@ ZFUIView *_ZFP_ZFUIViewFocusDataFindNext(ZF_IN const ZFCoreArrayPOD<_ZFP_ZFUIVie
     else
     {
         zfindex index = focusDatas.find(view, _ZFP_ZFUIViewFocusNextFind_comparerForFind);
-        if(index == zfindexMax)
+        if(index == zfindexMax())
         {
             return (focusDatas.isEmpty() ? zfnull : focusDatas[focusDatas.count() - 1].view);
         }
@@ -305,7 +310,7 @@ ZFUIView *_ZFP_ZFUIViewFocusDataFindFirst(ZF_IN const ZFCoreArrayPOD<_ZFP_ZFUIVi
     if(ascending)
     {
         zfindex index = focusDatas.find(view, _ZFP_ZFUIViewFocusNextFind_comparerForFind);
-        if(index == zfindexMax)
+        if(index == zfindexMax())
         {
             return (focusDatas.isEmpty() ? zfnull : focusDatas[0].view);
         }
@@ -318,7 +323,7 @@ ZFUIView *_ZFP_ZFUIViewFocusDataFindFirst(ZF_IN const ZFCoreArrayPOD<_ZFP_ZFUIVi
     else
     {
         zfindex index = focusDatas.find(view, _ZFP_ZFUIViewFocusNextFind_comparerForFind);
-        if(index == zfindexMax)
+        if(index == zfindexMax())
         {
             return (focusDatas.isEmpty() ? zfnull : focusDatas[focusDatas.count() - 1].view);
         }
@@ -331,8 +336,20 @@ ZFUIView *_ZFP_ZFUIViewFocusDataFindFirst(ZF_IN const ZFCoreArrayPOD<_ZFP_ZFUIVi
 }
 
 // ============================================================
-ZFUIView *ZFUIViewFocusNextFind(ZF_IN ZFUIView *view,
-                                ZF_IN_OPT const ZFUIViewFocusNextParam &param /* = ZFUIViewFocusNextParam() */)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFUIViewFocusNextParam, ZFUIViewFocusNextParam)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewFocusNextParam, ZFUIOrientationFlags const &, focusDirection)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewFocusNextParam, void, focusDirectionSet, ZFMP_IN(ZFUIOrientationFlags const &, focusDirection))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewFocusNextParam, zfbool const &, focusLoopMode)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewFocusNextParam, void, focusLoopModeSet, ZFMP_IN(zfbool const &, focusLoopMode))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewFocusNextParam, ZFUIView * const &, focusEndParent)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewFocusNextParam, void, focusEndParentSet, ZFMP_IN(ZFUIView * const &, focusEndParent))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewFocusNextParam, zfbool const &, focusInternalViews)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewFocusNextParam, void, focusInternalViewsSet, ZFMP_IN(zfbool const &, focusInternalViews))
+
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_2(ZFUIView *, ZFUIViewFocusNextFind,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFUIViewFocusNextParam &, param, ZFUIViewFocusNextParam()))
 {
     if(view == zfnull)
     {
@@ -464,8 +481,9 @@ ZFUIView *ZFUIViewFocusNextFind(ZF_IN ZFUIView *view,
     return zfnull;
 }
 
-ZFUIView *ZFUIViewFocusNextMove(ZF_IN ZFUIView *view,
-                                ZF_IN_OPT const ZFUIViewFocusNextParam &param /* = ZFUIViewFocusNextParam() */)
+ZFMETHOD_FUNC_DEFINE_2(ZFUIView *, ZFUIViewFocusNextMove,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFUIViewFocusNextParam &, param, ZFUIViewFocusNextParam()))
 {
     ZFUIView *next = ZFUIViewFocusNextFind(view, param);
     if(next != zfnull)
@@ -477,14 +495,15 @@ ZFUIView *ZFUIViewFocusNextMove(ZF_IN ZFUIView *view,
 
 // ============================================================
 static zfbool _ZFP_ZFUIViewFocusResolveKeyEvent_shiftPressed = zffalse;
-zfbool ZFUIViewFocusResolveKeyEvent(ZF_IN ZFUIView *view,
-                                    ZF_IN ZFUIKeyEvent *keyEvent,
-                                    ZF_OUT_OPT ZFUIView **nextFocus /* = zfnull */,
-                                    ZF_IN_OPT ZFUIView *endParent /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFUIViewFocusResolveKeyEvent,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN(ZFUIKeyEvent *, keyEvent),
+                       ZFMP_OUT_OPT(zfautoObject *, nextFocus, zfnull),
+                       ZFMP_IN_OPT(ZFUIView *, endParent, zfnull))
 {
     if(nextFocus != zfnull)
     {
-        *nextFocus = zfnull;
+        *nextFocus = zfautoObjectNull();
     }
     ZFUIViewFocusNextParam param;
     switch(keyEvent->keyCode)
@@ -540,7 +559,7 @@ zfbool ZFUIViewFocusResolveKeyEvent(ZF_IN ZFUIView *view,
     ZFUIView *next = ZFUIViewFocusNextMove(view, param);
     if(nextFocus != zfnull)
     {
-        *nextFocus = next;
+        *nextFocus = zfautoObjectCreate(next);
     }
     return zftrue;
 }

@@ -165,7 +165,7 @@ static void _ZFP_ZFFramework_test_prepareTestCase(ZF_IN ZFUIView *containerView)
         zfstring subModuleName = allTestCase[0]->className();
         {
             zfindex t = zfstringFind(subModuleName, '_');
-            if(t == zfindexMax)
+            if(t == zfindexMax())
             {
                 subModuleName.removeAll();
             }
@@ -285,9 +285,9 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModuleTest(ZF_IN ZFUIView *c
 ZF_GLOBAL_INITIALIZER_INIT(iOS7AutoTitleSpace)
 {
     zfstring frameworkName = ZFEnvInfo::frameworkName();
-    if(zfstringFindCaseInsensitive(frameworkName, zfText("iOS")) != zfindexMax
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPhone")) != zfindexMax
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPad")) != zfindexMax)
+    if(zfstringFindCaseInsensitive(frameworkName, zfText("iOS")) != zfindexMax()
+       || zfstringFindCaseInsensitive(frameworkName, zfText("iPhone")) != zfindexMax()
+       || zfstringFindCaseInsensitive(frameworkName, zfText("iPad")) != zfindexMax())
     {
         if(zfVersionGetInt(ZFEnvInfo::frameworkVersion(), ZFVERSION_MAIN()) >= 7)
         {

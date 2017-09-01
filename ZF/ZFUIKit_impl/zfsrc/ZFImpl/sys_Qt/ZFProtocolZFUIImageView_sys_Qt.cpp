@@ -29,7 +29,7 @@ public:
     : QWidget()
     , _ZFP_owner(owner)
     , _ZFP_imageScale(1)
-    , _ZFP_imageNinePatchScaled(ZFUIMarginZero)
+    , _ZFP_imageNinePatchScaled(ZFUIMarginZero())
     {
     }
 
@@ -46,7 +46,7 @@ protected:
         QPainter painter(this);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
         QRect bounds(QPoint(), this->geometry().size());
-        if(_ZFP_imageNinePatchScaled == ZFUIMarginZero)
+        if(_ZFP_imageNinePatchScaled == ZFUIMarginZero())
         {
             painter.drawImage(bounds, *image);
             return ;

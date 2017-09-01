@@ -59,7 +59,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
     {
         if(ret.isEmpty())
         {
-            zfindex zeroTokenIndex = zfindexMax;
+            zfindex zeroTokenIndex = zfindexMax();
             for(zfindex i = 0; i < listCount; ++i)
             {
                 if(flagList[i] == 0)
@@ -68,7 +68,7 @@ zfbool zfflagsToString(ZF_IN_OUT zfstring &ret,
                     break;
                 }
             }
-            if(zeroTokenIndex == zfindexMax)
+            if(zeroTokenIndex == zfindexMax())
             {
                 ret = _ZFP_zfflagsInvalidToken;
             }
@@ -102,7 +102,7 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                          ZF_IN const zfchar **nameList,
                          ZF_IN zfindex listCount,
                          ZF_IN const zfchar *src,
-                         ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                         ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                          ZF_IN_OPT zfchar separatorToken /* = '|' */,
                          ZF_OUT_OPT const zfchar **outErrorPos /* = zfnull */)
 {
@@ -117,7 +117,7 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
     ZFCoreArrayPOD<zfindexRange> pos;
     zfstring separatorTokens;
     separatorTokens += separatorToken;
-    if(!zfCoreDataPairSplitString(pos, zfindexMax, src, srcLen, separatorTokens, zfnull, zfnull, zffalse, outErrorPos))
+    if(!zfCoreDataPairSplitString(pos, zfindexMax(), src, srcLen, separatorTokens, zfnull, zfnull, zffalse, outErrorPos))
     {
         return zffalse;
     }
@@ -138,7 +138,7 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
         {
             if(pos[iSrc].count > 2 && *(src + pos[iSrc].start) == '0' && *(src + pos[iSrc].start + 1) == 'x')
             {
-                zfflags tmp = zfflagsZero;
+                zfflags tmp = zfflagsZero();
                 if(!zfsToIntT(tmp, src + pos[iSrc].start + 2, pos[iSrc].count - 2, 16, zftrue, outErrorPos))
                 {
                     return zffalse;
@@ -203,7 +203,7 @@ zfbool zfstringToSerializableData(ZF_OUT ZFSerializableData &serializableData,
         })
 #define _ZFP_ZFPROPERTY_TYPE_DEFINE_int_disallow_negative(TypeName, Type) \
     ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(TypeName, Type, { \
-            if(srcLen == zfindexMax) \
+            if(srcLen == zfindexMax()) \
             { \
                 srcLen = zfslen(src); \
             } \
@@ -971,7 +971,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(zfautoObject, zfautoObject, {
     })
 ZFOUTPUT_TYPE_DEFINE(zfautoObject, {
         output.execute(
-            (v == zfautoObjectNull)
+            (v == zfautoObjectNull())
             ? ZFTOKEN_zfnull
             : v.toObject()->objectInfo()
         );

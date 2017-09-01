@@ -553,7 +553,7 @@ static void _ZFP_ZFLeakTestObjectCachedMarkAllProperty(ZF_IN ZFObject *ownerObje
         zflockfree_zfReleaseWithoutLeakTest(holder);
     }
     ZFCoreArrayPOD<const ZFProperty *> &allProperty = holder->allProperty;
-    for(zfindex i = allProperty.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = allProperty.count() - 1; i != zfindexMax(); --i)
     {
         const ZFProperty *property = allProperty[i];
         if(property->callbackIsValueAccessed(property, ownerObject))

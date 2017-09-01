@@ -287,7 +287,7 @@ zfautoObject ZFMap::removeAndGet(ZF_IN ZFObject *pKey)
             return zfautoObjectCreate(tmpValue);
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 ZFKeyValuePairHolder ZFMap::removeAndGetPair(ZF_IN ZFObject *pKey)
 {

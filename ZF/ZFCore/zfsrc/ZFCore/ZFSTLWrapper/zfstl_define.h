@@ -27,16 +27,16 @@
  * @brief size_t wrapper
  *
  * take good care of that, zfindex is not ensured same as size_t,
- * so it is not ensured that zfindexMax is equal to zfstring::npos,
+ * so it is not ensured that zfindexMax() is equal to zfstring::npos,
  * e.g.:
  * @code
  *   zfindex n = zfstring::npos;
  *   zfbool b0 = (n == zfstring::npos); // zftrue
- *   zfbool b1 = (zfindexMax == zfstring::npos); // not ensured
+ *   zfbool b1 = (zfindexMax() == zfstring::npos); // not ensured
  *
  *   size_t t = 0;
  *   zfindex t2 = t - 1;
- *   zfbool b2 = (t2 == zfindexMax); // not ensured
+ *   zfbool b2 = (t2 == zfindexMax()); // not ensured
  * @endcode
  * use explicit conversion is recommended
  */

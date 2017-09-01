@@ -17,7 +17,7 @@ ZFOBJECT_REGISTER(ZFCopyable)
 zfautoObject ZFCopyable::copy(void)
 {
     zfautoObject ret = this->classData()->newInstance(ZFCallerInfoMake());
-    if(ret != zfautoObjectNull)
+    if(ret != zfautoObjectNull())
     {
         ZFCastZFObjectUnchecked(zfself *, ret.toObject())->copyableOnCopyFrom(this->toObject());
         if(ret.toObject()->classData()->classIsTypeOf(ZFSerializable::ClassData()))

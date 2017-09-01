@@ -21,7 +21,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief manually set the next focus target for the from view, set null to remove
  */
-extern ZF_ENV_EXPORT void ZFUIViewFocusNextSet(ZF_IN ZFUIView *from, ZF_IN ZFUIView *nextFocus);
+ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewFocusNextSet,
+                        ZFMP_IN(ZFUIView *, from),
+                        ZFMP_IN(ZFUIView *, nextFocus))
 
 #define _ZFP_ZFUIViewFocusNextSetChainEndPtr ((ZFUIView *)-1)
 extern ZF_ENV_EXPORT void _ZFP_ZFUIViewFocusNextSetChain(ZF_IN ZFUIView *view0, ZF_IN ZFUIView *view1, ...);
@@ -35,7 +37,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFUIViewFocusNextSetChain(ZF_IN ZFUIView *view0, 
 /**
  * @brief filter to exclude certain view from being focused by #ZFUIViewFocusNextFind, empty by default
  */
-extern ZF_ENV_EXPORT ZFFilterForZFObject ZFUIViewFocusNextFilter;
+ZFEXPORT_VAR_DECLARE(ZFFilterForZFObject, ZFUIViewFocusNextFilter)
 
 /**
  * @brief param for #ZFUIViewFocusNextFind and #ZFUIViewFocusNextMove
@@ -60,7 +62,25 @@ zfclassLikePOD ZF_ENV_EXPORT ZFUIViewFocusNextParam
      * @brief whether to find internal views, true by default
      */
     ZFCORE_PARAM_WITH_INIT(zfbool, focusInternalViews, zftrue)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN const ZFUIViewFocusNextParam &ref) const
+    {
+        return (zftrue
+                && this->focusDirection() == ref.focusDirection()
+                && this->focusLoopMode() == ref.focusLoopMode()
+                && this->focusEndParent() == ref.focusEndParent()
+                && this->focusInternalViews() == ref.focusInternalViews()
+            );
+    }
+    zfbool operator != (ZF_IN const ZFUIViewFocusNextParam &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFUIViewFocusNextParam, ZFUIViewFocusNextParam)
 
 // ============================================================
 /**
@@ -68,14 +88,16 @@ zfclassLikePOD ZF_ENV_EXPORT ZFUIViewFocusNextParam
  *
  * return first focusable view if found
  */
-extern ZF_ENV_EXPORT ZFUIView *ZFUIViewFocusNextFind(ZF_IN ZFUIView *view,
-                                                     ZF_IN_OPT const ZFUIViewFocusNextParam &param = ZFUIViewFocusNextParam());
+ZFMETHOD_FUNC_DECLARE_2(ZFUIView *, ZFUIViewFocusNextFind,
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN_OPT(const ZFUIViewFocusNextParam &, param, ZFUIViewFocusNextParam()))
 
 /**
  * @brief move focus to next if available or do nothing otherwise, see #ZFUIViewFocusNextFind
  */
-extern ZF_ENV_EXPORT ZFUIView *ZFUIViewFocusNextMove(ZF_IN ZFUIView *view,
-                                                     ZF_IN_OPT const ZFUIViewFocusNextParam &param = ZFUIViewFocusNextParam());
+ZFMETHOD_FUNC_DECLARE_2(ZFUIView *, ZFUIViewFocusNextMove,
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN_OPT(const ZFUIViewFocusNextParam &, param, ZFUIViewFocusNextParam()))
 
 // ============================================================
 /**
@@ -84,10 +106,11 @@ extern ZF_ENV_EXPORT ZFUIView *ZFUIViewFocusNextMove(ZF_IN ZFUIView *view,
  * return true if the event has been resolved,
  * next focused view can be checked by the optional nextFocus param
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewFocusResolveKeyEvent(ZF_IN ZFUIView *view,
-                                                         ZF_IN ZFUIKeyEvent *keyEvent,
-                                                         ZF_OUT_OPT ZFUIView **nextFocus = zfnull,
-                                                         ZF_IN_OPT ZFUIView *endParent = zfnull);
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFUIViewFocusResolveKeyEvent,
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN(ZFUIKeyEvent *, keyEvent),
+                        ZFMP_OUT_OPT(zfautoObject *, nextFocus, zfnull),
+                        ZFMP_IN_OPT(ZFUIView *, endParent, zfnull))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIViewFocus_h_

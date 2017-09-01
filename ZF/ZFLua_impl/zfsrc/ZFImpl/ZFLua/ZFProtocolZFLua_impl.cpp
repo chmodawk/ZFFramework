@@ -15,7 +15,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFLua_impl, ZFLua, ZFProtocolLevel::e_Default)
 public:
     virtual zfbool luaExecute(ZF_IN const zfchar *src,
-                              ZF_IN_OPT zfindex srcLen = zfindexMax,
+                              ZF_IN_OPT zfindex srcLen = zfindexMax(),
                               ZF_OUT_OPT zfstring *errorHint = zfnull)
     {
         if(ZFFrameworkStateCheck(ZFLevelZFFrameworkLow) != ZFFrameworkStateAvailable)

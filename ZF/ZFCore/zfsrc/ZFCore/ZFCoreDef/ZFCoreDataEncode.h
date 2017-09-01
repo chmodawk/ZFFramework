@@ -70,7 +70,7 @@ extern ZF_ENV_EXPORT const zfchar _ZFP_zfCoreDataEncodeCharMapDefault[256];
  */
 extern ZF_ENV_EXPORT void zfCoreDataEncode(ZF_OUT zfstring &result,
                                            ZF_IN const zfchar *src,
-                                           ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                           ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                            ZF_IN_OPT const zfchar *charMap = zfCoreDataEncodeCharMapDefault(),
                                            ZF_IN_OPT zfchar escapeToken = '%');
 /**
@@ -78,7 +78,7 @@ extern ZF_ENV_EXPORT void zfCoreDataEncode(ZF_OUT zfstring &result,
  */
 extern ZF_ENV_EXPORT void zfCoreDataDecode(ZF_OUT zfstring &result,
                                            ZF_IN const zfchar *src,
-                                           ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                           ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                            ZF_IN_OPT zfchar escapeToken = '%');
 
 ZF_NAMESPACE_GLOBAL_END

@@ -83,7 +83,7 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFThreadTaskRequestCallback_action)
             zfsynchronizedObjectUnlock(_ZFP_ZFThread_mutex);
         }
         taskData->taskCallback().execute(
-            ZFListenerData(zfidentityInvalid, zfnull, taskData->taskParam0(), taskData->taskParam1()),
+            ZFListenerData(zfidentityInvalid(), zfnull, taskData->taskParam0(), taskData->taskParam1()),
             taskData->taskUserData());
         if(lockAvailable)
         {
@@ -155,7 +155,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfidentity, ZFThreadTaskRequest,
 {
     if(taskRequestData == zfnull || !taskRequestData->taskCallback().callbackIsValid())
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
@@ -164,7 +164,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfidentity, ZFThreadTaskRequest,
         zfsynchronizedObjectLock(_ZFP_ZFThread_mutex);
     }
 
-    zfindex oldTaskIndex = zfindexMax;
+    zfindex oldTaskIndex = zfindexMax();
     for(zfindex i = 0; i < _ZFP_ZFThread_taskDatas->count(); ++i)
     {
         ZFThreadTaskRequestData *existing = _ZFP_ZFThread_taskDatas->get<ZFThreadTaskRequestData *>(i);
@@ -175,13 +175,13 @@ ZFMETHOD_FUNC_DEFINE_2(zfidentity, ZFThreadTaskRequest,
             break;
         }
     }
-    zfidentity taskId = zfidentityInvalid;
-    if(oldTaskIndex != zfindexMax && mergeCallback != ZFThreadTaskRequestMergeCallbackDoNotMerge())
+    zfidentity taskId = zfidentityInvalid();
+    if(oldTaskIndex != zfindexMax() && mergeCallback != ZFThreadTaskRequestMergeCallbackDoNotMerge())
     {
         zfblockedAllocWithoutLeakTest(ZFThreadTaskRequestMergeCallbackData, mergeCallbackData);
         mergeCallbackData->taskRequestDataOld = _ZFP_ZFThread_taskDatas->get<ZFThreadTaskRequestData *>(oldTaskIndex);
         mergeCallbackData->taskRequestDataNew = taskRequestData;
-        mergeCallback.execute(ZFListenerData(zfidentityInvalid, zfnull, mergeCallbackData));
+        mergeCallback.execute(ZFListenerData(zfidentityInvalid(), zfnull, mergeCallbackData));
         if(mergeCallbackData->taskRequestDataMerged != zfnull)
         {
             taskRequestData = mergeCallbackData->taskRequestDataMerged;

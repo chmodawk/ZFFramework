@@ -93,7 +93,7 @@ extern ZF_ENV_EXPORT const zfindexRange _ZFP_zfindexRangeMax;
  */
 #define zfindexRangeZero() _ZFP_zfindexRangeZero
 /**
- * @brief max index range (0, zfindexMax)
+ * @brief max index range (0, zfindexMax())
  */
 #define zfindexRangeMax() _ZFP_zfindexRangeMax
 /**

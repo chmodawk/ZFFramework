@@ -30,7 +30,7 @@ inline CGPoint ZFImpl_sys_iOS_ZFUIKit_ZFUIPointToCGPoint(ZF_IN const ZFUIPoint &
 extern ZF_ENV_EXPORT void ZFImpl_sys_iOS_ZFUIKit_ZFUIPointFromCGPoint(ZF_OUT ZFUIPoint &ret, ZF_IN const CGPoint &cgPoint);
 inline ZFUIPoint ZFImpl_sys_iOS_ZFUIKit_ZFUIPointFromCGPoint(ZF_IN const CGPoint &cgPoint)
 {
-    ZFUIPoint ret = ZFUIPointZero;
+    ZFUIPoint ret = ZFUIPointZero();
     ZFImpl_sys_iOS_ZFUIKit_ZFUIPointFromCGPoint(ret, cgPoint);
     return ret;
 }
@@ -45,7 +45,7 @@ inline CGSize ZFImpl_sys_iOS_ZFUIKit_ZFUISizeToCGSize(ZF_IN const ZFUISize &size
 extern ZF_ENV_EXPORT void ZFImpl_sys_iOS_ZFUIKit_ZFUISizeFromCGSize(ZF_OUT ZFUISize &ret, ZF_IN const CGSize &cgSize);
 inline ZFUISize ZFImpl_sys_iOS_ZFUIKit_ZFUISizeFromCGSize(ZF_IN const CGSize &cgSize)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     ZFImpl_sys_iOS_ZFUIKit_ZFUISizeFromCGSize(ret, cgSize);
     return ret;
 }
@@ -60,7 +60,7 @@ inline CGRect ZFImpl_sys_iOS_ZFUIKit_ZFUIRectToCGRect(ZF_IN const ZFUIRect &rect
 extern ZF_ENV_EXPORT void ZFImpl_sys_iOS_ZFUIKit_ZFUIRectFromCGRect(ZF_OUT ZFUIRect &ret, ZF_IN const CGRect &cgRect);
 inline ZFUIRect ZFImpl_sys_iOS_ZFUIKit_ZFUIRectFromCGRect(ZF_IN const CGRect &cgRect)
 {
-    ZFUIRect ret = ZFUIRectZero;
+    ZFUIRect ret = ZFUIRectZero();
     ZFImpl_sys_iOS_ZFUIKit_ZFUIRectFromCGRect(ret, cgRect);
     return ret;
 }
@@ -75,7 +75,7 @@ inline UIEdgeInsets ZFImpl_sys_iOS_ZFUIKit_ZFUIMarginToUIEdgeInsets(ZF_IN const 
 extern ZF_ENV_EXPORT void ZFImpl_sys_iOS_ZFUIKit_ZFUIMarginFromUIEdgeInsets(ZF_OUT ZFUIMargin &ret, ZF_IN const UIEdgeInsets &edgeInsets);
 inline ZFUIMargin ZFImpl_sys_iOS_ZFUIKit_ZFUIMarginFromUIEdgeInsets(ZF_IN const UIEdgeInsets &edgeInsets)
 {
-    ZFUIMargin ret = ZFUIMarginZero;
+    ZFUIMargin ret = ZFUIMarginZero();
     ZFImpl_sys_iOS_ZFUIKit_ZFUIMarginFromUIEdgeInsets(ret, edgeInsets);
     return ret;
 }

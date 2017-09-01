@@ -52,7 +52,7 @@ void ZFStyleable::styleableCopyFrom(ZF_IN ZFStyleable *anotherStyleable)
     ZFObject *anotherStyleableObject = anotherStyleable->toObject();;
     const ZFProperty *property = zfnull;
 
-    for(zfindex i = holderTmp->normalProperty.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = holderTmp->normalProperty.count() - 1; i != zfindexMax(); --i)
     {
         property = holderTmp->normalProperty[i];
         if(!anotherCls->classIsTypeOf(property->propertyOwnerClass()))
@@ -65,7 +65,7 @@ void ZFStyleable::styleableCopyFrom(ZF_IN ZFStyleable *anotherStyleable)
             this->styleableOnCopyPropertyFrom(anotherStyleable, property, ZFStyleable::PropertyTypeNormal);
         }
     }
-    for(zfindex i = holderTmp->styleableProperty.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = holderTmp->styleableProperty.count() - 1; i != zfindexMax(); --i)
     {
         property = holderTmp->styleableProperty[i];
         if(!anotherCls->classIsTypeOf(property->propertyOwnerClass()))
@@ -78,7 +78,7 @@ void ZFStyleable::styleableCopyFrom(ZF_IN ZFStyleable *anotherStyleable)
             this->styleableOnCopyPropertyFrom(anotherStyleable, property, ZFStyleable::PropertyTypeStyleable);
         }
     }
-    for(zfindex i = holderTmp->copyableProperty.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = holderTmp->copyableProperty.count() - 1; i != zfindexMax(); --i)
     {
         property = holderTmp->copyableProperty[i];
         if(!anotherCls->classIsTypeOf(property->propertyOwnerClass()))

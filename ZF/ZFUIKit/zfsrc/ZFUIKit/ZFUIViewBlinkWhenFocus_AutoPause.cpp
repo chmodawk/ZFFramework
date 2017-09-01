@@ -6,7 +6,7 @@
  * Distributed under MIT license:
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
-#include "ZFUIViewBlinkWhenFocus_AutoPause.h"
+#include "ZFUIViewBlinkWhenFocus.h"
 
 #include "ZFUIWindow.h"
 #include "ZFUISysWindow.h"

@@ -21,7 +21,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                                            ZF_IN const zfchar *fileDescriptor,
-                                                                           ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax,
+                                                                           ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax(),
                                                                            ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
                                                                            ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
 /**
@@ -64,14 +64,14 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN
  */
 ZFMETHOD_FUNC_DECLARE_4(ZFInputCallback, ZFInputCallbackForFileDescriptor,
                         ZFMP_IN(const zfchar *, fileDescriptor),
-                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax()),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
                         ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 
 // ============================================================
 extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                                              ZF_IN const zfchar *fileDescriptor,
-                                                                             ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax,
+                                                                             ZF_IN_OPT zfindex fileDescriptorLen = zfindexMax(),
                                                                              ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create);
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
@@ -108,7 +108,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_
  */
 ZFMETHOD_FUNC_DECLARE_3(ZFOutputCallback, ZFOutputCallbackForFileDescriptor,
                         ZFMP_IN(const zfchar *, fileDescriptor),
-                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                        ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax()),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create))
 
 // ============================================================
@@ -116,14 +116,14 @@ ZFMETHOD_FUNC_DECLARE_3(ZFOutputCallback, ZFOutputCallbackForFileDescriptor,
  * @brief see #ZFFileDescriptorTypeRegister
  */
 typedef ZFInputCallback (*ZFFileDescriptorInputCallbackGetter)(ZF_IN const zfchar *fileDescriptorData,
-                                                               ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                               ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                                ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */);
 /**
  * @brief see #ZFFileDescriptorTypeRegister
  */
 typedef ZFOutputCallback (*ZFFileDescriptorOutputCallbackGetter)(ZF_IN const zfchar *fileDescriptorData,
-                                                                 ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                                 ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                  ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Create */);
 /**
  * @brief register a file descriptor

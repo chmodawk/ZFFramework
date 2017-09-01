@@ -15,9 +15,9 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFJsonEscapeCharImpl_default, ZFJsonEscapeChar, 
 public:
     virtual void jsonEscapeCharEncode(ZF_OUT const ZFOutputCallback &dst,
                                       ZF_IN const zfchar *src,
-                                      ZF_IN_OPT zfindex count = zfindexMax)
+                                      ZF_IN_OPT zfindex count = zfindexMax())
     {
-        for(const zfchar *srcEnd = src + ((count == zfindexMax) ? zfslen(src) : count); src != srcEnd; ++src)
+        for(const zfchar *srcEnd = src + ((count == zfindexMax()) ? zfslen(src) : count); src != srcEnd; ++src)
         {
             if(*src == '\"')
             {
@@ -55,9 +55,9 @@ public:
     }
     virtual void jsonEscapeCharDecode(ZF_OUT const ZFOutputCallback &dst,
                                       ZF_IN const zfchar *src,
-                                      ZF_IN_OPT zfindex count = zfindexMax)
+                                      ZF_IN_OPT zfindex count = zfindexMax())
     {
-        for(const zfchar *srcEnd = src + ((count == zfindexMax) ? zfslen(src) : count); src != srcEnd; ++src)
+        for(const zfchar *srcEnd = src + ((count == zfindexMax()) ? zfslen(src) : count); src != srcEnd; ++src)
         {
             if(*src == '\\' && src + 1 != srcEnd)
             {

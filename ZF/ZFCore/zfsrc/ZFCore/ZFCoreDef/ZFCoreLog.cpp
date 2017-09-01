@@ -34,7 +34,7 @@ zfindex _ZFP_ZFCoreLogOutputCallbackDefault(ZF_IN const zfcharA *s)
 {
     // try to print to std output
     fprintf(stderr, zfTextA("%s"), s);
-    return zfindexMax;
+    return zfindexMax();
 }
 
 void zfCoreLogOutputCallbackSet(ZF_IN_OPT ZFCoreLogOutputCallbackType callback /* = ZFCoreLogOutputCallbackDefault */)

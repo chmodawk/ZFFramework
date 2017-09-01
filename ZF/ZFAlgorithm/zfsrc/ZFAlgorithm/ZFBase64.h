@@ -44,7 +44,7 @@ ZFEXPORT_VAR_READONLY_DECLARE(zfindex, ZFBase64LineBreakPosNone)
  * @brief calculate required size to store result,
  *   ensured big enough but not ensure exactly the same
  *
- * return zfindexMax if error
+ * return zfindexMax() if error
  */
 ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64EncodeCalcSize,
                         ZFMP_IN(zfindex, srcLen),
@@ -55,7 +55,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64EncodeCalcSize,
  */
 extern ZF_ENV_EXPORT zfbool ZFBase64Encode(ZF_OUT zfchar *buf,
                                            ZF_IN const void *src,
-                                           ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                           ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                            ZF_OUT_OPT zfindex *outResultSize = zfnull,
                                            ZF_IN_OPT const zfchar *table = ZFBase64TableDefault(),
                                            ZF_IN_OPT zfchar pad = ZFBase64PadDefault(),
@@ -77,7 +77,7 @@ ZFMETHOD_FUNC_DECLARE_6(zfbool, ZFBase64Encode,
  * @brief calculate required size to store result,
  *   ensured big enough but not ensure exactly the same
  *
- * return zfindexMax if error
+ * return zfindexMax() if error
  */
 ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64DecodeCalcSize,
                         ZFMP_IN(zfindex, srcLen),
@@ -90,7 +90,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfindex, ZFBase64DecodeCalcSize,
  */
 extern ZF_ENV_EXPORT zfbool ZFBase64Decode(ZF_OUT void *buf,
                                            ZF_IN const zfchar *src,
-                                           ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                           ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                            ZF_OUT_OPT zfindex *outResultSize = zfnull,
                                            ZF_IN_OPT const zfchar *table = ZFBase64TableDefault(),
                                            ZF_IN_OPT zfchar pad = ZFBase64PadDefault());
@@ -130,7 +130,7 @@ public:
     /** @brief see #ZFBase64Encode */
     virtual inline zfbool base64Encode(ZF_OUT zfchar *buf,
                                        ZF_IN const void *src,
-                                       ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                       ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                        ZF_OUT_OPT zfindex *outResultSize = zfnull)
     {
         return ZFBase64Encode(buf, src, srcLen, outResultSize, this->base64Table(), this->base64Pad(), this->base64LineBreakPos());
@@ -152,7 +152,7 @@ public:
     /** @brief see #ZFBase64Decode */
     virtual inline zfbool base64Decode(ZF_OUT void *buf,
                                        ZF_IN const zfchar *src,
-                                       ZF_IN_OPT zfindex srcLen = zfindexMax,
+                                       ZF_IN_OPT zfindex srcLen = zfindexMax(),
                                        ZF_OUT_OPT zfindex *outResultSize = zfnull)
     {
         return ZFBase64Decode(buf, src, srcLen, outResultSize, this->base64Table(), this->base64Pad());

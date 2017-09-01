@@ -16,11 +16,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
                       ZF_IN zfindex tokenCount,
                       ZF_IN const zfchar *toCompare,
-                      ZF_IN_OPT zfindex toCompareLength /* = zfindexMax */)
+                      ZF_IN_OPT zfindex toCompareLength /* = zfindexMax() */)
 {
     if(toCompare == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
 
     zfindex tmpLen = 0;
@@ -32,7 +32,7 @@ zfindex zfsCheckMatch(ZF_IN const zfchar **tokens,
             return i;
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 
 ZF_NAMESPACE_GLOBAL_END

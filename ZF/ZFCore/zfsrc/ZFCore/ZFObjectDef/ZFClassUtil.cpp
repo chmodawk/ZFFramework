@@ -103,7 +103,7 @@ zfbool allPropertyIsEqual(ZF_IN ZFObject *obj0,
     const ZFClass *cls1 = obj1->classData();
 
     ZFCoreArrayPOD<const ZFProperty *> allProperty = ZFClassUtil::allProperty(cls0, filter);
-    for(zfindex i = allProperty.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = allProperty.count() - 1; i != zfindexMax(); --i)
     {
         if(cls1->classIsTypeOf(allProperty[i]->propertyOwnerClass())
             && allProperty[i]->callbackCompare(allProperty[i], obj0, obj1) != ZFCompareTheSame)
@@ -117,7 +117,7 @@ zfbool allPropertyIsEqual(ZF_IN ZFObject *obj0,
 
 void objectPropertyInfo(ZF_IN_OUT zfstring &ret,
                         ZF_IN ZFObject *obj,
-                        ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
+                        ZF_IN_OPT zfindex maxCount /* = zfindexMax() */,
                         ZF_IN_OPT const ZFTokenForKeyValueContainer &token /* = ZFTokenForKeyValueContainerDefault() */)
 {
     if(obj == zfnull)
@@ -210,8 +210,8 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_2(ZFClassUtil, ZFCoreArrayPOD<const
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_3(ZFClassUtil, void, allProperty, ZFMP_OUT(ZFCoreArray<const ZFProperty *> &, ret), ZFMP_IN(const ZFClass *, cls), ZFMP_IN_OPT(const ZFFilterForZFProperty *, filter, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_2(ZFClassUtil, ZFCoreArrayPOD<const ZFProperty *>, allProperty, ZFMP_IN(const ZFClass *, cls), ZFMP_IN_OPT(const ZFFilterForZFProperty *, filter, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_3(ZFClassUtil, zfbool, allPropertyIsEqual, ZFMP_IN(ZFObject *, obj0), ZFMP_IN(ZFObject *, obj1), ZFMP_IN_OPT(const ZFFilterForZFProperty *, filter, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_4(ZFClassUtil, void, objectPropertyInfo, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(ZFObject *, obj), ZFMP_IN_OPT(zfindex, maxCount, zfindexMax), ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_3(ZFClassUtil, zfstring, objectPropertyInfo, ZFMP_IN(ZFObject *, obj), ZFMP_IN_OPT(zfindex, maxCount, zfindexMax), ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_4(ZFClassUtil, void, objectPropertyInfo, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(ZFObject *, obj), ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()), ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_3(ZFClassUtil, zfstring, objectPropertyInfo, ZFMP_IN(ZFObject *, obj), ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()), ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_2(ZFClassUtil, void, objectInfoT, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(ZFObject *, obj))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_WITH_NS_1(ZFClassUtil, zfstring, objectInfo, ZFMP_IN(ZFObject *, obj))
 

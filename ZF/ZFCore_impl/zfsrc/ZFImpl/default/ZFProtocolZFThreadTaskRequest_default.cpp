@@ -29,7 +29,7 @@ public:
             ZFThreadExecuteInMainThread(mainThreadCallback, userData);
         })
         ZFThreadExecuteInNewThread(threadCallback,
-            zflineAllocWithoutLeakTest(ZFListenerHolder, task, ZFListenerData(zfidentityInvalid, zfnull, param0, param1)));
+            zflineAllocWithoutLeakTest(ZFListenerHolder, task, ZFListenerData(zfidentityInvalid(), zfnull, param0, param1)));
     }
 ZFPROTOCOL_IMPLEMENTATION_END(ZFThreadTaskRequestImpl_default)
 ZFPROTOCOL_IMPLEMENTATION_REGISTER(ZFThreadTaskRequestImpl_default)

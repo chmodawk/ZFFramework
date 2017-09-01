@@ -70,7 +70,7 @@ public:
     /**
      * @brief button background's layout margin, #ZFUIMarginZero by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIMargin, buttonBackgroundMargin, ZFPropertyInitValue(ZFUIMarginZero))
+    ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIMargin, buttonBackgroundMargin, ZFPropertyInitValue(ZFUIMarginZero()))
 
     // ============================================================
     // label

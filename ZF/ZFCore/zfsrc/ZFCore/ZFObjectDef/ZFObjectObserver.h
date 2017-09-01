@@ -53,7 +53,7 @@ public:
      * @brief main constructor
      */
     ZFListenerData(void)
-    : eventId(zfidentityInvalid)
+    : eventId(zfidentityInvalid())
     , sender(zfnull)
     , param0(zfnull)
     , param1(zfnull)
@@ -184,7 +184,7 @@ zffinal zfclassLikePOD ZF_ENV_EXPORT ZFObserverAddParam
     ZFCORE_PARAM_DECLARE_SELF(ZFObserverAddParam)
 
     /** @brief see #ZFObject::observerNotify */
-    ZFCORE_PARAM_WITH_INIT(zfidentity, eventId, zfidentityInvalid)
+    ZFCORE_PARAM_WITH_INIT(zfidentity, eventId, zfidentityInvalid())
 
     /** @brief see #ZFObject::observerNotify */
     ZFCORE_PARAM(ZFListener, observer)
@@ -323,7 +323,7 @@ inline const zfchar *ZFObserverEventGetName(ZF_IN const zfidentity &eventId)
 /**
  * @brief see #ZFOBSERVER_EVENT
  *
- * get event id from name, or zfidentityInvalid if no such event name
+ * get event id from name, or #zfidentityInvalid if no such event name
  * @note can be found only if accessed or registered by #ZFOBSERVER_EVENT_REGISTER
  */
 inline zfidentity ZFObserverEventGetId(ZF_IN const zfchar *name)

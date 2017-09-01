@@ -38,9 +38,9 @@ public:
     : aniTarget(zfnull)
     , aniRunning(zffalse)
     , aniDelaying(zffalse)
-    , aniDelayTaskId(zfidentityInvalid)
-    , aniDelayThreadId(zfidentityInvalid)
-    , aniDummyThreadId(zfidentityInvalid)
+    , aniDelayTaskId(zfidentityInvalid())
+    , aniDelayThreadId(zfidentityInvalid())
+    , aniDummyThreadId(zfidentityInvalid())
     , aniStopCalled(zffalse)
     , aniStoppedByUser(zffalse)
     , aniIdGenerator()
@@ -239,7 +239,7 @@ void ZFAnimation::_ZFP_ZFAnimation_aniReadyStop(void)
 }
 void ZFAnimation::_ZFP_ZFAnimation_aniDummyNotifyStop(void)
 {
-    d->aniDummyThreadId = zfidentityInvalid;
+    d->aniDummyThreadId = zfidentityInvalid();
     this->aniImplNotifyStop();
 }
 void ZFAnimation::aniImplDelay(void)

@@ -550,7 +550,7 @@ public:
     /**
      * @brief how many attributes before add new line, 3 by default
      *
-     * e.g. if zfindexMax, never add new line,
+     * e.g. if zfindexMax(), never add new line,
      * if 0, add before every attributes,
      * if 1, add before every attributes except first one
      */
@@ -633,7 +633,7 @@ ZFMETHOD_FUNC_DECLARE_1(ZFXmlItem, ZFXmlItemFromInput,
  */
 ZFMETHOD_FUNC_DECLARE_2(ZFXmlItem, ZFXmlItemFromString,
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, size, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, size, zfindexMax()))
 /**
  * @brief util method to parse and get first element, or return an item with null type if fail
  */
@@ -644,7 +644,7 @@ ZFMETHOD_FUNC_DECLARE_1(ZFXmlItem, ZFXmlParseFirstElement,
  */
 ZFMETHOD_FUNC_DECLARE_2(ZFXmlItem, ZFXmlParseFirstElement,
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, size, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, size, zfindexMax()))
 
 // ============================================================
 /**
@@ -691,14 +691,14 @@ ZFMETHOD_FUNC_DECLARE_2(zfstring, ZFXmlItemToString,
 ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharEncode,
                         ZFMP_OUT(zfstring &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 /**
  * @brief see #ZFXmlEscapeCharEncode
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharEncode,
                         ZFMP_OUT(const ZFOutputCallback &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 
 /**
  * @brief see #ZFXmlEscapeCharEncode
@@ -706,14 +706,14 @@ ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharEncode,
 ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharDecode,
                         ZFMP_OUT(zfstring &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 /**
  * @brief see #ZFXmlEscapeCharEncode
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlEscapeCharDecode,
                         ZFMP_OUT(const ZFOutputCallback &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFXml_h_

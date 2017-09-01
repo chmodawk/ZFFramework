@@ -141,7 +141,7 @@ zfbool ZFSerializable::serializeFromData(ZF_IN const ZFSerializableData &seriali
             }
 
             zfautoObject styleableObj = ZFObjectCreate(styleableType, styleableData);
-            if(styleableObj == zfautoObjectNull)
+            if(styleableObj == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                     zfText("failed to create object from \"%s\" \"%s\""), styleableType, styleableData);
@@ -310,7 +310,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
         else if(this->serializableStyleableTypeGet() != zfnull || this->serializableStyleableDataGet() != zfnull)
         { // styleable logic
             zfautoObject styleableObj = ZFObjectCreate(this->serializableStyleableTypeGet(), this->serializableStyleableDataGet());
-            if(styleableObj == zfautoObjectNull)
+            if(styleableObj == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint,
                     zfText("failed to create object from \"%s\" \"%s\""),
@@ -407,7 +407,7 @@ _ZFP_I_ZFSerializablePropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_get
             allClass.add(tmpCls);
             do
             {
-                for(zfindex i = tmpCls->implementedInterfaceCount() - 1; i != zfindexMax; --i)
+                for(zfindex i = tmpCls->implementedInterfaceCount() - 1; i != zfindexMax(); --i)
                 {
                     allClass.add(tmpCls->implementedInterfaceAtIndex(i));
                 }
@@ -417,7 +417,7 @@ _ZFP_I_ZFSerializablePropertyTypeHolder *ZFSerializable::_ZFP_ZFSerializable_get
                 }
                 tmpCls = tmpCls->parentClass();
             } while(tmpCls != zfnull);
-            for(zfindex i = allClass.count() - 1; i != zfindexMax; --i)
+            for(zfindex i = allClass.count() - 1; i != zfindexMax(); --i)
             {
                 tmpCls = allClass[i];
                 for(zfindex iProperty = 0; iProperty < tmpCls->propertyCount(); ++iProperty)
@@ -535,7 +535,7 @@ zfbool ZFSerializable::serializableOnSerializePropertyFromData(ZF_IN const ZFSer
         {
             return zffalse;
         }
-        if(obj != zfautoObjectNull && !obj.toObject()->classData()->classIsTypeOf(property->propertyClassOfRetainProperty()))
+        if(obj != zfautoObjectNull() && !obj.toObject()->classData()->classIsTypeOf(property->propertyClassOfRetainProperty()))
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, propertyData,
                 zfText("object %s not type of %s"),
@@ -817,7 +817,7 @@ zfbool ZFObjectIsSerializable(ZF_IN ZFObject *obj)
 // ============================================================
 zfbool ZFObjectFromString(ZF_OUT zfautoObject &result,
                           ZF_IN const zfchar *encodedData,
-                          ZF_IN_OPT zfindex encodedDataLen /* = zfindexMax */,
+                          ZF_IN_OPT zfindex encodedDataLen /* = zfindexMax() */,
                           ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
 {
     ZFSerializableData serializableData;
@@ -828,7 +828,7 @@ zfbool ZFObjectFromString(ZF_OUT zfautoObject &result,
     return ZFObjectFromSerializableData(result, serializableData, outErrorHint);
 }
 zfautoObject ZFObjectFromString(ZF_IN const zfchar *encodedData,
-                                ZF_IN_OPT zfindex encodedDataLen /* = zfindexMax */,
+                                ZF_IN_OPT zfindex encodedDataLen /* = zfindexMax() */,
                                 ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
 {
     zfautoObject result;
@@ -885,7 +885,7 @@ zfbool ZFObjectFromSerializableData(ZF_OUT zfautoObject &result,
                                     ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
                                     ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
 {
-    result = zfautoObjectNull;
+    result = zfautoObjectNull();
 
     const zfchar *serializableClass = ZFSerializableUtil::requireSerializableClass(ZFPropertyTypeId_none, serializableData, outErrorHint, outErrorPos);
     if(serializableClass == zfnull)
@@ -1024,8 +1024,8 @@ ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFSerializable, void, serializableSty
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFSerializable, const zfchar *, serializableStyleableDataGet)
 
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(zfbool, ZFObjectIsSerializable, ZFMP_IN(ZFObject *, obj))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromString, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromString, ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromString, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax()), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromString, ZFMP_IN(const zfchar *, encodedData), ZFMP_IN_OPT(zfindex, encodedDataLen, zfindexMax()), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectFromInput, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfautoObject, ZFObjectFromInput, ZFMP_IN(const ZFInputCallback &, input), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToString, ZFMP_OUT(zfstring &, encodedData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))

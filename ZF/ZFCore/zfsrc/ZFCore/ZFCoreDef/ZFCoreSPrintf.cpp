@@ -11,15 +11,15 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-#define _ZFP_zfstringAppendPrecisionNone (zfindexMax - 1)
+#define _ZFP_zfstringAppendPrecisionNone (zfindexMax() - 1)
 #define _ZFP_zfstringAppendFlag_alignLeft 1
 #define _ZFP_zfstringAppendFlag_leadingZero 2
 zfclassLikePOD ZF_ENV_EXPORT _ZFP_zfstringAppendFlag
 {
 public:
     zfflags flags;
-    zfindex width; // zfindexMax to scan from vaList
-    zfindex precision; // zfindexMax to scan from vaList,
+    zfindex width; // zfindexMax() to scan from vaList
+    zfindex precision; // zfindexMax() to scan from vaList,
                        // or _ZFP_zfstringAppendPrecisionNone if none
     zfcharA positiveToken; // "+" or "-" or " ", or '\0' if none
     zfbool success;
@@ -249,7 +249,7 @@ void _ZFP_zfstringAppendT(ZF_OUT T_Str &s,
         if(flags.precision != _ZFP_zfstringAppendPrecisionNone)
         {
             zfindex pos = zfstringFind(tmp, '.');
-            if(pos != zfindexMax)
+            if(pos != zfindexMax())
             {
                 zfindex decimalLen = tmp.length() - pos - 1;
                 if(decimalLen > flags.precision)

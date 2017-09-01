@@ -221,7 +221,7 @@ public:
      */
     ZFMETHOD_DECLARE_0(ZFRegExpOptionFlags, regExpFlag);
     /**
-     * @brief get named group's number which can be used as "$n" while #regExpReplace, or zfindexMax if no such group
+     * @brief get named group's number which can be used as "$n" while #regExpReplace, or zfindexMax() if no such group
      */
     ZFMETHOD_DECLARE_1(zfindex, regExpNamedGroupIndexForName, ZFMP_IN(const zfchar *, name));
 
@@ -239,14 +239,14 @@ public:
     ZFMETHOD_DECLARE_3(void, regExpMatch,
                        ZFMP_OUT(ZFRegExpResult &, result),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax));
+                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()));
     /**
      * @brief test the src which must match the pattern exactly, see #regExpMatch
      */
     ZFMETHOD_DECLARE_3(void, regExpMatchExact,
                        ZFMP_OUT(ZFRegExpResult &, result),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax));
+                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()));
 
     /**
      * @brief replace src with this pattern and replacePattern
@@ -256,8 +256,8 @@ public:
                        ZFMP_OUT(ZFRegExpResult &, result),
                        ZFMP_IN(const zfchar *, src),
                        ZFMP_IN(const zfchar *, replacePattern),
-                       ZFMP_IN_OPT(zfindex, maxReplaceCount, zfindexMax),
-                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax));
+                       ZFMP_IN_OPT(zfindex, maxReplaceCount, zfindexMax()),
+                       ZFMP_IN_OPT(zfindex, srcLength, zfindexMax()));
 
 private:
     _ZFP_ZFRegExpPrivate *d;

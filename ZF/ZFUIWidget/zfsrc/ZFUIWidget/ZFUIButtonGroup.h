@@ -97,7 +97,7 @@ public:
      */
     virtual zfindex buttonCount(void);
     /**
-     * @brief find the button's index or return zfindexMax if not exist
+     * @brief find the button's index or return zfindexMax() if not exist
      */
     virtual zfindex buttonFind(ZF_IN ZFUIButton *button);
     /**
@@ -111,7 +111,7 @@ public:
      * before #buttonOnAdd
      */
     virtual void buttonAdd(ZF_IN ZFUIButton *button,
-                           ZF_IN_OPT zfindex atIndex = zfindexMax);
+                           ZF_IN_OPT zfindex atIndex = zfindexMax());
     /**
      * @brief remove button or do nothing if not in this button group
      *
@@ -225,9 +225,9 @@ public:
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfbool, buttonTabAllowUnchecked);
 
     /**
-     * @brief for #ZFUIButtonGroupType::e_Tab type only, the checked tab index, zfindexMax by default
+     * @brief for #ZFUIButtonGroupType::e_Tab type only, the checked tab index, zfindexMax() by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, buttonTabChecked, ZFPropertyInitValue(zfindexMax))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, buttonTabChecked, ZFPropertyInitValue(zfindexMax()))
     ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(zfindex, buttonTabChecked);
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfindex, buttonTabChecked);
 

@@ -38,28 +38,28 @@ ZFMETHOD_FUNC_DECLARE_INLINE_1(ZFUIColor, ZFUIColorRandom,
 /** @brief 0x00000000 */
 #define ZFUIColorTransparent() ZFUIColorZero()
 /** @brief 0xFF000000 */
-#define ZFUIColorBlack() ZFUIColorMake(0xFF000000)
+#define ZFUIColorBlack() ZFUIColor(0xFF000000)
 /** @brief 0xFF555555 */
-#define ZFUIColorGrayDark() ZFUIColorMake(0xFF555555)
+#define ZFUIColorGrayDark() ZFUIColor(0xFF555555)
 /** @brief 0xFF808080 */
-#define ZFUIColorGray() ZFUIColorMake(0xFF808080)
+#define ZFUIColorGray() ZFUIColor(0xFF808080)
 /** @brief 0xFFAAAAAA */
-#define ZFUIColorGrayLight() ZFUIColorMake(0xFFAAAAAA)
+#define ZFUIColorGrayLight() ZFUIColor(0xFFAAAAAA)
 /** @brief 0xFFFFFFFF */
-#define ZFUIColorWhite() ZFUIColorMake(0xFFFFFFFF)
+#define ZFUIColorWhite() ZFUIColor(0xFFFFFFFF)
 
 /** @brief 0xFFFF0000 */
-#define ZFUIColorRed() ZFUIColorMake(0xFFFF0000)
+#define ZFUIColorRed() ZFUIColor(0xFFFF0000)
 /** @brief 0xFF00FF00 */
-#define ZFUIColorGreen() ZFUIColorMake(0xFF00FF00)
+#define ZFUIColorGreen() ZFUIColor(0xFF00FF00)
 /** @brief 0xFF0000FF */
-#define ZFUIColorBlue() ZFUIColorMake(0xFF0000FF)
+#define ZFUIColorBlue() ZFUIColor(0xFF0000FF)
 /** @brief 0xFFFFFF00 */
-#define ZFUIColorYellow() ZFUIColorMake(0xFFFFFF00)
+#define ZFUIColorYellow() ZFUIColor(0xFFFFFF00)
 /** @brief 0xFFFF00FF */
-#define ZFUIColorMagenta() ZFUIColorMake(0xFFFF00FF)
+#define ZFUIColorMagenta() ZFUIColor(0xFFFF00FF)
 /** @brief 0xFF00FFFF */
-#define ZFUIColorCyan() ZFUIColorMake(0xFF00FFFF)
+#define ZFUIColorCyan() ZFUIColor(0xFF00FFFF)
 
 // ============================================================
 // web colors

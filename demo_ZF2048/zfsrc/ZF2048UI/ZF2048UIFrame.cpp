@@ -63,9 +63,9 @@ public:
     , blockBackgrounds(zfnull)
     , dataWidth(0)
     , dataHeight(0)
-    , cachedBlockFrame(ZFUIRectZero)
+    , cachedBlockFrame(ZFUIRectZero())
     , cachedBlockSize(0)
-    , mouseDownPoint(ZFUIPointZero)
+    , mouseDownPoint(ZFUIPointZero())
     {
     }
 };
@@ -131,7 +131,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
             {
                 block = d->blocksHolder->get<ZF2048UIBlock *>(blockCount);
                 ++blockCount;
-                this->childMove(block, zfindexMax);
+                this->childMove(block, zfindexMax());
             }
             else
             {
@@ -324,7 +324,7 @@ void ZF2048UIFrame::viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent)
 
 ZF_GLOBAL_INITIALIZER_INIT(ZF2048UIFrame_ignoreFrom_ZFUIViewBlinkWhenFocus)
 {
-    ZFUIViewBlinkWhenFocusFilter.classFilter.filterAdd(ZF2048UIFrame::ClassData());
+    ZFUIViewBlinkWhenFocusFilter().classFilter.filterAdd(ZF2048UIFrame::ClassData());
 }
 ZF_GLOBAL_INITIALIZER_END(ZF2048UIFrame_ignoreFrom_ZFUIViewBlinkWhenFocus)
 

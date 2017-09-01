@@ -103,7 +103,7 @@ private:
 /**
  * @brief calculate identity from string
  */
-extern ZF_ENV_EXPORT zfidentity zfidentityCalcString(ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax);
+extern ZF_ENV_EXPORT zfidentity zfidentityCalcString(ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax());
 /**
  * @brief calculate identity from raw buffer
  */

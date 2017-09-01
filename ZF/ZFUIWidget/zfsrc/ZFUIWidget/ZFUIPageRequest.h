@@ -58,7 +58,25 @@ public:
      * if true, #ZFUIPageManager::requestPageResume would be called automatically after page created
      */
     ZFCORE_PARAM_WITH_INIT(zfbool, pageAutoResume, zftrue)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN const ZFUIPageRequestPageCreateParam &ref) const
+    {
+        return (zftrue
+                && this->pageClass() == ref.pageClass()
+                && this->pageCreateParam() == ref.pageCreateParam()
+                && this->pageAutoResume() == ref.pageAutoResume()
+            );
+    }
+    zfbool operator != (ZF_IN const ZFUIPageRequestPageCreateParam &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFUIPageRequestPageCreateParam, ZFUIPageRequestPageCreateParam)
+
 /**
  * @brief request for #ZFUIPageManager::requestPageCreate
  */

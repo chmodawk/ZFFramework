@@ -75,7 +75,7 @@ public:
      */
     zffinal void objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
                                       ZF_IN typename ZFCoreInfoGetter<T_POD>::InfoGetter elementInfoGetter,
-                                      ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                      ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                       ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault()) const
     {
         zfindex count = 0;
@@ -113,7 +113,7 @@ public:
     }
     /** @brief see #objectInfoOfContentT */
     zffinal zfstring objectInfoOfContent(ZF_IN typename ZFCoreInfoGetter<T_POD>::InfoGetter elementInfoGetter,
-                                         ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                         ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                          ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault()) const
     {
         zfstring ret;

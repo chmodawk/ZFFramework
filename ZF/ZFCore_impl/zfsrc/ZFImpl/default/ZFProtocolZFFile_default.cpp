@@ -381,7 +381,7 @@ private:
     {
         zfstring pathTmp = path;
         zfindex indexL = zfstringFindReversely(pathTmp, pathTmp.length(), &ZFFile::fileSeparator, 1);
-        if(indexL == zfindexMax)
+        if(indexL == zfindexMax())
         {
             if(!excludeLastLevel)
             {
@@ -416,17 +416,17 @@ private:
                 break;
             }
             dirToMake.add(pathTmp);
-            if(indexL == zfindexMax)
+            if(indexL == zfindexMax())
             {
                 break;
             }
             indexL = zfstringFindReversely(pathTmp, pathTmp.length(), &ZFFile::fileSeparator, 1);
-            if(indexL != zfindexMax)
+            if(indexL != zfindexMax())
             {
                 pathTmp.remove(indexL);
             }
         } while(zftrue);
-        for(zfindex i = dirToMake.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = dirToMake.count() - 1; i != zfindexMax(); --i)
         {
             if(!this->makeDir(dirToMake[i], errPos))
             {

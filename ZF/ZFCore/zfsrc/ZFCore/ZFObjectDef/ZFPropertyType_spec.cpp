@@ -29,7 +29,7 @@ ZF_STATIC_REGISTER_END(PropTIReg_ZFObject)
 ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFCallerInfo, ZFCallerInfoHolder, {
         zfindexRange pos[3] = {0};
         const zfchar *p = src;
-        const zfchar *pEnd = src + ((srcLen == zfindexMax) ? zfslen(src) : srcLen);
+        const zfchar *pEnd = src + ((srcLen == zfindexMax()) ? zfslen(src) : srcLen);
 
         zfcharSkipSpace(p, pEnd);
         if(p >= pEnd)

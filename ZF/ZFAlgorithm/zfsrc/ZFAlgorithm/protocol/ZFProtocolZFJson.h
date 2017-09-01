@@ -27,7 +27,7 @@ public:
      * @brief parse json
      */
     virtual ZFJsonItem jsonParse(ZF_IN const zfchar *src,
-                                 ZF_IN_OPT zfindex size = zfindexMax) zfpurevirtual;
+                                 ZF_IN_OPT zfindex size = zfindexMax()) zfpurevirtual;
     /**
      * @brief parse json
      */

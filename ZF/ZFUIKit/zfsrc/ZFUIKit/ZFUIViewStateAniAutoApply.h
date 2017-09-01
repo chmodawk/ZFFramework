@@ -22,7 +22,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief whether auto start #ZFUIViewStateAniAutoApplyStart, false by default
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewStateAniAutoApply;
+ZFEXPORT_VAR_DECLARE(zfbool, ZFUIViewStateAniAutoApply)
 
 /**
  * @brief automatically invoke #ZFUIViewStateAniStart when #ZFUIView::EventViewLayoutOnLayoutRequest
@@ -31,26 +31,26 @@ extern ZF_ENV_EXPORT zfbool ZFUIViewStateAniAutoApply;
  *   which may cause strange behavior as well as performance issue,
  *   use only when fully tested
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyStart(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniAutoApplyStart)
 /**
  * @brief see #ZFUIViewStateAniAutoApplyStart
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyStop(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniAutoApplyStop)
 /**
  * @brief see #ZFUIViewStateAniAutoApplyStart
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewStateAniAutoApplyStarted(void);
+ZFMETHOD_FUNC_DECLARE_0(zfbool, ZFUIViewStateAniAutoApplyStarted)
 
 /**
  * @brief temporary pause the #ZFUIViewStateAniAutoApplyStart
  *
  * can be called more than one time, but must be paired with #ZFUIViewStateAniAutoApplyResume
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyPause(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniAutoApplyPause)
 /** @brief see #ZFUIViewStateAniAutoApplyPause */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyResume(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniAutoApplyResume)
 /** @brief see #ZFUIViewStateAniAutoApplyPause */
-extern ZF_ENV_EXPORT zfindex ZFUIViewStateAniAutoApplyPaused(void);
+ZFMETHOD_FUNC_DECLARE_0(zfindex, ZFUIViewStateAniAutoApplyPaused)
 
 // ============================================================
 ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
@@ -92,14 +92,15 @@ ZF_NAMESPACE_END(ZFGlobalEvent)
  *
  * the task would be scheduled and run in future even if time is 0
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyPauseForTime(ZF_IN zftimet time = zftimetZero);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIViewStateAniAutoApplyPauseForTime,
+                        ZFMP_IN_OPT(zftimet, time, zftimetZero()))
 /**
  * @brief cancel #ZFUIViewStateAniAutoApplyPauseForTime
  *
  * typically you should not call this method manually,
  * which would cancel all the task that started by #ZFUIViewStateAniAutoApplyPauseForTime
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniAutoApplyPauseForTimeCancel(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniAutoApplyPauseForTimeCancel)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIViewStateAniAutoApply_h_

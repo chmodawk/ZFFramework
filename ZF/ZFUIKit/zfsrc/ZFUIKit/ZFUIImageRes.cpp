@@ -15,20 +15,20 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageRes,
 {
     if(resPath == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageRes:%s"), resPath);
     zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
-    if(cached != zfautoObjectNull)
+    if(cached != zfautoObjectNull())
     {
         return cached;
     }
 
     cached = ZFUIImageLoadFromInput(ZFInputCallbackForResFile(resPath));
-    if(cached == zfautoObjectNull)
+    if(cached == zfautoObjectNull())
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
     return cached;
@@ -39,12 +39,12 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
 {
     if(resPath == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageRes:%s"), resPath);
     zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
-    if(cached != zfautoObjectNull)
+    if(cached != zfautoObjectNull())
     {
         return cached;
     }
@@ -52,13 +52,13 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
     ZFSerializableData data;
     if(!ZFXmlParse(data, ZFInputCallbackForResFile(resPath)))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     cached = ZFObjectFromSerializableData(data);
-    if(cached == zfautoObjectNull || !cached.toObject()->classData()->classIsSubclassOf(ZFUIImage::ClassData()))
+    if(cached == zfautoObjectNull() || !cached.toObject()->classData()->classIsSubclassOf(ZFUIImage::ClassData()))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
     return cached;

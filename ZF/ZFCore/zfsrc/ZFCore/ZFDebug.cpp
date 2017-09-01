@@ -25,7 +25,7 @@ static zfindex _ZFP_ZFDebugWrappedZFCoreLog(ZF_IN const zfcharA *s)
         // try to print to std output
         fprintf(stderr, zfTextA("%s"), s);
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFDebugDataHolder, ZFLevelZFFrameworkEssential)
 {
@@ -231,7 +231,7 @@ public:
         if(session._ZFP_ZFDebugSession_d->enableFlagCount <= 0
             || !ZFDebugLevelIsActive(session._ZFP_ZFDebugSession_d->debugLevel))
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         if(this->firstTimeOutput)
         {
@@ -251,7 +251,7 @@ public:
         return count;
     }
 public:
-    void doOutput(ZF_IN const void *src, ZF_IN_OPT zfindex count = zfindexMax)
+    void doOutput(ZF_IN const void *src, ZF_IN_OPT zfindex count = zfindexMax())
     {
         for(zfindex i = 0; i < session._ZFP_ZFDebugSession_d->callbacks.count(); ++i)
         {

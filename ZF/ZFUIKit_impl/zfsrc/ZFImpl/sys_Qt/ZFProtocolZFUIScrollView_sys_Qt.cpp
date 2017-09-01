@@ -367,7 +367,7 @@ public:
     QWidget *_ZFP_findFgView(ZF_IN zfint x, ZF_IN zfint y)
     {
         ZFCoreArrayPOD<ZFUIView *> fgViews = _ZFP_ownerZFUIScrollView->internalForegroundViewArray();
-        for(zfindex i = fgViews.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = fgViews.count() - 1; i != zfindexMax(); --i)
         {
             QWidget *t = ZFCastStatic(QWidget *, fgViews[i]->nativeView());
             if(t->isEnabled() && t->geometry().contains(x, y))
@@ -411,7 +411,7 @@ public:
         --beforeIndex;
         x -= _ZFP_scrollViewContentView->geometry().x();
         y -= _ZFP_scrollViewContentView->geometry().y();
-        for( ; beforeIndex != zfindexMax; --beforeIndex)
+        for( ; beforeIndex != zfindexMax(); --beforeIndex)
         {
             QWidget *t = _ZFP_scrollViewContentViewLayoutProxy->itemAt(beforeIndex)->widget();
             if(t->isEnabled() && t->geometry().contains(x, y))
@@ -439,7 +439,7 @@ public:
                     return &(qobject_cast<_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *>(innerChild)->_ZFP_scrollViewImplHelper);
                 }
             }
-        } while(beforeIndex != zfindexMax);
+        } while(beforeIndex != zfindexMax());
         return zfnull;
     }
     virtual void findTouchedChildScrollViewCleanup(ZF_IN void *nativeChild)
@@ -469,7 +469,7 @@ public:
                 }
                 return t;
             }
-        } while(beforeIndex != zfindexMax);
+        } while(beforeIndex != zfindexMax());
         return zfnull;
     }
     virtual void findTouchedChildCleanup(ZF_IN void *nativeChild)

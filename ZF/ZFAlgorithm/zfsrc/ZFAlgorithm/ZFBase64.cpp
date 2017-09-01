@@ -13,7 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFEXPORT_VAR_READONLY_DEFINE(const zfchar *, ZFBase64TableDefault, zfText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"))
 ZFEXPORT_VAR_READONLY_DEFINE(zfchar, ZFBase64PadDefault, '=')
 ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosStandard, 76)
-ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosNone, zfindexMax)
+ZFEXPORT_VAR_READONLY_DEFINE(zfindex, ZFBase64LineBreakPosNone, zfindexMax())
 
 // ============================================================
 // encode
@@ -21,9 +21,9 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFBase64EncodeCalcSize,
                        ZFMP_IN(zfindex, srcLen),
                        ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 {
-    if(srcLen == zfindexMax)
+    if(srcLen == zfindexMax())
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     srcLen = ((srcLen * 4) + 2) / 3;
     if(lineBreakPos != ZFBase64LineBreakPosNone() && srcLen > 0)
@@ -35,7 +35,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFBase64EncodeCalcSize,
 
 zfbool ZFBase64Encode(ZF_OUT zfchar *buf,
                       ZF_IN const void *src,
-                      ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                      ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                       ZF_OUT_OPT zfindex *outResultSize /* = zfnull */,
                       ZF_IN_OPT const zfchar *table /* = ZFBase64TableDefault() */,
                       ZF_IN_OPT zfchar pad /* = ZFBase64PadDefault() */,
@@ -126,15 +126,15 @@ ZFMETHOD_FUNC_DEFINE_2(zfindex, ZFBase64DecodeCalcSize,
                        ZFMP_IN(zfindex, srcLen),
                        ZFMP_IN_OPT(zfindex, lineBreakPos, ZFBase64LineBreakPosNone()))
 {
-    if(srcLen == zfindexMax)
+    if(srcLen == zfindexMax())
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return (srcLen * 3 / 4);
 }
 zfbool ZFBase64Decode(ZF_OUT void *buf,
                       ZF_IN const zfchar *src,
-                      ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                      ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                       ZF_OUT_OPT zfindex *outResultSize /* = zfnull */,
                       ZF_IN_OPT const zfchar *table /* = ZFBase64TableDefault() */,
                       ZF_IN_OPT zfchar pad /* = ZFBase64PadDefault() */)

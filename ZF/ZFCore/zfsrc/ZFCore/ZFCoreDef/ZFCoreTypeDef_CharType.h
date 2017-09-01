@@ -259,7 +259,7 @@ inline zfint _ZFP_zfscmpA(const zfcharA *s1, const zfcharA *s2)
 extern ZF_ENV_EXPORT zfint _ZFP_zfsicmpA(const zfcharA *s1, const zfcharA *s2);
 inline zfint _ZFP_zfsncmpA(const zfcharA *s1, const zfcharA *s2, zfindex count)
 {
-    return ((count == zfindexMax) ? strcmp(s1, s2) : strncmp(s1, s2, (size_t)count));
+    return ((count == zfindexMax()) ? strcmp(s1, s2) : strncmp(s1, s2, (size_t)count));
 }
 extern ZF_ENV_EXPORT zfint _ZFP_zfsnicmpA(const zfcharA *s1, const zfcharA *s2, zfindex count);
 

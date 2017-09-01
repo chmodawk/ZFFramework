@@ -132,10 +132,10 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFOperationCacheMatchActionEnum, cacheMatchAction,
                                 ZFPropertyInitValue(ZFOperationCacheMatchAction::e_NotifyFinish))
     /**
-     * @brief max cache size, or zfindexMax for no limit, zfindexMax by default
+     * @brief max cache size, or zfindexMax() for no limit, zfindexMax() by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, cacheMaxSize,
-                                ZFPropertyInitValue(zfindexMax))
+                                ZFPropertyInitValue(zfindexMax()))
     /**
      * @brief default cache expire time, default is ZFOperationCacheExpireTimeDisable
      *
@@ -161,7 +161,7 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, cacheTrimThreshold, ZFPropertyInitValue(3))
 
     /**
-     * @brief max operation allowed to start, default is 5, use zfindexMax for unlimited
+     * @brief max operation allowed to start, default is 5, use zfindexMax() for unlimited
      *
      * while starting a opeartion exceeds max count,
      * the newly start operation would be queued
@@ -218,8 +218,8 @@ public:
      */
     virtual zfautoObject createCache(ZF_IN ZFOperationParam *operationParam,
                                      ZF_IN ZFOperationResult *operationResult,
-                                     ZF_IN_OPT const zftimet &cacheExpireTime = zftimetZero,
-                                     ZF_IN_OPT const zftimet &cacheTime = zftimetZero);
+                                     ZF_IN_OPT const zftimet &cacheExpireTime = zftimetZero(),
+                                     ZF_IN_OPT const zftimet &cacheTime = zftimetZero());
 
     /**
      * @brief create progress
@@ -243,7 +243,7 @@ public:
                                         ZF_IN_OPT ZFOperationResult *operationResult = zfnull,
                                         ZF_IN_OPT ZFOperationObserver *operationObserver = zfnull,
                                         ZF_IN_OPT ZFOperationCache *operationCache = zfnull,
-                                        ZF_IN_OPT zfidentity operationId = zfidentityInvalid,
+                                        ZF_IN_OPT zfidentity operationId = zfidentityInvalid(),
                                         ZF_IN_OPT ZFOperationProgress *operationProgress = zfnull);
 
 protected:
@@ -264,7 +264,7 @@ protected:
     // operation constroll
 public:
     /**
-     * @brief start the operation, return a id or zfidentityInvalid if task not started
+     * @brief start the operation, return a id or #zfidentityInvalid if task not started
      *   (typically because of cache matched or ignore duplicated task)
      */
     virtual zfidentity taskStart(ZF_IN_OPT ZFOperationParam *operationParam = zfnull,
@@ -634,7 +634,7 @@ public:
      * @brief used for storing an operation id
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfidentity, operationId,
-                                ZFPropertyInitValue(zfidentityInvalid))
+                                ZFPropertyInitValue(zfidentityInvalid()))
     /**
      * @brief task category, can be used to stop task by #ZFOperation::taskStopForCategory
      */

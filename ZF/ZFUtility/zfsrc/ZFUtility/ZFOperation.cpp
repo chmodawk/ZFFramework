@@ -277,7 +277,7 @@ public:
             }
             else
             {
-                for(zfindex iObserver = taskData->taskObserverDatas->count() - 1; iObserver != zfindexMax; --iObserver)
+                for(zfindex iObserver = taskData->taskObserverDatas->count() - 1; iObserver != zfindexMax(); --iObserver)
                 {
                     taskData->taskObserverDatas->get<_ZFP_I_ZFOperationPrivateTaskObserverData *>(iObserver)->taskIsDuplicate = zffalse;
                 }
@@ -346,7 +346,7 @@ public:
                         }
                         else
                         {
-                            for(zfindex iTaskObserver = taskData->taskObserverDatas->count() - 1; iTaskObserver != zfindexMax; --iTaskObserver)
+                            for(zfindex iTaskObserver = taskData->taskObserverDatas->count() - 1; iTaskObserver != zfindexMax(); --iTaskObserver)
                             {
                                 taskData->taskObserverDatas->get<_ZFP_I_ZFOperationPrivateTaskObserverData *>(iTaskObserver)->taskIsDuplicate = zffalse;
                             }
@@ -609,7 +609,7 @@ void ZFOperation::cacheTrimBySize(ZF_IN zfindex size)
     {
         tmp->add(d->caches->get(i));
     }
-    d->caches->remove(size, zfindexMax);
+    d->caches->remove(size, zfindexMax());
     for(zfindex i = 0; i < tmp->count(); ++i)
     {
         this->cacheOnRemove(tmp->get<ZFOperationCache *>(i));
@@ -679,8 +679,8 @@ zfautoObject ZFOperation::createCache(void)
 }
 zfautoObject ZFOperation::createCache(ZF_IN ZFOperationParam *operationParam,
                                       ZF_IN ZFOperationResult *operationResult,
-                                      ZF_IN_OPT const zftimet &cacheExpireTime /* = zftimetZero */,
-                                      ZF_IN_OPT const zftimet &cacheTime /* = zftimetZero */)
+                                      ZF_IN_OPT const zftimet &cacheExpireTime /* = zftimetZero() */,
+                                      ZF_IN_OPT const zftimet &cacheTime /* = zftimetZero() */)
 {
     zfautoObject operationCacheTmp = this->createCache();
     ZFOperationCache *operationCache = operationCacheTmp.to<ZFOperationCache *>();
@@ -702,7 +702,7 @@ zfautoObject ZFOperation::createTaskData(ZF_IN ZFOperationParam *operationParam,
                                          ZF_IN_OPT ZFOperationResult *operationResult /* = zfnull */,
                                          ZF_IN_OPT ZFOperationObserver *operationObserver /* = zfnull */,
                                          ZF_IN_OPT ZFOperationCache *operationCache /* = zfnull */,
-                                         ZF_IN_OPT zfidentity operationId /* = zfidentityInvalid */,
+                                         ZF_IN_OPT zfidentity operationId /* = zfidentityInvalid() */,
                                          ZF_IN_OPT ZFOperationProgress *operationProgress /* = zfnull */)
 {
     zfautoObject operationTaskDataTmp = this->createTaskData();
@@ -795,7 +795,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
     if(startParam == zfnull || startParam->operationTaskData() == zfnull)
     {
         zfCoreLog(zfTextA("invalid start param"));
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     zfsynchronizedObject(this);
@@ -813,19 +813,19 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
         else
         {
             zfCoreLog(zfTextA("dummy param is not allowed"));
-            return zfidentityInvalid;
+            return zfidentityInvalid();
         }
     }
     if(!this->paramIsValid(operationParam))
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
     if(!this->taskOnCheckNeedStart(operationTaskData))
     {
         operationTaskData->operationResultSet(this->createResult(ZFResultType::e_Cancel).to<ZFOperationResult *>());
         this->operationTaskOnStart(operationTaskData);
         this->operationTaskOnStop(operationTaskData);
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     this->cacheRestore();
@@ -835,7 +835,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
 
     // search for cache
     zfindex cacheIndex = d->caches->count() - 1;
-    while(cacheIndex != zfindexMax)
+    while(cacheIndex != zfindexMax())
     {
         if(d->caches->get<ZFOperationCache *>(cacheIndex)->operationParam()->paramIsEqual(operationParam))
         {
@@ -843,7 +843,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
         }
         --cacheIndex;
     }
-    if(cacheIndex != zfindexMax)
+    if(cacheIndex != zfindexMax())
     {
         this->cacheSaveRequest();
 
@@ -893,7 +893,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
                         operationTaskData->operationCacheSet(operationCache);
                         this->operationTaskOnStart(operationTaskData);
                         this->operationTaskOnStop(operationTaskData);
-                        return zfidentityInvalid;
+                        return zfidentityInvalid();
                     }
                     else
                     {
@@ -910,7 +910,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
                         this->operationTaskOnStart(operationTaskData);
                         this->operationTaskOnStop(operationTaskData);
                         this->cacheRemove(operationParam);
-                        return zfidentityInvalid;
+                        return zfidentityInvalid();
                     }
                     else
                     {
@@ -937,7 +937,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
                 }
                 default:
                     zfCoreCriticalShouldNotGoHere();
-                    return zfidentityInvalid;
+                    return zfidentityInvalid();
             }
         }
         else
@@ -978,7 +978,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
             else
             {
                 operationTaskData->operationResultSet(this->createResult(ZFResultType::e_Cancel).to<ZFOperationResult *>());
-                return zfidentityInvalid;
+                return zfidentityInvalid();
             }
         }
     }
@@ -1011,7 +1011,7 @@ zfidentity ZFOperation::taskStart(ZF_IN ZFOperationStartParam *startParam)
 }
 void ZFOperation::taskStop(ZF_IN zfidentity operationId)
 {
-    if(zfidentityIsValid(operationId))
+    if(operationId != zfidentityInvalid())
     {
         zfsynchronizedObjectLock(this);
         zfblockedAllocWithoutLeakTest(ZFArrayEditable, toNotifyTaskObserverDatas);
@@ -1026,7 +1026,7 @@ void ZFOperation::taskStop(ZF_IN zfidentity operationId)
 }
 zfautoObject ZFOperation::taskStopAndGetResult(ZF_IN zfidentity operationId)
 {
-    if(zfidentityIsValid(operationId))
+    if(operationId != zfidentityInvalid())
     {
         zfsynchronizedObject(this);
         zfautoObject operationResultTmp = this->createResult(ZFResultType::e_Cancel);
@@ -1045,7 +1045,7 @@ zfautoObject ZFOperation::taskStopAndGetResult(ZF_IN zfidentity operationId)
             return zfautoObjectCreate(operationResult);
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 void ZFOperation::taskStop(ZF_IN_OPT ZFOperationParam *operationParam /* = zfnull */)
 {
@@ -1087,7 +1087,7 @@ void ZFOperation::taskStopAll(void)
 
 void ZFOperation::taskStopObserver(ZF_IN zfidentity operationId)
 {
-    if(zfidentityIsValid(operationId))
+    if(operationId != zfidentityInvalid())
     {
         zfsynchronizedObject(this);
         _ZFP_I_ZFOperationPrivateTaskObserverData *taskObserverData = d->findTaskObserverDataForOperationId(operationId);
@@ -1225,7 +1225,7 @@ void ZFOperation::taskNotifyFinish(ZF_IN zfidentity operationId,
 {
     zfCoreAssertWithMessage(operationResult != zfnull, zfTextA("result is null"));
 
-    if(!zfidentityIsValid(operationId))
+    if(operationId == zfidentityInvalid())
     {
         return ;
     }
@@ -1269,7 +1269,7 @@ void ZFOperation::taskNotifyProgress(ZF_IN ZFOperationParam *operationParam,
 void ZFOperation::taskNotifyProgress(ZF_IN zfidentity operationId,
                                      ZF_IN_OPT ZFOperationProgress *operationProgress /* = zfnull */)
 {
-    if(zfidentityIsValid(operationId))
+    if(operationId != zfidentityInvalid())
     {
         zfsynchronizedObject(this);
         _ZFP_I_ZFOperationPrivateTaskData *taskData = d->findTaskDataForOperationId(operationId, zffalse);

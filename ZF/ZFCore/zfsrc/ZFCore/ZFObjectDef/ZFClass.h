@@ -33,6 +33,46 @@ typedef void (* _ZFP_ZFObjectCheckInitImplementationListCallback)(ZF_IN_OUT ZFCl
 typedef ZFInterface * (*_ZFP_ZFObjectToInterfaceCastCallback)(ZF_IN ZFObject * const &obj);
 
 // ============================================================
+/** @brief see #ZFClass::instanceObserverAdd */
+zffinal zfclassLikePOD ZF_ENV_EXPORT ZFClassInstanceObserverAddParam
+{
+    ZFCORE_PARAM_DECLARE_SELF(ZFClassInstanceObserverAddParam)
+
+    /** @brief see #ZFClass::instanceObserverAdd */
+    ZFCORE_PARAM(ZFListener, observer)
+
+    /** @brief see #ZFClass::instanceObserverAdd */
+    ZFCORE_PARAM_WITH_INIT(ZFObject *, userData, zfnull)
+
+    /** @brief see #ZFClass::instanceObserverAdd */
+    ZFCORE_PARAM_WITH_INIT(ZFObject *, owner, zfnull)
+
+    /** @brief see #ZFClass::instanceObserverAdd */
+    ZFCORE_PARAM_WITH_INIT(ZFLevel, observerLevel, ZFLevelAppNormal)
+
+    /** @brief see #ZFClass::instanceObserverAdd */
+    ZFCORE_PARAM_WITH_INIT(zfbool, observeAllChildType, zftrue)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN ZFClassInstanceObserverAddParam const &ref) const
+    {
+        return (zftrue
+                && this->observer() == ref.observer()
+                && this->userData() == ref.userData()
+                && this->owner() == ref.owner()
+                && this->observerLevel() == ref.observerLevel()
+                && this->observeAllChildType() == ref.observeAllChildType()
+            );
+    }
+    zfbool operator != (ZF_IN ZFClassInstanceObserverAddParam const &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
+};
+
+// ============================================================
 zfclassFwd _ZFP_ZFClassPrivate;
 /**
  * @brief ZFObject's class info
@@ -52,7 +92,7 @@ public:
      * typical usage:
      * @code
      *   const ZFClass *cls = ZFClass::classForName(zfText("MyObject"));
-     *   zfautoObject objTmp = ((cls != zfnull) ? cls->newInstance() : zfautoObjectNull);
+     *   zfautoObject objTmp = ((cls != zfnull) ? cls->newInstance() : zfautoObjectNull());
      *   MyObject *obj = objTmp.to<MyObject *>();
      * @endcode
      * @note the class to find must:
@@ -85,26 +125,6 @@ public:
     // ============================================================
     // instance observer
 public:
-    /** @brief see #ZFClass::instanceObserverAdd */
-    zffinal zfclassLikePOD ZF_ENV_EXPORT InstanceObserverAddParam
-    {
-        ZFCORE_PARAM_DECLARE_SELF(InstanceObserverAddParam)
-
-        /** @brief see #ZFClass::instanceObserverAdd */
-        ZFCORE_PARAM(ZFListener, observer)
-
-        /** @brief see #ZFClass::instanceObserverAdd */
-        ZFCORE_PARAM_WITH_INIT(ZFObject *, userData, zfnull)
-
-        /** @brief see #ZFClass::instanceObserverAdd */
-        ZFCORE_PARAM_WITH_INIT(ZFObject *, owner, zfnull)
-
-        /** @brief see #ZFClass::instanceObserverAdd */
-        ZFCORE_PARAM_WITH_INIT(ZFLevel, observerLevel, ZFLevelAppNormal)
-
-        /** @brief see #ZFClass::instanceObserverAdd */
-        ZFCORE_PARAM_WITH_INIT(zfbool, observeAllChildType, zftrue)
-    };
     /**
      * @brief add an observer which would be called if any of this class's instance created
      */
@@ -114,7 +134,7 @@ public:
                              ZF_IN_OPT ZFLevel observerLevel = ZFLevelAppNormal,
                              ZF_IN_OPT zfbool observeAllChildType = zftrue) const;
     /** @brief see #instanceObserverAdd */
-    inline void instanceObserverAdd(ZF_IN const ZFClass::InstanceObserverAddParam &param) const
+    inline void instanceObserverAdd(ZF_IN const ZFClassInstanceObserverAddParam &param) const
     {
         this->instanceObserverAdd(param.observer(), param.userData(), param.owner(), param.observerLevel(), param.observeAllChildType());
     }

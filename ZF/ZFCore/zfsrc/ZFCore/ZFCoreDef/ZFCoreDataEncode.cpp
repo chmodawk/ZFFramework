@@ -47,12 +47,12 @@ const zfchar _ZFP_zfCoreDataEncodeCharMapDefault[256] = {
 
 void zfCoreDataEncode(ZF_OUT zfstring &result,
                       ZF_IN const zfchar *src,
-                      ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                      ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                       ZF_IN_OPT const zfchar *charMap /* = zfCoreDataEncodeCharMapDefault() */,
                       ZF_IN_OPT zfchar escapeToken /* = '%' */)
 {
     if(src == zfnull) {return;}
-    const zfchar *srcEnd = (src + ((srcLen == zfindexMax) ? zfslen(src) : srcLen));
+    const zfchar *srcEnd = (src + ((srcLen == zfindexMax()) ? zfslen(src) : srcLen));
     while(src < srcEnd)
     {
         if(*src == escapeToken)
@@ -77,11 +77,11 @@ void zfCoreDataEncode(ZF_OUT zfstring &result,
 }
 void zfCoreDataDecode(ZF_OUT zfstring &result,
                       ZF_IN const zfchar *src,
-                      ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                      ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                       ZF_IN_OPT zfchar escapeToken /* = '%' */)
 {
     if(src == zfnull) {return ;}
-    const zfchar *srcEnd = (src + ((srcLen == zfindexMax) ? zfslen(src) : srcLen));
+    const zfchar *srcEnd = (src + ((srcLen == zfindexMax()) ? zfslen(src) : srcLen));
     while(src < srcEnd)
     {
         if(*src == escapeToken)

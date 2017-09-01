@@ -127,7 +127,7 @@ public:
         _ZFP_ZF2048AppAutoMoveActionItem *actionItem = listenerData.sender->toAny();
 
         zfindex index = owner->d->actionListAdapter()->cellArray()->find(actionItem->viewParent(), ZFComparerCheckEqual);
-        zfCoreAssert(index != zfindexMax);
+        zfCoreAssert(index != zfindexMax());
         owner->autoMoves.remove(index);
         owner->d->actionListAdapter()->cellRemove(index);
         owner->d->actionList()->listReload();

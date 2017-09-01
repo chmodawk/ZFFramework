@@ -37,7 +37,7 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFXmlImpl_default, ZFXml, ZFProtocolLevel::e_Def
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("pugixml"))
 public:
     virtual ZFXmlItem xmlParse(ZF_IN const zfchar *src,
-                               ZF_IN_OPT zfindex size = zfindexMax)
+                               ZF_IN_OPT zfindex size = zfindexMax())
     {
         ZFBuffer buf;
         buf.bufferCopy(src, size * sizeof(zfchar));

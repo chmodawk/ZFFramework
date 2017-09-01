@@ -16,7 +16,7 @@ ZF_GLOBAL_INITIALIZER_INIT(ZFCore_ZFSerializable_debug_ErrorLog)
     ZFCALLBACK_LOCAL_BEGIN_2(zfindex, tmp, const void *, param0, zfindex, param1)
     {
         zfLogTrimT() << zfstring((const zfchar *)param0, param1);
-        return zfindexMax;
+        return zfindexMax();
     }
     ZFCALLBACK_LOCAL_END(tmp)
     this->output = tmp;

@@ -162,7 +162,7 @@ zfautoObject ZFObjectCache::cacheAccess(ZF_IN const zfchar *cacheKey)
             return it->second->cacheValue;
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 
 zfautoObject ZFObjectCache::cacheRemove(ZF_IN const zfchar *cacheKey)
@@ -181,7 +181,7 @@ zfautoObject ZFObjectCache::cacheRemove(ZF_IN const zfchar *cacheKey)
             return ret;
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 void ZFObjectCache::cacheRemoveAll(void)
 {

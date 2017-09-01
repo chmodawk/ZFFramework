@@ -11,7 +11,8 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 ZF_NAMESPACE_BEGIN(ZFUIViewUtil)
 
-ZFUIView *viewRoot(ZF_IN ZFUIView *view)
+ZFMETHOD_FUNC_DEFINE_WITH_NS_1(ZFUIViewUtil, ZFUIView *, viewRoot,
+                               ZFMP_IN(ZFUIView *, view))
 {
     if(view != zfnull)
     {
@@ -23,7 +24,9 @@ ZFUIView *viewRoot(ZF_IN ZFUIView *view)
     return view;
 }
 
-zfbool viewIsChildOf(ZF_IN ZFUIView *view, ZF_IN ZFUIView *parentToCheck)
+ZFMETHOD_FUNC_DEFINE_WITH_NS_2(ZFUIViewUtil, zfbool, viewIsChildOf,
+                               ZFMP_IN(ZFUIView *, view),
+                               ZFMP_IN(ZFUIView *, parentToCheck))
 {
     if(view != zfnull)
     {
@@ -40,11 +43,12 @@ zfbool viewIsChildOf(ZF_IN ZFUIView *view, ZF_IN ZFUIView *parentToCheck)
     return zffalse;
 }
 
-ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
-                      ZF_IN const ZFUIPoint &pos,
-                      ZF_IN_OPT zfbool filterDisabledView /* = zffalse */,
-                      ZF_IN_OPT zfbool filterInternalView /* = zftrue */,
-                      ZF_IN_OPT const ZFFilterForZFObject *filter /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_WITH_NS_5(ZFUIViewUtil, ZFUIView *, viewChildAt,
+                               ZFMP_IN(ZFUIView *, view),
+                               ZFMP_IN(const ZFUIPoint &, pos),
+                               ZFMP_IN_OPT(zfbool, filterDisabledView, zffalse),
+                               ZFMP_IN_OPT(zfbool, filterInternalView, zftrue),
+                               ZFMP_IN_OPT(const ZFFilterForZFObject *, filter, zfnull))
 {
     if(view == zfnull
         || (filterDisabledView && !view->viewUIEnableTree())
@@ -57,10 +61,10 @@ ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
         return zfnull;
     }
 
-    ZFUIRect layoutedFrameFixed = ZFUIRectZero;
+    ZFUIRect layoutedFrameFixed = ZFUIRectZero();
 
     ZFCoreArrayPOD<ZFUIView *> childList = view->internalForegroundViewArray();
-    for(zfindex i = childList.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = childList.count() - 1; i != zfindexMax(); --i)
     {
         ZFUIView *child = childList[i];
         child->layoutedFrameFixedT(layoutedFrameFixed);
@@ -78,7 +82,7 @@ ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
     }
 
     childList = view->childArray();
-    for(zfindex i = childList.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = childList.count() - 1; i != zfindexMax(); --i)
     {
         ZFUIView *child = childList[i];
         child->layoutedFrameFixedT(layoutedFrameFixed);
@@ -96,7 +100,7 @@ ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
     }
 
     childList = view->internalBackgroundViewArray();
-    for(zfindex i = childList.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = childList.count() - 1; i != zfindexMax(); --i)
     {
         ZFUIView *child = childList[i];
         child->layoutedFrameFixedT(layoutedFrameFixed);
@@ -121,15 +125,18 @@ ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
     return view;
 }
 
-void viewRectToParent(ZF_OUT ZFUIRect &rect, ZF_IN ZFUIView *view, ZF_IN ZFUIView *parent)
+ZFMETHOD_FUNC_DEFINE_WITH_NS_3(ZFUIViewUtil, void, viewRectToParent,
+                               ZFMP_OUT(ZFUIRect &, rect),
+                               ZFMP_IN(ZFUIView *, view),
+                               ZFMP_IN(ZFUIView *, parent))
 {
     if(view == zfnull || parent == zfnull)
     {
-        rect = ZFUIRectZero;
+        rect = ZFUIRectZero();
         return ;
     }
     view->layoutedFrameFixedT(rect);
-    ZFUIRect layoutedFrameFixed = ZFUIRectZero;
+    ZFUIRect layoutedFrameFixed = ZFUIRectZero();
     while(view->viewParent() != zfnull && view != parent)
     {
         view = view->viewParent();
@@ -139,9 +146,12 @@ void viewRectToParent(ZF_OUT ZFUIRect &rect, ZF_IN ZFUIView *view, ZF_IN ZFUIVie
     }
     if(view != parent)
     {
-        rect = ZFUIRectZero;
+        rect = ZFUIRectZero();
     }
 }
+ZFMETHOD_FUNC_DEFINE_DETAIL_2(ZFMethodFuncIsInline, ZFUIViewUtil, ZFUIRect, viewRectToParent,
+                              ZFMP_IN(ZFUIView *, view),
+                              ZFMP_IN(ZFUIView *, parent))
 
 ZF_NAMESPACE_END(ZFUIViewUtil)
 ZF_NAMESPACE_GLOBAL_END

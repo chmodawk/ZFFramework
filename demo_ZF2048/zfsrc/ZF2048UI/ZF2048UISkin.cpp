@@ -22,7 +22,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
     { // block_bg.png
         zfstring path = zfstringWithFormat(zfText("%s/block/block_bg.png"), resPath);
         zfautoObject image = ZFUIImageRes(path);
-        if(image == zfautoObjectNull)
+        if(image == zfautoObjectNull())
         {
             zfSkinSet(zfText("ZF2048_block_bg"), zfnull);
         }
@@ -36,7 +36,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
     { // block_na.png
         zfstring path = zfstringWithFormat(zfText("%s/block/block_na.png"), resPath);
         zfautoObject image = ZFUIImageRes(path);
-        if(image == zfautoObjectNull)
+        if(image == zfautoObjectNull())
         {
             zfSkinSet(zfText("ZF2048_block_na"), zfnull);
         }
@@ -50,7 +50,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
     { // frame
         zfstring path = zfstringWithFormat(zfText("%s/frame/frame_bg.xml"), resPath);
         zfautoObject image = ZFUIImageResXml(path);
-        if(image == zfautoObjectNull)
+        if(image == zfautoObjectNull())
         {
             zfSkinSet(zfText("ZF2048_frame"), zfnull);
         }
@@ -87,7 +87,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
             {
                 zfstring skinKey = zfstringWithFormat(zfText("ZF2048_block_%d"), (zfint)blockValue);
                 zfautoObject image = ZFUIImageRes(fd.filePath());
-                if(image == zfautoObjectNull)
+                if(image == zfautoObjectNull())
                 {
                     zfSkinSet(skinKey, zfnull);
                 }

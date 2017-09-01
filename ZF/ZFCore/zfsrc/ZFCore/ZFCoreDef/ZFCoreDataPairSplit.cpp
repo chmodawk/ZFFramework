@@ -13,7 +13,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
                                  ZF_IN zfindex desiredCountOrIndexMax,
                                  ZF_IN const zfchar *src,
-                                 ZF_IN_OPT zfindex srcLen /* = zfindexMax */,
+                                 ZF_IN_OPT zfindex srcLen /* = zfindexMax() */,
                                  ZF_IN_OPT const zfchar *separatorTokens /* = zfText(",") */,
                                  ZF_IN_OPT const zfchar *leftTokens /* = zfText("(") */,
                                  ZF_IN_OPT const zfchar *rightTokens /* = zfText(")") */,
@@ -29,15 +29,15 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
         return zffalse;
     }
     const zfchar *p = src;
-    const zfchar *srcEnd = ((srcLen == zfindexMax) ? (src + zfslen(src)) : (src + srcLen));
+    const zfchar *srcEnd = ((srcLen == zfindexMax()) ? (src + zfslen(src)) : (src + srcLen));
 
     // leftTokens
-    zfindex leftTokenMatch = zfindexMax;
+    zfindex leftTokenMatch = zfindexMax();
     zfcharSkipSpace(p, srcEnd);
     if(leftTokens != zfnull && *leftTokens != '\0')
     {
         leftTokenMatch = zfstringFind(leftTokens, *p);
-        if(leftTokenMatch == zfindexMax)
+        if(leftTokenMatch == zfindexMax())
         {
             if(outErrorPos != zfnull)
             {
@@ -62,7 +62,7 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
         zfbool matchEnd = zffalse;
         for( ; pr < srcEnd; ++pr)
         {
-            if(zfstringFind(separatorTokens, *pr) != zfindexMax)
+            if(zfstringFind(separatorTokens, *pr) != zfindexMax())
             {
                 if(itemTokenMatch.isEmpty())
                 {
@@ -78,7 +78,7 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
             }
 
             zfindex matchL = zfstringFind(leftTokens, *pr);
-            if(matchL != zfindexMax)
+            if(matchL != zfindexMax())
             {
                 // paired child item
                 itemTokenMatch.add(matchL);
@@ -87,7 +87,7 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
             }
 
             zfindex matchR = zfstringFind(rightTokens, *pr);
-            if(matchR != zfindexMax)
+            if(matchR != zfindexMax())
             {
                 if(itemTokenMatch.isEmpty())
                 {
@@ -151,7 +151,7 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
     } while(count < desiredCountOrIndexMax);
 
     // count check
-    if(desiredCountOrIndexMax != zfindexMax && count != desiredCountOrIndexMax)
+    if(desiredCountOrIndexMax != zfindexMax() && count != desiredCountOrIndexMax)
     {
         if(outErrorPos != zfnull)
         {
@@ -164,7 +164,7 @@ zfbool zfCoreDataPairSplitString(ZF_OUT ZFCoreArray<zfindexRange> &outData,
     zfcharSkipSpace(p, srcEnd);
     if(rightTokens != zfnull && *rightTokens != '\0')
     {
-        if(p == srcEnd || zfstringFind(rightTokens, *p) == zfindexMax)
+        if(p == srcEnd || zfstringFind(rightTokens, *p) == zfindexMax())
         {
             if(outErrorPos != zfnull)
             {

@@ -55,7 +55,7 @@ public:
         zfblockedAlloc(ZFUIButtonBasic, textEditClearButton);
         propertyValue = zfautoObjectCreateWithoutLeakTest(textEditClearButton);
         textEditClearButton->buttonIconImageSet(ZFUIImageResXml(zfText("ZFUIWidget/ZFUITextEditWidget_clearButton.xml")));
-        textEditClearButton->viewSizeMinSet(ZFUISizeZero);
+        textEditClearButton->viewSizeMinSet(ZFUISizeZero());
         textEditClearButton->viewVisibleSet(zffalse);
     }
 

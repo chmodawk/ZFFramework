@@ -182,10 +182,11 @@ private:
     _ZFP_zfautoObjectPrivateBase *d;
 };
 
+extern ZF_ENV_EXPORT const zfautoObject _ZFP_zfautoObjectNull;
 /**
  * @brief global null zfautoObject
  */
-extern ZF_ENV_EXPORT const zfautoObject zfautoObjectNull;
+#define zfautoObjectNull() _ZFP_zfautoObjectNull
 
 // ============================================================
 // ZFCastZFObject fix for ZFAny

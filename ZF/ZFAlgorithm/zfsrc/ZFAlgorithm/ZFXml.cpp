@@ -71,7 +71,7 @@ ZFEXPORT_VAR_READONLY_DEFINE(ZFXmlOutputFlags, ZFXmlOutputFlagsDefault, ZFXmlOut
 static const ZFXmlOutputFlags &_ZFP_ZFXmlOutputFlagsTrimInit(void)
 {
     static ZFXmlOutputFlags d;
-    d.xmlElementAttributeCountBeforeAddNewLine = zfindexMax;
+    d.xmlElementAttributeCountBeforeAddNewLine = zfindexMax();
     d.xmlElementTrimTagIfNoChildren = zftrue;
     d.xmlToken.xmlNewLineToken.removeAll();
     d.xmlToken.xmlIndentToken.removeAll();
@@ -105,7 +105,7 @@ static zfbool _ZFP_ZFXmlOutputElementAttributeNeedNewLine(ZF_IN const ZFXmlItem 
         return zffalse;
     }
     ZFXmlItem xmlAttribute = element.xmlAttributeFirst();
-    if(flags.xmlElementAttributeCountBeforeAddNewLine == zfindexMax)
+    if(flags.xmlElementAttributeCountBeforeAddNewLine == zfindexMax())
     {
         return zffalse;
     }
@@ -164,7 +164,7 @@ static zfbool _ZFP_ZFXmlOutputAttributeNeedNewLine(ZF_IN const ZFXmlItem &xmlAtt
                                                    ZF_IN const ZFXmlVisitData &data)
 {
     return (flags.xmlElementAttributeCountBeforeAddNewLine == 0
-        || (flags.xmlElementAttributeCountBeforeAddNewLine != zfindexMax
+        || (flags.xmlElementAttributeCountBeforeAddNewLine != zfindexMax()
             && data.siblingIndex > 0
             && (data.siblingIndex % flags.xmlElementAttributeCountBeforeAddNewLine) == 0));
 }
@@ -844,7 +844,7 @@ public:
                 this->xmlAttributeFirst = tmp[0];
                 this->xmlAttributeLast = tmp[tmp.count() - 1];
 
-                for(zfindex i = tmp.count() - 1; i != zfindexMax; --i)
+                for(zfindex i = tmp.count() - 1; i != zfindexMax(); --i)
                 {
                     xmlAttribute = tmp[i];
                     if(i + 1 < tmp.count())
@@ -1139,7 +1139,7 @@ void ZFXmlItem::xmlVisit(ZF_IN const ZFXmlVisitCallback &callback /* = ZFXmlVisi
         {
             if(!callback.execute(data))
             {
-                for(zfindex i = ((zfindex)datas.count()) - 1; i != zfindexMax; --i)
+                for(zfindex i = ((zfindex)datas.count()) - 1; i != zfindexMax(); --i)
                 {
                     if(datas[i].depth == data.depth)
                     {
@@ -1553,7 +1553,7 @@ ZFMETHOD_FUNC_DEFINE_1(ZFXmlItem, ZFXmlItemFromInput,
 }
 ZFMETHOD_FUNC_DEFINE_2(ZFXmlItem, ZFXmlItemFromString,
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, size, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, size, zfindexMax()))
 {
     return ZFPROTOCOL_ACCESS(ZFXml)->xmlParse(src, size);
 }
@@ -1565,7 +1565,7 @@ ZFMETHOD_FUNC_DEFINE_1(ZFXmlItem, ZFXmlParseFirstElement,
 }
 ZFMETHOD_FUNC_DEFINE_2(ZFXmlItem, ZFXmlParseFirstElement,
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, size, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, size, zfindexMax()))
 {
     return ZFXmlItem(ZFXmlItemFromString(src, size).xmlChildElementFirst());
 }
@@ -1604,14 +1604,14 @@ ZFMETHOD_FUNC_DEFINE_2(zfstring, ZFXmlItemToString,
 ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharEncode,
                        ZFMP_OUT(zfstring &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFXmlEscapeCharEncode(ZFOutputCallbackForString(dst), src, count);
 }
 ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharEncode,
                        ZFMP_OUT(const ZFOutputCallback &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFPROTOCOL_ACCESS(ZFXmlEscapeChar)->xmlEscapeCharEncode(dst, src, count);
 }
@@ -1619,14 +1619,14 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharEncode,
 ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharDecode,
                        ZFMP_OUT(zfstring &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFXmlEscapeCharDecode(ZFOutputCallbackForString(dst), src, count);
 }
 ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlEscapeCharDecode,
                        ZFMP_OUT(const ZFOutputCallback &, dst),
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 {
     ZFPROTOCOL_ACCESS(ZFXmlEscapeChar)->xmlEscapeCharDecode(dst, src, count);
 }

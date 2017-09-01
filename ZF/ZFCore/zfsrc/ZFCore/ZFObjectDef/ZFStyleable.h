@@ -223,7 +223,7 @@ private:
             } \
             zfautoObject obj = _ZFP_ZFStyleableDefault_##YourStyle::ClassData()->newInstance( \
                 ZFCallerInfo(ZF_CALLER_FILE, zfTextA("DefaultStyle"), ZF_CALLER_LINE)); \
-            if(obj != zfautoObjectNull) \
+            if(obj != zfautoObjectNull()) \
             { \
                 zfself::_ZFP_ZFStyleablEnumDefaultStyleSet(obj.to<YourStyle *>()); \
             } \

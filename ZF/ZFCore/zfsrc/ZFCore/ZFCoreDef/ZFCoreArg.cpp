@@ -116,7 +116,7 @@ void zfCoreArgMerge(ZF_OUT zfstring &result,
             result += ' ';
         }
 
-        zfbool containSpace = (zfstringFind(s, ' ') != zfindexMax);
+        zfbool containSpace = (zfstringFind(s, ' ') != zfindexMax());
         if(containSpace)
         {
             result += '\"';

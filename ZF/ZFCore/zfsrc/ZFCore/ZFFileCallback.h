@@ -65,7 +65,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                                    ZF_IN const zfchar *filePath,
                                                                    ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create,
-                                                                   ZF_IN_OPT zfindex autoFlushSize = zfindexMax);
+                                                                   ZF_IN_OPT zfindex autoFlushSize = zfindexMax());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -74,7 +74,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
  *   <node>
  *       <zfstring category="filePath" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Create by default
- *       <zfindex category="autoFlushSize" ... /> // optional, zfindexMax by default
+ *       <zfindex category="autoFlushSize" ... /> // optional, zfindexMax() by default
  *   </node>
  * @endcode
  */
@@ -93,14 +93,14 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForFile(ZF_IN const Z
  * -  (const zfchar *)filePath: file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
  * -  (zfindex)autoFlushSize: ensure to flush file after how much size written,
- *   use zfindexMax to disable or 0 to flush every time
+ *   use zfindexMax() to disable or 0 to flush every time
  *
  * auto open and auto close files, may return a null callback if open file error
  */
 ZFMETHOD_FUNC_DECLARE_3(ZFOutputCallback, ZFOutputCallbackForFile,
                         ZFMP_IN(const zfchar *, filePath),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
-                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
 
 // ============================================================
 // ZFInputCallbackForFile
@@ -191,7 +191,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
                                                                         ZF_IN const ZFSerializableData &dataToCheckParentPath,
                                                                         ZF_IN const zfchar *localPath,
                                                                         ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create,
-                                                                        ZF_IN_OPT zfindex autoFlushSize = zfindexMax);
+                                                                        ZF_IN_OPT zfindex autoFlushSize = zfindexMax());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -200,7 +200,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
  *   <node>
  *       <zfstring category="localPath" ... />
  *       <ZFFileOpenOptionFlags category="flags" ... /> // optional, ZFFileOpenOption::e_Create by default
- *       <zfindex category="autoFlushSize" ... /> // optional, zfindexMax by default
+ *       <zfindex category="autoFlushSize" ... /> // optional, zfindexMax() by default
  *   </node>
  * @endcode
  */
@@ -220,7 +220,7 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
  * -  (const zfchar *)localPath: local file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
  * -  (zfindex)autoFlushSize: ensure to flush file after how much size written,
- *   use zfindexMax to disable or 0 to flush every time
+ *   use zfindexMax() to disable or 0 to flush every time
  *
  * auto open and auto close files, may return a null callback if open file error
  */
@@ -228,7 +228,7 @@ ZFMETHOD_FUNC_DECLARE_4(ZFOutputCallback, ZFOutputCallbackForLocalFile,
                         ZFMP_IN(const ZFSerializableData &, dataToCheckParentPath),
                         ZFMP_IN(const zfchar *, localPath),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
-                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
 
 // ============================================================
 // ZFInputCallbackForLocalFile

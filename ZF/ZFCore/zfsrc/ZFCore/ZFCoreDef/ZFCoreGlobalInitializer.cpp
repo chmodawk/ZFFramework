@@ -88,7 +88,7 @@ static void _ZFP_GI_instanceInit(ZFCoreArrayPOD<_ZFP_GI_Data *> &list)
 }
 static void _ZFP_GI_instanceDealloc(ZFCoreArrayPOD<_ZFP_GI_Data *> &list)
 {
-    for(zfindex i = list.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = list.count() - 1; i != zfindexMax(); --i)
     {
         _ZFP_GI_Data *data = list.get(i);
         if(data->instance != zfnull)
@@ -758,7 +758,7 @@ void _ZFP_GI_notifyInstanceCreated(ZF_IN const _ZFP_GI_Data *data)
 
     // reorder in same level
     ZFCoreArrayPOD<_ZFP_GI_Data *> &dataList = d.dataListForLevel(data->level);
-    zfindex prevNull = zfindexMax;
+    zfindex prevNull = zfindexMax();
     zfindex self = 0;
     for(zfindex i = 0; i < dataList.count(); ++i)
     {
@@ -766,7 +766,7 @@ void _ZFP_GI_notifyInstanceCreated(ZF_IN const _ZFP_GI_Data *data)
         {
             self = i;
         }
-        else if(prevNull == zfindexMax && dataList[i]->instance == zfnull)
+        else if(prevNull == zfindexMax() && dataList[i]->instance == zfnull)
         {
             prevNull = i;
         }

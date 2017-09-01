@@ -69,11 +69,11 @@ public:
                 this->onScreenKeyboardStateOnChangeListener);
 
             this->scrollView->scrollContentFrameSet(ZFUIRectGetBounds(this->pimplOwner->layoutedFrame()));
-            if(this->autoFitMargin == ZFUIMarginZero || this->pimplOwner->layoutParam() == zfnull)
+            if(this->autoFitMargin == ZFUIMarginZero() || this->pimplOwner->layoutParam() == zfnull)
             {
                 return ;
             }
-            this->autoFitMargin = ZFUIMarginZero;
+            this->autoFitMargin = ZFUIMarginZero();
             #if _ZFP_ZFUIOnScreenKeyboardAutoFitLayout_DEBUG
                 zfLogTrimT() << zfText("[ZFUIOnScreenKeyboardAutoFitLayout] margin changed to") << this->autoFitMargin;
             #endif
@@ -124,7 +124,7 @@ public:
     ZFUIMargin autoFitMarginCalc(ZF_IN const ZFUIRect &orgRect,
                                  ZF_IN ZFUIOnScreenKeyboardState *keyboardState)
     {
-        ZFUIMargin ret = ZFUIMarginZero;
+        ZFUIMargin ret = ZFUIMarginZero();
         if(keyboardState->keyboardShowing())
         {
             ZFUIRect clientFrame = keyboardState->keyboardFixClientFrame();
@@ -168,9 +168,9 @@ public:
             layout->d->scrollEnableFlag = zffalse;
             layout->d->scrollView->scrollEnableSet(layout->d->scrollEnableFlag && layout->autoFitScrollEnable());
             #if _ZFP_ZFUIOnScreenKeyboardAutoFitLayout_DEBUG
-                zfLogTrimT() << zfText("[ZFUIOnScreenKeyboardAutoFitLayout] margin changed to") << ZFUIMarginZero;
+                zfLogTrimT() << zfText("[ZFUIOnScreenKeyboardAutoFitLayout] margin changed to") << ZFUIMarginZero();
             #endif
-            layout->d->scrollView->layoutParam()->layoutMarginSet(ZFUIMarginZero);
+            layout->d->scrollView->layoutParam()->layoutMarginSet(ZFUIMarginZero());
             layout->d->scrollView->scrollContentFrameSet(ZFUIRectGetBounds(layout->layoutedFrame()));
         }
     }
@@ -224,7 +224,7 @@ public:
     , scrollView(zfnull)
     , scrollEnableFlag(zffalse)
     , autoFitFocusedView(zfnull)
-    , autoFitMargin(ZFUIMarginZero)
+    , autoFitMargin(ZFUIMarginZero())
     , onScreenKeyboardStateOnChangeListener(ZFCallbackForRawFunction(_ZFP_ZFUIOnScreenKeyboardAutoFitLayoutPrivate::onScreenKeyboardStateOnChange))
     , viewFocusOnChangeListener(ZFCallbackForRawFunction(_ZFP_ZFUIOnScreenKeyboardAutoFitLayoutPrivate::viewFocusOnChange))
     , scrollFocusedViewToVisibleDelayListener(ZFCallbackForRawFunction(_ZFP_ZFUIOnScreenKeyboardAutoFitLayoutPrivate::scrollFocusedViewToVisibleDelay))
@@ -298,7 +298,7 @@ void ZFUIOnScreenKeyboardAutoFitLayout::viewDelegateLayoutOnMeasure(ZF_OUT ZFUIS
                                                                     ZF_IN const ZFUISize &sizeHint,
                                                                     ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ret = ZFUISizeZero;
+    ret = ZFUISizeZero();
     ZFUISize sizeHintTmp = ZFUIViewLayoutParam::sizeHintOffset(sizeHint,
         ZFUISizeMake(ZFUIMarginGetX(d->autoFitMargin), ZFUIMarginGetY(d->autoFitMargin)));
     for(zfindex i = 0; i < this->childCount(); ++i)
@@ -313,7 +313,7 @@ void ZFUIOnScreenKeyboardAutoFitLayout::viewDelegateLayoutOnLayoutPrepare(ZF_IN 
 {
     zfsuper::viewDelegateLayoutOnLayoutPrepare(bounds);
     if(!this->autoFitEnable()
-        || this->layoutedFrame().size == ZFUISizeZero || this->layoutedFrame().size != bounds.size
+        || this->layoutedFrame().size == ZFUISizeZero() || this->layoutedFrame().size != bounds.size
         || !d->scrollEnableFlag)
     {
         d->scrollView->scrollContentFrameSet(bounds);

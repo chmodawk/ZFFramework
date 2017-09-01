@@ -58,17 +58,17 @@ public:
         CRegexpT<zfchar> *regexp = ZFCastStatic(CRegexpT<zfchar> *, regExp->nativeRegExp());
 
         zfint ret = regexp->GetNamedGroupNumber(name);
-        return ((ret < 0) ? zfindexMax : (zfindex)ret);
+        return ((ret < 0) ? zfindexMax() : (zfindex)ret);
     }
 
     virtual void regExpMatch(ZF_IN ZFRegExp *regExp,
                              ZF_OUT ZFRegExpResult &result,
                              ZF_IN const zfchar *src,
-                             ZF_IN_OPT zfindex srcLength = zfindexMax)
+                             ZF_IN_OPT zfindex srcLength = zfindexMax())
     {
         CRegexpT<zfchar> *regexp = ZFCastStatic(CRegexpT<zfchar> *, regExp->nativeRegExp());
 
-        MatchResult regexpResult = ((srcLength == zfindexMax)
+        MatchResult regexpResult = ((srcLength == zfindexMax())
             ? regexp->Match(src)
             : regexp->Match(src, (zfint)srcLength, 0, zfnull));
         this->fillResult(result, regexpResult);
@@ -76,11 +76,11 @@ public:
     virtual void regExpMatchExact(ZF_IN ZFRegExp *regExp,
                                   ZF_OUT ZFRegExpResult &result,
                                   ZF_IN const zfchar *src,
-                                  ZF_IN_OPT zfindex srcLength = zfindexMax)
+                                  ZF_IN_OPT zfindex srcLength = zfindexMax())
     {
         CRegexpT<zfchar> *regexp = ZFCastStatic(CRegexpT<zfchar> *, regExp->nativeRegExp());
 
-        MatchResult regexpResult = ((srcLength == zfindexMax)
+        MatchResult regexpResult = ((srcLength == zfindexMax())
             ? regexp->MatchExact(src)
             : regexp->MatchExact(src, (zfint)srcLength, zfnull));
         this->fillResult(result, regexpResult);
@@ -91,19 +91,19 @@ public:
                                ZF_OUT ZFRegExpResult &result,
                                ZF_IN const zfchar *src,
                                ZF_IN const zfchar *replacePattern,
-                               ZF_IN_OPT zfindex maxReplaceCount = zfindexMax,
-                               ZF_IN_OPT zfindex srcLength = zfindexMax)
+                               ZF_IN_OPT zfindex maxReplaceCount = zfindexMax(),
+                               ZF_IN_OPT zfindex srcLength = zfindexMax())
     {
         CRegexpT<zfchar> *regexp = ZFCastStatic(CRegexpT<zfchar> *, regExp->nativeRegExp());
 
         zfint dummy;
         MatchResult regexpResult;
         zfchar *pResult = regexp->Replace(
-            src, (zfint)((srcLength == zfindexMax) ? zfslen(src) : srcLength),
+            src, (zfint)((srcLength == zfindexMax()) ? zfslen(src) : srcLength),
             replacePattern, (zfint)zfslen(replacePattern),
             dummy,
             -1,
-            (zfint)((maxReplaceCount == zfindexMax) ? -1 : maxReplaceCount),
+            (zfint)((maxReplaceCount == zfindexMax()) ? -1 : maxReplaceCount),
             &regexpResult);
         if(pResult != zfnull)
         {
@@ -129,7 +129,7 @@ private:
             zfindexRange indexPair;
             indexPair.start = regexpResult.GetGroupStart((zfint)i);
             indexPair.count = regexpResult.GetGroupEnd((zfint)i) - indexPair.start;
-            if(indexPair.start != zfindexMax && indexPair.count > 0)
+            if(indexPair.start != zfindexMax() && indexPair.count > 0)
             {
                 result.namedGroups.add(indexPair);
             }

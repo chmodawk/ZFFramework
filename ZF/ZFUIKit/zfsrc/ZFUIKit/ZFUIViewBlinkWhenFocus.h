@@ -22,17 +22,17 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief filter to exclude certain view to be auto blinked, empty by default
  */
-extern ZF_ENV_EXPORT ZFFilterForZFObject ZFUIViewBlinkWhenFocusFilter;
+ZFEXPORT_VAR_DECLARE(ZFFilterForZFObject, ZFUIViewBlinkWhenFocusFilter)
 
 // ============================================================
 /**
  * @brief whether auto start #ZFUIViewBlinkWhenFocusAutoApplyStart, true by default
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewBlinkWhenFocusAutoApply;
+ZFEXPORT_VAR_DECLARE(zfbool, ZFUIViewBlinkWhenFocusAutoApply)
 /**
  * @brief default mask image for #ZFUIViewBlinkWhenFocusAutoApplyStart, an alpha white image by default
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIViewBlinkWhenFocusMaskImage;
+ZFEXPORT_VAR_DECLARE(zfautoObject, ZFUIViewBlinkWhenFocusMaskImage)
 
 /**
  * @brief util method to automatically blink focused view
@@ -43,26 +43,27 @@ extern ZF_ENV_EXPORT zfautoObject ZFUIViewBlinkWhenFocusMaskImage;
  * -  #ZFUIViewBlinkWhenFocusAutoApplyStop would be called automatically during #ZFFrameworkCleanup
  *   as level #ZFLevelZFFrameworkLow
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyStart(ZF_IN_OPT ZFUIImage *img = zfnull);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIViewBlinkWhenFocusAutoApplyStart,
+                        ZFMP_IN_OPT(ZFUIImage *, img, zfnull))
 /**
  * @brief see #ZFUIViewBlinkWhenFocusAutoApplyStart
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyStop(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewBlinkWhenFocusAutoApplyStop)
 /**
  * @brief see #ZFUIViewBlinkWhenFocusAutoApplyStart
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewBlinkWhenFocusAutoApplyStarted(void);
+ZFMETHOD_FUNC_DECLARE_0(zfbool, ZFUIViewBlinkWhenFocusAutoApplyStarted)
 
 /**
  * @brief temporary pause the auto blink
  *
  * can be called more than one time, but must be paired with #ZFUIViewBlinkWhenFocusAutoApplyResume
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyPause(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewBlinkWhenFocusAutoApplyPause)
 /** @brief see #ZFUIViewBlinkWhenFocusAutoApplyPause */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyResume(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewBlinkWhenFocusAutoApplyResume)
 /** @brief see #ZFUIViewBlinkWhenFocusAutoApplyPause */
-extern ZF_ENV_EXPORT zfindex ZFUIViewBlinkWhenFocusAutoApplyPaused(void);
+ZFMETHOD_FUNC_DECLARE_0(zfindex, ZFUIViewBlinkWhenFocusAutoApplyPaused)
 
 // ============================================================
 ZF_NAMESPACE_BEGIN(ZFGlobalEvent)
@@ -118,14 +119,15 @@ ZF_NAMESPACE_END(ZFGlobalEvent)
  *
  * the task would be scheduled and run in future even if time is 0
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyPauseForTime(ZF_IN zftimet time = zftimetZero);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIViewBlinkWhenFocusAutoApplyPauseForTime,
+                        ZFMP_IN_OPT(zftimet, time, zftimetZero()))
 /**
  * @brief cancel #ZFUIViewBlinkWhenFocusAutoApplyPauseForTime
  *
  * typically you should not call this method manually,
  * which would cancel all the task that started by #ZFUIViewBlinkWhenFocusAutoApplyPauseForTime
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlinkWhenFocusAutoApplyPauseForTimeCancel(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewBlinkWhenFocusAutoApplyPauseForTimeCancel)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIViewBlinkWhenFocus_h_

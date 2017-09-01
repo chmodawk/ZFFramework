@@ -14,12 +14,12 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath)
 {
     if(resPath == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFRJ:%s"), resPath);
     zfautoObject cached = ZFResCache::instance()->cacheAccess(key);
-    if(cached != zfautoObjectNull)
+    if(cached != zfautoObjectNull())
     {
         return cached;
     }
@@ -27,12 +27,12 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath)
     ZFSerializableData data;
     if(!ZFJsonParse(data, ZFInputCallbackForResFile(resPath)))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     cached = ZFObjectFromSerializableData(data);
-    if(cached == zfautoObjectNull)
+    if(cached == zfautoObjectNull())
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     ZFResCache::instance()->cacheSave(key, cached.toObject());
     return cached;

@@ -82,10 +82,10 @@ ZFMETHOD_FUNC_DEFINE_2(zfflags, zfCrc32Calc,
 }
 ZFMETHOD_FUNC_DEFINE_3(zfflags, zfCrc32Calc,
                        ZFMP_IN(const zfchar *, src),
-                       ZFMP_IN_OPT(zfindex, len, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, len, zfindexMax()),
                        ZFMP_IN_OPT(zfflags, prevResult, ZFCrc32ValueZero()))
 {
-    return zfCrc32Calc((const void *)src, ((len == zfindexMax) ? zfslen(src) : len), prevResult);
+    return zfCrc32Calc((const void *)src, ((len == zfindexMax()) ? zfslen(src) : len), prevResult);
 }
 
 ZF_NAMESPACE_GLOBAL_END

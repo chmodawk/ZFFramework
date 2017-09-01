@@ -138,7 +138,7 @@ public:
     , _ZFP_viewUIEnableTree(zftrue)
     , _ZFP_mousePressed(zffalse)
     , _ZFP_mouseEnterFlag(zffalse)
-    , _ZFP_mouseMoveLastPoint(ZFUIPointZero)
+    , _ZFP_mouseMoveLastPoint(ZFUIPointZero())
     , _ZFP_layoutRequested(zftrue)
     {
         this->setLayout(_ZFP_layoutProxy);

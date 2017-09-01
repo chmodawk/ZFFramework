@@ -87,7 +87,7 @@ private:
     static void _nextValue(ZF_IN_OUT ZFUIContentScaleTypeEnum &value)
     {
         zfindex index = ZFUIContentScaleType::EnumIndexForValue(value);
-        zfCoreAssert(index != zfindexMax);
+        zfCoreAssert(index != zfindexMax());
         ++index;
         if(index >= ZFUIContentScaleType::EnumCount())
         {

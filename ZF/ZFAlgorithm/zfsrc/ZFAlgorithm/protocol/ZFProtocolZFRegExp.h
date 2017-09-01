@@ -46,12 +46,12 @@ public:
     virtual void regExpMatch(ZF_IN ZFRegExp *regExp,
                              ZF_OUT ZFRegExpResult &result,
                              ZF_IN const zfchar *src,
-                             ZF_IN_OPT zfindex srcLength = zfindexMax) zfpurevirtual;
+                             ZF_IN_OPT zfindex srcLength = zfindexMax()) zfpurevirtual;
     /** @brief see ZFRegExp::regExpMatchExact */
     virtual void regExpMatchExact(ZF_IN ZFRegExp *regExp,
                                   ZF_OUT ZFRegExpResult &result,
                                   ZF_IN const zfchar *src,
-                                  ZF_IN_OPT zfindex srcLength = zfindexMax) zfpurevirtual;
+                                  ZF_IN_OPT zfindex srcLength = zfindexMax()) zfpurevirtual;
 
     /** @brief see ZFRegExp::regExpReplace */
     virtual void regExpReplace(ZF_IN ZFRegExp *regExp,
@@ -59,8 +59,8 @@ public:
                                ZF_OUT ZFRegExpResult &result,
                                ZF_IN const zfchar *src,
                                ZF_IN const zfchar *replacePattern,
-                               ZF_IN_OPT zfindex maxReplaceCount = zfindexMax,
-                               ZF_IN_OPT zfindex srcLength = zfindexMax) zfpurevirtual;
+                               ZF_IN_OPT zfindex maxReplaceCount = zfindexMax(),
+                               ZF_IN_OPT zfindex srcLength = zfindexMax()) zfpurevirtual;
 ZFPROTOCOL_INTERFACE_END(ZFRegExp)
 
 ZF_NAMESPACE_GLOBAL_END

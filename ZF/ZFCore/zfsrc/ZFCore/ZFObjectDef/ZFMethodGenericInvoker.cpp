@@ -26,7 +26,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFMethodGenericInvokerDefaultParamInit)
     zfReleaseWithoutLeakTest(_ZFP_ZFMethodGenericInvokerDefaultParamRef);
     _ZFP_ZFMethodGenericInvokerDefaultParamRef = zfnull;
 
-    _ZFP_ZFMethodGenericInvokerDefaultParamHolderRef = zfautoObjectNull;
+    _ZFP_ZFMethodGenericInvokerDefaultParamHolderRef = zfautoObjectNull();
 }
 ZF_GLOBAL_INITIALIZER_END(ZFMethodGenericInvokerDefaultParamInit)
 

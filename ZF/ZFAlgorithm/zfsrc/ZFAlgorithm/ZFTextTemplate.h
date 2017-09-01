@@ -24,7 +24,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * data would be applied accorrding to #ZFTextTemplateParam,
  * and result would be written to output,
  * return newly size written if success,
- * or zfindexMax if failed,
+ * or zfindexMax() if failed,
  * you may pass an invalid output callback to calculate result size\n
  * \n
  * methods:
@@ -91,7 +91,7 @@ ZFMETHOD_FUNC_DECLARE_4(zfindex, ZFTextTemplateApply,
                         ZFMP_IN(const ZFTextTemplateParam &, param),
                         ZFMP_IN(const ZFOutputCallback &, output),
                         ZFMP_IN(const zfchar *, data),
-                        ZFMP_IN_OPT(zfindex, dataSize, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, dataSize, zfindexMax()))
 /** @brief see #ZFTextTemplateApply */
 ZFMETHOD_FUNC_DECLARE_3(zfindex, ZFTextTemplateApply,
                         ZFMP_IN(const ZFTextTemplateParam &, param),

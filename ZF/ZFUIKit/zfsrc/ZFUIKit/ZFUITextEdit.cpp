@@ -115,7 +115,7 @@ ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUITextEdit, ZFString *, textContent)
     ZFString *v = propertyValue;
     if(v != zfnull && !v->isEmpty() && !this->textShouldChange(v))
     {
-        propertyValue = zfautoObjectNull;
+        propertyValue = zfautoObjectNull();
     }
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFString *, textContent)
@@ -244,9 +244,10 @@ void ZFUITextEdit::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     }
 }
 
-ZFUISize ZFUITextEdit::measureTextEdit(ZF_IN_OPT const ZFUISize &sizeHint /* = ZFUISizeZero */)
+ZFMETHOD_DEFINE_1(ZFUITextEdit, ZFUISize, measureTextEdit,
+                  ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()))
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     ZFUISizeApplyScaleReversely(ret, d->impl->measureNativeTextEdit(this,
         ZFUISizeApplyScale(ZFUIViewLayoutParam::sizeHintOffset(sizeHint, ZFUISizeMake(
                     0 - ZFUIMarginGetX(this->nativeImplViewMargin()),
@@ -352,7 +353,8 @@ void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyReturnClicked(void)
             return ;
     }
 }
-zfbool ZFUITextEdit::textShouldChange(ZF_IN ZFString *newText)
+ZFMETHOD_DEFINE_1(ZFUITextEdit, zfbool, textShouldChange,
+                  ZFMP_IN(ZFString *, newText))
 {
     zfbool shouldChange = zftrue;
     this->textOnChangeCheck(newText, shouldChange);
@@ -365,15 +367,15 @@ zfbool ZFUITextEdit::textShouldChange(ZF_IN ZFString *newText)
         return zftrue;
     }
 }
-void ZFUITextEdit::textEditBegin(void)
+ZFMETHOD_DEFINE_0(ZFUITextEdit, void, textEditBegin)
 {
     d->impl->textEditBegin(this);
 }
-void ZFUITextEdit::textEditEnd(void)
+ZFMETHOD_DEFINE_0(ZFUITextEdit, void, textEditEnd)
 {
     d->impl->textEditEnd(this);
 }
-zfbool ZFUITextEdit::textEditing(void)
+ZFMETHOD_DEFINE_0(ZFUITextEdit, zfbool, textEditing)
 {
     return d->textEditing;
 }

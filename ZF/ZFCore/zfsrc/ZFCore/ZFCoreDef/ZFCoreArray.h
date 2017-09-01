@@ -134,11 +134,11 @@ public:
      */
     void objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
                               ZF_IN typename ZFCoreInfoGetter<T_Element>::InfoGetter elementInfoGetter,
-                              ZF_IN_OPT zfindex maxCount = zfindexMax,
+                              ZF_IN_OPT zfindex maxCount = zfindexMax(),
                               ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault()) const;
     /** @brief see #objectInfoOfContentT */
     zfstring objectInfoOfContent(ZF_IN typename ZFCoreInfoGetter<T_Element>::InfoGetter elementInfoGetter,
-                                 ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                 ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                  ZF_IN_OPT const ZFTokenForContainer &token = ZFTokenForContainerDefault()) const
     {
         zfstring ret;
@@ -354,7 +354,7 @@ public:
     void sort(ZF_IN typename ZFComparer<T_Element>::Comparer elementComparer,
               ZF_IN_OPT zfbool ascending = zftrue,
               ZF_IN_OPT zfindex start = 0,
-              ZF_IN_OPT zfindex count = zfindexMax);
+              ZF_IN_OPT zfindex count = zfindexMax());
 
     // ============================================================
     // iterator

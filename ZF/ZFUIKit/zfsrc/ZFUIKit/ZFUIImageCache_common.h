@@ -28,7 +28,7 @@ ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
  */
 ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
                         ZFMP_IN(const ZFUIColor &, color),
-                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
+                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageCache_common_h_

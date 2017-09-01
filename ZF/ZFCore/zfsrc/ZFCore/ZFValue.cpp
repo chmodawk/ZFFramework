@@ -222,7 +222,7 @@ zfbool ZFValue::serializableOnSerializeFromData(ZF_IN const ZFSerializableData &
             const zfchar *valueString = ZFSerializableUtil::checkAttribute(serializableData, ZFSerializableKeyword_ZFValue_value);
             if(valueString != zfnull)
             {
-                if(!ZFSerializableDataFromString(v, valueString, zfindexMax, outErrorHint))
+                if(!ZFSerializableDataFromString(v, valueString, zfindexMax(), outErrorHint))
                 {
                     if(outErrorPos != zfnull)
                     {
@@ -366,7 +366,7 @@ zfidentity ZFValue::objectHash(void)
         _ZFP_ZFValue_hash_switch_case(identity, zfidentity, zft_zfidentity)
         default:
             zfCoreCriticalShouldNotGoHere();
-            return zfidentityZero;
+            return zfidentityZero();
     }
     return (zfidentity)~ret;
 }

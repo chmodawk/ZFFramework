@@ -113,7 +113,7 @@ public:
                                      ZF_IN ZFUIView *child,
                                      ZF_IN ZFUIViewLayoutParam *lp)
     {
-        ZFUIRect ret = ZFUIRectZero;
+        ZFUIRect ret = ZFUIRectZero();
         ZFUIViewLayoutParam::layoutParamApply(ret, rect, child, lp);
         return ret;
     }
@@ -121,14 +121,16 @@ public:
     /**
      * @brief util method to apply sizeHint accorrding sizeParam
      */
-    static void sizeHintApply(ZF_OUT zfint &ret,
-                              ZF_IN zfint size,
-                              ZF_IN zfint sizeHint,
-                              ZF_IN ZFUISizeTypeEnum sizeParam);
+    ZFMETHOD_DECLARE_STATIC_4(void, sizeHintApply,
+                              ZFMP_OUT(zfint &, ret),
+                              ZFMP_IN(zfint, size),
+                              ZFMP_IN(zfint, sizeHint),
+                              ZFMP_IN(ZFUISizeTypeEnum, sizeParam));
     /** @brief see #sizeHintApply */
-    static zfint sizeHintApply(ZF_IN zfint size,
-                               ZF_IN zfint sizeHint,
-                               ZF_IN ZFUISizeTypeEnum sizeParam)
+    ZFMETHOD_DECLARE_STATIC_3(zfint, sizeHintApply,
+                              ZFMP_IN(zfint, size),
+                              ZFMP_IN(zfint, sizeHint),
+                              ZFMP_IN(ZFUISizeTypeEnum, sizeParam))
     {
         zfint ret = size;
         ZFUIViewLayoutParam::sizeHintApply(ret, size, sizeHint, sizeParam);
@@ -138,16 +140,18 @@ public:
     /**
      * @brief util method to apply sizeHint accorrding sizeParam
      */
-    static void sizeHintApply(ZF_OUT ZFUISize &ret,
-                              ZF_IN const ZFUISize &size,
-                              ZF_IN const ZFUISize &sizeHint,
-                              ZF_IN const ZFUISizeParam &sizeParam);
+    ZFMETHOD_DECLARE_STATIC_4(void, sizeHintApply,
+                              ZFMP_OUT(ZFUISize &, ret),
+                              ZFMP_IN(const ZFUISize &, size),
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(const ZFUISizeParam &, sizeParam));
     /** @brief see #sizeHintApply */
-    static ZFUISize sizeHintApply(ZF_IN const ZFUISize &size,
-                                  ZF_IN const ZFUISize &sizeHint,
-                                  ZF_IN const ZFUISizeParam &sizeParam)
+    ZFMETHOD_DECLARE_STATIC_3(ZFUISize, sizeHintApply,
+                              ZFMP_IN(const ZFUISize &, size),
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(const ZFUISizeParam &, sizeParam))
     {
-        ZFUISize ret = ZFUISizeZero;
+        ZFUISize ret = ZFUISizeZero();
         ZFUIViewLayoutParam::sizeHintApply(ret, size, sizeHint, sizeParam);
         return ret;
     }
@@ -155,12 +159,14 @@ public:
     /**
      * @brief merge two size hint
      */
-    static void sizeHintMerge(ZF_OUT zfint &ret,
-                              ZF_IN zfint sizeHint0,
-                              ZF_IN zfint sizeHint1);
+    ZFMETHOD_DECLARE_STATIC_3(void, sizeHintMerge,
+                              ZFMP_OUT(zfint &, ret),
+                              ZFMP_IN(zfint, sizeHint0),
+                              ZFMP_IN(zfint, sizeHint1));
     /** @brief see #sizeHintMerge */
-    static zfint sizeHintMerge(ZF_IN zfint sizeHint0,
-                               ZF_IN zfint sizeHint1)
+    ZFMETHOD_DECLARE_STATIC_2(zfint, sizeHintMerge,
+                              ZFMP_IN(zfint, sizeHint0),
+                              ZFMP_IN(zfint, sizeHint1))
     {
         zfint ret = 0;
         ZFUIViewLayoutParam::sizeHintMerge(ret, sizeHint0, sizeHint1);
@@ -170,14 +176,16 @@ public:
     /**
      * @brief merge two size hint
      */
-    static void sizeHintMerge(ZF_OUT ZFUISize &ret,
-                              ZF_IN const ZFUISize &sizeHint0,
-                              ZF_IN const ZFUISize &sizeHint1);
+    ZFMETHOD_DECLARE_STATIC_3(void, sizeHintMerge,
+                              ZFMP_OUT(ZFUISize &, ret),
+                              ZFMP_IN(const ZFUISize &, sizeHint0),
+                              ZFMP_IN(const ZFUISize &, sizeHint1));
     /** @brief see #sizeHintMerge */
-    static ZFUISize sizeHintMerge(ZF_IN const ZFUISize &sizeHint0,
-                                  ZF_IN const ZFUISize &sizeHint1)
+    ZFMETHOD_DECLARE_STATIC_2(ZFUISize, sizeHintMerge,
+                              ZFMP_IN(const ZFUISize &, sizeHint0),
+                              ZFMP_IN(const ZFUISize &, sizeHint1))
     {
-        ZFUISize ret = ZFUISizeZero;
+        ZFUISize ret = ZFUISizeZero();
         ZFUIViewLayoutParam::sizeHintMerge(ret, sizeHint0, sizeHint1);
         return ret;
     }
@@ -185,12 +193,14 @@ public:
     /**
      * @brief safely increase or decrease size hint, do nothing if old one is no limit
      */
-    static void sizeHintOffset(ZF_OUT zfint &ret,
-                               ZF_IN zfint sizeHint,
-                               ZF_IN zfint offset);
+    ZFMETHOD_DECLARE_STATIC_3(void, sizeHintOffset,
+                              ZFMP_OUT(zfint &, ret),
+                              ZFMP_IN(zfint, sizeHint),
+                              ZFMP_IN(zfint, offset));
     /** @brief see #sizeHintOffset */
-    static zfint sizeHintOffset(ZF_IN zfint sizeHint,
-                                ZF_IN zfint offset)
+    ZFMETHOD_DECLARE_STATIC_2(zfint, sizeHintOffset,
+                              ZFMP_IN(zfint, sizeHint),
+                              ZFMP_IN(zfint, offset))
     {
         zfint ret = 0;
         ZFUIViewLayoutParam::sizeHintOffset(ret, sizeHint, offset);
@@ -200,14 +210,16 @@ public:
     /**
      * @brief safely increase or decrease size hint, do nothing if old one is no limit
      */
-    static void sizeHintOffset(ZF_OUT ZFUISize &ret,
-                               ZF_IN const ZFUISize &sizeHint,
-                               ZF_IN const ZFUISize &offset);
+    ZFMETHOD_DECLARE_STATIC_3(void, sizeHintOffset,
+                              ZFMP_OUT(ZFUISize &, ret),
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(const ZFUISize &, offset));
     /** @brief see #sizeHintOffset */
-    static ZFUISize sizeHintOffset(ZF_IN const ZFUISize &sizeHint,
-                                   ZF_IN const ZFUISize &offset)
+    ZFMETHOD_DECLARE_STATIC_2(ZFUISize, sizeHintOffset,
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(const ZFUISize &, offset))
     {
-        ZFUISize ret = ZFUISizeZero;
+        ZFUISize ret = ZFUISizeZero();
         ZFUIViewLayoutParam::sizeHintOffset(ret, sizeHint, offset);
         return ret;
     }
@@ -215,14 +227,16 @@ public:
     /**
      * @brief safely increase or decrease size hint, do nothing if old one is no limit
      */
-    static void sizeHintOffset(ZF_OUT ZFUISize &ret,
-                               ZF_IN const ZFUISize &sizeHint,
-                               ZF_IN zfint offset);
+    ZFMETHOD_DECLARE_STATIC_3(void, sizeHintOffset,
+                              ZFMP_OUT(ZFUISize &, ret),
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(zfint, offset));
     /** @brief see #sizeHintOffset */
-    static ZFUISize sizeHintOffset(ZF_IN const ZFUISize &sizeHint,
-                                   ZF_IN zfint offset)
+    ZFMETHOD_DECLARE_STATIC_2(ZFUISize, sizeHintOffset,
+                              ZFMP_IN(const ZFUISize &, sizeHint),
+                              ZFMP_IN(zfint, offset))
     {
-        ZFUISize ret = ZFUISizeZero;
+        ZFUISize ret = ZFUISizeZero();
         ZFUIViewLayoutParam::sizeHintOffset(ret, sizeHint, offset);
         return ret;
     }
@@ -240,7 +254,7 @@ public:
      * @brief see #ZFUIViewLayoutParam, default is #ZFUISizeInvalid
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUISize, sizeHint,
-                                ZFPropertyInitValue(ZFUISizeInvalid))
+                                ZFPropertyInitValue(ZFUISizeInvalid()))
     /**
      * @brief see #ZFUIViewLayoutParam, default is #ZFUISizeParamWrapWidthWrapHeight
      */
@@ -255,7 +269,7 @@ public:
      * @brief see #ZFUIViewLayoutParam, default is (0, 0, 0, 0)
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIMargin, layoutMargin,
-                                ZFPropertyInitValue(ZFUIMarginZero))
+                                ZFPropertyInitValue(ZFUIMarginZero()))
 };
 
 ZF_NAMESPACE_GLOBAL_END

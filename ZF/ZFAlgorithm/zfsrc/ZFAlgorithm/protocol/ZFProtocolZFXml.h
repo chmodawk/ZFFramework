@@ -33,7 +33,7 @@ public:
      * -  CDATA for text node
      */
     virtual ZFXmlItem xmlParse(ZF_IN const zfchar *src,
-                               ZF_IN_OPT zfindex size = zfindexMax) zfpurevirtual;
+                               ZF_IN_OPT zfindex size = zfindexMax()) zfpurevirtual;
     /**
      * @brief parse xml document
      */

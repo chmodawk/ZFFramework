@@ -203,7 +203,7 @@ public:
     {
         if(p == 0)
         {
-            v.operator = (zfautoObjectNull);
+            v.operator = (zfautoObjectNull());
         }
     }
     static zfbool equal(ZF_IN const zfautoObject &v, ZF_IN T const &p)

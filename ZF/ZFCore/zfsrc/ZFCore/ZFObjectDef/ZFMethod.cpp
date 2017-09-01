@@ -33,8 +33,8 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
     this->_ZFP_ZFMethod_returnTypeName = returnTypeName;
     this->_ZFP_ZFMethod_paramCount = 0;
 
-    this->_ZFP_ZFMethod_methodIsStatic = (zfstringFind(methodIsWhatType, _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic)) != zfindexMax);
-    this->_ZFP_ZFMethod_methodIsVirtual = (zfstringFind(methodIsWhatType, _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsVirtual)) != zfindexMax);
+    this->_ZFP_ZFMethod_methodIsStatic = (zfstringFind(methodIsWhatType, _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic)) != zfindexMax());
+    this->_ZFP_ZFMethod_methodIsVirtual = (zfstringFind(methodIsWhatType, _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsVirtual)) != zfindexMax());
 
     va_list vaList;
     va_start(vaList, returnTypeName);
@@ -54,7 +54,7 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
 
         if(_ZFP_ZFMethodHasDefaultParam(paramDefault))
         {
-            if(this->_ZFP_ZFMethod_paramDefaultBeginIndex == zfindexMax)
+            if(this->_ZFP_ZFMethod_paramDefaultBeginIndex == zfindexMax())
             {
                 this->_ZFP_ZFMethod_paramDefaultBeginIndex = this->_ZFP_ZFMethod_paramCount;
             }
@@ -96,7 +96,7 @@ ZFMethod::ZFMethod(void)
 , _ZFP_ZFMethod_paramTypeNameList()
 , _ZFP_ZFMethod_paramDefaultNameList()
 , _ZFP_ZFMethod_paramDefaultValueAccessCallbackList()
-, _ZFP_ZFMethod_paramDefaultBeginIndex(zfindexMax)
+, _ZFP_ZFMethod_paramDefaultBeginIndex(zfindexMax())
 , _ZFP_ZFMethod_methodOwnerClass(zfnull)
 , _ZFP_ZFMethod_privilegeType(ZFMethodPrivilegeTypePublic)
 , _ZFP_ZFMethod_methodIsStatic(zffalse)

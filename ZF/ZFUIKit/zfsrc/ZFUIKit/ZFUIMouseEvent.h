@@ -61,7 +61,7 @@ zffinal zfclass ZF_ENV_EXPORT ZFUIMouseEvent : zfextends ZFUIEvent
 
 protected:
     ZFUIMouseEvent(void)
-    : mouseId(zfidentityInvalid)
+    : mouseId(zfidentityInvalid())
     , mouseAction(ZFUIMouseAction::e_MouseDown)
     , mousePoint()
     , mouseButton(ZFUIMouseButton::e_MouseButtonLeft)

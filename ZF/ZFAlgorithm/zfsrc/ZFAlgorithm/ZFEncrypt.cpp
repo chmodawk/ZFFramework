@@ -80,7 +80,7 @@ ZFOBJECT_REGISTER(ZFEncrypt)
 
 zfindex ZFEncrypt::encryptCalcSize(ZF_IN zfindex srcLen)
 {
-    if(srcLen == zfindexMax)
+    if(srcLen == zfindexMax())
     {
         return 0;
     }
@@ -88,7 +88,7 @@ zfindex ZFEncrypt::encryptCalcSize(ZF_IN zfindex srcLen)
 }
 zfindex ZFEncrypt::decryptCalcSize(ZF_IN zfindex srcLen)
 {
-    if(srcLen == zfindexMax)
+    if(srcLen == zfindexMax())
     {
         return 0;
     }

@@ -45,7 +45,7 @@ zfbool ZFAnimationTimeLineProperty::serializableOnSerializeFromData(ZF_IN const 
             {
                 return zffalse;
             }
-            if(step == zfautoObjectNull)
+            if(step == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     zfText("invalid step: %s"), ZFObjectInfoOfInstance(step.toObject()).cString());
@@ -134,7 +134,7 @@ zfidentity ZFAnimationTimeLineProperty::objectHash(void)
 {
     return zfidentityHash(zfsuper::objectHash()
         , d->steps.count()
-        , (d->steps.isEmpty() ? zfidentityZero : d->steps[0]->objectHash())
+        , (d->steps.isEmpty() ? zfidentityZero() : d->steps[0]->objectHash())
         );
 }
 ZFCompareResult ZFAnimationTimeLineProperty::objectCompare(ZF_IN ZFObject *anotherObj)
@@ -172,7 +172,7 @@ void ZFAnimationTimeLineProperty::stepRemove(ZF_IN ZFTimeLineProperty *step)
 {
     zfCoreAssert(!this->aniRunning());
     zfindex index = d->steps.find(step, ZFComparerCheckEqual);
-    if(index != zfindexMax)
+    if(index != zfindexMax())
     {
         d->steps.remove(index);
         zfRelease(step);

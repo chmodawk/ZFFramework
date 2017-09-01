@@ -37,7 +37,7 @@ public:
         {
             owner->d->loopIndex = 0;
             zfbool unableToMove = (!owner->d->loopRunFlag || owner->d->loopIndex >= owner->actionList.count());
-            if(unableToMove && owner->actionList.find(ZF2048AppAutoMoveAction::e_Random) != zfindexMax && owner->game->gameCanMove())
+            if(unableToMove && owner->actionList.find(ZF2048AppAutoMoveAction::e_Random) != zfindexMax() && owner->game->gameCanMove())
             {
                 unableToMove = zffalse;
             }

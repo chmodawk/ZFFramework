@@ -21,7 +21,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief filter to exclude certain view to be animated by #ZFUIViewStateAniStart, empty by default
  */
-extern ZF_ENV_EXPORT ZFFilterForZFObject ZFUIViewStateAniFilter;
+ZFEXPORT_VAR_DECLARE(ZFFilterForZFObject, ZFUIViewStateAniFilter)
 
 // ============================================================
 /**
@@ -47,11 +47,11 @@ extern ZF_ENV_EXPORT ZFFilterForZFObject ZFUIViewStateAniFilter;
  * -  #ZFUIViewStateAniImpl::EventStateAniViewAniStart
  * -  #ZFUIViewStateAniImpl::EventStateAniViewAniStop
  */
-extern ZF_ENV_EXPORT void ZFUIViewStateAniStart(void);
+ZFMETHOD_FUNC_DECLARE_0(void, ZFUIViewStateAniStart)
 /**
  * @brief whether #ZFUIViewStateAniStart started
  */
-extern ZF_ENV_EXPORT zfbool ZFUIViewStateAniStarted(void);
+ZFMETHOD_FUNC_DECLARE_0(zfbool, ZFUIViewStateAniStarted)
 
 // ============================================================
 ZF_NAMESPACE_BEGIN(ZFUIViewStateAniImpl)

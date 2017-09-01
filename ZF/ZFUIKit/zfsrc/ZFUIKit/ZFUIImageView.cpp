@@ -132,7 +132,7 @@ void ZFUIImageView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                     ZF_IN const ZFUISize &sizeHint,
                                     ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ret = ((this->imageContent() != zfnull) ? this->imageContent()->imageSize() : ZFUISizeZero);
+    ret = ((this->imageContent() != zfnull) ? this->imageContent()->imageSize() : ZFUISizeZero());
 }
 
 ZF_NAMESPACE_GLOBAL_END

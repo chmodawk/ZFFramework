@@ -106,13 +106,13 @@ public:
                                 ZFPropertyInitValue(zftrue))
 
     /**
-     * @brief number of times to repeat, zfindexMax by default
+     * @brief number of times to repeat, zfindexMax() by default
      *
      * -  0 means no repeat, run once and stop
-     * -  zfindexMax means repeat until stop manually
+     * -  zfindexMax() means repeat until stop manually
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, aniRepeatCount,
-                                ZFPropertyInitValue(zfindexMax))
+                                ZFPropertyInitValue(zfindexMax()))
 
     /**
      * @brief ani frames, holds #ZFUIAnimatedImageAniFrame
@@ -229,7 +229,7 @@ public:
     /**
      * @brief current ani frame index
      *
-     * may be zfindexMax if not started
+     * may be zfindexMax() if not started
      */
     virtual zfindex aniFrameIndexCurrent(void);
 

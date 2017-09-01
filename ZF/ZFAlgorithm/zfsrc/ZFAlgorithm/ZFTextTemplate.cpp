@@ -58,17 +58,17 @@ ZFMETHOD_FUNC_DEFINE_4(zfindex, ZFTextTemplateApply,
                        ZFMP_IN(const ZFTextTemplateParam &, param),
                        ZFMP_IN(const ZFOutputCallback &, output),
                        ZFMP_IN(const zfchar *, data),
-                       ZFMP_IN_OPT(zfindex, dataSize, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, dataSize, zfindexMax()))
 {
     if(data == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
 
     zfindex condCount = 0;
     zfindex size = 0;
     const zfchar *p = data;
-    const zfchar *pEnd = (data + ((dataSize == zfindexMax) ? zfslen(data) : dataSize));
+    const zfchar *pEnd = (data + ((dataSize == zfindexMax()) ? zfslen(data) : dataSize));
     ZFCoreMap stateMap;
     do
     {
@@ -131,7 +131,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfindex, ZFTextTemplateApply,
     ZFBuffer buffer = ZFInputCallbackReadToBuffer(input);
     if(buffer.buffer() == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return ZFTextTemplateApply(param, output, buffer.bufferAsString(), buffer.bufferAsStringLength());
 }
@@ -142,13 +142,13 @@ static zfindex _ZFP_ZFTextTemplateApply_keyLength(ZF_IN const zfchar *pEnd,
 {
     if(*p == ' ' || *p == '\t' || *p == _ZFP_ZFTextTemplate_tagR)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     const zfchar *t = p;
     while(t < pEnd && *t != _ZFP_ZFTextTemplate_tagR) {++t;}
     if(t >= pEnd)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return (t - p);
 }
@@ -167,7 +167,7 @@ static void _ZFP_ZFTextTemplateApply_replaceData(ZF_IN const ZFTextTemplateParam
     }
     ++p;
     zfindex keySize = _ZFP_ZFTextTemplateApply_keyLength(pEnd, p);
-    if(keySize == zfindexMax)
+    if(keySize == zfindexMax())
     {
         return ;
     }
@@ -212,7 +212,7 @@ static void _ZFP_ZFTextTemplateApply_enableData(ZF_IN const ZFTextTemplateParam 
     }
     ++p;
     zfindex keySize = _ZFP_ZFTextTemplateApply_keyLength(pEnd, p);
-    if(keySize == zfindexMax)
+    if(keySize == zfindexMax())
     {
         return ;
     }
@@ -271,7 +271,7 @@ static void _ZFP_ZFTextTemplateApply_enableData(ZF_IN const ZFTextTemplateParam 
         }
         ++p;
         zfindex keySize = _ZFP_ZFTextTemplateApply_keyLength(pEnd, p);
-        if(keySize == zfindexMax)
+        if(keySize == zfindexMax())
         {
             continue;
         }
@@ -307,7 +307,7 @@ static void _ZFP_ZFTextTemplateApply_indexData(ZF_IN const ZFTextTemplateParam &
     }
     ++p;
     zfindex keySize = _ZFP_ZFTextTemplateApply_keyLength(pEnd, p);
-    if(keySize == zfindexMax)
+    if(keySize == zfindexMax())
     {
         return ;
     }
@@ -387,7 +387,7 @@ static void _ZFP_ZFTextTemplateApply_indexData_reset(ZF_IN const ZFTextTemplateP
     }
     ++p;
     zfindex keySize = _ZFP_ZFTextTemplateApply_keyLength(pEnd, p);
-    if(keySize == zfindexMax)
+    if(keySize == zfindexMax())
     {
         return ;
     }

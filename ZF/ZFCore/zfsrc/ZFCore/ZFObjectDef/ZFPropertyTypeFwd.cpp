@@ -44,7 +44,7 @@ zfbool ZFPropertyTypeIdDataBase::propertyWrapperToSerializableData(ZF_OUT ZFSeri
 }
 zfbool ZFPropertyTypeIdDataBase::propertyWrapperFromString(ZF_OUT zfautoObject &v,
                                                            ZF_IN const zfchar *src,
-                                                           ZF_IN_OPT zfindex srcLen /* = zfindexMax */) const
+                                                           ZF_IN_OPT zfindex srcLen /* = zfindexMax() */) const
 {
     this->propertyWrapper(v);
     ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, v);

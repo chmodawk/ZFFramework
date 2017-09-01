@@ -14,26 +14,26 @@ ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_method, data)
 {
     if(data == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     ZFCoreArrayPOD<zfindexRange> pos;
     if(!zfCoreDataPairSplitString(
             pos, zfHint("desiredCountOrIndexMax")3,
-            data, zfHint("srcLen")zfindexMax,
+            data, zfHint("srcLen")zfindexMax(),
             zfHint("separatorTokens")zfText(":"),
             zfHint("leftToken")zfnull, zfHint("rightToken")zfnull,
             zfHint("allowEmptyItem")zftrue)
        || pos[0].count == 0 || pos[1].count != 0 || pos[2].count == 0)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     const ZFClass *cls = ZFClass::classForName(zfstring(data + pos[0].start, pos[0].count));
-    if(cls == zfnull) {return zfautoObjectNull;}
+    if(cls == zfnull) {return zfautoObjectNull();}
 
     const ZFMethod *method = cls->methodForName(zfstring(data + pos[2].start, pos[2].count));
-    if(method == zfnull || !method->methodIsStatic()) {return zfautoObjectNull;}
+    if(method == zfnull || !method->methodIsStatic()) {return zfautoObjectNull();}
 
     return method->executeStatic<zfautoObject>();
 }

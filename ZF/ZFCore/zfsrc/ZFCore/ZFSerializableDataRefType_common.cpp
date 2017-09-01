@@ -15,8 +15,8 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_value)
     ZFCoreArrayPOD<zfindexRange> pos;
     zfCoreDataPairSplitString(
         pos,
-        zfindexMax,
-        refData, zfindexMax,
+        zfindexMax(),
+        refData, zfindexMax(),
         zfText("|"),
         zfText("["), zfText("]")
         );
@@ -35,7 +35,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_value)
     zfCoreDataDecode(creatorData, zfstring(refData + pos[1].start, pos[1].count));
 
     zfautoObject owner = ZFObjectCreate(creatorType, creatorData);
-    if(owner == zfautoObjectNull)
+    if(owner == zfautoObjectNull())
     {
         ZFSerializableUtil::errorOccurred(outErrorHint,
             zfText("failed to serialize object from \"%s\" with data \"%s\""),
@@ -54,8 +54,8 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_value)
     pos.removeAll();
     const zfchar *propertyData = refData + propertyDataIndex;
     if(!zfCoreDataPairSplitString(
-            pos, zfindexMax,
-            propertyData, zfindexMax,
+            pos, zfindexMax(),
+            propertyData, zfindexMax(),
             zfText(":"),
             zfnull, zfnull,
             zftrue

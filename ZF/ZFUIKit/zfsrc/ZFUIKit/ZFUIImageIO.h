@@ -95,7 +95,7 @@ ZFMETHOD_FUNC_DECLARE_1(zfautoObject, ZFUIImageLoadFromInput,
  */
 ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIImageLoadFromColor,
                         ZFMP_IN(const ZFUIColor &, color),
-                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
+                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIImageIO_h_

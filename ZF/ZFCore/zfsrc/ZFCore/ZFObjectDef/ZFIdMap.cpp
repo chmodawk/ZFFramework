@@ -39,7 +39,7 @@ public:
 public:
     _ZFP_ZFIdMapData(void)
     : refCount(1)
-    , idValue(zfidentityInvalid)
+    , idValue(zfidentityInvalid())
     , idName()
     , ZFCoreLibDestroyFlag()
     {
@@ -151,7 +151,7 @@ zfidentity ZFIdMapGetId(ZF_IN const zfchar *moduleName, ZF_IN const zfchar *idNa
     {
         return it->second->idValue;
     }
-    return zfidentityInvalid;
+    return zfidentityInvalid();
 }
 void ZFIdMapGetAll(ZF_IN const zfchar *moduleName, ZF_OUT ZFCoreArrayPOD<zfidentity> &idValues, ZF_OUT ZFCoreArrayPOD<const zfchar *> &idNames)
 {

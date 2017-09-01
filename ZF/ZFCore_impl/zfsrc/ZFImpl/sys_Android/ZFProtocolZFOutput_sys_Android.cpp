@@ -47,12 +47,12 @@ public:
     {
         zfstringA tmp = s;
         this->checkOutput(tmp);
-        return zfindexMax;
+        return zfindexMax();
     }
-    virtual zfindex outputLog(ZF_IN const zfchar *s, ZF_IN_OPT zfindex count = zfindexMax)
+    virtual zfindex outputLog(ZF_IN const zfchar *s, ZF_IN_OPT zfindex count = zfindexMax())
     {
         zfsynchronizedObject(this->syncObj);
-        if(count == zfindexMax)
+        if(count == zfindexMax())
         {
             this->savedString += s;
         }
@@ -61,7 +61,7 @@ public:
             this->savedString.append(s, count);
         }
         this->checkOutput(this->savedString);
-        return zfindexMax;
+        return zfindexMax();
     }
 private:
     ZFObject *syncObj;
@@ -86,7 +86,7 @@ private:
             else
             {
                 zfindex index = zfstringFindReversely(s, '\n');
-                if(index != zfindexMax)
+                if(index != zfindexMax())
                 {
                     if(index == 0)
                     {

@@ -196,14 +196,15 @@ public:
     /**
      * @brief see #textPlaceHolder
      */
-    virtual const zfchar *textPlaceHolderString(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, textPlaceHolderString)
     {
         return this->textPlaceHolder()->textContentString();
     }
     /**
      * @brief see #textPlaceHolder
      */
-    virtual void textPlaceHolderStringSet(ZF_IN const zfchar *s)
+    ZFMETHOD_DECLARE_1(void, textPlaceHolderStringSet,
+                       ZFMP_IN(const zfchar *, s))
     {
         this->textPlaceHolder()->textContentStringSet(s);
     }
@@ -237,14 +238,15 @@ public:
     /**
      * @brief see #textContent, always empty string if not set
      */
-    virtual const zfchar *textContentString(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, textContentString)
     {
         return (this->textContent() ? this->textContent()->stringValue() : zfText(""));
     }
     /**
      * @brief see #textContent
      */
-    virtual void textContentStringSet(ZF_IN const zfchar *s)
+    ZFMETHOD_DECLARE_1(void, textContentStringSet,
+                       ZFMP_IN(const zfchar *, s))
     {
         this->textContentSet((s && *s) ? zflineAlloc(ZFString, s) : zfnull);
     }
@@ -252,7 +254,7 @@ public:
     /**
      * @brief util method to check whether the text is null or empty string
      */
-    virtual inline zfbool textContentIsEmpty(void)
+    ZFMETHOD_DECLARE_0(zfbool, textContentIsEmpty)
     {
         return zfscmpTheSame(this->textContentString(), zfText(""));
     }
@@ -312,7 +314,8 @@ public:
     /**
      * @brief see #ZFUITextEdit
      */
-    virtual void textStyleCopyFrom(ZF_IN ZFUITextView *src)
+    ZFMETHOD_DECLARE_1(void, textStyleCopyFrom,
+                       ZFMP_IN(ZFUITextView *, src))
     {
         if(src == zfnull)
         {
@@ -330,7 +333,8 @@ public:
     /**
      * @brief see #ZFUITextEdit
      */
-    virtual void textStyleCopyTo(ZF_IN ZFUITextView *dst)
+    ZFMETHOD_DECLARE_1(void, textStyleCopyTo,
+                       ZFMP_IN(ZFUITextView *, dst))
     {
         if(dst == zfnull)
         {
@@ -367,7 +371,8 @@ public:
      * and usually have no need to call\n
      * sizeHint shows max size the text view may have, or -1 if no limit
      */
-    virtual ZFUISize measureTextEdit(ZF_IN_OPT const ZFUISize &sizeHint = ZFUISizeZero);
+    ZFMETHOD_DECLARE_1(ZFUISize, measureTextEdit,
+                       ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()));
 
 public:
     zffinal void _ZFP_ZFUITextEdit_textNotifyBeginEdit(void);
@@ -381,19 +386,20 @@ public:
      * by default, this method would check accorrding to #ZFUITextEdit::textEditFilter,
      * and null or empty string would always treated as allowed for safe
      */
-    zffinal zfbool textShouldChange(ZF_IN ZFString *newText);
+    ZFMETHOD_DECLARE_1(zfbool, textShouldChange,
+                       ZFMP_IN(ZFString *, newText));
     /**
      * @brief manually start edit
      */
-    zffinal void textEditBegin(void);
+    ZFMETHOD_DECLARE_0(void, textEditBegin);
     /**
      * @brief manually start edit
      */
-    zffinal void textEditEnd(void);
+    ZFMETHOD_DECLARE_0(void, textEditEnd);
     /**
      * @brief true if editing text, typically keyboard is showing
      */
-    zffinal zfbool textEditing(void);
+    ZFMETHOD_DECLARE_0(zfbool, textEditing);
 
 protected:
     /** @brief see #EventTextOnEditBegin */
@@ -410,7 +416,7 @@ protected:
     virtual void textOnEditConfirm(void);
 public:
     /** @brief see #EventTextOnEditConfirm */
-    virtual void textEditNotifyConfirm(void)
+    ZFMETHOD_DECLARE_0(void, textEditNotifyConfirm)
     {
         this->textOnEditConfirm();
     }

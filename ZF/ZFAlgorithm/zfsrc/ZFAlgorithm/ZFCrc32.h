@@ -52,7 +52,7 @@ ZFMETHOD_FUNC_DECLARE_2(zfflags, zfCrc32Calc,
  */
 ZFMETHOD_FUNC_DECLARE_3(zfflags, zfCrc32Calc,
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, len, zfindexMax),
+                        ZFMP_IN_OPT(zfindex, len, zfindexMax()),
                         ZFMP_IN_OPT(zfflags, prevResult, ZFCrc32ValueZero()))
 
 ZF_NAMESPACE_GLOBAL_END

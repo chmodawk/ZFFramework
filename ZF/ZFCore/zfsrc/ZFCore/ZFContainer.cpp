@@ -50,7 +50,7 @@ zfbool ZFContainer::serializableOnSerializeFromData(ZF_IN const ZFSerializableDa
             {
                 return zffalse;
             }
-            if(element == zfautoObjectNull)
+            if(element == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     zfText("null element"));
@@ -159,7 +159,7 @@ void ZFContainer::objectOnDeallocPrepare(void)
 
 ZFMETHOD_DEFINE_3(ZFContainer, void, objectInfoOfContentT,
                   ZFMP_IN_OUT(zfstring &, ret),
-                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
                   ZFMP_IN_OPT(const ZFTokenForContainer &, token, ZFTokenForContainerDefault()))
 {
     zfindex count = 0;
@@ -202,7 +202,7 @@ zfidentity ZFContainer::objectHash(void)
     }
     else
     {
-        return zfidentityZero;
+        return zfidentityZero();
     }
 }
 ZFCompareResult ZFContainer::objectCompare(ZF_IN ZFObject *anotherObj)

@@ -97,11 +97,12 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUISysWindowMainWindowCleanup)
 ZF_GLOBAL_INITIALIZER_END(ZFUISysWindowMainWindowCleanup)
 void ZFUISysWindow::mainWindowRegister(ZF_IN ZFUISysWindow *window)
 {
-    zfCoreAssertWithMessage(_ZFP_ZFUISysWindow_mainWindow == zfnull, zfTextA("mainWindowRegister must be called before accessing mainWindow"));
+    zfCoreAssertWithMessage(_ZFP_ZFUISysWindow_mainWindow == zfnull,
+        zfTextA("mainWindowRegister must be called before accessing mainWindow"));
     _ZFP_ZFUISysWindow_mainWindowRegistered = window;
 }
 
-ZFUISysWindow *ZFUISysWindow::mainWindow(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, mainWindow)
 {
     if(_ZFP_ZFUISysWindow_mainWindow == zfnull)
     {
@@ -141,21 +142,21 @@ void ZFUISysWindow::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
-void *ZFUISysWindow::nativeWindow(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, void *, nativeWindow)
 {
     return d->nativeWindow;
 }
 
-zfbool ZFUISysWindow::nativeWindowIsCreated(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, zfbool, nativeWindowIsCreated)
 {
     return d->nativeWindowCreated;
 }
-zfbool ZFUISysWindow::nativeWindowIsResumed(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, zfbool, nativeWindowIsResumed)
 {
     return d->nativeWindowResumed;
 }
 
-ZFUIOrientationEnum ZFUISysWindow::windowOrientation(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIOrientationEnum, windowOrientation)
 {
     if(d->embedImpl != zfnull)
     {
@@ -166,7 +167,8 @@ ZFUIOrientationEnum ZFUISysWindow::windowOrientation(void)
         return d->impl->windowOrientation(this);
     }
 }
-void ZFUISysWindow::windowOrientationFlagsSet(ZF_IN const ZFUIOrientationFlags &windowOrientationFlags)
+ZFMETHOD_DEFINE_1(ZFUISysWindow, void, windowOrientationFlagsSet,
+                  ZFMP_IN(const ZFUIOrientationFlags &, windowOrientationFlags))
 {
     zfuint tmp = 0;
     if(ZFBitTest(windowOrientationFlags.enumValue(), ZFUIOrientation::e_Left))
@@ -201,12 +203,12 @@ void ZFUISysWindow::windowOrientationFlagsSet(ZF_IN const ZFUIOrientationFlags &
         }
     }
 }
-const ZFUIOrientationFlags &ZFUISysWindow::windowOrientationFlags(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUIOrientationFlags &, windowOrientationFlags)
 {
     return d->windowOrientationFlags;
 }
 
-ZFUISysWindow *ZFUISysWindow::modalWindowShow(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowShow)
 {
     zfCoreAssertWithMessage(d->modalWindowShowing == zfnull, zfTextA("already has a showing modal window, you must finish it first"));
     zfCoreAssertWithMessage(this->nativeWindow() != zfnull, zfTextA("you can only create modal window after ZFUISysWindow created, see ZFUISysWindow::nativeWindowIsCreated"));
@@ -216,7 +218,7 @@ ZFUISysWindow *ZFUISysWindow::modalWindowShow(void)
     modalWindow->d->modalWindowOwner = this;
     return modalWindow;
 }
-void ZFUISysWindow::modalWindowFinish(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, void, modalWindowFinish)
 {
     zfCoreAssertWithMessage(d->modalWindowOwner != zfnull, zfTextA("not a modal window"));
 
@@ -226,20 +228,20 @@ void ZFUISysWindow::modalWindowFinish(void)
 
     zfRelease(this);
 }
-ZFUISysWindow *ZFUISysWindow::modalWindowGetShowing(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowGetShowing)
 {
     return d->modalWindowShowing;
 }
-ZFUISysWindow *ZFUISysWindow::modalWindowGetOwner(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowGetOwner)
 {
     return d->modalWindowOwner;
 }
 
-ZFUIViewLayoutParam *ZFUISysWindow::windowLayoutParam(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIViewLayoutParam *, windowLayoutParam)
 {
     return d->windowLayoutParam;
 }
-ZFUIRootView *ZFUISysWindow::rootView(void)
+ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIRootView *, rootView)
 {
     return d->windowRootView;
 }

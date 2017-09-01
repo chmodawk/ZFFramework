@@ -194,7 +194,7 @@
 
     for(UITouch *touch in touches)
     {
-        if(self._ZFP_mouseRecords.find(touch, ZFComparerCheckEqual) == zfindexMax)
+        if(self._ZFP_mouseRecords.find(touch, ZFComparerCheckEqual) == zfindexMax())
         {
             self._ZFP_mouseRecords.add(touch);
         }
@@ -224,7 +224,7 @@
     for(UITouch *touch in touches)
     {
         zfindex index = self._ZFP_mouseRecords.find(touch, ZFComparerCheckEqual);
-        if(index != zfindexMax)
+        if(index != zfindexMax())
         {
             self._ZFP_mouseRecords.remove(index);
         }
@@ -249,7 +249,7 @@
     for(UITouch *touch in touches)
     {
         zfindex index = self._ZFP_mouseRecords.find(touch, ZFComparerCheckEqual);
-        if(index != zfindexMax)
+        if(index != zfindexMax())
         {
             self._ZFP_mouseRecords.remove(index);
         }

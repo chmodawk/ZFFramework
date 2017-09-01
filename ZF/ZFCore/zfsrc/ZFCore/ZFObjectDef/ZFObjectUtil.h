@@ -117,11 +117,11 @@ inline zfstring ZFObjectInfo(ZF_IN ZFObject *obj)
 
 /**
  * @brief util method to calculate hash of object,
- *   or return zfidentityInvalid if null
+ *   or return #zfidentityInvalid if null
  */
 inline zfidentity ZFObjectHash(ZF_IN ZFObject *obj)
 {
-    return ((obj == zfnull) ? zfidentityInvalid : obj->objectHash());
+    return ((obj == zfnull) ? zfidentityInvalid() : obj->objectHash());
 }
 
 // ============================================================

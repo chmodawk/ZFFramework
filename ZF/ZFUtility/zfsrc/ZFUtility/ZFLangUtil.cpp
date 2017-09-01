@@ -21,7 +21,7 @@ public:
 
 public:
     _ZFP_zfLangApplyData(void)
-    : objIdentity(), langKey(), langChangeCallback(zfnull), userData(zfautoObjectNull)
+    : objIdentity(), langKey(), langChangeCallback(zfnull), userData(zfautoObjectNull())
     {
     }
     _ZFP_zfLangApplyData(ZF_IN _ZFP_zfLangApplyData const &ref)

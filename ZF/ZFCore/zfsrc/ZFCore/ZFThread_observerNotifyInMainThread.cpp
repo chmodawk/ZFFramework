@@ -104,7 +104,7 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
 {
     if(obj == zfnull)
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
     if(_ZFP_ZFObserverNotifyInMainThreadCallback)
     {
@@ -124,7 +124,7 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
     else
     {
         obj->observerNotifyWithCustomSender(customSender, eventId, param0, param1);
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 }
 ZFMETHOD_FUNC_DEFINE_INLINE_4(zfidentity, ZFObserverNotifyInMainThread,

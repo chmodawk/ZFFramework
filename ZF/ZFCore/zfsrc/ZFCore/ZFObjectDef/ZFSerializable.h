@@ -554,7 +554,7 @@ extern ZF_ENV_EXPORT zfbool ZFObjectIsSerializable(ZF_IN ZFObject *obj);
  */
 extern ZF_ENV_EXPORT zfbool ZFObjectFromString(ZF_OUT zfautoObject &result,
                                                ZF_IN const zfchar *encodedData,
-                                               ZF_IN_OPT zfindex encodedDataLen = zfindexMax,
+                                               ZF_IN_OPT zfindex encodedDataLen = zfindexMax(),
                                                ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 /**
  * @brief convenient method to serialize from encoded data
@@ -566,7 +566,7 @@ extern ZF_ENV_EXPORT zfbool ZFObjectFromString(ZF_OUT zfautoObject &result,
  *   the result would be null
  */
 extern ZF_ENV_EXPORT zfautoObject ZFObjectFromString(ZF_IN const zfchar *encodedData,
-                                                     ZF_IN_OPT zfindex encodedDataLen = zfindexMax,
+                                                     ZF_IN_OPT zfindex encodedDataLen = zfindexMax(),
                                                      ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 
 /**

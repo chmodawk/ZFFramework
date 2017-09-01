@@ -31,7 +31,7 @@ protected:
 
         zfLogTrim(zfText("============================================================"));
         zfLogTrim(zfText("ZFThread"));
-        zfidentity taskId = zfidentityInvalid;
+        zfidentity taskId = zfidentityInvalid();
 
 #if 1
         zfLogTrim(zfText("execute main and thread without lock (async):"));

@@ -207,7 +207,7 @@ public:
             return ;
         }
         zfindex index = this->pageDelayDestroyList.find(page);
-        if(index == zfindexMax)
+        if(index == zfindexMax())
         {
             return ;
         }
@@ -310,7 +310,7 @@ void ZFUIPageManager::embededDestroy(void)
         ZFCoreArrayPOD<ZFUIPage *> pageList;
         pageList.copyFrom(d->pageList);
         d->pageList.removeAll();
-        for(zfindex i = pageList.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = pageList.count() - 1; i != zfindexMax(); --i)
         {
             ZFUIPage *page = pageList[i];
             d->pageDestroy(page);
@@ -551,7 +551,7 @@ void ZFUIPageManager::resolvePageResume(ZF_IN ZFUIPageRequestPageResume *request
 {
     ZFUIPage *page = request->page();
     zfindex index = d->pageList.find(page);
-    if(index == zfindexMax || page->pageResumed())
+    if(index == zfindexMax() || page->pageResumed())
     {
         return ;
     }
@@ -607,7 +607,7 @@ void ZFUIPageManager::resolvePageDestroy(ZF_IN ZFUIPageRequestPageDestroy *reque
 {
     ZFUIPage *page = request->page();
     zfindex index = d->pageList.find(page);
-    if(index == zfindexMax)
+    if(index == zfindexMax())
     {
         return ;
     }
@@ -668,7 +668,7 @@ void ZFUIPageManager::requestOnResolveCustom(ZF_IN ZFUIPageRequestCustom *reques
 void ZFUIPageManager::resolveCustom(ZF_IN ZFUIPageRequestCustom *request)
 {
     request->listener().execute(
-        ZFListenerData(zfidentityInvalid, this->toObject(), request->param0(), request->param1()),
+        ZFListenerData(zfidentityInvalid(), this->toObject(), request->param0(), request->param1()),
         request->userData());
 
     request->requestResolvedSet(zftrue);
@@ -731,7 +731,7 @@ void ZFUIPageManager::movePageEnd(void)
     d->movePageFlag = zffalse;
 
     ZFUIPage *pageToPause = zfnull;
-    for(zfindex i = d->pageList.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = d->pageList.count() - 1; i != zfindexMax(); --i)
     {
         ZFUIPage *page = d->pageList[i];
         if(page->pageResumed())

@@ -21,6 +21,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE
+ */
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFClassInstanceObserverAddParam, ZFClassInstanceObserverAddParam)
+
+/**
+ * @brief see #ZFPROPERTY_TYPE_DECLARE
  *
  * serializable data:
  * @code

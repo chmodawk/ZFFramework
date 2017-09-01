@@ -153,7 +153,7 @@ public:
                     break;
                 }
 
-                if(this->processingMouseId != zfidentityInvalid)
+                if(this->processingMouseId != zfidentityInvalid())
                 {
                     _ZFP_ZFUIButton_DEBUG_LOG(zfText("      %s ignored"), ZFObjectInfo(mouseEvent).cString())
                     this->ignoredMouses.add(mouseEvent->mouseId);
@@ -168,7 +168,7 @@ public:
                 break;
             case ZFUIMouseAction::e_MouseMove:
             {
-                if(this->ignoredMouses.find(mouseEvent->mouseId) == zfindexMax)
+                if(this->ignoredMouses.find(mouseEvent->mouseId) == zfindexMax())
                 {
                     this->processMouse(mouseEvent);
                 }
@@ -186,7 +186,7 @@ public:
                     }
                 }
                 zfindex ignoredIndex = this->ignoredMouses.find(mouseEvent->mouseId);
-                if(ignoredIndex != zfindexMax)
+                if(ignoredIndex != zfindexMax())
                 {
                     this->ignoredMouses.remove(ignoredIndex);
                 }
@@ -195,7 +195,7 @@ public:
                     this->processMouse(mouseEvent);
                     if(this->processingMouseId == mouseEvent->mouseId)
                     {
-                        this->processingMouseId = zfidentityInvalid;
+                        this->processingMouseId = zfidentityInvalid();
                     }
                 }
             }
@@ -364,7 +364,7 @@ public:
     _ZFP_ZFUIButtonPrivate(void)
     : pimplOwner(zfnull)
     , buttonState(ZFUIButtonState::e_Normal)
-    , processingMouseId(zfidentityInvalid)
+    , processingMouseId(zfidentityInvalid())
     , ignoredMouses()
     , processingMouses()
     , prevMousePointMap()

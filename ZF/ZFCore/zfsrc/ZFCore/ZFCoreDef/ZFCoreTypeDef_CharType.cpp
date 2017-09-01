@@ -158,7 +158,7 @@ ZF_ENV_SENSITIVE("Android JNI has no wchar_t version support")
     }
     zfint _ZFP_zfsncmpW(const zfcharW *s1, const zfcharW *s2, zfindex count)
     {
-        return ((count == zfindexMax) ? wcscmp(s1, s2) : wcsncmp(s1, s2, (size_t)count));
+        return ((count == zfindexMax()) ? wcscmp(s1, s2) : wcsncmp(s1, s2, (size_t)count));
     }
     zfint _ZFP_zfsnicmpW(const zfcharW *s1, const zfcharW *s2, zfindex count)
     {

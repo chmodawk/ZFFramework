@@ -22,7 +22,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief default mask image for #ZFUIViewBlink, an alpha white image by default
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIViewBlinkImageDefault;
+ZFEXPORT_VAR_DECLARE(zfautoObject, ZFUIViewBlinkImageDefault)
 
 /**
  * @brief param for #ZFUIViewBlink
@@ -39,19 +39,38 @@ public:
     ZFCORE_PARAM_WITH_INIT(zftimet, blinkDuration, ZFUIGlobalStyle::DefaultStyle()->aniDurationNormal())
     /** @brief blink count, 1 by default */
     ZFCORE_PARAM_WITH_INIT(zfindex, blinkCount, 1)
+
+public:
+    /** @cond ZFPrivateDoc */
+    zfbool operator == (ZF_IN const ZFUIViewBlinkParam &ref) const
+    {
+        return (zftrue
+                && this->blinkImage() == ref.blinkImage()
+                && this->blinkDuration() == ref.blinkDuration()
+                && this->blinkCount() == ref.blinkCount()
+            );
+    }
+    zfbool operator != (ZF_IN const ZFUIViewBlinkParam &ref) const
+    {
+        return !this->operator == (ref);
+    }
+    /** @endcond */
 };
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFUIViewBlinkParam, ZFUIViewBlinkParam)
 /**
  * @brief blink view so that it's easy to be noticed
  */
-extern ZF_ENV_EXPORT void ZFUIViewBlink(ZF_IN ZFUIView *view,
-                                        ZF_IN const ZFUIViewBlinkParam &blinkParam = ZFUIViewBlinkParam());
+ZFMETHOD_FUNC_DECLARE_2(void, ZFUIViewBlink,
+                        ZFMP_IN(ZFUIView *, view),
+                        ZFMP_IN_OPT(const ZFUIViewBlinkParam &, blinkParam, ZFUIViewBlinkParam()));
 /**
  * @brief blink view so that it's easy to be noticed
  */
-inline void ZFUIViewBlink(ZF_IN ZFUIView *view,
-                          ZF_IN ZFUIImage *blinkImage,
-                          ZF_IN_OPT zftimet blinkDuration = ZFUIGlobalStyle::DefaultStyle()->aniDurationNormal(),
-                          ZF_IN_OPT zfindex blinkCount = 1)
+ZFMETHOD_FUNC_DECLARE_INLINE_4(void, ZFUIViewBlink,
+                               ZFMP_IN(ZFUIView *, view),
+                               ZFMP_IN(ZFUIImage *, blinkImage),
+                               ZFMP_IN_OPT(zftimet, blinkDuration, ZFUIGlobalStyle::DefaultStyle()->aniDurationNormal()),
+                               ZFMP_IN_OPT(zfindex, blinkCount, 1))
 {
     ZFUIViewBlink(view, ZFUIViewBlinkParam()
             .blinkImageSet(blinkImage)

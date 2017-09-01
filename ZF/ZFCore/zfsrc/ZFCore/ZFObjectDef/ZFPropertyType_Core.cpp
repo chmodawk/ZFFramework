@@ -85,7 +85,7 @@ zfbool ZFPropertySerializeFrom(ZF_IN ZFObject *ownerObject,
         {
             return zffalse;
         }
-        if(obj != zfautoObjectNull && !obj.toObject()->classData()->classIsTypeOf(property->propertyClassOfRetainProperty()))
+        if(obj != zfautoObjectNull() && !obj.toObject()->classData()->classIsTypeOf(property->propertyClassOfRetainProperty()))
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                 zfText("object %s not type of %s"),
@@ -164,7 +164,7 @@ ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, void, wrappedV
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, zfbool, wrappedValueIsInit)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFPropertyTypeWrapper, zfbool, wrappedValueFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueToSerializableData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueFromString, ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueFromString, ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFPropertyTypeWrapper, zfbool, wrappedValueToString, ZFMP_IN_OUT(zfstring &, s))
 
 ZF_NAMESPACE_GLOBAL_END

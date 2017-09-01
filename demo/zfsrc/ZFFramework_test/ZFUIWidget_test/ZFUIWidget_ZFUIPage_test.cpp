@@ -95,7 +95,7 @@ protected:
     {
         zfsuper::pageOnResume(reason);
         zfindex index = this->pageManager()->pageList().find(this->pageGroupId().cString(), zfself::pageFindFirstByPageGroupId);
-        if(index != zfindexMax && this->pageManager()->pageAt(index) != this)
+        if(index != zfindexMax() && this->pageManager()->pageAt(index) != this)
         {
             this->_titleLeftView()->viewVisibleSet(zftrue);
         }
@@ -284,7 +284,7 @@ protected:
 
         if(pageTmp != zfnull)
         {
-            this->_pageContainer()->childMove(pageTmp->_mainView(), zfindexMax);
+            this->_pageContainer()->childMove(pageTmp->_mainView(), zfindexMax());
         }
     }
 };

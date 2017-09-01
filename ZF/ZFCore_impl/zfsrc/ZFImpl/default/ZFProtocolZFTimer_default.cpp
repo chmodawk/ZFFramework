@@ -32,9 +32,9 @@ protected:
     , timer(zfnull)
     , timerThreadStarted(zffalse)
     , threadCallbackIdGenerator()
-    , threadCallbackId(zfidentityInvalid)
+    , threadCallbackId(zfidentityInvalid())
     , mainThreadCallbackIdGenerator()
-    , mainThreadCallbackId(zfidentityInvalid)
+    , mainThreadCallbackId(zfidentityInvalid())
     {
     }
 

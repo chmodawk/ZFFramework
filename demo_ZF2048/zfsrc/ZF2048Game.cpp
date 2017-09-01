@@ -180,7 +180,7 @@ public:
                 }
 
                 zfindex movedTo = mergedPosCheck.find(action.to);
-                if(movedTo != zfindexMax)
+                if(movedTo != zfindexMax())
                 {
                     mergedPosCheck.remove(movedTo);
                     zfautoObject aniHolder = game->d->aniForBlockMerge();

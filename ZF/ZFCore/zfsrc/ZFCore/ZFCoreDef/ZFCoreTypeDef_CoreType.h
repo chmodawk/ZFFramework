@@ -88,12 +88,12 @@ ZFT_INT_WEAK(_ZFT_zfbool, zfbool);
  *
  *
  * @warning take good care of that, zfindex is not ensured same as size_t,
- *   so it is not ensured that zfindexMax is equal to zfstring::npos,
+ *   so it is not ensured that zfindexMax() is equal to zfstring::npos,
  *   e.g.:
  *   @code
  *     zfindex n = std::string::npos;
  *     zfbool b0 = (n == std::string::npos); // true
- *     zfbool b1 = (zfindexMax == std::string::npos); // not ensured
+ *     zfbool b1 = (zfindexMax() == std::string::npos); // not ensured
  *   @endcode
  * @note all integer types are ensured differs from each other (by #ZFT_INT_STRONG),
  *   so that it's convenient to achieve template specialization\n
@@ -118,9 +118,9 @@ ZFT_INT_WEAK(_ZFT_zfindex, zfindex)
  * @brief (zfindex)-1, indicate a max index value, see #zfindex
  * @see zfuint
  */
-#define zfindexMax ((zfindex)-1)
+#define zfindexMax() ((zfindex)-1)
 /** @brief zero value */
-#define zfindexZero ((zfindex)0)
+#define zfindexZero() ((zfindex)0)
 
 // ============================================================
 /**
@@ -128,13 +128,13 @@ ZFT_INT_WEAK(_ZFT_zfindex, zfindex)
  */
 ZFT_INT_WEAK(_ZFT_zfint, zfint);
 /** @brief zero value */
-#define zfintZero ((zfint)0)
+#define zfintZero() ((zfint)0)
 /**
  * @brief same as unsigned int, see #zfindex
  */
 ZFT_INT_WEAK(_ZFT_zfuint, zfuint);
 /** @brief zero value */
-#define zfuintZero ((zfuint)0)
+#define zfuintZero() ((zfuint)0)
 
 // ============================================================
 /**
@@ -142,21 +142,21 @@ ZFT_INT_WEAK(_ZFT_zfuint, zfuint);
  */
 ZFT_INT_WEAK(_ZFT_zffloat, zffloat);
 /** @brief zero value */
-#define zffloatZero ((zffloat)0)
+#define zffloatZero() ((zffloat)0)
 
 /**
  * @brief same as double, see #zfindex
  */
 ZFT_INT_STRONG(double, zfdouble)
 /** @brief zero value */
-extern ZF_ENV_EXPORT const zfdouble zfdoubleZero;
+#define zfdoubleZero() ((zfdouble)0)
 
 /**
  * @brief same as long double, see #zfindex
  */
 ZFT_INT_STRONG(long double, zflongdouble)
 /** @brief zero value */
-extern ZF_ENV_EXPORT const zflongdouble zflongdoubleZero;
+#define zflongdoubleZero() ((zflongdouble)0)
 
 // ============================================================
 /**
@@ -164,7 +164,7 @@ extern ZF_ENV_EXPORT const zflongdouble zflongdoubleZero;
  */
 ZFT_INT_WEAK(_ZFT_zfbyte, zfbyte);
 /** @brief zero value */
-#define zfbyteZero ((zfbyte)0)
+#define zfbyteZero() ((zfbyte)0)
 
 // ============================================================
 /**
@@ -175,7 +175,7 @@ ZFT_INT_WEAK(_ZFT_zfbyte, zfbyte);
  */
 ZFT_INT_STRONG(zft_zfint64, zftimet)
 /** @brief zero value */
-extern ZF_ENV_EXPORT const zftimet zftimetZero;
+#define zftimetZero() ((zftimet)0)
 
 // ============================================================
 /**
@@ -183,7 +183,7 @@ extern ZF_ENV_EXPORT const zftimet zftimetZero;
  */
 ZFT_INT_STRONG_WITH_BIT(zft_zfuint32, zfflags)
 /** @brief zero value */
-extern ZF_ENV_EXPORT const zfflags zfflagsZero;
+#define zfflagsZero() ((zfflags)0)
 
 // ============================================================
 /**
@@ -191,15 +191,11 @@ extern ZF_ENV_EXPORT const zfflags zfflagsZero;
  */
 ZFT_INT_STRONG_WITH_BIT(zft_zfindex, zfidentity)
 /** @brief zero value */
-extern ZF_ENV_EXPORT const zfidentity zfidentityZero;
+#define zfidentityZero() ((zfidentity)0)
 /**
  * @brief an invalid id value, ensured ((zfidentity)-1)
  */
-extern ZF_ENV_EXPORT const zfidentity zfidentityInvalid;
-/**
- * @brief util macro to check whether the id value is valid
- */
-#define zfidentityIsValid(value) ((value) != zfidentityInvalid)
+#define zfidentityInvalid() ((zfidentity)-1)
 
 ZF_NAMESPACE_GLOBAL_END
 

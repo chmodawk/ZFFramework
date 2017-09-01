@@ -101,7 +101,7 @@ void ZFCoreMap::objectInfoT(ZF_IN_OUT zfstring &ret) const
     this->objectInfoOfContentT(ret, 5);
 }
 void ZFCoreMap::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
-                                     ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
+                                     ZF_IN_OPT zfindex maxCount /* = zfindexMax() */,
                                      ZF_IN_OPT const ZFTokenForKeyValueContainer &token /* = ZFTokenForKeyValueContainerDefault() */) const
 {
     zfindex count = 0;

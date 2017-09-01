@@ -21,7 +21,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfautoObject, ZFUIImageScale,
 {
     if(image == zfnull || image->nativeImage() == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zffloat scale = image->imageScaleFixed();
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImageIO)->imageApplyScale(
@@ -31,7 +31,7 @@ ZFMETHOD_FUNC_DEFINE_3(zfautoObject, ZFUIImageScale,
         ZFUIMarginApplyScale(image->imageNinePatch(), scale));
     if(nativeImage == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     ret.to<ZFUIImage *>()->nativeImageSet(nativeImage);
@@ -46,7 +46,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
 {
     if(nativeImage == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     ret.to<ZFUIImage *>()->nativeImageSet(nativeImage);
@@ -84,7 +84,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInput,
     ZFUIImage *image = ret;
     if(!ZFUIImageEncodeFromBinary(image, input))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     if(input.callbackSerializeCustomType() != zfnull)
@@ -167,7 +167,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
 }
 ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
                        ZFMP_IN(const ZFUIColor &, color),
-                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
+                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 {
     ZFUISize sizeTmp = ZFUISizeMake(zfmMax(1, size.width), zfmMax(1, size.height));
     void *nativeImage = ZFPROTOCOL_ACCESS(ZFUIImageIO)->imageLoadFromColor(
@@ -176,7 +176,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
         ZFUISizeApplyScale(sizeTmp, ZFUIGlobalStyle::DefaultStyle()->imageScale()));
     if(nativeImage == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());

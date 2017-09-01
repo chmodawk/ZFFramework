@@ -50,8 +50,19 @@ public:
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewBlinkDataHolder)
 
 // ============================================================
-void ZFUIViewBlink(ZF_IN ZFUIView *view,
-                   ZF_IN const ZFUIViewBlinkParam &blinkParam /* = ZFUIViewBlinkParam() */)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFUIViewBlinkParam, ZFUIViewBlinkParam)
+
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewBlinkParam, ZFUIImage * const &, blinkImage)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewBlinkParam, void, blinkImageSet, ZFMP_IN(ZFUIImage * const &, blinkImage))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewBlinkParam, zftimet const &, blinkDuration)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewBlinkParam, void, blinkDurationSet, ZFMP_IN(zftimet const &, blinkDuration))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFUIViewBlinkParam, zfindex const &, blinkCount)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFUIViewBlinkParam, void, blinkCountSet, ZFMP_IN(zfindex const &, blinkCount))
+
+// ============================================================
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewBlink,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFUIViewBlinkParam &, blinkParam, ZFUIViewBlinkParam()))
 {
     if(blinkParam.blinkCount() <= 0 || blinkParam.blinkDuration() <= 0)
     {
@@ -62,6 +73,11 @@ void ZFUIViewBlink(ZF_IN ZFUIView *view,
         _ZFP_ZFUIViewBlinkDoOn(view, blinkParam);
     }
 }
+ZFMETHOD_FUNC_DEFINE_INLINE_4(void, ZFUIViewBlink,
+                              ZFMP_IN(ZFUIView *, view),
+                              ZFMP_IN(ZFUIImage *, blinkImage),
+                              ZFMP_IN_OPT(zftimet, blinkDuration, ZFUIGlobalStyle::DefaultStyle()->aniDurationNormal()),
+                              ZFMP_IN_OPT(zfindex, blinkCount, 1))
 
 // ============================================================
 // blink action
@@ -83,7 +99,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
     }
     blinkView->imageContentSet((blinkParam.blinkImage() != zfnull)
         ? blinkParam.blinkImage()
-        : ZFUIViewBlinkImageDefault.to<ZFUIImage *>());
+        : ZFUIViewBlinkImageDefault().to<ZFUIImage *>());
 
     if(ZFPROTOCOL_IS_AVAILABLE(ZFAnimationNativeView) && !_ZFP_ZFUIViewBlink_DEBUG_noAni)
     {
@@ -207,15 +223,19 @@ static void _ZFP_ZFUIViewBlinkDoOff(ZF_IN ZFUIView *view)
 
 // ============================================================
 // other
-zfautoObject ZFUIViewBlinkImageDefault;
+ZFEXPORT_VAR_DEFINE(zfautoObject, ZFUIViewBlinkImageDefault, zfautoObjectNull())
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewBlinkInitSetting, ZFLevelZFFrameworkHigh)
 {
     (void)ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewBlinkDataHolder);
     #if _ZFP_ZFUIViewBlink_DEBUG_color
-        ZFUIViewBlinkImageDefault = ZFUIImageLoadFromColor(ZFUIColorMake(255, 255, 0, 0));
+        ZFUIViewBlinkImageDefaultSet(ZFUIImageLoadFromColor(ZFUIColorMake(255, 255, 0, 0)));
     #else
-        ZFUIViewBlinkImageDefault = ZFUIImageResXml(zfText("ZFUIKit/ZFUIViewBlinkImage.xml"));
+        ZFUIViewBlinkImageDefaultSet(ZFUIImageResXml(zfText("ZFUIKit/ZFUIViewBlinkImage.xml")));
     #endif
+}
+ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkInitSetting)
+{
+    ZFUIViewBlinkImageDefaultSet(zfautoObjectNull());
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewBlinkInitSetting)
 
@@ -229,7 +249,6 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewBlinkCleanup)
     {
         _ZFP_ZFUIViewBlinkDoOff(d->blinkingViews[d->blinkingViews.count() - 1]);
     }
-    ZFUIViewBlinkImageDefault = zfautoObjectNull;
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewBlinkCleanup)
 

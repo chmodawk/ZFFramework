@@ -205,8 +205,8 @@ ZFMETHOD_DEFINE_2(ZFFile, void, fileNameOf,
                   ZFMP_OUT(zfstring &, ret),
                   ZFMP_IN(const zfchar *, src))
 {
-    zfindex pos = zfstringFindReversely(src, zfindexMax, &ZFFile::fileSeparator, 1);
-    if(pos != zfindexMax)
+    zfindex pos = zfstringFindReversely(src, zfindexMax(), &ZFFile::fileSeparator, 1);
+    if(pos != zfindexMax())
     {
         ret += (src + pos + 1);
     }
@@ -221,7 +221,7 @@ ZFMETHOD_DEFINE_2(ZFFile, void, fileNameOfWithoutExt,
 {
     zfindex len = zfslen(src);
     zfindex pos = zfstringFindReversely(src, len, &ZFFile::fileSeparator, 1);
-    if(pos != zfindexMax)
+    if(pos != zfindexMax())
     {
         ++pos;
     }
@@ -230,7 +230,7 @@ ZFMETHOD_DEFINE_2(ZFFile, void, fileNameOfWithoutExt,
         pos = 0;
     }
     zfindex dotPos = zfstringFindReversely(src + pos, len - pos, zfText("."), 1);
-    if(dotPos != zfindexMax)
+    if(dotPos != zfindexMax())
     {
         ret.append(src + pos, dotPos - pos);
     }
@@ -243,8 +243,8 @@ ZFMETHOD_DEFINE_2(ZFFile, void, fileExtOf,
                   ZFMP_OUT(zfstring &, ret),
                   ZFMP_IN(const zfchar *, src))
 {
-    zfindex pos = zfstringFindReversely(src, zfindexMax, zfText("."), 1);
-    if(pos != zfindexMax)
+    zfindex pos = zfstringFindReversely(src, zfindexMax(), zfText("."), 1);
+    if(pos != zfindexMax())
     {
         ret += (src + pos + 1);
     }
@@ -253,8 +253,8 @@ ZFMETHOD_DEFINE_2(ZFFile, void, fileParentPathOf,
                   ZFMP_OUT(zfstring &, ret),
                   ZFMP_IN(const zfchar *, src))
 {
-    zfindex pos = zfstringFindReversely(src, zfindexMax, &ZFFile::fileSeparator, 1);
-    if(pos != zfindexMax)
+    zfindex pos = zfstringFindReversely(src, zfindexMax(), &ZFFile::fileSeparator, 1);
+    if(pos != zfindexMax())
     {
         ret.append(src, pos);
     }
@@ -269,7 +269,7 @@ ZFMETHOD_DEFINE_2(ZFFile, void, filePathComponentsOf,
     do
     {
         posL = zfstringFindReversely(src, posR, &ZFFile::fileSeparator, 1);
-        if(posL == zfindexMax)
+        if(posL == zfindexMax())
         {
             if(posR > 0)
             {
@@ -570,14 +570,14 @@ ZFMETHOD_DEFINE_3(ZFFile, zfindex, fileRead,
 ZFMETHOD_DEFINE_3(ZFFile, zfindex, fileWrite,
                   ZFMP_IN(ZFFileToken, token),
                   ZFMP_IN(const void *, src),
-                  ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax))
+                  ZFMP_IN_OPT(zfindex, maxByteSize, zfindexMax()))
 {
     if(src == zfnull)
     {
         return 0;
     }
     return _ZFP_ZFFileReadWriteImpl->fileWrite(token, src,
-        (maxByteSize == zfindexMax) ? (sizeof(zfchar) * zfslen((const zfchar *)src)) : maxByteSize);
+        (maxByteSize == zfindexMax()) ? (sizeof(zfchar) * zfslen((const zfchar *)src)) : maxByteSize);
 }
 ZFMETHOD_DEFINE_1(ZFFile, void, fileFlush,
                   ZFMP_IN(ZFFileToken, token))
@@ -599,12 +599,12 @@ ZFMETHOD_DEFINE_1(ZFFile, zfindex, fileSize,
 {
     if(token == ZFFileTokenInvalid())
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     zfindex saved = ZFFile::fileTell(token);
-    if(saved == zfindexMax)
+    if(saved == zfindexMax())
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     ZFFile::fileSeek(token, 0, ZFSeekPosEnd);
     zfindex size = ZFFile::fileTell(token);
@@ -978,7 +978,7 @@ ZFMETHOD_DEFINE_1(ZFFile, zfindex, resSize,
 {
     if(token == ZFFileTokenInvalid())
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     zfindex saved = ZFFile::resTell(token);
     ZFFile::resSeek(token, 0, ZFSeekPosEnd);

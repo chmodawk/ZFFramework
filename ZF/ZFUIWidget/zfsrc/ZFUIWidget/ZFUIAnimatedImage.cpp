@@ -34,10 +34,10 @@ public:
     _ZFP_ZFUIAnimatedImagePrivate(void)
     : pimplOwner(zfnull)
     , aniRunning(zffalse)
-    , aniFrameIndexLast(zfindexMax)
-    , aniFrameIndexCurrent(zfindexMax)
+    , aniFrameIndexLast(zfindexMax())
+    , aniFrameIndexCurrent(zfindexMax())
     , aniRepeatCountCurrent(0)
-    , aniFrameTaskId(zfidentityInvalid)
+    , aniFrameTaskId(zfidentityInvalid())
     , aniFramesOnChangeListener(ZFCallbackForRawFunction(_ZFP_ZFUIAnimatedImagePrivate::aniFramesOnChange))
     , aniFrameDurationOnFinishListener(ZFCallbackForRawFunction(_ZFP_ZFUIAnimatedImagePrivate::aniFrameDurationOnFinish))
     {
@@ -53,7 +53,7 @@ public:
         zfblockedRelease(zfRetain(this->pimplOwner));
 
         zfbool loopFinish = zffalse;
-        if(this->aniFrameIndexLast != zfindexMax
+        if(this->aniFrameIndexLast != zfindexMax()
             && this->aniFrameIndexCurrent == this->pimplOwner->aniFrames()->count() - 1)
         {
             loopFinish = zftrue;
@@ -138,7 +138,7 @@ void ZFUIAnimatedImage::aniStart(void)
     d->aniRepeatCountCurrent = 0;
     if(!this->aniKeepPreviousState())
     {
-        d->aniFrameIndexCurrent = zfindexMax;
+        d->aniFrameIndexCurrent = zfindexMax();
     }
 
     d->aniRunNext();
@@ -151,10 +151,10 @@ void ZFUIAnimatedImage::aniStop(void)
     }
     d->aniRunning = zffalse;
     this->aniFrames()->observerRemove(ZFContainer::EventContentOnChange(), d->aniFramesOnChangeListener);
-    d->aniFrameIndexLast = zfindexMax;
+    d->aniFrameIndexLast = zfindexMax();
 
     zfidentity aniFrameTaskIdTmp = d->aniFrameTaskId;
-    d->aniFrameTaskId = zfidentityInvalid;
+    d->aniFrameTaskId = zfidentityInvalid();
     ZFThreadExecuteCancel(aniFrameTaskIdTmp);
 
     zfRelease(this);
@@ -179,7 +179,7 @@ void ZFUIAnimatedImage::aniManual(ZF_IN zfindex aniFrame)
     }
     if(d->aniFrameIndexCurrent >= this->aniFrames()->count())
     {
-        d->aniFrameIndexCurrent = zfindexMax;
+        d->aniFrameIndexCurrent = zfindexMax();
     }
     this->aniFrameOnUpdate();
     this->aniOnUpdate();
@@ -204,7 +204,7 @@ zftimet ZFUIAnimatedImage::aniFrameDurationCurrent(void)
     }
     else
     {
-        return zftimetZero;
+        return zftimetZero();
     }
 }
 zftimet ZFUIAnimatedImage::aniFrameDurationFixedCurrent(void)
@@ -215,7 +215,7 @@ zftimet ZFUIAnimatedImage::aniFrameDurationFixedCurrent(void)
     }
     else
     {
-        return zftimetZero;
+        return zftimetZero();
     }
 }
 ZFUIAnimatedImageAniFrame *ZFUIAnimatedImage::aniFrameCurrent(void)
@@ -237,7 +237,7 @@ zfindex ZFUIAnimatedImage::aniFrameIndexCurrent(void)
     }
     else
     {
-        return zfindexMax;
+        return zfindexMax();
     }
 }
 

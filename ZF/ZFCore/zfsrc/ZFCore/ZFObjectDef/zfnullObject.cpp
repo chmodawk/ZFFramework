@@ -27,7 +27,7 @@ public:
     zfoverride
     virtual zfidentity objectHash(void)
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
     zfoverride
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj)

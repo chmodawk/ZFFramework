@@ -111,7 +111,7 @@ ZFMETHOD_FUNC_DECLARE_1(zfbool, ZFLuaExecute,
 /** @brief see #ZFLuaExecute */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFLuaExecute,
                         ZFMP_IN(const zfchar *, buf),
-                        ZFMP_IN_OPT(zfindex, bufLen, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, bufLen, zfindexMax()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLuaExecute_h_

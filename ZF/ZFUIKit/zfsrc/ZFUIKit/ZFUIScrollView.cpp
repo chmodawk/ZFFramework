@@ -97,7 +97,7 @@ protected:
     , scrollerActions()
     , scrollerActionRunning(zffalse)
     , scrollThumbNeedUpdate(zftrue)
-    , scrollAreaMargin(ZFUIMarginZero)
+    , scrollAreaMargin(ZFUIMarginZero())
     , xScrollThumbClass(zfnull)
     , xScrollThumb(zfnull)
     , yScrollThumbClass(zfnull)
@@ -1002,7 +1002,7 @@ ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollChildToVisible,
 ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollAreaMarginAdd,
                   ZFMP_IN(const ZFUIMargin &, margin))
 {
-    if(margin != ZFUIMarginZero)
+    if(margin != ZFUIMarginZero())
     {
         ZFUIMarginInc(d->scrollAreaMargin, d->scrollAreaMargin, margin);
         this->layoutRequest();
@@ -1012,7 +1012,7 @@ ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollAreaMarginAdd,
 ZFMETHOD_DEFINE_1(ZFUIScrollView, void, scrollAreaMarginRemove,
                   ZFMP_IN(const ZFUIMargin &, margin))
 {
-    if(margin != ZFUIMarginZero)
+    if(margin != ZFUIMarginZero())
     {
         ZFUIMarginDec(d->scrollAreaMargin, d->scrollAreaMargin, margin);
         this->layoutRequest();

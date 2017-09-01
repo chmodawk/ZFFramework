@@ -12,7 +12,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFileBOM, ZFFileBOM, {
-        if(srcLen == zfindexMax)
+        if(srcLen == zfindexMax())
         {
             srcLen = zfslen(src);
         }
@@ -42,7 +42,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFileBOM, ZFFileBOM, {
 
 ZFCORETYPE_STRING_CONVERTER_DEFINE(ZFFileBOMList, ZFFileBOMList, {
         ZFCoreArrayPOD<zfindexRange> pos;
-        if(!zfCoreDataPairSplitString(pos, zfindexMax, src, srcLen))
+        if(!zfCoreDataPairSplitString(pos, zfindexMax(), src, srcLen))
         {
             return zffalse;
         }

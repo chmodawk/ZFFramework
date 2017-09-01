@@ -34,7 +34,7 @@ static _ZFP_ZFFileDescriptorCallbackData *_ZFP_ZFFileDescriptorTypeFind(ZF_IN co
 // ============================================================
 ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                       ZF_IN const zfchar *fileDescriptor,
-                                                      ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax */,
+                                                      ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax() */,
                                                       ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                       ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
@@ -49,7 +49,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
     zfindex dataLength = 0;
     {
         const zfchar *p = fileDescriptor;
-        const zfchar *pEnd = ((fileDescriptorLen == zfindexMax) ? p + zfslen(fileDescriptor) : p + fileDescriptorLen);
+        const zfchar *pEnd = ((fileDescriptorLen == zfindexMax()) ? p + zfslen(fileDescriptor) : p + fileDescriptorLen);
         for( ; p != pEnd; ++p)
         {
             if(*p == ':')
@@ -135,7 +135,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
 }
 ZFMETHOD_FUNC_DEFINE_4(ZFInputCallback, ZFInputCallbackForFileDescriptor,
                        ZFMP_IN(const zfchar *, fileDescriptor),
-                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax()),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
 {
@@ -190,14 +190,14 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
 
     serializableData.resolveMark();
 
-    result = ZFInputCallbackForFileDescriptor(fileDescriptor, zfindexMax, flags, BOMList);
+    result = ZFInputCallbackForFileDescriptor(fileDescriptor, zfindexMax(), flags, BOMList);
     return zftrue;
 }
 
 // ============================================================
 ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &callerInfo,
                                                         ZF_IN const zfchar *fileDescriptor,
-                                                        ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax */,
+                                                        ZF_IN_OPT zfindex fileDescriptorLen /* = zfindexMax() */,
                                                         ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Create */)
 {
     ZFOutputCallback ret = ZFCallbackNullDetail(callerInfo);
@@ -211,7 +211,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
     zfindex dataLength = 0;
     {
         const zfchar *p = fileDescriptor;
-        const zfchar *pEnd = ((fileDescriptorLen == zfindexMax) ? p + zfslen(fileDescriptor) : p + fileDescriptorLen);
+        const zfchar *pEnd = ((fileDescriptorLen == zfindexMax()) ? p + zfslen(fileDescriptor) : p + fileDescriptorLen);
         for( ; p != pEnd; ++p)
         {
             if(*p == ':')
@@ -276,7 +276,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
 }
 ZFMETHOD_FUNC_DEFINE_3(ZFOutputCallback, ZFOutputCallbackForFileDescriptor,
                        ZFMP_IN(const zfchar *, fileDescriptor),
-                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax),
+                       ZFMP_IN_OPT(zfindex, fileDescriptorLen, zfindexMax()),
                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create))
 {
     return ZFOutputCallbackForFileDescriptor(fileDescriptor, fileDescriptorLen, flags);
@@ -305,7 +305,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
     }
     serializableData.resolveMark();
 
-    result = ZFOutputCallbackForFileDescriptor(fileDescriptor, zfindexMax, flags);
+    result = ZFOutputCallbackForFileDescriptor(fileDescriptor, zfindexMax(), flags);
     return zftrue;
 }
 

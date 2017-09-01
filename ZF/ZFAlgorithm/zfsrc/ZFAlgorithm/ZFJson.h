@@ -357,7 +357,7 @@ public:
      * @brief add json object to specified index (ranged in [0, count])
      */
     void jsonObjectAdd(ZF_IN const ZFJsonItem &jsonObject,
-                       ZF_IN_OPT zfindex atIndex = zfindexMax);
+                       ZF_IN_OPT zfindex atIndex = zfindexMax());
     /**
      * @brief remove json object
      */
@@ -403,7 +403,7 @@ ZFMETHOD_FUNC_DECLARE_1(ZFJsonItem, ZFJsonItemFromInput, ZFMP_IN(const ZFInputCa
  */
 ZFMETHOD_FUNC_DECLARE_2(ZFJsonItem, ZFJsonItemFromString,
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, length, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, length, zfindexMax()))
 
 /**
  * @brief convert json to output
@@ -450,14 +450,14 @@ ZFMETHOD_FUNC_DECLARE_2(zfstring, ZFJsonItemToString,
 ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharEncode,
                         ZFMP_OUT(zfstring &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 /**
  * @brief see #ZFJsonEscapeCharEncode
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharEncode,
                         ZFMP_OUT(const ZFOutputCallback &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 
 /**
  * @brief see #ZFJsonEscapeCharEncode
@@ -465,14 +465,14 @@ ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharEncode,
 ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharDecode,
                         ZFMP_OUT(zfstring &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 /**
  * @brief see #ZFJsonEscapeCharEncode
  */
 ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonEscapeCharDecode,
                         ZFMP_OUT(const ZFOutputCallback &, dst),
                         ZFMP_IN(const zfchar *, src),
-                        ZFMP_IN_OPT(zfindex, count, zfindexMax))
+                        ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFJson_h_

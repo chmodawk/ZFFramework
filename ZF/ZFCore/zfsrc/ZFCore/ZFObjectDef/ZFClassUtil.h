@@ -87,11 +87,11 @@ extern ZF_ENV_EXPORT zfbool allPropertyIsEqual(ZF_IN ZFObject *obj0,
  */
 extern ZF_ENV_EXPORT void objectPropertyInfo(ZF_IN_OUT zfstring &ret,
                                              ZF_IN ZFObject *obj,
-                                             ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                             ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                              ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault());
 /** @brief see #objectPropertyInfo */
 inline zfstring objectPropertyInfo(ZF_IN ZFObject *obj,
-                                   ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                   ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                    ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault())
 {
     zfstring ret;

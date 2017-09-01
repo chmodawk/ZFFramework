@@ -228,16 +228,16 @@ ZFUIButton *ZFUIDialogContentBasic::dialogButtonAtIndex(ZF_IN zfindex index)
 zfindex ZFUIDialogContentBasic::dialogButtonFind(ZF_IN ZFUIButton *dialogButton)
 {
     zfindex ret = d->dialogButtonLayout->childFind(dialogButton);
-    if(ret == zfindexMax || ret < d->dialogButtonInternalCount)
+    if(ret == zfindexMax() || ret < d->dialogButtonInternalCount)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return (ret - d->dialogButtonInternalCount);
 }
 void ZFUIDialogContentBasic::dialogButtonAdd(ZF_IN ZFUIButton *button,
-                                             ZF_IN_OPT zfindex atIndex /* = zfindexMax */)
+                                             ZF_IN_OPT zfindex atIndex /* = zfindexMax() */)
 {
-    if(atIndex == zfindexMax)
+    if(atIndex == zfindexMax())
     {
         atIndex = this->dialogButtonCount();
     }
@@ -255,7 +255,7 @@ void ZFUIDialogContentBasic::dialogButtonRemove(ZF_IN ZFUIButton *button)
 }
 void ZFUIDialogContentBasic::dialogButtonRemoveAtIndex(ZF_IN zfindex index)
 {
-    if(index == zfindexMax)
+    if(index == zfindexMax())
     {
         return ;
     }

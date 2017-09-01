@@ -106,14 +106,14 @@ public:
     /** @brief see #encrypt */
     virtual zfbool encrypt(ZF_OUT zfchar *buf,
                            ZF_IN const void *src,
-                           ZF_IN_OPT zfindex srcLen = zfindexMax)
+                           ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return this->encrypt(ZFOutputCallbackForBuffer(buf), ZFInputCallbackForBuffer(src, srcLen));
     }
     /** @brief see #decrypt */
     virtual zfbool decrypt(ZF_OUT zfchar *buf,
                            ZF_IN const void *src,
-                           ZF_IN_OPT zfindex srcLen = zfindexMax)
+                           ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return this->decrypt(ZFOutputCallbackForBuffer(buf), ZFInputCallbackForBuffer(src, srcLen));
     }
@@ -121,14 +121,14 @@ public:
     /** @brief see #encrypt */
     virtual zfbool encrypt(ZF_IN_OUT const ZFOutputCallback &output,
                            ZF_IN const void *src,
-                           ZF_IN_OPT zfindex srcLen = zfindexMax)
+                           ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return this->encrypt(output, ZFInputCallbackForBuffer(src, srcLen));
     }
     /** @brief see #decrypt */
     virtual zfbool decrypt(ZF_IN_OUT const ZFOutputCallback &output,
                            ZF_IN const void *src,
-                           ZF_IN_OPT zfindex srcLen = zfindexMax)
+                           ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return this->decrypt(output, ZFInputCallbackForBuffer(src, srcLen));
     }

@@ -117,7 +117,7 @@ void _ZFP_ZFThreadImpl_default_threadCallback(_ZFP_ZFThreadImpl_default_ExecuteD
     _ZFP_ZFThreadImpl_default_threadMap[nativeCurrentThreadId] = data->ownerZFThread;
     zfsynchronizedObjectUnlock(_ZFP_ZFThreadImpl_default_syncObj);
 
-    data->runnable.execute(ZFListenerData(zfidentityInvalid, zfnull, data->param0, data->param1));
+    data->runnable.execute(ZFListenerData(zfidentityInvalid(), zfnull, data->param0, data->param1));
 
     zfsynchronizedObjectLock(_ZFP_ZFThreadImpl_default_syncObj);
     _ZFP_ZFThreadImpl_default_threadMap.erase(nativeCurrentThreadId);

@@ -22,10 +22,10 @@ public:
 public:
     _ZFP_ZFIdentityGeneratorPrivate(void)
     : refCount(1)
-    , cur(zfidentityInvalid)
+    , cur(zfidentityInvalid())
     , used()
     {
-        this->used[zfidentityInvalid] = zftrue;
+        this->used[zfidentityInvalid()] = zftrue;
     }
 };
 
@@ -103,7 +103,7 @@ void ZFIdentityGenerator::markUnused(ZF_IN zfidentity identity)
 void ZFIdentityGenerator::removeAll(void)
 {
     d->used.clear();
-    d->used[zfidentityInvalid] = zftrue;
+    d->used[zfidentityInvalid()] = zftrue;
 }
 
 void ZFIdentityGenerator::allUsed(ZF_IN_OUT ZFCoreArray<zfidentity> &ret) const
@@ -116,12 +116,12 @@ void ZFIdentityGenerator::allUsed(ZF_IN_OUT ZFCoreArray<zfidentity> &ret) const
 }
 
 // ============================================================
-zfidentity zfidentityCalcString(ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen /* = zfindexMax */)
+zfidentity zfidentityCalcString(ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen /* = zfindexMax() */)
 {
-    zfidentity hash = zfidentityZero;
+    zfidentity hash = zfidentityZero();
     if(src)
     {
-        if(srcLen == zfindexMax)
+        if(srcLen == zfindexMax())
         {
             while(*src)
             {
@@ -143,7 +143,7 @@ zfidentity zfidentityCalcBuf(ZF_IN const void *src, ZF_IN zfindex srcLen)
 {
     const zfbyte *p = (const zfbyte *)src;
     const zfbyte *pEnd = p + srcLen;
-    zfidentity hash = zfidentityZero;
+    zfidentity hash = zfidentityZero();
     if(p)
     {
         while(p < pEnd)

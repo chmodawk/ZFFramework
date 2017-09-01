@@ -207,7 +207,7 @@ static zfbool _ZFP_ZFTextTemplateRun_applyFile(ZF_IN_OUT zfstring &path,
     }
     zfblockedFree(buf);
 
-    if(ZFTextTemplateApply(textTemplateParam, ZFOutputCallbackForFile(path), buf, bufEnd - buf) == zfindexMax)
+    if(ZFTextTemplateApply(textTemplateParam, ZFOutputCallbackForFile(path), buf, bufEnd - buf) == zfindexMax())
     {
         zfstringAppend(outErrorHint, zfText("failed to update template for %s"), path.cString());
         return zffalse;

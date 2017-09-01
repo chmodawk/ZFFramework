@@ -81,9 +81,9 @@ void ZFUIAnimatedImageView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     }
     else
     {
-        ret = ZFUISizeZero;
+        ret = ZFUISizeZero();
         ZFUIAnimatedImage *animatedImage = this->animatedImage();
-        for(zfindex i = animatedImage->aniFrameCount() - 1; i != zfindexMax; --i)
+        for(zfindex i = animatedImage->aniFrameCount() - 1; i != zfindexMax(); --i)
         {
             ZFUIImage *aniFrame = animatedImage->aniFrameImageAtIndex(i);
             ret.width = zfmMax(ret.width, aniFrame->imageSize().width);

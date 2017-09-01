@@ -29,7 +29,7 @@ public:
                                   ZF_IN const ZFUIMargin &ninePatch)
     {
         QImage *nativeImageTmp = ZFCastStatic(QImage *, nativeImage);
-        if(ninePatch == ZFUIMarginZero)
+        if(ninePatch == ZFUIMarginZero())
         {
             QImage *ret = new QImage();
             *ret = nativeImageTmp->scaled(

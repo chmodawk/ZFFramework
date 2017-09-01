@@ -43,8 +43,8 @@ public:
 public:
     void clear(void)
     {
-        this->cachedLength = zfindexMax;
-        this->cachedWordCount = zfindexMax;
+        this->cachedLength = zfindexMax();
+        this->cachedWordCount = zfindexMax();
 
         switch(this->storageType)
         {
@@ -78,8 +78,8 @@ public:
 public:
     _ZFP_ZFStringPrivate(void)
     : refCount(1)
-    , cachedLength(zfindexMax)
-    , cachedWordCount(zfindexMax)
+    , cachedLength(zfindexMax())
+    , cachedWordCount(zfindexMax())
     , storageType(ZFStringStorageType::e_CharBufferRef)
     , nativeString(zfnull)
     , nativeStringBuf(zfnull)
@@ -298,7 +298,7 @@ ZFMETHOD_DEFINE_0(ZFString, zfbool, isEmpty)
 }
 ZFMETHOD_DEFINE_0(ZFString, zfindex, length)
 {
-    if(d->cachedLength == zfindexMax)
+    if(d->cachedLength == zfindexMax())
     {
         d->cachedLength = zfslen(this->stringValue());
     }
@@ -306,7 +306,7 @@ ZFMETHOD_DEFINE_0(ZFString, zfindex, length)
 }
 ZFMETHOD_DEFINE_0(ZFString, zfindex, wordCount)
 {
-    if(d->cachedWordCount == zfindexMax)
+    if(d->cachedWordCount == zfindexMax())
     {
         ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
         d->cachedWordCount = _ZFP_ZFStringImpl->wordCountOfUTF8(this->stringValue());

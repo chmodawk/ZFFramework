@@ -26,7 +26,7 @@ zfbool ZFTestCaseRun(ZF_IN const ZFClass *cls,
         return zffalse;
     }
     zfautoObject testCaseTmp = cls->newInstance(ZFCallerInfoMake());
-    if(testCaseTmp == zfautoObjectNull || !testCaseTmp.toObject()->classData()->classIsSubclassOf(ZFTestCase::ClassData()))
+    if(testCaseTmp == zfautoObjectNull() || !testCaseTmp.toObject()->classData()->classIsSubclassOf(ZFTestCase::ClassData()))
     {
         return zffalse;
     }

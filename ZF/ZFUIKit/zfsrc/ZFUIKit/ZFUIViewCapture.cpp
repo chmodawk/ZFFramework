@@ -11,16 +11,17 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject ZFUIViewCapture(ZF_IN ZFUIView *view)
+ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIViewCapture,
+                       ZFMP_IN(ZFUIView *, view))
 {
     if(view == zfnull)
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zfautoObject ret = ZFUIImage::ClassData()->newInstance(ZFCallerInfoMake());
     if(!ZFPROTOCOL_ACCESS(ZFUIViewCapture)->viewCapture(view, ret.to<ZFUIImage *>()))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     return ret;
 }

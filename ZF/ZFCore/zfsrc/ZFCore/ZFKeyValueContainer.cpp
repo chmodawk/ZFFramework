@@ -50,7 +50,7 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
 
         if(zfscmpTheSame(category, ZFSerializableKeyword_ZFKeyValueContainer_key))
         {
-            if(key != zfautoObjectNull)
+            if(key != zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                     zfText("missing value for key %s (%s)"),
@@ -62,7 +62,7 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
             {
                 return zffalse;
             }
-            if(key == zfautoObjectNull)
+            if(key == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, zfText("null key"));
                 return zffalse;
@@ -70,7 +70,7 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
         }
         else if(zfscmpTheSame(category, ZFSerializableKeyword_ZFKeyValueContainer_value))
         {
-            if(key == zfautoObjectNull)
+            if(key == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
                     zfText("missing key"));
@@ -80,17 +80,17 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
             {
                 return zffalse;
             }
-            if(value == zfautoObjectNull)
+            if(value == zfautoObjectNull())
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, zfText("null value"));
                 return zffalse;
             }
             this->iteratorAddKeyValue(key.toObject(), value.toObject());
-            key = zfautoObjectNull;
-            value = zfautoObjectNull;
+            key = zfautoObjectNull();
+            value = zfautoObjectNull();
         }
     }
-    if(key != zfautoObjectNull)
+    if(key != zfautoObjectNull())
     {
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
             zfText("missing value for key %s (%s)"),
@@ -231,7 +231,7 @@ void ZFKeyValueContainer::objectOnDeallocPrepare(void)
 
 ZFMETHOD_DEFINE_3(ZFKeyValueContainer, void, objectInfoOfContentT,
                   ZFMP_IN_OUT(zfstring &, ret),
-                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax),
+                  ZFMP_IN_OPT(zfindex, maxCount, zfindexMax()),
                   ZFMP_IN_OPT(const ZFTokenForKeyValueContainer &, token, ZFTokenForKeyValueContainerDefault()))
 {
     zfindex count = 0;
@@ -281,7 +281,7 @@ zfidentity ZFKeyValueContainer::objectHash(void)
     }
     else
     {
-        return zfidentityZero;
+        return zfidentityZero();
     }
 }
 ZFCompareResult ZFKeyValueContainer::objectCompare(ZF_IN ZFObject *anotherObj)

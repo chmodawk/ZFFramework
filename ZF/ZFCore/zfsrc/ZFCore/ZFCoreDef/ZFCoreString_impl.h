@@ -143,7 +143,7 @@ public:
     {
         if(s)
         {
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }
@@ -236,18 +236,18 @@ public:
     /** @brief append string */
     inline _zfstr &append(ZF_IN const _zfstr &s) {this->append(s.cString(), s.length()); return *this;}
     /** @brief append string */
-    inline _zfstr &append(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &append(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax())
     {
         return this->append(s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief append string */
-    inline _zfstr &append(ZF_IN const T_Char *s) {return this->append(s, zfindexMax);}
+    inline _zfstr &append(ZF_IN const T_Char *s) {return this->append(s, zfindexMax());}
     /** @brief append string */
     _zfstr &append(ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(s)
         {
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }
@@ -264,18 +264,18 @@ public:
     /** @brief replace all content of the string */
     inline _zfstr &assign(ZF_IN const _zfstr &s) {return this->assign(s.cString(), s.length());}
     /** @brief replace all content of the string */
-    inline _zfstr &assign(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &assign(ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax())
     {
         return this->assign(s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief replace all content of the string */
-    inline _zfstr &assign(ZF_IN const T_Char *s) {return this->assign(s, zfindexMax);}
+    inline _zfstr &assign(ZF_IN const T_Char *s) {return this->assign(s, zfindexMax());}
     /** @brief replace all content of the string */
     _zfstr &assign(ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
         if(s)
         {
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }
@@ -297,12 +297,12 @@ public:
     /** @brief insert string */
     inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const _zfstr &s) {return this->insert(insertAt, s.cString(), s.length());}
     /** @brief insert string */
-    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax())
     {
         return this->insert(insertAt, s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief insert string */
-    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s) {return this->insert(insertAt, s, zfindexMax);}
+    inline _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s) {return this->insert(insertAt, s, zfindexMax());}
     /** @brief insert string */
     _zfstr &insert(ZF_IN zfindex insertAt, ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
@@ -312,7 +312,7 @@ public:
         }
         else if(s)
         {
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }
@@ -330,12 +330,12 @@ public:
     /** @brief replace string in range */
     inline _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const _zfstr &s) {return this->replace(replacePos, replaceLen, s.cString(), s.length());}
     /** @brief replace string in range */
-    _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax)
+    _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const _zfstr &s, ZF_IN zfindex pos, ZF_IN zfindex len = zfindexMax())
     {
         return this->replace(replacePos, replaceLen, s.cString() + pos, (pos < s.length()) ? ((len > s.length() - pos) ? (s.length() - pos) : len) : 0);
     }
     /** @brief replace string in range */
-    inline _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s) {return this->replace(replacePos, replaceLen, s, zfindexMax);}
+    inline _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s) {return this->replace(replacePos, replaceLen, s, zfindexMax());}
     /** @brief replace string in range */
     _zfstr &replace(ZF_IN zfindex replacePos, ZF_IN zfindex replaceLen, ZF_IN const T_Char *s, ZF_IN zfindex len)
     {
@@ -349,7 +349,7 @@ public:
             {
                 replaceLen = d.length - replacePos;
             }
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }
@@ -390,7 +390,7 @@ public:
         }
     }
     /** @brief remove part of the string */
-    void remove(ZF_IN_OPT zfindex pos = 0, ZF_IN_OPT zfindex len = zfindexMax)
+    void remove(ZF_IN_OPT zfindex pos = 0, ZF_IN_OPT zfindex len = zfindexMax())
     {
         if(pos < d.length)
         {
@@ -418,12 +418,12 @@ public:
     /** @brief compare with another string */
     inline zfint compare(ZF_IN const _zfstr &s) const {return zfscmpT(this->cString(), s.cString());}
     /** @brief compare with another string */
-    zfint compare(ZF_IN const T_Char *s, ZF_IN zfindex len = zfindexMax) const
+    zfint compare(ZF_IN const T_Char *s, ZF_IN zfindex len = zfindexMax()) const
     {
         const T_Char *buf = d.buf();
         if(s)
         {
-            if(len == zfindexMax)
+            if(len == zfindexMax())
             {
                 len = zfslenT(s);
             }

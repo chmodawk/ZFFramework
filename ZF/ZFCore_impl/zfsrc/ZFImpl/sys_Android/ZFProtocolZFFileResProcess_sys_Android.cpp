@@ -154,7 +154,7 @@ public:
     {
         if(token == ZFFileTokenInvalid())
         {
-            return zfindexMax;
+            return zfindexMax();
         }
         _ZFP_ZFProtocolZFFileResProcess_sys_Android_FileToken *d = ZFCastStatic(_ZFP_ZFProtocolZFFileResProcess_sys_Android_FileToken *, token);
         return (AAsset_getLength(d->token) - AAsset_getRemainingLength(d->token));

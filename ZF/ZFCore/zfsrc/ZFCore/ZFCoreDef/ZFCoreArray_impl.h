@@ -189,7 +189,7 @@ ZFCompareResult ZFCoreArray<T_Element>::objectCompare(ZF_IN const ZFCoreArray<T_
     {
         return ZFCompareUncomparable;
     }
-    for(zfindex i = this->count() - 1; i != zfindexMax; --i)
+    for(zfindex i = this->count() - 1; i != zfindexMax(); --i)
     {
         if(comparer(this->get(i), ref.get(i)) != ZFCompareTheSame)
         {
@@ -208,7 +208,7 @@ void ZFCoreArray<T_Element>::objectInfoT(ZF_IN_OUT zfstring &ret) const
 template<typename T_Element>
 void ZFCoreArray<T_Element>::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
                                                   ZF_IN typename ZFCoreInfoGetter<T_Element>::InfoGetter elementInfoGetter,
-                                                  ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
+                                                  ZF_IN_OPT zfindex maxCount /* = zfindexMax() */,
                                                   ZF_IN_OPT const ZFTokenForContainer &token /* = ZFTokenForContainerDefault() */) const
 {
     zfindex count = 0;
@@ -348,7 +348,7 @@ zfindex ZFCoreArray<T_Element>::find(ZF_IN T_Element const &e,
             return (p - d->buf);
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 template<typename T_Element>
 zfindex ZFCoreArray<T_Element>::findReversely(ZF_IN T_Element const &e,
@@ -364,7 +364,7 @@ zfindex ZFCoreArray<T_Element>::findReversely(ZF_IN T_Element const &e,
             }
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 template<typename T_Element>
 template<typename T_Another>
@@ -378,7 +378,7 @@ zfindex ZFCoreArray<T_Element>::find(ZF_IN T_Another const &e,
             return (p - d->buf);
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 template<typename T_Element>
 template<typename T_Another>
@@ -395,7 +395,7 @@ zfindex ZFCoreArray<T_Element>::findReversely(ZF_IN T_Another const &e,
             }
         }
     }
-    return zfindexMax;
+    return zfindexMax();
 }
 
 template<typename T_Element>
@@ -573,7 +573,7 @@ void ZFCoreArray<T_Element>::move(ZF_IN zfindex fromIndex, ZF_IN zfindex toIndex
         zfCoreCriticalIndexOutOfRange(fromIndex, this->count());
         return ;
     }
-    if(toIndexOrIndexMax == zfindexMax)
+    if(toIndexOrIndexMax == zfindexMax())
     {
         toIndexOrIndexMax = this->count() - 1;
     }
@@ -689,7 +689,7 @@ template<typename T_Element>
 inline void ZFCoreArray<T_Element>::sort(ZF_IN typename ZFComparer<T_Element>::Comparer elementComparer,
                                          ZF_IN_OPT zfbool ascending /* = zftrue */,
                                          ZF_IN_OPT zfindex start /* = 0 */,
-                                         ZF_IN_OPT zfindex count /* = zfindexMax */)
+                                         ZF_IN_OPT zfindex count /* = zfindexMax() */)
 {
     if(!this->isEmpty() && start + 1 < this->count() && count > 1)
     {

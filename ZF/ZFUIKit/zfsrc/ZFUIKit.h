@@ -46,7 +46,6 @@
 #include "ZFUIKit/ZFUIView.h"
 #include "ZFUIKit/ZFUIViewBlink.h"
 #include "ZFUIKit/ZFUIViewBlinkWhenFocus.h"
-#include "ZFUIKit/ZFUIViewBlinkWhenFocus_AutoPause.h"
 #include "ZFUIKit/ZFUIViewCapture.h"
 #include "ZFUIKit/ZFUIViewFocus.h"
 #include "ZFUIKit/ZFUIViewPositionOnScreen.h"

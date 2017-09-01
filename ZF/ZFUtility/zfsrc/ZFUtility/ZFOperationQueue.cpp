@@ -218,7 +218,7 @@ void ZFOperationQueue::taskOnStart(ZF_IN ZFOperationTaskData *operationTaskData)
         taskState->childToStartMaxFixed = taskState->childToRun->count();
     }
 
-    for(zfindex i = taskState->childToRun->count() - 1; i != zfindexMax; --i)
+    for(zfindex i = taskState->childToRun->count() - 1; i != zfindexMax(); --i)
     {
         queueResult->childResultsInOrder()->add(zfnullObject());
         queueProgress->childLastProgressDatas()->add(zfnullObject());
@@ -314,8 +314,8 @@ static void _ZFP_ZFOperationQueue_updateQueueProgress(ZF_IN ZFOperationTaskData 
     queueProgress->childLastProgressDatas()->set(childIndex, childOperationTaskData);
 
     zfdouble totalTask = (zfdouble)queueProgress->childLastProgressDatas()->count();
-    zfdouble curTask = zfdoubleZero;
-    for(zfindex i = queueProgress->childLastProgressDatas()->count() - 1; i != zfindexMax; --i)
+    zfdouble curTask = zfdoubleZero();
+    for(zfindex i = queueProgress->childLastProgressDatas()->count() - 1; i != zfindexMax(); --i)
     {
         // zfnullObject or ZFOperationTaskData
         ZFOperationTaskData *childOperationTaskData = ZFCastZFObject(ZFOperationTaskData *, queueProgress->childLastProgressDatas()->get(i));

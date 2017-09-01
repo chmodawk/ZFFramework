@@ -31,7 +31,7 @@ extern ZF_ENV_EXPORT const zfchar *ZFIdMapGetName(ZF_IN const zfchar *moduleName
 /**
  * @brief see #ZFIDMAP
  *
- * get id value from id name, or zfidentityInvalid if no such id name
+ * get id value from id name, or #zfidentityInvalid if no such id name
  * @note can be found only if accessed or registered by #ZFIDMAP_REGISTER
  */
 extern ZF_ENV_EXPORT zfidentity ZFIdMapGetId(ZF_IN const zfchar *moduleName, ZF_IN const zfchar *idName);

@@ -83,7 +83,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodFromSig(ZF_IN const zfchar *methodS
  */
 extern ZF_ENV_EXPORT zfbool ZFMethodSigSplit(ZF_OUT ZFCoreArray<zfindexRange> &ret,
                                              ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax);
+                                             ZF_IN_OPT zfindex srcLen = zfindexMax());
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFMethodSerializable_h_

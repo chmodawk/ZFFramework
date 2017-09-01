@@ -78,7 +78,7 @@ public:
      */
     ZFMETHOD_DECLARE_0(ZFUIRect, keyboardFixClientFrame)
     {
-        ZFUIRect ret = ZFUIRectZero;
+        ZFUIRect ret = ZFUIRectZero();
         this->keyboardFixClientFrameT(ret);
         return ret;
     }
@@ -97,8 +97,8 @@ protected:
     ZFUIOnScreenKeyboardState(void)
     : _ZFP_ZFUIOnScreenKeyboardState_windowSysWindow(zfnull)
     , _ZFP_ZFUIOnScreenKeyboardState_keyboardShowing(zffalse)
-    , _ZFP_ZFUIOnScreenKeyboardState_keyboardFrame(ZFUIRectZero)
-    , _ZFP_ZFUIOnScreenKeyboardState_keyboardFramePrev(ZFUIRectZero)
+    , _ZFP_ZFUIOnScreenKeyboardState_keyboardFrame(ZFUIRectZero())
+    , _ZFP_ZFUIOnScreenKeyboardState_keyboardFramePrev(ZFUIRectZero())
     {
     }
     /** @endcond */

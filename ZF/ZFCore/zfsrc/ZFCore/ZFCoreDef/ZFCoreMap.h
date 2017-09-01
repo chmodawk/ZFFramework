@@ -88,10 +88,10 @@ public:
      * @brief return a string describe the content
      */
     zffinal void objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
-                                      ZF_IN_OPT zfindex maxCount = zfindexMax,
+                                      ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                       ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault()) const;
     /** @brief see #objectInfoOfContentT */
-    zffinal zfstring objectInfoOfContent(ZF_IN_OPT zfindex maxCount = zfindexMax,
+    zffinal zfstring objectInfoOfContent(ZF_IN_OPT zfindex maxCount = zfindexMax(),
                                          ZF_IN_OPT const ZFTokenForKeyValueContainer &token = ZFTokenForKeyValueContainerDefault()) const
     {
         zfstring ret;

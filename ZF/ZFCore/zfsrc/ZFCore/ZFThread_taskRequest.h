@@ -26,7 +26,7 @@ zfclass ZF_ENV_EXPORT ZFThreadTaskRequestData : zfextends ZFObject
 
 public:
     /** @brief see #ZFThreadTaskRequest */
-    ZFPROPERTY_ASSIGN_READONLY(zfidentity, taskId, ZFPropertyInitValue(zfidentityInvalid))
+    ZFPROPERTY_ASSIGN_READONLY(zfidentity, taskId, ZFPropertyInitValue(zfidentityInvalid()))
     /** @brief see #ZFThreadTaskRequest */
     ZFPROPERTY_ASSIGN(ZFListener, taskCallback)
     /** @brief see #ZFThreadTaskRequest */

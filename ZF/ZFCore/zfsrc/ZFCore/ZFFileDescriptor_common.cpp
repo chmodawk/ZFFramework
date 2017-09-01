@@ -12,60 +12,60 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetter_NativeLocal(ZF_IN const zfchar *fileDescriptorData,
-                                                                            ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                                            ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                             ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                                             ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     return ZFInputCallbackForFile(
-        ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()),
+        ((dataLen == zfindexMax()) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()),
         flags,
         autoSkipBOMTable);
 }
 static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_NativeLocal(ZF_IN const zfchar *fileDescriptorData,
-                                                                              ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                                              ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                               ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Create */)
 {
     return ZFOutputCallbackForFile(
-        ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()),
+        ((dataLen == zfindexMax()) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()),
         flags);
 }
 
 // ============================================================
 #define _ZFP_ZFFileDescriptorInputCallbackGetter(FileDescriptorType) \
     static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetter_##FileDescriptorType(ZF_IN const zfchar *fileDescriptorData, \
-                                                                                         ZF_IN_OPT zfindex dataLen /* = zfindexMax */, \
+                                                                                         ZF_IN_OPT zfindex dataLen /* = zfindexMax() */, \
                                                                                          ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */, \
                                                                                          ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */) \
     { \
         return ZFInputCallbackForFile(zfsConnectLineFree( \
                 ZFFile::FileDescriptorType(), \
                 ZFFile::fileSeparatorString, \
-                ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()) \
+                ((dataLen == zfindexMax()) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()) \
             ), \
             flags, \
             autoSkipBOMTable); \
     }
 #define _ZFP_ZFFileDescriptorOutputCallbackGetter(FileDescriptorType) \
     static ZFOutputCallback _ZFP_ZFFileDescriptorOutputCallbackGetter_##FileDescriptorType(ZF_IN const zfchar *fileDescriptorData, \
-                                                                                           ZF_IN_OPT zfindex dataLen /* = zfindexMax */, \
+                                                                                           ZF_IN_OPT zfindex dataLen /* = zfindexMax() */, \
                                                                                            ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Create */) \
     { \
         return ZFOutputCallbackForFile(zfsConnectLineFree( \
                 ZFFile::FileDescriptorType(), \
                 ZFFile::fileSeparatorString, \
-                ((dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()) \
+                ((dataLen == zfindexMax()) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString()) \
             ), \
             flags); \
     }
 
 // ============================================================
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetterForResFile(ZF_IN const zfchar *fileDescriptorData,
-                                                                          ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                                          ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                           ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                                           ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
     return ZFInputCallbackForResFile(
-        (dataLen == zfindexMax) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString(),
+        (dataLen == zfindexMax()) ? fileDescriptorData : zfstring(fileDescriptorData, dataLen).cString(),
         autoSkipBOMTable);
 }
 
@@ -85,7 +85,7 @@ _ZFP_ZFFileDescriptorInputCallbackGetter(cachePath)
 _ZFP_ZFFileDescriptorOutputCallbackGetter(cachePath)
 
 static ZFInputCallback _ZFP_ZFFileDescriptorInputCallbackGetterForText(ZF_IN const zfchar *fileDescriptorData,
-                                                                       ZF_IN_OPT zfindex dataLen /* = zfindexMax */,
+                                                                       ZF_IN_OPT zfindex dataLen /* = zfindexMax() */,
                                                                        ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                                        ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {

@@ -27,7 +27,7 @@ zfautoObject ZFUIListCellUpdater::itemCacheAccess(ZF_IN const zfchar *key)
     }
     else
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 }
 void ZFUIListCellUpdater::itemCacheRecycle(ZF_IN const zfchar *key, ZF_IN ZFObject *cache)

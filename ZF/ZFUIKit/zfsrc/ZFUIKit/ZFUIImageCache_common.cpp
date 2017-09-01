@@ -20,14 +20,14 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageLoadFromInputWithCache:%s"), input.callbackId());
     zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
-    if(cached != zfautoObjectNull)
+    if(cached != zfautoObjectNull())
     {
         return cached;
     }
     cached = ZFUIImageLoadFromInput(input);
-    if(cached == zfautoObjectNull)
+    if(cached == zfautoObjectNull())
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
     return cached;
@@ -35,18 +35,18 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
 
 ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
                        ZFMP_IN(const ZFUIColor &, color),
-                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero))
+                       ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 {
     zfstring key = zfstringWithFormat(zfText("ZFUIImageLoadFromInputWithCache:%s %s"), ZFUIColorToString(color).cString(), ZFUISizeToString(size).cString());
     zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
-    if(cached != zfautoObjectNull)
+    if(cached != zfautoObjectNull())
     {
         return cached;
     }
     cached = ZFUIImageLoadFromColor(color, size);
-    if(cached == zfautoObjectNull)
+    if(cached == zfautoObjectNull())
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
     return cached;

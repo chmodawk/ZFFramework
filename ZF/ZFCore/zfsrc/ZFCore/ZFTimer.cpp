@@ -45,7 +45,7 @@ ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnStop)
 ZFObject *ZFTimer::objectOnInit(ZF_IN const zftimet &timerInterval,
                                 ZF_IN_OPT ZFObject *timerParam0 /* = zfnull */,
                                 ZF_IN_OPT ZFObject *timerParam1 /* = zfnull */,
-                                ZF_IN_OPT const zftimet &timerDelay /* = zftimetZero */,
+                                ZF_IN_OPT const zftimet &timerDelay /* = zftimetZero() */,
                                 ZF_IN_OPT zfbool timerActivateInMainThread /* = zffalse */)
 {
     this->objectOnInit();
@@ -145,12 +145,27 @@ void ZFTimer::_ZFP_ZFTimer_timerOnStop(void)
 // ============================================================
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFTimerExecuteParam, ZFTimerExecuteParam)
 
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, zftimet const &, timerInterval)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerIntervalSet, ZFMP_IN(zftimet const &, timerInterval))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, zfbool const &, timerActivateInMainThread)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerActivateInMainThreadSet, ZFMP_IN(zfbool const &, timerActivateInMainThread))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, ZFObject * const &, timerParam0)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerParam0Set, ZFMP_IN(ZFObject * const &, timerParam0))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, ZFObject * const &, timerParam1)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerParam1Set, ZFMP_IN(ZFObject * const &, timerParam1))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, ZFObject * const &, userData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, userDataSet, ZFMP_IN(ZFObject * const &, userData))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, ZFListener const &, timerCallback)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerCallbackSet, ZFMP_IN(ZFListener const &, timerCallback))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFTimerExecuteParam, zfindex const &, timerActivateCountMax)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFTimerExecuteParam, void, timerActivateCountMaxSet, ZFMP_IN(zfindex const &, timerActivateCountMax))
+
 ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFTimerExecute,
                        ZFMP_IN(const ZFTimerExecuteParam &, param))
 {
     if(param.timerInterval() <= 0 || !param.timerCallback().callbackIsValid())
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
     zfblockedAlloc(ZFTimer, timer);
     timer->timerIntervalSet(param.timerInterval());

@@ -56,7 +56,7 @@ public:
     : autoReleasePool(zfnull)
     , autoReleasePoolNeedDrain(zffalse)
     , semaWaitHolder(zfnull)
-    , taskId(zfidentityInvalid)
+    , taskId(zfidentityInvalid())
     , startFlag(zffalse)
     , runningFlag(zffalse)
     , stopRequestedFlag(zffalse)
@@ -119,7 +119,7 @@ public:
 
 protected:
     _ZFP_I_ZFThreadRunnableData(void)
-    : taskId(zfidentityInvalid)
+    : taskId(zfidentityInvalid())
     , runnableType(_ZFP_ZFThreadRunnableTypeExecuteInMainThread)
     , nativeToken(zfnull)
     , _runnable()
@@ -485,11 +485,11 @@ ZFMETHOD_DEFINE_3(ZFThread, void, threadStart,
             ? this->threadRunnable()
             : ZFListener(ZFCallbackForMemberMethod(this, ZFMethodAccess(ZFThread, threadOnRun))),
         userData,
-        ZFListenerData(zfidentityInvalid, zfnull, param0, param1),
+        ZFListenerData(zfidentityInvalid(), zfnull, param0, param1),
         zfnull,
         this,
         _ZFP_ZFThread_d);
-    if(zfidentityIsValid(taskIdTmp))
+    if(taskIdTmp != zfidentityInvalid())
     {
         _ZFP_ZFThread_d->taskId = taskIdTmp;
     }
@@ -600,13 +600,13 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFThreadExecuteInMainThread,
 {
     if(!runnable.callbackIsValid())
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
     ZFThread *curThread = ZFThread::currentThread();
     if(curThread != zfnull && curThread->isMainThread() && waitUntilDone)
     {
         runnable.execute(listenerData, userData);
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
@@ -675,7 +675,7 @@ static zfidentity _ZFP_ZFThreadExecuteInNewThread(ZF_IN const ZFListener &runnab
         {
             zfsynchronizedObjectUnlock(_ZFP_ZFThread_mutex);
         }
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
     ownerZFThreadPrivate->startFlag = zftrue;
 
@@ -720,7 +720,7 @@ ZFMETHOD_FUNC_DEFINE_4(zfidentity, ZFThreadExecuteInNewThread,
 {
     if(!runnable.callbackIsValid())
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     ZFThread *tmpThread = zfAlloc(ZFThread);
@@ -749,7 +749,7 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFThreadExecuteInMainThreadAfterDelay,
     }
     if(!runnable.callbackIsValid())
     {
-        return zfidentityInvalid;
+        return zfidentityInvalid();
     }
 
     zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
@@ -834,7 +834,7 @@ static void _ZFP_ZFThreadDoCancelTask(ZF_IN _ZFP_I_ZFThreadRunnableData *runnabl
 ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteCancel,
                        ZFMP_IN(zfidentity, taskId))
 {
-    if(zfidentityIsValid(taskId))
+    if(taskId != zfidentityInvalid())
     {
         zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
         if(lockAvailable)
@@ -908,7 +908,7 @@ ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteCancelByOwner,
 ZFMETHOD_FUNC_DEFINE_1(void, ZFThreadExecuteWait,
                        ZFMP_IN(zfidentity, taskId))
 {
-    if(zfidentityIsValid(taskId))
+    if(taskId != zfidentityInvalid())
     {
         zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
         if(lockAvailable)
@@ -949,7 +949,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFThreadExecuteWait,
                        ZFMP_IN(zfidentity, taskId),
                        ZFMP_IN(const zftimet &, miliSecs))
 {
-    if(zfidentityIsValid(taskId))
+    if(taskId != zfidentityInvalid())
     {
         zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
         if(lockAvailable)
@@ -1000,7 +1000,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFThreadExecuteObserverAdd,
             ZFObserverEventGetName(eventId));
         return ;
     }
-    if(zfidentityIsValid(taskId))
+    if(taskId != zfidentityInvalid())
     {
         zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
         if(lockAvailable)
@@ -1035,7 +1035,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFThreadExecuteObserverRemove,
             ZFObserverEventGetName(eventId));
         return ;
     }
-    if(zfidentityIsValid(taskId))
+    if(taskId != zfidentityInvalid())
     {
         zfbool lockAvailable = (_ZFP_ZFThread_mutex != zfnull);
         if(lockAvailable)

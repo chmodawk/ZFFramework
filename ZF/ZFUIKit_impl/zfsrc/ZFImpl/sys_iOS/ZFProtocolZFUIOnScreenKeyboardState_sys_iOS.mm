@@ -24,7 +24,7 @@ static _ZFP_ZFUIOnScreenKeyboardStateImpl_sys_iOS *_ZFP_ZFUIOnScreenKeyboardStat
     if(self)
     {
         self.keyboardShowing = zffalse;
-        self.keyboardFrame = ZFUIRectZero;
+        self.keyboardFrame = ZFUIRectZero();
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_keyboardOnChange:) name:UIKeyboardWillChangeFrameNotification object:nil];
     }

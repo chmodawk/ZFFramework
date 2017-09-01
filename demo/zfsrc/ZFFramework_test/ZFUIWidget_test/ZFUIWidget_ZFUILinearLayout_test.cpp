@@ -78,7 +78,7 @@ private:
 
         ZFUIKit_test_prepareSettingForNormalProperty(settings, layout, ZFUIMargin, ZFPropertyAccess(ZFUILinearLayout, layoutChildMargin),
             ZFCoreArrayPODCreate(ZFUIMargin
-                , ZFUIMarginZero
+                , ZFUIMarginZero()
                 , ZFUIMarginMake(8)
                 , ZFUIMarginMake(12)
                 , ZFUIMarginMake(24)

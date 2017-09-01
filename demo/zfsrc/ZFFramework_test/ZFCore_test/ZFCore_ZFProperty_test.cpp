@@ -26,7 +26,7 @@ public:
     // custom callback
     ZFPROPERTY_CUSTOM_INIT_CHECKER_DECLARE(ZFObject *, propertyRetain)
     {
-        if(outInitValue != zfnull) {*outInitValue = zfautoObjectNull;}
+        if(outInitValue != zfnull) {*outInitValue = zfautoObjectNull();}
         return (this->propertyRetain() == zfnull);
     }
     ZFPROPERTY_CUSTOM_VALUE_COMPARER_DECLARE(ZFObject *, propertyRetain)

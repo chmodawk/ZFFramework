@@ -27,13 +27,13 @@ ZFOBSERVER_EVENT_GLOBAL_REGISTER(ZFUIViewStateAniImpl, StateAniViewAniStop)
 
 // ============================================================
 // ZFUIViewStateAniFilter
-ZFFilterForZFObject ZFUIViewStateAniFilter;
+ZFEXPORT_VAR_DEFINE(ZFFilterForZFObject, ZFUIViewStateAniFilter, ZFFilterForZFObject())
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewStateAniFilterDataHolder, ZFLevelZFFrameworkNormal)
 {
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewStateAniFilterDataHolder)
 {
-    ZFUIViewStateAniFilter.filterRemoveAll();
+    ZFUIViewStateAniFilter().filterRemoveAll();
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniFilterDataHolder)
 
@@ -47,7 +47,7 @@ public:
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewStateAniDataHolder, ZFLevelZFFrameworkEssential)
 {
     this->taskStarted = zffalse;
-    this->delayStartTaskId = zfidentityInvalid;
+    this->delayStartTaskId = zfidentityInvalid();
     this->delayStartActionListener = ZFCallbackForRawFunction(zfself::delayStartAction);
     this->viewOnDetachListener = ZFCallbackForRawFunction(zfself::viewOnDetach);
     this->viewTaskOnStartListener = ZFCallbackForRawFunction(zfself::viewTaskOnStart);
@@ -158,7 +158,7 @@ public:
     void viewAniStart(ZF_IN ZFUIView *view)
     {
         this->delayStartTasks.add(view);
-        if(this->delayStartTaskId == zfidentityInvalid)
+        if(this->delayStartTaskId == zfidentityInvalid())
         {
             this->delayStartTaskId = ZFThreadTaskRequest(this->delayStartActionListener);
         }
@@ -170,13 +170,13 @@ private:
         {
             this->viewAniDoStart(this->delayStartTasks.removeLastAndGet());
         }
-        this->delayStartTaskId = zfidentityInvalid;
+        this->delayStartTaskId = zfidentityInvalid();
     }
     void delayStop(void)
     {
         ZFThreadTaskCancel(this->delayStartTaskId);
         this->delayStartTasks.removeAll();
-        this->delayStartTaskId = zfidentityInvalid;
+        this->delayStartTaskId = zfidentityInvalid();
     }
     void viewAniDoStart(ZF_IN ZFUIView *view)
     {
@@ -189,12 +189,12 @@ private:
         {
             if(parent->objectIsPrivate()
                 || !parent->viewVisible()
-                || !ZFUIViewStateAniFilter.filterCheckActive(parent))
+                || !ZFUIViewStateAniFilter().filterCheckActive(parent))
             {
                 return ;
             }
             zfstlmap<ZFUIView *, _ZFP_ZFUIViewStateAniTaskData>::iterator it = this->tasks.find(parent);
-            if(it != this->tasks.end() && it->second.ani != zfautoObjectNull)
+            if(it != this->tasks.end() && it->second.ani != zfautoObjectNull())
             {
                 return ;
             }
@@ -250,12 +250,12 @@ ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniDataHolder)
 static zfbool _ZFP_ZFUIViewStateAniStart_available = zffalse;
 ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIViewStateAniStart_availableDelay, ZFLevelAppLow)
 {
-    this->delayTaskId = zfidentityInvalid;
+    this->delayTaskId = zfidentityInvalid();
     if(ZFPROTOCOL_IS_AVAILABLE(ZFThread))
     {
         ZFLISTENER_LOCAL(delayAction, {
             _ZFP_ZFUIViewStateAniStart_available = zftrue;
-            userData->to<ZFTypeHolder *>()->holdedDataRef<zfidentity &>() = zfidentityInvalid;
+            userData->to<ZFTypeHolder *>()->holdedDataRef<zfidentity &>() = zfidentityInvalid();
         })
         this->delayTaskId = ZFThreadExecuteInMainThreadAfterDelay((zftimet)200, delayAction,
             zflineAlloc(ZFTypeHolder, &this->delayTaskId, ZFTypeHolderTypePointerRef));
@@ -269,7 +269,8 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewStateAniStart_availableDelay)
 private:
     zfidentity delayTaskId;
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewStateAniStart_availableDelay)
-void ZFUIViewStateAniStart(void)
+
+ZFMETHOD_FUNC_DEFINE_0(void, ZFUIViewStateAniStart)
 {
     if(_ZFP_ZFUIViewStateAniStart_available
         && ZFPROTOCOL_IS_AVAILABLE(ZFThread)
@@ -278,7 +279,7 @@ void ZFUIViewStateAniStart(void)
         ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniDataHolder)->taskStart();
     }
 }
-zfbool ZFUIViewStateAniStarted(void)
+ZFMETHOD_FUNC_DEFINE_0(zfbool, ZFUIViewStateAniStarted)
 {
     return ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniDataHolder)->taskStarted;
 }
@@ -409,7 +410,7 @@ void ZFUIViewStateAniImplUnregister(ZF_IN ZFUIViewStateAniImplProtocol *impl)
 
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIViewStateAniImplDataHolder) *d = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewStateAniImplDataHolder);
     zfindex index = d->implList.find(impl);
-    if(index == zfindexMax)
+    if(index == zfindexMax())
     {
         return ;
     }

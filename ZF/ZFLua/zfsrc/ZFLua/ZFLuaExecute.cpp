@@ -20,7 +20,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFLuaExecute,
 }
 ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFLuaExecute,
                        ZFMP_IN(const zfchar *, buf),
-                       ZFMP_IN_OPT(zfindex, bufLen, zfindexMax))
+                       ZFMP_IN_OPT(zfindex, bufLen, zfindexMax()))
 {
     zfstring errHint;
     if(!ZFPROTOCOL_ACCESS(ZFLua)->luaExecute(buf, bufLen, &errHint))

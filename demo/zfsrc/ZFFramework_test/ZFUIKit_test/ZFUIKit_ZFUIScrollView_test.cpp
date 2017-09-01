@@ -87,7 +87,7 @@ private:
                             ZF_IN const ZFUISize &itemSize,
                             ZF_IN const ZFUISize &itemSpace,
                             ZF_IN const ZFUISize &itemCount,
-                            ZF_IN_OPT const ZFUIMargin &contentMargin = ZFUIMarginZero)
+                            ZF_IN_OPT const ZFUIMargin &contentMargin = ZFUIMarginZero())
     {
         scrollView->scrollContentFrameSet(ZFUIRectMake(
             0,

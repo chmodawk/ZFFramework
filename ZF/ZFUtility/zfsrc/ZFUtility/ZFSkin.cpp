@@ -43,7 +43,7 @@ zfautoObject zfSkin(ZF_IN const zfchar *key,
         }
         else
         {
-            return zfautoObjectNull;
+            return zfautoObjectNull();
         }
     }
 }

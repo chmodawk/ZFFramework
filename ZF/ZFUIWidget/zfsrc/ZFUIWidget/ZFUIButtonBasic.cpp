@@ -304,19 +304,19 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
         }
     }
 
-    ZFUISize labelSize = ZFUISizeZero;
+    ZFUISize labelSize = ZFUISizeZero();
     if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
     {
         labelSize = labelView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
-    ZFUISize iconSize = ZFUISizeZero;
+    ZFUISize iconSize = ZFUISizeZero();
     if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
     {
         iconSize = iconView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
-    ZFUISize backgroundSize = ZFUISizeZero;
+    ZFUISize backgroundSize = ZFUISizeZero();
     if(backgroundView != zfnull && backgroundView->viewVisible() && d->buttonBackground->imageContent() != zfnull)
     {
         ZFUISize sizeHintBg = sizeHint;
@@ -339,7 +339,7 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
         backgroundSize = backgroundView->layoutMeasure(sizeHintBg, ZFUISizeParamWrapWidthWrapHeight());
     }
 
-    ZFUISize contentSize = ZFUISizeZero;
+    ZFUISize contentSize = ZFUISizeZero();
     zfint contentSpace = 0;
     switch(this->buttonContentIconPosition())
     {
@@ -400,19 +400,19 @@ void ZFUIButtonBasic::internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &bound
     ZFUIView *labelView = ZFCastZFObjectUnchecked(ZFUIView *, d->buttonLabel);
     ZFUIView *iconView = ZFCastZFObjectUnchecked(ZFUIView *, d->buttonIcon);
 
-    ZFUISize labelSize = ZFUISizeZero;
+    ZFUISize labelSize = ZFUISizeZero();
     if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
     {
         labelSize = labelView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }
 
-    ZFUISize iconSize = ZFUISizeZero;
+    ZFUISize iconSize = ZFUISizeZero();
     if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
     {
         iconSize = iconView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }
 
-    ZFUIRect contentFrame = ZFUIRectZero;
+    ZFUIRect contentFrame = ZFUIRectZero();
     zfint contentSpace = 0;
     switch(this->buttonContentIconPosition())
     {

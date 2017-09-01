@@ -89,7 +89,7 @@ public:
     zfoverride
     virtual zfbool propertyWrapperFromString(ZF_OUT zfautoObject &v,
                                              ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax) const
+                                             ZF_IN_OPT zfindex srcLen = zfindexMax()) const
     {
         return ZFObjectFromString(v, src, srcLen);
     }
@@ -121,11 +121,11 @@ public:
     {
         return ZFObjectToSerializableData(serializableData, ZFCastZFObjectUnchecked(ZFObject *, v), outErrorHint);
     }
-    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return ZFObjectFromString(v, src, srcLen);
     }
-    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return zffalse;
     }
@@ -187,7 +187,7 @@ public:
     zfoverride
     virtual zfbool propertyWrapperFromString(ZF_OUT zfautoObject &v,
                                              ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax) const
+                                             ZF_IN_OPT zfindex srcLen = zfindexMax()) const
     {
         return ZFObjectFromString(v, src, srcLen);
     }
@@ -219,11 +219,11 @@ public:
     {
         return ZFObjectToSerializableData(serializableData, v.toObject(), outErrorHint);
     }
-    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return ZFObjectFromString(v, src, srcLen);
     }
-    static zfbool PropertyFromString(ZF_OUT ZFAny &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT ZFAny &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return zffalse;
     }
@@ -290,7 +290,7 @@ public:
     zfoverride
     virtual zfbool propertyWrapperFromString(ZF_OUT zfautoObject &v,
                                              ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax) const
+                                             ZF_IN_OPT zfindex srcLen = zfindexMax()) const
     {
         return ZFObjectFromString(v, src, srcLen);
     }
@@ -322,11 +322,11 @@ public:
     {
         return ZFObjectToSerializableData(serializableData, v.toObject(), outErrorHint);
     }
-    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT zfautoObject &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return ZFObjectFromString(v, src, srcLen);
     }
-    static zfbool PropertyFromString(ZF_OUT ZFAnyT<T_Type> &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT ZFAnyT<T_Type> &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return zffalse;
     }
@@ -411,7 +411,7 @@ public:
     {
         return ZFCallerInfoToSerializableData(serializableData, v, outErrorHint);
     }
-    static zfbool PropertyFromString(ZF_OUT ZFCallerInfo &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT ZFCallerInfo &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return zffalse;
     }
@@ -505,7 +505,7 @@ public:
     {
         return ZFPropertyTypeIdData<T_Type_>::PropertyToSerializableData(serializableData, v, outErrorHint);
     }
-    static zfbool PropertyFromString(ZF_OUT T_Type_ &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax)
+    static zfbool PropertyFromString(ZF_OUT T_Type_ &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax())
     {
         return ZFPropertyTypeIdData<T_Type_>::PropertyFromString(v, src, srcLen);
     }
@@ -521,7 +521,7 @@ public:
     {
         if(v == zfnull)
         {
-            obj = zfautoObjectNull;
+            obj = zfautoObjectNull();
             return zftrue;
         }
         else

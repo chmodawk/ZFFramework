@@ -28,7 +28,7 @@ extern ZF_ENV_EXPORT jobject ZFImpl_sys_Android_ZFUIPointToZFAndroidPoint(ZF_IN 
 extern ZF_ENV_EXPORT void ZFImpl_sys_Android_ZFUIPointFromZFAndroidPoint(ZF_OUT ZFUIPoint &ret, ZF_IN jobject jobjPoint);
 inline ZFUIPoint ZFImpl_sys_Android_ZFUIPointFromZFAndroidPoint(ZF_IN jobject jobjPoint)
 {
-    ZFUIPoint ret = ZFUIPointZero;
+    ZFUIPoint ret = ZFUIPointZero();
     ZFImpl_sys_Android_ZFUIPointFromZFAndroidPoint(ret, jobjPoint);
     return ret;
 }
@@ -44,7 +44,7 @@ extern ZF_ENV_EXPORT jobject ZFImpl_sys_Android_ZFUISizeToZFAndroidSize(ZF_IN co
 extern ZF_ENV_EXPORT void ZFImpl_sys_Android_ZFUISizeFromZFAndroidSize(ZF_OUT ZFUISize &ret, ZF_IN jobject jobjSize);
 inline ZFUISize ZFImpl_sys_Android_ZFUISizeFromZFAndroidSize(ZF_IN jobject jobjSize)
 {
-    ZFUISize ret = ZFUISizeZero;
+    ZFUISize ret = ZFUISizeZero();
     ZFImpl_sys_Android_ZFUISizeFromZFAndroidSize(ret, jobjSize);
     return ret;
 }
@@ -60,7 +60,7 @@ extern ZF_ENV_EXPORT jobject ZFImpl_sys_Android_ZFUIMarginToZFAndroidMargin(ZF_I
 extern ZF_ENV_EXPORT void ZFImpl_sys_Android_ZFUIMarginFromZFAndroidMargin(ZF_OUT ZFUIMargin &ret, ZF_IN jobject jobjMargin);
 inline ZFUIMargin ZFImpl_sys_Android_ZFUIMarginFromZFAndroidMargin(ZF_IN jobject jobjMargin)
 {
-    ZFUIMargin ret = ZFUIMarginZero;
+    ZFUIMargin ret = ZFUIMarginZero();
     ZFImpl_sys_Android_ZFUIMarginFromZFAndroidMargin(ret, jobjMargin);
     return ret;
 }
@@ -76,7 +76,7 @@ extern ZF_ENV_EXPORT jobject ZFImpl_sys_Android_ZFUIRectToZFAndroidRect(ZF_IN co
 extern ZF_ENV_EXPORT void ZFImpl_sys_Android_ZFUIRectFromZFAndroidRect(ZF_OUT ZFUIRect &ret, ZF_IN jobject jobjRect);
 inline ZFUIRect ZFImpl_sys_Android_ZFUIRectFromZFAndroidRect(ZF_IN jobject jobjRect)
 {
-    ZFUIRect ret = ZFUIRectZero;
+    ZFUIRect ret = ZFUIRectZero();
     ZFImpl_sys_Android_ZFUIRectFromZFAndroidRect(ret, jobjRect);
     return ret;
 }

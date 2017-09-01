@@ -38,7 +38,7 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFJsonImpl_default, ZFJson, ZFProtocolLevel::e_D
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("rapidjson"))
 public:
     virtual ZFJsonItem jsonParse(ZF_IN const zfchar *src,
-                                 ZF_IN_OPT zfindex size = zfindexMax)
+                                 ZF_IN_OPT zfindex size = zfindexMax())
     {
         ZFBuffer buf;
         buf.bufferCopy(src, size * sizeof(zfchar));

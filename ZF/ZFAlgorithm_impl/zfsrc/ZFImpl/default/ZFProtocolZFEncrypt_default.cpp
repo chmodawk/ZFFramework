@@ -52,7 +52,7 @@ public:
     virtual zfbool encrypt(ZF_IN_OUT const ZFOutputCallback &output, ZF_IN const ZFInputCallback &input, ZF_IN const zfstring &key)
     {
         zfindex inputSize = input.ioSize();
-        if(inputSize != zfindexMax)
+        if(inputSize != zfindexMax())
         {
             ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
             zfstring sizeCheck = zfstringWithFormat(zfText("%s+"), zfsFromInt(inputSize, 16).cString());
@@ -89,7 +89,7 @@ public:
             }
         }
         zfindex sizeCheck = 0;
-        if(zfsToIntT(sizeCheck, sizeCheckBuf, zfindexMax, 16))
+        if(zfsToIntT(sizeCheck, sizeCheckBuf, zfindexMax(), 16))
         {
             return zffalse;
         }

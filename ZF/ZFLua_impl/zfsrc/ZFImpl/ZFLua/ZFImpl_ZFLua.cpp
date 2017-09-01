@@ -62,14 +62,26 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
     zfclassNotPOD _ZFP_ZFImpl_ZFLua_zfnullHolder
     {
     public:
-        static zfautoObject action(void)
+        static zfautoObject get_zfnull(void)
         {
-            return zfautoObjectNull;
+            return zfautoObjectNull();
+        }
+        static zfautoObject get_zftrue(void)
+        {
+            return ZFValue::boolValueCreate(zftrue);
+        }
+        static zfautoObject get_zffalse(void)
+        {
+            return ZFValue::boolValueCreate(zffalse);
         }
     };
-    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfnull"), _ZFP_ZFImpl_ZFLua_zfnullHolder::action);
+    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfnull"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zfnull);
+    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zftrue"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zftrue);
+    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zffalse"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zffalse);
     ZFImpl_ZFLua_execute(L, zfText(
             "zfnull = _ZFP_ZFImpl_ZFLua_zfnull()\n"
+            "zftrue = _ZFP_ZFImpl_ZFLua_zftrue()\n"
+            "zffalse = _ZFP_ZFImpl_ZFLua_zffalse()\n"
         ));
 
     // each impl setup callback
@@ -255,7 +267,7 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(_ZFP_ZFImpl_ZFLua_implDispatchReturnValueN
 }
 ZF_GLOBAL_INITIALIZER_DESTROY(_ZFP_ZFImpl_ZFLua_implDispatchReturnValueNotSetInstanceInit)
 {
-    _ZFP_ZFImpl_ZFLua_implDispatchReturnValueNotSetInstance = zfautoObjectNull;
+    _ZFP_ZFImpl_ZFLua_implDispatchReturnValueNotSetInstance = zfautoObjectNull();
 }
 ZF_GLOBAL_INITIALIZER_END(_ZFP_ZFImpl_ZFLua_implDispatchReturnValueNotSetInstanceInit)
 
@@ -402,7 +414,7 @@ void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplDispatchInfo &dispatch
 // ============================================================
 zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                             ZF_IN const zfchar *buf,
-                            ZF_IN_OPT zfindex bufLen /* = zfindexMax */,
+                            ZF_IN_OPT zfindex bufLen /* = zfindexMax() */,
                             ZF_OUT_OPT zfstring *errHint /* = zfnull */)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFImpl_ZFLua_luaStateGlobalHolder) *d
@@ -417,7 +429,7 @@ zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
     }
 
     ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
-    int error = (luaL_loadbuffer(L, buf, (bufLen == zfindexMax) ? zfslen(buf) : bufLen, "") || lua_pcall(L, 0, 0, 0));
+    int error = (luaL_loadbuffer(L, buf, (bufLen == zfindexMax()) ? zfslen(buf) : bufLen, "") || lua_pcall(L, 0, 0, 0));
     if(error)
     {
         if(errHint != zfnull)
@@ -543,7 +555,7 @@ zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
     }
 
     zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
-    if(param == zfautoObjectNull)
+    if(param == zfautoObjectNull())
     {
         return allowEmpty;
     }
@@ -585,7 +597,7 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
     }
 
     zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
-    if(param == zfautoObjectNull)
+    if(param == zfautoObjectNull())
     {
         return allowEmpty;
     }
@@ -619,13 +631,13 @@ zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
     }
     if(!lua_isuserdata(L, luaStackOffset))
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 
     zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
-    if(param == zfautoObjectNull)
+    if(param == zfautoObjectNull())
     {
-        return (allowEmpty ? ZFValue::intValueCreate(0) : zfautoObjectNull);
+        return (allowEmpty ? ZFValue::intValueCreate(0) : zfautoObjectNull());
     }
     else if(param.toObject()->classData()->classIsTypeOf(ZFValue::ClassData()))
     {
@@ -677,7 +689,7 @@ zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
     }
     else
     {
-        return zfautoObjectNull;
+        return zfautoObjectNull();
     }
 }
 

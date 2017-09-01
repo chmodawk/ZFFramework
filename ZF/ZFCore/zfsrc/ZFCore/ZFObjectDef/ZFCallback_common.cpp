@@ -30,7 +30,7 @@ zfindex ZFIOCallbackCalcFSeek(ZF_IN zfindex offset,
             return ((offset + seekByteSize > length) ? offset : (length - seekByteSize));
         default:
             zfCoreCriticalShouldNotGoHere();
-            return zfindexMax;
+            return zfindexMax();
     }
 }
 
@@ -41,12 +41,12 @@ zfindex ZFIOCallback::ioSeek(ZF_IN zfindex byteSize,
     ZFObject *owner = this->callbackTagGet(ZFCallbackTagKeyword_ioOwner);
     if(owner == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     const ZFMethod *method = owner->classData()->methodForName(zfText("ioSeek"));
     if(method == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return method->execute<zfindex, zfindex, ZFSeekPos>(owner, byteSize, pos);
 }
@@ -55,12 +55,12 @@ zfindex ZFIOCallback::ioTell(void) const
     ZFObject *owner = this->callbackTagGet(ZFCallbackTagKeyword_ioOwner);
     if(owner == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     const ZFMethod *method = owner->classData()->methodForName(zfText("ioTell"));
     if(method == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return method->execute<zfindex>(owner);
 }
@@ -69,12 +69,12 @@ zfindex ZFIOCallback::ioSize(void) const
     ZFObject *owner = this->callbackTagGet(ZFCallbackTagKeyword_ioOwner);
     if(owner == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     const ZFMethod *method = owner->classData()->methodForName(zfText("ioSize"));
     if(method == zfnull)
     {
-        return zfindexMax;
+        return zfindexMax();
     }
     return method->execute<zfindex>(owner);
 }
@@ -105,7 +105,7 @@ public:
     }
     ZFMETHOD_DECLARE_0(zfindex, ioTell)
     {
-        return ((this->pString->length() >= this->savedLength) ? (this->pString->length() - this->savedLength) : zfindexMax);
+        return ((this->pString->length() >= this->savedLength) ? (this->pString->length() - this->savedLength) : zfindexMax());
     }
     ZFMETHOD_DECLARE_0(zfindex, ioSize)
     {
@@ -144,7 +144,7 @@ public:
                        ZFMP_IN(zfindex, count))
     {
         const zfbyte *pSrc = (const zfbyte *)s;
-        if(count == zfindexMax)
+        if(count == zfindexMax())
         {
             while(*pSrc && p < pEnd)
             {
@@ -234,7 +234,7 @@ public:
                 break;
             default:
                 zfCoreCriticalShouldNotGoHere();
-                return zfindexMax;
+                return zfindexMax();
         }
         return p - pStart;
     }
@@ -244,12 +244,12 @@ public:
     }
     ZFMETHOD_DECLARE_0(zfindex, ioSize)
     {
-        return ((pEnd > pStart) ? (pEnd - pStart) : zfindexMax);
+        return ((pEnd > pStart) ? (pEnd - pStart) : zfindexMax());
     }
 };
 ZFOutputCallback _ZFP_ZFOutputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerInfo,
                                                 ZF_IN void *buf,
-                                                ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
+                                                ZF_IN_OPT zfindex maxCount /* = zfindexMax() */,
                                                 ZF_IN_OPT zfbool autoAppendNullToken /* = zftrue */)
 {
     if(buf == zfnull || maxCount == 0 || (maxCount == 1 && autoAppendNullToken))
@@ -259,7 +259,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForBuffer(ZF_IN const ZFCallerInfo &caller
     _ZFP_ZFOutputCallbackForBufferOwner *owner = zfAlloc(_ZFP_ZFOutputCallbackForBufferOwner);
     owner->autoAppendNullToken = autoAppendNullToken;
     owner->pStart = (zfbyte *)buf;
-    if(maxCount == zfindexMax)
+    if(maxCount == zfindexMax())
     {
         owner->pEnd = zfnull;
         --(owner->pEnd);
@@ -392,7 +392,7 @@ ZFBuffer ZFInputCallbackReadToBuffer(ZF_IN_OUT const ZFInputCallback &input)
 
     ZFBuffer ret;
     zfindex totalSize = input.ioSize();
-    if(totalSize != zfindexMax)
+    if(totalSize != zfindexMax())
     {
         ret.bufferMalloc(totalSize + sizeof(zfcharW));
         if(input.execute(ret.buffer(), totalSize) != totalSize)
@@ -486,7 +486,7 @@ zfbool ZFInputCallbackSkipChars(ZF_OUT zfchar *buf,
 zfindex ZFInputCallbackReadUntil(ZF_IN_OUT zfstring &ret,
                                  ZF_IN_OUT const ZFInputCallback &input,
                                  ZF_IN_OPT const zfchar *charSet /* = zfText(" \t\r\n") */,
-                                 ZF_IN_OPT zfindex maxCount /* = zfindexMax */,
+                                 ZF_IN_OPT zfindex maxCount /* = zfindexMax() */,
                                  ZF_OUT_OPT zfchar *firstCharMatchedCharSet /* = zfnull */)
 {
     zfindex readCount = 0;
@@ -537,7 +537,7 @@ zfindex ZFInputCallbackCheckMatch(ZF_IN const zfchar **tokens,
                                   ZF_IN zfindex tokenCount,
                                   ZF_IN_OUT const ZFInputCallback &input)
 {
-    zfindex ret = zfindexMax;
+    zfindex ret = zfindexMax();
     if(input.callbackIsValid())
     {
         zfindex saved = input.ioTell();
@@ -639,23 +639,23 @@ public:
 ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &callerInfo,
                                                     ZF_IN const ZFInputCallback &inputCallback,
                                                     ZF_IN_OPT zfindex start /* = 0 */,
-                                                    ZF_IN_OPT zfindex count /* = zfindexMax */,
+                                                    ZF_IN_OPT zfindex count /* = zfindexMax() */,
                                                     ZF_IN_OPT zfbool autoRestorePos /* = zftrue */)
 {
     zfbool valid = zffalse;
-    zfindex savedPos = zfindexMax;
+    zfindex savedPos = zfindexMax();
     zfindex countFixed = count;
     do
     {
         if(!inputCallback.callbackIsValid()) {break;}
 
         savedPos = inputCallback.ioTell();
-        if(savedPos == zfindexMax) {break;}
+        if(savedPos == zfindexMax()) {break;}
 
         if(inputCallback.ioSeek(start, ZFSeekPosBegin) != start) {break;}
 
         zfindex srcCount = inputCallback.ioSize();
-        if(srcCount == zfindexMax) {break;}
+        if(srcCount == zfindexMax()) {break;}
         if(start + countFixed > srcCount)
         {
             countFixed = srcCount - start;
@@ -665,7 +665,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
     } while(zffalse);
     if(!valid)
     {
-        if(savedPos != zfindexMax)
+        if(savedPos != zfindexMax())
         {
             inputCallback.ioSeek(savedPos, ZFSeekPosBegin);
         }
@@ -714,7 +714,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
                     customData.elementAdd(startData);
                 }
 
-                if(count != zfindexMax)
+                if(count != zfindexMax())
                 {
                     ZFSerializableData countData;
                     if(!zfindexToSerializableData(countData, count))
@@ -771,7 +771,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
             return zffalse;
         }
     }
-    zfindex count = zfindexMax;
+    zfindex count = zfindexMax();
     {
         const ZFSerializableData *countData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForInputInRange_count);
         if(countData != zfnull && !zfindexFromSerializableData(count, *countData, outErrorHint, outErrorPos))
@@ -841,7 +841,7 @@ public:
 ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerInfo,
                                               ZF_IN zfbool copy,
                                               ZF_IN const void *src,
-                                              ZF_IN_OPT zfindex count /* = zfindexMax */)
+                                              ZF_IN_OPT zfindex count /* = zfindexMax() */)
 {
     if(src == zfnull)
     {
@@ -849,7 +849,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForBuffer(ZF_IN const ZFCallerInfo &callerIn
     }
     zfindex len = count;
     void *srcTmp = zfnull;
-    if(len == zfindexMax)
+    if(len == zfindexMax())
     {
         len = zfslen((const zfchar *)src);
     }
@@ -929,7 +929,7 @@ public:
         {
             return count;
         }
-        if(count == zfindexMax)
+        if(count == zfindexMax())
         {
             count = zfslen((const zfchar *)buf) * sizeof(zfchar);
         }
@@ -998,9 +998,9 @@ ZFMETHOD_USER_REGISTER_0({return ZFIOCallback(invokerObject->to<v_ZFCallback *>(
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFOutputCallback, ZFOutputCallbackForString, ZFMP_IN_OUT(zfstring &, s))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFBuffer, ZFInputCallbackReadToBuffer, ZFMP_IN_OUT(const ZFInputCallback &, input))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfindex, ZFInputCallbackReadToOutput, ZFMP_IN_OUT(const ZFOutputCallback &, output), ZFMP_IN_OUT(const ZFInputCallback &, input))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFInputCallback, ZFInputCallbackForInputInRange, ZFMP_IN(const ZFInputCallback &, inputCallback), ZFMP_IN_OPT(zfindex, start, 0), ZFMP_IN_OPT(zfindex, count, zfindexMax), ZFMP_IN_OPT(zfbool, autoRestorePos, zftrue))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFInputCallback, ZFInputCallbackForBuffer, ZFMP_IN(const zfchar *, buf), ZFMP_IN_OPT(zfindex, count, zfindexMax))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFInputCallback, ZFInputCallbackForBufferCopy, ZFMP_IN(const zfchar *, buf), ZFMP_IN_OPT(zfindex, count, zfindexMax))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFInputCallback, ZFInputCallbackForInputInRange, ZFMP_IN(const ZFInputCallback &, inputCallback), ZFMP_IN_OPT(zfindex, start, 0), ZFMP_IN_OPT(zfindex, count, zfindexMax()), ZFMP_IN_OPT(zfbool, autoRestorePos, zftrue))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFInputCallback, ZFInputCallbackForBuffer, ZFMP_IN(const zfchar *, buf), ZFMP_IN_OPT(zfindex, count, zfindexMax()))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(ZFInputCallback, ZFInputCallbackForBufferCopy, ZFMP_IN(const zfchar *, buf), ZFMP_IN_OPT(zfindex, count, zfindexMax()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif

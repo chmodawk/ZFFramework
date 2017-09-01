@@ -141,7 +141,7 @@ private:
         {
             return ;
         }
-        static ZFUIPoint lastPoint = ZFUIPointZero;
+        static ZFUIPoint lastPoint = ZFUIPointZero();
         static zfindex lastCount = 0;
         static zfbool langFlag = zffalse;
         if(zfmAbs(event->mousePoint.x - lastPoint.x) <= 5
@@ -174,9 +174,9 @@ ZF_GLOBAL_INITIALIZER_END(testLangLoad)
 ZF_GLOBAL_INITIALIZER_INIT(iOS7AutoTitleSpace)
 {
     zfstring frameworkName = ZFEnvInfo::frameworkName();
-    if(zfstringFindCaseInsensitive(frameworkName, zfText("iOS")) != zfindexMax
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPhone")) != zfindexMax
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPad")) != zfindexMax)
+    if(zfstringFindCaseInsensitive(frameworkName, zfText("iOS")) != zfindexMax()
+       || zfstringFindCaseInsensitive(frameworkName, zfText("iPhone")) != zfindexMax()
+       || zfstringFindCaseInsensitive(frameworkName, zfText("iPad")) != zfindexMax())
     {
         if(zfVersionGetInt(ZFEnvInfo::frameworkVersion(), ZFVERSION_MAIN()) >= 7)
         {

@@ -120,9 +120,9 @@ public:
     /**
      * @brief util method to copy string
      */
-    zffinal zfbool bufferCopy(ZF_IN const zfchar *s, ZF_IN_OPT zfindex length = zfindexMax)
+    zffinal zfbool bufferCopy(ZF_IN const zfchar *s, ZF_IN_OPT zfindex length = zfindexMax())
     {
-        return this->bufferCopy((const void *)s, ((length == zfindexMax) ? zfslen(s) : length) * sizeof(zfchar));
+        return this->bufferCopy((const void *)s, ((length == zfindexMax()) ? zfslen(s) : length) * sizeof(zfchar));
     }
     /**
      * @brief util method to copy string

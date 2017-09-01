@@ -100,7 +100,7 @@ public:
     virtual zfindex dialogButtonFind(ZF_IN ZFUIButton *dialogButton);
     zfoverride
     virtual void dialogButtonAdd(ZF_IN ZFUIButton *button,
-                                 ZF_IN_OPT zfindex atIndex = zfindexMax);
+                                 ZF_IN_OPT zfindex atIndex = zfindexMax());
     zfoverride
     virtual void dialogButtonRemove(ZF_IN ZFUIButton *button);
     zfoverride

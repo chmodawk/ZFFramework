@@ -17,22 +17,24 @@ static void _ZFP_ZFUIViewTreePrintDelayedAction(ZF_IN const ZFListenerData &list
     ZFListenerHolder *data = ZFCastZFObjectUnchecked(ZFListenerHolder *, userData);
     ZFUIViewTreePrint(ZFCastZFObjectUnchecked(ZFUIView *, data->listenerData.param0), data->runnable);
 }
-void ZFUIViewTreePrintDelayed(ZF_IN ZFUIView *view,
-                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrintDelayed,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()))
 {
     ZFThreadTaskRequest(
         ZFCallbackForRawFunction(_ZFP_ZFUIViewTreePrintDelayedAction),
-        zflineAllocWithoutLeakTest(ZFListenerHolder, outputCallback, ZFListenerData(zfidentityInvalid, zfnull, view)));
+        zflineAllocWithoutLeakTest(ZFListenerHolder, outputCallback, ZFListenerData(zfidentityInvalid(), zfnull, view)));
 }
 
-void ZFUIViewTreePrintDelayed(ZF_IN zftimet delay,
-                              ZF_IN ZFUIView *view,
-                              ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
+ZFMETHOD_FUNC_DEFINE_3(void, ZFUIViewTreePrintDelayed,
+                       ZFMP_IN(zftimet, delay),
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()))
 {
     ZFThreadExecuteInMainThreadAfterDelay(
         delay,
         ZFCallbackForRawFunction(_ZFP_ZFUIViewTreePrintDelayedAction),
-        zflineAllocWithoutLeakTest(ZFListenerHolder, outputCallback, ZFListenerData(zfidentityInvalid, zfnull, view)));
+        zflineAllocWithoutLeakTest(ZFListenerHolder, outputCallback, ZFListenerData(zfidentityInvalid(), zfnull, view)));
 }
 
 // ============================================================
@@ -71,8 +73,10 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFUIViewTreePrintSyncObjectHolder)
     _ZFP_ZFUIViewTreePrintSyncObject = zfnull;
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIViewTreePrintSyncObjectHolder);
-void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
-                       ZF_IN_OPT const ZFOutputCallback &outputCallback /* = ZFOutputCallbackDefault() */)
+
+ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrint,
+                       ZFMP_IN(ZFUIView *, view),
+                       ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()))
 {
     if(view == zfnull || !outputCallback.callbackIsValid())
     {
@@ -106,7 +110,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
         ZFCoreArrayPOD<ZFUIView *> bgViews = printData.view->internalBackgroundViewArray();
         ZFCoreArrayPOD<ZFUIView *> normalViews = printData.view->childArray();
         ZFCoreArrayPOD<ZFUIView *> fgViews = printData.view->internalForegroundViewArray();
-        for(zfindex i = fgViews.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = fgViews.count() - 1; i != zfindexMax(); --i)
         {
             _ZFP_ZFUIViewTreePrintPrintData printDataTmp;
             printDataTmp.view = fgViews.get(i)->to<ZFUIView *>();
@@ -115,7 +119,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
             printDataTmp.layer = ZFUIViewChildLayer::e_Foreground;
             printDatas.add(printDataTmp);
         }
-        for(zfindex i = normalViews.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = normalViews.count() - 1; i != zfindexMax(); --i)
         {
             _ZFP_ZFUIViewTreePrintPrintData printDataTmp;
             printDataTmp.view = normalViews.get(i)->to<ZFUIView *>();
@@ -124,7 +128,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
             printDataTmp.layer = ZFUIViewChildLayer::e_Normal;
             printDatas.add(printDataTmp);
         }
-        for(zfindex i = bgViews.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = bgViews.count() - 1; i != zfindexMax(); --i)
         {
             _ZFP_ZFUIViewTreePrintPrintData printDataTmp;
             printDataTmp.view = bgViews.get(i)->to<ZFUIView *>();
@@ -133,7 +137,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
             printDataTmp.layer = ZFUIViewChildLayer::e_Background;
             printDatas.add(printDataTmp);
         }
-        for(zfindex i = implViews.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = implViews.count() - 1; i != zfindexMax(); --i)
         {
             _ZFP_ZFUIViewTreePrintPrintData printDataTmp;
             printDataTmp.view = implViews.get(i)->to<ZFUIView *>();
@@ -145,7 +149,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
 
         outputCallback.execute(zfText("|"));
         outputCallback.execute(zfstringWithFormat(zfText("%2zi"), printData.siblingIndex).cString());
-        for(zfindex i = printData.depth - 1; i != zfindexMax; --i)
+        for(zfindex i = printData.depth - 1; i != zfindexMax(); --i)
         {
             outputCallback.execute(zfText(" |"));
         }
@@ -171,7 +175,7 @@ void ZFUIViewTreePrint(ZF_IN ZFUIView *view,
 
         ZFCoreArrayPOD<_ZFP_ZFUIViewTreePrintData> &datas = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewTreePrintDataHolder)->datas;
         zfbool exist = zffalse;
-        for(zfindex i = datas.count() - 1; i != zfindexMax; --i)
+        for(zfindex i = datas.count() - 1; i != zfindexMax(); --i)
         {
             if(printData.view->classData()->classIsSubclassOf(datas[i].viewClass))
             {
@@ -225,7 +229,7 @@ void ZFUIViewTreePrintInfoGetterSet(ZF_IN const ZFClass *viewClass,
         return ;
     }
 
-    zfindex indexAddTo = zfindexMax;
+    zfindex indexAddTo = zfindexMax();
     for(zfindex i = 0; i < datas.count(); ++i)
     {
         const ZFClass *cls = datas[i].viewClass;
@@ -248,7 +252,7 @@ void ZFUIViewTreePrintInfoGetterSet(ZF_IN const ZFClass *viewClass,
     _ZFP_ZFUIViewTreePrintData data;
     data.viewClass = viewClass;
     data.viewInfoGetter = viewInfoGetter;
-    if(indexAddTo == zfindexMax)
+    if(indexAddTo == zfindexMax())
     {
         datas.add(data);
     }
@@ -260,7 +264,7 @@ void ZFUIViewTreePrintInfoGetterSet(ZF_IN const ZFClass *viewClass,
 ZFUIViewTreePrintInfoGetter ZFUIViewTreePrintInfoGetterGet(ZF_IN const ZFClass *viewClass)
 {
     ZFCoreArrayPOD<_ZFP_ZFUIViewTreePrintData> &datas = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewTreePrintDataHolder)->datas;
-    for(zfindex i = datas.count() - 1; i != zfindexMax; --i)
+    for(zfindex i = datas.count() - 1; i != zfindexMax(); --i)
     {
         if(datas[i].viewClass == viewClass)
         {

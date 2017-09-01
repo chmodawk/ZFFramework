@@ -306,12 +306,12 @@ zfautoObject ZFClass::newInstanceForName(ZF_IN const zfchar *className,
                                          ZF_IN const ZFCallerInfo &callerInfo)
 {
     const ZFClass *cls = ZFClass::classForName(className);
-    return ((cls != zfnull) ? cls->newInstance(callerInfo) : zfautoObjectNull);
+    return ((cls != zfnull) ? cls->newInstance(callerInfo) : zfautoObjectNull());
 }
 zfautoObject ZFClass::newInstanceForNameWithoutLeakTest(ZF_IN const zfchar *className)
 {
     const ZFClass *cls = ZFClass::classForName(className);
-    return ((cls != zfnull) ? cls->newInstanceWithoutLeakTest() : zfautoObjectNull);
+    return ((cls != zfnull) ? cls->newInstanceWithoutLeakTest() : zfautoObjectNull());
 }
 
 // ============================================================
@@ -377,7 +377,7 @@ void ZFClass::_ZFP_ZFClass_instanceObserverNotify(ZF_IN ZFObject *obj) const
 {
     if(!d->instanceObserverCached.empty())
     {
-        ZFListenerData listenerData(zfidentityInvalid, obj);
+        ZFListenerData listenerData(zfidentityInvalid(), obj);
         for(zfstlsize i = 0; i < d->instanceObserverCached.size(); ++i)
         {
             _ZFP_ZFClassPrivate::InstanceObserverData &data = *(d->instanceObserverCached[i]);
@@ -849,7 +849,7 @@ zfautoObject ZFClass::classTagRemoveAndGet(ZF_IN const zfchar *key) const
             return ret;
         }
     }
-    return zfautoObjectNull;
+    return zfautoObjectNull();
 }
 void ZFClass::classTagRemoveAll(void) const
 {
@@ -1086,7 +1086,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_parentInterfaceListCache(ZF_IN ZFClass *cls
         {
             const ZFClass *clsTmp = clsToCheck.getFirst();
             clsToCheck.removeFirst();
-            if(parentList.find(clsTmp) == zfindexMax)
+            if(parentList.find(clsTmp) == zfindexMax())
             {
                 parentList.add(clsTmp);
 
@@ -1117,7 +1117,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_interfaceCastListCache(ZF_IN ZFClass *cls)
     {
         for(const ZFClass **p = cls->parentClass()->d->interfaceCastListCache; *p != zfnull; ++p)
         {
-            if(parentInterfaceList.find(*p, ZFComparerCheckEqual) == zfindexMax)
+            if(parentInterfaceList.find(*p, ZFComparerCheckEqual) == zfindexMax())
             {
                 parentInterfaceList.add(*p);
             }
@@ -1127,7 +1127,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_interfaceCastListCache(ZF_IN ZFClass *cls)
     {
         for(const ZFClass **p = cls->d->interfaceCastListCache; *p != zfnull; ++p)
         {
-            if(parentInterfaceList.find(*p, ZFComparerCheckEqual) == zfindexMax)
+            if(parentInterfaceList.find(*p, ZFComparerCheckEqual) == zfindexMax())
             {
                 parentInterfaceList.add(*p);
             }
@@ -1142,7 +1142,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_interfaceCastListCache(ZF_IN ZFClass *cls)
     {
         for(_ZFP_ZFObjectToInterfaceCastCallback *p = cls->parentClass()->d->interfaceCastCallbackListCache; *p != zfnull; ++p)
         {
-            if(parentInterfaceCastList.find(*p, ZFComparerCheckEqual) == zfindexMax)
+            if(parentInterfaceCastList.find(*p, ZFComparerCheckEqual) == zfindexMax())
             {
                 parentInterfaceCastList.add(*p);
             }
@@ -1152,7 +1152,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_interfaceCastListCache(ZF_IN ZFClass *cls)
     {
         for(_ZFP_ZFObjectToInterfaceCastCallback *p = cls->d->interfaceCastCallbackListCache; *p != zfnull; ++p)
         {
-            if(parentInterfaceCastList.find(*p, ZFComparerCheckEqual) == zfindexMax)
+            if(parentInterfaceCastList.find(*p, ZFComparerCheckEqual) == zfindexMax())
             {
                 parentInterfaceCastList.add(*p);
             }
@@ -1200,7 +1200,7 @@ void ZFClass::_ZFP_ZFClassInitFinish_methodAndPropertyFindCache(ZF_IN ZFClass *c
         cls->d->methodAndPropertyFindCache.push_back(clsTmp);
         alreadyChecked[clsTmp] = zftrue;
 
-        for(zfindex i = clsTmp->implementedInterfaceCount() - 1; i != zfindexMax; --i)
+        for(zfindex i = clsTmp->implementedInterfaceCount() - 1; i != zfindexMax(); --i)
         {
             clsToCheck.push_back(clsTmp->implementedInterfaceAtIndex(i));
         }
@@ -1478,9 +1478,26 @@ ZF_NAMESPACE_GLOBAL_END
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClassInstanceObserverAddParam, ZFListener const &, observer)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClassInstanceObserverAddParam, void, observerSet, ZFMP_IN(ZFListener const &, observer))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClassInstanceObserverAddParam, ZFObject * const &, userData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClassInstanceObserverAddParam, void, userDataSet, ZFMP_IN(ZFObject * const &, userData))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClassInstanceObserverAddParam, ZFObject * const &, owner)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClassInstanceObserverAddParam, void, ownerSet, ZFMP_IN(ZFObject * const &, owner))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClassInstanceObserverAddParam, ZFLevel const &, observerLevel)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClassInstanceObserverAddParam, void, observerLevelSet, ZFMP_IN(ZFLevel const &, observerLevel))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClassInstanceObserverAddParam, zfbool const &, observeAllChildType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClassInstanceObserverAddParam, void, observeAllChildTypeSet, ZFMP_IN(zfbool const &, observeAllChildType))
+
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(ZFClass, v_ZFClass, const ZFClass *, classForName, ZFMP_IN(const zfchar *, className))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_2(ZFClass, v_ZFClass, zfautoObject, newInstanceForName, ZFMP_IN(const zfchar *, className), ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_STATIC_1(ZFClass, v_ZFClass, zfautoObject, newInstanceForNameWithoutLeakTest, ZFMP_IN(const zfchar *, className))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_5(v_ZFClass, void, instanceObserverAdd,
+    ZFMP_IN(const ZFListener &, observer), ZFMP_IN_OPT(ZFObject *, userData, zfnull), ZFMP_IN_OPT(ZFObject *, owner, zfnull), ZFMP_IN_OPT(ZFLevel, observerLevel, ZFLevelAppNormal), ZFMP_IN_OPT(zfbool, observeAllChildType, zftrue))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, instanceObserverAdd, ZFMP_IN(const ZFClassInstanceObserverAddParam &, param))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, instanceObserverRemove, ZFMP_IN(const ZFListener &, observer))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, instanceObserverRemoveByOwner, ZFMP_IN(ZFObject *, owner))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, void, instanceObserverRemoveAll)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, classDataChangeAutoRemoveTagAdd, ZFMP_IN(const zfchar *, tag))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, classDataChangeAutoRemoveTagRemove, ZFMP_IN(const zfchar *, tag))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, objectInfoOfInheritTreeT, ZFMP_IN_OUT(zfstring &, ret))

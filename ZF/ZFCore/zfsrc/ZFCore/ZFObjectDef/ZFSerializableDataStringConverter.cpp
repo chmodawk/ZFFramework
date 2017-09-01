@@ -83,7 +83,7 @@ zfbool _ZFP_ZFSerializableDataFromString(ZF_OUT ZFSerializableData &serializable
             zfText("invalid param"));
         return zffalse;
     }
-    const zfchar *srcEnd = (encodedData + ((encodedDataLen == zfindexMax) ? zfslen(encodedData) : encodedDataLen));
+    const zfchar *srcEnd = (encodedData + ((encodedDataLen == zfindexMax()) ? zfslen(encodedData) : encodedDataLen));
     zfbool ret = zffalse;
     do
     {
@@ -373,7 +373,7 @@ zfbool ZFSerializableDataToString(ZF_OUT zfstring &result,
     }
     else
     {
-        zfCoreDataEncode(result, serializableData.itemClass(), zfindexMax, _ZFP_ZFSerializableEscapeCharMap);
+        zfCoreDataEncode(result, serializableData.itemClass(), zfindexMax(), _ZFP_ZFSerializableEscapeCharMap);
     }
 
     // refType and refData
@@ -384,7 +384,7 @@ zfbool ZFSerializableDataToString(ZF_OUT zfstring &result,
     }
     else
     {
-        zfCoreDataEncode(result, serializableData.referenceRefType(), zfindexMax, _ZFP_ZFSerializableEscapeCharMap);
+        zfCoreDataEncode(result, serializableData.referenceRefType(), zfindexMax(), _ZFP_ZFSerializableEscapeCharMap);
     }
     result += ':';
     if(serializableData.referenceRefData() == zfnull)
@@ -393,7 +393,7 @@ zfbool ZFSerializableDataToString(ZF_OUT zfstring &result,
     }
     else
     {
-        zfCoreDataEncode(result, serializableData.referenceRefData(), zfindexMax, _ZFP_ZFSerializableEscapeCharMap);
+        zfCoreDataEncode(result, serializableData.referenceRefData(), zfindexMax(), _ZFP_ZFSerializableEscapeCharMap);
     }
     result += ')';
 
@@ -403,9 +403,9 @@ zfbool ZFSerializableDataToString(ZF_OUT zfstring &result,
         serializableData.attributeIteratorIsValid(it);
         serializableData.attributeIteratorNext(it))
     {
-        zfCoreDataEncode(result, serializableData.attributeIteratorGetKey(it), zfindexMax, _ZFP_ZFSerializableEscapeCharMap);
+        zfCoreDataEncode(result, serializableData.attributeIteratorGetKey(it), zfindexMax(), _ZFP_ZFSerializableEscapeCharMap);
         result += '=';
-        zfCoreDataEncode(result, serializableData.attributeIteratorGet(it), zfindexMax, _ZFP_ZFSerializableEscapeCharMap);
+        zfCoreDataEncode(result, serializableData.attributeIteratorGet(it), zfindexMax(), _ZFP_ZFSerializableEscapeCharMap);
         result += ';';
     }
     result += ')';

@@ -40,7 +40,7 @@ public:
     ZFLISTENER_DECLARE(updateTask)
     {
         this->buttonGroup->observerRemove(ZFUIButton::EventButtonOnClick(), this->buttonEventListener);
-        this->updateTaskId = zfidentityInvalid;
+        this->updateTaskId = zfidentityInvalid();
         this->listAdapter->cellRemoveAll();
         this->buttonGroup->buttonRemoveAll();
         switch(this->pimplOwner->choiceMode())
@@ -167,7 +167,7 @@ public:
         this->listAdapterSet(this->listAdapter);
 
         this->updateTaskListener = ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, updateTask));
-        this->updateTaskId = zfidentityInvalid;
+        this->updateTaskId = zfidentityInvalid();
 
         this->buttonEventListener = ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, buttonEvent));
         this->buttonGroup = zfAllocWithoutLeakTest(ZFUIButtonGroupArray);

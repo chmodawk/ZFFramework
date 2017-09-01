@@ -263,7 +263,7 @@ public:
         offset = zfmAbs(offset);
         if(offset <= 2)
         {
-            return zftimetZero;
+            return zftimetZero();
         }
 
         if(offset >= _ZFP_ZFUIScrollerDefault_scrollAniBounceDragMax)

@@ -67,7 +67,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *           //   zfbool YourTypeFromString(
  *           //       ZF_OUT YourType &v,
  *           //       ZF_IN const zfchar *src,
- *           //       ZF_IN_OPT zfindex srcLen = zfindexMax);
+ *           //       ZF_IN_OPT zfindex srcLen = zfindexMax());
  *       }, {
  *           // convertToString callbackk, proto type:
  *           //   zfbool YourTypeToString(
@@ -240,7 +240,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             }, zfbool, TypeName##FromString \
             , ZFMP_OUT(Type &, v) \
             , ZFMP_IN(const zfchar *, src) \
-            , ZFMP_OUT_OPT(zfindex, srcLen, zfindexMax) \
+            , ZFMP_OUT_OPT(zfindex, srcLen, zfindexMax()) \
             ); \
         _method_FromString = method_FromString; \
         ZFMethodFuncUserRegister_2(method_ToString, { \
@@ -495,7 +495,7 @@ public:
      * @brief convert from string, see #ZFPropertyTypeIdData::propertyWrapperFromString
      */
     virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src,
-                                          ZF_IN_OPT zfindex srcLen = zfindexMax) zfpurevirtual;
+                                          ZF_IN_OPT zfindex srcLen = zfindexMax()) zfpurevirtual;
     /**
      * @brief convert to string, see #ZFPropertyTypeIdData::propertyWrapperToString
      */

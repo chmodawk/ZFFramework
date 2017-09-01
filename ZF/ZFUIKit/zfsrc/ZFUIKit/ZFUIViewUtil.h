@@ -23,25 +23,29 @@ ZF_NAMESPACE_BEGIN(ZFUIViewUtil)
  * @brief recursive find the root ZFUIView parent of this view,
  *   may return self if no parent
  */
-extern ZF_ENV_EXPORT ZFUIView *viewRoot(ZF_IN ZFUIView *view);
+ZFMETHOD_FUNC_DECLARE_WITH_NS_1(ZFUIViewUtil, ZFUIView *, viewRoot,
+                                ZFMP_IN(ZFUIView *, view))
 
 /**
  * @brief check whether this view is child of specified view (recursively)
  *
  * true if view equals to this view
  */
-extern ZF_ENV_EXPORT zfbool viewIsChildOf(ZF_IN ZFUIView *view, ZF_IN ZFUIView *parentToCheck);
+ZFMETHOD_FUNC_DECLARE_WITH_NS_2(ZFUIViewUtil, zfbool, viewIsChildOf,
+                                ZFMP_IN(ZFUIView *, view),
+                                ZFMP_IN(ZFUIView *, parentToCheck))
 
 /**
  * @brief recursively check child at position (relative to the view)
  *
  * may be invalid if layout step not finished
  */
-extern ZF_ENV_EXPORT ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
-                                           ZF_IN const ZFUIPoint &pos,
-                                           ZF_IN_OPT zfbool filterDisabledView = zffalse,
-                                           ZF_IN_OPT zfbool filterInternalView = zftrue,
-                                           ZF_IN_OPT const ZFFilterForZFObject *filter = zfnull);
+ZFMETHOD_FUNC_DECLARE_WITH_NS_5(ZFUIViewUtil, ZFUIView *, viewChildAt,
+                                ZFMP_IN(ZFUIView *, view),
+                                ZFMP_IN(const ZFUIPoint &, pos),
+                                ZFMP_IN_OPT(zfbool, filterDisabledView, zffalse),
+                                ZFMP_IN_OPT(zfbool, filterInternalView, zftrue),
+                                ZFMP_IN_OPT(const ZFFilterForZFObject *, filter, zfnull))
 
 /**
  * @brief check rect of view relative to parent,
@@ -53,11 +57,16 @@ extern ZF_ENV_EXPORT ZFUIView *viewChildAt(ZF_IN ZFUIView *view,
  * however, result may be invalid if view's parent contains #ZFUINativeViewWrapper\n
  * this method would calculate rect depends on #ZFUIView::layoutedFrameFixed recursively
  */
-extern ZF_ENV_EXPORT void viewRectToParent(ZF_OUT ZFUIRect &rect, ZF_IN ZFUIView *view, ZF_IN ZFUIView *parent);
+ZFMETHOD_FUNC_DECLARE_WITH_NS_3(ZFUIViewUtil, void, viewRectToParent,
+                                ZFMP_OUT(ZFUIRect &, rect),
+                                ZFMP_IN(ZFUIView *, view),
+                                ZFMP_IN(ZFUIView *, parent))
 /** @brief see #viewRectToParent */
-inline ZFUIRect viewRectToParent(ZF_IN ZFUIView *view, ZF_IN ZFUIView *parent)
+ZFMETHOD_FUNC_DECLARE_DETAIL_2(ZFMethodFuncIsInline, ZFUIViewUtil, ZFUIRect, viewRectToParent,
+                               ZFMP_IN(ZFUIView *, view),
+                               ZFMP_IN(ZFUIView *, parent))
 {
-    ZFUIRect ret = ZFUIRectZero;
+    ZFUIRect ret = ZFUIRectZero();
     ZFUIViewUtil::viewRectToParent(ret, view, parent);
     return ret;
 }
