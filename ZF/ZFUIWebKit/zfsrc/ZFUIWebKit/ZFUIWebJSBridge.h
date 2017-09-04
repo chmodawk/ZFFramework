@@ -29,11 +29,11 @@ public:
     /**
      * @brief message sent to web
      */
-    ZFSerializableData messageSend;
+    ZFJsonItem messageSend;
     /**
      * @brief message response from web
      */
-    ZFSerializableData messageResponse;
+    ZFJsonItem messageResponse;
 };
 
 // ============================================================
@@ -48,11 +48,11 @@ public:
     /**
      * @brief message received from web
      */
-    ZFSerializableData messageRecv;
+    ZFJsonItem messageRecv;
     /**
      * @brief message response to web
      */
-    ZFSerializableData messageResponse;
+    ZFJsonItem messageResponse;
 };
 
 // ============================================================
@@ -117,8 +117,8 @@ public:
      *
      * note: the message to send can be modified by observing #EventWebMessageBeforeSend
      */
-    virtual ZFSerializableData webMessageSend(ZF_IN_OUT ZFSerializableData &messageSend);
-    zffinal ZFSerializableData _ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFSerializableData &messageRecv);
+    virtual ZFJsonItem webMessageSend(ZF_IN_OUT ZFJsonItem &messageSend);
+    zffinal ZFJsonItem _ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFJsonItem &messageRecv);
 
 protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFUIWebJSBridge::instanceForWebView")

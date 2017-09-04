@@ -58,7 +58,7 @@ ZFUIWebView *ZFUIWebJSBridge::webView(void)
     return d->webView;
 }
 
-ZFSerializableData ZFUIWebJSBridge::webMessageSend(ZF_IN_OUT ZFSerializableData &messageSend)
+ZFJsonItem ZFUIWebJSBridge::webMessageSend(ZF_IN_OUT ZFJsonItem &messageSend)
 {
     zfblockedAllocWithoutLeakTest(ZFUIWebJSBridgeSendData, dataSend);
     dataSend->messageSend = messageSend;
@@ -67,7 +67,7 @@ ZFSerializableData ZFUIWebJSBridge::webMessageSend(ZF_IN_OUT ZFSerializableData 
     this->webMessageAfterSend(dataSend);
     return dataSend->messageResponse;
 }
-ZFSerializableData ZFUIWebJSBridge::_ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFSerializableData &messageRecv)
+ZFJsonItem ZFUIWebJSBridge::_ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFJsonItem &messageRecv)
 {
     zfblockedAllocWithoutLeakTest(ZFUIWebJSBridgeRecvData, dataRecv);
     dataRecv->messageRecv = messageRecv;
