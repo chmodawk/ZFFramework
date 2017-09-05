@@ -23,7 +23,7 @@ static void _ZFP_ZFImpl_ZFLua_ZFMethod_setupGlobalMethod(ZF_IN const ZFCoreArray
     zfstring code;
     zfstringAppend(code, zfText(
             "function %s(...)\n"
-            "    return zfl_callStatic2(\"zf\", \"%s\", ...)\n"
+            "    return zfl_callStatic2('zf', '%s', ...)\n"
             "end\n"
         ), method->methodName(), method->methodName());
     for(zfindex i = 0; i < luaStateList.count(); ++i)

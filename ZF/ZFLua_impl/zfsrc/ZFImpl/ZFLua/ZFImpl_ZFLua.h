@@ -524,9 +524,24 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
  * return proper #ZFValue if success, or empty if fail\n
  * if allowEmpty, a #ZFValue::intValueCreate would be returned
  */
-extern ZF_ENV_EXPORT zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
-                                                        ZF_IN zfint luaStackOffset,
-                                                        ZF_IN_OPT zfbool allowEmpty = zffalse);
+extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
+                                                  ZF_IN lua_State *L,
+                                                  ZF_IN zfint luaStackOffset,
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+/** @brief see #ZFImpl_ZFLua_toNumber */
+inline zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
+                                          ZF_IN zfint luaStackOffset,
+                                          ZF_IN_OPT zfbool allowEmpty = zffalse)
+{
+    zfautoObject ret;
+    ZFImpl_ZFLua_toNumber(ret, L, luaStackOffset, allowEmpty);
+    return ret;
+}
+/** @brief see #ZFImpl_ZFLua_toNumber */
+extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT lua_Number &ret,
+                                                  ZF_IN lua_State *L,
+                                                  ZF_IN zfint luaStackOffset,
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
 
 // ============================================================
 // wrapper for impl
@@ -563,7 +578,7 @@ inline void ZFImpl_ZFLua_luaPush(ZF_IN lua_State *L, ZF_IN const zfautoObject &v
     zfautoObject t = v;
     ELuna::convert2LuaType<zfautoObject>::convertType(L, t);
 }
-inline const zfautoObject &ZFImpl_ZFLua_luaRead(ZF_IN lua_State *L, ZF_IN zfint luaStackOffset)
+inline const zfautoObject &ZFImpl_ZFLua_luaGet(ZF_IN lua_State *L, ZF_IN zfint luaStackOffset)
 {
     return ELuna::convert2CppType<zfautoObject const &>::convertType(L, luaStackOffset);
 }

@@ -7,6 +7,7 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFImpl_ZFLua.h"
+#include "ZFImpl_ZFLua_metatable.h"
 
 #include "ZFCore/ZFSTLWrapper/zfstl_string.h"
 #include "ZFCore/ZFSTLWrapper/zfstl_vector.h"
@@ -66,22 +67,10 @@ void ZFImpl_ZFLua_luaStateAttach(ZF_IN lua_State *L)
         {
             return zfautoObjectNull();
         }
-        static zfautoObject get_zftrue(void)
-        {
-            return ZFValue::boolValueCreate(zftrue);
-        }
-        static zfautoObject get_zffalse(void)
-        {
-            return ZFValue::boolValueCreate(zffalse);
-        }
     };
     ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfnull"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zfnull);
-    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zftrue"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zftrue);
-    ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zffalse"), _ZFP_ZFImpl_ZFLua_zfnullHolder::get_zffalse);
     ZFImpl_ZFLua_execute(L, zfText(
             "zfnull = _ZFP_ZFImpl_ZFLua_zfnull()\n"
-            "zftrue = _ZFP_ZFImpl_ZFLua_zftrue()\n"
-            "zffalse = _ZFP_ZFImpl_ZFLua_zffalse()\n"
         ));
 
     // each impl setup callback
@@ -149,12 +138,15 @@ void ZFImpl_ZFLua_implSetupScope(ZF_IN_OUT lua_State *L, ZF_IN const zfchar **sc
     for(zfindex i = 0; *scopeNameList != zfnull; ++scopeNameList, ++i)
     {
         zfstringAppend(code, zfText(
-                "%s = \"%s\"\n"
+                "%s = '%s'\n"
                 "local tbl = debug.getmetatable(%s)\n"
                 "tbl.__index = function(scope, k)\n"
                 "    return function(...)\n"
                 "        return zfl_callStatic2(scope, k, ...)\n"
                 "    end\n"
+                "end\n"
+                "tbl.__call = function(scope)\n"
+                "    return zfAlloc(scope)\n"
                 "end\n"
                 "debug.setmetatable(%s, tbl)\n"
             ), *scopeNameList, *scopeNameList, *scopeNameList, *scopeNameList);
@@ -170,81 +162,9 @@ void ZFImpl_ZFLua_implSetupScope(ZF_IN_OUT lua_State *L, ZF_IN const zfchar **sc
         ZFImpl_ZFLua_execute(L, code);
     }
 }
-static bool _ZFP_ZFImpl_ZFLua_zfautoObject_eq(ZF_IN zfautoObject const &obj0, ZF_IN zfautoObject const &obj1);
-static zfstlstring _ZFP_ZFImpl_ZFLua_zfautoObject_tostring(ZF_IN zfautoObject const &obj);
 void ZFImpl_ZFLua_implSetupObject(ZF_IN_OUT lua_State *L, ZF_IN_OPT zfint objIndex /* = -1 */)
 {
-    lua_getglobal(L, zfTextA("_ZFP_ZFImpl_ZFLua_implSetupObject"));
-    if(!lua_isfunction(L, -1))
-    {
-        lua_pop(L, 1);
-
-        ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfautoObject_eq"), _ZFP_ZFImpl_ZFLua_zfautoObject_eq);
-        ZFImpl_ZFLua_luaFunctionRegister(L, zfText("_ZFP_ZFImpl_ZFLua_zfautoObject_tostring"), _ZFP_ZFImpl_ZFLua_zfautoObject_tostring);
-        ZFImpl_ZFLua_execute(L, zfText(
-                "function _ZFP_ZFImpl_ZFLua_implSetupObject_index(obj, k)\n"
-                "    return function(obj, ...)\n"
-                "        return zfl_call(obj, k, ...)\n"
-                "    end\n"
-                "end\n"
-                "\n"
-                "function _ZFP_ZFImpl_ZFLua_implSetupObject(obj)\n"
-                "    local tbl = debug.getmetatable(obj)\n"
-                "    tbl.__index = _ZFP_ZFImpl_ZFLua_implSetupObject_index\n"
-                "    tbl.__eq = _ZFP_ZFImpl_ZFLua_zfautoObject_eq\n"
-                "    tbl.__tostring = _ZFP_ZFImpl_ZFLua_zfautoObject_tostring\n"
-                "    debug.setmetatable(obj, tbl)\n"
-                "end\n"
-            ));
-
-        lua_getglobal(L, zfTextA("_ZFP_ZFImpl_ZFLua_implSetupObject"));
-    }
-
-    lua_pushvalue(L, (objIndex > 0) ? objIndex : (objIndex - 1));
-
-    int error = lua_pcall(L, 1, 0, 0);
-    if(error)
-    {
-        zfstring errorHint = zfsCoreA2Z(lua_tostring(L, -1));
-        lua_pop(L, 1);
-
-        ZFLuaErrorOccurredTrim(
-            zfText("[ZFLua] failed to setup object metatable: %s"),
-            errorHint.cString());
-    }
-}
-static bool _ZFP_ZFImpl_ZFLua_zfautoObject_eq(ZF_IN zfautoObject const &obj0, ZF_IN zfautoObject const &obj1)
-{
-    ZFObject *e0 = obj0;
-    ZFObject *e1 = obj1;
-    if(e0 == e1)
-    {
-        return zftrue;
-    }
-    else if(e0 == zfnull)
-    {
-        ZFPropertyTypeWrapper *t = ZFCastZFObject(ZFPropertyTypeWrapper *, e1);
-        if(t != zfnull && t->wrappedValueIsInit())
-        {
-            return zftrue;
-        }
-    }
-    else if(e1 == zfnull)
-    {
-        ZFPropertyTypeWrapper *t = ZFCastZFObject(ZFPropertyTypeWrapper *, e0);
-        if(t != zfnull && t->wrappedValueIsInit())
-        {
-            return zftrue;
-        }
-    }
-    return zffalse;
-}
-static zfstlstring _ZFP_ZFImpl_ZFLua_zfautoObject_tostring(ZF_IN zfautoObject const &obj)
-{
-    ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
-    zfstring ret;
-    ZFObjectInfoT(ret, obj.toObject());
-    return zfstlstring(ret.cString());
+    ZFImpl_ZFLua_implSetupObject_metatable(L, objIndex);
 }
 
 // ============================================================
@@ -466,7 +386,7 @@ void ZFImpl_ZFLua_luaObjectInfoT(ZF_OUT zfstring &ret,
     switch(lua_type(L, luaStackOffset))
     {
         case LUA_TNIL:
-            ret += zfText("nil");
+            ret += zfText("<nil>");
             break;
         case LUA_TBOOLEAN:
             zfboolToString(ret, (lua_toboolean(L, luaStackOffset) != 0));
@@ -530,7 +450,7 @@ zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,
 {
     if(lua_isuserdata(L, luaStackOffset))
     {
-        param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
+        param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
         return zftrue;
     }
     else
@@ -554,7 +474,7 @@ zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
         return zffalse;
     }
 
-    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
+    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
     if(param == zfautoObjectNull())
     {
         return allowEmpty;
@@ -596,7 +516,7 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
         return zffalse;
     }
 
-    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
+    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
     if(param == zfautoObjectNull())
     {
         return allowEmpty;
@@ -621,75 +541,201 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
     }
 }
 
-zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
-                                   ZF_IN zfint luaStackOffset,
-                                   ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
+                             ZF_IN lua_State *L,
+                             ZF_IN zfint luaStackOffset,
+                             ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
 {
-    if(lua_isnumber(L, luaStackOffset))
+    int success = 0;
+    lua_Number num = lua_tonumberx(L, luaStackOffset, &success);
+    if(success)
     {
-        return ZFValue::doubleValueCreate((zfdouble)lua_tonumber(L, luaStackOffset));
+        ret = ZFValue::doubleValueCreate((zfdouble)num);
+        return zftrue;
     }
     if(!lua_isuserdata(L, luaStackOffset))
     {
-        return zfautoObjectNull();
+        return zffalse;
     }
 
-    zfautoObject const &param = ZFImpl_ZFLua_luaRead(L, luaStackOffset);
+    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
     if(param == zfautoObjectNull())
     {
-        return (allowEmpty ? ZFValue::intValueCreate(0) : zfautoObjectNull());
+        if(allowEmpty)
+        {
+            ret = ZFValue::intValueCreate(0);
+            return zftrue;
+        }
+        else
+        {
+            return zffalse;
+        }
     }
     else if(param.toObject()->classData()->classIsTypeOf(ZFValue::ClassData()))
     {
-        return param;
+        ret = param;
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfbool::ClassData()))
     {
-        return ZFValue::boolValueCreate(param.to<v_zfbool *>()->zfv);
+        ret = ZFValue::boolValueCreate(param.to<v_zfbool *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfindex::ClassData()))
     {
-        return ZFValue::indexValueCreate(param.to<v_zfindex *>()->zfv);
+        ret = ZFValue::indexValueCreate(param.to<v_zfindex *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfint::ClassData()))
     {
-        return ZFValue::intValueCreate(param.to<v_zfint *>()->zfv);
+        ret = ZFValue::intValueCreate(param.to<v_zfint *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfuint::ClassData()))
     {
-        return ZFValue::unsignedIntValueCreate(param.to<v_zfuint *>()->zfv);
+        ret = ZFValue::unsignedIntValueCreate(param.to<v_zfuint *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zffloat::ClassData()))
     {
-        return ZFValue::floatValueCreate(param.to<v_zffloat *>()->zfv);
+        ret = ZFValue::floatValueCreate(param.to<v_zffloat *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfdouble::ClassData()))
     {
-        return ZFValue::doubleValueCreate(param.to<v_zfdouble *>()->zfv);
+        ret = ZFValue::doubleValueCreate(param.to<v_zfdouble *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zflongdouble::ClassData()))
     {
-        return ZFValue::longDoubleValueCreate(param.to<v_zflongdouble *>()->zfv);
+        ret = ZFValue::longDoubleValueCreate(param.to<v_zflongdouble *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfbyte::ClassData()))
     {
-        return ZFValue::unsignedIntValueCreate((zfuint)param.to<v_zfbyte *>()->zfv);
+        ret = ZFValue::unsignedIntValueCreate((zfuint)param.to<v_zfbyte *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zftimet::ClassData()))
     {
-        return ZFValue::timeValueCreate(param.to<v_zftimet *>()->zfv);
+        ret = ZFValue::timeValueCreate(param.to<v_zftimet *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfflags::ClassData()))
     {
-        return ZFValue::flagsValueCreate(param.to<v_zfflags *>()->zfv);
+        ret = ZFValue::flagsValueCreate(param.to<v_zfflags *>()->zfv);
+        return zftrue;
     }
     else if(param.toObject()->classData()->classIsTypeOf(v_zfidentity::ClassData()))
     {
-        return ZFValue::identityValueCreate(param.to<v_zfidentity *>()->zfv);
+        ret = ZFValue::identityValueCreate(param.to<v_zfidentity *>()->zfv);
+        return zftrue;
     }
     else
     {
-        return zfautoObjectNull();
+        return zffalse;
+    }
+}
+zfbool ZFImpl_ZFLua_toNumber(ZF_OUT lua_Number &ret,
+                             ZF_IN lua_State *L,
+                             ZF_IN zfint luaStackOffset,
+                             ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+{
+    int success = 0;
+    ret = lua_tonumberx(L, luaStackOffset, &success);
+    if(success)
+    {
+        return zftrue;
+    }
+    if(!lua_isuserdata(L, luaStackOffset))
+    {
+        return zffalse;
+    }
+
+    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
+    if(param == zfautoObjectNull())
+    {
+        if(allowEmpty)
+        {
+            ret = 0;
+            return zftrue;
+        }
+        else
+        {
+            return zffalse;
+        }
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(ZFValue::ClassData()))
+    {
+        ZFValue *v = param.to<ZFValue *>();
+        if(v->valueConvertableTo(ZFValueType::e_double))
+        {
+            ret = v->doubleValue();
+            return zftrue;
+        }
+        else
+        {
+            return zffalse;
+        }
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfbool::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfbool *>()->zfv ? 1 : 0);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfindex::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfindex *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfint::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfint *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfuint::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfuint *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zffloat::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zffloat *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfdouble::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfdouble *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zflongdouble::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zflongdouble *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfbyte::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfbyte *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zftimet::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zftimet *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfflags::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfflags *>()->zfv);
+        return zftrue;
+    }
+    else if(param.toObject()->classData()->classIsTypeOf(v_zfidentity::ClassData()))
+    {
+        ret = (lua_Number)(param.to<v_zfidentity *>()->zfv);
+        return zftrue;
+    }
+    else
+    {
+        return zffalse;
     }
 }
 

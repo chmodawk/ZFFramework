@@ -22,20 +22,14 @@ static int _ZFP_ZFImpl_ZFLua_zfl_toNumber(ZF_IN lua_State *L)
         return luaL_error(L, "");
     }
 
-    zfautoObject ret = ZFImpl_ZFLua_toNumber(L, 1);
-    if(ret == zfautoObjectNull())
+    lua_Number v = 0;
+    if(!ZFImpl_ZFLua_toNumber(v, L, 1))
     {
         ZFLuaErrorOccurredTrim(zfText("[zfl_toNumber] unknown param type, got %s"),
             ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
         return luaL_error(L, "");
     }
-    ZFValue *v = ret.to<ZFValue *>();
-    if(!v->valueConvertableTo(ZFValueType::e_double))
-    {
-        ZFLuaErrorOccurredTrim(zfText("[zfl_toNumber] invalid value type: %s"), v->objectInfo().cString());
-        return luaL_error(L, "");
-    }
-    lua_pushnumber(L, (lua_Number)v->doubleValue());
+    lua_pushnumber(L, (lua_Number)v);
     return 1;
 }
 
