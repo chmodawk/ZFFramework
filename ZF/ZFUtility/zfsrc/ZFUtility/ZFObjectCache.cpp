@@ -101,8 +101,9 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFObjectCache, zfbool, cacheTrimWhenReceiveMe
         this, this->cacheTrimWhenReceiveMemoryWarning());
 }
 
-void ZFObjectCache::cacheSave(ZF_IN const zfchar *cacheKey,
-                              ZF_IN ZFObject *cacheValue)
+ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheSave,
+                  ZFMP_IN(const zfchar *, cacheKey),
+                  ZFMP_IN(ZFObject *, cacheValue))
 {
     zfsynchronizedObject(this);
     if(cacheValue == zfnull)
@@ -151,7 +152,8 @@ void ZFObjectCache::cacheSave(ZF_IN const zfchar *cacheKey,
         zfdelete(cacheData);
     }
 }
-zfautoObject ZFObjectCache::cacheAccess(ZF_IN const zfchar *cacheKey)
+ZFMETHOD_DEFINE_1(ZFObjectCache, zfautoObject, cacheAccess,
+                  ZFMP_IN(const zfchar *, cacheKey))
 {
     zfsynchronizedObject(this);
     if(cacheKey != zfnull)
@@ -165,7 +167,8 @@ zfautoObject ZFObjectCache::cacheAccess(ZF_IN const zfchar *cacheKey)
     return zfautoObjectNull();
 }
 
-zfautoObject ZFObjectCache::cacheRemove(ZF_IN const zfchar *cacheKey)
+ZFMETHOD_DEFINE_1(ZFObjectCache, zfautoObject, cacheRemove,
+                  ZFMP_IN(const zfchar *, cacheKey))
 {
     zfsynchronizedObject(this);
     if(cacheKey != zfnull)
@@ -183,18 +186,19 @@ zfautoObject ZFObjectCache::cacheRemove(ZF_IN const zfchar *cacheKey)
     }
     return zfautoObjectNull();
 }
-void ZFObjectCache::cacheRemoveAll(void)
+ZFMETHOD_DEFINE_0(ZFObjectCache, void, cacheRemoveAll)
 {
     zfsynchronizedObject(this);
     d->cacheRemoveAll(this);
 }
 
-void ZFObjectCache::cacheTrim(void)
+ZFMETHOD_DEFINE_0(ZFObjectCache, void, cacheTrim)
 {
     this->cacheTrimBySize(this->cacheTrimThreshold());
 }
 
-void ZFObjectCache::cacheTrimBySize(ZF_IN zfindex size)
+ZFMETHOD_DEFINE_1(ZFObjectCache, void, cacheTrimBySize,
+                  ZFMP_IN(zfindex, size))
 {
     zfsynchronizedObject(this);
     if(size >= (zfindex)(d->cacheList.size()))
@@ -218,8 +222,9 @@ void ZFObjectCache::cacheTrimBySize(ZF_IN zfindex size)
     }
 }
 
-void ZFObjectCache::allCache(ZF_IN_OUT ZFCoreArray<zfstring> &cacheKeys,
-                             ZF_IN_OUT ZFCoreArray<zfautoObject> &cacheValues)
+ZFMETHOD_DEFINE_2(ZFObjectCache, void, allCache,
+                  ZFMP_IN_OUT(ZFCoreArray<zfstring> &, cacheKeys),
+                  ZFMP_IN_OUT(ZFCoreArray<zfautoObject> &, cacheValues))
 {
     zfsynchronizedObject(this);
     for(_ZFP_ZFObjectCacheListType::iterator it = d->cacheList.begin(); it != d->cacheList.end(); ++it)

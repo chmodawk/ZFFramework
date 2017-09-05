@@ -124,36 +124,42 @@ public:
     /**
      * @brief add child animation
      */
-    virtual void childAniAdd(ZF_IN ZFAnimation *ani);
+    ZFMETHOD_DECLARE_1(void, childAniAdd,
+                       ZFMP_IN(ZFAnimation *, ani));
     /**
      * @brief add child animation
      */
-    virtual void childAniAdd(ZF_IN ZFAnimation *ani,
-                             ZF_IN zfbool childAutoCopyTarget);
+    ZFMETHOD_DECLARE_2(void, childAniAdd,
+                       ZFMP_IN(ZFAnimation *, ani),
+                       ZFMP_IN(zfbool, childAutoCopyTarget));
     /**
      * @brief add child animation
      */
-    virtual void childAniAdd(ZF_IN ZFAnimationGroupChildData *childData);
+    ZFMETHOD_DECLARE_1(void, childAniAdd,
+                       ZFMP_IN(ZFAnimationGroupChildData *, childData));
     /**
      * @brief child animation count
      */
-    virtual zfindex childAniCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, childAniCount);
     /**
      * @brief get child animation
      */
-    virtual ZFAnimation *childAniGet(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(ZFAnimation *, childAniGet,
+                       ZFMP_IN(zfindex , index));
     /**
      * @brief get child animation data
      */
-    virtual ZFAnimationGroupChildData *childAniDataGet(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(ZFAnimationGroupChildData *, childAniDataGet,
+                       ZFMP_IN(zfindex, index));
     /**
      * @brief remove child animation
      */
-    virtual void childAniRemove(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(void, childAniRemove,
+                       ZFMP_IN(zfindex, index));
     /**
      * @brief remove all child animation
      */
-    virtual void childAniRemoveAll(void);
+    ZFMETHOD_DECLARE_0(void, childAniRemoveAll);
 
     // ============================================================
     // property

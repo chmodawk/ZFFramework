@@ -333,7 +333,8 @@ void ZFUIOnScreenKeyboardAutoFitLayout::viewDelegateLayoutOnLayoutPrepare(ZF_IN 
 }
 
 // ============================================================
-ZFUIOnScreenKeyboardAutoFitLayout *ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window)
+ZFMETHOD_FUNC_DEFINE_1(ZFUIOnScreenKeyboardAutoFitLayout *, ZFUIOnScreenKeyboardAutoFitStart,
+                       ZFMP_IN(ZFUIWindow *, window))
 {
     if(window != zfnull)
     {
@@ -344,7 +345,8 @@ ZFUIOnScreenKeyboardAutoFitLayout *ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWi
     }
     return zfnull;
 }
-void ZFUIOnScreenKeyboardAutoFitStop(ZF_IN ZFUIWindow *window)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIOnScreenKeyboardAutoFitStop,
+                       ZFMP_IN(ZFUIWindow *, window))
 {
     if(window != zfnull)
     {

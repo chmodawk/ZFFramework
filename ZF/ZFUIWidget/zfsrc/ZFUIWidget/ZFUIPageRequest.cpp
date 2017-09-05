@@ -28,5 +28,8 @@ ZFOBJECT_REGISTER(ZFUIPageRequestPageGroupResume)
 ZFOBJECT_REGISTER(ZFUIPageRequestPageDestroy)
 ZFOBJECT_REGISTER(ZFUIPageRequestCustom)
 
+// ============================================================
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIPageRequestPageCreate, ZFUIPageRequestPageCreateParam, createParam)
+
 ZF_NAMESPACE_GLOBAL_END
 

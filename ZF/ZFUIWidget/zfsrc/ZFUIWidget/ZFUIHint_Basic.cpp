@@ -14,8 +14,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // hint with simple text and icon
 ZFSTYLE_DEFAULT_DEFINE(ZFUIHintContentBasic)
 
-zfautoObject ZFUIHintMake(ZF_IN const zfchar *text,
-                          ZF_IN_OPT ZFUIImage *icon /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIHintMake,
+                       ZFMP_IN(const zfchar *, text),
+                       ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 {
     zfblockedAlloc(ZFUIHint, hint);
 
@@ -33,6 +34,9 @@ zfautoObject ZFUIHintMake(ZF_IN const zfchar *text,
 
     return zfautoObjectCreate(hint);
 }
+ZFMETHOD_FUNC_DEFINE_INLINE_2(zfautoObject, ZFUIHintShow,
+                              ZFMP_IN(const zfchar *, text),
+                              ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 
 ZF_NAMESPACE_GLOBAL_END
 

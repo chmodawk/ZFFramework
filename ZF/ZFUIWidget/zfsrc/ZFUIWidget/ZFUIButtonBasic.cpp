@@ -567,23 +567,23 @@ const ZFClass *ZFUIButtonBasic::buttonBackgroundClass(void)
     return ZFUIImageView::ClassData();
 }
 
-ZFUITextView *ZFUIButtonBasic::buttonLabel(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, ZFUITextView *, buttonLabel)
 {
     this->prepareButtonLabel();
     return d->buttonLabel;
 }
-ZFUIImageView *ZFUIButtonBasic::buttonIcon(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, ZFUIImageView *, buttonIcon)
 {
     this->prepareButtonIcon();
     return d->buttonIcon;
 }
-ZFUIImageView *ZFUIButtonBasic::buttonBackground(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, ZFUIImageView *, buttonBackground)
 {
     this->prepareButtonBackground();
     return d->buttonBackground;
 }
 
-void ZFUIButtonBasic::prepareButtonLabel(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, void, prepareButtonLabel)
 {
     if(d->buttonLabel == zfnull)
     {
@@ -593,7 +593,7 @@ void ZFUIButtonBasic::prepareButtonLabel(void)
         this->internalBackgroundViewAdd(ZFCastZFObjectUnchecked(ZFUIView *, d->buttonLabel));
     }
 }
-void ZFUIButtonBasic::prepareButtonIcon(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, void, prepareButtonIcon)
 {
     if(d->buttonIcon == zfnull)
     {
@@ -610,7 +610,7 @@ void ZFUIButtonBasic::prepareButtonIcon(void)
         }
     }
 }
-void ZFUIButtonBasic::prepareButtonBackground(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonBasic, void, prepareButtonBackground)
 {
     if(d->buttonBackground == zfnull)
     {

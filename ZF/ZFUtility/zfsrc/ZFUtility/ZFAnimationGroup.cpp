@@ -432,44 +432,50 @@ ZFCompareResult ZFAnimationGroup::objectCompare(ZF_IN ZFObject *anotherObj)
 
 // ============================================================
 // child animation control
-void ZFAnimationGroup::childAniAdd(ZF_IN ZFAnimation *ani)
+ZFMETHOD_DEFINE_1(ZFAnimationGroup, void, childAniAdd,
+                  ZFMP_IN(ZFAnimation *, ani))
 {
     zfblockedAllocWithoutLeakTest(ZFAnimationGroupChildData, childData);
     childData->childAniSet(ani);
     this->childAniAdd(childData);
 }
-void ZFAnimationGroup::childAniAdd(ZF_IN ZFAnimation *ani,
-                                   ZF_IN zfbool childAutoCopyTarget)
+ZFMETHOD_DEFINE_2(ZFAnimationGroup, void, childAniAdd,
+                  ZFMP_IN(ZFAnimation *, ani),
+                  ZFMP_IN(zfbool, childAutoCopyTarget))
 {
     zfblockedAllocWithoutLeakTest(ZFAnimationGroupChildData, childData);
     childData->childAniSet(ani);
     childData->childAutoCopyTargetSet(childAutoCopyTarget);
     this->childAniAdd(childData);
 }
-void ZFAnimationGroup::childAniAdd(ZF_IN ZFAnimationGroupChildData *childData)
+ZFMETHOD_DEFINE_1(ZFAnimationGroup, void, childAniAdd,
+                  ZFMP_IN(ZFAnimationGroupChildData *, childData))
 {
     zfCoreAssert(childData != zfnull);
     zfCoreAssert(childData->childAni() != zfnull);
     zfCoreAssertWithMessage(!this->aniRunning(), zfTextA("you must not modify child animation while group is running"));
     d->childAnis->add(childData);
 }
-zfindex ZFAnimationGroup::childAniCount(void)
+ZFMETHOD_DEFINE_0(ZFAnimationGroup, zfindex, childAniCount)
 {
     return d->childAnis->count();
 }
-ZFAnimation *ZFAnimationGroup::childAniGet(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFAnimationGroup, ZFAnimation *, childAniGet,
+                  ZFMP_IN(zfindex, index))
 {
     return d->childAnis->get<ZFAnimationGroupChildData *>(index)->childAni();
 }
-ZFAnimationGroupChildData *ZFAnimationGroup::childAniDataGet(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFAnimationGroup, ZFAnimationGroupChildData *, childAniDataGet,
+                  ZFMP_IN(zfindex, index))
 {
     return d->childAnis->get<ZFAnimationGroupChildData *>(index);
 }
-void ZFAnimationGroup::childAniRemove(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFAnimationGroup, void, childAniRemove,
+                  ZFMP_IN(zfindex, index))
 {
     d->childAnis->remove(index);
 }
-void ZFAnimationGroup::childAniRemoveAll(void)
+ZFMETHOD_DEFINE_0(ZFAnimationGroup, void, childAniRemoveAll)
 {
     d->childAnis->removeAll();
 }

@@ -123,13 +123,14 @@ public:
 
 public:
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline zfindex aniFrameCount(void)
+    ZFMETHOD_DECLARE_0(zfindex, aniFrameCount)
     {
         return this->aniFrames()->count();
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline void aniFrameAdd(ZF_IN ZFUIImage *aniFrameImage,
-                                    ZF_IN_OPT zftimet aniFrameDuration = (zftimet)-1)
+    ZFMETHOD_DECLARE_2(void, aniFrameAdd,
+                       ZFMP_IN(ZFUIImage *, aniFrameImage),
+                       ZFMP_IN_OPT(zftimet, aniFrameDuration, (zftimet)-1))
     {
         zfCoreAssert(aniFrameImage != zfnull);
         zfblockedAlloc(ZFUIAnimatedImageAniFrame, aniFrame);
@@ -138,27 +139,32 @@ public:
         this->aniFrames()->add(aniFrame);
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline void aniFrameRemoveAtIndex(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(void, aniFrameRemoveAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         this->aniFrames()->remove(index);
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline ZFUIAnimatedImageAniFrame *aniFrameAtIndex(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(ZFUIAnimatedImageAniFrame *, aniFrameAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         return this->aniFrames()->get<ZFUIAnimatedImageAniFrame *>(index);
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline ZFUIImage *aniFrameImageAtIndex(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(ZFUIImage *, aniFrameImageAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         return this->aniFrames()->get<ZFUIAnimatedImageAniFrame *>(index)->aniFrameImage();
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual inline zftimet aniFrameDurationAtIndex(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(zftimet, aniFrameDurationAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         return this->aniFrames()->get<ZFUIAnimatedImageAniFrame *>(index)->aniFrameDuration();
     }
     /** @brief see #ZFUIAnimatedImageAniFrame */
-    virtual zftimet aniFrameDurationFixedAtIndex(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(zftimet, aniFrameDurationFixedAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         zftimet ret = this->aniFrames()->get<ZFUIAnimatedImageAniFrame *>(index)->aniFrameDuration();
         if(ret < 0)
@@ -172,15 +178,15 @@ public:
     /**
      * @brief start animation
      */
-    zffinal void aniStart(void);
+    ZFMETHOD_DECLARE_0(void, aniStart);
     /**
      * @brief stop animation
      */
-    zffinal void aniStop(void);
+    ZFMETHOD_DECLARE_0(void, aniStop);
     /**
      * @brief true if running
      */
-    zffinal zfbool aniRunning(void);
+    ZFMETHOD_DECLARE_0(zfbool, aniRunning);
 
 public:
     /**
@@ -191,11 +197,12 @@ public:
      * #EventAniFrameOnUpdate and #EventAniOnUpdate would be notified,
      * other event won't be notified
      */
-    zffinal void aniManual(ZF_IN zfindex aniFrame);
+    ZFMETHOD_DECLARE_1(void, aniManual,
+                       ZFMP_IN(zfindex, aniFrame));
     /**
      * @brief see #aniManual
      */
-    zffinal inline void aniManualPrev(void)
+    ZFMETHOD_DECLARE_0(void, aniManualPrev)
     {
         this->aniManual((this->aniFrameIndexCurrent() > 0)
             ? (this->aniFrameIndexCurrent() - 1)
@@ -204,7 +211,7 @@ public:
     /**
      * @brief see #aniManual
      */
-    zffinal inline void aniManualNext(void)
+    ZFMETHOD_DECLARE_0(void, aniManualNext)
     {
         this->aniManual(this->aniFrameIndexCurrent() + 1);
     }
@@ -213,31 +220,31 @@ public:
     /**
      * @brief see #aniFrameIndexCurrent
      */
-    virtual ZFUIImage *aniFrameImageCurrent(void);
+    ZFMETHOD_DECLARE_0(ZFUIImage *, aniFrameImageCurrent);
     /**
      * @brief see #aniFrameIndexCurrent
      */
-    virtual zftimet aniFrameDurationCurrent(void);
+    ZFMETHOD_DECLARE_0(zftimet, aniFrameDurationCurrent);
     /**
      * @brief see #aniFrameIndexCurrent
      */
-    virtual zftimet aniFrameDurationFixedCurrent(void);
+    ZFMETHOD_DECLARE_0(zftimet, aniFrameDurationFixedCurrent);
     /**
      * @brief see #aniFrameIndexCurrent
      */
-    virtual ZFUIAnimatedImageAniFrame *aniFrameCurrent(void);
+    ZFMETHOD_DECLARE_0(ZFUIAnimatedImageAniFrame *, aniFrameCurrent);
     /**
      * @brief current ani frame index
      *
      * may be zfindexMax() if not started
      */
-    virtual zfindex aniFrameIndexCurrent(void);
+    ZFMETHOD_DECLARE_0(zfindex, aniFrameIndexCurrent);
 
 public:
     /**
      * @brief repeat count since start, 0 for first time
      */
-    virtual zfindex aniRepeatCountCurrent(void);
+    ZFMETHOD_DECLARE_0(zfindex, aniRepeatCountCurrent);
 
 public:
     zfoverride

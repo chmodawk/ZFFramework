@@ -86,7 +86,8 @@ public:
      * by default, list adapter won't be retained by this list view to prevent recursive retain,
      * you may use this method to retain it automatically
      */
-    virtual void listAdapterSetAutoRetain(ZF_IN ZFUIListAdapter *listAdapter);
+    ZFMETHOD_DECLARE_1(void, listAdapterSetAutoRetain,
+                       ZFMP_IN(ZFUIListAdapter *, listAdapter));
 
     /**
      * @brief list updater to update list cells, holds #ZFUIListCellUpdater
@@ -186,18 +187,19 @@ public:
      * @note this method would reload the entire list,
      *   use #listReloadCellAtIndex for performance
      */
-    virtual void listReload(void);
+    ZFMETHOD_DECLARE_0(void, listReload);
     /**
      * @brief true if list need reload
      */
-    virtual zfbool listReloadRequested(void);
+    ZFMETHOD_DECLARE_0(zfbool, listReloadRequested);
     /**
      * @brief reload cell at index immediately, do nothing if index not in visible range
      *   or #listReloadRequested
      *
      * this method would have higher performance if you want to update specified cell only
      */
-    virtual void listReloadCellAtIndex(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(void, listReloadCellAtIndex,
+                       ZFMP_IN(zfindex, index));
 
 public:
     /**
@@ -206,14 +208,14 @@ public:
      * returned value should not be stored,
      * since visible cell may change frequently
      */
-    virtual ZFCoreArrayPOD<ZFUIListCell *> listVisibleCell(void);
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFUIListCell *>, listVisibleCell);
     /**
      * @brief return first visible cell's index, valid only if #listReloadRequested is not true
      *
      * index is ordered by #ZFUIListAdapter,
      * so first cell may positioned at bottom accorrding to layout orientation
      */
-    virtual const zfindexRange &listVisibleCellIndexRange(void);
+    ZFMETHOD_DECLARE_0(const zfindexRange &, listVisibleCellIndexRange);
 
 public:
     /**
@@ -225,15 +227,17 @@ public:
      *   you should prevent doing other load logic during scroll events,
      *   otherwise, dead loop may occurred
      */
-    virtual void scrollListCellToHead(ZF_IN zfindex cellIndex,
-                                      ZF_IN_OPT zfint offset = 0,
-                                      ZF_IN_OPT zfbool animated = zftrue);
+    ZFMETHOD_DECLARE_3(void, scrollListCellToHead,
+                       ZFMP_IN(zfindex, cellIndex),
+                       ZFMP_IN_OPT(zfint, offset, 0),
+                       ZFMP_IN_OPT(zfbool, animated, zftrue));
     /**
      * @brief scroll cell to bottom, see #scrollListCellToHead
      */
-    virtual void scrollListCellToTail(ZF_IN zfindex cellIndex,
-                                      ZF_IN_OPT zfint offset = 0,
-                                      ZF_IN_OPT zfbool animated = zftrue);
+    ZFMETHOD_DECLARE_3(void, scrollListCellToTail,
+                       ZFMP_IN(zfindex, cellIndex),
+                       ZFMP_IN_OPT(zfint, offset, 0),
+                       ZFMP_IN_OPT(zfbool, animated, zftrue));
 
     // ============================================================
     // events

@@ -257,14 +257,14 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, PageBeforeDestroy)
 
 // ============================================================
 // embeded logic
-void ZFUIPageManager::embededCreate(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededCreate)
 {
     zfCoreAssert(d == zfnull);
     d = zfpoolNew(_ZFP_ZFUIPageManagerPrivate);
     d->pimplOwner = this;
     this->managerOnCreate();
 }
-void ZFUIPageManager::embededResume(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededResume)
 {
     zfCoreAssert(!d->managerResumed);
     d->managerResumed = zftrue;
@@ -282,7 +282,7 @@ void ZFUIPageManager::embededResume(void)
 
     this->managerAfterResume();
 }
-void ZFUIPageManager::embededPause(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededPause)
 {
     zfCoreAssert(d->managerResumed);
     d->managerResumed = zffalse;
@@ -299,7 +299,7 @@ void ZFUIPageManager::embededPause(void)
     }
     this->managerOnPause();
 }
-void ZFUIPageManager::embededDestroy(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededDestroy)
 {
     zfCoreAssert(d != zfnull);
     zfCoreAssert(!d->managerResumed);
@@ -341,7 +341,8 @@ void ZFUIPageManager::embededDestroy(void)
 
 // ============================================================
 // manager control
-void ZFUIPageManager::managerUIBlockedSet(ZF_IN zfbool value)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, managerUIBlockedSet,
+                  ZFMP_IN(zfbool, value))
 {
     zfsynchronizedObjectLock(this->toObject());
     if(value)
@@ -371,33 +372,35 @@ void ZFUIPageManager::managerUIBlockedSet(ZF_IN zfbool value)
         }
     }
 }
-zfindex ZFUIPageManager::managerUIBlocked(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, zfindex, managerUIBlocked)
 {
     return d->managerUIBlocked;
 }
 
 // ============================================================
 // page access
-zfindex ZFUIPageManager::pageCount(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, zfindex, pageCount)
 {
     return d->pageList.count();
 }
-ZFCoreArrayPOD<ZFUIPage *> &ZFUIPageManager::pageList(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, ZFCoreArrayPOD<ZFUIPage *> &, pageList)
 {
     return d->pageList;
 }
 
 // ============================================================
 // page request
-void ZFUIPageManager::requestPageCreate(ZF_IN const ZFUIPageRequestPageCreateParam &createParam)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestPageCreate,
+                  ZFMP_IN(const ZFUIPageRequestPageCreateParam &, createParam))
 {
     zfblockedAlloc(ZFUIPageRequestPageCreate, request);
     request->createParam = createParam;
     this->requestPost(request);
 }
-void ZFUIPageManager::requestPageCreate(ZF_IN const ZFClass *pageClass,
-                                        ZF_IN_OPT ZFObject *pageCreateParam /* = zfnull */,
-                                        ZF_IN_OPT zfbool pageAutoResume /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFUIPageManager, void, requestPageCreate,
+                  ZFMP_IN(const ZFClass *, pageClass),
+                  ZFMP_IN_OPT(ZFObject *, pageCreateParam, zfnull),
+                  ZFMP_IN_OPT(zfbool, pageAutoResume, zftrue))
 {
     if(pageClass == zfnull)
     {
@@ -410,7 +413,8 @@ void ZFUIPageManager::requestPageCreate(ZF_IN const ZFClass *pageClass,
         .pageAutoResumeSet(pageAutoResume);
     this->requestPost(request);
 }
-void ZFUIPageManager::requestPageResume(ZF_IN ZFUIPage *page)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestPageResume,
+                  ZFMP_IN(ZFUIPage *, page))
 {
     if(page == zfnull)
     {
@@ -420,13 +424,15 @@ void ZFUIPageManager::requestPageResume(ZF_IN ZFUIPage *page)
     request->pageSet(page);
     this->requestPost(request);
 }
-void ZFUIPageManager::requestPageGroupResume(ZF_IN const zfchar *pageGroupId)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestPageGroupResume,
+                  ZFMP_IN(const zfchar *, pageGroupId))
 {
     zfblockedAlloc(ZFUIPageRequestPageGroupResume, request);
     request->pageGroupIdSet(zfstring(pageGroupId));
     this->requestPost(request);
 }
-void ZFUIPageManager::requestPageDestroy(ZF_IN ZFUIPage *page)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestPageDestroy,
+                  ZFMP_IN(ZFUIPage *, page))
 {
     if(page == zfnull)
     {
@@ -436,7 +442,8 @@ void ZFUIPageManager::requestPageDestroy(ZF_IN ZFUIPage *page)
     request->pageSet(page);
     this->requestPost(request);
 }
-void ZFUIPageManager::requestPost(ZF_IN ZFUIPageRequest *request)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestPost,
+                  ZFMP_IN(ZFUIPageRequest *, request))
 {
     if(request != zfnull)
     {
@@ -446,7 +453,8 @@ void ZFUIPageManager::requestPost(ZF_IN ZFUIPageRequest *request)
         d->requestDoPost(this->toObject());
     }
 }
-void ZFUIPageManager::requestBlockedSet(ZF_IN zfbool value)
+ZFMETHOD_DEFINE_1(ZFUIPageManager, void, requestBlockedSet,
+                  ZFMP_IN(zfbool, value))
 {
     zfsynchronizedObjectLock(this->toObject());
     if(value)
@@ -477,7 +485,7 @@ void ZFUIPageManager::requestBlockedSet(ZF_IN zfbool value)
         }
     }
 }
-zfindex ZFUIPageManager::requestBlocked(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManager, zfindex, requestBlocked)
 {
     return d->requestBlocked;
 }

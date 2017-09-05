@@ -106,11 +106,12 @@ public:
      * this is not necessary to be set during animation's running
      * (although most animation subclass need a target)
      */
-    virtual void aniTargetSet(ZF_IN ZFObject *aniTarget);
+    ZFMETHOD_DECLARE_1(void, aniTargetSet,
+                       ZFMP_IN(ZFObject *, aniTarget));
     /**
      * @brief animation's target
      */
-    virtual ZFObject *aniTarget(void);
+    ZFMETHOD_DECLARE_0(ZFObject *, aniTarget);
 
     // ============================================================
     // start stop
@@ -120,25 +121,25 @@ public:
      * @note an animation would be retained automatically when it's running,
      *   and released after stopped
      */
-    zffinal void aniStart(void);
+    ZFMETHOD_DECLARE_0(void, aniStart);
     /**
      * @brief true if the animation is running (or delaying)
      */
-    zffinal zfbool aniRunning(void);
+    ZFMETHOD_DECLARE_0(zfbool, aniRunning);
     /**
      * @brief true if the animation is delaying
      */
-    zffinal zfbool aniDelaying(void);
+    ZFMETHOD_DECLARE_0(zfbool, aniDelaying);
     /**
      * @brief stop the animation or do nothing if not started
      */
-    zffinal void aniStop(void);
+    ZFMETHOD_DECLARE_0(void, aniStop);
     /**
      * @brief true if the animation is stopped by calling #aniStop
      *
      * this state would be kept until next #aniStart called
      */
-    zffinal zfbool aniStoppedByUser(void);
+    ZFMETHOD_DECLARE_0(zfbool, aniStoppedByUser);
 
 public:
     /**
@@ -147,13 +148,13 @@ public:
      * animation id would be updated automatically
      * each time animation is started and stopped
      */
-    virtual zfidentity aniId(void);
+    ZFMETHOD_DECLARE_0(zfidentity, aniId);
 
 public:
     /**
      * @brief check whether animation is valid, see #aniImplCheckValid
      */
-    zffinal zfbool aniValid(void);
+    ZFMETHOD_DECLARE_0(zfbool, aniValid);
 
 protected:
     /**

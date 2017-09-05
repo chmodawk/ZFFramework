@@ -13,7 +13,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIWebJSBridgeSendData)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWebJSBridgeSendData, ZFJsonItem, messageSend)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWebJSBridgeSendData, ZFJsonItem, messageResponse)
+
 ZFOBJECT_REGISTER(ZFUIWebJSBridgeRecvData)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWebJSBridgeRecvData, ZFJsonItem, messageRecv)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIWebJSBridgeRecvData, ZFJsonItem, messageResponse)
 
 // ============================================================
 zfclassNotPOD _ZFP_ZFUIWebJSBridgePrivate
@@ -40,7 +45,8 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIWebJSBridge, WebMessageBeforeRecv)
 ZFOBSERVER_EVENT_REGISTER(ZFUIWebJSBridge, WebMessageAfterRecv)
 
 #define _ZFP_ZFUIWebJSBridge_tagKey zfText("_ZFP_ZFUIWebJSBridge_tagKey")
-ZFUIWebJSBridge *ZFUIWebJSBridge::instanceForWebView(ZF_IN ZFUIWebView *webView)
+ZFMETHOD_DEFINE_1(ZFUIWebJSBridge, ZFUIWebJSBridge *, instanceForWebView,
+                  ZFMP_IN(ZFUIWebView *, webView))
 {
     ZFUIWebJSBridge *ret = webView->tagGet<ZFUIWebJSBridge *>(_ZFP_ZFUIWebJSBridge_tagKey);
     if(ret == zfnull)
@@ -53,12 +59,13 @@ ZFUIWebJSBridge *ZFUIWebJSBridge::instanceForWebView(ZF_IN ZFUIWebView *webView)
     return ret;
 }
 
-ZFUIWebView *ZFUIWebJSBridge::webView(void)
+ZFMETHOD_DEFINE_0(ZFUIWebJSBridge, ZFUIWebView *, webView)
 {
     return d->webView;
 }
 
-ZFJsonItem ZFUIWebJSBridge::webMessageSend(ZF_IN_OUT ZFJsonItem &messageSend)
+ZFMETHOD_DEFINE_1(ZFUIWebJSBridge, ZFJsonItem, webMessageSend,
+                  ZFMP_IN_OUT(ZFJsonItem &, messageSend))
 {
     zfblockedAllocWithoutLeakTest(ZFUIWebJSBridgeSendData, dataSend);
     dataSend->messageSend = messageSend;

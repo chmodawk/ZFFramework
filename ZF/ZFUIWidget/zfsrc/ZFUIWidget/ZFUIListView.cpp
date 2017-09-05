@@ -1341,7 +1341,8 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIListView, ZFUIListAdapter *, listAdapter)
     }
     this->tagRemove(_ZFP_ZFUIListView_listAdapterHolderTag);
 }
-void ZFUIListView::listAdapterSetAutoRetain(ZF_IN ZFUIListAdapter *listAdapter)
+ZFMETHOD_DEFINE_1(ZFUIListView, void, listAdapterSetAutoRetain,
+                  ZFMP_IN(ZFUIListAdapter *, listAdapter))
 {
     zfRetainWithoutLeakTest(listAdapter);
     this->listAdapterSet(listAdapter);
@@ -1530,7 +1531,7 @@ void ZFUIListView::scrollOnScrollEnd(void)
 }
 
 // ============================================================
-void ZFUIListView::listReload(void)
+ZFMETHOD_DEFINE_0(ZFUIListView, void, listReload)
 {
     if(!d->listReloadRequested)
     {
@@ -1541,11 +1542,12 @@ void ZFUIListView::listReload(void)
         this->layoutRequest();
     }
 }
-zfbool ZFUIListView::listReloadRequested(void)
+ZFMETHOD_DEFINE_0(ZFUIListView, zfbool, listReloadRequested)
 {
     return d->listReloadRequested;
 }
-void ZFUIListView::listReloadCellAtIndex(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFUIListView, void, listReloadCellAtIndex,
+                  ZFMP_IN(zfindex, index))
 {
     if(d->listReloadRequested || !zfindexRangeContain(d->listVisibleCellIndexRange, index))
     {
@@ -1595,18 +1597,19 @@ void ZFUIListView::listReloadCellAtIndex(ZF_IN zfindex index)
     zfRelease(cellOld);
 }
 
-ZFCoreArrayPOD<ZFUIListCell *> ZFUIListView::listVisibleCell(void)
+ZFMETHOD_DEFINE_0(ZFUIListView, ZFCoreArrayPOD<ZFUIListCell *>, listVisibleCell)
 {
     return d->listVisibleCell;
 }
-const zfindexRange &ZFUIListView::listVisibleCellIndexRange(void)
+ZFMETHOD_DEFINE_0(ZFUIListView, const zfindexRange &, listVisibleCellIndexRange)
 {
     return d->listVisibleCellIndexRange;
 }
 
-void ZFUIListView::scrollListCellToHead(ZF_IN zfindex cellIndex,
-                                        ZF_IN_OPT zfint offset /* = 0 */,
-                                        ZF_IN_OPT zfbool animated /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFUIListView, void, scrollListCellToHead,
+                  ZFMP_IN(zfindex, cellIndex),
+                  ZFMP_IN_OPT(zfint, offset, 0),
+                  ZFMP_IN_OPT(zfbool, animated, zftrue))
 {
     if(cellIndex >= d->cellCount)
     {
@@ -1622,9 +1625,10 @@ void ZFUIListView::scrollListCellToHead(ZF_IN zfindex cellIndex,
     d->scrollListCellDesiredPosSaved = 30000;
     d->scrollListCellCheckUpdate();
 }
-void ZFUIListView::scrollListCellToTail(ZF_IN zfindex cellIndex,
-                                        ZF_IN_OPT zfint offset /* = 0 */,
-                                        ZF_IN_OPT zfbool animated /* = zftrue */)
+ZFMETHOD_DEFINE_3(ZFUIListView, void, scrollListCellToTail,
+                  ZFMP_IN(zfindex, cellIndex),
+                  ZFMP_IN_OPT(zfint, offset, 0),
+                  ZFMP_IN_OPT(zfbool, animated, zftrue))
 {
     if(cellIndex >= d->cellCount)
     {

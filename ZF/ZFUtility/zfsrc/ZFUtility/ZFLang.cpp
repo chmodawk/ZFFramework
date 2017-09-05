@@ -23,9 +23,10 @@ static _ZFP_ZFLangMapType &_ZFP_ZFLangMapGlobal(void)
     static _ZFP_ZFLangMapType d;
     return d;
 }
-void zfLang(ZF_IN_OUT zfstring &ret,
-            ZF_IN const zfchar *key,
-            ZF_IN_OPT const zfchar *valueDefault /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_3(void, zfLang,
+                       ZFMP_IN_OUT(zfstring &, ret),
+                       ZFMP_IN(const zfchar *, key),
+                       ZFMP_IN_OPT(const zfchar *, valueDefault, zfnull))
 {
     zfCoreMutexLocker();
     _ZFP_ZFLangMapType &m = _ZFP_ZFLangMapGlobal();
@@ -46,11 +47,18 @@ void zfLang(ZF_IN_OUT zfstring &ret,
         }
     }
 }
-void zfLangNotifyChanged(void)
+ZFMETHOD_FUNC_DEFINE_INLINE_2(zfstring, zfLang,
+                              ZFMP_IN(const zfchar *, key),
+                              ZFMP_IN_OPT(const zfchar *, valueDefault, zfnull))
+
+ZFMETHOD_FUNC_DEFINE_0(void, zfLangNotifyChanged)
 {
     ZFGlobalEventCenter::instance()->observerNotify(ZFGlobalEvent::EventLangOnChange());
 }
-void zfLangSet(ZF_IN const zfchar *key, ZF_IN const zfchar *value)
+
+ZFMETHOD_FUNC_DEFINE_2(void, zfLangSet,
+                       ZFMP_IN(const zfchar *, key),
+                       ZFMP_IN(const zfchar *, value))
 {
     if(key != zfnull)
     {
@@ -65,7 +73,9 @@ void zfLangSet(ZF_IN const zfchar *key, ZF_IN const zfchar *value)
         }
     }
 }
-void zfLangSetDefault(ZF_IN const zfchar *key, ZF_IN const zfchar *value)
+ZFMETHOD_FUNC_DEFINE_2(void, zfLangSetDefault,
+                       ZFMP_IN(const zfchar *, key),
+                       ZFMP_IN(const zfchar *, value))
 {
     if(key && value)
     {
@@ -79,7 +89,7 @@ void zfLangSetDefault(ZF_IN const zfchar *key, ZF_IN const zfchar *value)
     }
 }
 
-void zfLangUnload(void)
+ZFMETHOD_FUNC_DEFINE_0(void, zfLangUnload)
 {
     zfCoreMutexLocker();
     _ZFP_ZFLangMapGlobal().clear();
@@ -87,7 +97,8 @@ void zfLangUnload(void)
     zfLangNotifyChanged();
 }
 
-void zfLangDebug(ZF_IN_OPT const ZFOutputCallback &output /* = ZFOutputCallbackDefault() */)
+ZFMETHOD_FUNC_DEFINE_1(void, zfLangDebug,
+                       ZFMP_IN_OPT(const ZFOutputCallback &, output, ZFOutputCallbackDefault()))
 {
     _ZFP_ZFLangMapType &m = _ZFP_ZFLangMapGlobal();
     for(_ZFP_ZFLangMapType::iterator it = m.begin(); it != m.end(); ++it)

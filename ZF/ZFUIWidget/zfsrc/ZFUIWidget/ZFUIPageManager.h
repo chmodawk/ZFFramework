@@ -194,13 +194,13 @@ public:
      * so we supply direct life cycle manage method for implementation to achieve life cycle,
      * you must ensure it's logical valid while handling it
      */
-    zffinal void embededCreate(void);
+    ZFMETHOD_DECLARE_0(void, embededCreate);
     /** @brief see #embededCreate */
-    zffinal void embededResume(void);
+    ZFMETHOD_DECLARE_0(void, embededResume);
     /** @brief see #embededCreate */
-    zffinal void embededPause(void);
+    ZFMETHOD_DECLARE_0(void, embededPause);
     /** @brief see #embededCreate */
-    zffinal void embededDestroy(void);
+    ZFMETHOD_DECLARE_0(void, embededDestroy);
 
     // ============================================================
     // manager control
@@ -214,11 +214,12 @@ public:
      * this method can be embeded but must be paired,
      * last time you call this method to restore enable state would finally restore enable state
      */
-    zffinal void managerUIBlockedSet(ZF_IN zfbool value);
+    ZFMETHOD_DECLARE_1(void, managerUIBlockedSet,
+                       ZFMP_IN(zfbool, value));
     /**
      * @brief see #managerUIBlockedSet
      */
-    zffinal zfindex managerUIBlocked(void);
+    ZFMETHOD_DECLARE_0(zfindex, managerUIBlocked);
 protected:
     /** @brief see #EventManagerUIBlockedOnChange, subclass should implement and achieve actual action */
     virtual void managerUIBlockedOnChange(void)
@@ -232,7 +233,7 @@ public:
     /**
      * @brief page count of this page manager
      */
-    zffinal zfindex pageCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, pageCount);
     /**
      * @brief directly access the page list
      *
@@ -241,11 +242,12 @@ public:
      * you must not modify the list,
      * except when using with #movePageBegin
      */
-    zffinal ZFCoreArrayPOD<ZFUIPage *> &pageList(void);
+    ZFMETHOD_DECLARE_0(ZFCoreArrayPOD<ZFUIPage *> &, pageList);
     /**
      * @brief page at index
      */
-    inline ZFUIPage *pageAt(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(ZFUIPage *, pageAt,
+                       ZFMP_IN(zfindex, index))
     {
         return this->pageList().get(index);
     }
@@ -260,7 +262,7 @@ public:
     /**
      * @brief return foreground page or null if no page
      */
-    inline ZFUIPage *pageForeground(void)
+    ZFMETHOD_DECLARE_0(ZFUIPage *, pageForeground)
     {
         if(!this->pageList().isEmpty())
         {
@@ -283,17 +285,20 @@ public:
     /**
      * @brief request create page, see #ZFUIPageManager
      */
-    zffinal void requestPageCreate(ZF_IN const ZFUIPageRequestPageCreateParam &createParam);
+    ZFMETHOD_DECLARE_1(void, requestPageCreate,
+                       ZFMP_IN(const ZFUIPageRequestPageCreateParam &, createParam));
     /**
      * @brief request create page, see #ZFUIPageManager
      */
-    zffinal void requestPageCreate(ZF_IN const ZFClass *pageClass,
-                                   ZF_IN_OPT ZFObject *pageCreateParam = zfnull,
-                                   ZF_IN_OPT zfbool pageAutoResume = zftrue);
+    ZFMETHOD_DECLARE_3(void, requestPageCreate,
+                       ZFMP_IN(const ZFClass *, pageClass),
+                       ZFMP_IN_OPT(ZFObject *, pageCreateParam, zfnull),
+                       ZFMP_IN_OPT(zfbool, pageAutoResume, zftrue));
     /**
      * @brief request resume page
      */
-    zffinal void requestPageResume(ZF_IN ZFUIPage *page);
+    ZFMETHOD_DECLARE_1(void, requestPageResume,
+                       ZFMP_IN(ZFUIPage *, page));
     /**
      * @brief request resume a group of page
      *
@@ -302,22 +307,26 @@ public:
      * keeping their original relative stack order\n
      * null group id belongs to nothing
      */
-    zffinal void requestPageGroupResume(ZF_IN const zfchar *pageGroupId);
+    ZFMETHOD_DECLARE_1(void, requestPageGroupResume,
+                       ZFMP_IN(const zfchar *, pageGroupId));
     /**
      * @brief request destroy page
      */
-    zffinal void requestPageDestroy(ZF_IN ZFUIPage *page);
+    ZFMETHOD_DECLARE_1(void, requestPageDestroy,
+                       ZFMP_IN(ZFUIPage *, page));
     /**
      * @brief post a custom request to queue, which would be resolved by #requestOnResolve
      */
-    zffinal void requestPost(ZF_IN ZFUIPageRequest *request);
+    ZFMETHOD_DECLARE_1(void, requestPost,
+                       ZFMP_IN(ZFUIPageRequest *, request));
     /**
      * @brief util method to post a listener to be execute at current request queue's end
      */
-    zffinal void requestPostCustom(ZF_IN const ZFListener &listener,
-                                   ZF_IN_OPT ZFObject *userData = zfnull,
-                                   ZF_IN_OPT ZFObject *param0 = zfnull,
-                                   ZF_IN_OPT ZFObject *param1 = zfnull)
+    ZFMETHOD_DECLARE_4(void, requestPostCustom,
+                       ZFMP_IN(const ZFListener &, listener),
+                       ZFMP_IN_OPT(ZFObject *, userData, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param0, zfnull),
+                       ZFMP_IN_OPT(ZFObject *, param1, zfnull))
     {
         zfblockedAlloc(ZFUIPageRequestCustom, request);
         request->listenerSet(listener);
@@ -335,11 +344,12 @@ public:
      * #requestBlockedSet can be embeded with more than one time,
      * but must be paired
      */
-    zffinal void requestBlockedSet(ZF_IN zfbool value);
+    ZFMETHOD_DECLARE_1(void, requestBlockedSet,
+                       ZFMP_IN(zfbool, value));
     /**
      * @brief see #requestBlockedSet
      */
-    zffinal zfindex requestBlocked(void);
+    ZFMETHOD_DECLARE_0(zfindex, requestBlocked);
 protected:
     /** @brief see #EventRequestBlockedOnChange */
     virtual inline void requestBlockedOnChange(void)

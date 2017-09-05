@@ -46,17 +46,17 @@ public:
 
 public:
     /** @brief see #ZFUIAnimatedImage::aniStart */
-    virtual inline void aniStart(void)
+    ZFMETHOD_DECLARE_0(void, aniStart)
     {
         this->animatedImage()->aniStart();
     }
     /** @brief see #ZFUIAnimatedImage::aniStop */
-    virtual inline void aniStop(void)
+    ZFMETHOD_DECLARE_0(void, aniStop)
     {
         this->animatedImage()->aniStop();
     }
     /** @brief see #ZFUIAnimatedImage::aniRunning */
-    virtual inline zfbool aniRunning(void)
+    ZFMETHOD_DECLARE_0(zfbool, aniRunning)
     {
         return this->animatedImage()->aniRunning();
     }

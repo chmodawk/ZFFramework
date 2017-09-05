@@ -47,14 +47,15 @@ public:
     /**
      * @brief util method to set input hint text
      */
-    virtual inline void inputHintTextSet(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, inputHintTextSet,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->inputView()->textPlaceHolder()->textContentStringSet(text);
     }
     /**
      * @brief util method to get input hint text
      */
-    virtual inline const zfchar *inputHintText(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, inputHintText)
     {
         return this->inputView()->textPlaceHolder()->textContentString();
     }
@@ -62,14 +63,15 @@ public:
     /**
      * @brief util method to set input text
      */
-    virtual inline void inputTextSet(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, inputTextSet,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->inputView()->textContentStringSet(text);
     }
     /**
      * @brief util method to get input text
      */
-    virtual inline const zfchar *inputText(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, inputText)
     {
         return this->inputView()->textContentString();
     }

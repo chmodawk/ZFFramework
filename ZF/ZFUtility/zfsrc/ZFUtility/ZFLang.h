@@ -39,21 +39,25 @@ ZF_NAMESPACE_END(ZFGlobalEvent)
  * it all depends on app to manage language files,
  * and decide which file to use
  */
-extern ZF_ENV_EXPORT void zfLang(ZF_IN_OUT zfstring &ret,
-                                 ZF_IN const zfchar *key,
-                                 ZF_IN_OPT const zfchar *valueDefault = zfnull);
+ZFMETHOD_FUNC_DECLARE_3(void, zfLang,
+                        ZFMP_IN_OUT(zfstring &, ret),
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN_OPT(const zfchar *, valueDefault, zfnull))
 /** @brief see #zfLang */
-inline zfstring zfLang(ZF_IN const zfchar *key,
-                       ZF_IN_OPT const zfchar *valueDefault = zfnull)
+ZFMETHOD_FUNC_DECLARE_INLINE_2(zfstring, zfLang,
+                               ZFMP_IN(const zfchar *, key),
+                               ZFMP_IN_OPT(const zfchar *, valueDefault, zfnull))
 {
     zfstring ret;
     zfLang(ret, key, valueDefault);
     return ret;
 }
+
 /**
  * @brief notify lang changed
  */
-extern ZF_ENV_EXPORT void zfLangNotifyChanged(void);
+ZFMETHOD_FUNC_DECLARE_0(void, zfLangNotifyChanged)
+
 /**
  * @brief manually change one language data, or remove if value is null
  *
@@ -62,20 +66,26 @@ extern ZF_ENV_EXPORT void zfLangNotifyChanged(void);
  * -# load by your own logic, and save by #zfLangSet
  * -# notify data changed by #zfLangNotifyChanged
  */
-extern ZF_ENV_EXPORT void zfLangSet(ZF_IN const zfchar *key, ZF_IN const zfchar *value);
+ZFMETHOD_FUNC_DECLARE_2(void, zfLangSet,
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN(const zfchar *, value))
 /**
  * @brief similar to #zfLangSet, but applies only if not exist
  */
-extern ZF_ENV_EXPORT void zfLangSetDefault(ZF_IN const zfchar *key, ZF_IN const zfchar *value);
+ZFMETHOD_FUNC_DECLARE_2(void, zfLangSetDefault,
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN(const zfchar *, value))
+
 /**
  * @brief unload all data (not recommended)
  */
-extern ZF_ENV_EXPORT void zfLangUnload(void);
+ZFMETHOD_FUNC_DECLARE_0(void, zfLangUnload)
 
 /**
  * @brief for debug use only
  */
-extern ZF_ENV_EXPORT void zfLangDebug(ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault());
+ZFMETHOD_FUNC_DECLARE_1(void, zfLangDebug,
+                        ZFMP_IN_OPT(const ZFOutputCallback &, output, ZFOutputCallbackDefault()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLang_h_

@@ -92,11 +92,12 @@ public:
      * you may override the method to override the animation\n
      * this value would be reset to null when animation stopped or page destroyed\n
      */
-    virtual void pageAniSet(ZF_IN ZFAnimation *pageAni);
+    ZFMETHOD_DECLARE_1(void, pageAniSet,
+                       ZFMP_IN(ZFAnimation *, pageAni));
     /**
      * @brief see #pageAniSet
      */
-    virtual ZFAnimation *pageAni(void);
+    ZFMETHOD_DECLARE_0(ZFAnimation *, pageAni);
 
 public:
     /**

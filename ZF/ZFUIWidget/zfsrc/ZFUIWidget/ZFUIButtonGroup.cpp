@@ -225,20 +225,23 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIButtonGroup, ZFUIButtonGroupTypeEnum, but
     }
 }
 
-zfindex ZFUIButtonGroup::buttonCount(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonGroup, zfindex, buttonCount)
 {
     return this->_ZFP_ZFUIButtonGroup_buttons()->count();
 }
-zfindex ZFUIButtonGroup::buttonFind(ZF_IN ZFUIButton *button)
+ZFMETHOD_DEFINE_1(ZFUIButtonGroup, zfindex, buttonFind,
+                  ZFMP_IN(ZFUIButton *, button))
 {
     return this->_ZFP_ZFUIButtonGroup_buttons()->find(button);
 }
-ZFUIButton *ZFUIButtonGroup::buttonAtIndex(ZF_IN zfindex buttonIndex)
+ZFMETHOD_DEFINE_1(ZFUIButtonGroup, ZFUIButton *, buttonAtIndex,
+                  ZFMP_IN(zfindex, buttonIndex))
 {
     return this->_ZFP_ZFUIButtonGroup_buttons()->get<ZFUIButton *>(buttonIndex);
 }
-void ZFUIButtonGroup::buttonAdd(ZF_IN ZFUIButton *button,
-                                ZF_IN_OPT zfindex atIndex /* = zfindexMax() */)
+ZFMETHOD_DEFINE_2(ZFUIButtonGroup, void, buttonAdd,
+                  ZFMP_IN(ZFUIButton *, button),
+                  ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()))
 {
     if(atIndex == zfindexMax())
     {
@@ -253,11 +256,13 @@ void ZFUIButtonGroup::buttonAdd(ZF_IN ZFUIButton *button,
     _ZFP_ZFUIButtonGroup_setup(this, button, atIndex);
     this->buttonOnAdd(button, atIndex);
 }
-void ZFUIButtonGroup::buttonRemove(ZF_IN ZFUIButton *button)
+ZFMETHOD_DEFINE_1(ZFUIButtonGroup, void, buttonRemove,
+                  ZFMP_IN(ZFUIButton *, button))
 {
     this->buttonRemoveAtIndex(this->_ZFP_ZFUIButtonGroup_buttons()->find(button));
 }
-void ZFUIButtonGroup::buttonRemoveAtIndex(ZF_IN zfindex buttonIndex)
+ZFMETHOD_DEFINE_1(ZFUIButtonGroup, void, buttonRemoveAtIndex,
+                  ZFMP_IN(zfindex, buttonIndex))
 {
     if(buttonIndex == zfindexMax())
     {
@@ -275,7 +280,7 @@ void ZFUIButtonGroup::buttonRemoveAtIndex(ZF_IN zfindex buttonIndex)
     this->buttonOnRemove(button, buttonIndex);
     zfReleaseWithoutLeakTest(button);
 }
-void ZFUIButtonGroup::buttonRemoveAll(void)
+ZFMETHOD_DEFINE_0(ZFUIButtonGroup, void, buttonRemoveAll)
 {
     while(this->buttonCount() > 0)
     {

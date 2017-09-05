@@ -12,7 +12,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zftimet ZFUIHintDurationDefault = (zftimet)1500;
+ZFEXPORT_VAR_DEFINE(zftimet, ZFUIHintDurationDefault, (zftimet)1500)
 
 // ============================================================
 static ZFArray *_ZFP_ZFUIHint_hintListForRead(ZF_IN ZFUISysWindow *inSysWindow)
@@ -244,7 +244,8 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIHint, HintOnUpdate)
 ZFOBSERVER_EVENT_REGISTER(ZFUIHint, HintOnShow)
 ZFOBSERVER_EVENT_REGISTER(ZFUIHint, HintOnHide)
 
-ZFCoreArrayPOD<ZFUIHint *> ZFUIHint::hintList(ZF_IN_OPT ZFUISysWindow *inSysWindow /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFUIHint, ZFCoreArrayPOD<ZFUIHint *>, hintList,
+                  ZFMP_IN_OPT(ZFUISysWindow *, inSysWindow, zfnull))
 {
     zfsynchronizedObject(_ZFP_ZFUIHintSyncObj);
 
@@ -293,12 +294,12 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIHint, zfbool, hintWindowAutoResize)
     }
 }
 
-ZFUIWindow *ZFUIHint::hintWindow(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, ZFUIWindow *, hintWindow)
 {
     return d->hintWindow;
 }
 
-void ZFUIHint::hintShow(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, void, hintShow)
 {
     zfsynchronizedObject(_ZFP_ZFUIHintSyncObj);
     if(this->hintShowing())
@@ -319,7 +320,7 @@ void ZFUIHint::hintShow(void)
         d->hintDoDelay();
     }
 }
-void ZFUIHint::hintHide(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, void, hintHide)
 {
     zfsynchronizedObject(_ZFP_ZFUIHintSyncObj);
     if(d->hintShowing)
@@ -353,15 +354,15 @@ void ZFUIHint::hintHide(void)
         }
     }
 }
-zfbool ZFUIHint::hintShowing(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, zfbool, hintShowing)
 {
     return d->hintShowing;
 }
-zfbool ZFUIHint::hintDelaying(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, zfbool, hintDelaying)
 {
     return d->hintDelaying;
 }
-ZFAnimation *ZFUIHint::hintAnimating(void)
+ZFMETHOD_DEFINE_0(ZFUIHint, ZFAnimation *, hintAnimating)
 {
     return d->hintAnimating;
 }

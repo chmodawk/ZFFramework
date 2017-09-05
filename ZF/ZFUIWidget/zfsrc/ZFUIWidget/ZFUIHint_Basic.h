@@ -75,13 +75,15 @@ protected:
  * -  #ZFUIHintContentBasic as the #ZFUIHint::hintContent
  * -  have an alpha change animation as the hint's show and hide animation
  */
-extern ZF_ENV_EXPORT zfautoObject ZFUIHintMake(ZF_IN const zfchar *text,
-                                               ZF_IN_OPT ZFUIImage *icon = zfnull);
+ZFMETHOD_FUNC_DECLARE_2(zfautoObject, ZFUIHintMake,
+                        ZFMP_IN(const zfchar *, text),
+                        ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 /**
  * @brief #ZFUIHintMake and show the hint
  */
-inline zfautoObject ZFUIHintShow(ZF_IN const zfchar *text,
-                                 ZF_IN_OPT ZFUIImage *icon = zfnull)
+ZFMETHOD_FUNC_DECLARE_INLINE_2(zfautoObject, ZFUIHintShow,
+                               ZFMP_IN(const zfchar *, text),
+                               ZFMP_IN_OPT(ZFUIImage *, icon, zfnull))
 {
     zfautoObject hint = ZFUIHintMake(text, icon);
     hint.to<ZFUIHint *>()->hintShow();

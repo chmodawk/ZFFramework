@@ -249,7 +249,8 @@ public:
     /**
      * @brief util method to get button label's style
      */
-    virtual ZFUITextView *buttonLabelStyle(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFUITextView *, buttonLabelStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         switch(forState)
         {
@@ -271,7 +272,8 @@ public:
     /**
      * @brief util method to get button icon's style
      */
-    virtual ZFUIImageView *buttonIconStyle(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFUIImageView *, buttonIconStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         switch(forState)
         {
@@ -293,7 +295,8 @@ public:
     /**
      * @brief util method to get button icon's style
      */
-    virtual ZFUIImageView *buttonBackgroundStyle(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFUIImageView *, buttonBackgroundStyle,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         switch(forState)
         {
@@ -316,30 +319,34 @@ public:
     /**
      * @brief util method to get button label's text
      */
-    virtual ZFString *buttonLabelText(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFString *, buttonLabelText,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         return this->buttonLabelStyle(forState)->textContent();
     }
     /**
      * @brief util method to set button label's text
      */
-    virtual void buttonLabelTextSet(ZF_IN ZFString *text,
-                                    ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_2(void, buttonLabelTextSet,
+                       ZFMP_IN(ZFString *, text),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         this->buttonLabelStyle(forState)->textContentSet(text);
     }
     /**
      * @brief util method to get button label's text
      */
-    virtual const zfchar *buttonLabelTextString(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(const zfchar *, buttonLabelTextString,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         return this->buttonLabelStyle(forState)->textContentString();
     }
     /**
      * @brief util method to set button label's text
      */
-    virtual void buttonLabelTextStringSet(ZF_IN const zfchar *text,
-                                          ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_2(void, buttonLabelTextStringSet,
+                       ZFMP_IN(const zfchar *, text),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         this->buttonLabelStyle(forState)->textContentStringSet(text);
     }
@@ -347,15 +354,17 @@ public:
     /**
      * @brief util method to get button icon's image
      */
-    virtual ZFUIImage *buttonIconImage(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFUIImage *, buttonIconImage,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         return this->buttonIconStyle(forState)->imageContent();
     }
     /**
      * @brief util method to set button icon's image
      */
-    virtual void buttonIconImageSet(ZF_IN ZFUIImage *image,
-                                    ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_2(void, buttonIconImageSet,
+                       ZFMP_IN(ZFUIImage *, image),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         this->buttonIconStyle(forState)->imageContentSet(image);
     }
@@ -363,15 +372,17 @@ public:
     /**
      * @brief util method to get button background's image
      */
-    virtual ZFUIImage *buttonBackgroundImage(ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_1(ZFUIImage *, buttonBackgroundImage,
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         return this->buttonBackgroundStyle(forState)->imageContent();
     }
     /**
      * @brief util method to set button background's image
      */
-    virtual void buttonBackgroundImageSet(ZF_IN ZFUIImage *image,
-                                          ZF_IN_OPT ZFUIButtonStateEnum forState = ZFUIButtonState::e_Normal)
+    ZFMETHOD_DECLARE_2(void, buttonBackgroundImageSet,
+                       ZFMP_IN(ZFUIImage *, image),
+                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         this->buttonBackgroundStyle(forState)->imageContentSet(image);
     }
@@ -424,7 +435,7 @@ public:
      *   if really want to update manually,
      *   use #ZFUIButton::buttonStateUpdate
      */
-    virtual ZFUITextView *buttonLabel(void);
+    ZFMETHOD_DECLARE_0(ZFUITextView *, buttonLabel);
     /**
      * @brief button's icon view, style of this view must be changed by #ZFUIButtonBasic::buttonIconStyleNormal, etc
      *
@@ -432,7 +443,7 @@ public:
      *   if really want to update manually,
      *   use #ZFUIButton::buttonStateUpdate
      */
-    virtual ZFUIImageView *buttonIcon(void);
+    ZFMETHOD_DECLARE_0(ZFUIImageView *, buttonIcon);
     /**
      * @brief button's background view, style of this view must be changed by #ZFUIButtonBasic::buttonBackgroundStyleNormal, etc
      *
@@ -440,7 +451,7 @@ public:
      *   if really want to update manually,
      *   use #ZFUIButton::buttonStateUpdate
      */
-    virtual ZFUIImageView *buttonBackground(void);
+    ZFMETHOD_DECLARE_0(ZFUIImageView *, buttonBackground);
 
 public:
     /**
@@ -451,15 +462,15 @@ public:
      * or change #buttonLabelStyle's property\n
      * you may manually call this method to create the button component, if necessary
      */
-    zffinal void prepareButtonLabel(void);
+    ZFMETHOD_DECLARE_0(void, prepareButtonLabel);
     /**
      * @brief see #prepareButtonLabel
      */
-    zffinal void prepareButtonIcon(void);
+    ZFMETHOD_DECLARE_0(void, prepareButtonIcon);
     /**
      * @brief see #prepareButtonLabel
      */
-    zffinal void prepareButtonBackground(void);
+    ZFMETHOD_DECLARE_0(void, prepareButtonBackground);
 
 private:
     _ZFP_ZFUIButtonBasicPrivate *d;

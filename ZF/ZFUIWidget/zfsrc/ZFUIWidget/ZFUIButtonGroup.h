@@ -95,39 +95,44 @@ public:
     /**
      * @brief button count
      */
-    virtual zfindex buttonCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, buttonCount);
     /**
      * @brief find the button's index or return zfindexMax() if not exist
      */
-    virtual zfindex buttonFind(ZF_IN ZFUIButton *button);
+    ZFMETHOD_DECLARE_1(zfindex, buttonFind,
+                       ZFMP_IN(ZFUIButton *, button));
     /**
      * @brief get button at index
      */
-    virtual ZFUIButton *buttonAtIndex(ZF_IN zfindex buttonIndex);
+    ZFMETHOD_DECLARE_1(ZFUIButton *, buttonAtIndex,
+                       ZFMP_IN(zfindex, buttonIndex));
     /**
      * @brief add button
      *
      * newly added button's setting would be changed accorrding #buttonGroupType,
      * before #buttonOnAdd
      */
-    virtual void buttonAdd(ZF_IN ZFUIButton *button,
-                           ZF_IN_OPT zfindex atIndex = zfindexMax());
+    ZFMETHOD_DECLARE_2(void, buttonAdd,
+                       ZFMP_IN(ZFUIButton *, button),
+                       ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()));
     /**
      * @brief remove button or do nothing if not in this button group
      *
      * removed button's setting won't be reset by this method
      */
-    virtual void buttonRemove(ZF_IN ZFUIButton *button);
+    ZFMETHOD_DECLARE_1(void, buttonRemove,
+                       ZFMP_IN(ZFUIButton *, button));
     /**
      * @brief remove button at index
      *
      * removed button's setting won't be reset by this method
      */
-    virtual void buttonRemoveAtIndex(ZF_IN zfindex buttonIndex);
+    ZFMETHOD_DECLARE_1(void, buttonRemoveAtIndex,
+                       ZFMP_IN(zfindex, buttonIndex));
     /**
      * @brief remove all button
      */
-    virtual void buttonRemoveAll(void);
+    ZFMETHOD_DECLARE_0(void, buttonRemoveAll);
 
 public:
     zffinal inline void _ZFP_ZFUIButtonGroup_buttonGroupOnEvent(ZF_IN ZFUIButton *button,

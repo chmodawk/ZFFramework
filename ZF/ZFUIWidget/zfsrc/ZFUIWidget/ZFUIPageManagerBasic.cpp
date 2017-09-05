@@ -228,16 +228,17 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIPageManagerBasic, PageAniOnStop)
 
 // ============================================================
 // animation
-void ZFUIPageManagerBasic::pageAniOverrideForOnce(ZF_IN ZFAnimation *pageAniResume,
-                                                  ZF_IN ZFAnimation *pageAniPause,
-                                                  ZF_IN_OPT zfbool pageAniPauseHasHigherPriority /* = zffalse */)
+ZFMETHOD_DEFINE_3(ZFUIPageManagerBasic, void, pageAniOverrideForOnce,
+                  ZFMP_IN(ZFAnimation *, pageAniResume),
+                  ZFMP_IN(ZFAnimation *, pageAniPause),
+                  ZFMP_IN_OPT(zfbool, pageAniPauseHasHigherPriority, zffalse))
 {
     d->pageAniOverrideForOnce = zftrue;
     ZFPropertyChange(d->pageAniOverrideForOnceResumeAni, pageAniResume);
     ZFPropertyChange(d->pageAniOverrideForOncePauseAni, pageAniPause);
     d->pageAniOverrideForOncePauseAniHasHigherPriority = pageAniPauseHasHigherPriority;
 }
-void ZFUIPageManagerBasic::pageAniOverrideForOnceCancel(void)
+ZFMETHOD_DEFINE_0(ZFUIPageManagerBasic, void, pageAniOverrideForOnceCancel)
 {
     d->pageAniOverrideForOnce = zffalse;
     ZFPropertyChange(d->pageAniOverrideForOnceResumeAni, zfnull);

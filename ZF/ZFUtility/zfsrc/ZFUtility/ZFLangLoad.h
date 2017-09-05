@@ -48,8 +48,9 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   }
  * @endcode
  */
-extern ZF_ENV_EXPORT zfbool zfLangLoad(ZF_IN const ZFSerializableData &serializableData,
-                                       ZF_OUT_OPT zfstring *errorHint = zfnull);
+ZFMETHOD_FUNC_DECLARE_2(zfbool, zfLangLoad,
+                        ZFMP_IN(const ZFSerializableData &, serializableData),
+                        ZFMP_OUT_OPT(zfstring *, errorHint, zfnull))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLangLoad_h_

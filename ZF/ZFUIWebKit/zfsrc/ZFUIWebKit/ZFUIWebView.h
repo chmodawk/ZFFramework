@@ -50,44 +50,46 @@ public:
     /**
      * @brief load from url
      */
-    virtual void webLoadUrl(ZF_IN const zfchar *url);
+    ZFMETHOD_DECLARE_1(void, webLoadUrl,
+                       ZFMP_IN(const zfchar *, url));
     /**
      * @brief load from html string
      */
-    virtual void webLoadHtml(ZF_IN const zfchar *html,
-                             ZF_IN_OPT const zfchar *baseUrl = zfnull);
+    ZFMETHOD_DECLARE_2(void, webLoadHtml,
+                       ZFMP_IN(const zfchar *, html),
+                       ZFMP_IN_OPT(const zfchar *, baseUrl, zfnull));
     /**
      * @brief reload current web data
      */
-    virtual void webReload(void);
+    ZFMETHOD_DECLARE_0(void, webReload);
     /**
      * @brief stop loading
      */
-    virtual void webLoadStop(void);
+    ZFMETHOD_DECLARE_0(void, webLoadStop);
 
     /**
      * @brief go back, see #webGoBackAvailable
      */
-    virtual void webGoBack(void);
+    ZFMETHOD_DECLARE_0(void, webGoBack);
     /**
      * @brief go forward, see #webGoForwardAvailable
      */
-    virtual void webGoForward(void);
+    ZFMETHOD_DECLARE_0(void, webGoForward);
 
 public:
     /**
      * @brief true if web is loading
      */
-    virtual zfbool webLoading(void);
+    ZFMETHOD_DECLARE_0(zfbool, webLoading);
 
     /**
      * @brief whether the web can go back, see #webGoBack
      */
-    virtual zfbool webGoBackAvailable(void);
+    ZFMETHOD_DECLARE_0(zfbool, webGoBackAvailable);
     /**
      * @brief whether the web can go forward, see #webGoForward
      */
-    virtual zfbool webGoForwardAvailable(void);
+    ZFMETHOD_DECLARE_0(zfbool, webGoForwardAvailable);
 
 public:
     zffinal void _ZFP_ZFUIWebView_notifyWebLoadStateChanged(void)

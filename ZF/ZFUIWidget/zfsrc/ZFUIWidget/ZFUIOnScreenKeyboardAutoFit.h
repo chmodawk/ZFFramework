@@ -96,9 +96,11 @@ private:
  * \n
  * #ZFUIOnScreenKeyboardAutoFitStop would be applied automatically when owner window destroyed
  */
-extern ZF_ENV_EXPORT ZFUIOnScreenKeyboardAutoFitLayout *ZFUIOnScreenKeyboardAutoFitStart(ZF_IN ZFUIWindow *window);
+ZFMETHOD_FUNC_DECLARE_1(ZFUIOnScreenKeyboardAutoFitLayout *, ZFUIOnScreenKeyboardAutoFitStart,
+                        ZFMP_IN(ZFUIWindow *, window))
 /** @brief see #ZFUIOnScreenKeyboardAutoFitStart */
-extern ZF_ENV_EXPORT void ZFUIOnScreenKeyboardAutoFitStop(ZF_IN ZFUIWindow *window);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIOnScreenKeyboardAutoFitStop,
+                        ZFMP_IN(ZFUIWindow *, window))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIOnScreenKeyboardAutoFit_h_

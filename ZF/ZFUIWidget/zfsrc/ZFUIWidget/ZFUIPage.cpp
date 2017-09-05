@@ -23,7 +23,9 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIPage, PageBeforePause)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPage, PageAfterPause)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPage, PageBeforeDestroy)
 
-void ZFUIPage::pageDestroy(void)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFUIPage, ZFUIPageManager *, pageManager)
+
+ZFMETHOD_DEFINE_0(ZFUIPage, void, pageDestroy)
 {
     this->pageManager()->requestPageDestroy(this);
 }

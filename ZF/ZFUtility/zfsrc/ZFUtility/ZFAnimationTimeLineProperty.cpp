@@ -162,13 +162,15 @@ ZFCompareResult ZFAnimationTimeLineProperty::objectCompare(ZF_IN ZFObject *anoth
 
 // ============================================================
 // property change step
-void ZFAnimationTimeLineProperty::stepAdd(ZF_IN ZFTimeLineProperty *step)
+ZFMETHOD_DEFINE_1(ZFAnimationTimeLineProperty, void, stepAdd,
+                  ZFMP_IN(ZFTimeLineProperty *, step))
 {
     zfCoreAssert(!this->aniRunning());
     zfCoreAssert(step != zfnull);
     d->steps.add(zfRetain(step));
 }
-void ZFAnimationTimeLineProperty::stepRemove(ZF_IN ZFTimeLineProperty *step)
+ZFMETHOD_DEFINE_1(ZFAnimationTimeLineProperty, void, stepRemove,
+                  ZFMP_IN(ZFTimeLineProperty *, step))
 {
     zfCoreAssert(!this->aniRunning());
     zfindex index = d->steps.find(step, ZFComparerCheckEqual);
@@ -178,14 +180,15 @@ void ZFAnimationTimeLineProperty::stepRemove(ZF_IN ZFTimeLineProperty *step)
         zfRelease(step);
     }
 }
-void ZFAnimationTimeLineProperty::stepRemoveAtIndex(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFAnimationTimeLineProperty, void, stepRemoveAtIndex,
+                  ZFMP_IN(zfindex, index))
 {
     zfCoreAssert(!this->aniRunning());
     ZFTimeLineProperty *step = d->steps[index];
     d->steps.remove(index);
     zfRelease(step);
 }
-void ZFAnimationTimeLineProperty::stepRemoveAll(void)
+ZFMETHOD_DEFINE_0(ZFAnimationTimeLineProperty, void, stepRemoveAll)
 {
     zfCoreAssert(!this->aniRunning());
     if(!d->steps.isEmpty())
@@ -199,11 +202,12 @@ void ZFAnimationTimeLineProperty::stepRemoveAll(void)
         }
     }
 }
-zfindex ZFAnimationTimeLineProperty::stepCount(void)
+ZFMETHOD_DEFINE_0(ZFAnimationTimeLineProperty, zfindex, stepCount)
 {
     return d->steps.count();
 }
-ZFTimeLineProperty *ZFAnimationTimeLineProperty::stepAtIndex(ZF_IN zfindex index)
+ZFMETHOD_DEFINE_1(ZFAnimationTimeLineProperty, ZFTimeLineProperty *, stepAtIndex,
+                  ZFMP_IN(zfindex, index))
 {
     return d->steps.get(index);
 }

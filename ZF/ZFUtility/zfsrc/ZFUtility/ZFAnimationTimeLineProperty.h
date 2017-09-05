@@ -71,17 +71,21 @@ public:
      * @brief add a property change step,
      *   #ZFAnimation::aniTarget's property would be change accorrding this step
      */
-    virtual void stepAdd(ZF_IN ZFTimeLineProperty *step);
+    ZFMETHOD_DECLARE_1(void, stepAdd,
+                       ZFMP_IN(ZFTimeLineProperty *, step));
     /** @brief see #stepAdd */
-    virtual void stepRemove(ZF_IN ZFTimeLineProperty *step);
+    ZFMETHOD_DECLARE_1(void, stepRemove,
+                       ZFMP_IN(ZFTimeLineProperty *, step));
     /** @brief see #stepAdd */
-    virtual void stepRemoveAtIndex(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(void, stepRemoveAtIndex,
+                       ZFMP_IN(zfindex, index));
     /** @brief see #stepAdd */
-    virtual void stepRemoveAll(void);
+    ZFMETHOD_DECLARE_0(void, stepRemoveAll);
     /** @brief see #stepAdd */
-    virtual zfindex stepCount(void);
+    ZFMETHOD_DECLARE_0(zfindex, stepCount);
     /** @brief see #stepAdd */
-    virtual ZFTimeLineProperty *stepAtIndex(ZF_IN zfindex index);
+    ZFMETHOD_DECLARE_1(ZFTimeLineProperty *, stepAtIndex,
+                       ZFMP_IN(zfindex, index));
 
     // ============================================================
     // start stop

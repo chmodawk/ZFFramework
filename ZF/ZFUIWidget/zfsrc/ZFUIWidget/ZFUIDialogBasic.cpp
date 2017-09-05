@@ -10,7 +10,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-ZFOBJECT_REGISTER(ZFUIDialogButtonType)
+ZFENUM_DEFINE(ZFUIDialogButtonType)
 
 ZFOBJECT_REGISTER(ZFUIDialogContent)
 
@@ -23,7 +23,9 @@ ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(ZFUIDialogContentClassInit, ZFLevelZFFrame
     _ZFP_ZFUIDialogContentClass = ZFUIDialogContentBasic::ClassData();
 }
 ZF_GLOBAL_INITIALIZER_END(ZFUIDialogContentClassInit)
-void ZFUIDialogContentClassSet(ZF_IN const ZFClass *cls)
+
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIDialogContentClassSet,
+                       ZFMP_IN(const ZFClass *, cls))
 {
     if(cls == zfnull)
     {
@@ -39,7 +41,7 @@ void ZFUIDialogContentClassSet(ZF_IN const ZFClass *cls)
         _ZFP_ZFUIDialogContentClass = cls;
     }
 }
-const ZFClass *ZFUIDialogContentClass(void)
+ZFMETHOD_FUNC_DEFINE_0(const ZFClass *, ZFUIDialogContentClass)
 {
     return _ZFP_ZFUIDialogContentClass;
 }

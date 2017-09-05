@@ -48,32 +48,36 @@ public:
      * newly cached object would be added to queue's head,
      * and tail's cache would be removed if exceeds #cacheMaxSize
      */
-    virtual void cacheSave(ZF_IN const zfchar *cacheKey,
-                           ZF_IN ZFObject *cacheValue);
+    ZFMETHOD_DECLARE_2(void, cacheSave,
+                       ZFMP_IN(const zfchar *, cacheKey),
+                       ZFMP_IN(ZFObject *, cacheValue));
     /**
      * @brief access cache, or return #zfautoObjectNull if not exist
      */
-    virtual zfautoObject cacheAccess(ZF_IN const zfchar *cacheKey);
+    ZFMETHOD_DECLARE_1(zfautoObject, cacheAccess,
+                       ZFMP_IN(const zfchar *, cacheKey));
 
     /**
      * @brief remove cache or do nothing if not exist, return removed cache
      */
-    virtual zfautoObject cacheRemove(ZF_IN const zfchar *cacheKey);
+    ZFMETHOD_DECLARE_1(zfautoObject, cacheRemove,
+                       ZFMP_IN(const zfchar *, cacheKey));
     /**
      * @brief remove all cache
      */
-    virtual void cacheRemoveAll(void);
+    ZFMETHOD_DECLARE_0(void, cacheRemoveAll);
     /**
      * @brief trim the cache to reduce memory
      *
      * by default, this method would call #cacheTrimBySize
      */
-    virtual void cacheTrim(void);
+    ZFMETHOD_DECLARE_0(void, cacheTrim);
     /**
      * @brief util method to trim the cache
      *   so that the cached data won't exceeds specified size
      */
-    virtual void cacheTrimBySize(ZF_IN zfindex size);
+    ZFMETHOD_DECLARE_1(void, cacheTrimBySize,
+                       ZFMP_IN(zfindex , size));
 
 public:
     /**
@@ -81,8 +85,9 @@ public:
      *
      * ensured ordered from new to old
      */
-    virtual void allCache(ZF_IN_OUT ZFCoreArray<zfstring> &cacheKeys,
-                          ZF_IN_OUT ZFCoreArray<zfautoObject> &cacheValues);
+    ZFMETHOD_DECLARE_2(void, allCache,
+                       ZFMP_IN_OUT(ZFCoreArray<zfstring> &, cacheKeys),
+                       ZFMP_IN_OUT(ZFCoreArray<zfautoObject> &, cacheValues));
 
 protected:
     /**

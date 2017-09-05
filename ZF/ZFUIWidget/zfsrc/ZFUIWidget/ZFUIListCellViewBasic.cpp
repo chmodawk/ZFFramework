@@ -28,23 +28,23 @@ public:
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIListCellViewBasic)
 
-ZFUIView *ZFUIListCellViewBasic::cellIconContainer(void)
+ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellIconContainer)
 {
     return d->cellIconContainer;
 }
-ZFUIView *ZFUIListCellViewBasic::cellCenterContainer(void)
+ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellCenterContainer)
 {
     return d->cellCenterContainer;
 }
-ZFUIView *ZFUIListCellViewBasic::cellLabelMainContainer(void)
+ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellLabelMainContainer)
 {
     return d->cellLabelMainContainer;
 }
-ZFUIView *ZFUIListCellViewBasic::cellLabelSubContainer(void)
+ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellLabelSubContainer)
 {
     return d->cellLabelSubContainer;
 }
-ZFUIView *ZFUIListCellViewBasic::cellAccessoryContainer(void)
+ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellAccessoryContainer)
 {
     return d->cellAccessoryContainer;
 }

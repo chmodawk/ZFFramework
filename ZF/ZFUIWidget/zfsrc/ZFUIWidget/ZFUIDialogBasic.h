@@ -76,14 +76,15 @@ public:
     /**
      * @brief set the dialog's title text
      */
-    virtual void dialogTitleTextSet(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogTitleTextSet,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogTitleView()->textContentStringSet(text);
     }
     /**
      * @brief get the dialog's title text
      */
-    virtual const zfchar *dialogTitleText(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogTitleText)
     {
         return this->dialogTitleView()->textContentString();
     }
@@ -101,14 +102,15 @@ public:
     /**
      * @brief set the dialog's content text
      */
-    virtual void dialogContentTextSet(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogContentTextSet,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogContentView()->textContentStringSet(text);
     }
     /**
      * @brief get the dialog's content text
      */
-    virtual const zfchar *dialogContentText(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogContentText)
     {
         return this->dialogContentView()->textContentString();
     }
@@ -145,63 +147,71 @@ public:
     virtual void dialogButtonRemove(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType) zfpurevirtual;
 
     /** @brief util method to access #dialogButton */
-    virtual inline ZFUIButton *dialogButton_Yes(ZF_IN_OPT zfbool autoCreateIfNotExist = zftrue)
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Yes,
+                       ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Yes, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    virtual inline ZFUIButton *dialogButton_No(ZF_IN_OPT zfbool autoCreateIfNotExist = zftrue)
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_No,
+                       ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_No, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    virtual inline ZFUIButton *dialogButton_Cancel(ZF_IN_OPT zfbool autoCreateIfNotExist = zftrue)
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Cancel,
+                       ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Cancel, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    virtual inline ZFUIButton *dialogButton_Destructive(ZF_IN_OPT zfbool autoCreateIfNotExist = zftrue)
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Destructive,
+                       ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Destructive, autoCreateIfNotExist);
     }
 
     /** @brief util method to access #dialogButtonText */
-    virtual inline const zfchar *dialogButtonText_Yes(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Yes)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Yes);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    virtual inline void dialogButtonTextSet_Yes(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Yes,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Yes, text);
     }
     /** @brief util method to access #dialogButtonText */
-    virtual inline const zfchar *dialogButtonText_No(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_No)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_No);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    virtual inline void dialogButtonTextSet_No(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_No,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_No, text);
     }
     /** @brief util method to access #dialogButtonText */
-    virtual inline const zfchar *dialogButtonText_Cancel(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Cancel)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Cancel);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    virtual inline void dialogButtonTextSet_Cancel(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Cancel,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Cancel, text);
     }
     /** @brief util method to access #dialogButtonText */
-    virtual inline const zfchar *dialogButtonText_Destructive(void)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Destructive)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Destructive);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    virtual inline void dialogButtonTextSet_Destructive(ZF_IN const zfchar *text)
+    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Destructive,
+                       ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Destructive, text);
     }
@@ -258,11 +268,12 @@ protected:
  * #ZFUIDialogContentBasic by default,
  * set null to reset to default
  */
-extern ZF_ENV_EXPORT void ZFUIDialogContentClassSet(ZF_IN const ZFClass *cls);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIDialogContentClassSet,
+                        ZFMP_IN(const ZFClass *, cls))
 /**
  * @brief see #ZFUIDialogContentClassSet
  */
-extern ZF_ENV_EXPORT const ZFClass *ZFUIDialogContentClass(void);
+ZFMETHOD_FUNC_DECLARE_0(const ZFClass *, ZFUIDialogContentClass)
 
 // ============================================================
 // ZFUIDialogBasic
@@ -292,54 +303,91 @@ public:
 public:
     // ============================================================
     // title
-    zfoverride
-    virtual inline ZFUIView *dialogTitleContainer(void) {return this->dialogContent()->dialogTitleContainer();}
-    zfoverride
-    virtual inline ZFUITextView *dialogTitleView(void) {return this->dialogContent()->dialogTitleView();}
+    ZFMETHOD_DECLARE_0(ZFUIView *, dialogTitleContainer)
+    {
+        return this->dialogContent()->dialogTitleContainer();
+    }
+    ZFMETHOD_DECLARE_0(ZFUITextView *, dialogTitleView)
+    {
+        return this->dialogContent()->dialogTitleView();
+    }
 
     // ============================================================
     // content
-    zfoverride
-    virtual inline ZFUIView *dialogContentContainer(void) {return this->dialogContent()->dialogContentContainer();}
-    zfoverride
-    virtual inline ZFUITextView *dialogContentView(void) {return this->dialogContent()->dialogContentView();}
+    ZFMETHOD_DECLARE_0(ZFUIView *, dialogContentContainer)
+    {
+        return this->dialogContent()->dialogContentContainer();
+    }
+    ZFMETHOD_DECLARE_0(ZFUITextView *, dialogContentView)
+    {
+        return this->dialogContent()->dialogContentView();
+    }
 
     // ============================================================
     // button
-    zfoverride
-    virtual inline ZFUIView *dialogButtonContainer(void) {return this->dialogContent()->dialogButtonContainer();}
-    zfoverride
-    virtual inline ZFUIButton *dialogButton(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType,
-                                            ZF_IN_OPT zfbool autoCreateIfNotExist = zftrue)
-    {return this->dialogContent()->dialogButton(dialogButtonType, autoCreateIfNotExist);}
-    zfoverride
-    virtual inline const zfchar *dialogButtonText(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType)
-    {return this->dialogContent()->dialogButtonText(dialogButtonType);}
-    zfoverride
-    virtual inline void dialogButtonTextSet(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType,
-                                            ZF_IN const zfchar *text)
-    {this->dialogContent()->dialogButtonTextSet(dialogButtonType, text);}
-    zfoverride
-    virtual inline void dialogButtonRemove(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType) {this->dialogContent()->dialogButtonRemove(dialogButtonType);}
+    ZFMETHOD_DECLARE_0(ZFUIView *, dialogButtonContainer)
+    {
+        return this->dialogContent()->dialogButtonContainer();
+    }
+    ZFMETHOD_DECLARE_2(ZFUIButton *, dialogButton,
+                       ZFMP_IN(ZFUIDialogButtonTypeEnum, dialogButtonType),
+                       ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
+    {
+        return this->dialogContent()->dialogButton(dialogButtonType, autoCreateIfNotExist);
+    }
+    ZFMETHOD_DECLARE_1(const zfchar *, dialogButtonText,
+                       ZFMP_IN(ZFUIDialogButtonTypeEnum, dialogButtonType))
+    {
+        return this->dialogContent()->dialogButtonText(dialogButtonType);
+    }
+    ZFMETHOD_DECLARE_2(void, dialogButtonTextSet,
+                       ZFMP_IN(ZFUIDialogButtonTypeEnum, dialogButtonType),
+                       ZFMP_IN(const zfchar *, text))
+    {
+        this->dialogContent()->dialogButtonTextSet(dialogButtonType, text);
+    }
+    ZFMETHOD_DECLARE_1(void, dialogButtonRemove,
+                       ZFMP_IN(ZFUIDialogButtonTypeEnum , dialogButtonType))
+    {
+        this->dialogContent()->dialogButtonRemove(dialogButtonType);
+    }
 
     // ============================================================
     // button
-    zfoverride
-    virtual inline zfindex dialogButtonCount(void) {return this->dialogContent()->dialogButtonCount();}
-    zfoverride
-    virtual inline ZFUIButton *dialogButtonAtIndex(ZF_IN zfindex index) {return this->dialogContent()->dialogButtonAtIndex(index);}
-    zfoverride
-    virtual inline zfindex dialogButtonFind(ZF_IN ZFUIButton *dialogButton) {return this->dialogContent()->dialogButtonFind(dialogButton);}
-    zfoverride
-    virtual inline void dialogButtonAdd(ZF_IN ZFUIButton *button,
-                                        ZF_IN_OPT zfindex atIndex = zfindexMax())
-    {this->dialogContent()->dialogButtonAdd(button, atIndex);}
-    zfoverride
-    virtual inline void dialogButtonRemove(ZF_IN ZFUIButton *button) {this->dialogContent()->dialogButtonRemove(button);}
-    zfoverride
-    virtual inline void dialogButtonRemoveAtIndex(ZF_IN zfindex index) {this->dialogContent()->dialogButtonRemoveAtIndex(index);}
-    zfoverride
-    virtual inline void dialogButtonRemoveAll(void) {this->dialogContent()->dialogButtonRemoveAll();}
+    ZFMETHOD_DECLARE_0(zfindex, dialogButtonCount)
+    {
+        return this->dialogContent()->dialogButtonCount();
+    }
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButtonAtIndex,
+                       ZFMP_IN(zfindex, index))
+    {
+        return this->dialogContent()->dialogButtonAtIndex(index);
+    }
+    ZFMETHOD_DECLARE_1(zfindex, dialogButtonFind,
+                       ZFMP_IN(ZFUIButton *, dialogButton))
+    {
+        return this->dialogContent()->dialogButtonFind(dialogButton);
+    }
+    ZFMETHOD_DECLARE_2(void, dialogButtonAdd,
+                       ZFMP_IN(ZFUIButton *, button),
+                       ZFMP_IN_OPT(zfindex, atIndex, zfindexMax()))
+    {
+        this->dialogContent()->dialogButtonAdd(button, atIndex);
+    }
+    ZFMETHOD_DECLARE_1(void, dialogButtonRemove,
+                       ZFMP_IN(ZFUIButton *, button))
+    {
+        this->dialogContent()->dialogButtonRemove(button);
+    }
+    ZFMETHOD_DECLARE_1(void, dialogButtonRemoveAtIndex,
+                       ZFMP_IN(zfindex, index))
+    {
+        this->dialogContent()->dialogButtonRemoveAtIndex(index);
+    }
+    ZFMETHOD_DECLARE_0(void, dialogButtonRemoveAll)
+    {
+        this->dialogContent()->dialogButtonRemoveAll();
+    }
 
 public:
     zfoverride

@@ -114,17 +114,18 @@ ZFCompareResult ZFAnimation::objectCompare(ZF_IN ZFObject *anotherObj)
     return ZFCompareUncomparable;
 }
 
-void ZFAnimation::aniTargetSet(ZF_IN ZFObject *aniTarget)
+ZFMETHOD_DEFINE_1(ZFAnimation, void, aniTargetSet,
+                  ZFMP_IN(ZFObject *, aniTarget))
 {
     zfCoreAssertWithMessage(!d->aniRunning, zfTextA("change animation's target while animation is running"));
     d->aniTarget = aniTarget;
 }
-ZFObject *ZFAnimation::aniTarget(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, ZFObject *, aniTarget)
 {
     return d->aniTarget;
 }
 
-void ZFAnimation::aniStart(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, void, aniStart)
 {
     this->_ZFP_ZFAnimation_aniReadyStart();
 
@@ -155,11 +156,15 @@ void ZFAnimation::aniStart(void)
         this->aniImplStart();
     }
 }
-zfbool ZFAnimation::aniRunning(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zfbool, aniRunning)
 {
     return d->aniRunning;
 }
-void ZFAnimation::aniStop(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zfbool, aniDelaying)
+{
+    return d->aniDelaying;
+}
+ZFMETHOD_DEFINE_0(ZFAnimation, void, aniStop)
 {
     if(!(d->aniRunning) || d->aniStopCalled)
     {
@@ -179,17 +184,17 @@ void ZFAnimation::aniStop(void)
     }
     this->aniImplNotifyStop();
 }
-zfbool ZFAnimation::aniStoppedByUser(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zfbool, aniStoppedByUser)
 {
     return d->aniStoppedByUser;
 }
 
-zfidentity ZFAnimation::aniId(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zfidentity, aniId)
 {
     return d->aniIdGenerator.current();
 }
 
-zfbool ZFAnimation::aniValid(void)
+ZFMETHOD_DEFINE_0(ZFAnimation, zfbool, aniValid)
 {
     return this->aniImplCheckValid();
 }

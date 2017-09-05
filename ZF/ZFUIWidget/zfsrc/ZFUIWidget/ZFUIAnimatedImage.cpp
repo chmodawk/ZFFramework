@@ -125,7 +125,7 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIAnimatedImage, AniOnRepeat)
 ZFOBSERVER_EVENT_REGISTER(ZFUIAnimatedImage, AniOnUpdate)
 ZFOBSERVER_EVENT_REGISTER(ZFUIAnimatedImage, AniFrameOnUpdate)
 
-void ZFUIAnimatedImage::aniStart(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, void, aniStart)
 {
     if(d->aniRunning || this->aniFrameCount() == 0)
     {
@@ -143,7 +143,7 @@ void ZFUIAnimatedImage::aniStart(void)
 
     d->aniRunNext();
 }
-void ZFUIAnimatedImage::aniStop(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, void, aniStop)
 {
     if(!d->aniRunning)
     {
@@ -159,12 +159,13 @@ void ZFUIAnimatedImage::aniStop(void)
 
     zfRelease(this);
 }
-zfbool ZFUIAnimatedImage::aniRunning(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zfbool, aniRunning)
 {
     return d->aniRunning;
 }
 
-void ZFUIAnimatedImage::aniManual(ZF_IN zfindex aniFrame)
+ZFMETHOD_DEFINE_1(ZFUIAnimatedImage, void, aniManual,
+                  ZFMP_IN(zfindex, aniFrame))
 {
     this->aniStop();
 
@@ -185,7 +186,7 @@ void ZFUIAnimatedImage::aniManual(ZF_IN zfindex aniFrame)
     this->aniOnUpdate();
 }
 
-ZFUIImage *ZFUIAnimatedImage::aniFrameImageCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, ZFUIImage *, aniFrameImageCurrent)
 {
     if(d->aniFrameIndexCurrent < this->aniFrames()->count())
     {
@@ -196,7 +197,7 @@ ZFUIImage *ZFUIAnimatedImage::aniFrameImageCurrent(void)
         return zfnull;
     }
 }
-zftimet ZFUIAnimatedImage::aniFrameDurationCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zftimet, aniFrameDurationCurrent)
 {
     if(d->aniFrameIndexCurrent < this->aniFrames()->count())
     {
@@ -207,7 +208,7 @@ zftimet ZFUIAnimatedImage::aniFrameDurationCurrent(void)
         return zftimetZero();
     }
 }
-zftimet ZFUIAnimatedImage::aniFrameDurationFixedCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zftimet, aniFrameDurationFixedCurrent)
 {
     if(d->aniFrameIndexCurrent < this->aniFrames()->count())
     {
@@ -218,7 +219,7 @@ zftimet ZFUIAnimatedImage::aniFrameDurationFixedCurrent(void)
         return zftimetZero();
     }
 }
-ZFUIAnimatedImageAniFrame *ZFUIAnimatedImage::aniFrameCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, ZFUIAnimatedImageAniFrame *, aniFrameCurrent)
 {
     if(d->aniFrameIndexCurrent < this->aniFrames()->count())
     {
@@ -229,7 +230,7 @@ ZFUIAnimatedImageAniFrame *ZFUIAnimatedImage::aniFrameCurrent(void)
         return zfnull;
     }
 }
-zfindex ZFUIAnimatedImage::aniFrameIndexCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zfindex, aniFrameIndexCurrent)
 {
     if(d->aniFrameIndexCurrent < this->aniFrames()->count())
     {
@@ -241,7 +242,7 @@ zfindex ZFUIAnimatedImage::aniFrameIndexCurrent(void)
     }
 }
 
-zfindex ZFUIAnimatedImage::aniRepeatCountCurrent(void)
+ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zfindex, aniRepeatCountCurrent)
 {
     return d->aniRepeatCountCurrent;
 }

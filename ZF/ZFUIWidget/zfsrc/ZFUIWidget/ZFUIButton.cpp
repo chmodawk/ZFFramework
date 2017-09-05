@@ -435,12 +435,13 @@ void ZFUIButton::objectOnDealloc(void)
     zfsuper::objectOnDealloc();
 }
 
-void ZFUIButton::buttonClickIntervalReset(void)
+ZFMETHOD_DEFINE_0(ZFUIButton, void, buttonClickIntervalReset)
 {
     d->buttonLastClickTimestamp = 0;
 }
 
-void ZFUIButton::buttonSimulateClick(ZF_IN_OPT ZFUIEvent *event /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFUIButton, void, buttonSimulateClick,
+                  ZFMP_IN_OPT(ZFUIEvent *, event, zfnull))
 {
     zfCoreAssert(ZFThread::currentThread() == ZFThread::mainThread());
 
@@ -450,7 +451,7 @@ void ZFUIButton::buttonSimulateClick(ZF_IN_OPT ZFUIEvent *event /* = zfnull */)
 void ZFUIButton::viewEventOnMouseEvent(ZF_IN ZFUIMouseEvent *mouseEvent)
 {
     zfsuper::viewEventOnMouseEvent(mouseEvent);
-    
+
     if(mouseEvent->mouseButton == ZFUIMouseButton::e_MouseButtonLeft)
     {
         d->viewEventOnMouseEvent(mouseEvent);
@@ -495,11 +496,11 @@ void ZFUIButton::viewPropertyOnUpdate(void)
     this->buttonStateUpdate();
 }
 
-ZFUIButtonStateEnum ZFUIButton::buttonState(void)
+ZFMETHOD_DEFINE_0(ZFUIButton, ZFUIButtonStateEnum, buttonState)
 {
     return d->buttonState;
 }
-void ZFUIButton::buttonStateUpdate(void)
+ZFMETHOD_DEFINE_0(ZFUIButton, void, buttonStateUpdate)
 {
     this->buttonStateOnUpdate();
 }

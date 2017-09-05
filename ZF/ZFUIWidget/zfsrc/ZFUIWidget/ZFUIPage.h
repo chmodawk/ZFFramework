@@ -106,7 +106,7 @@ public:
     /**
      * @brief owner page manager
      */
-    zffinal ZFUIPageManager *pageManager(void)
+    virtual ZFUIPageManager *pageManager(void)
     {
         return this->_ZFP_ZFUIPage_pageManager;
     }
@@ -128,7 +128,7 @@ public:
     /**
      * @brief page create param passed from #ZFUIPageManager::requestPageCreate
      */
-    zffinal ZFObject *pageCreateParam(void)
+    ZFMETHOD_DECLARE_0(ZFObject *, pageCreateParam)
     {
         return _ZFP_ZFUIPage_pageCreateParam;
     }
@@ -143,21 +143,21 @@ public:
     /**
      * @brief true if page created (true after #pageOnCreate called)
      */
-    virtual zfbool pageCreated(void)
+    ZFMETHOD_DECLARE_0(zfbool, pageCreated)
     {
         return _ZFP_ZFUIPage_pageCreated;
     }
     /**
      * @brief true if page resumed (true after #pageOnResume called)
      */
-    virtual zfbool pageResumed(void)
+    ZFMETHOD_DECLARE_0(zfbool, pageResumed)
     {
         return _ZFP_ZFUIPage_pageResumed;
     }
     /**
      * @brief true if page attached (true after #pageOnAttach and false before #pageOnDetach)
      */
-    virtual zfbool pageAttached(void)
+    ZFMETHOD_DECLARE_0(zfbool, pageAttached)
     {
         return _ZFP_ZFUIPage_pageAttached;
     }
@@ -165,7 +165,7 @@ public:
     /**
      * @brief equal to invoke #ZFUIPageManager::requestPageDestroy
      */
-    virtual void pageDestroy(void);
+    ZFMETHOD_DECLARE_0(void, pageDestroy);
 
     // ============================================================
     // page life cycle

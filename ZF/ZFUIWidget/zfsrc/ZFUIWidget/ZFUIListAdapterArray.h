@@ -52,44 +52,48 @@ public:
      * @brief directly access internal cell array,
      *   you may modify it directly, with caution
      */
-    virtual inline ZFArrayEditable *cellArray(void)
+    ZFMETHOD_DECLARE_0(ZFArrayEditable *, cellArray)
     {
         return d;
     }
     /**
      * @brief add cell
      */
-    virtual inline void cellAdd(ZF_IN ZFUIListCell *cell)
+    ZFMETHOD_DECLARE_1(void, cellAdd,
+                       ZFMP_IN(ZFUIListCell *, cell))
     {
         d->add(cell);
     }
     /**
      * @brief add cell at index
      */
-    virtual inline void cellAdd(ZF_IN zfindex index,
-                                ZF_IN ZFUIListCell *cell)
+    ZFMETHOD_DECLARE_2(void, cellAdd,
+                       ZFMP_IN(zfindex, index),
+                       ZFMP_IN(ZFUIListCell *, cell))
     {
         d->add(index, cell);
     }
     /**
      * @brief remove cell
      */
-    virtual inline void cellRemove(ZF_IN zfindex index,
-                                   ZF_IN_OPT zfindex count = 1)
+    ZFMETHOD_DECLARE_2(void, cellRemove,
+                       ZFMP_IN(zfindex, index),
+                       ZFMP_IN_OPT(zfindex, count, 1))
     {
         d->remove(index, count);
     }
     /**
      * @brief remove cell
      */
-    virtual inline void cellRemoveElement(ZF_IN ZFUIListCell *cell)
+    ZFMETHOD_DECLARE_1(void, cellRemoveElement,
+                       ZFMP_IN(ZFUIListCell *, cell))
     {
         d->removeElement(cell);
     }
     /**
      * @brief remove all cell
      */
-    virtual inline void cellRemoveAll(void)
+    ZFMETHOD_DECLARE_0(void, cellRemoveAll)
     {
         d->removeAll();
     }
@@ -97,41 +101,44 @@ public:
 public:
     /**
      * @brief whether to override default list cell size hint, false by default
+     *
+     * if true, #cellSizeHintOverrideValue would be used instead of #ZFUIListAdapter::cellSizeHint
      */
     ZFPROPERTY_ASSIGN(zfbool, cellSizeHintOverride)
     /**
      * @brief valid only if #cellSizeHintOverride, -1 by default, see #ZFUIListAdapter::cellSizeAtIndex
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, cellSizeHint, ZFPropertyInitValue(-1))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfint, cellSizeHintOverrideValue, ZFPropertyInitValue(-1))
 
 public:
-    zfoverride
-    virtual zfindex cellCount(void)
+    ZFMETHOD_DECLARE_0(zfindex, cellCount)
     {
         return d->count();
     }
-    zfoverride
-    virtual zfautoObject cellCacheOnAccess(ZF_IN zfindex index)
+    ZFMETHOD_DECLARE_1(zfautoObject, cellAtIndex,
+                       ZFMP_IN(zfindex, index))
     {
         return zfautoObjectCreate(d->get(index));
     }
-    zfoverride
-    virtual zfautoObject cellAtIndex(ZF_IN zfindex index)
-    {
-        return zfautoObjectCreate(d->get(index));
-    }
-    zfoverride
-    virtual zfint cellSizeAtIndex(ZF_IN zfindex index,
-                                  ZF_IN ZFUIListCell *cell)
+    ZFMETHOD_DECLARE_2(zfint, cellSizeAtIndex,
+                       ZFMP_IN(zfindex, index),
+                       ZFMP_IN(ZFUIListCell *, cell))
     {
         if(this->cellSizeHintOverride())
         {
-            return this->cellSizeHint();
+            return this->cellSizeHintOverrideValue();
         }
         else
         {
             return zfsuperI(ZFUIListAdapter)::cellSizeAtIndex(index, cell);
         }
+    }
+
+protected:
+    zfoverride
+    virtual zfautoObject cellCacheOnAccess(ZF_IN zfindex index)
+    {
+        return zfautoObjectCreate(d->get(index));
     }
 
 private:

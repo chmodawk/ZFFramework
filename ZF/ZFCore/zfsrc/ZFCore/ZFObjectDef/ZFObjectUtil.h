@@ -345,6 +345,11 @@ public:
 };
 /** @endcond */
 
+// ============================================================
+ZFCOMPARER_DEFAULT_DECLARE(zfautoObject, zfautoObject, {
+        return ZFObjectCompare(v0.toObject(), v1.toObject());
+    })
+
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFObjectUtil_h_
 

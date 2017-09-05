@@ -20,41 +20,43 @@ ZFOBJECT_REGISTER(ZFUIWebView)
 
 ZFOBSERVER_EVENT_REGISTER(ZFUIWebView, WebLoadStateOnChange)
 
-void ZFUIWebView::webLoadUrl(ZF_IN const zfchar *url)
+ZFMETHOD_DEFINE_1(ZFUIWebView, void, webLoadUrl,
+                  ZFMP_IN(const zfchar *, url))
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webLoadUrl(this, url);
 }
-void ZFUIWebView::webLoadHtml(ZF_IN const zfchar *html,
-                              ZF_IN_OPT const zfchar *baseUrl /* = zfnull */)
+ZFMETHOD_DEFINE_2(ZFUIWebView, void, webLoadHtml,
+                  ZFMP_IN(const zfchar *, html),
+                  ZFMP_IN_OPT(const zfchar *, baseUrl, zfnull))
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webLoadHtml(this, html, baseUrl);
 }
-void ZFUIWebView::webReload(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, void, webReload)
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webReload(this);
 }
-void ZFUIWebView::webLoadStop(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, void, webLoadStop)
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webLoadStop(this);
 }
-void ZFUIWebView::webGoBack(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, void, webGoBack)
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webGoBack(this);
 }
-void ZFUIWebView::webGoForward(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, void, webGoForward)
 {
     ZFPROTOCOL_ACCESS(ZFUIWebView)->webGoForward(this);
 }
 
-zfbool ZFUIWebView::webLoading(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, zfbool, webLoading)
 {
     return ZFPROTOCOL_ACCESS(ZFUIWebView)->webLoading(this);
 }
-zfbool ZFUIWebView::webGoBackAvailable(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, zfbool, webGoBackAvailable)
 {
     return ZFPROTOCOL_ACCESS(ZFUIWebView)->webGoBackAvailable(this);
 }
-zfbool ZFUIWebView::webGoForwardAvailable(void)
+ZFMETHOD_DEFINE_0(ZFUIWebView, zfbool, webGoForwardAvailable)
 {
     return ZFPROTOCOL_ACCESS(ZFUIWebView)->webGoForwardAvailable(this);
 }

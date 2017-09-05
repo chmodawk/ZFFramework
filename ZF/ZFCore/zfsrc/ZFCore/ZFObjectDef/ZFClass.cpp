@@ -1253,11 +1253,14 @@ void ZFClass::_ZFP_ZFClass_methodAndPropertyAutoRegister(void) const
         {
             d->internalTypesNeedAutoRegister = zffalse;
 
-            // create dummy instance to ensure static init of the object would take effect
-            // including method and property register
-            if(d->constructor != zfnull)
+            if(!this->classIsTypeOf(ZFPropertyTypeWrapper::ClassData()))
             {
-                d->destructor(d->constructor());
+                // create dummy instance to ensure static init of the object would take effect
+                // including method and property register
+                if(d->constructor != zfnull)
+                {
+                    d->destructor(d->constructor());
+                }
             }
         }
     }

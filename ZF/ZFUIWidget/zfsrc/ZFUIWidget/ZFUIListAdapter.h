@@ -64,7 +64,7 @@ public:
     /**
      * @brief list's orientation
      */
-    zffinal inline ZFUIOrientationEnum listOrientation(void)
+    ZFMETHOD_DECLARE_0(ZFUIOrientationEnum, listOrientation)
     {
         return this->_ZFP_ZFUIListAdapter_listOrientation;
     }
@@ -75,7 +75,7 @@ public:
     /**
      * @brief list container's size
      */
-    zffinal inline const ZFUISize &listContainerSize(void)
+    ZFMETHOD_DECLARE_0(const ZFUISize &, listContainerSize)
     {
         return this->_ZFP_ZFUIListAdapter_listContainerSize;
     }
@@ -86,7 +86,7 @@ public:
     /**
      * @brief list cell's size hint
      */
-    zffinal inline zfint cellSizeHint(void)
+    ZFMETHOD_DECLARE_0(zfint, cellSizeHint)
     {
         return this->_ZFP_ZFUIListAdapter_cellSizeHint;
     }
@@ -97,7 +97,8 @@ public:
     /**
      * @brief see #EventListAdapterOnReload
      */
-    virtual void listAdapterNotifyReload(ZF_IN_OPT zfindex atIndexOrMax = zfindexMax())
+    ZFMETHOD_DECLARE_1(void, listAdapterNotifyReload,
+                       ZFMP_IN_OPT(zfindex, atIndexOrMax, zfindexMax()))
     {
         this->listAdapterOnReload(atIndexOrMax);
     }
@@ -121,8 +122,9 @@ public:
      * otherwise, the cell's size is fixed\n
      * return #cellSizeHint by default
      */
-    virtual inline zfint cellSizeAtIndex(ZF_IN zfindex index,
-                                         ZF_IN ZFUIListCell *cell)
+    ZFMETHOD_DECLARE_2(zfint, cellSizeAtIndex,
+                       ZFMP_IN(zfindex, index),
+                       ZFMP_IN(ZFUIListCell *, cell))
     {
         return this->cellSizeHint();
     }

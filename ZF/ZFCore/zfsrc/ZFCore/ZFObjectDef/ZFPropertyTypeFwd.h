@@ -413,7 +413,7 @@ public:
         } \
         else \
         { \
-            return ZFComparerCheckEqual(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
+            return ZFComparerDefault(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
         } \
     } \
     const zfchar *v_##TypeName::wrappedValuePropertyTypeId(void) \
@@ -422,11 +422,11 @@ public:
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerCheckEqual(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
+        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
-        return ZFComparerCheckEqual(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
+        return ZFComparerDefault(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
     } \
     ZF_STATIC_REGISTER_INIT(PropTIReg_##TypeName) \
     { \
@@ -616,7 +616,7 @@ public:
         } \
         else \
         { \
-            return ZFComparerCheckEqual(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
+            return ZFComparerDefault(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
         } \
     } \
     const zfchar *v_##TypeName::wrappedValuePropertyTypeId(void) \
@@ -625,11 +625,11 @@ public:
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerCheckEqual(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
+        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
-        return ZFComparerCheckEqual(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
+        return ZFComparerDefault(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
     }
 
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE_UNCOMPARABLE(TypeName, Type) \

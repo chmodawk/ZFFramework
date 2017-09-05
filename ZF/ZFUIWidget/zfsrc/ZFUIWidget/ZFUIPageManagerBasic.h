@@ -55,13 +55,14 @@ public:
      * or, you may cancel manually by #pageAniOverrideForOnceCancel
      * newly overrided animation would override old settings
      */
-    zffinal void pageAniOverrideForOnce(ZF_IN ZFAnimation *pageAniResume,
-                                        ZF_IN ZFAnimation *pageAniPause,
-                                        ZF_IN_OPT zfbool pageAniPauseHasHigherPriority = zffalse);
+    ZFMETHOD_DECLARE_3(void, pageAniOverrideForOnce,
+                       ZFMP_IN(ZFAnimation *, pageAniResume),
+                       ZFMP_IN(ZFAnimation *, pageAniPause),
+                       ZFMP_IN_OPT(zfbool, pageAniPauseHasHigherPriority, zffalse));
     /**
      * @brief see #pageAniOverrideForOnceCancel
      */
-    zffinal void pageAniOverrideForOnceCancel(void);
+    ZFMETHOD_DECLARE_0(void, pageAniOverrideForOnceCancel);
 protected:
     /**
      * @brief used by #pageAniOnUpdate to check update overrided animation

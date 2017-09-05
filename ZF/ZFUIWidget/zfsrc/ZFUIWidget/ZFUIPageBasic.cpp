@@ -46,7 +46,8 @@ ZFOBJECT_REGISTER(ZFUIPageBasic)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageBasic, PageAniOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageBasic, PageAniOnStop)
 
-void ZFUIPageBasic::pageAniSet(ZF_IN ZFAnimation *pageAni)
+ZFMETHOD_DEFINE_1(ZFUIPageBasic, void, pageAniSet,
+                  ZFMP_IN(ZFAnimation *, pageAni))
 {
     zfCoreAssertWithMessage(this->_ZFP_ZFUIPage_pageAniCanChange,
         zfTextA("you can only change pageAni during")
@@ -54,10 +55,12 @@ void ZFUIPageBasic::pageAniSet(ZF_IN ZFAnimation *pageAni)
         zfTextA("or Manager::pageAniOnUpdate"));
     ZFPropertyChange(d->pageAni, pageAni);
 }
-ZFAnimation *ZFUIPageBasic::pageAni(void)
+ZFMETHOD_DEFINE_0(ZFUIPageBasic, ZFAnimation *, pageAni)
 {
     return d->pageAni;
 }
+
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_VAR(ZFUIPageBasic, zfbool, pageAniPriorityNeedHigher)
 
 void ZFUIPageBasic::pageAniOnUpdate(ZF_IN ZFUIPageBasic *resumePageOrNull,
                                     ZF_IN ZFUIPageBasic *pausePageOrNull,

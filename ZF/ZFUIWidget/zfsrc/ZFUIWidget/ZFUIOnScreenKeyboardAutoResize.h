@@ -25,9 +25,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * \n
  * #ZFUIOnScreenKeyboardAutoFitStop would be applied automatically when owner window destroyed
  */
-extern ZF_ENV_EXPORT void ZFUIOnScreenKeyboardAutoResizeStart(ZF_IN ZFUIWindow *window);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIOnScreenKeyboardAutoResizeStart,
+                        ZFMP_IN(ZFUIWindow *, window))
 /** @brief see #ZFUIOnScreenKeyboardAutoResizeStart */
-extern ZF_ENV_EXPORT void ZFUIOnScreenKeyboardAutoResizeStop(ZF_IN ZFUIWindow *window);
+ZFMETHOD_FUNC_DECLARE_1(void, ZFUIOnScreenKeyboardAutoResizeStop,
+                        ZFMP_IN(ZFUIWindow *, window))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIOnScreenKeyboardAutoResize_h_

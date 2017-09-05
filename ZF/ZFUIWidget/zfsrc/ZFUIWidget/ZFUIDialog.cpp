@@ -312,11 +312,11 @@ ZFPROPERTY_CUSTOM_ON_DETACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
     }
 }
 
-zfbool ZFUIDialog::dialogShowing(void)
+ZFMETHOD_DEFINE_0(ZFUIDialog, zfbool, dialogShowing)
 {
     return d->windowShowing();
 }
-void ZFUIDialog::dialogShow(void)
+ZFMETHOD_DEFINE_0(ZFUIDialog, void, dialogShow)
 {
     if(d->windowShowing())
     {
@@ -358,7 +358,7 @@ void ZFUIDialog::dialogShow(void)
         this->dialogAniShow()->aniStart();
     }
 }
-void ZFUIDialog::dialogHide(void)
+ZFMETHOD_DEFINE_0(ZFUIDialog, void, dialogHide)
 {
     if(!d->windowShowing())
     {
@@ -402,7 +402,7 @@ void ZFUIDialog::dialogHide(void)
         this->dialogAniHide()->aniStart();
     }
 }
-void ZFUIDialog::dialogHideForce(void)
+ZFMETHOD_DEFINE_0(ZFUIDialog, void, dialogHideForce)
 {
     if(d->windowShowing())
     {
@@ -418,7 +418,8 @@ void ZFUIDialog::dialogHideForce(void)
     }
 }
 
-void ZFUIDialog::dialogApplyAutoHide(ZF_IN ZFUIButton *button)
+ZFMETHOD_DEFINE_1(ZFUIDialog, void, dialogApplyAutoHide,
+                  ZFMP_IN(ZFUIButton *, button))
 {
     if(button == zfnull)
     {
@@ -435,7 +436,7 @@ void ZFUIDialog::dialogApplyAutoHide(ZF_IN ZFUIButton *button)
         );
 }
 
-ZFUIWindow *ZFUIDialog::dialogWindow(void)
+ZFMETHOD_DEFINE_0(ZFUIDialog, ZFUIWindow *, dialogWindow)
 {
     return d;
 }

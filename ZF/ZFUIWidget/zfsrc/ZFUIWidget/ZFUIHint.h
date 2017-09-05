@@ -20,7 +20,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief default hint duration, 1500 by default
  */
-extern ZF_ENV_EXPORT zftimet ZFUIHintDurationDefault;
+ZFEXPORT_VAR_DECLARE(zftimet, ZFUIHintDurationDefault)
 
 // ============================================================
 zfclassFwd _ZFP_ZFUIHintPrivate;
@@ -67,7 +67,8 @@ public:
     /**
      * @brief get hint list in specified #ZFUISysWindow
      */
-    static ZFCoreArrayPOD<ZFUIHint *> hintList(ZF_IN_OPT ZFUISysWindow *inSysWindow = zfnull);
+    ZFMETHOD_DECLARE_STATIC_1(ZFCoreArrayPOD<ZFUIHint *>, hintList,
+                              ZFMP_IN_OPT(ZFUISysWindow *, inSysWindow, zfnull));
 
 public:
     /**
@@ -85,7 +86,7 @@ public:
      * you should update the layout param of the hint window instead of the hint view,
      * and the hint view would be layouted accorrding the hintWindow's layout param
      */
-    zffinal ZFUIWindow *hintWindow(void);
+    ZFMETHOD_DECLARE_0(ZFUIWindow *, hintWindow);
 
 public:
     /**
@@ -103,7 +104,7 @@ public:
      *
      * @note show and hide animation won't be included in #hintDuration
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, hintDuration, ZFPropertyInitValue(ZFUIHintDurationDefault))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zftimet, hintDuration, ZFPropertyInitValue(ZFUIHintDurationDefault()))
     /**
      * @brief the animation to hide the hint, null by default
      */
@@ -125,25 +126,25 @@ public:
      * the hint object would be retained when show,
      * and would be released automatically after hide
      */
-    zffinal void hintShow(void);
+    ZFMETHOD_DECLARE_0(void, hintShow);
     /**
      * @brief hide the hint with animation,
      *   do nothing if not showing,
      *   cancel show task if delaying
      */
-    zffinal void hintHide(void);
+    ZFMETHOD_DECLARE_0(void, hintHide);
     /**
      * @brief whether the hint is showing or delaying, see #hintDelaying
      */
-    zffinal zfbool hintShowing(void);
+    ZFMETHOD_DECLARE_0(zfbool, hintShowing);
     /**
      * @brief whether the hint is delaying, see #hintShowing
      */
-    zffinal zfbool hintDelaying(void);
+    ZFMETHOD_DECLARE_0(zfbool, hintDelaying);
     /**
      * @brief return the animation if animating, or null if not
      */
-    zffinal ZFAnimation *hintAnimating(void);
+    ZFMETHOD_DECLARE_0(ZFAnimation *, hintAnimating);
 
 protected:
     /** @brief see #ZFUIHint::EventHintOnInit */

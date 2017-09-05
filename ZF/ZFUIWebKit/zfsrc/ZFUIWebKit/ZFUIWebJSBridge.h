@@ -103,13 +103,14 @@ public:
      * return old one if exist or create new one if not exist\n
      * the bridge object would be stored as an object tag to it's owner webView
      */
-    static ZFUIWebJSBridge *instanceForWebView(ZF_IN ZFUIWebView *webView);
+    ZFMETHOD_DECLARE_STATIC_1(ZFUIWebJSBridge *, instanceForWebView,
+                              ZFMP_IN(ZFUIWebView *, webView));
 
 public:
     /**
      * @brief owner of this JS bridge
      */
-    virtual ZFUIWebView *webView(void);
+    ZFMETHOD_DECLARE_0(ZFUIWebView *, webView);
 
 public:
     /**
@@ -117,7 +118,8 @@ public:
      *
      * note: the message to send can be modified by observing #EventWebMessageBeforeSend
      */
-    virtual ZFJsonItem webMessageSend(ZF_IN_OUT ZFJsonItem &messageSend);
+    ZFMETHOD_DECLARE_1(ZFJsonItem, webMessageSend,
+                       ZFMP_IN_OUT(ZFJsonItem &, messageSend));
     zffinal ZFJsonItem _ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFJsonItem &messageRecv);
 
 protected:

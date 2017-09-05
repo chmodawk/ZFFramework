@@ -44,7 +44,8 @@ public:
     zfbool layoutMarginHasStored;
 };
 
-void ZFUIOnScreenKeyboardAutoResizeStart(ZF_IN ZFUIWindow *window)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIOnScreenKeyboardAutoResizeStart,
+                       ZFMP_IN(ZFUIWindow *, window))
 {
     if(window == zfnull)
     {
@@ -67,7 +68,8 @@ void ZFUIOnScreenKeyboardAutoResizeStart(ZF_IN ZFUIWindow *window)
 
     _ZFP_ZFUIOnScreenKeyboardAutoResize_doStart(window);
 }
-void ZFUIOnScreenKeyboardAutoResizeStop(ZF_IN ZFUIWindow *window)
+ZFMETHOD_FUNC_DEFINE_1(void, ZFUIOnScreenKeyboardAutoResizeStop,
+                       ZFMP_IN(ZFUIWindow *, window))
 {
     if(window == zfnull)
     {
