@@ -25,8 +25,8 @@ it's designed to be a complete and complex framework, current code status:
     * basic UI module (view, window, label, image view, button, layout, scroll view, list view)
     * basic algorithm (xml, json, regexp, md5, base64, crc32, encryption)
     * common platform implementations (iOS, Android, Qt)
+    * auto lua binding by reflection
 * working
-    * auto script binding
     * more useful UI modules
     * basic network module
     * basic database module
@@ -57,11 +57,11 @@ it's designed to be a complete and complex framework, current code status:
     }
 ```
 
-* (WIP) this piece of code shows equivalent lua code to use ZFFramework,
+* this piece of code shows equivalent lua code to use ZFFramework,
     all the lua bindings are done by reflection
 
 ```lua
-    local window = ZFUIWindow.zfAlloc();
+    local window = ZFUIWindow();
     window:windowShow();
     local textView = zfAlloc("ZFUITextView");
     window:childAdd(textView);
