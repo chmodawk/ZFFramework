@@ -314,7 +314,7 @@ zfbool ZFAnimationGroup::serializableOnSerializeFromData(ZF_IN const ZFSerializa
                     zfText("null child"));
                 return zffalse;
             }
-            if(!element.toObject()->classData()->classIsSubclassOf(ZFAnimationGroupChildData::ClassData()))
+            if(!element.toObject()->classData()->classIsTypeOf(ZFAnimationGroupChildData::ClassData()))
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     zfText("object %s not type of %s"), element.toObject()->objectInfoOfInstance().cString(), ZFAnimationGroupChildData::ClassData());

@@ -126,12 +126,6 @@ public:
     /**
      * @brief compare with anotherObj
      *
-     * two ZFValue is considered as same only if
-     * value type and value both the same\n
-     * \n
-     * if you want to compare two different type with logical value compare,
-     * you should use compareType, while type is "Bool, Int", etc\n
-     * \n
      * while compare with logical value,
      * we would cast them to appropriate type first\n
      * the cast priority is:\n
@@ -160,20 +154,19 @@ public:
      * other types would convert by #ZFCastStatic\n
      * a serializable type can only convert to a serializable type
      */
-    ZFMETHOD_DECLARE_1(zfbool, valueConvertableTo,
-                       ZFMP_IN(ZFValueTypeEnum, toType));
+    virtual zfbool valueConvertableTo(ZF_IN ZFValueTypeEnum toType);
 
 public:
     #define _ZFP_ZFValue_method_DECLARE(TypeName, T) \
         public: \
             /** @brief create a new ZFValue */ \
-            ZFMETHOD_DECLARE_STATIC_1(zfautoObject, TypeName##ValueCreate, ZFMP_IN(T const &, v)); \
+            static zfautoObject TypeName##ValueCreate(ZF_IN T const &v); \
             /** @brief see #objectCompare */ \
-            ZFMETHOD_DECLARE_1(ZFCompareResult, TypeName##ValueCompare, ZFMP_IN(T const &, v)); \
+            virtual ZFCompareResult TypeName##ValueCompare(ZF_IN T const &v); \
             /** @brief try to access the value, convert if able, assert fail if not convertable */ \
-            ZFMETHOD_DECLARE_0(T, TypeName##Value); \
+            virtual T TypeName##Value(void); \
             /** @brief directly access value as raw type, no type safe check and you must ensure type is matched */ \
-            ZFMETHOD_DECLARE_0(T const &, TypeName##ValueAccess); \
+            virtual T const &TypeName##ValueAccess(void); \
         protected: \
             /** @brief set new value */ \
             virtual void TypeName##ValueSet(ZF_IN T const &v);
@@ -196,20 +189,19 @@ public:
     /**
      * @brief get the type of ZFValue
      */
-    ZFMETHOD_DECLARE_0(ZFValueTypeEnum, valueType);
+    virtual ZFValueTypeEnum valueType(void);
 
     /**
      * @brief get the type name of ZFValue
      */
-    ZFMETHOD_DECLARE_0(const zfchar *, valueTypeName);
+    virtual const zfchar *valueTypeName(void);
 
     /**
      * @brief return a string describe the value in short
      */
-    ZFMETHOD_DECLARE_1(void, valueStringT,
-                       ZFMP_IN_OUT(zfstring &, ret));
+    virtual void valueStringT(ZF_IN_OUT zfstring &ret);
     /** @brief see #valueStringT */
-    ZFMETHOD_DECLARE_0(zfstring, valueString)
+    virtual zfstring valueString(void)
     {
         zfstring ret;
         this->valueStringT(ret);
@@ -252,8 +244,9 @@ public:
 public:
     #define _ZFP_ZFValueEditable_method_DECLARE(TypeName, T) \
         /** @brief create a new ZFValueEditable */ \
-        ZFMETHOD_DECLARE_STATIC_1(zfautoObject, TypeName##ValueCreate, ZFMP_IN(T const &, v)); \
-        ZFMETHOD_DECLARE_1(void, TypeName##ValueSet, ZFMP_IN(T const &, v)) \
+        static zfautoObject TypeName##ValueCreate(ZF_IN T const &v); \
+        /** @brief change value */ \
+        virtual void TypeName##ValueSet(ZF_IN T const &v) \
         {zfsuper::TypeName##ValueSet(v);}
 
     _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE

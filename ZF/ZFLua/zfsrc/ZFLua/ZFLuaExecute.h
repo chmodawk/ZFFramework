@@ -55,6 +55,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     -  #ZFMethodFuncNamespaceGlobal
  *     -  #ZFLuaFuncNamespaceGlobal
  *     -  empty string
+ * -  ZFEnum
+ *   -  `YourEnum.e_YourEnumValue()`\n
+ *     access the enum value
+ *   -  `YourEnumFlags('YourEnumValue1|YourEnumValue2')`
+ *     or `YourEnumFlags(YourEnum.e_YourEnumValue1(), YourEnum.e_YourEnumValue2, ...)`\n
+ *     create enum flags
  * -  value holder
  *   -  `value = YourTypeName("yourTypeData")`
  *     or `value = zfAlloc("YourTypeName")`
@@ -72,12 +78,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *     to its wrapper type `YourTypeName`,
  *     then the methods can be invoked directly to your value type
  * -  value converter
- *   -  `zfl_toValue(v)`\n
- *     convert a value to lua's normal value, by #ZFImpl_ZFLua_toValue
- *   -  `zfl_toString(v)`\n
- *     convert a value to lua's normal string, by #ZFImpl_ZFLua_toString
- *   -  `zfl_toNumber(v)`\n
- *     convert a value to lua's normal number, by #ZFImpl_ZFLua_toNumber
+ *   -  `zfl_luaValue(v)`\n
+ *     convert a value to lua's raw value, by #ZFImpl_ZFLua_toString or #ZFImpl_ZFLua_toNumber,
+ *     the result lua value can be:
+ *     -  lua string
+ *     -  lua integer
+ *     -  lua number
+ *     -  lua boolean
  * -  callback
  *   -  `ZFCallbackForLua(luaFunc)`\n
  *     create a #ZFListener from lua function\n

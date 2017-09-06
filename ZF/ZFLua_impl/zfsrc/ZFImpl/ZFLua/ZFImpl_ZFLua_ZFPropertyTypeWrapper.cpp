@@ -26,7 +26,7 @@ static int _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper(ZF_IN lua_State *L)
         ZFLuaErrorOccurredTrim(zfText("[ZFPropertyTypeWrapper] no such class %s"), className.cString());
         return luaL_error(L, "");
     }
-    else if(!cls->classIsSubclassOf(ZFPropertyTypeWrapper::ClassData()))
+    else if(!cls->classIsTypeOf(ZFPropertyTypeWrapper::ClassData()))
     {
         ZFLuaErrorOccurredTrim(zfText("[ZFPropertyTypeWrapper] class %s is not type of %s"),
             className.cString(),
@@ -73,7 +73,7 @@ static ZFLISTENER_PROTOTYPE_EXPAND(_ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapper_class
     const ZFClassDataChangeData *data = listenerData.param0->to<ZFPointerHolder *>()->holdedDataPointer<const ZFClassDataChangeData *>();
     if(data->changedClass != zfnull && data->changeType == ZFClassDataChangeTypeAttach)
     {
-        if(data->changedClass->classIsSubclassOf(ZFPropertyTypeWrapper::ClassData()))
+        if(data->changedClass->classIsTypeOf(ZFPropertyTypeWrapper::ClassData()))
         {
             const ZFCoreArrayPOD<lua_State *> &luaStateList = ZFImpl_ZFLua_luaStateAttached();
             for(zfindex i = 0; i < luaStateList.count(); ++i)
@@ -93,7 +93,7 @@ ZFImpl_ZFLua_implSetupCallback_DEFINE(ZFPropertyTypeWrapper, {
             for(zfindex i = 0; i < allClass.count(); ++i)
             {
                 const ZFClass *cls = allClass[i];
-                if(cls != target && cls->classIsSubclassOf(target))
+                if(cls != target && cls->classIsTypeOf(target))
                 {
                     _ZFP_ZFImpl_ZFLua_ZFPropertyTypeWrapperSetup(L, cls);
                 }

@@ -177,7 +177,7 @@ ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrint,
         zfbool exist = zffalse;
         for(zfindex i = datas.count() - 1; i != zfindexMax(); --i)
         {
-            if(printData.view->classData()->classIsSubclassOf(datas[i].viewClass))
+            if(printData.view->classData()->classIsTypeOf(datas[i].viewClass))
             {
                 datas[i].viewInfoGetter(printData.view, outputCallback);
                 exist = zftrue;
@@ -213,7 +213,7 @@ ZFMETHOD_FUNC_DEFINE_2(void, ZFUIViewTreePrint,
 void ZFUIViewTreePrintInfoGetterSet(ZF_IN const ZFClass *viewClass,
                                     ZF_IN ZFUIViewTreePrintInfoGetter viewInfoGetter)
 {
-    zfCoreAssert(viewClass != zfnull && viewClass->classIsSubclassOf(ZFUIView::ClassData()));
+    zfCoreAssert(viewClass != zfnull && viewClass->classIsTypeOf(ZFUIView::ClassData()));
     ZFCoreArrayPOD<_ZFP_ZFUIViewTreePrintData> &datas = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIViewTreePrintDataHolder)->datas;
     if(viewInfoGetter == zfnull)
     {
@@ -238,12 +238,12 @@ void ZFUIViewTreePrintInfoGetterSet(ZF_IN const ZFClass *viewClass,
             datas[i].viewInfoGetter = viewInfoGetter;
             break;
         }
-        else if(cls->classIsSubclassOf(viewClass))
+        else if(cls->classIsTypeOf(viewClass))
         {
             indexAddTo = i;
             break;
         }
-        else if(viewClass->classIsSubclassOf(cls))
+        else if(viewClass->classIsTypeOf(cls))
         {
             indexAddTo = i + 1;
         }

@@ -11,30 +11,28 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-static int _ZFP_ZFImpl_ZFLua_zfl_toValue(ZF_IN lua_State *L)
+static int _ZFP_ZFImpl_ZFLua_zfl_luaValue(ZF_IN lua_State *L)
 {
     zfint count = (zfint)lua_gettop(L);
     if(count != 1)
     {
         ZFLuaErrorOccurredTrim(
-            zfText("[zfl_toValue] takes only one param, got %zi"),
+            zfText("[zfl_luaValue] takes only one param, got %zi"),
             (zfindex)count);
         return luaL_error(L, "");
     }
 
-    zfstring ret;
-    if(!ZFImpl_ZFLua_toValue(ret, L, 1))
+    if(!lua_isuserdata(L, 1) && lua_islightuserdata(L, 1))
     {
-        ZFLuaErrorOccurredTrim(zfText("[zfl_toValue] unknown param type, got %s"),
-            ZFImpl_ZFLua_luaObjectInfo(L, 1, zftrue).cString());
-        return luaL_error(L, "");
+        lua_pushvalue(L, 1);
+        return 1;
     }
-    lua_pushstring(L, zfsCoreZ2A(ret.cString()));
-    return 1;
+
+    return ZFImpl_ZFLua_toLuaValue(L, ZFImpl_ZFLua_luaGet(L, 1));
 }
 
-ZFImpl_ZFLua_implSetupCallback_DEFINE(zfl_toValue, {
-        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_toValue"), _ZFP_ZFImpl_ZFLua_zfl_toValue);
+ZFImpl_ZFLua_implSetupCallback_DEFINE(zfl_luaValue, {
+        ZFImpl_ZFLua_luaCFunctionRegister(L, zfText("zfl_luaValue"), _ZFP_ZFImpl_ZFLua_zfl_luaValue);
     }, {
     })
 

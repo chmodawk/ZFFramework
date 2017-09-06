@@ -367,7 +367,7 @@ ZFMETHOD_FUNC_DEFINE_2(ZFUIView *, ZFUIViewFocusNextFind,
     ZFUIView *root = view;
     ZFUIPoint viewCenter = ZFUIRectGetCenter(view->layoutedFrame());
     while(root->viewParentVirtual() != zfnull
-        && !root->classData()->classIsSubclassOf(ZFUIWindow::ClassData())
+        && !root->classData()->classIsTypeOf(ZFUIWindow::ClassData())
         && root != param.focusEndParent())
     {
         viewCenter.x += root->layoutedFrame().point.x;

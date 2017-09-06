@@ -732,13 +732,9 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFilterForZFClassType, ZFFilterForZF
             ZFTOKEN_ZFFilterForZFClassTypeInclude,
             ZFTOKEN_ZFFilterForZFClassTypeExclude,
             ZFTOKEN_ZFFilterForZFClassTypeIncludeChildOf,
-            ZFTOKEN_ZFFilterForZFClassTypeIncludeChildTypeOf,
             ZFTOKEN_ZFFilterForZFClassTypeIncludeParentOf,
-            ZFTOKEN_ZFFilterForZFClassTypeIncludeParentTypeOf,
             ZFTOKEN_ZFFilterForZFClassTypeExcludeChildOf,
-            ZFTOKEN_ZFFilterForZFClassTypeExcludeChildTypeOf,
             ZFTOKEN_ZFFilterForZFClassTypeExcludeParentOf,
-            ZFTOKEN_ZFFilterForZFClassTypeExcludeParentTypeOf,
         });
         zfindex matched = zfsCheckMatch(tokens, ZFM_ARRAY_SIZE(tokens), src, srcLen);
         v = ZFFilterForZFClassTypeInclude;
@@ -754,25 +750,13 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFilterForZFClassType, ZFFilterForZF
                 v = ZFFilterForZFClassTypeIncludeChildOf;
                 return zftrue;
             case 3:
-                v = ZFFilterForZFClassTypeIncludeChildTypeOf;
-                return zftrue;
-            case 4:
                 v = ZFFilterForZFClassTypeIncludeParentOf;
                 return zftrue;
-            case 5:
-                v = ZFFilterForZFClassTypeIncludeParentTypeOf;
-                return zftrue;
-            case 6:
+            case 4:
                 v = ZFFilterForZFClassTypeExcludeChildOf;
                 return zftrue;
-            case 7:
-                v = ZFFilterForZFClassTypeExcludeChildTypeOf;
-                return zftrue;
-            case 8:
+            case 5:
                 v = ZFFilterForZFClassTypeExcludeParentOf;
-                return zftrue;
-            case 9:
-                v = ZFFilterForZFClassTypeExcludeParentTypeOf;
                 return zftrue;
             default:
                 return zffalse;
@@ -789,26 +773,14 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFFilterForZFClassType, ZFFilterForZF
             case ZFFilterForZFClassTypeIncludeChildOf:
                 s += ZFTOKEN_ZFFilterForZFClassTypeIncludeChildOf;
                 return zftrue;
-            case ZFFilterForZFClassTypeIncludeChildTypeOf:
-                s += ZFTOKEN_ZFFilterForZFClassTypeIncludeChildTypeOf;
-                return zftrue;
             case ZFFilterForZFClassTypeIncludeParentOf:
                 s += ZFTOKEN_ZFFilterForZFClassTypeIncludeParentOf;
-                return zftrue;
-            case ZFFilterForZFClassTypeIncludeParentTypeOf:
-                s += ZFTOKEN_ZFFilterForZFClassTypeIncludeParentTypeOf;
                 return zftrue;
             case ZFFilterForZFClassTypeExcludeChildOf:
                 s += ZFTOKEN_ZFFilterForZFClassTypeExcludeChildOf;
                 return zftrue;
-            case ZFFilterForZFClassTypeExcludeChildTypeOf:
-                s += ZFTOKEN_ZFFilterForZFClassTypeExcludeChildTypeOf;
-                return zftrue;
             case ZFFilterForZFClassTypeExcludeParentOf:
                 s += ZFTOKEN_ZFFilterForZFClassTypeExcludeParentOf;
-                return zftrue;
-            case ZFFilterForZFClassTypeExcludeParentTypeOf:
-                s += ZFTOKEN_ZFFilterForZFClassTypeExcludeParentTypeOf;
                 return zftrue;
             default:
                 zfCoreCriticalShouldNotGoHere();

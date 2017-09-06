@@ -503,23 +503,23 @@ void ZFUIPageManager::requestOnResolve(ZF_IN ZFUIPageRequest *request)
     }
 
     const ZFClass *cls = request->classData();
-    if(cls->classIsSubclassOf(ZFUIPageRequestPageResume::ClassData()))
+    if(cls->classIsTypeOf(ZFUIPageRequestPageResume::ClassData()))
     {
         this->requestOnResolvePageResume(request->to<ZFUIPageRequestPageResume *>());
     }
-    else if(cls->classIsSubclassOf(ZFUIPageRequestPageCreate::ClassData()))
+    else if(cls->classIsTypeOf(ZFUIPageRequestPageCreate::ClassData()))
     {
         this->requestOnResolvePageCreate(request->to<ZFUIPageRequestPageCreate *>());
     }
-    else if(cls->classIsSubclassOf(ZFUIPageRequestPageDestroy::ClassData()))
+    else if(cls->classIsTypeOf(ZFUIPageRequestPageDestroy::ClassData()))
     {
         this->requestOnResolvePageDestroy(request->to<ZFUIPageRequestPageDestroy *>());
     }
-    else if(cls->classIsSubclassOf(ZFUIPageRequestPageGroupResume::ClassData()))
+    else if(cls->classIsTypeOf(ZFUIPageRequestPageGroupResume::ClassData()))
     {
         this->requestOnResolvePageGroupResume(request->to<ZFUIPageRequestPageGroupResume *>());
     }
-    else if(cls->classIsSubclassOf(ZFUIPageRequestCustom::ClassData()))
+    else if(cls->classIsTypeOf(ZFUIPageRequestCustom::ClassData()))
     {
         this->requestOnResolveCustom(request->to<ZFUIPageRequestCustom *>());
     }

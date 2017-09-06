@@ -138,12 +138,12 @@ protected:
                 ));
             ZFLuaExecute(zfText(
                     "print('\\nbool:')\n"
-                    "if(zfl_toNumber(zfbool('true'))) then\n"
+                    "if(zfl_luaValue(zfbool('true'))) then\n"
                     "    print('bool true')\n"
                     "else\n"
                     "    print('bool false')\n"
                     "end\n"
-                    "if(zfl_toNumber(zfbool('false'))) then\n"
+                    "if(zfl_luaValue(zfbool('false'))) then\n"
                     "    print('bool true')\n"
                     "else\n"
                     "    print('bool false')\n"

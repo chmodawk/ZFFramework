@@ -267,7 +267,7 @@ public:
         }
         else
         {
-            if(!layoutParam->classData()->classIsSubclassOf(this->pimplOwner->layoutParamClass()))
+            if(!layoutParam->classData()->classIsTypeOf(this->pimplOwner->layoutParamClass()))
             {
                 layoutParamNeedRelease = zftrue;
                 ZFUIViewLayoutParam *tmp = zfRetain(this->pimplOwner->layoutParamCreate().to<ZFUIViewLayoutParam *>());
@@ -514,7 +514,7 @@ public:
                 zfText("null view"));
             return zffalse;
         }
-        if(!internalView.toObject()->classData()->classIsSubclassOf(ZFUIView::ClassData()))
+        if(!internalView.toObject()->classData()->classIsTypeOf(ZFUIView::ClassData()))
         {
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                 zfText("%s not type of %s"),
@@ -758,7 +758,7 @@ zfbool ZFUIView::serializableOnSerializeFromData(ZF_IN const ZFSerializableData 
                     zfText("null view"));
                 return zffalse;
             }
-            if(!element.toObject()->classData()->classIsSubclassOf(ZFUIView::ClassData()))
+            if(!element.toObject()->classData()->classIsTypeOf(ZFUIView::ClassData()))
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     zfText("%s not type of %s"),
@@ -783,7 +783,7 @@ zfbool ZFUIView::serializableOnSerializeFromData(ZF_IN const ZFSerializableData 
                     zfText("null layoutParam"));
                 return zffalse;
             }
-            if(!layoutParam.toObject()->classData()->classIsSubclassOf(ZFUIViewLayoutParam::ClassData()))
+            if(!layoutParam.toObject()->classData()->classIsTypeOf(ZFUIViewLayoutParam::ClassData()))
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, categoryData,
                     zfText("%s not type of %s"),
@@ -1654,7 +1654,7 @@ void ZFUIView::_ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleForApp,
 ZFMETHOD_DEFINE_0(ZFUIView, zfautoObject, layoutParamCreate)
 {
     zfautoObject layoutParam = this->layoutParamClass()->newInstance(ZFCallerInfoMake());
-    if(layoutParam == zfautoObjectNull() || !layoutParam.toObject()->classData()->classIsSubclassOf(ZFUIViewLayoutParam::ClassData()))
+    if(layoutParam == zfautoObjectNull() || !layoutParam.toObject()->classData()->classIsTypeOf(ZFUIViewLayoutParam::ClassData()))
     {
         return zfautoObjectNull();
     }
@@ -2338,13 +2338,13 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, viewEventSend,
 void ZFUIView::viewEventOnEvent(ZF_IN ZFUIEvent *event)
 {
     const ZFClass *eventClass = event->classData();
-    if(eventClass->classIsSubclassOf(ZFUIMouseEvent::ClassData()))
+    if(eventClass->classIsTypeOf(ZFUIMouseEvent::ClassData()))
     {
         ZFUIMouseEvent *mouseEvent = ZFCastZFObjectUnchecked(ZFUIMouseEvent *, event);
         this->viewEventOnMouseEvent(mouseEvent);
         mouseEvent->eventResolvedSet(zftrue);
     }
-    else if(eventClass->classIsSubclassOf(ZFUIKeyEvent::ClassData()))
+    else if(eventClass->classIsTypeOf(ZFUIKeyEvent::ClassData()))
     {
         ZFUIKeyEvent *eventTmp = ZFCastZFObjectUnchecked(ZFUIKeyEvent *, event);
         this->viewEventOnKeyEvent(eventTmp);
@@ -2357,7 +2357,7 @@ void ZFUIView::viewEventOnEvent(ZF_IN ZFUIEvent *event)
             }
         }
     }
-    else if(eventClass->classIsSubclassOf(ZFUIWheelEvent::ClassData()))
+    else if(eventClass->classIsTypeOf(ZFUIWheelEvent::ClassData()))
     {
         ZFUIWheelEvent *eventTmp = ZFCastZFObjectUnchecked(ZFUIWheelEvent *, event);
         this->viewEventOnWheelEvent(eventTmp);

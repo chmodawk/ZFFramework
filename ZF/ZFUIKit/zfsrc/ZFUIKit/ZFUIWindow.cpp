@@ -45,7 +45,7 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOnHide)
 ZFMETHOD_DEFINE_1(ZFUIWindow, ZFUIWindow *, windowForView,
                   ZFMP_IN(ZFUIView *, forView))
 {
-    while(forView != zfnull && !forView->classData()->classIsSubclassOf(ZFUIWindow::ClassData()))
+    while(forView != zfnull && !forView->classData()->classIsTypeOf(ZFUIWindow::ClassData()))
     {
         forView = forView->viewParent();
     }
@@ -216,7 +216,7 @@ ZFMETHOD_DEFINE_0(ZFUIWindow, ZFUIViewLayoutParam *, windowLayoutParam)
 
 void ZFUIWindow::viewOnAddToParent(ZF_IN ZFUIView *parent)
 {
-    zfCoreAssertWithMessage(parent->classData()->classIsSubclassOf(ZFUIRootView::ClassData()), zfTextA("you must not add a window to another view"));
+    zfCoreAssertWithMessage(parent->classData()->classIsTypeOf(ZFUIRootView::ClassData()), zfTextA("you must not add a window to another view"));
     zfsuper::viewOnAddToParent(parent);
 
     this->windowOnShow();

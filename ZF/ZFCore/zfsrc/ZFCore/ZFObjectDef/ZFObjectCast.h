@@ -55,7 +55,7 @@ zfclassFwd ZFInterface;
 template<typename T_ZFObjectTo, typename T_ZFObjectFrom>
 inline T_ZFObjectTo _ZFP_ZFCastZFObjectExplicit(T_ZFObjectFrom const &obj)
 {
-    return ((obj->classData()->classIsSubclassOf(zftTraitsType<T_ZFObjectTo>::TraitsType::ClassData()))
+    return ((obj->classData()->classIsTypeOf(zftTraitsType<T_ZFObjectTo>::TraitsType::ClassData()))
         ? static_cast<T_ZFObjectTo>(obj)
         : zfnull);
 }

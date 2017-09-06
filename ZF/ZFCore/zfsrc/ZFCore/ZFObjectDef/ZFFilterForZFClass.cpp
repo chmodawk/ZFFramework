@@ -161,48 +161,24 @@ zfbool ZFFilterForZFClass::filterCheckActive(ZF_IN const ZFClass * const &e) con
                 }
                 break;
             case ZFFilterForZFClassTypeIncludeChildOf:
-                if(e == zfnull || !e->classIsSubclassOf(filter.filterClass))
-                {
-                    return zffalse;
-                }
-                break;
-            case ZFFilterForZFClassTypeIncludeChildTypeOf:
                 if(e == zfnull || !e->classIsTypeOf(filter.filterClass))
                 {
                     return zffalse;
                 }
                 break;
             case ZFFilterForZFClassTypeIncludeParentOf:
-                if(e == zfnull || !filter.filterClass->classIsSubclassOf(e))
-                {
-                    return zffalse;
-                }
-                break;
-            case ZFFilterForZFClassTypeIncludeParentTypeOf:
                 if(e == zfnull || !filter.filterClass->classIsTypeOf(e))
                 {
                     return zffalse;
                 }
                 break;
             case ZFFilterForZFClassTypeExcludeChildOf:
-                if(e != zfnull && e->classIsSubclassOf(filter.filterClass))
-                {
-                    return zffalse;
-                }
-                break;
-            case ZFFilterForZFClassTypeExcludeChildTypeOf:
                 if(e != zfnull && e->classIsTypeOf(filter.filterClass))
                 {
                     return zffalse;
                 }
                 break;
             case ZFFilterForZFClassTypeExcludeParentOf:
-                if(e != zfnull && filter.filterClass->classIsSubclassOf(e))
-                {
-                    return zffalse;
-                }
-                break;
-            case ZFFilterForZFClassTypeExcludeParentTypeOf:
                 if(e != zfnull && filter.filterClass->classIsTypeOf(e))
                 {
                     return zffalse;

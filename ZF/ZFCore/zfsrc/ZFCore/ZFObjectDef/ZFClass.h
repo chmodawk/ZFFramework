@@ -203,10 +203,6 @@ public:
 
 public:
     /**
-     * @brief true if object is subclass of cls
-     */
-    zfbool classIsSubclassOf(ZF_IN const ZFClass *cls) const;
-    /**
      * @brief true if class is subclass of cls, or implements cls
      */
     zfbool classIsTypeOf(ZF_IN const ZFClass *cls) const;

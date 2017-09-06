@@ -41,11 +41,11 @@ private:
         zfblockedRelease(userData);
         page->pageManager<ZFUIPageManagerBasic *>()->d->pageAniListenerDetach(page);
 
-        if(reason->classData()->classIsSubclassOf(ZFUIPageResumeReason::ClassData()))
+        if(reason->classData()->classIsTypeOf(ZFUIPageResumeReason::ClassData()))
         {
             pageManager->d->pageAniLastResume = zfnull;
         }
-        else if(reason->classData()->classIsSubclassOf(ZFUIPagePauseReason::ClassData()))
+        else if(reason->classData()->classIsTypeOf(ZFUIPagePauseReason::ClassData()))
         {
             pageManager->d->pageAniLastPause = zfnull;
         }
@@ -54,7 +54,7 @@ private:
         page->pageAniSet(zfnull);
         page->_ZFP_ZFUIPage_pageAniCanChange = zffalse;
 
-        if(reason->classData()->classIsSubclassOf(ZFUIPagePauseReason::ClassData()))
+        if(reason->classData()->classIsTypeOf(ZFUIPagePauseReason::ClassData()))
         {
             page->pageManager<ZFUIPageManagerBasic *>()->pageDelayDetachNotifyFinish(page);
         }

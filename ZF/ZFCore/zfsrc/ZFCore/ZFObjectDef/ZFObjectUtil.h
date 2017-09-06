@@ -30,21 +30,6 @@ inline ZFObject *ZFObjectToObject(ZF_IN T_ZFObject *obj)
 
 // ============================================================
 // compare
-inline ZFCompareResult _ZFP_ZFObjectCompare(ZF_IN ZFObject * const &obj0, ZF_IN ZFObject * const &obj1)
-{
-    if(obj0 == obj1)
-    {
-        return ZFCompareTheSame;
-    }
-    else if(obj0 == zfnull || obj1 == zfnull)
-    {
-        return ZFCompareUncomparable;
-    }
-    else
-    {
-        return obj0->objectCompare(obj1);
-    }
-}
 /**
  * @brief util method to compare two ZFObject,
  *   return #ZFCompareTheSame if both null,
@@ -54,7 +39,28 @@ inline ZFCompareResult _ZFP_ZFObjectCompare(ZF_IN ZFObject * const &obj0, ZF_IN 
 template<typename T_ZFObject0, typename T_ZFObject1>
 inline ZFCompareResult ZFObjectCompare(ZF_IN T_ZFObject0 * const &e0, ZF_IN T_ZFObject1 * const &e1)
 {
-    return _ZFP_ZFObjectCompare(ZFObjectToObject(e0), ZFObjectToObject(e1));
+    if(e0 == zfnull)
+    {
+        if(e1 == zfnull)
+        {
+            return ZFCompareTheSame;
+        }
+        else
+        {
+            return ZFCompareUncomparable;
+        }
+    }
+    else
+    {
+        if(e1 == zfnull)
+        {
+            return ZFCompareUncomparable;
+        }
+        else
+        {
+            return e0->toObject()->objectCompare(e1->toObject());
+        }
+    }
 }
 /**
  * @brief default comparer for ZFObject types, compare by #ZFObjectCompare, see #ZFComparer

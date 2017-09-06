@@ -21,12 +21,12 @@ zfbool ZFTestCaseRun(ZF_IN const ZFClass *cls,
     {
         *testCaseHaveRun = zfnull;
     }
-    if(cls == zfnull || !cls->classIsSubclassOf(ZFTestCase::ClassData()))
+    if(cls == zfnull || !cls->classIsTypeOf(ZFTestCase::ClassData()))
     {
         return zffalse;
     }
     zfautoObject testCaseTmp = cls->newInstance(ZFCallerInfoMake());
-    if(testCaseTmp == zfautoObjectNull() || !testCaseTmp.toObject()->classData()->classIsSubclassOf(ZFTestCase::ClassData()))
+    if(testCaseTmp == zfautoObjectNull() || !testCaseTmp.toObject()->classData()->classIsTypeOf(ZFTestCase::ClassData()))
     {
         return zffalse;
     }
@@ -137,7 +137,7 @@ private:
         for(zfindex i = 0; i < allClass.count(); ++i)
         {
             const ZFClass *cls = allClass[i];
-            if(cls->classIsSubclassOf(desired) && !cls->classIsAbstract())
+            if(cls->classIsTypeOf(desired) && !cls->classIsAbstract())
             {
                 this->testCases.add(cls);
             }

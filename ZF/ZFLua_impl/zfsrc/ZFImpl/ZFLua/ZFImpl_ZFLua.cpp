@@ -459,48 +459,6 @@ zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,
     }
 }
 
-zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
-                            ZF_IN lua_State *L,
-                            ZF_IN zfint luaStackOffset,
-                            ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
-{
-    if(lua_isstring(L, luaStackOffset))
-    {
-        s += zfsCoreA2Z(lua_tostring(L, luaStackOffset));
-        return zftrue;
-    }
-    if(!lua_isuserdata(L, luaStackOffset))
-    {
-        return zffalse;
-    }
-
-    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
-    if(param == zfautoObjectNull())
-    {
-        return allowEmpty;
-    }
-
-    ZFValue *v = ZFCastZFObject(ZFValue *, param);
-    if(v != zfnull)
-    {
-        if(v->valueType() == ZFValueType::e_serializableData)
-        {
-            return zffalse;
-        }
-        v->valueStringT(s);
-        return zftrue;
-    }
-
-    ZFPropertyTypeWrapper *wrapper = ZFCastZFObject(ZFPropertyTypeWrapper *, param);
-    if(wrapper != zfnull)
-    {
-        wrapper->wrappedValueToString(s);
-        return zftrue;
-    }
-
-    return zffalse;
-}
-
 zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
                              ZF_IN lua_State *L,
                              ZF_IN zfint luaStackOffset,
@@ -508,7 +466,7 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
 {
     if(lua_isstring(L, luaStackOffset))
     {
-        s += zfsCoreA2Z(lua_tostring(L, luaStackOffset));
+        s += ZFStringA2Z(lua_tostring(L, luaStackOffset));
         return zftrue;
     }
     if(!lua_isuserdata(L, luaStackOffset))
@@ -517,22 +475,30 @@ zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
     }
 
     zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
-    if(param == zfautoObjectNull())
+    return ZFImpl_ZFLua_toString(s, param.toObject(), allowEmpty);
+}
+zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
+                             ZF_IN ZFObject *obj,
+                             ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+{
+    if(obj == zfnull)
     {
         return allowEmpty;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(ZFString::ClassData()))
+
+    const ZFClass *cls = obj->classData();
+    if(cls->classIsTypeOf(ZFString::ClassData()))
     {
-        ZFString *t = param.to<ZFString *>();
+        ZFString *t = obj->to<ZFString *>();
         if(t != zfnull)
         {
             s += t->stringValue();
         }
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfstring::ClassData()))
+    else if(cls->classIsTypeOf(v_zfstring::ClassData()))
     {
-        s += param.to<v_zfstring *>()->zfv;
+        s += obj->to<v_zfstring *>()->zfv;
         return zftrue;
     }
     else
@@ -559,7 +525,16 @@ zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
     }
 
     zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
-    if(param == zfautoObjectNull())
+    return ZFImpl_ZFLua_toNumber(ret, param.toObject(), allowEmpty);
+}
+
+static zfbool _ZFP_ZFImpl_ZFLua_toNumber_ZFEnum(ZF_OUT zfautoObject &ret,
+                                                ZF_IN ZFPropertyTypeWrapper *enumWrapper);
+zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
+                             ZF_IN ZFObject *obj,
+                             ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+{
+    if(obj == zfnull)
     {
         if(allowEmpty)
         {
@@ -571,64 +546,76 @@ zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
             return zffalse;
         }
     }
-    else if(param.toObject()->classData()->classIsTypeOf(ZFValue::ClassData()))
+
+    const ZFClass *cls = obj->classData();
+    if(cls->classIsTypeOf(ZFValue::ClassData()))
     {
-        ret = param;
+        ret = zfautoObjectCreateWithoutLeakTest(obj);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfbool::ClassData()))
+    else if(cls->classIsTypeOf(v_zfbool::ClassData()))
     {
-        ret = ZFValue::boolValueCreate(param.to<v_zfbool *>()->zfv);
+        ret = ZFValue::boolValueCreate(obj->to<v_zfbool *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfindex::ClassData()))
+    else if(cls->classIsTypeOf(v_zfindex::ClassData()))
     {
-        ret = ZFValue::indexValueCreate(param.to<v_zfindex *>()->zfv);
+        ret = ZFValue::indexValueCreate(obj->to<v_zfindex *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfint::ClassData()))
+    else if(cls->classIsTypeOf(v_zfint::ClassData()))
     {
-        ret = ZFValue::intValueCreate(param.to<v_zfint *>()->zfv);
+        ret = ZFValue::intValueCreate(obj->to<v_zfint *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfuint::ClassData()))
+    else if(cls->classIsTypeOf(v_zfuint::ClassData()))
     {
-        ret = ZFValue::unsignedIntValueCreate(param.to<v_zfuint *>()->zfv);
+        ret = ZFValue::unsignedIntValueCreate(obj->to<v_zfuint *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zffloat::ClassData()))
+    else if(cls->classIsTypeOf(v_zffloat::ClassData()))
     {
-        ret = ZFValue::floatValueCreate(param.to<v_zffloat *>()->zfv);
+        ret = ZFValue::floatValueCreate(obj->to<v_zffloat *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfdouble::ClassData()))
+    else if(cls->classIsTypeOf(v_zfdouble::ClassData()))
     {
-        ret = ZFValue::doubleValueCreate(param.to<v_zfdouble *>()->zfv);
+        ret = ZFValue::doubleValueCreate(obj->to<v_zfdouble *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zflongdouble::ClassData()))
+    else if(cls->classIsTypeOf(v_zflongdouble::ClassData()))
     {
-        ret = ZFValue::longDoubleValueCreate(param.to<v_zflongdouble *>()->zfv);
+        ret = ZFValue::longDoubleValueCreate(obj->to<v_zflongdouble *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfbyte::ClassData()))
+    else if(cls->classIsTypeOf(v_zfbyte::ClassData()))
     {
-        ret = ZFValue::unsignedIntValueCreate((zfuint)param.to<v_zfbyte *>()->zfv);
+        ret = ZFValue::unsignedIntValueCreate((zfuint)obj->to<v_zfbyte *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zftimet::ClassData()))
+    else if(cls->classIsTypeOf(v_zftimet::ClassData()))
     {
-        ret = ZFValue::timeValueCreate(param.to<v_zftimet *>()->zfv);
+        ret = ZFValue::timeValueCreate(obj->to<v_zftimet *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfflags::ClassData()))
+    else if(cls->classIsTypeOf(v_zfflags::ClassData()))
     {
-        ret = ZFValue::flagsValueCreate(param.to<v_zfflags *>()->zfv);
+        ret = ZFValue::flagsValueCreate(obj->to<v_zfflags *>()->zfv);
         return zftrue;
     }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfidentity::ClassData()))
+    else if(cls->classIsTypeOf(v_zfidentity::ClassData()))
     {
-        ret = ZFValue::identityValueCreate(param.to<v_zfidentity *>()->zfv);
+        ret = ZFValue::identityValueCreate(obj->to<v_zfidentity *>()->zfv);
+        return zftrue;
+    }
+    else if(cls->classIsTypeOf(ZFEnum::ClassData()))
+    {
+        ret = ZFValue::flagsValueCreate((zfflags)obj->to<ZFEnum *>()->enumValue());
+        return zftrue;
+    }
+    else if(cls->classIsTypeOf(ZFPropertyTypeWrapper::ClassData())
+        && _ZFP_ZFImpl_ZFLua_toNumber_ZFEnum(ret, obj->to<ZFPropertyTypeWrapper *>()))
+    {
         return zftrue;
     }
     else
@@ -636,107 +623,96 @@ zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
         return zffalse;
     }
 }
-zfbool ZFImpl_ZFLua_toNumber(ZF_OUT lua_Number &ret,
-                             ZF_IN lua_State *L,
-                             ZF_IN zfint luaStackOffset,
-                             ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+static zfbool _ZFP_ZFImpl_ZFLua_toNumber_ZFEnum(ZF_OUT zfautoObject &ret,
+                                                ZF_IN ZFPropertyTypeWrapper *enumWrapper)
 {
-    int success = 0;
-    ret = lua_tonumberx(L, luaStackOffset, &success);
-    if(success)
+    const ZFClass *enumClass = zfnull;
+    zfuint enumValue = 0;
+    if(ZFEnumWrapperInfo(enumClass, enumValue, enumWrapper))
     {
-        return zftrue;
-    }
-    if(!lua_isuserdata(L, luaStackOffset))
-    {
-        return zffalse;
-    }
-
-    zfautoObject const &param = ZFImpl_ZFLua_luaGet(L, luaStackOffset);
-    if(param == zfautoObjectNull())
-    {
-        if(allowEmpty)
-        {
-            ret = 0;
-            return zftrue;
-        }
-        else
-        {
-            return zffalse;
-        }
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(ZFValue::ClassData()))
-    {
-        ZFValue *v = param.to<ZFValue *>();
-        if(v->valueConvertableTo(ZFValueType::e_double))
-        {
-            ret = v->doubleValue();
-            return zftrue;
-        }
-        else
-        {
-            return zffalse;
-        }
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfbool::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfbool *>()->zfv ? 1 : 0);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfindex::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfindex *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfint::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfint *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfuint::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfuint *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zffloat::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zffloat *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfdouble::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfdouble *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zflongdouble::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zflongdouble *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfbyte::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfbyte *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zftimet::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zftimet *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfflags::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfflags *>()->zfv);
-        return zftrue;
-    }
-    else if(param.toObject()->classData()->classIsTypeOf(v_zfidentity::ClassData()))
-    {
-        ret = (lua_Number)(param.to<v_zfidentity *>()->zfv);
+        ret = ZFValue::flagsValueCreate((zfflags)enumValue);
         return zftrue;
     }
     else
     {
         return zffalse;
     }
+}
+
+zfbool ZFImpl_ZFLua_toLuaValue(ZF_IN lua_State *L,
+                               ZF_IN ZFObject *obj,
+                               ZF_IN_OPT zfbool allowEmpty /* = zffalse */)
+{
+    if(obj == zfnull)
+    {
+        if(allowEmpty)
+        {
+            lua_pushnumber(L, 0);
+            return zftrue;
+        }
+        else
+        {
+            return zffalse;
+        }
+    }
+
+    zfautoObject v;
+    if(ZFImpl_ZFLua_toNumber(v, obj, allowEmpty))
+    {
+        ZFValue *t = v.to<ZFValue *>();
+        switch(t->valueType())
+        {
+            case ZFValueType::e_bool:
+                lua_pushboolean(L, t->boolValue());
+                return 1;
+            case ZFValueType::e_char:
+                lua_pushinteger(L, (lua_Integer)t->charValueAccess());
+                return 1;
+            case ZFValueType::e_int:
+                lua_pushinteger(L, (lua_Integer)t->intValueAccess());
+                return 1;
+            case ZFValueType::e_unsignedInt:
+                lua_pushinteger(L, (lua_Integer)t->unsignedIntValueAccess());
+                return 1;
+            case ZFValueType::e_index:
+                lua_pushinteger(L, (lua_Integer)t->indexValueAccess());
+                return 1;
+            case ZFValueType::e_float:
+                lua_pushinteger(L, (lua_Number)t->floatValueAccess());
+                return 1;
+            case ZFValueType::e_double:
+                lua_pushinteger(L, (lua_Number)t->doubleValueAccess());
+                return 1;
+            case ZFValueType::e_longDouble:
+                lua_pushinteger(L, (lua_Number)t->longDoubleValueAccess());
+                return 1;
+            case ZFValueType::e_time:
+                lua_pushinteger(L, (lua_Integer)t->timeValueAccess());
+                return 1;
+            case ZFValueType::e_flags:
+                lua_pushinteger(L, (lua_Integer)t->flagsValueAccess());
+                return 1;
+            case ZFValueType::e_identity:
+                lua_pushinteger(L, (lua_Integer)t->identityValueAccess());
+                return 1;
+            case ZFValueType::e_serializableData:
+            default:
+                ZFLuaErrorOccurredTrim(zfText("[zfl_luaValue] unknown param type, got %s"),
+                    t->objectInfo().cString());
+                return luaL_error(L, "");
+        }
+    }
+
+    zfstring s;
+    if(ZFImpl_ZFLua_toString(s, obj, allowEmpty))
+    {
+        lua_pushstring(L, ZFStringZ2A(s.cString()));
+        return 1;
+    }
+
+    ZFLuaErrorOccurredTrim(zfText("[zfl_luaValue] unknown param type, got %s"),
+        obj->objectInfo().cString());
+    return luaL_error(L, "");
 }
 
 ZF_NAMESPACE_GLOBAL_END

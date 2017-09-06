@@ -10,6 +10,8 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+ZFENUM_DEFINE(ZFValueType)
+
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_expandValue_bool(value) ((value) ? 1 : 0)
 #define _ZFP_ZFValue_expandValue_char(value) (value)
@@ -44,7 +46,104 @@ _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_initValue(TypeName) \
     _ZFP_ZFValue_initValue_##TypeName()
 
-ZFENUM_DEFINE(ZFValueType)
+// ============================================================
+#define _ZFP_ZFValueCompareCast_DEFINE_1(TypeName, CastType) \
+    typedef CastType _ZFP_ZFValueCompareCast_##TypeName##_##TypeName;
+#define _ZFP_ZFValueCompareCast_DEFINE_2(TypeName0, TypeName1, CastType) \
+    typedef CastType _ZFP_ZFValueCompareCast_##TypeName0##_##TypeName1; \
+    typedef CastType _ZFP_ZFValueCompareCast_##TypeName1##_##TypeName0;
+
+_ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
+_ZFP_ZFValueCompareCast_DEFINE_1(bool, zft_zfbool)
+_ZFP_ZFValueCompareCast_DEFINE_1(char, zft_zfchar)
+_ZFP_ZFValueCompareCast_DEFINE_1(int, zft_zfint)
+_ZFP_ZFValueCompareCast_DEFINE_1(unsignedInt, zft_zfuint)
+_ZFP_ZFValueCompareCast_DEFINE_1(index, zft_zfindex)
+_ZFP_ZFValueCompareCast_DEFINE_1(float, zft_zffloat)
+_ZFP_ZFValueCompareCast_DEFINE_1(double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_1(longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_1(time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_1(flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_1(identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_1(serializableData, ZFSerializableData)
+
+_ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, char, zft_zfchar)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, int, zft_zfint)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, unsignedInt, zft_zfuint)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, index, zft_zfindex)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, float, zft_zffloat)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(bool, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(char, int, zft_zfint)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, unsignedInt, zft_zfuint)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, index, zft_zfindex)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, float, zft_zffloat)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(char, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(int, unsignedInt, zft_zfuint)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, index, zft_zfindex)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, float, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(int, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, index, zft_zfindex)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, float, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(index, float, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, double, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(index, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(float, double, zft_zfdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(float, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(float, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(float, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(float, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(float, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(double, longDouble, zft_zflongdouble)
+_ZFP_ZFValueCompareCast_DEFINE_2(double, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(double, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(double, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(double, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, time, zft_zftimet)
+_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(time, flags, zft_zfflags)
+_ZFP_ZFValueCompareCast_DEFINE_2(time, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(time, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(flags, identity, zft_zfidentity)
+_ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
+
+_ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
 
 // ============================================================
 // ZFValue cleaner
@@ -377,11 +476,11 @@ ZFCompareResult ZFValue::objectCompare(ZF_IN ZFObject *anotherObj)
     zfself *another = ZFCastZFObject(zfself *, anotherObj);
     if(another == zfnull) {return ZFCompareUncomparable;}
 
-    switch(this->valueType())
+    switch(another->valueType())
     {
         #define _ZFP_ZFValue_compare_switch_case(TypeName, Type, originalType) \
             case ZFValueType::ZFM_CAT(e_, TypeName): \
-                return _ZFP_ZFValueCompare(this->TypeName##ValueAccess(), another->TypeName##ValueAccess());
+                return this->TypeName##ValueCompare(another->TypeName##ValueAccess());
 
         _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
         _ZFP_ZFValue_compare_switch_case(bool, zfbool, zft_zfbool)
@@ -402,104 +501,6 @@ ZFCompareResult ZFValue::objectCompare(ZF_IN ZFObject *anotherObj)
     }
 }
 
-#define _ZFP_ZFValueCompareCast_DEFINE_1(TypeName, CastType) \
-    typedef CastType _ZFP_ZFValueCompareCast_##TypeName##_##TypeName;
-#define _ZFP_ZFValueCompareCast_DEFINE_2(TypeName0, TypeName1, CastType) \
-    typedef CastType _ZFP_ZFValueCompareCast_##TypeName0##_##TypeName1; \
-    typedef CastType _ZFP_ZFValueCompareCast_##TypeName1##_##TypeName0;
-
-_ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
-_ZFP_ZFValueCompareCast_DEFINE_1(bool, zft_zfbool)
-_ZFP_ZFValueCompareCast_DEFINE_1(char, zft_zfchar)
-_ZFP_ZFValueCompareCast_DEFINE_1(int, zft_zfint)
-_ZFP_ZFValueCompareCast_DEFINE_1(unsignedInt, zft_zfuint)
-_ZFP_ZFValueCompareCast_DEFINE_1(index, zft_zfindex)
-_ZFP_ZFValueCompareCast_DEFINE_1(float, zft_zffloat)
-_ZFP_ZFValueCompareCast_DEFINE_1(double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_1(longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_1(time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_1(flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_1(identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_1(serializableData, ZFSerializableData)
-
-// ============================================================
-_ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, char, zft_zfchar)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, int, zft_zfint)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, unsignedInt, zft_zfuint)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, index, zft_zfindex)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, float, zft_zffloat)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(bool, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(char, int, zft_zfint)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, unsignedInt, zft_zfuint)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, index, zft_zfindex)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, float, zft_zffloat)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(char, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(int, unsignedInt, zft_zfuint)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, index, zft_zfindex)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, float, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(int, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, index, zft_zfindex)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, float, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(unsignedInt, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(index, float, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, double, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(index, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(float, double, zft_zfdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(float, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(float, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(float, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(float, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(float, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(double, longDouble, zft_zflongdouble)
-_ZFP_ZFValueCompareCast_DEFINE_2(double, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(double, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(double, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(double, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, time, zft_zftimet)
-_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(longDouble, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(time, flags, zft_zfflags)
-_ZFP_ZFValueCompareCast_DEFINE_2(time, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(time, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(flags, identity, zft_zfidentity)
-_ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
-
-_ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
 // ============================================================
 
 #define _ZFP_ZFValue_compareType_switch_case(SwitchType, TypeName) \
@@ -510,7 +511,7 @@ _ZFP_ZFValueCompareCast_DEFINE_2(flags, serializableData, void)
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_compareType(TypeName, Type, originalType) \
-    ZFMETHOD_DEFINE_1(ZFValue, ZFCompareResult, TypeName##ValueCompare, ZFMP_IN(Type const &, v)) \
+    ZFCompareResult ZFValue::TypeName##ValueCompare(ZF_IN Type const &v) \
     { \
         switch(this->valueType()) \
         { \
@@ -531,7 +532,8 @@ _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
                 zfCoreCriticalShouldNotGoHere(); \
                 return ZFCompareUncomparable; \
         } \
-    }
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, ZFCompareResult, TypeName##ValueCompare, ZFMP_IN(Type const &, v))
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 _ZFP_ZFValue_compareType(bool, zfbool, zft_zfbool)
@@ -557,14 +559,15 @@ ZFCompareResult ZFValue::serializableDataValueCompare(ZF_IN const ZFSerializable
 
 // ============================================================
 #define _ZFP_ZFValue_create_noCache_DEFINE(TypeName, Type, originalType) \
-    ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
+    zfautoObject ZFValue::TypeName##ValueCreate(ZF_IN Type const &v) \
     { \
         zfblockedAlloc(ZFValue, value); \
         value->TypeName##ValueSet(v); \
         return zfautoObjectCreate(value); \
-    }
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v))
 #define _ZFP_ZFValue_create_hasCache_DEFINE(TypeName, Type, originalType, negativeCount, positiveCount) \
-    ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
+    zfautoObject ZFValue::TypeName##ValueCreate(ZF_IN Type const &v) \
     { \
         zfCoreMutexLocker(); \
         static ZFValue *s_value[negativeCount + 1 + positiveCount] = {0}; \
@@ -582,8 +585,9 @@ ZFCompareResult ZFValue::serializableDataValueCompare(ZF_IN const ZFSerializable
         zfblockedAlloc(ZFValue, value); \
         value->TypeName##ValueSet(v); \
         return zfautoObjectCreate(value); \
-    }
-ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, boolValueCreate, ZFMP_IN(zfbool const &, v))
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v))
+zfautoObject ZFValue::boolValueCreate(ZF_IN zfbool const &v)
 {
     zfCoreMutexLocker();
     static ZFValue *s_value[2] = {0};
@@ -597,6 +601,7 @@ ZFMETHOD_DEFINE_1(ZFValue, zfautoObject, boolValueCreate, ZFMP_IN(zfbool const &
     }
     return zfautoObjectCreate(s_value[i]);
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, zfautoObject, boolValueCreate, ZFMP_IN(zfbool const &, v))
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 _ZFP_ZFValue_create_noCache_DEFINE(char, zfchar, zft_zfchar)
 _ZFP_ZFValue_create_hasCache_DEFINE(int, zfint, zft_zfint, 3, 10)
@@ -611,8 +616,7 @@ _ZFP_ZFValue_create_noCache_DEFINE(identity, zfidentity, zft_zfidentity)
 _ZFP_ZFValue_create_noCache_DEFINE(serializableData, ZFSerializableData, void)
 
 // ============================================================
-ZFMETHOD_DEFINE_1(ZFValue, zfbool, valueConvertableTo,
-                  ZFMP_IN(ZFValueTypeEnum, toType))
+zfbool ZFValue::valueConvertableTo(ZF_IN ZFValueTypeEnum toType)
 {
     switch(toType)
     {
@@ -636,6 +640,7 @@ ZFMETHOD_DEFINE_1(ZFValue, zfbool, valueConvertableTo,
             return zffalse;
     }
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, zfbool, valueConvertableTo, ZFMP_IN(ZFValueTypeEnum, toType))
 
 // ============================================================
 #define _ZFP_ZFValueLogUnConvertable(fromType, toType) \
@@ -648,7 +653,7 @@ ZFMETHOD_DEFINE_1(ZFValue, zfbool, valueConvertableTo,
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 #define _ZFP_ZFValue_getValue_DEFINE(TypeName, Type, originalType) \
-    ZFMETHOD_DEFINE_0(ZFValue, Type, TypeName##Value) \
+    Type ZFValue::TypeName##Value(void) \
     { \
         switch(this->valueType()) \
         { \
@@ -668,7 +673,8 @@ _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
                 zfCoreCriticalShouldNotGoHere(); \
                 return (Type)_ZFP_ZFValue_initValue(TypeName); \
         } \
-    }
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFValue, Type, TypeName##Value)
 
 zfbool ZFValue::boolValue(void)
 {
@@ -728,10 +734,11 @@ ZFSerializableData ZFValue::serializableDataValue(void)
  * valid only if sizeof(primitive type) equals to wrapper object
  */
 #define _ZFP_ZFValue_accessValue_DEFINE(TypeName, Type, originalType) \
-    ZFMETHOD_DEFINE_0(ZFValue, Type const &, TypeName##ValueAccess) \
+    Type const &ZFValue::TypeName##ValueAccess(void) \
     { \
         return (Type const &)d->v.value_##TypeName; \
-    }
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFValue, Type const &, TypeName##ValueAccess)
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 _ZFP_ZFValue_accessValue_DEFINE(bool, zfbool, zft_zfbool)
@@ -752,22 +759,25 @@ ZFSerializableData const &ZFValue::serializableDataValueAccess(void)
 }
 
 // ============================================================
-ZFMETHOD_DEFINE_0(ZFValue, ZFValueTypeEnum, valueType)
+ZFValueTypeEnum ZFValue::valueType(void)
 {
     return d->type;
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFValue, ZFValueTypeEnum, valueType)
 
-ZFMETHOD_DEFINE_0(ZFValue, const zfchar *, valueTypeName)
+const zfchar *ZFValue::valueTypeName(void)
 {
     return ZFValueType::EnumNameForValue(this->valueType());
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFValue, const zfchar *, valueTypeName)
 
-ZFMETHOD_DEFINE_1(ZFValue, void, valueStringT,
-                  ZFMP_IN_OUT(zfstring &, ret))
+void ZFValue::valueStringT(ZF_IN_OUT zfstring &ret)
 {
     d->valueStringT(ret);
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValue, void, valueStringT, ZFMP_IN_OUT(zfstring &, ret))
 
+// ============================================================
 void ZFValue::valueSet(ZF_IN ZFValue *another)
 {
     if(another == zfnull)
@@ -835,12 +845,13 @@ void ZFValue::serializableDataValueSet(ZF_IN const ZFSerializableData &v)
 
 // ============================================================
 #define _ZFP_ZFValueEditable_create_DEFINE(TypeName, Type, originalType) \
-    ZFMETHOD_DEFINE_1(ZFValueEditable, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v)) \
+    zfautoObject ZFValueEditable::TypeName##ValueCreate(ZF_IN Type const &v) \
     { \
         zfblockedAlloc(ZFValueEditable, ret); \
         ret->TypeName##ValueSet(v); \
         return zfautoObjectCreate(ret); \
-    }
+    } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFValueEditable, zfautoObject, TypeName##ValueCreate, ZFMP_IN(Type const &, v))
 
 _ZFP_ZFVALUE_DUMMY_FLAG_TO_ADD_TYPE
 _ZFP_ZFValueEditable_create_DEFINE(bool, zfbool, zft_zfbool)

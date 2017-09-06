@@ -174,7 +174,7 @@ ZFOBJECT_SINGLETON_DEFINE_DETAIL(ZFOperationQueue, ZFOperationQueue, ZFOperation
 zfbool ZFOperationQueue::paramIsValid(ZF_IN ZFOperationParam *operationParam)
 {
     if(!zfsuper::paramIsValid(operationParam)
-        || !operationParam->classData()->classIsSubclassOf(ZFOperationQueueParam::ClassData()))
+        || !operationParam->classData()->classIsTypeOf(ZFOperationQueueParam::ClassData()))
     {
         return zffalse;
     }

@@ -344,6 +344,13 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
                 dispatchInfo.classOrNamespace, dispatchInfo.methodName); \
         } \
     } while(zffalse)
+#define ZFImpl_ZFLua_implDispatch_AssertNotStaticMethod() \
+    if(dispatchInfo.isStatic) \
+    { \
+        return dispatchInfo.dispatchError( \
+            zfText("%s::%s is object instance method, called as static method"), \
+            dispatchInfo.classOrNamespace, dispatchInfo.methodName); \
+    }
 /** @brief util macro for impl */
 #define ZFImpl_ZFLua_implDispatch_AssertClassExist() \
     do { \
@@ -362,7 +369,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
         if(paramName == zfnull && dispatchInfo.paramList[N]->toObject() != zfnull) \
         { \
             ZFImpl_ZFLua_UnknownParamHolder *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParamHolder *, dispatchInfo.paramList[N]->toObject()); \
-            if(t != zfnull && desiredClass::ClassData()->classIsSubclassOf(ZFPropertyTypeWrapper::ClassData())) \
+            if(t != zfnull && desiredClass::ClassData()->classIsTypeOf(ZFPropertyTypeWrapper::ClassData())) \
             { \
                 zfblockedAllocWithoutLeakTest(desiredClass, t2); \
                 if(t2->to<ZFPropertyTypeWrapper *>()->wrappedValueFromString(t->zfv)) \
@@ -387,7 +394,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
         if(paramName == zfnull) \
         { \
             ZFImpl_ZFLua_UnknownParamHolder *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParamHolder *, dispatchInfo.paramList[N]->toObject()); \
-            if(t != zfnull && desiredClass::ClassData()->classIsSubclassOf(ZFPropertyTypeWrapper::ClassData())) \
+            if(t != zfnull && desiredClass::ClassData()->classIsTypeOf(ZFPropertyTypeWrapper::ClassData())) \
             { \
                 zfblockedAllocWithoutLeakTest(desiredClass, t2); \
                 if(t2->to<ZFPropertyTypeWrapper *>()->wrappedValueFromString(t->zfv)) \
@@ -404,16 +411,9 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
                 ZFObjectInfo(dispatchInfo.paramList[N]->toObject()).cString()); \
         } \
     } while(zffalse)
-#define _ZFP_ZFImpl_ZFLua_implDispatch_AssertIsInstanceMethod() \
-    if(dispatchInfo.isStatic) \
-    { \
-        return dispatchInfo.dispatchError( \
-            zfText("%s::%s is object instance method, called as static method"), \
-            dispatchInfo.classOrNamespace, dispatchInfo.methodName); \
-    }
 /** @brief util macro for impl */
 #define ZFImpl_ZFLua_implDispatch_AccessOwnerObject(OwnerObjectType, WrapperType, objName) \
-    _ZFP_ZFImpl_ZFLua_implDispatch_AssertIsInstanceMethod() \
+    ZFImpl_ZFLua_implDispatch_AssertNotStaticMethod() \
     WrapperType *_ZFP_##objName = ZFCastZFObject(WrapperType *, dispatchInfo.objectOrNull); \
     if(_ZFP_##objName == zfnull) \
     { \
@@ -426,7 +426,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
     OwnerObjectType objName = _ZFP_##objName->zfv
 /** @brief util macro for impl */
 #define ZFImpl_ZFLua_implDispatch_AccessOwnerZFObject(OwnerZFObjectType, objName) \
-    _ZFP_ZFImpl_ZFLua_implDispatch_AssertIsInstanceMethod() \
+    ZFImpl_ZFLua_implDispatch_AssertNotStaticMethod() \
     OwnerZFObjectType *objName = ZFCastZFObject(OwnerZFObjectType *, dispatchInfo.objectOrNull); \
     do { \
         if(objName == zfnull) \
@@ -478,17 +478,6 @@ inline zfstring ZFImpl_ZFLua_luaObjectInfo(ZF_IN lua_State *L,
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,
                                                   ZF_IN lua_State *L,
                                                   ZF_IN zfint luaStackOffset);
-/**
- * @brief for lua code to convert zfautoObject to lua's value type (string or number)
- *
- * support all type that #ZFImpl_ZFLua_toString and #ZFImpl_ZFLua_toNumber supported\n
- * support all #ZFPropertyTypeWrapper, which would serialize the internal value to string
- * and return the string value
- */
-extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
-                                                 ZF_IN lua_State *L,
-                                                 ZF_IN zfint luaStackOffset,
-                                                 ZF_IN_OPT zfbool allowEmpty = zffalse);
 
 /**
  * @brief get params from lua
@@ -501,6 +490,10 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toValue(ZF_IN_OUT zfstring &s,
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
                                                   ZF_IN lua_State *L,
                                                   ZF_IN zfint luaStackOffset,
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+/** @brief see #ZFImpl_ZFLua_toString */
+extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
+                                                  ZF_IN ZFObject *obj,
                                                   ZF_IN_OPT zfbool allowEmpty = zffalse);
 
 /**
@@ -520,6 +513,7 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
  * -  #v_zftimet
  * -  #v_zfflags
  * -  #v_zfidentity
+ * -  all #ZFEnum types
  *
  * return proper #ZFValue if success, or empty if fail\n
  * if allowEmpty, a #ZFValue::intValueCreate would be returned
@@ -537,11 +531,24 @@ inline zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
     ZFImpl_ZFLua_toNumber(ret, L, luaStackOffset, allowEmpty);
     return ret;
 }
+
 /** @brief see #ZFImpl_ZFLua_toNumber */
-extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT lua_Number &ret,
-                                                  ZF_IN lua_State *L,
-                                                  ZF_IN zfint luaStackOffset,
+extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
+                                                  ZF_IN ZFObject *obj,
                                                   ZF_IN_OPT zfbool allowEmpty = zffalse);
+
+/**
+ * @brief convert native type to lua type
+ *
+ * support all types that can be converted by #ZFImpl_ZFLua_toString
+ * and #ZFImpl_ZFLua_toNumber\n
+ * if success, push result value to top of lua's stack and return true,
+ * otherwise, push nothing and return false\n
+ * if allowEmpty, push 0 number if obj is null
+ */
+extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toLuaValue(ZF_IN lua_State *L,
+                                                    ZF_IN ZFObject *obj,
+                                                    ZF_IN_OPT zfbool allowEmpty = zffalse);
 
 // ============================================================
 // wrapper for impl

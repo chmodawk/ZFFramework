@@ -13,95 +13,96 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 #define _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(param, luaStackOffset) \
-    lua_Number param = 0; \
-    if(!ZFImpl_ZFLua_toNumber(param, L, luaStackOffset)) \
+    zfautoObject _##param = 0; \
+    if(!ZFImpl_ZFLua_toNumber(_##param, L, luaStackOffset)) \
     { \
         ZFLuaErrorOccurredTrim(zfText("[LuaMetatable] unknown param type: %s"), \
             ZFImpl_ZFLua_luaObjectInfo(L, luaStackOffset, zftrue).cString()); \
         return luaL_error(L, ""); \
-    }
+    } \
+    ZFValue *param = _##param.to<ZFValue *>()
 
 // ============================================================
 static int _ZFP_ZFImpl_ZFLua_metatable_add(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)(v1 + v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->doubleValue() + v2->doubleValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_sub(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)(v1 - v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->doubleValue() - v2->doubleValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_mul(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)(v1 * v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->doubleValue() * v2->doubleValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_div(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)(v1 / v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->doubleValue() / v2->doubleValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_mod(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((long)v1 % (long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->intValue() % v2->intValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_unm(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    lua_pushnumber(L, (lua_Number)(-v1));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    lua_pushnumber(L, (lua_Number)(-(v1->doubleValue())));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_band(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((unsigned long)v1 & (unsigned long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->flagsValue() & v2->flagsValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_bor(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((unsigned long)v1 | (unsigned long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->flagsValue() | v2->flagsValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_bxor(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((unsigned long)v1 ^ (unsigned long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->flagsValue() ^ v2->flagsValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_bnot(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    lua_pushnumber(L, (lua_Number)(~(unsigned long)v1));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    lua_pushnumber(L, (lua_Number)(~(v1->flagsValue())));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_shl(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((unsigned long)v1 << (unsigned long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->intValue() << v2->intValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_shr(ZF_IN lua_State *L)
 {
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1)
-    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2)
-    lua_pushnumber(L, (lua_Number)((unsigned long)v1 >> (unsigned long)v2));
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v1, 1);
+    _ZFP_ZFImpl_ZFLua_metatable_PrepareParam(v2, 2);
+    lua_pushnumber(L, (lua_Number)(v1->intValue() >> v2->intValue()));
     return 1;
 }
 static int _ZFP_ZFImpl_ZFLua_metatable_concat(ZF_IN lua_State *L)
@@ -158,6 +159,17 @@ static zfbool _ZFP_ZFImpl_ZFLua_metatable_cmp(ZF_OUT ZFCompareResult &ret, ZF_IN
     }
     else
     {
+        if(lua_isnumber(L, 1) || lua_isnumber(L, 2))
+        {
+            zfautoObject v1;
+            zfautoObject v2;
+            if(ZFImpl_ZFLua_toNumber(v1, L, 1)
+                && ZFImpl_ZFLua_toNumber(v2, L, 2))
+            {
+                ret = ZFComparerDefault(v1, v2);
+                return zftrue;
+            }
+        }
         if(lua_isstring(L, 1) || lua_isstring(L, 2))
         {
             zfstring v1;
@@ -166,17 +178,6 @@ static zfbool _ZFP_ZFImpl_ZFLua_metatable_cmp(ZF_OUT ZFCompareResult &ret, ZF_IN
                && ZFImpl_ZFLua_toString(v2, L, 2, zftrue))
             {
                 ret = ZFComparerDefault(v1, v2);
-                return zftrue;
-            }
-        }
-        if(lua_isnumber(L, 1) || lua_isnumber(L, 2))
-        {
-            lua_Number v1;
-            lua_Number v2;
-            if(ZFImpl_ZFLua_toNumber(v1, L, 1)
-                && ZFImpl_ZFLua_toNumber(v2, L, 2))
-            {
-                ret = ZFComparerDefault((zfdouble)v1, (zfdouble)v2);
                 return zftrue;
             }
         }

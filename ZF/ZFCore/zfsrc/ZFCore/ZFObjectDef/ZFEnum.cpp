@@ -77,7 +77,7 @@ ZFObject *ZFEnum::objectOnInit(ZF_IN zfuint value)
 ZFObject *ZFEnum::objectOnInit(ZF_IN ZFEnum *another)
 {
     this->objectOnInit();
-    if(another != zfnull && another->classData()->classIsSubclassOf(this->classData()))
+    if(another != zfnull && another->classData()->classIsTypeOf(this->classData()))
     {
         zfself::enumValueSet(another->enumValue());
     }
@@ -398,6 +398,23 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
 
 ZFOUTPUT_TYPE_DEFINE(ZFEnumFlagsBase, {output << v.objectInfo();})
 
+// ============================================================
+zfbool ZFEnumWrapperInfo(ZF_OUT const ZFClass *&enumClass,
+                         ZF_OUT zfuint &enumValue,
+                         ZF_IN ZFPropertyTypeWrapper *enumWrapper)
+{
+    if(enumWrapper == zfnull)
+    {
+        return zffalse;
+    }
+    const ZFMethod *m = enumWrapper->classData()->methodForName(zfText("_ZFP_ZFEnumWrapperInfo"));
+    if(m == zfnull)
+    {
+        return zffalse;
+    }
+    return m->executeStatic<zfbool, const ZFClass *&, zfuint &, ZFPropertyTypeWrapper *>(enumClass, enumValue, enumWrapper);
+}
+
 ZF_NAMESPACE_GLOBAL_END
 
 #if _ZFP_ZFOBJECT_METHOD_REG
@@ -423,6 +440,8 @@ ZFMETHOD_USER_REGISTER_DETAIL_1(ZFEnum_enumValueSet, _ZFP_ZFEnum_enumValueSet_me
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_7(zfbool, zfflagsToString, ZFMP_IN_OUT(zfstring &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_6(zfstring, zfflagsToString, ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(zfbool, zfflagsFromString, ZFMP_OUT(zfflags &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
+
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFEnumWrapperInfo, ZFMP_OUT(const ZFClass *&, enumClass), ZFMP_OUT(zfuint &, enumValue), ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif

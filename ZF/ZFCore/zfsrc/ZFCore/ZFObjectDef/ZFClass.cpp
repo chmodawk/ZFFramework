@@ -468,19 +468,6 @@ void ZFClass::objectInfoOfInheritTreeT(ZF_IN_OUT zfstring &ret) const
     }
 }
 
-zfbool ZFClass::classIsSubclassOf(ZF_IN const ZFClass *cls) const
-{
-    const ZFClass **p = d->parentListCache;
-    do
-    {
-        if(*p == cls)
-        {
-            return zftrue;
-        }
-        ++p;
-    } while(*p);
-    return zffalse;
-}
 zfbool ZFClass::classIsTypeOf(ZF_IN const ZFClass *cls) const
 {
     const ZFClass **p = (cls->d->isInterface ? d->parentInterfaceListCache : d->parentListCache);
@@ -1505,7 +1492,6 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, classDataChangeAutoRe
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, classDataChangeAutoRemoveTagRemove, ZFMP_IN(const zfchar *, tag))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, void, objectInfoOfInheritTreeT, ZFMP_IN_OUT(zfstring &, ret))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfstring, objectInfoOfInheritTree)
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, zfbool, classIsSubclassOf, ZFMP_IN(const ZFClass *, cls))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, zfbool, classIsTypeOf, ZFMP_IN(const ZFClass *, cls))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, const zfchar *, className)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, const ZFClass *, parentClass)
