@@ -184,15 +184,15 @@ public:
     /**
      * @brief access cached object for performance
      *
-     * should be paired with #cacheRelease
+     * should be paired with #cacheAdd
      */
-    static ZFPointerHolder *cacheAccess(void);
+    static ZFPointerHolder *cacheGet(void);
     /**
      * @brief release the cached object
      *
      * after calling this method, you must not access the obj any more by any chances
      */
-    static void cacheRelease(ZF_IN ZFPointerHolder *obj);
+    static void cacheAdd(ZF_IN ZFPointerHolder *obj);
 
 protected:
     zfoverride

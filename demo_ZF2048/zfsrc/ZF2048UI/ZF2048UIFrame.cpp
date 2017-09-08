@@ -94,7 +94,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
     zfindex bgCount = dataWidth * dataHeight;
     while(d->blockBackgrounds->count() < bgCount)
     {
-        _ZFP_ZF2048UIBlockBackgroundView *blockBg = _ZFP_ZF2048UIBlockBackgroundView::cacheAccess();
+        _ZFP_ZF2048UIBlockBackgroundView *blockBg = _ZFP_ZF2048UIBlockBackgroundView::cacheGet();
         d->blockBackgrounds->add(blockBg);
         this->childAdd(blockBg, zfnull, 0);
     }
@@ -103,7 +103,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
         _ZFP_ZF2048UIBlockBackgroundView *blockBg = d->blockBackgrounds->getLast()->toAny();
         if(blockBg != zfnull)
         {
-            _ZFP_ZF2048UIBlockBackgroundView::cacheRelease(blockBg);
+            _ZFP_ZF2048UIBlockBackgroundView::cacheAdd(blockBg);
             blockBg->viewRemoveFromParent();
         }
         d->blockBackgrounds->removeLast();
@@ -135,7 +135,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
             }
             else
             {
-                block = ZF2048UIBlock::cacheAccess();
+                block = ZF2048UIBlock::cacheGet();
                 ++blockCount;
                 this->childAdd(block);
                 d->blocksHolder->add(block);
@@ -148,7 +148,7 @@ void ZF2048UIFrame::update(ZF_IN const ZF2048Value *data,
     {
         ZF2048UIBlock *block = d->blocksHolder->getLast<ZF2048UIBlock *>();
         block->viewRemoveFromParent();
-        ZF2048UIBlock::cacheRelease(block);
+        ZF2048UIBlock::cacheAdd(block);
         d->blocksHolder->removeLast();
     }
     if(this->layoutedFrame().size.width > 0 && this->layoutedFrame().size.height > 0)

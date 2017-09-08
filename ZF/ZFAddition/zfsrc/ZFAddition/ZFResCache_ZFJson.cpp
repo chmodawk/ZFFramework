@@ -18,7 +18,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath)
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFRJ:%s"), resPath);
-    zfautoObject cached = ZFResCache::instance()->cacheAccess(key);
+    zfautoObject cached = ZFResCache::instance()->cacheGet(key);
     if(cached != zfautoObjectNull())
     {
         return cached;
@@ -34,7 +34,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath)
     {
         return zfautoObjectNull();
     }
-    ZFResCache::instance()->cacheSave(key, cached.toObject());
+    ZFResCache::instance()->cacheAdd(key, cached.toObject());
     return cached;
 }
 

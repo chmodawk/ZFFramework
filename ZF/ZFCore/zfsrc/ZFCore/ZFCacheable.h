@@ -89,32 +89,32 @@ public:
  *   } // cachedObject would be auto recycled and cached after code block
  *
  *   // or, you may manually manage the cache
- *   MyCacheable *cache = MyCacheable::cacheAccess(void);
- *   MyCacheable::cacheRelease(cache);
- *   // note that the cacheAccess and cacheRelease must be paired
+ *   MyCacheable *cache = MyCacheable::cacheGet(void);
+ *   MyCacheable::cacheAdd(cache);
+ *   // note that the cacheGet and cacheAdd must be paired
  * @endcode
  */
 #define ZFCACHEABLE_DECLARE(T_ZFCacheable) \
-    ZFCACHEABLE_DECLARE_DETAIL(T_ZFCacheable, cacheAccess, cacheRelease)
+    ZFCACHEABLE_DECLARE_DETAIL(T_ZFCacheable, cacheGet, cacheAdd)
 /** @brief see #ZFCACHEABLE_DECLARE */
-#define ZFCACHEABLE_DECLARE_DETAIL(T_ZFCacheable, cacheAccessMethod, cacheReleaseMethod) \
+#define ZFCACHEABLE_DECLARE_DETAIL(T_ZFCacheable, cacheGetMethod, cacheAddMethod) \
     ZFCLASS_SINGLETON_DECLARE(_ZFP_ZFCacheableCacheHolder<T_ZFCacheable>, _ZFP_ZFCacheableCacheHolderRef) \
     public: \
         /** @brief see #ZFCACHEABLE_DECLARE, access the cache */ \
-        static T_ZFCacheable *cacheAccessMethod(void); \
+        static T_ZFCacheable *cacheGetMethod(void); \
         /** @brief see #ZFCACHEABLE_DECLARE, release the cache */ \
-        static void cacheReleaseMethod(ZF_IN T_ZFCacheable *cachedObject); \
+        static void cacheAddMethod(ZF_IN T_ZFCacheable *cachedObject); \
     public: \
-        zffinal zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCacheableVisitor_##cacheAccessMethod \
+        zffinal zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCacheableVisitor_##cacheGetMethod \
         { \
         public: \
-            _ZFP_ZFCacheableVisitor_##cacheAccessMethod(void) \
-            : cachedObject(cacheAccessMethod()) \
+            _ZFP_ZFCacheableVisitor_##cacheGetMethod(void) \
+            : cachedObject(cacheGetMethod()) \
             { \
             } \
-            ~_ZFP_ZFCacheableVisitor_##cacheAccessMethod(void) \
+            ~_ZFP_ZFCacheableVisitor_##cacheGetMethod(void) \
             { \
-                cacheReleaseMethod(this->cachedObject); \
+                cacheAddMethod(this->cachedObject); \
             } \
         public: \
             T_ZFCacheable *cachedObject; \
@@ -122,12 +122,12 @@ public:
 
 /** @brief see #ZFCACHEABLE_DECLARE */
 #define ZFCACHEABLE_DEFINE(OwnerClass, T_ZFCacheable) \
-    ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheAccess, cacheRelease, 5, ZFLevelZFFrameworkHigh)
+    ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheGet, cacheAdd, 5, ZFLevelZFFrameworkHigh)
 /** @brief see #ZFCACHEABLE_DECLARE */
 #define ZFCACHEABLE_DEFINE_WITH_MAX(OwnerClass, T_ZFCacheable, MaxSize) \
-    ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheAccess, cacheRelease, MaxSize, ZFLevelZFFrameworkHigh)
+    ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheGet, cacheAdd, MaxSize, ZFLevelZFFrameworkHigh)
 /** @brief see #ZFCACHEABLE_DECLARE */
-#define ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheAccessMethod, cacheReleaseMethod, \
+#define ZFCACHEABLE_DEFINE_DETAIL(OwnerClass, T_ZFCacheable, cacheGetMethod, cacheAddMethod, \
                                   MaxSize, \
                                   ZFLevel_) \
     ZFCLASS_SINGLETON_DEFINE_DETAIL(OwnerClass, \
@@ -135,7 +135,7 @@ public:
                                     _ZFP_ZFCacheableCacheHolder<T_ZFCacheable>, \
                                     _ZFP_ZFCacheableCacheHolderRef, \
                                     ZFLevel_) \
-    T_ZFCacheable *OwnerClass::cacheAccessMethod(void) \
+    T_ZFCacheable *OwnerClass::cacheGetMethod(void) \
     { \
         zfCoreMutexLocker(); \
         _ZFP_ZFCacheableCacheHolder<T_ZFCacheable> *holder = OwnerClass::_ZFP_ZFCacheableCacheHolderRef(); \
@@ -151,7 +151,7 @@ public:
         } \
         return ret; \
     } \
-    void OwnerClass::cacheReleaseMethod(ZF_IN T_ZFCacheable *cachedObject) \
+    void OwnerClass::cacheAddMethod(ZF_IN T_ZFCacheable *cachedObject) \
     { \
         zfCoreMutexLocker(); \
         if(cachedObject != zfnull) \
@@ -171,10 +171,10 @@ public:
     }
 /** @brief see #ZFCACHEABLE_DECLARE */
 #define ZFCACHEABLE_ACCESS(OwnerClass, T_ZFCacheable, name) \
-    ZFCACHEABLE_ACCESS_DETAIL(OwnerClass, T_ZFCacheable, cacheAccess, name)
+    ZFCACHEABLE_ACCESS_DETAIL(OwnerClass, T_ZFCacheable, cacheGet, name)
 /** @brief see #ZFCACHEABLE_DECLARE */
-#define ZFCACHEABLE_ACCESS_DETAIL(T_OwnerClass, T_ZFCacheable, cacheAccessMethod, name) \
-    T_OwnerClass::_ZFP_ZFCacheableVisitor_##cacheAccessMethod _ZFP_ZFCacheableAccess_##name; \
+#define ZFCACHEABLE_ACCESS_DETAIL(T_OwnerClass, T_ZFCacheable, cacheGetMethod, name) \
+    T_OwnerClass::_ZFP_ZFCacheableVisitor_##cacheGetMethod _ZFP_ZFCacheableAccess_##name; \
     T_ZFCacheable *name = _ZFP_ZFCacheableAccess_##name.cachedObject
 
 ZF_NAMESPACE_GLOBAL_END

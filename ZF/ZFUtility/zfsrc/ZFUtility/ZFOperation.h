@@ -132,10 +132,10 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFOperationCacheMatchActionEnum, cacheMatchAction,
                                 ZFPropertyInitValue(ZFOperationCacheMatchAction::e_NotifyFinish))
     /**
-     * @brief max cache size, or zfindexMax() for no limit, zfindexMax() by default
+     * @brief max cache size, or #zfindexMax for no limit, 10 by default
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, cacheMaxSize,
-                                ZFPropertyInitValue(zfindexMax()))
+                                ZFPropertyInitValue(10))
     /**
      * @brief default cache expire time, default is ZFOperationCacheExpireTimeDisable
      *
@@ -534,6 +534,11 @@ public:
      */
     ZFMETHOD_DECLARE_1(zfbool, cacheIsValid,
                        ZFMP_IN(ZFOperationCache *, operationCache));
+    /**
+     * @brief access all cache, for debug use only
+     */
+    ZFMETHOD_DECLARE_1(void, cacheGetAll,
+                       ZFMP_OUT(ZFCoreArray<ZFOperationCache *> &, allCache));
 
 protected:
     /**

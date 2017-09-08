@@ -32,7 +32,7 @@ ZF_GLOBAL_INITIALIZER_DESTROY(ZFPointerHolderCacheHolder)
     }
 }
 ZF_GLOBAL_INITIALIZER_END(ZFPointerHolderCacheHolder)
-ZFPointerHolder *ZFPointerHolder::cacheAccess(void)
+ZFPointerHolder *ZFPointerHolder::cacheGet(void)
 {
     ZFPointerHolder *ret = zfnull;
     zfCoreMutexLock();
@@ -48,7 +48,7 @@ ZFPointerHolder *ZFPointerHolder::cacheAccess(void)
     zfCoreMutexUnlock();
     return ret;
 }
-void ZFPointerHolder::cacheRelease(ZF_IN ZFPointerHolder *obj)
+void ZFPointerHolder::cacheAdd(ZF_IN ZFPointerHolder *obj)
 {
     zfCoreMutexLock();
     obj->holdedData = zfnull;

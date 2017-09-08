@@ -101,7 +101,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFObjectCache, zfbool, cacheTrimWhenReceiveMe
         this, this->cacheTrimWhenReceiveMemoryWarning());
 }
 
-ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheSave,
+ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheAdd,
                   ZFMP_IN(const zfchar *, cacheKey),
                   ZFMP_IN(ZFObject *, cacheValue))
 {
@@ -152,7 +152,7 @@ ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheSave,
         zfdelete(cacheData);
     }
 }
-ZFMETHOD_DEFINE_1(ZFObjectCache, zfautoObject, cacheAccess,
+ZFMETHOD_DEFINE_1(ZFObjectCache, zfautoObject, cacheGet,
                   ZFMP_IN(const zfchar *, cacheKey))
 {
     zfsynchronizedObject(this);
@@ -222,9 +222,9 @@ ZFMETHOD_DEFINE_1(ZFObjectCache, void, cacheTrimBySize,
     }
 }
 
-ZFMETHOD_DEFINE_2(ZFObjectCache, void, allCache,
-                  ZFMP_IN_OUT(ZFCoreArray<zfstring> &, cacheKeys),
-                  ZFMP_IN_OUT(ZFCoreArray<zfautoObject> &, cacheValues))
+ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheGetAll,
+                  ZFMP_IN_OUT(ZFCoreArray<const zfchar *> &, cacheKeys),
+                  ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, cacheValues))
 {
     zfsynchronizedObject(this);
     for(_ZFP_ZFObjectCacheListType::iterator it = d->cacheList.begin(); it != d->cacheList.end(); ++it)

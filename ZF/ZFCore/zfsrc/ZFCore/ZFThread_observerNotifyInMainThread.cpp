@@ -91,7 +91,7 @@ private:
             taskData->eventId,
             taskData->param0,
             taskData->param1);
-        _ZFP_I_ZFObserverNotifyInMainThreadTaskData::cacheRelease(taskData);
+        _ZFP_I_ZFObserverNotifyInMainThreadTaskData::cacheAdd(taskData);
     }
 ZF_GLOBAL_INITIALIZER_END(ZFObserverNotifyInMainThreadDataHolder)
 
@@ -108,7 +108,7 @@ ZFMETHOD_FUNC_DEFINE_5(zfidentity, ZFObserverNotifyInMainThreadWithCustomSender,
     }
     if(_ZFP_ZFObserverNotifyInMainThreadCallback)
     {
-        _ZFP_I_ZFObserverNotifyInMainThreadTaskData *taskData = _ZFP_I_ZFObserverNotifyInMainThreadTaskData::cacheAccess();
+        _ZFP_I_ZFObserverNotifyInMainThreadTaskData *taskData = _ZFP_I_ZFObserverNotifyInMainThreadTaskData::cacheGet();
         taskData->objSet(obj);
         taskData->customSenderSet(customSender);
         taskData->eventId = eventId;

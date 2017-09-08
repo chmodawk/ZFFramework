@@ -1454,10 +1454,10 @@ void _ZFP_ZFClassDataChangeNotify(ZF_IN ZFClassDataChangeType changeType,
         data.changedProperty = changedProperty;
         data.changedMethod = changedMethod;
 
-        ZFPointerHolder *holder = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *holder = ZFPointerHolder::cacheGet();
         holder->holdedData = &data;
         ZFClassDataChangeObserver.observerNotify(ZFGlobalEvent::EventClassDataChange(), holder);
-        ZFPointerHolder::cacheRelease(holder);
+        ZFPointerHolder::cacheAdd(holder);
     }
 }
 

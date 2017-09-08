@@ -26,9 +26,9 @@ zfclass ZF_ENV_EXPORT ZFObjectCache : zfextends ZFObject
     ZFOBJECT_DECLARE(ZFObjectCache, ZFObject)
 
     /**
-     * @brief max cache size, 100 by default
+     * @brief max cache size, 10 by default
      */
-    ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, cacheMaxSize, ZFPropertyInitValue(100))
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfindex, cacheMaxSize, ZFPropertyInitValue(10))
 
     /**
      * @brief whether invoke #cacheTrim when receive #ZFGlobalEvent::EventAppOnReceiveMemoryWarning, true by default
@@ -48,13 +48,13 @@ public:
      * newly cached object would be added to queue's head,
      * and tail's cache would be removed if exceeds #cacheMaxSize
      */
-    ZFMETHOD_DECLARE_2(void, cacheSave,
+    ZFMETHOD_DECLARE_2(void, cacheAdd,
                        ZFMP_IN(const zfchar *, cacheKey),
                        ZFMP_IN(ZFObject *, cacheValue));
     /**
      * @brief access cache, or return #zfautoObjectNull if not exist
      */
-    ZFMETHOD_DECLARE_1(zfautoObject, cacheAccess,
+    ZFMETHOD_DECLARE_1(zfautoObject, cacheGet,
                        ZFMP_IN(const zfchar *, cacheKey));
 
     /**
@@ -85,9 +85,9 @@ public:
      *
      * ensured ordered from new to old
      */
-    ZFMETHOD_DECLARE_2(void, allCache,
-                       ZFMP_IN_OUT(ZFCoreArray<zfstring> &, cacheKeys),
-                       ZFMP_IN_OUT(ZFCoreArray<zfautoObject> &, cacheValues));
+    ZFMETHOD_DECLARE_2(void, cacheGetAll,
+                       ZFMP_IN_OUT(ZFCoreArray<const zfchar *> &, cacheKeys),
+                       ZFMP_IN_OUT(ZFCoreArray<ZFObject *> &, cacheValues));
 
 protected:
     /**

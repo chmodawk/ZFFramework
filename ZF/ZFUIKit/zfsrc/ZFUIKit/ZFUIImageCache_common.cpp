@@ -19,7 +19,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageLoadFromInputWithCache:%s"), input.callbackId());
-    zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
+    zfautoObject cached = ZFUIImageCache::instance()->cacheGet(key);
     if(cached != zfautoObjectNull())
     {
         return cached;
@@ -29,7 +29,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInputWithCache,
     {
         return zfautoObjectNull();
     }
-    ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
+    ZFUIImageCache::instance()->cacheAdd(key, cached.toObject());
     return cached;
 }
 
@@ -38,7 +38,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
                        ZFMP_IN_OPT(const ZFUISize &, size, ZFUISizeZero()))
 {
     zfstring key = zfstringWithFormat(zfText("ZFUIImageLoadFromInputWithCache:%s %s"), ZFUIColorToString(color).cString(), ZFUISizeToString(size).cString());
-    zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
+    zfautoObject cached = ZFUIImageCache::instance()->cacheGet(key);
     if(cached != zfautoObjectNull())
     {
         return cached;
@@ -48,7 +48,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColorWithCache,
     {
         return zfautoObjectNull();
     }
-    ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
+    ZFUIImageCache::instance()->cacheAdd(key, cached.toObject());
     return cached;
 }
 

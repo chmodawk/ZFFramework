@@ -69,10 +69,10 @@ protected:
     /** @brief see #EventTestCaseOnOutput */
     virtual inline void testCaseOnOutput(ZF_IN const zfchar *info)
     {
-        ZFPointerHolder *holder = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *holder = ZFPointerHolder::cacheGet();
         holder->holdedData = info;
         this->observerNotify(ZFTestCase::EventTestCaseOnOutput(), holder);
-        ZFPointerHolder::cacheRelease(holder);
+        ZFPointerHolder::cacheAdd(holder);
     }
     /** @brief see #EventTestCaseOnStart */
     virtual inline void testCaseOnStart(void)

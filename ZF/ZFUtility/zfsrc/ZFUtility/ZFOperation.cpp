@@ -1504,6 +1504,14 @@ ZFMETHOD_DEFINE_1(ZFOperation, zfbool, cacheIsValid,
         && this->paramIsValid(operationCache->operationParam())
         && operationCache->operationResult()->resultType() == ZFResultType::e_Success);
 }
+ZFMETHOD_DEFINE_1(ZFOperation, void, cacheGetAll,
+                  ZFMP_OUT(ZFCoreArray<ZFOperationCache *> &, allCache))
+{
+    for(zfindex i = 0; i < d->caches->count(); ++i)
+    {
+        allCache.add(d->caches->get<ZFOperationCache *>(i));
+    }
+}
 
 ZFMETHOD_DEFINE_0(ZFOperation, void, cacheSaveRequest)
 {

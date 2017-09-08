@@ -453,10 +453,10 @@ ZFMETHOD_DEFINE_1(ZFFile, void, settingPathSet,
     _ZFP_ZFFilePathImpl->settingPathSet(path);
     if(!old.isEmpty())
     {
-        ZFPointerHolder *t = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *t = ZFPointerHolder::cacheGet();
         t->holdedData = old.cString();
         ZFGlobalEventCenter::instance()->observerNotify(ZFFile::EventSettingPathOnChange(), t);
-        ZFPointerHolder::cacheRelease(t);
+        ZFPointerHolder::cacheAdd(t);
     }
 }
 
@@ -471,10 +471,10 @@ ZFMETHOD_DEFINE_1(ZFFile, void, storagePathSet,
     _ZFP_ZFFilePathImpl->storagePathSet(path);
     if(!old.isEmpty())
     {
-        ZFPointerHolder *t = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *t = ZFPointerHolder::cacheGet();
         t->holdedData = old.cString();
         ZFGlobalEventCenter::instance()->observerNotify(ZFFile::EventStoragePathOnChange(), t);
-        ZFPointerHolder::cacheRelease(t);
+        ZFPointerHolder::cacheAdd(t);
     }
 }
 
@@ -489,10 +489,10 @@ ZFMETHOD_DEFINE_1(ZFFile, void, storageSharedPathSet,
     _ZFP_ZFFilePathImpl->storageSharedPathSet(path);
     if(!old.isEmpty())
     {
-        ZFPointerHolder *t = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *t = ZFPointerHolder::cacheGet();
         t->holdedData = old.cString();
         ZFGlobalEventCenter::instance()->observerNotify(ZFFile::EventStorageSharedPathOnChange(), t);
-        ZFPointerHolder::cacheRelease(t);
+        ZFPointerHolder::cacheAdd(t);
     }
 }
 
@@ -507,10 +507,10 @@ ZFMETHOD_DEFINE_1(ZFFile, void, cachePathSet,
     _ZFP_ZFFilePathImpl->cachePathSet(path);
     if(!old.isEmpty())
     {
-        ZFPointerHolder *t = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *t = ZFPointerHolder::cacheGet();
         t->holdedData = old.cString();
         ZFGlobalEventCenter::instance()->observerNotify(ZFFile::EventCachePathOnChange(), t);
-        ZFPointerHolder::cacheRelease(t);
+        ZFPointerHolder::cacheAdd(t);
     }
 }
 

@@ -19,7 +19,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageRes,
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageRes:%s"), resPath);
-    zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
+    zfautoObject cached = ZFUIImageCache::instance()->cacheGet(key);
     if(cached != zfautoObjectNull())
     {
         return cached;
@@ -30,7 +30,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageRes,
     {
         return zfautoObjectNull();
     }
-    ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
+    ZFUIImageCache::instance()->cacheAdd(key, cached.toObject());
     return cached;
 }
 
@@ -43,7 +43,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
     }
 
     zfstring key = zfstringWithFormat(zfText("ZFUIImageRes:%s"), resPath);
-    zfautoObject cached = ZFUIImageCache::instance()->cacheAccess(key);
+    zfautoObject cached = ZFUIImageCache::instance()->cacheGet(key);
     if(cached != zfautoObjectNull())
     {
         return cached;
@@ -60,7 +60,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
     {
         return zfautoObjectNull();
     }
-    ZFUIImageCache::instance()->cacheSave(key, cached.toObject());
+    ZFUIImageCache::instance()->cacheAdd(key, cached.toObject());
     return cached;
 }
 

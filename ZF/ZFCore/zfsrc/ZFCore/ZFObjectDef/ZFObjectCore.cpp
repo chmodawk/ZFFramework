@@ -552,13 +552,13 @@ void ZFObject::objectPropertyValueOnUpdate(ZF_IN const ZFProperty *property, ZF_
 {
     if(d->observerHasAddFlag_objectPropertyValueOnUpdate)
     {
-        ZFPointerHolder *param0 = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *param0 = ZFPointerHolder::cacheGet();
         param0->holdedData = property;
-        ZFPointerHolder *param1 = ZFPointerHolder::cacheAccess();
+        ZFPointerHolder *param1 = ZFPointerHolder::cacheGet();
         param1->holdedData = oldValue;
         this->observerNotify(ZFObject::EventObjectPropertyValueOnUpdate(), param0, param1);
-        ZFPointerHolder::cacheRelease(param0);
-        ZFPointerHolder::cacheRelease(param1);
+        ZFPointerHolder::cacheAdd(param0);
+        ZFPointerHolder::cacheAdd(param1);
     }
 }
 
