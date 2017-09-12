@@ -70,16 +70,10 @@ public:
         } \
         /** @endcond */ \
     public: \
-        /** @brief get class info */ \
-        static const ZFClass *ClassData(void) \
-        { \
-            return zfself::_ZFP_ZFObjectGetClass(); \
-        } \
-    public: \
         /** @brief get instance's class info */ \
         virtual const ZFClass *classData(void) \
         { \
-            return zfself::_ZFP_ZFObjectGetClass(); \
+            return zfself::ClassData(); \
         } \
     private: \
         static void _ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
@@ -107,7 +101,8 @@ public:
         { \
             zfpoolDelete(_ZFP_ZFCastZFObjectInternal(zfself *, obj)); \
         } \
-        static ZFClass *_ZFP_ZFObjectGetClass(void) \
+        /** @brief get class info */ \
+        static const ZFClass *ClassData(void) \
         { \
             static _ZFP_ZFClassRegisterHolder _holder( \
                     zfText(#ChildClass), \
@@ -122,7 +117,8 @@ public:
     public: \
         typedef enum {_ZFP_ZFObjectCanAlloc = 0} _ZFP_ZFObjectCanAllocChecker; \
     public: \
-        static ZFClass *_ZFP_ZFObjectGetClass(void) \
+        /** @brief get class info */ \
+        static const ZFClass *ClassData(void) \
         { \
             static _ZFP_ZFClassRegisterHolder _holder( \
                     zfText(#ChildClass), \
@@ -212,7 +208,7 @@ public:
 #define ZFOBJECT_REGISTER(T_ZFObject) \
     ZF_STATIC_REGISTER_INIT(ObjR_##T_ZFObject) \
     { \
-        T_ZFObject::_ZFP_ZFObjectGetClass()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \
+        T_ZFObject::ClassData()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \
         ZFMethodUserRegisterDetail_0(resultMethod, &invoker, T_ZFObject::ClassData(), \
             public, ZFMethodIsStatic, \
             const ZFClass *, zfText("ClassData")); \

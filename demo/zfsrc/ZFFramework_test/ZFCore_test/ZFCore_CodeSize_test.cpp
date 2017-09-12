@@ -11,18 +11,19 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-// 36964978
-#define _ZFP_ZFCore_CodeSize_test_Dummy_ENABLE                  0 // 117824, 37082802
-#define _ZFP_ZFCore_CodeSize_test_StaticRegister_ENABLE         0 // 81136, 37046114
-#define _ZFP_ZFCore_CodeSize_test_StaticInit_ENABLE             0 // 322768, 37287746
-#define _ZFP_ZFCore_CodeSize_test_GlobalInit_ENABLE             0 // 165440, 37130418
-#define _ZFP_ZFCore_CodeSize_test_Object_ENABLE                 0 // 891504, 37856482
-#define _ZFP_ZFCore_CodeSize_test_Method_ENABLE                 0 // 321328, 37286306
-#define _ZFP_ZFCore_CodeSize_test_MethodFunc_ENABLE             0 // 364448, 37329426
-#define _ZFP_ZFCore_CodeSize_test_MethodUserRegister_ENABLE     0 // 347872, 37312850
-#define _ZFP_ZFCore_CodeSize_test_MethodFuncUserRegister_ENABLE 0 // 360896, 37325874
-#define _ZFP_ZFCore_CodeSize_test_Property_ENABLE               0 // 1865568, 38830546
-#define _ZFP_ZFCore_CodeSize_test_PropertyUserRegister_ENABLE   0 // 736848, 37701826
+// 43087245
+#define _ZFP_ZFCore_CodeSize_test_Dummy_ENABLE                  0 // x~x,     117776, 44206397
+#define _ZFP_ZFCore_CodeSize_test_StaticRegister_ENABLE         0 // 1000~7N, 81088, 44169709
+#define _ZFP_ZFCore_CodeSize_test_StaticInit_ENABLE             0 // 10~10,   322848, 44411469
+#define _ZFP_ZFCore_CodeSize_test_GlobalInit_ENABLE             0 // 150~N,   161248, 44249869
+#define _ZFP_ZFCore_CodeSize_test_Object_ENABLE                 0 // 250~N,   887776, 44976397
+#define _ZFP_ZFCore_CodeSize_test_Method_ENABLE                 0 // 800~5N,  317168, 44405789
+#define _ZFP_ZFCore_CodeSize_test_MethodFunc_ENABLE             0 // 300~N,   364512, 44453133
+#define _ZFP_ZFCore_CodeSize_test_MethodUserRegister_ENABLE     0 // 600~600, 343744, 44432365
+#define _ZFP_ZFCore_CodeSize_test_MethodFuncUserRegister_ENABLE 0 // 350~350, 360976, 44449597
+#define _ZFP_ZFCore_CodeSize_test_Property_ENABLE               0 // 500~3N,  1598384, 44685629
+#define _ZFP_ZFCore_CodeSize_test_PropertyUserRegister_ENABLE   0 // 10~10,   736912, 44825533
+#define _ZFP_ZFCore_CodeSize_test_PropertyType_ENABLE           0 // 90~N,    1924496, 45011741
 
 // ============================================================
 // dummy object
@@ -1230,6 +1231,115 @@ ZFPROPERTY_USER_REGISTER_ASSIGN(_ZFP_ZFCore_CodeSize_test_PropertyUserRegister, 
 ZFPROPERTY_USER_REGISTER_ASSIGN(_ZFP_ZFCore_CodeSize_test_PropertyUserRegister, zfstring, v97, ZFPropertyNoInitValue, public, public)
 ZFPROPERTY_USER_REGISTER_ASSIGN(_ZFP_ZFCore_CodeSize_test_PropertyUserRegister, zfstring, v98, ZFPropertyNoInitValue, public, public)
 ZFPROPERTY_USER_REGISTER_ASSIGN(_ZFP_ZFCore_CodeSize_test_PropertyUserRegister, zfstring, v99, ZFPropertyNoInitValue, public, public)
+#endif
+
+// ============================================================
+// property type
+#if _ZFP_ZFCore_CodeSize_test_PropertyType_ENABLE
+#define _ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(N) \
+    zfclassNotPOD _ZFP_ZFCore_CodeSize_test_PropertyType_Class##N {}; \
+    ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(_ZFP_ZFCore_CodeSize_test_PropertyType_Class##N, _ZFP_ZFCore_CodeSize_test_PropertyType_Class##N) \
+    ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE_UNCOMPARABLE(_ZFP_ZFCore_CodeSize_test_PropertyType_Class##N, _ZFP_ZFCore_CodeSize_test_PropertyType_Class##N)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(0)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(1)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(2)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(3)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(4)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(5)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(6)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(7)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(8)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(9)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(10)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(11)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(12)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(13)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(14)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(15)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(16)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(17)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(18)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(19)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(20)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(21)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(22)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(23)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(24)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(25)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(26)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(27)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(28)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(29)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(30)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(31)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(32)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(33)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(34)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(35)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(36)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(37)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(38)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(39)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(40)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(41)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(42)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(43)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(44)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(45)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(46)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(47)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(48)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(49)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(50)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(51)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(52)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(53)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(54)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(55)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(56)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(57)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(58)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(59)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(60)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(61)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(62)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(63)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(64)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(65)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(66)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(67)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(68)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(69)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(70)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(71)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(72)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(73)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(74)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(75)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(76)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(77)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(78)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(79)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(80)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(81)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(82)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(83)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(84)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(85)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(86)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(87)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(88)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(89)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(90)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(91)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(92)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(93)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(94)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(95)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(96)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(97)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(98)
+_ZFP_ZFCore_CodeSize_test_PropertyType_EXPAND(99)
 #endif
 
 ZF_NAMESPACE_GLOBAL_END

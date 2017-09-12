@@ -20,7 +20,6 @@ public:
     zfindex waiterCount;
     HANDLE sema;
     CRITICAL_SECTION semaMutex;
-    CRITICAL_SECTION mutexParamLocker;
 };
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFSemaphoreImpl_sys_Windows, ZFSemaphore, ZFProtocolLevel::e_SystemLow)
@@ -31,7 +30,6 @@ public:
         semaphoreToken->waiterCount = 0;
         semaphoreToken->sema = CreateSemaphore(zfnull, 0, MAXLONG, zfnull);
         InitializeCriticalSection(&(semaphoreToken->semaMutex));
-        InitializeCriticalSection(&(semaphoreToken->mutexParamLocker));
         return semaphoreToken;
     }
     virtual void nativeSemaphoreDestroy(ZF_IN ZFSemaphore *semaphore,
@@ -40,61 +38,46 @@ public:
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, nativeSemaphore);
         CloseHandle(semaphoreToken->sema);
         DeleteCriticalSection(&(semaphoreToken->semaMutex));
-        DeleteCriticalSection(&(semaphoreToken->mutexParamLocker));
         zfdelete(semaphoreToken);
     }
 
     virtual void semaphoreLock(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
-        EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
+        EnterCriticalSection(&(semaphoreToken->semaMutex));
     }
     virtual void semaphoreUnlock(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
-        LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
+        LeaveCriticalSection(&(semaphoreToken->semaMutex));
     }
 
     virtual void semaphoreSignal(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
 
-        EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
         if(semaphoreToken->waiterCount > 0)
         {
             --(semaphoreToken->waiterCount);
-            LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
             this->semaSignal(semaphoreToken, 1);
-        }
-        else
-        {
-            LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
         }
     }
     virtual void semaphoreBroadcast(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
 
-        EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
         if(semaphoreToken->waiterCount > 0)
         {
             zfindex tmp = semaphoreToken->waiterCount;
             semaphoreToken->waiterCount = 0;
-            LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
             this->semaSignal(semaphoreToken, tmp);
-        }
-        else
-        {
-            LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
         }
     }
     virtual void semaphoreWait(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
 
-        EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
         ++(semaphoreToken->waiterCount);
-        LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
         this->semaWait(semaphoreToken);
     }
     virtual zfbool semaphoreWait(ZF_IN ZFSemaphore *semaphore,
@@ -102,9 +85,7 @@ public:
     {
         _ZFP_ZFSemaphoreImpl_sys_Windows_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Windows_Token *, semaphore->nativeSemaphore());
 
-        EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
         ++(semaphoreToken->waiterCount);
-        LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
 
         if(this->semaWait(semaphoreToken, miliSecsTimeout))
         {
@@ -112,12 +93,10 @@ public:
         }
         else
         {
-            EnterCriticalSection(&(semaphoreToken->mutexParamLocker));
             if(semaphoreToken->waiterCount > 0)
             {
                 --(semaphoreToken->waiterCount);
             }
-            LeaveCriticalSection(&(semaphoreToken->mutexParamLocker));
             return zffalse;
         }
     }

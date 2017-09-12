@@ -71,7 +71,8 @@ public:
             } \
         } \
     public: \
-        static ZFClass *_ZFP_ZFObjectGetClass(void) \
+        /** @brief get class info */ \
+        static const ZFClass *ClassData(void) \
         { \
             static _ZFP_ZFClassRegisterHolder _holder( \
                     zfText(#InterfaceName), \
@@ -82,11 +83,6 @@ public:
                     zftrue \
                 ); \
             return _holder.cls; \
-        } \
-        /** @brief get class info */ \
-        static const ZFClass *ClassData(void) \
-        { \
-            return zfself::_ZFP_ZFObjectGetClass(); \
         } \
     protected: \
         virtual void _ZFP_ZFInterface_INHERIT_CHECKER(void) \

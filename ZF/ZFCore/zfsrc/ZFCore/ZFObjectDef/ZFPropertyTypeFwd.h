@@ -30,10 +30,6 @@ public:
 
 public:
     /**
-     * @brief see #ZFPropertyTypeIdData::PropertyAccessable
-     */
-    virtual zfbool propertyAccessable(void) const zfpurevirtual;
-    /**
      * @brief see #ZFPropertyTypeIdData::PropertySerializable
      */
     virtual zfbool propertySerializable(void) const zfpurevirtual;
@@ -43,42 +39,21 @@ public:
     virtual const zfchar *propertyTypeId(void) const zfpurevirtual;
     /**
      * @brief return the proper wrapper type if available
+     *
+     * if available:
+     * -  if the property is ZFObject type, set v to #zfautoObjectNull and return true,
+     *   the value would be serialized by #ZFObjectFromString series later
+     * -  if the property is not ZFObject type,
+     *   impl should set v to proper holder type (#ZFPropertyTypeWrapper)
+     *   and return true
      */
-    virtual void propertyWrapper(ZF_OUT zfautoObject &v) const
+    virtual zfbool propertyWrapper(ZF_OUT zfautoObject &v) const
     {
+        return zffalse;
     }
-    /**
-     * @brief convert from serializable data
-     */
-    virtual zfbool propertyWrapperFromSerializableData(ZF_OUT zfautoObject &v,
-                                                       ZF_IN const ZFSerializableData &serializableData,
-                                                       ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                       ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) const;
-    /**
-     * @brief convert to serializable data
-     */
-    virtual zfbool propertyWrapperToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                     ZF_IN ZFObject *v,
-                                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull) const;
-    /**
-     * @brief convert from string, return error pos or empty string if fail
-     */
-    virtual zfbool propertyWrapperFromString(ZF_OUT zfautoObject &v,
-                                             ZF_IN const zfchar *src,
-                                             ZF_IN_OPT zfindex srcLen = zfindexMax()) const;
-    /**
-     * @brief convert to string
-     */
-    virtual zfbool propertyWrapperToString(ZF_IN_OUT zfstring &s,
-                                           ZF_IN ZFObject *v) const;
 };
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(T_Type) \
     public: \
-        zfoverride \
-        virtual zfbool propertyAccessable(void) const \
-        { \
-            return PropertyAccessable; \
-        } \
         zfoverride \
         virtual zfbool propertySerializable(void) const \
         { \
@@ -146,15 +121,6 @@ public:
          */
         PropertyRegistered = 0,
         /**
-         * @brief whether this type can be accessed
-         *
-         * property is accessable if declared by any of these:
-         * -  #ZFPROPERTY_TYPE_DECLARE
-         * -  #ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE
-         * -  #ZFPROPERTY_TYPE_ALIAS_DECLARE
-         */
-        PropertyAccessable = 0,
-        /**
          * @brief whether this type can be serialized
          *
          * property is serializable if declared by any of these:
@@ -168,28 +134,6 @@ public:
      * @brief get property type id, or return #ZFPropertyTypeId_none if not registered
      */
     static const zfchar *PropertyTypeId(void);
-
-    /**
-     * @brief convert from serializable data
-     */
-    static zfbool PropertyFromSerializableData(ZF_OUT T_Type &v,
-                                               ZF_IN const ZFSerializableData &serializableData,
-                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                               ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
-    /**
-     * @brief convert to serializable data
-     */
-    static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                             ZF_IN T_Type const &v,
-                                             ZF_OUT_OPT zfstring *outErrorHint = zfnull);
-    /**
-     * @brief convert from string, return error pos or empty string if fail
-     */
-    static zfbool PropertyFromString(ZF_OUT T_Type &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax());
-    /**
-     * @brief convert to string
-     */
-    static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN T_Type const &v);
 
     /**
      * @brief store the value to wrapper object
@@ -319,7 +263,6 @@ public:
     public: \
         enum { \
             PropertyRegistered = 1, \
-            PropertyAccessable = 1, \
             PropertySerializable = 1, \
         }; \
         static inline const zfchar *PropertyTypeId(void) \
@@ -327,32 +270,12 @@ public:
             return ZFPropertyTypeId_##TypeName(); \
         } \
         zfoverride \
-        virtual void propertyWrapper(ZF_OUT zfautoObject &v) const \
+        virtual zfbool propertyWrapper(ZF_OUT zfautoObject &v) const \
         { \
             v_##TypeName *t = zfAllocWithoutLeakTest(v_##TypeName); \
             v = zfautoObjectCreateWithoutLeakTest(t); \
             zfReleaseWithoutLeakTest(t); \
-        } \
-        static zfbool PropertyFromSerializableData(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, \
-                                                   ZF_IN const ZFSerializableData &serializableData, \
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
-        { \
-            return TypeName##FromSerializableData(v, serializableData, outErrorHint, outErrorPos); \
-        } \
-        static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                 ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v, \
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
-        { \
-            return TypeName##ToSerializableData(serializableData, v, outErrorHint); \
-        } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
-        { \
-            return TypeName##FromString(v, src, srcLen); \
-        } \
-        static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
-        { \
-            return TypeName##ToString(s, v); \
+            return zftrue; \
         } \
         static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
         { \
@@ -518,7 +441,6 @@ public:
     public: \
         enum { \
             PropertyRegistered = 1, \
-            PropertyAccessable = 1, \
             PropertySerializable = 0, \
         }; \
         static inline const zfchar *PropertyTypeId(void) \
@@ -526,36 +448,12 @@ public:
             return ZFPropertyTypeId_none; \
         } \
         zfoverride \
-        virtual void propertyWrapper(ZF_OUT zfautoObject &v) const \
+        virtual zfbool propertyWrapper(ZF_OUT zfautoObject &v) const \
         { \
             v_##TypeName *t = zfAllocWithoutLeakTest(v_##TypeName); \
             v = zfautoObjectCreateWithoutLeakTest(t); \
             zfReleaseWithoutLeakTest(t); \
-        } \
-        static zfbool PropertyFromSerializableData(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, \
-                                                   ZF_IN const ZFSerializableData &serializableData, \
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
-        { \
-            ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, \
-                zfText("registered type %s is not serializable"), zfText(#TypeName)); \
-            return zffalse; \
-        } \
-        static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                 ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v, \
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
-        { \
-            ZFSerializableUtil::errorOccurred(outErrorHint, \
-                zfText("registered type %s is not serializable"), zfText(#TypeName)); \
-            return zffalse; \
-        } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
-        { \
-            return zffalse; \
-        } \
-        static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
-        { \
-            return zffalse; \
+            return zftrue; \
         } \
         static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
         { \
@@ -666,37 +564,11 @@ public:
     public: \
         enum { \
             PropertyRegistered = 1, \
-            PropertyAccessable = 0, \
             PropertySerializable = 0, \
         }; \
         static inline const zfchar *PropertyTypeId(void) \
         { \
             return ZFPropertyTypeId_none; \
-        } \
-        static zfbool PropertyFromSerializableData(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, \
-                                                   ZF_IN const ZFSerializableData &serializableData, \
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
-        { \
-            ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, \
-                zfText("not serializable")); \
-            return zffalse; \
-        } \
-        static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                 ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v, \
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
-        { \
-            ZFSerializableUtil::errorOccurred(outErrorHint, \
-                zfText("not serializable")); \
-            return zffalse; \
-        } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
-        { \
-            return zffalse; \
-        } \
-        static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
-        { \
-            return zffalse; \
         } \
         static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
         { \
@@ -729,7 +601,6 @@ public:
     public: \
         enum { \
             PropertyRegistered = ZFPropertyTypeIdData<ExistType>::PropertyRegistered, \
-            PropertyAccessable = ZFPropertyTypeIdData<ExistType>::PropertyAccessable, \
             PropertySerializable = ZFPropertyTypeIdData<ExistType>::PropertySerializable, \
         }; \
         static inline const zfchar *PropertyTypeId(void) \
@@ -737,49 +608,11 @@ public:
             return ZFPropertyTypeIdData<ExistType>::PropertyTypeId(); \
         } \
         zfoverride \
-        virtual void propertyWrapper(ZF_OUT zfautoObject &v) const \
+        virtual zfbool propertyWrapper(ZF_OUT zfautoObject &v) const \
         { \
             ZFPropertyTypeIdData<ExistType> t; \
             t.propertyWrapper(v); \
-        } \
-        static zfbool PropertyFromSerializableData(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, \
-                                                   ZF_IN const ZFSerializableData &serializableData, \
-                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
-        { \
-            zftValue<ExistType> t; \
-            if(ZFPropertyTypeIdData<ExistType>::PropertyFromSerializableData(t.zfv, serializableData, outErrorHint, outErrorPos)) \
-            { \
-                v = t.zfv; \
-                return zftrue; \
-            } \
-            else \
-            { \
-                return zffalse; \
-            } \
-        } \
-        static zfbool PropertyToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                 ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v, \
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
-        { \
-            return ZFPropertyTypeIdData<ExistType>::PropertyToSerializableData(serializableData, (ExistType)v, outErrorHint); \
-        } \
-        static zfbool PropertyFromString(ZF_OUT _ZFP_ZFPropertyTypeWrapper_##TypeName &v, ZF_IN const zfchar *src, ZF_IN_OPT zfindex srcLen = zfindexMax()) \
-        { \
-            zftValue<ExistType> t; \
-            if(ZFPropertyTypeIdData<ExistType>::PropertyFromString(t.zfv, src, srcLen)) \
-            { \
-                v = t.zfv; \
-                return zftrue; \
-            } \
-            else \
-            { \
-                return zffalse; \
-            } \
-        } \
-        static zfbool PropertyToString(ZF_IN_OUT zfstring &s, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
-        { \
-            return ZFPropertyTypeIdData<ExistType>::PropertyToString(s, (ExistType)v); \
+            return zftrue; \
         } \
         static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
         { \

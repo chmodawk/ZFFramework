@@ -53,7 +53,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                     , propertyClassOfRetainProperty \
                     , &zfself::_ZFP_propCbAccessed_##Name \
                     , &zfself::_ZFP_propCbIsInit_##Name \
-                    , &zfself::_ZFP_propCbCmp_##Name \
+                    , &ZFPropertyCallbackCompareDefault<Type> \
                     , &ZFPropertyCallbackCopyDefault<Type> \
                     , &ZFPropertyCallbackRetainSetDefault<Type> \
                     , &ZFPropertyCallbackRetainGetDefault<Type> \
@@ -80,7 +80,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                     , propertyClassOfRetainProperty \
                     , zfself::_ZFP_propCbAccessed_##Name \
                     , zfself::_ZFP_propCbIsInit_##Name \
-                    , zfself::_ZFP_propCbCmp_##Name \
+                    , &ZFPropertyCallbackCompareDefault<Type> \
                     , &ZFPropertyCallbackCopyDefault<Type> \
                     , zfnull \
                     , zfnull \
@@ -152,31 +152,24 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             zfself::_ZFP_PropHT_##Name valueHolder; \
         }; \
         zfself::_ZFP_PropV_##Name Name##_PropV; \
-    protected: \
-        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
+    private: \
+        static zfbool _ZFP_propCbIsInit_##Name(ZF_IN const ZFProperty *property, \
+                                               ZF_IN ZFObject *ownerObj, \
+                                               ZF_OUT_OPT void *outInitValue) \
         { \
-            if(Name##_PropV.propertyAccessed()) \
+            zfCoreMutexLocker(); \
+            zfself *t = ZFCastZFObjectUnchecked(zfself *, ownerObj); \
+            if(t->Name##_PropV.propertyAccessed()) \
             { \
-                const ZFProperty *property = zfself::_ZFP_Prop_##Name(); \
-                if(property->_ZFP_ZFProperty_cbCustomIsInitValue) \
+                zfself::_ZFP_PropV_##Name _holder; \
+                if(outInitValue != zfnull) \
                 { \
-                    return (this->*( \
-                            (zfbool (zfself::*)(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *)) \
-                            property->_ZFP_ZFProperty_cbCustomIsInitValue \
-                        ))(outInitValue); \
+                    *(zfself::_ZFP_PropHT_##Name *)outInitValue = zfautoObjectCreateWithoutLeakTest( \
+                        ZFCastZFObjectUnchecked(ZFObject *, _holder.propertyInit(t, zffalse))); \
                 } \
-                else \
-                { \
-                    zfself::_ZFP_PropV_##Name _holder; \
-                    if(outInitValue != zfnull) \
-                    { \
-                        *outInitValue = zfautoObjectCreateWithoutLeakTest( \
-                            ZFCastZFObjectUnchecked(ZFObject *, _holder.propertyInit(this, zffalse))); \
-                    } \
-                    return (ZFComparerDefault( \
-                            this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(this, zffalse)) \
-                        == ZFCompareTheSame); \
-                } \
+                return (ZFComparerDefault( \
+                        t->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(t, zffalse)) \
+                    == ZFCompareTheSame); \
             } \
             else \
             { \
@@ -238,30 +231,23 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             zfself::_ZFP_PropVT_##Name *value; \
         }; \
         zfself::_ZFP_PropV_##Name Name##_PropV; \
-    protected: \
-        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue) \
+    private: \
+        static zfbool _ZFP_propCbIsInit_##Name(ZF_IN const ZFProperty *property, \
+                                               ZF_IN ZFObject *ownerObj, \
+                                               ZF_OUT_OPT void *outInitValue) \
         { \
-            if(Name##_PropV.propertyAccessed()) \
+            zfCoreMutexLocker(); \
+            zfself *t = ZFCastZFObjectUnchecked(zfself *, ownerObj); \
+            if(t->Name##_PropV.propertyAccessed()) \
             { \
-                const ZFProperty *property = zfself::_ZFP_Prop_##Name(); \
-                if(property->_ZFP_ZFProperty_cbCustomIsInitValue) \
+                zfself::_ZFP_PropV_##Name _holder; \
+                if(outInitValue != zfnull) \
                 { \
-                    return (this->*( \
-                            (zfbool (zfself::*)(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *)) \
-                            property->_ZFP_ZFProperty_cbCustomIsInitValue \
-                        ))(outInitValue); \
+                    *(zfself::_ZFP_PropHT_##Name *)outInitValue = _holder.propertyInit(t, zffalse); \
                 } \
-                else \
-                { \
-                    zfself::_ZFP_PropV_##Name _holder; \
-                    if(outInitValue != zfnull) \
-                    { \
-                        *outInitValue = _holder.propertyInit(this, zffalse); \
-                    } \
-                    return (ZFComparerDefault( \
-                            this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(this, zffalse)) \
-                        == ZFCompareTheSame); \
-                } \
+                return (ZFComparerDefault( \
+                        t->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), _holder.propertyInit(t, zffalse)) \
+                    == ZFCompareTheSame); \
             } \
             else \
             { \
@@ -277,40 +263,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
                                                  ZF_IN ZFObject *ownerObj) \
         { \
             return ZFCastZFObjectUnchecked(zfself *, ownerObj)->Name##_PropV.propertyAccessed(); \
-        } \
-    private: \
-        static zfbool _ZFP_propCbIsInit_##Name(ZF_IN const ZFProperty *property, \
-                                               ZF_IN ZFObject *ownerObj, \
-                                               ZF_OUT_OPT void *outInitValue) \
-        { \
-            zfCoreMutexLocker(); \
-            return ZFCastZFObjectUnchecked(zfself *, ownerObj)->_ZFP_propCbIsInitA_##Name((zfself::_ZFP_PropHT_##Name *)outInitValue); \
-        } \
-    private: \
-        static ZFCompareResult _ZFP_propCbCmp_##Name(ZF_IN const ZFProperty *property, \
-                                                     ZF_IN ZFObject *obj0, \
-                                                     ZF_IN ZFObject *obj1) \
-        { \
-            zfCoreMutexLocker(); \
-            return ZFCastZFObjectUnchecked(zfself *, obj0)->_ZFP_propCbCmpA_##Name(obj1); \
-        } \
-    protected: \
-        virtual ZFCompareResult _ZFP_propCbCmpA_##Name(ZF_IN ZFObject *anotherObj) \
-        { \
-            const ZFProperty *property = zfself::_ZFP_Prop_##Name(); \
-            if(property->_ZFP_ZFProperty_cbCustomCompare) \
-            { \
-                return (this->*( \
-                        (ZFCompareResult (zfself::*)(ZF_IN ZFObject *)) \
-                        property->_ZFP_ZFProperty_cbCustomCompare \
-                    ))(anotherObj); \
-            } \
-            else \
-            { \
-                return ZFComparerDefault( \
-                    this->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)(), \
-                    ZFCastZFObjectUnchecked(zfself *, anotherObj)->_ZFP_ZFPROPERTY_GETTER_NAME(Type, Name)()); \
-            } \
         } \
     private: \
         static void _ZFP_propCbDel_##Name(ZF_IN ZFObject *owner, ZF_IN const ZFProperty *property) \
@@ -705,44 +657,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
     public:
 
 // ============================================================
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_INIT_CHECKER_DECLARE(Type, Name) \
-    private: \
-        zfclassNotPOD _ZFP_propCbIsInitReg_##Name \
-        { \
-        public: \
-            _ZFP_propCbIsInitReg_##Name(void) \
-            { \
-                zfself::_ZFP_Prop_##Name()->_ZFP_ZFProperty_cbCustomIsInitValue = \
-                    (ZFMemberFuncAddrType)&zfself::_ZFP_propCbIsInitC_##Name; \
-            } \
-        }; \
-        _ZFP_propCbIsInitReg_##Name _ZFP_propCbIsInitRegH_##Name; \
-    public: \
-        zfbool _ZFP_propCbIsInitC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_INIT_CHECKER_DEFINE(OwnerClass, Type, Name) \
-    zfbool OwnerClass::_ZFP_propCbIsInitC_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_VALUE_COMPARER_DECLARE(Type, Name) \
-    private: \
-        zfclassNotPOD _ZFP_propCbCmpReg_##Name \
-        { \
-        public: \
-            _ZFP_propCbCmpReg_##Name(void) \
-            { \
-                zfself::_ZFP_Prop_##Name()->_ZFP_ZFProperty_cbCustomCompare = \
-                    (ZFMemberFuncAddrType)&zfself::_ZFP_propCbCmpC_##Name; \
-            } \
-        }; \
-        _ZFP_propCbCmpReg_##Name _ZFP_propCbCmpRegH_##Name; \
-    public: \
-        ZFCompareResult _ZFP_propCbCmpC_##Name(ZF_IN ZFObject *anotherObj)
-/** @brief see #ZFPROPERTY_RETAIN */
-#define ZFPROPERTY_CUSTOM_VALUE_COMPARER_DEFINE(OwnerClass, Type, Name) \
-    ZFCompareResult OwnerClass::_ZFP_propCbCmpC_##Name(ZF_IN ZFObject *anotherObj)
-
 /**
  * @brief declare custom life cycle callback for the property
  *
@@ -842,35 +756,6 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
      _ZFP_ZFPROPERTY_LIFE_CYCLE_CUSTOM_DEFINE(OwnerClass, Type, Name, OnUpdate, ZFM_EXPAND)
 
 // ============================================================
-/**
- * @brief override property's init value checker
- *
- * proto type:\n
- *   zfbool isInitValue(void)
- */
-#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE(Type, Name) \
-    public: \
-        virtual zfbool _ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-/** @brief see #ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_DEFINE(OwnerClass, Type, Name) \
-    zfbool OwnerClass::_ZFP_propCbIsInitA_##Name(ZF_OUT_OPT zfself::_ZFP_PropHT_##Name *outInitValue)
-/** @brief see #ZFPROPERTY_OVERRIDE_INIT_CHECKER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_INIT_CHECKER_CALL_SUPER(SuperOwnerClass, Type, Name) \
-    SuperOwnerClass::_ZFP_propCbIsInitA_##Name(outInitValue)
-
-/**
- * @brief override property's value comparer
- */
-#define ZFPROPERTY_OVERRIDE_VALUE_COMPARER_DECLARE(Type, Name) \
-    public: \
-        virtual ZFCompareResult _ZFP_propCbCmpA_##Name(ZF_IN ZFObject *anotherObj)
-/** @brief see #ZFPROPERTY_OVERRIDE_VALUE_COMPARER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_VALUE_COMPARER_DEFINE(OwnerClass, Type, Name) \
-    ZFCompareResult OwnerClass::_ZFP_propCbCmpA_##Name(ZF_IN ZFObject *anotherObj)
-/** @brief see #ZFPROPERTY_OVERRIDE_VALUE_COMPARER_DECLARE */
-#define ZFPROPERTY_OVERRIDE_VALUE_COMPARER_CALL_SUPER(SuperOwnerClass, Type, Name) \
-    SuperOwnerClass::_ZFP_propCbCmpA_##Name(anotherObj)
-
 #define _ZFP_ZFPROPERTY_OVERRIDE_ON_INIT_REGISTER(Type, Name) \
     private: \
         zfclassNotPOD _ZFP_ZFPropertyInitStepRegister_##Name \

@@ -21,7 +21,6 @@ public:
     zfindex waiterCount;
     pthread_cond_t sema;
     pthread_mutex_t semaLocker;
-    pthread_mutex_t mutexParamLocker;
 };
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFSemaphoreImpl_sys_Posix, ZFSemaphore, ZFProtocolLevel::e_SystemLow)
@@ -32,7 +31,6 @@ public:
         semaphoreToken->waiterCount = 0;
         pthread_cond_init(&(semaphoreToken->sema), zfnull);
         pthread_mutex_init(&(semaphoreToken->semaLocker), zfnull);
-        pthread_mutex_init(&(semaphoreToken->mutexParamLocker), zfnull);
         return semaphoreToken;
     }
     virtual void nativeSemaphoreDestroy(ZF_IN ZFSemaphore *semaphore,
@@ -41,61 +39,46 @@ public:
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, nativeSemaphore);
         pthread_cond_destroy(&(semaphoreToken->sema));
         pthread_mutex_destroy(&(semaphoreToken->semaLocker));
-        pthread_mutex_destroy(&(semaphoreToken->mutexParamLocker));
         zfdelete(semaphoreToken);
     }
 
     virtual void semaphoreLock(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
-        pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
+        pthread_mutex_lock(&(semaphoreToken->semaLocker));
     }
     virtual void semaphoreUnlock(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
-        pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
+        pthread_mutex_unlock(&(semaphoreToken->semaLocker));
     }
 
     virtual void semaphoreSignal(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
 
-        pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
         if(semaphoreToken->waiterCount > 0)
         {
             --(semaphoreToken->waiterCount);
-            pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
             this->semaSignal(semaphoreToken, 1);
-        }
-        else
-        {
-            pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
         }
     }
     virtual void semaphoreBroadcast(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
 
-        pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
         if(semaphoreToken->waiterCount > 0)
         {
             zfindex tmp = semaphoreToken->waiterCount;
             semaphoreToken->waiterCount = 0;
-            pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
             this->semaSignal(semaphoreToken, tmp);
-        }
-        else
-        {
-            pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
         }
     }
     virtual void semaphoreWait(ZF_IN ZFSemaphore *semaphore)
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
 
-        pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
         ++(semaphoreToken->waiterCount);
-        pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
         this->semaWait(semaphoreToken);
     }
     virtual zfbool semaphoreWait(ZF_IN ZFSemaphore *semaphore,
@@ -103,9 +86,7 @@ public:
     {
         _ZFP_ZFSemaphoreImpl_sys_Posix_Token *semaphoreToken = ZFCastStatic(_ZFP_ZFSemaphoreImpl_sys_Posix_Token *, semaphore->nativeSemaphore());
 
-        pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
         ++(semaphoreToken->waiterCount);
-        pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
 
         if(this->semaWait(semaphoreToken, miliSecsTimeout))
         {
@@ -113,12 +94,10 @@ public:
         }
         else
         {
-            pthread_mutex_lock(&(semaphoreToken->mutexParamLocker));
             if(semaphoreToken->waiterCount > 0)
             {
                 --(semaphoreToken->waiterCount);
             }
-            pthread_mutex_unlock(&(semaphoreToken->mutexParamLocker));
             return zffalse;
         }
     }

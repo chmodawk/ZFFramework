@@ -66,7 +66,12 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
 
         v.namedGroups.removeAll();
         element = ZFSerializableUtil::checkElementByName(serializableData, ZFSerializableKeyword_ZFRegExpResult_namedGroups);
-        if(element != zfnull && !ZFCoreArrayFromSerializableData(v.namedGroups, serializableData, outErrorHint, outErrorPos))
+        if(element != zfnull && !ZFCoreArrayFromSerializableData(
+            v.namedGroups,
+            zfindexRangeFromSerializableData,
+            serializableData,
+            outErrorHint,
+            outErrorPos))
         {
             return zffalse;
         }
@@ -99,7 +104,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
         if(!v.namedGroups.isEmpty())
         {
             ZFSerializableData element;
-            if(!ZFCoreArrayToSerializableData(element, v.namedGroups, outErrorHint))
+            if(!ZFCoreArrayToSerializableData(element, zfindexRangeToSerializableData, v.namedGroups, outErrorHint))
             {
                 return zffalse;
             }

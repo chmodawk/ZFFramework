@@ -45,12 +45,10 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
         {
             break;
         }
-        const zfchar *paramTypeName = va_arg(vaList, const zfchar *);
         const zfchar *paramDefault = va_arg(vaList, const zfchar *);
         _ZFP_ZFMethodParamDefaultValueAccessCallback paramDefaultValueAccessCallback = va_arg(vaList, _ZFP_ZFMethodParamDefaultValueAccessCallback);
 
         this->_ZFP_ZFMethod_paramTypeIdList[this->_ZFP_ZFMethod_paramCount] = paramTypeId;
-        this->_ZFP_ZFMethod_paramTypeNameList[this->_ZFP_ZFMethod_paramCount] = paramTypeName;
 
         if(_ZFP_ZFMethodHasDefaultParam(paramDefault))
         {
@@ -58,7 +56,6 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
             {
                 this->_ZFP_ZFMethod_paramDefaultBeginIndex = this->_ZFP_ZFMethod_paramCount;
             }
-            this->_ZFP_ZFMethod_paramDefaultNameList[this->_ZFP_ZFMethod_paramCount] = _ZFP_ZFMethodDefaultParamText(paramDefault);
             this->_ZFP_ZFMethod_paramDefaultValueAccessCallbackList[this->_ZFP_ZFMethod_paramCount] = paramDefaultValueAccessCallback;
         }
 
@@ -93,8 +90,6 @@ ZFMethod::ZFMethod(void)
 , _ZFP_ZFMethod_returnTypeName()
 , _ZFP_ZFMethod_paramCount(0)
 , _ZFP_ZFMethod_paramTypeIdList()
-, _ZFP_ZFMethod_paramTypeNameList()
-, _ZFP_ZFMethod_paramDefaultNameList()
 , _ZFP_ZFMethod_paramDefaultValueAccessCallbackList()
 , _ZFP_ZFMethod_paramDefaultBeginIndex(zfindexMax())
 , _ZFP_ZFMethod_methodOwnerClass(zfnull)
@@ -165,13 +160,7 @@ void ZFMethod::objectInfoT(ZF_IN_OUT zfstring &ret) const
             {
                 ret += zfText(", ");
             }
-            ret += this->methodParamTypeNameAtIndex(i);
-
-            if(this->methodParamDefaultNameAtIndex(i) != zfnull)
-            {
-                ret += zfText(" = ");
-                ret += this->methodParamDefaultNameAtIndex(i);
-            }
+            ret += this->methodParamTypeIdAtIndex(i);
         }
         ret += zfText(")");
     }
@@ -319,7 +308,7 @@ ZFMethod *_ZFP_ZFMethodRegister(ZF_IN zfbool methodIsUserRegister
                                 , ZF_IN const zfchar *methodName
                                 , ZF_IN const zfchar *returnTypeId
                                 , ZF_IN const zfchar *returnTypeName
-                                /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                /* ParamTypeIdString, DefaultValueAccessCallback, end with zfnull */
                                 , ...
                                 )
 {
@@ -352,7 +341,7 @@ ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
                                  , ZF_IN const zfchar *methodName
                                  , ZF_IN const zfchar *returnTypeId
                                  , ZF_IN const zfchar *returnTypeName
-                                 /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                 /* ParamTypeIdString, DefaultValueAccessCallback, end with zfnull */
                                  , ZF_IN va_list vaList
                                  )
 {
@@ -370,16 +359,12 @@ ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
     ZFMethod *method = zfnull;
 
     const zfchar *paramTypeId[ZFMETHOD_MAX_PARAM + 1] = {0};
-    const zfchar *paramType[ZFMETHOD_MAX_PARAM + 1] = {0};
-    const zfchar *paramDefaultValue[ZFMETHOD_MAX_PARAM + 1] = {0};
     _ZFP_ZFMethodParamDefaultValueAccessCallback paramDefaultValueAccess[ZFMETHOD_MAX_PARAM + 1] = {0};
     {
         zfindex index = 0;
         paramTypeId[index] = va_arg(vaList, const zfchar *);
         while(paramTypeId[index] != zfnull)
         {
-            paramType[index] = va_arg(vaList, const zfchar *);
-            paramDefaultValue[index] = va_arg(vaList, const zfchar *);
             paramDefaultValueAccess[index] = va_arg(vaList, _ZFP_ZFMethodParamDefaultValueAccessCallback);
             ++index;
             paramTypeId[index] = va_arg(vaList, const zfchar *);
@@ -432,14 +417,14 @@ ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
                 , methodName
                 , returnTypeId
                 , returnTypeName
-                , paramTypeId[0], paramType[0], paramDefaultValue[0], paramDefaultValueAccess[0]
-                , paramTypeId[1], paramType[1], paramDefaultValue[1], paramDefaultValueAccess[1]
-                , paramTypeId[2], paramType[2], paramDefaultValue[2], paramDefaultValueAccess[2]
-                , paramTypeId[3], paramType[3], paramDefaultValue[3], paramDefaultValueAccess[3]
-                , paramTypeId[4], paramType[4], paramDefaultValue[4], paramDefaultValueAccess[4]
-                , paramTypeId[5], paramType[5], paramDefaultValue[5], paramDefaultValueAccess[5]
-                , paramTypeId[6], paramType[6], paramDefaultValue[6], paramDefaultValueAccess[6]
-                , paramTypeId[7], paramType[7], paramDefaultValue[7], paramDefaultValueAccess[7]
+                , paramTypeId[0], paramDefaultValueAccess[0]
+                , paramTypeId[1], paramDefaultValueAccess[1]
+                , paramTypeId[2], paramDefaultValueAccess[2]
+                , paramTypeId[3], paramDefaultValueAccess[3]
+                , paramTypeId[4], paramDefaultValueAccess[4]
+                , paramTypeId[5], paramDefaultValueAccess[5]
+                , paramTypeId[6], paramDefaultValueAccess[6]
+                , paramTypeId[7], paramDefaultValueAccess[7]
                 , zfnull
             );
 
@@ -488,7 +473,7 @@ _ZFP_ZFMethodRegisterHolder::_ZFP_ZFMethodRegisterHolder(ZF_IN zfbool methodIsUs
                                                          , ZF_IN const zfchar *methodName
                                                          , ZF_IN const zfchar *returnTypeId
                                                          , ZF_IN const zfchar *returnTypeName
-                                                         /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                                         /* ParamTypeIdString, DefaultValueAccessCallback, end with zfnull */
                                                          , ...
                                                          )
 : method(zfnull)
@@ -522,7 +507,7 @@ _ZFP_ZFMethodRegisterHolder::_ZFP_ZFMethodRegisterHolder(ZF_IN zfbool dummy
                                                          , ZF_IN const zfchar *methodName
                                                          , ZF_IN const zfchar *returnTypeId
                                                          , ZF_IN const zfchar *returnTypeName
-                                                         /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                                                         /* ParamTypeIdString, DefaultValueAccessCallback, end with zfnull */
                                                          , ZF_IN va_list vaList
                                                          )
 : method(_ZFP_ZFMethodRegisterV(methodIsUserRegister
@@ -587,8 +572,6 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodRetu
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, const zfchar *, methodReturnTypeName)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfindex, methodParamCount)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamTypeIdAtIndex, ZFMP_IN(zfindex, index))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamTypeNameAtIndex, ZFMP_IN(zfindex, index))
-ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, const zfchar *, methodParamDefaultNameAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, zfautoObject, methodParamDefaultValueAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, zfindex, methodParamDefaultBeginIndex)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFFuncAddrType, methodInvoker)

@@ -481,23 +481,23 @@ public:
 
 public:
     /**
-     * @brief convert from serializable data, see #ZFPropertyTypeIdData::propertyWrapperFromSerializableData
+     * @brief convert from serializable data
      */
     virtual zfbool wrappedValueFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
                                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull,
                                                     ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) zfpurevirtual;
     /**
-     * @brief convert to serializable data, see #ZFPropertyTypeIdData::propertyWrapperToSerializableData
+     * @brief convert to serializable data
      */
     virtual zfbool wrappedValueToSerializableData(ZF_OUT ZFSerializableData &serializableData,
                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull) zfpurevirtual;
     /**
-     * @brief convert from string, see #ZFPropertyTypeIdData::propertyWrapperFromString
+     * @brief convert from string
      */
     virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src,
                                           ZF_IN_OPT zfindex srcLen = zfindexMax()) zfpurevirtual;
     /**
-     * @brief convert to string, see #ZFPropertyTypeIdData::propertyWrapperToString
+     * @brief convert to string
      */
     virtual zfbool wrappedValueToString(ZF_IN_OUT zfstring &s) zfpurevirtual;
 
