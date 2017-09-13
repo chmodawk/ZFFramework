@@ -80,19 +80,9 @@ zfclassFwd ZFClass;
 #define _ZFP_ZFMethodDefaultParam(DefaultValue) \
     = (DefaultValue) ZFM_EMPTY
 
-// tricks to solve empty macro expansion when cross platform
-// default param would be expanded by
-//   ZFM_TOSTRING_DIRECT(DefaultValueFix())
-// which would be expanded to
-//   "= (DefaultValue) ZFM_EMPTY()"
-#define _ZFP_ZFMethodHasDefaultParam(text) \
-    (zfslen(text) > 16) /* length of "= () ZFM_EMPTY()" */
-#define _ZFP_ZFMethodDefaultParamText(text) \
-    zfstring( \
-            text + 3, /* length of "= (" */ \
-            zfslen(text) - 16 /* length of "= () ZFM_EMPTY()" */ \
-            )
-
+// tricks to solve recursive macro
+#define _ZFP_ZFMethodDefaultEmpty() ZFM_EMPTY
+#define _ZFP_ZFMethodDefaultExpand() ZFM_EXPAND
 /**
  * @brief macro to wrap param types for #ZFMETHOD_DECLARE_0 series
  *
@@ -106,22 +96,22 @@ zfclassFwd ZFClass;
  * -  #ZFMP_IN_OUT_OPT
  */
 #define ZFMP_IN(ParamType, paramName) \
-    ParamType, paramName, _ZFP_ZFMethodNoDefaultParam
+    ParamType, paramName, _ZFP_ZFMethodDefaultEmpty, _ZFP_ZFMethodNoDefaultParam
 /** @brief see #ZFMP_IN */
 #define ZFMP_IN_OPT(ParamType, paramName, DefaultValue) \
-    ParamType, paramName, _ZFP_ZFMethodDefaultParam(DefaultValue)
+    ParamType, paramName, _ZFP_ZFMethodDefaultExpand, _ZFP_ZFMethodDefaultParam(DefaultValue)
 /** @brief see #ZFMP_IN */
 #define ZFMP_OUT(ParamType, paramName) \
-    ParamType, paramName, _ZFP_ZFMethodNoDefaultParam
+    ParamType, paramName, _ZFP_ZFMethodDefaultEmpty, _ZFP_ZFMethodNoDefaultParam
 /** @brief see #ZFMP_IN */
 #define ZFMP_OUT_OPT(ParamType, paramName, DefaultValue) \
-    ParamType, paramName, _ZFP_ZFMethodDefaultParam(DefaultValue)
+    ParamType, paramName, _ZFP_ZFMethodDefaultExpand, _ZFP_ZFMethodDefaultParam(DefaultValue)
 /** @brief see #ZFMP_IN */
 #define ZFMP_IN_OUT(ParamType, paramName) \
-    ParamType, paramName, _ZFP_ZFMethodNoDefaultParam
+    ParamType, paramName, _ZFP_ZFMethodDefaultEmpty, _ZFP_ZFMethodNoDefaultParam
 /** @brief see #ZFMP_IN */
 #define ZFMP_IN_OUT_OPT(ParamType, paramName, DefaultValue) \
-    ParamType, paramName, _ZFP_ZFMethodDefaultParam(DefaultValue)
+    ParamType, paramName, _ZFP_ZFMethodDefaultExpand, _ZFP_ZFMethodDefaultParam(DefaultValue)
 
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMethodFuncNamespaceGlobalId ZF_NAMESPACE_GLOBAL_ID
@@ -262,7 +252,7 @@ public:
                             ZF_IN const zfchar *methodName,
                             ZF_IN const zfchar *returnTypeId,
                             ZF_IN const zfchar *returnTypeName,
-                            /* ParamTypeIdString, ParamTypeString, DefaultValueString, DefaultValueAccessCallback, end with zfnull */
+                            /* ParamTypeIdString, DefaultValueAccessCallback, end with zfnull */
                             ...);
     void _ZFP_ZFMethod_initClassMemberType(ZF_IN const ZFClass *methodOwnerClass,
                                            ZF_IN ZFMethodPrivilegeType privilegeType);

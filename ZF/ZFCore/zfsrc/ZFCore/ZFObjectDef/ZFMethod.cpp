@@ -45,12 +45,11 @@ void ZFMethod::_ZFP_ZFMethod_init(ZF_IN zfbool methodIsUserRegister,
         {
             break;
         }
-        const zfchar *paramDefault = va_arg(vaList, const zfchar *);
         _ZFP_ZFMethodParamDefaultValueAccessCallback paramDefaultValueAccessCallback = va_arg(vaList, _ZFP_ZFMethodParamDefaultValueAccessCallback);
 
         this->_ZFP_ZFMethod_paramTypeIdList[this->_ZFP_ZFMethod_paramCount] = paramTypeId;
 
-        if(_ZFP_ZFMethodHasDefaultParam(paramDefault))
+        if(paramDefaultValueAccessCallback != zfnull)
         {
             if(this->_ZFP_ZFMethod_paramDefaultBeginIndex == zfindexMax())
             {

@@ -74,9 +74,9 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
 
 // ============================================================
 #define _ZFP_ZFMethodFuncAccess(MethodNamespace, MethodName) \
-    _ZFP_ZFMethodFuncAccess_(MethodNamespace, MethodName)
-#define _ZFP_ZFMethodFuncAccess_(MethodNamespace, MethodName) \
-    (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName(zfnull))
+    _ZFP_MtdFA_(MethodNamespace, MethodName)
+#define _ZFP_MtdFA_(MethodNamespace, MethodName) \
+    (_ZFP_MtdFA_##MethodNamespace##_##MethodName(zfnull))
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMethodFuncAccess(MethodName) \
     _ZFP_ZFMethodFuncAccess(ZFMethodFuncNamespaceGlobalId, MethodName)
@@ -91,7 +91,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ParamExpandOrEmpty6, ParamType6 \
         , ParamExpandOrEmpty7, ParamType7 \
     ) \
-    (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName((void (*)( \
+    (_ZFP_MtdFA_##MethodNamespace##_##MethodName((void (*)( \
            ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
            ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
            ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -282,17 +282,17 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     ZFM_EXPAND(_ZFP_ZFMETHOD_FUNC_DECLARE_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_FUNC_DECLARE_( \
     ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, DECLARE_LINE \
-    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
-    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
-    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
-    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
-    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
-    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
-    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
-    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+    , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+    , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+    , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+    , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+    , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+    , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+    , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+    , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
     ) \
     /** @cond ZFPrivateDoc */ \
-    extern ZF_ENV_EXPORT const ZFMethod *_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName(void (*)( \
+    extern ZF_ENV_EXPORT const ZFMethod *_ZFP_MtdFA_##MethodNamespace##_##MethodName(void (*)( \
             ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
             ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
             ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -318,14 +318,14 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     ZFM_EXPAND(_ZFP_ZFMETHOD_FUNC_DEFINE_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_FUNC_DEFINE_( \
     ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, DECLARE_LINE \
-    , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
-    , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
-    , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
-    , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
-    , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
-    , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
-    , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
-    , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+    , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+    , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+    , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+    , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+    , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+    , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+    , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+    , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
     ) \
     _ZFP_ZFMETHOD_FUNC_DEFINE_inlinePrefix(ZFMethodFuncIsInlineOrNotInline) ReturnType (MethodName)( \
         ParamExpandOrEmpty0(            ParamType0 param0) \
@@ -337,19 +337,19 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         ParamExpandOrEmpty6(ZFM_COMMA() ParamType6 param6) \
         ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
         ); \
-    zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE \
+    zfclassNotPOD ZF_ENV_EXPORT _ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE \
     { \
     public: \
         _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
             ReturnType, _ \
-            , ParamExpandOrEmpty0, ParamType0, param0, DefaultValueFix0 \
-            , ParamExpandOrEmpty1, ParamType1, param1, DefaultValueFix1 \
-            , ParamExpandOrEmpty2, ParamType2, param2, DefaultValueFix2 \
-            , ParamExpandOrEmpty3, ParamType3, param3, DefaultValueFix3 \
-            , ParamExpandOrEmpty4, ParamType4, param4, DefaultValueFix4 \
-            , ParamExpandOrEmpty5, ParamType5, param5, DefaultValueFix5 \
-            , ParamExpandOrEmpty6, ParamType6, param6, DefaultValueFix6 \
-            , ParamExpandOrEmpty7, ParamType7, param7, DefaultValueFix7 \
+            , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+            , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+            , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+            , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+            , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+            , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+            , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+            , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
             ) \
         static ReturnType methodInvoker( \
             ZF_IN const ZFMethod *invokerMethod, \
@@ -376,7 +376,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
                 ); \
         } \
     }; \
-    extern ZF_ENV_EXPORT const ZFMethod *_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName(void (*)( \
+    extern ZF_ENV_EXPORT const ZFMethod *_ZFP_MtdFA_##MethodNamespace##_##MethodName(void (*)( \
             ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
             ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
             ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -388,8 +388,8 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         )) \
     { \
         static _ZFP_ZFMethodRegisterHolder _methodHolder(zffalse \
-                , ZFCastReinterpret(ZFFuncAddrType, &_ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE::methodInvoker) \
-                , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _) \
+                , ZFCastReinterpret(ZFFuncAddrType, &_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE::methodInvoker) \
+                , _ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, _) \
                 , _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic) \
                 , zfnull \
                 , ZFMethodPrivilegeTypePublic \
@@ -400,35 +400,35 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
                 , zfText(#ReturnType) \
                 ParamExpandOrEmpty0(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 0) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty0, 0) \
                     ) \
                 ParamExpandOrEmpty1(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 1) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty1, 1) \
                     ) \
                 ParamExpandOrEmpty2(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 2) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty2, 2) \
                     ) \
                 ParamExpandOrEmpty3(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 3) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty3, 3) \
                     ) \
                 ParamExpandOrEmpty4(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 4) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty4, 4) \
                     ) \
                 ParamExpandOrEmpty5(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 5) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty5, 5) \
                     ) \
                 ParamExpandOrEmpty6(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 6) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty6, 6) \
                     ) \
                 ParamExpandOrEmpty7(ZFM_EMPTY() \
                         , ZFPropertyTypeIdData<zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId() \
-                        , _ZFP_ZFMethodFuncHolder_##MethodNamespace##_##MethodName##_##DECLARE_LINE:: _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_, 7) \
+                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFH_##MethodNamespace##_##MethodName##_##DECLARE_LINE, _, DefaultExpandOrEmpty7, 7) \
                     ) \
                 , zfnull \
             ); \
@@ -436,7 +436,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     } \
     ZF_STATIC_REGISTER_INIT(MtdFR_##MethodNamespace##_##MethodName##_##DECLARE_LINE) \
     { \
-        (_ZFP_ZFMethodFuncAccess_##MethodNamespace##_##MethodName((void (*)( \
+        (_ZFP_MtdFA_##MethodNamespace##_##MethodName((void (*)( \
                ParamExpandOrEmpty0(ZFM_EMPTY() ParamType0) \
                ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
                ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
@@ -509,14 +509,14 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     ) \
     _ZFP_ZFMETHOD_FUNC_DECLARE( \
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
-        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_0( \
@@ -545,14 +545,14 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     ) \
     _ZFP_ZFMETHOD_FUNC_DEFINE( \
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
-        , ZFM_EMPTY,  ParamType0, param0, DefaultValueFix0 \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -592,13 +592,13 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     _ZFP_ZFMETHOD_FUNC_DECLARE( \
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_1( \
@@ -635,13 +635,13 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
     _ZFP_ZFMETHOD_FUNC_DEFINE( \
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -689,12 +689,12 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_2( \
@@ -739,12 +739,12 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         ZFMethodFuncIsInlineOrNotInline, MethodNamespace, ReturnType, MethodName, ZF_CALLER_LINE \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -800,11 +800,11 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_3( \
@@ -857,11 +857,11 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -925,10 +925,10 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_4( \
@@ -989,10 +989,10 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -1064,9 +1064,9 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_5( \
@@ -1135,9 +1135,9 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -1217,8 +1217,8 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_6( \
@@ -1295,8 +1295,8 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
@@ -1384,7 +1384,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 /** @brief see #ZFMETHOD_FUNC_DECLARE_0 */
 #define ZFMETHOD_FUNC_DEFINE_7( \
@@ -1469,7 +1469,7 @@ inline ZFCoreArrayPOD<const ZFMethod *> ZFMethodFuncGetAll(ZF_IN const zfchar *m
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultValueFix7 \
+        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
 
 // ============================================================
