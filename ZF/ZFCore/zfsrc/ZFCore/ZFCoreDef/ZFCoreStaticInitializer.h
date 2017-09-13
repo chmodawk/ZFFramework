@@ -69,19 +69,19 @@ public:
     zfclassNotPOD _ZFP_SI_##Name \
     { \
     public: \
-        static void *_ZFP_SI_constructor_##Name(void) \
+        static void *_ZFP_SI_ctor_##Name(void) \
         { \
             return (void *)zfnew(_ZFP_SI_##Name); \
         } \
-        static void _ZFP_SI_destructor_##Name(ZF_IN void *p) \
+        static void _ZFP_SI_dtor_##Name(ZF_IN void *p) \
         { \
             zfdelete(ZFCastStatic(_ZFP_SI_##Name *, p)); \
         } \
         static _ZFP_SI_##Name *_ZFP_SI_instanceAccess(void) \
         { \
             static _ZFP_SI_Holder d(zfText(#Name), \
-                _ZFP_SI_##Name::_ZFP_SI_constructor_##Name, \
-                _ZFP_SI_##Name::_ZFP_SI_destructor_##Name); \
+                _ZFP_SI_##Name::_ZFP_SI_ctor_##Name, \
+                _ZFP_SI_##Name::_ZFP_SI_dtor_##Name); \
             return ZFCastStatic(_ZFP_SI_##Name *, d.instance); \
         } \
     public: \

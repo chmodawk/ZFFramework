@@ -20,23 +20,23 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 // zfAlloc
 template<typename T_ZFObject, int valid>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFObjectAllocChecker
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk
 {
 };
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFObjectAllocChecker<T_ZFObject, 1>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk<T_ZFObject, 1>
 {
 public:
     typedef T_ZFObject CanAlloc;
 };
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFObjectAllocChecker<T_ZFObject, 0>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk<T_ZFObject, 0>
 {
 };
 #define _ZFP_zfAlloc(T_ZFObject, ...) \
-    _ZFP_ZFCastZFObjectInternal(T_ZFObject *, _ZFP_ZFCastZFObjectInternal(T_ZFObject *, \
+    _ZFP_ObjCastInternal(T_ZFObject *, _ZFP_ObjCastInternal(T_ZFObject *, \
         (ZFObject::_ZFP_ZFObjectAlloc( \
-            _ZFP_ZFObjectAllocChecker<T_ZFObject, T_ZFObject::_ZFP_ZFObjectCanAlloc>::CanAlloc::_ZFP_ZFObject_constructor())) \
+            _ZFP_Obj_AllocCk<T_ZFObject, T_ZFObject::_ZFP_ZFObjectCanAlloc>::CanAlloc::_ZFP_Obj_ctor())) \
         )->objectOnInit(__VA_ARGS__)->_ZFP_ZFObjectCheckOnInit())
 /**
  * @brief won't be logged by ZFLeakTest, use only if necessary
@@ -55,21 +55,21 @@ inline void _ZFP_zfRetainAction(ZF_IN ZFObject *obj)
     obj->objectOnRetain();
 }
 template<typename T_ZFObject, int isZFObjectType>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainHolder {};
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainH {};
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainHolder<T_ZFObject, 1>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainH<T_ZFObject, 1>
 {
 public:
-    static inline void action(ZF_IN T_ZFObject *obj)
+    static inline void a(ZF_IN T_ZFObject *obj)
     {
         _ZFP_zfRetainAction(obj);
     }
 };
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainHolder<T_ZFObject, 0>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfRetainH<T_ZFObject, 0>
 {
 public:
-    static inline void action(ZF_IN T_ZFObject *obj)
+    static inline void a(ZF_IN T_ZFObject *obj)
     {
         _ZFP_zfRetainAction(obj->toObject());
     }
@@ -79,7 +79,7 @@ inline T_ZFObject *_ZFP_zfRetain(ZF_IN T_ZFObject *obj)
 {
     if(obj)
     {
-        _ZFP_zfRetainHolder<T_ZFObject, zftTypeIsTypeOf<T_ZFObject, ZFObject>::TypeIsTypeOf>::action(obj);
+        _ZFP_zfRetainH<T_ZFObject, zftTypeIsTypeOf<T_ZFObject, ZFObject>::TypeIsTypeOf>::a(obj);
     }
     return obj;
 }
@@ -115,21 +115,21 @@ inline void _ZFP_zfReleaseAction(ZF_IN ZFObject *obj)
     }
 }
 template<typename T_ZFObject, int isZFObjectType>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseHolder {};
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseH {};
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseHolder<T_ZFObject, 1>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseH<T_ZFObject, 1>
 {
 public:
-    static inline void action(ZF_IN T_ZFObject *obj)
+    static inline void a(ZF_IN T_ZFObject *obj)
     {
         _ZFP_zfReleaseAction(obj);
     }
 };
 template<typename T_ZFObject>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseHolder<T_ZFObject, 0>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfReleaseH<T_ZFObject, 0>
 {
 public:
-    static inline void action(ZF_IN T_ZFObject *obj)
+    static inline void a(ZF_IN T_ZFObject *obj)
     {
         _ZFP_zfReleaseAction(obj->toObject());
     }
@@ -139,7 +139,7 @@ inline void _ZFP_zfRelease(ZF_IN T_ZFObject *obj)
 {
     if(obj)
     {
-        _ZFP_zfReleaseHolder<T_ZFObject, zftTypeIsTypeOf<T_ZFObject, ZFObject>::TypeIsTypeOf>::action(obj);
+        _ZFP_zfReleaseH<T_ZFObject, zftTypeIsTypeOf<T_ZFObject, ZFObject>::TypeIsTypeOf>::a(obj);
     }
 }
 inline void _ZFP_zfRelease(ZF_IN const ZFAny &any)

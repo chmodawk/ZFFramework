@@ -377,7 +377,7 @@ ZFObject *ZFObject::_ZFP_ZFObjectCheckOnInit(void)
 
     d->objectInstanceState = ZFObjectInstanceStateOnInitFinish;
     this->classData()->_ZFP_ZFClass_propertyAutoInitAction(this);
-    this->_ZFP_ZFObject_interfaceOnInit();
+    this->_ZFP_ObjI_onInitIvk();
     this->objectOnInitFinish();
     d->objectInstanceState = ZFObjectInstanceStateIdle;
 
@@ -408,7 +408,7 @@ void ZFObject::_ZFP_ZFObjectDealloc(ZFObject *obj)
     }
     obj->d->objectInstanceState = ZFObjectInstanceStateOnDeallocPrepare;
     obj->objectOnDeallocPrepare();
-    obj->_ZFP_ZFObject_interfaceOnDealloc();
+    obj->_ZFP_ObjI_onDeallocIvk();
     for(zfstlsize i = obj->d->propertyAccessed.size() - 1; i != (zfstlsize)-1; --i)
     {
         const ZFProperty *property = obj->d->propertyAccessed[i];

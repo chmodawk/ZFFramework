@@ -233,22 +233,22 @@ zfbool zfautoObject::operator == (ZF_IN T_ZFObject const &p) const
 
 // ============================================================
 // ZFCastZFObject fix for ZFAny
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknown(zfautoObject const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknown(zfautoObject const &obj)
 {
     return obj.toObject();
 }
-inline void _ZFP_ZFCastZFObjectToUnknown(zfautoObject &ret,
-                                         ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknown(zfautoObject &ret,
+                                  ZFObject * const &obj)
 {
     ret = zfautoObjectCreateVerbose(obj, ZFCallerInfo(ZF_CALLER_FILE, zfTextA("ZFCastZFObject"), ZF_CALLER_LINE));
 }
 
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknownUnchecked(zfautoObject const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknownUnchecked(zfautoObject const &obj)
 {
     return obj.toObject();
 }
-inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(zfautoObject &ret,
-                                                  ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknownUnchecked(zfautoObject &ret,
+                                           ZFObject * const &obj)
 {
     ret = zfautoObjectCreateVerbose(obj, ZFCallerInfo(ZF_CALLER_FILE, zfTextA("ZFCastZFObjectUnchecked"), ZF_CALLER_LINE));
 }

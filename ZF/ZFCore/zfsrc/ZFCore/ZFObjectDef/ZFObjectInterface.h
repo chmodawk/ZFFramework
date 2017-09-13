@@ -34,10 +34,10 @@ zfclassFwd ZFClass;
 #define zfimplements public
 
 // ============================================================
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFInterfaceDummyParent
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_ObjI_Base
 {
 protected:
-    virtual ~_ZFP_ZFInterfaceDummyParent(void) {}
+    virtual ~_ZFP_ObjI_Base(void) {}
 
 public:
     static const ZFClass *ClassData(void)
@@ -45,9 +45,9 @@ public:
         return zfnull;
     }
 public:
-    static void _ZFP_ZFObjectInitImplementationList(ZFClass *cls) {}
+    static void _ZFP_Obj_initImpl(ZFClass *cls) {}
 public:
-    static void _ZFP_ZFInterface_INHERIT_CHECKER(void)
+    static void _ZFP_ObjI_ICk(void)
     {
     }
 };
@@ -59,14 +59,14 @@ public:
         /** @brief typedef for self */ \
         typedef InterfaceName zfself; \
     private: \
-        static void _ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
+        static void _ZFP_Obj_initImplCk(ZF_IN ZFClass *cls) \
         { \
             if(cls->_ZFP_ZFClassNeedInitImplementationList) \
             { \
                 cls->_ZFP_ZFClassNeedInitImplementationList = zffalse; \
-                if(zfself::_ZFP_ZFObjectInitImplementationList != zfsuper::_ZFP_ZFObjectInitImplementationList) \
+                if(zfself::_ZFP_Obj_initImpl != zfsuper::_ZFP_Obj_initImpl) \
                 { \
-                    zfself::_ZFP_ZFObjectInitImplementationList(cls); \
+                    zfself::_ZFP_Obj_initImpl(cls); \
                 } \
             } \
         } \
@@ -79,16 +79,16 @@ public:
                     DummyParent::ClassData(), \
                     zfnull, \
                     zfnull, \
-                    &zfself::_ZFP_ZFObjectCheckInitImplementationList, \
+                    &zfself::_ZFP_Obj_initImplCk, \
                     zftrue \
                 ); \
             return _holder.cls; \
         } \
     protected: \
-        virtual void _ZFP_ZFInterface_INHERIT_CHECKER(void) \
+        virtual void _ZFP_ObjI_ICk(void) \
         { \
             /* used to ensure inherit from ZFInterface */ \
-            _ZFP_ZFInterfaceDummyParent::_ZFP_ZFInterface_INHERIT_CHECKER(); \
+            _ZFP_ObjI_Base::_ZFP_ObjI_ICk(); \
         } \
     public: \
         /** @cond ZFPrivateDoc */ \
@@ -159,12 +159,12 @@ public:
         return _ZFP_ZFInterfaceCastWrapper<zfself, Interface, (zftTypeIsTypeOf<zfself, ZFObject>::TypeIsTypeOf ? 0 : 1)>::_ZFP_cast(obj); \
     }
 #define _ZFP_ZFIMPLEMENTS_DECLARE_EXPAND_INTERFACE_ON_INIT(Interface) \
-    Interface::_ZFP_ZFInterface_interfaceOnInit();
+    Interface::_ZFP_ObjI_onInit();
 #define _ZFP_ZFIMPLEMENTS_DECLARE_EXPAND_INTERFACE_ON_DEALLOC(Interface) \
-    Interface::_ZFP_ZFInterface_interfaceOnDealloc();
+    Interface::_ZFP_ObjI_onDealloc();
 #define _ZFP_ZFIMPLEMENTS_DECLARE(ImplementedInterfaces, ...) \
     public: \
-        static void _ZFP_ZFObjectInitImplementationList(ZFClass *cls) \
+        static void _ZFP_Obj_initImpl(ZFClass *cls) \
         { \
             if(cls->_ZFP_ZFClass_interfaceNeedRegister()) \
             { \
@@ -187,15 +187,15 @@ public:
 #define ZFIMPLEMENTS_DECLARE(ImplementedInterfaces, ...) \
         _ZFP_ZFIMPLEMENTS_DECLARE(ImplementedInterfaces, ##__VA_ARGS__) \
     public: \
-        virtual inline void _ZFP_ZFObject_interfaceOnInit(void) \
+        virtual inline void _ZFP_ObjI_onInitIvk(void) \
         { \
-            zfsuper::_ZFP_ZFObject_interfaceOnInit(); \
+            zfsuper::_ZFP_ObjI_onInitIvk(); \
             ZFM_FIX_PARAM(_ZFP_ZFIMPLEMENTS_DECLARE_EXPAND_INTERFACE_ON_INIT, ZFM_EMPTY, ImplementedInterfaces, ##__VA_ARGS__) \
         } \
-        virtual inline void _ZFP_ZFObject_interfaceOnDealloc(void) \
+        virtual inline void _ZFP_ObjI_onDeallocIvk(void) \
         { \
             ZFM_FIX_PARAM(_ZFP_ZFIMPLEMENTS_DECLARE_EXPAND_INTERFACE_ON_DEALLOC, ZFM_EMPTY, ImplementedInterfaces, ##__VA_ARGS__) \
-            zfsuper::_ZFP_ZFObject_interfaceOnDealloc(); \
+            zfsuper::_ZFP_ObjI_onDeallocIvk(); \
         } \
     public:
 
@@ -281,7 +281,7 @@ public:
  */
 zfinterface ZF_ENV_EXPORT ZFInterface
 {
-    _ZFP_ZFINTERFACE_DECLARE(ZFInterface, _ZFP_ZFInterfaceDummyParent)
+    _ZFP_ZFINTERFACE_DECLARE(ZFInterface, _ZFP_ObjI_Base)
 
 protected:
     /** @cond ZFPrivateDoc */
@@ -290,9 +290,9 @@ protected:
     /** @endcond */
 
 public:
-    static void _ZFP_ZFObjectInitImplementationList(ZFClass *cls) {}
-    zffinal inline void _ZFP_ZFInterface_interfaceOnInit(void) {}
-    zffinal inline void _ZFP_ZFInterface_interfaceOnDealloc(void) {}
+    static void _ZFP_Obj_initImpl(ZFClass *cls) {}
+    zffinal inline void _ZFP_ObjI_onInit(void) {}
+    zffinal inline void _ZFP_ObjI_onDealloc(void) {}
 
 public:
     /** @brief get instance's class info */
@@ -322,18 +322,18 @@ public:
  */
 #define ZFINTERFACE_ON_INIT_DECLARE() \
     public: \
-        zffinal void _ZFP_ZFInterface_interfaceOnInit(void)
+        zffinal void _ZFP_ObjI_onInit(void)
 /** @brief see #ZFINTERFACE_ON_INIT_DECLARE */
 #define ZFINTERFACE_ON_INIT_DEFINE(YourInterface) \
-    void YourInterface::_ZFP_ZFInterface_interfaceOnInit(void)
+    void YourInterface::_ZFP_ObjI_onInit(void)
 
 /** @brief see #ZFINTERFACE_ON_INIT_DECLARE */
 #define ZFINTERFACE_ON_DEALLOC_DECLARE() \
     public: \
-        zffinal void _ZFP_ZFInterface_interfaceOnDealloc(void)
+        zffinal void _ZFP_ObjI_onDealloc(void)
 /** @brief see #ZFINTERFACE_ON_INIT_DECLARE */
 #define ZFINTERFACE_ON_DEALLOC_DEFINE(YourInterface) \
-    void YourInterface::_ZFP_ZFInterface_interfaceOnDealloc(void)
+    void YourInterface::_ZFP_ObjI_onDealloc(void)
 
 ZF_NAMESPACE_GLOBAL_END
 

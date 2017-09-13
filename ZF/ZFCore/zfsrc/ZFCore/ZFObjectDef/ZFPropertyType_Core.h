@@ -147,7 +147,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief see #ZFPROPERTY_TYPE_DECLARE
  */
 #define ZFPROPERTY_TYPE_DEFINE(TypeName, Type, serializeFromAction, serializeToAction, convertFromStringAction, convertToStringAction) \
-    zfclassNotPOD _ZFP_ZFPropertyTypeRegisterHolder_##TypeName \
+    zfclassNotPOD _ZFP_PropTypeRegH_##TypeName \
     { \
     public: \
         static zfbool serializeFrom(ZF_IN const ZFProperty *propertyInfo, \
@@ -183,8 +183,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     { \
         _ZFP_ZFPropertyTypeRegister( \
             ZFPropertyTypeId_##TypeName(), \
-            _ZFP_ZFPropertyTypeRegisterHolder_##TypeName::serializeFrom, \
-            _ZFP_ZFPropertyTypeRegisterHolder_##TypeName::serializeTo); \
+            _ZFP_PropTypeRegH_##TypeName::serializeFrom, \
+            _ZFP_PropTypeRegH_##TypeName::serializeTo); \
     } \
     ZF_STATIC_REGISTER_DESTROY(PropId_##TypeName) \
     { \
@@ -455,7 +455,7 @@ public:
     /**
      * @brief type id for this wrapper type
      */
-    virtual const zfchar *wrappedValuePropertyTypeId(void) zfpurevirtual;
+    virtual const zfchar *wrappedValueTypeId(void) zfpurevirtual;
     /**
      * @brief access the value's address
      */

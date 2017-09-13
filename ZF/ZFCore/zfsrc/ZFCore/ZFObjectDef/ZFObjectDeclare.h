@@ -76,14 +76,14 @@ public:
             return zfself::ClassData(); \
         } \
     private: \
-        static void _ZFP_ZFObjectCheckInitImplementationList(ZF_IN ZFClass *cls) \
+        static void _ZFP_Obj_initImplCk(ZF_IN ZFClass *cls) \
         { \
             if(cls->_ZFP_ZFClassNeedInitImplementationList) \
             { \
                 cls->_ZFP_ZFClassNeedInitImplementationList = zffalse; \
-                if(zfself::_ZFP_ZFObjectInitImplementationList != zfsuper::_ZFP_ZFObjectInitImplementationList) \
+                if(zfself::_ZFP_Obj_initImpl != zfsuper::_ZFP_Obj_initImpl) \
                 { \
-                    zfself::_ZFP_ZFObjectInitImplementationList(cls); \
+                    zfself::_ZFP_Obj_initImpl(cls); \
                 } \
             } \
         } \
@@ -93,13 +93,13 @@ public:
         typedef enum {_ZFP_ZFObjectCanAlloc = 1} _ZFP_ZFObjectCanAllocChecker; \
     public: \
         zfpoolDeclareFriend() \
-        static ZFObject *_ZFP_ZFObject_constructor(void) \
+        static ZFObject *_ZFP_Obj_ctor(void) \
         { \
             return zfpoolNew(zfself); \
         } \
-        static void _ZFP_ZFObject_destructor(ZF_IN ZFObject *obj) \
+        static void _ZFP_Obj_dtor(ZF_IN ZFObject *obj) \
         { \
-            zfpoolDelete(_ZFP_ZFCastZFObjectInternal(zfself *, obj)); \
+            zfpoolDelete(_ZFP_ObjCastInternal(zfself *, obj)); \
         } \
         /** @brief get class info */ \
         static const ZFClass *ClassData(void) \
@@ -107,9 +107,9 @@ public:
             static _ZFP_ZFClassRegisterHolder _holder( \
                     zfText(#ChildClass), \
                     zfsuper::ClassData(), \
-                    &zfself::_ZFP_ZFObject_constructor, \
-                    &zfself::_ZFP_ZFObject_destructor, \
-                    &zfself::_ZFP_ZFObjectCheckInitImplementationList \
+                    &zfself::_ZFP_Obj_ctor, \
+                    &zfself::_ZFP_Obj_dtor, \
+                    &zfself::_ZFP_Obj_initImplCk \
                 ); \
             return _holder.cls; \
         }
@@ -125,7 +125,7 @@ public:
                     zfsuper::ClassData(), \
                     zfnull, \
                     zfnull, \
-                    &zfself::_ZFP_ZFObjectCheckInitImplementationList \
+                    &zfself::_ZFP_Obj_initImplCk \
                 ); \
             return _holder.cls; \
         }

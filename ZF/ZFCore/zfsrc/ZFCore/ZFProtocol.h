@@ -558,13 +558,13 @@ private:
                 return implLevel; \
             } \
         public: \
-            static ZFProtocol *_ZFP_##ImplementationClass##_newInstance(void) \
+            static ZFProtocol *_ZFP_##ImplementationClass##_ctor(void) \
             { \
                 return zfnew(ImplementationClass); \
             } \
             static void _ZFP_ZFProtocolUnregister(void) \
             { \
-                if(ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolDataRef().implConstructor == &ImplementationClass::_ZFP_##ImplementationClass##_newInstance) \
+                if(ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolDataRef().implConstructor == &ImplementationClass::_ZFP_##ImplementationClass##_ctor) \
                 { \
                     ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolImplementationChange(zfnull, zfnull, ZFProtocolLevel::e_Default); \
                 } \
@@ -573,7 +573,7 @@ private:
             static zfbool _ZFP_ZFProtocolRegister(void) \
             { \
                 ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolImplementationSet( \
-                    &ImplementationClass::_ZFP_##ImplementationClass##_newInstance, \
+                    &ImplementationClass::_ZFP_##ImplementationClass##_ctor, \
                     zfText(#ImplementationName), \
                     implLevel); \
                 static _ZFP_ZFProtocolImplRegisterHolder _holder( \
@@ -584,7 +584,7 @@ private:
             static zfbool _ZFP_ZFProtocolChange(void) \
             { \
                 ZFPROTOCOL_INTERFACE_CLASS(ModuleName)::_ZFP_ZFProtocolImplementationChange( \
-                    &ImplementationClass::_ZFP_##ImplementationClass##_newInstance, \
+                    &ImplementationClass::_ZFP_##ImplementationClass##_ctor, \
                     zfText(#ImplementationName), \
                     implLevel); \
                 return zftrue; \

@@ -194,21 +194,21 @@ public:
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_DECLARE(TypeName, Type) \
-    typedef Type _ZFP_ZFPropertyTypeWrapper_##TypeName; \
+    typedef Type _ZFP_PropTypeW_##TypeName; \
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
     zfclass ZF_ENV_EXPORT v_##TypeName : zfextends ZFPropertyTypeWrapper \
     { \
         ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_##TypeName, ZFPropertyTypeWrapper) \
     public: \
         /** @brief the value, see #ZFPropertyTypeIdData::Value */ \
-        _ZFP_ZFPropertyTypeWrapper_##TypeName zfv; \
+        _ZFP_PropTypeW_##TypeName zfv; \
     protected: \
         v_##TypeName(void) : zfv() {} \
     public: \
         zfoverride \
         virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();} \
         /** @brief init with value */ \
-        virtual ZFObject *objectOnInit(ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &value) \
+        virtual ZFObject *objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
         { \
             this->objectOnInit(); \
             this->zfv = value; \
@@ -224,15 +224,15 @@ public:
         virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj); \
     public: \
         zfoverride \
-        virtual const zfchar *wrappedValuePropertyTypeId(void); \
+        virtual const zfchar *wrappedValueTypeId(void); \
         zfoverride \
         virtual void *wrappedValue(void) {return &(this->zfv);} \
         zfoverride \
-        virtual void wrappedValueSet(ZF_IN const void *v) {this->zfv = *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v;} \
+        virtual void wrappedValueSet(ZF_IN const void *v) {this->zfv = *(const _ZFP_PropTypeW_##TypeName *)v;} \
     public: \
         zfoverride \
         virtual void wrappedValueReset(void) \
-        {this->zfv = zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv;} \
+        {this->zfv = zftValue<_ZFP_PropTypeW_##TypeName>().zfv;} \
         zfoverride \
         virtual zfbool wrappedValueIsInit(void); \
         zfoverride \
@@ -257,9 +257,9 @@ public:
     }; \
     /** @cond ZFPrivateDoc */ \
     template<> \
-    zfclassNotPOD ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
+    zfclassNotPOD ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
     { \
-        _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(_ZFP_ZFPropertyTypeWrapper_##TypeName) \
+        _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(_ZFP_PropTypeW_##TypeName) \
     public: \
         enum { \
             PropertyRegistered = 1, \
@@ -277,18 +277,18 @@ public:
             zfReleaseWithoutLeakTest(t); \
             return zftrue; \
         } \
-        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
+        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_PropTypeW_##TypeName const &v) \
         { \
             v_##TypeName *t = zfAllocWithoutLeakTest(v_##TypeName, v); \
             obj = zfautoObjectCreateWithoutLeakTest(t); \
             zfReleaseWithoutLeakTest(t); \
             return zftrue; \
         } \
-        template<typename T_Access = _ZFP_ZFPropertyTypeWrapper_##TypeName \
+        template<typename T_Access = _ZFP_PropTypeW_##TypeName \
             , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer \
                 && zftTypeIsSame< \
                         typename zftTraitsType<T_Access>::TraitsRemoveReference, \
-                        _ZFP_ZFPropertyTypeWrapper_##TypeName \
+                        _ZFP_PropTypeW_##TypeName \
                     >::TypeIsSame != 1) \
                 ? 1 : 0) \
             , typename T_Fix = void \
@@ -330,31 +330,31 @@ public:
     ZFCompareResult v_##TypeName::objectCompare(ZF_IN ZFObject *anotherObj) \
     { \
         ZFPropertyTypeWrapper *t = ZFCastZFObject(ZFPropertyTypeWrapper *, anotherObj); \
-        if(t == zfnull || !zfscmpTheSame(this->wrappedValuePropertyTypeId(), t->wrappedValuePropertyTypeId())) \
+        if(t == zfnull || !zfscmpTheSame(this->wrappedValueTypeId(), t->wrappedValueTypeId())) \
         { \
             return ZFCompareUncomparable; \
         } \
         else \
         { \
-            return ZFComparerDefault(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
+            return ZFComparerDefault(this->zfv, *(_ZFP_PropTypeW_##TypeName *)t->wrappedValue()); \
         } \
     } \
-    const zfchar *v_##TypeName::wrappedValuePropertyTypeId(void) \
+    const zfchar *v_##TypeName::wrappedValueTypeId(void) \
     { \
-        return ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName>::PropertyTypeId(); \
+        return ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>::PropertyTypeId(); \
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
+        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_PropTypeW_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
-        return ZFComparerDefault(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
+        return ZFComparerDefault(this->zfv, *(const _ZFP_PropTypeW_##TypeName *)v); \
     } \
     ZF_STATIC_REGISTER_INIT(PropTIReg_##TypeName) \
     { \
         _ZFP_ZFPropertyTypeIdDataRegister(ZFPropertyTypeId_##TypeName(), \
-            zfnew(ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName>)); \
+            zfnew(ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>)); \
     } \
     ZF_STATIC_REGISTER_DESTROY(PropTIReg_##TypeName) \
     { \
@@ -364,21 +364,21 @@ public:
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DECLARE(TypeName, Type) \
-    typedef Type _ZFP_ZFPropertyTypeWrapper_##TypeName; \
+    typedef Type _ZFP_PropTypeW_##TypeName; \
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
     zfclass ZF_ENV_EXPORT v_##TypeName : zfextends ZFPropertyTypeWrapper \
     { \
         ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(v_##TypeName, ZFPropertyTypeWrapper) \
     public: \
         /** @brief the value, see #ZFPropertyTypeIdData::Value */ \
-        _ZFP_ZFPropertyTypeWrapper_##TypeName zfv; \
+        _ZFP_PropTypeW_##TypeName zfv; \
     protected: \
         v_##TypeName(void) : zfv() {} \
     public: \
         zfoverride \
         virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();} \
         /** @brief init with value */ \
-        virtual ZFObject *objectOnInit(ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &value) \
+        virtual ZFObject *objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
         { \
             this->objectOnInit(); \
             this->zfv = value; \
@@ -394,15 +394,15 @@ public:
         virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj); \
     public: \
         zfoverride \
-        virtual const zfchar *wrappedValuePropertyTypeId(void); \
+        virtual const zfchar *wrappedValueTypeId(void); \
         zfoverride \
         virtual void *wrappedValue(void) {return &(this->zfv);} \
         zfoverride \
-        virtual void wrappedValueSet(ZF_IN const void *v) {this->zfv = *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v;} \
+        virtual void wrappedValueSet(ZF_IN const void *v) {this->zfv = *(const _ZFP_PropTypeW_##TypeName *)v;} \
     public: \
         zfoverride \
         virtual void wrappedValueReset(void) \
-        {this->zfv = zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv;} \
+        {this->zfv = zftValue<_ZFP_PropTypeW_##TypeName>().zfv;} \
         zfoverride \
         virtual zfbool wrappedValueIsInit(void); \
         zfoverride \
@@ -435,9 +435,9 @@ public:
     }; \
     /** @cond ZFPrivateDoc */ \
     template<> \
-    zfclassNotPOD ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
+    zfclassNotPOD ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
     { \
-        _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(_ZFP_ZFPropertyTypeWrapper_##TypeName) \
+        _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(_ZFP_PropTypeW_##TypeName) \
     public: \
         enum { \
             PropertyRegistered = 1, \
@@ -455,18 +455,18 @@ public:
             zfReleaseWithoutLeakTest(t); \
             return zftrue; \
         } \
-        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
+        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_PropTypeW_##TypeName const &v) \
         { \
             v_##TypeName *t = zfAllocWithoutLeakTest(v_##TypeName, v); \
             obj = zfautoObjectCreateWithoutLeakTest(t); \
             zfReleaseWithoutLeakTest(t); \
             return zftrue; \
         } \
-        template<typename T_Access = _ZFP_ZFPropertyTypeWrapper_##TypeName \
+        template<typename T_Access = _ZFP_PropTypeW_##TypeName \
             , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer \
                 && zftTypeIsSame< \
                         typename zftTraitsType<T_Access>::TraitsRemoveReference, \
-                        _ZFP_ZFPropertyTypeWrapper_##TypeName \
+                        _ZFP_PropTypeW_##TypeName \
                     >::TypeIsSame != 1) \
                 ? 1 : 0) \
             , typename T_Fix = void \
@@ -508,26 +508,26 @@ public:
     ZFCompareResult v_##TypeName::objectCompare(ZF_IN ZFObject *anotherObj) \
     { \
         ZFPropertyTypeWrapper *t = ZFCastZFObject(ZFPropertyTypeWrapper *, anotherObj); \
-        if(t == zfnull || !zfscmpTheSame(this->wrappedValuePropertyTypeId(), t->wrappedValuePropertyTypeId())) \
+        if(t == zfnull || !zfscmpTheSame(this->wrappedValueTypeId(), t->wrappedValueTypeId())) \
         { \
             return ZFCompareUncomparable; \
         } \
         else \
         { \
-            return ZFComparerDefault(this->zfv, *(_ZFP_ZFPropertyTypeWrapper_##TypeName *)t->wrappedValue()); \
+            return ZFComparerDefault(this->zfv, *(_ZFP_PropTypeW_##TypeName *)t->wrappedValue()); \
         } \
     } \
-    const zfchar *v_##TypeName::wrappedValuePropertyTypeId(void) \
+    const zfchar *v_##TypeName::wrappedValueTypeId(void) \
     { \
-        return ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName>::PropertyTypeId(); \
+        return ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>::PropertyTypeId(); \
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
-        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_ZFPropertyTypeWrapper_##TypeName>().zfv) == ZFCompareTheSame); \
+        return (ZFComparerDefault(this->zfv, zftValue<_ZFP_PropTypeW_##TypeName>().zfv) == ZFCompareTheSame); \
     } \
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
-        return ZFComparerDefault(this->zfv, *(const _ZFP_ZFPropertyTypeWrapper_##TypeName *)v); \
+        return ZFComparerDefault(this->zfv, *(const _ZFP_PropTypeW_##TypeName *)v); \
     }
 
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE_UNCOMPARABLE(TypeName, Type) \
@@ -540,9 +540,9 @@ public:
     { \
         return ZFCompareUncomparable; \
     } \
-    const zfchar *v_##TypeName::wrappedValuePropertyTypeId(void) \
+    const zfchar *v_##TypeName::wrappedValueTypeId(void) \
     { \
-        return ZFPropertyTypeIdData<_ZFP_ZFPropertyTypeWrapper_##TypeName>::PropertyTypeId(); \
+        return ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>::PropertyTypeId(); \
     } \
     zfbool v_##TypeName::wrappedValueIsInit(void) \
     { \
@@ -555,7 +555,7 @@ public:
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_DISABLE(Type) \
-    typedef Type _ZFP_ZFPropertyTypeWrapper_##TypeName; \
+    typedef Type _ZFP_PropTypeW_##TypeName; \
     /** @cond ZFPrivateDoc */ \
     template<> \
     zfclassNotPOD ZFPropertyTypeIdData<Type> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
@@ -570,7 +570,7 @@ public:
         { \
             return ZFPropertyTypeId_none; \
         } \
-        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
+        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_PropTypeW_##TypeName const &v) \
         { \
             return zffalse; \
         } \
@@ -593,7 +593,7 @@ public:
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DECLARE(ExistTypeName, ExistType, TypeName, Type) \
     /** @cond ZFPrivateDoc */ \
-    typedef Type _ZFP_ZFPropertyTypeWrapper_##TypeName; \
+    typedef Type _ZFP_PropTypeW_##TypeName; \
     template<> \
     zfclassNotPOD ZFPropertyTypeIdData<Type> : zfextendsNotPOD ZFPropertyTypeIdDataBase \
     { \
@@ -614,39 +614,39 @@ public:
             t.propertyWrapper(v); \
             return zftrue; \
         } \
-        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_ZFPropertyTypeWrapper_##TypeName const &v) \
+        static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_PropTypeW_##TypeName const &v) \
         { \
             return ZFPropertyTypeIdData<ExistType>::ValueStore(obj, (ExistType)v); \
         } \
-        template<typename T_Access = _ZFP_ZFPropertyTypeWrapper_##TypeName, typename T_Fix = void> \
+        template<typename T_Access = _ZFP_PropTypeW_##TypeName, typename T_Fix = void> \
         zfclassNotPOD Value \
         { \
             /* not support */ \
         }; \
         template<typename T_Fix> \
-        zfclassNotPOD Value<_ZFP_ZFPropertyTypeWrapper_##TypeName, T_Fix> \
+        zfclassNotPOD Value<_ZFP_PropTypeW_##TypeName, T_Fix> \
         { \
         public: \
             static zfbool accessAvailable(ZF_IN ZFObject *obj) \
             { \
                 return ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::accessAvailable(obj); \
             } \
-            static _ZFP_ZFPropertyTypeWrapper_##TypeName access(ZF_IN ZFObject *obj) \
+            static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
             { \
-                return (_ZFP_ZFPropertyTypeWrapper_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
+                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
             } \
         }; \
         template<typename T_Fix> \
-        zfclassNotPOD Value<_ZFP_ZFPropertyTypeWrapper_##TypeName const &, T_Fix> \
+        zfclassNotPOD Value<_ZFP_PropTypeW_##TypeName const &, T_Fix> \
         { \
         public: \
             static zfbool accessAvailable(ZF_IN ZFObject *obj) \
             { \
                 return ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::accessAvailable(obj); \
             } \
-            static _ZFP_ZFPropertyTypeWrapper_##TypeName access(ZF_IN ZFObject *obj) \
+            static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
             { \
-                return (_ZFP_ZFPropertyTypeWrapper_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
+                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
             } \
         }; \
     }; \

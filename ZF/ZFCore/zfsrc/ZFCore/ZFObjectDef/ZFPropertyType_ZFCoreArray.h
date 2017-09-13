@@ -111,7 +111,7 @@ public:
     }
 public:
     zfoverride
-    virtual const zfchar *wrappedValuePropertyTypeId(void)
+    virtual const zfchar *wrappedValueTypeId(void)
     {
         return ZFPropertyTypeId_ZFCoreArray();
     }

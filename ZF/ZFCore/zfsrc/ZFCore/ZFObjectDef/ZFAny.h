@@ -177,22 +177,22 @@ private:
 
 // ============================================================
 // ZFCastZFObject fix for ZFAny
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknown(ZFAny const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknown(ZFAny const &obj)
 {
     return obj;
 }
-inline void _ZFP_ZFCastZFObjectToUnknown(ZFAny &ret,
-                                         ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknown(ZFAny &ret,
+                                  ZFObject * const &obj)
 {
     ret = obj;
 }
 
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknownUnchecked(ZFAny const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknownUnchecked(ZFAny const &obj)
 {
     return obj;
 }
-inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(ZFAny &ret,
-                                                  ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknownUnchecked(ZFAny &ret,
+                                           ZFObject * const &obj)
 {
     ret = obj;
 }
@@ -200,25 +200,25 @@ inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(ZFAny &ret,
 // ============================================================
 // ZFCastZFObject fix for ZFAnyT
 template<typename T_ZFObject>
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknown(ZFAnyT<T_ZFObject *> const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknown(ZFAnyT<T_ZFObject *> const &obj)
 {
     return obj.toObject();
 }
 template<typename T_ZFObject>
-inline void _ZFP_ZFCastZFObjectToUnknown(ZFAnyT<T_ZFObject *> &ret,
-                                         ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknown(ZFAnyT<T_ZFObject *> &ret,
+                                  ZFObject * const &obj)
 {
     ret = ZFCastZFObject(T_ZFObject *, obj);
 }
 
 template<typename T_ZFObject>
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknownUnchecked(ZFAnyT<T_ZFObject *> const &obj)
+inline ZFObject *_ZFP_ObjCastFromUnknownUnchecked(ZFAnyT<T_ZFObject *> const &obj)
 {
     return obj.toObject();
 }
 template<typename T_ZFObject>
-inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(ZFAnyT<T_ZFObject *> &ret,
-                                                  ZFObject * const &obj)
+inline void _ZFP_ObjCastToUnknownUnchecked(ZFAnyT<T_ZFObject *> &ret,
+                                           ZFObject * const &obj)
 {
     ret = ZFCastZFObjectUnchecked(T_ZFObject *, obj);
 }

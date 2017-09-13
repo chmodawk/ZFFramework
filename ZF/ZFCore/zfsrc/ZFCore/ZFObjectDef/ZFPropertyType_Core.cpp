@@ -159,7 +159,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFPropertySerializeFrom, ZFMP_IN(ZFObject *, ownerObject), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFPropertySerializeTo, ZFMP_IN(const ZFProperty *, propertyInfo), ZFMP_IN(ZFObject *, ownerObject), ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, const zfchar *, wrappedValuePropertyTypeId)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, const zfchar *, wrappedValueTypeId)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, void, wrappedValueReset)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, zfbool, wrappedValueIsInit)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFPropertyTypeWrapper, zfbool, wrappedValueFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))

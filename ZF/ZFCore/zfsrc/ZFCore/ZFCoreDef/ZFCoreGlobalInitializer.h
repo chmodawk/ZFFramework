@@ -102,12 +102,12 @@ private:
 };
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(Name, ZFLevel_) \
-    static void *_ZFP_GI_constructor_##Name(void); \
-    static void _ZFP_GI_destructor_##Name(ZF_IN void *p); \
+    static void *_ZFP_GI_ctor_##Name(void); \
+    static void _ZFP_GI_dtor_##Name(ZF_IN void *p); \
     static _ZFP_GI_Reg _ZFP_GI_reg_##Name(ZFM_TOSTRING(Name), \
             ZFLevel_, \
-            _ZFP_GI_constructor_##Name, \
-            _ZFP_GI_destructor_##Name \
+            _ZFP_GI_ctor_##Name, \
+            _ZFP_GI_dtor_##Name \
         ); \
     zfclassNotPOD _ZFP_GI_##Name \
     { \
@@ -166,11 +166,11 @@ private:
 
 #define _ZFP_ZF_GLOBAL_INITIALIZER_END(Name) \
     }; \
-    static void *_ZFP_GI_constructor_##Name(void) \
+    static void *_ZFP_GI_ctor_##Name(void) \
     { \
         return (void *)zfnew(_ZFP_GI_##Name); \
     } \
-    static void _ZFP_GI_destructor_##Name(ZF_IN void *p) \
+    static void _ZFP_GI_dtor_##Name(ZF_IN void *p) \
     { \
         zfdelete((_ZFP_GI_##Name *)p); \
     }

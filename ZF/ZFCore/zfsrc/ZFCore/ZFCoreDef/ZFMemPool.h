@@ -55,7 +55,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     #define zfpoolNew(T_Type, ...) zfpoolNewLogger(T_Type, new (_ZFP_zfpoolObjectHolder::poolMalloc<T_Type>()) T_Type(__VA_ARGS__))
     #define zfpoolDelete(obj) _ZFP_zfpoolDelete(zfpoolDeleteLogger(obj))
     #define zfpoolDeclareFriend() \
-        friend zfclassFwd ::_ZFP_zfpoolObjectHolder;
+        friend zfclassFwd _ZFP_zfpoolObjectHolder;
 #else
     #define zfpoolNew(T_Type, ...) zfpoolNewLogger(T_Type, zfnew(T_Type, ##__VA_ARGS__))
     #define zfpoolDelete(obj) zfdelete(zfpoolDeleteLogger(obj))

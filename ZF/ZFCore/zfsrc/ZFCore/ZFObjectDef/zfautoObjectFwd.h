@@ -190,13 +190,13 @@ extern ZF_ENV_EXPORT const zfautoObject _ZFP_zfautoObjectNull;
 
 // ============================================================
 // ZFCastZFObject fix for ZFAny
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknown(zfautoObject const &obj);
-inline void _ZFP_ZFCastZFObjectToUnknown(zfautoObject &ret,
-                                         ZFObject * const &obj);
+inline ZFObject *_ZFP_ObjCastFromUnknown(zfautoObject const &obj);
+inline void _ZFP_ObjCastToUnknown(zfautoObject &ret,
+                                  ZFObject * const &obj);
 
-inline ZFObject *_ZFP_ZFCastZFObjectFromUnknownUnchecked(zfautoObject const &obj);
-inline void _ZFP_ZFCastZFObjectToUnknownUnchecked(zfautoObject &ret,
-                                                  ZFObject * const &obj);
+inline ZFObject *_ZFP_ObjCastFromUnknownUnchecked(zfautoObject const &obj);
+inline void _ZFP_ObjCastToUnknownUnchecked(zfautoObject &ret,
+                                           ZFObject * const &obj);
 
 ZF_NAMESPACE_GLOBAL_END
 

@@ -70,7 +70,7 @@ public:
     {
         return zfnull;
     }
-    static void _ZFP_ZFObjectInitImplementationList(ZFClass *cls) {}
+    static void _ZFP_Obj_initImpl(ZFClass *cls) {}
 };
 zfclassFwd _ZFP_ZFObjectPrivate;
 zfclassFwd ZFObjectHolder;
@@ -238,9 +238,9 @@ zfclass ZF_ENV_EXPORT ZFObject
     _ZFP_ZFOBJECT_DECLARE_OBJECT(ZFObject, _ZFP_ZFObjectDummyParent)
 
 public:
-    static void _ZFP_ZFObjectInitImplementationList(ZFClass *cls) {}
-    virtual inline void _ZFP_ZFObject_interfaceOnInit(void) {}
-    virtual inline void _ZFP_ZFObject_interfaceOnDealloc(void) {}
+    static void _ZFP_Obj_initImpl(ZFClass *cls) {}
+    virtual inline void _ZFP_ObjI_onInitIvk(void) {}
+    virtual inline void _ZFP_ObjI_onDeallocIvk(void) {}
 protected:
     /** @cond ZFPrivateDoc */
     ZFObject(void)

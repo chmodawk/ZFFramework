@@ -99,22 +99,22 @@ public:
      * @brief main constructor
      */
     ZFFilterBase(void)
-    : _ZFP_ZFFilterBase_filters()
-    , _ZFP_ZFFilterBase_customFilterCallbacks(zfnull)
+    : _filters()
+    , _customFilters(zfnull)
     {
     }
     /**
      * @brief construct from another filter, retain only, you should use #copyFrom to copy contents
      */
     ZFFilterBase(ZF_IN const ZFFilterBase<T_Public, T_Internal> &ref)
-    : _ZFP_ZFFilterBase_filters(ref._ZFP_ZFFilterBase_filters)
-    , _ZFP_ZFFilterBase_customFilterCallbacks(zfnull)
+    : _filters(ref._filters)
+    , _customFilters(zfnull)
     {
-        if(ref._ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        if(ref._customFilters != zfnull)
         {
-            this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnew(
-                _ZFP_ZFFilterBase_CustomFilterCallbacksType,
-                *ref._ZFP_ZFFilterBase_customFilterCallbacks);
+            this->_customFilters = zfnew(
+                _CustomFilterCallbacksType,
+                *ref._customFilters);
         }
     }
     /**
@@ -124,17 +124,17 @@ public:
     {
         if(this != &ref)
         {
-            this->_ZFP_ZFFilterBase_filters = ref._ZFP_ZFFilterBase_filters;
-            if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+            this->_filters = ref._filters;
+            if(this->_customFilters != zfnull)
             {
-                zfdelete(this->_ZFP_ZFFilterBase_customFilterCallbacks);
-                this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnull;
+                zfdelete(this->_customFilters);
+                this->_customFilters = zfnull;
             }
-            if(ref._ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+            if(ref._customFilters != zfnull)
             {
-                this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnew(
-                    _ZFP_ZFFilterBase_CustomFilterCallbacksType,
-                    *ref._ZFP_ZFFilterBase_customFilterCallbacks);
+                this->_customFilters = zfnew(
+                    _CustomFilterCallbacksType,
+                    *ref._customFilters);
             }
         }
         return *this;
@@ -142,7 +142,7 @@ public:
     /** @cond ZFPrivateDoc */
     zfbool operator == (ZF_IN const ZFFilterBase<T_Public, T_Internal> &ref) const
     {
-        return this->_ZFP_ZFFilterBase_filters == ref._ZFP_ZFFilterBase_filters;
+        return this->_filters == ref._filters;
     }
     inline zfbool operator != (ZF_IN const ZFFilterBase<T_Public, T_Internal> &ref) const {return !this->operator == (ref);}
     /** @endcond */
@@ -155,20 +155,20 @@ public:
      */
     virtual void copyFrom(ZF_IN ZFFilterBase<T_Public, T_Internal> const &ref)
     {
-        this->_ZFP_ZFFilterBase_filters.copyFrom(ref._ZFP_ZFFilterBase_filters);
-        if(ref._ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        this->_filters.copyFrom(ref._filters);
+        if(ref._customFilters != zfnull)
         {
-            if(this->_ZFP_ZFFilterBase_customFilterCallbacks == zfnull)
+            if(this->_customFilters == zfnull)
             {
-                this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnew(_ZFP_ZFFilterBase_CustomFilterCallbacksType);
+                this->_customFilters = zfnew(_CustomFilterCallbacksType);
             }
-            this->_ZFP_ZFFilterBase_customFilterCallbacks->copyFrom(*ref._ZFP_ZFFilterBase_customFilterCallbacks);
+            this->_customFilters->copyFrom(*ref._customFilters);
         }
         else
         {
-            if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+            if(this->_customFilters != zfnull)
             {
-                zfdelete(this->_ZFP_ZFFilterBase_customFilterCallbacks);
+                zfdelete(this->_customFilters);
             }
         }
     }
@@ -187,7 +187,7 @@ public:
             _ZFP_ZFFilterBaseFilterData<T_Internal> filterData;
             this->filterOnStore(filterData.element, e);
             filterData.filterType = filterType;
-            this->_ZFP_ZFFilterBase_filters.add(filterData);
+            this->_filters.add(filterData);
         }
         return *this;
     }
@@ -199,13 +199,13 @@ public:
     {
         if(this->filterOnCheckValid(e))
         {
-            for(zfindex i = 0; i < this->_ZFP_ZFFilterBase_filters.count(); ++i)
+            for(zfindex i = 0; i < this->_filters.count(); ++i)
             {
-                if(this->filterOnCheckEqual(this->_ZFP_ZFFilterBase_filters.get(i).element, e)
-                    && this->_ZFP_ZFFilterBase_filters.get(i).filterType == filterType)
+                if(this->filterOnCheckEqual(this->_filters.get(i).element, e)
+                    && this->_filters.get(i).filterType == filterType)
                 {
-                    this->filterOnRemove(this->_ZFP_ZFFilterBase_filters.get(i).element);
-                    this->_ZFP_ZFFilterBase_filters.remove(i);
+                    this->filterOnRemove(this->_filters.get(i).element);
+                    this->_filters.remove(i);
                     break;
                 }
             }
@@ -217,8 +217,8 @@ public:
      */
     virtual ZFFilterBase<T_Public, T_Internal> &filterRemoveAtIndex(ZF_IN zfindex index)
     {
-        this->filterOnRemove(this->_ZFP_ZFFilterBase_filters.get(index).element);
-        this->_ZFP_ZFFilterBase_filters.remove(index);
+        this->filterOnRemove(this->_filters.get(index).element);
+        this->_filters.remove(index);
         return *this;
     }
     /**
@@ -226,20 +226,20 @@ public:
      */
     virtual void filterRemoveAll(void)
     {
-        for(zfindex i = 0; i < this->_ZFP_ZFFilterBase_filters.count(); ++i)
+        for(zfindex i = 0; i < this->_filters.count(); ++i)
         {
-            this->filterOnRemove(this->_ZFP_ZFFilterBase_filters.get(i).element);
+            this->filterOnRemove(this->_filters.get(i).element);
         }
-        this->_ZFP_ZFFilterBase_filters.removeAll();
-        zfdelete(this->_ZFP_ZFFilterBase_customFilterCallbacks);
-        this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnull;
+        this->_filters.removeAll();
+        zfdelete(this->_customFilters);
+        this->_customFilters = zfnull;
     }
     /**
      * @brief get count of element
      */
     virtual zfindex filterCount(void) const
     {
-        return this->_ZFP_ZFFilterBase_filters.count();
+        return this->_filters.count();
     }
     /**
      * @brief get element at index
@@ -247,7 +247,7 @@ public:
     virtual T_Public filterGet(ZF_IN zfindex index) const
     {
         T_Public t;
-        this->filterOnAccess(t, this->_ZFP_ZFFilterBase_filters.get(index).element);
+        this->filterOnAccess(t, this->_filters.get(index).element);
         return t;
     }
     /**
@@ -255,25 +255,25 @@ public:
      */
     virtual T_Internal const &filterGetInternal(ZF_IN zfindex index) const
     {
-        return this->_ZFP_ZFFilterBase_filters.get(index).element;
+        return this->_filters.get(index).element;
     }
     /**
      * @brief get filter type for filter data at index
      */
     virtual ZFFilterType filterGetFilterType(ZF_IN zfindex index) const
     {
-        return this->_ZFP_ZFFilterBase_filters.get(index).filterType;
+        return this->_filters.get(index).filterType;
     }
     /**
      * @brief add a custom filter callback
      */
     virtual ZFFilterBase<T_Public, T_Internal> &customFilterCallbackAdd(ZF_IN typename ZFFilterBase<T_Public, T_Internal>::CustomFilterCallback customFilterCallback)
     {
-        if(this->_ZFP_ZFFilterBase_customFilterCallbacks == zfnull)
+        if(this->_customFilters == zfnull)
         {
-            this->_ZFP_ZFFilterBase_customFilterCallbacks = zfnew(_ZFP_ZFFilterBase_CustomFilterCallbacksType);
+            this->_customFilters = zfnew(_CustomFilterCallbacksType);
         }
-        this->_ZFP_ZFFilterBase_customFilterCallbacks->add(customFilterCallback);
+        this->_customFilters->add(customFilterCallback);
         return *this;
     }
     /**
@@ -281,15 +281,15 @@ public:
      */
     virtual ZFFilterBase<T_Public, T_Internal> &customFilterCallbackRemove(ZF_IN typename ZFFilterBase<T_Public, T_Internal>::CustomFilterCallback customFilterCallback)
     {
-        if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        if(this->_customFilters != zfnull)
         {
-            for(zfiterator it = this->_ZFP_ZFFilterBase_customFilterCallbacks->iterator();
-                this->_ZFP_ZFFilterBase_customFilterCallbacks->iteratorIsValid(it);
-                this->_ZFP_ZFFilterBase_customFilterCallbacks->iteratorNext(it))
+            for(zfiterator it = this->_customFilters->iterator();
+                this->_customFilters->iteratorIsValid(it);
+                this->_customFilters->iteratorNext(it))
             {
-                if(this->_ZFP_ZFFilterBase_customFilterCallbacks->iteratorGet(it) == customFilterCallback)
+                if(this->_customFilters->iteratorGet(it) == customFilterCallback)
                 {
-                    this->_ZFP_ZFFilterBase_customFilterCallbacks->iteratorRemove(it);
+                    this->_customFilters->iteratorRemove(it);
                     break;
                 }
             }
@@ -301,9 +301,9 @@ public:
      */
     virtual ZFFilterBase<T_Public, T_Internal> &customFilterCallbackRemove(ZF_IN zfindex index)
     {
-        if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        if(this->_customFilters != zfnull)
         {
-            this->_ZFP_ZFFilterBase_customFilterCallbacks->remove(index);
+            this->_customFilters->remove(index);
         }
         return *this;
     }
@@ -312,9 +312,9 @@ public:
      */
     virtual zfindex customFilterCallbackCount(void) const
     {
-        if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        if(this->_customFilters != zfnull)
         {
-            return this->_ZFP_ZFFilterBase_customFilterCallbacks->count();
+            return this->_customFilters->count();
         }
         return 0;
     }
@@ -323,7 +323,7 @@ public:
      */
     virtual typename ZFFilterBase<T_Public, T_Internal>::CustomFilterCallback customFilterCallbackAtIndex(ZF_IN zfindex index) const
     {
-        return this->_ZFP_ZFFilterBase_customFilterCallbacks->get(index);
+        return this->_customFilters->get(index);
     }
     /**
      * @brief return true if e is not filtered by this filter, see #ZFFilterType
@@ -334,11 +334,11 @@ public:
         {
             return zffalse;
         }
-        if(this->_ZFP_ZFFilterBase_customFilterCallbacks != zfnull)
+        if(this->_customFilters != zfnull)
         {
-            for(zfindex i = 0; i < this->_ZFP_ZFFilterBase_customFilterCallbacks->count(); ++i)
+            for(zfindex i = 0; i < this->_customFilters->count(); ++i)
             {
-                switch(this->_ZFP_ZFFilterBase_customFilterCallbacks->get(i)(e))
+                switch(this->_customFilters->get(i)(e))
                 {
                     case ZFFilterCallbackResultNotSpecified:
                         break;
@@ -380,7 +380,7 @@ public:
      */
     virtual void objectInfoT(ZF_IN_OUT zfstring &ret) const
     {
-        this->_ZFP_ZFFilterBase_filters.objectInfoOfContentT(ret,
+        this->_filters.objectInfoOfContentT(ret,
             _ZFP_ZFFilterBase_contentInfoGetter,
             zfHint("max count")5,
             ZFTokenForContainerDefault());
@@ -431,9 +431,9 @@ protected:
     {
         zfbool hasIncludeMode = zffalse;
         zfbool included = zffalse;
-        for(zfindex i = 0; i < this->_ZFP_ZFFilterBase_filters.count(); ++i)
+        for(zfindex i = 0; i < this->_filters.count(); ++i)
         {
-            const _ZFP_ZFFilterBaseFilterData<T_Internal> &filter = this->_ZFP_ZFFilterBase_filters.get(i);
+            const _ZFP_ZFFilterBaseFilterData<T_Internal> &filter = this->_filters.get(i);
             switch(filter.filterType)
             {
                 case ZFFilterTypeInclude:
@@ -458,10 +458,10 @@ protected:
     }
 
 private:
-    typedef ZFCoreArray<_ZFP_ZFFilterBaseFilterData<T_Internal> > _ZFP_ZFFilterBase_FiltersType;
-    typedef ZFCoreArrayPOD<typename ZFFilterBase<T_Public, T_Internal>::CustomFilterCallback> _ZFP_ZFFilterBase_CustomFilterCallbacksType;
-    _ZFP_ZFFilterBase_FiltersType _ZFP_ZFFilterBase_filters;
-    _ZFP_ZFFilterBase_CustomFilterCallbacksType *_ZFP_ZFFilterBase_customFilterCallbacks;
+    typedef ZFCoreArray<_ZFP_ZFFilterBaseFilterData<T_Internal> > _FiltersType;
+    typedef ZFCoreArrayPOD<typename ZFFilterBase<T_Public, T_Internal>::CustomFilterCallback> _CustomFilterCallbacksType;
+    _FiltersType _filters;
+    _CustomFilterCallbacksType *_customFilters;
 };
 
 // ============================================================
