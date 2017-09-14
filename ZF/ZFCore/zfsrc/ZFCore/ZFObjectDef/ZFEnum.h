@@ -117,10 +117,6 @@ public:
      */
     virtual const zfchar *enumNameAtIndex(ZF_IN zfindex index) zfpurevirtual;
     /**
-    * @brief get the full name (EnumType::EnumValueName) at index, or ZFEnumNameInvalid if not exist
-     */
-    virtual const zfchar *enumFullNameAtIndex(ZF_IN zfindex index) zfpurevirtual;
-    /**
      * @brief return true if contain the specified value
      */
     virtual zfbool enumContainValue(ZF_IN zfuint value) zfpurevirtual;
@@ -200,7 +196,6 @@ public:
     zfindex enumIndexForValue(ZF_IN zfuint value) const;
     zfuint enumValueAtIndex(ZF_IN zfindex index) const;
     const zfchar *enumNameAtIndex(ZF_IN zfindex index) const;
-    const zfchar *enumFullNameAtIndex(ZF_IN zfindex index) const;
     zfbool enumContainValue(ZF_IN zfuint value) const;
     zfuint enumValueForName(ZF_IN const zfchar *name) const;
     const zfchar *enumNameForValue(ZF_IN zfuint value) const;
@@ -344,11 +339,6 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
         { \
             return zfself::_ZFP_ZFEnumDataRef()->enumNameAtIndex(index); \
         } \
-        /** @brief get the name at index, or ZFEnumNameInvalid if not exist */ \
-        static const zfchar *EnumFullNameAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumFullNameAtIndex(index); \
-        } \
         /** @brief return true if contain the specified value */ \
         static zfbool EnumContainValue(ZF_IN zfuint value) \
         { \
@@ -384,11 +374,6 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
         virtual const zfchar *enumNameAtIndex(ZF_IN zfindex index) \
         { \
             return zfself::EnumNameAtIndex(index); \
-        } \
-        zfoverride \
-        virtual const zfchar *enumFullNameAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::EnumFullNameAtIndex(index); \
         } \
         zfoverride \
         virtual zfbool enumContainValue(ZF_IN zfuint value) \
@@ -552,13 +537,6 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
             _m.add(resultMethod); \
         } \
         { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumFullNameAtIndex, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                const zfchar *, zfText("EnumFullNameAtIndex"), \
-                ZFMP_IN(zfindex, index)); \
-            _m.add(resultMethod); \
-        } \
-        { \
             ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumContainValue, ChildEnum::ClassData(), \
                 public, ZFMethodIsStatic, \
                 zfbool, zfText("EnumContainValue"), \
@@ -616,9 +594,6 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
     \
     static const zfchar *ivk_EnumNameAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
     {return ChildEnum::EnumNameAtIndex(index);} \
-    \
-    static const zfchar *ivk_EnumFullNameAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
-    {return ChildEnum::EnumFullNameAtIndex(index);} \
     \
     static zfbool ivk_EnumContainValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
     {return ChildEnum::EnumContainValue(value);} \

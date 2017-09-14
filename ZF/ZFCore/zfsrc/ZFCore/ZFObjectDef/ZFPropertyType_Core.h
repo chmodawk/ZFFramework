@@ -95,6 +95,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * -  for aliased type, you may use #ZFPROPERTY_TYPE_ALIAS_DECLARE
  */
 #define ZFPROPERTY_TYPE_DECLARE(TypeName, Type) \
+    ZFPROPERTY_TYPE_DECLARE_WITH_CUSTOM_WRAPPER(TypeName, Type) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DECLARE(TypeName, Type)
+
+/** @brief see #ZFPROPERTY_TYPE_DECLARE */
+#define ZFPROPERTY_TYPE_DECLARE_WITH_CUSTOM_WRAPPER(TypeName, Type) \
     /** \n */ \
     inline const zfchar *ZFPropertyTypeId_##TypeName(void) \
     { \
@@ -140,13 +145,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             return ZFSerializableData(); \
         } \
     } \
-    ZFCORETYPE_STRING_CONVERTER_DECLARE(TypeName, Type) \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DECLARE(TypeName, Type)
+    ZFCORETYPE_STRING_CONVERTER_DECLARE(TypeName, Type)
 
-/**
- * @brief see #ZFPROPERTY_TYPE_DECLARE
- */
+/** @brief see #ZFPROPERTY_TYPE_DECLARE */
 #define ZFPROPERTY_TYPE_DEFINE(TypeName, Type, serializeFromAction, serializeToAction, convertFromStringAction, convertToStringAction) \
+    ZFPROPERTY_TYPE_DEFINE_WITH_CUSTOM_WRAPPER(TypeName, Type, ZFM_EXPAND(serializeFromAction), ZFM_EXPAND(serializeToAction), ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction)) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DEFINE(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction))
+
+/** @brief see #ZFPROPERTY_TYPE_DECLARE */
+#define ZFPROPERTY_TYPE_DEFINE_WITH_CUSTOM_WRAPPER(TypeName, Type, serializeFromAction, serializeToAction, convertFromStringAction, convertToStringAction) \
     zfclassNotPOD _ZFP_PropTypeRegH_##TypeName \
     { \
     public: \
@@ -205,8 +212,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         ZFM_EXPAND(serializeToAction) \
     } \
     ZFCORETYPE_STRING_CONVERTER_DEFINE(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction)) \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DEFINE(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction)) \
-    _ZFP_ZFPROPERTY_TYPE_DEFINE_METHOD_REGISTER(TypeName, Type)
+    _ZFP_ZFPROPERTY_TYPE_DEFINE_METHOD_REGISTER(TypeName, Type) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_REGISTER(TypeName, Type)
 
 #define _ZFP_ZFPROPERTY_TYPE_DEFINE_METHOD_REGISTER(TypeName, Type) \
     ZF_STATIC_REGISTER_INIT(PropMtdReg_##TypeName) \
@@ -277,7 +284,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 /** @brief see #ZFPROPERTY_TYPE_DECLARE */
 #define ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(TypeName, Type, convertFromStringAction, convertToStringAction) \
-    ZFPROPERTY_TYPE_DEFINE(TypeName, Type, { \
+    ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER_WITH_CUSTOM_WRAPPER(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction)) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DEFINE(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction))
+
+/** @brief see #ZFPROPERTY_TYPE_DECLARE */
+#define ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER_WITH_CUSTOM_WRAPPER(TypeName, Type, convertFromStringAction, convertToStringAction) \
+    ZFPROPERTY_TYPE_DEFINE_WITH_CUSTOM_WRAPPER(TypeName, Type, { \
         if(ZFSerializableUtil::requireSerializableClass(ZFPropertyTypeId_##TypeName(), serializableData, outErrorHint, outErrorPos) == zfnull) \
         { \
             return zffalse; \
@@ -310,7 +322,12 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 /** @brief see #ZFPROPERTY_TYPE_DECLARE */
 #define ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(TypeName, Type, serializeFromAction, serializeToAction) \
-    ZFPROPERTY_TYPE_DEFINE(TypeName, Type, ZFM_EXPAND(serializeFromAction), ZFM_EXPAND(serializeToAction), { \
+    ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER_WITH_CUSTOM_WRAPPER(TypeName, Type, ZFM_EXPAND(serializeFromAction), ZFM_EXPAND(serializeToAction)) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_DEFINE(TypeName, Type, ZFM_EXPAND(convertFromStringAction), ZFM_EXPAND(convertToStringAction))
+
+/** @brief see #ZFPROPERTY_TYPE_DECLARE */
+#define ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER_WITH_CUSTOM_WRAPPER(TypeName, Type, serializeFromAction, serializeToAction) \
+    ZFPROPERTY_TYPE_DEFINE_WITH_CUSTOM_WRAPPER(TypeName, Type, ZFM_EXPAND(serializeFromAction), ZFM_EXPAND(serializeToAction), { \
         ZFSerializableData serializableData; \
         return (ZFSerializableDataFromString(serializableData, src, srcLen) \
             && TypeName##FromData(v, serializableData)); \
@@ -341,15 +358,17 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     /** \n */ \
     inline const zfchar *ZFPropertyTypeId_##TypeName(void) \
     { \
-        return ZFPropertyTypeId_none; \
+        return zfText(#TypeName); \
     } \
     _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DECLARE(TypeName, Type)
 /** @brief see #ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE */
 #define ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(TypeName, Type) \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE(TypeName, Type)
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE(TypeName, Type) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_REGISTER(TypeName, Type)
 /** @brief see #ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE */
 #define ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE_UNCOMPARABLE(TypeName, Type) \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE_UNCOMPARABLE(TypeName, Type)
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DEFINE_UNCOMPARABLE(TypeName, Type) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_REGISTER(TypeName, Type)
 
 // ============================================================
 /**
@@ -361,16 +380,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * with the original exist one\n
  * see #ZFPROPERTY_TYPE_DECLARE for more info
  */
-#define ZFPROPERTY_TYPE_ALIAS_DECLARE(ExistTypeName, ExistType, AnotherTypeName, AnotherType) \
-    /** @brief see @ref ZFPropertyTypeId_##ExistTypeName */ \
-    inline const zfchar *ZFPropertyTypeId_##AnotherTypeName(void) \
+#define ZFPROPERTY_TYPE_ALIAS_DECLARE(AliasToTypeName, AliasToType, TypeName, Type) \
+    /** @brief see @ref ZFPropertyTypeId_##AliasToTypeName */ \
+    inline const zfchar *ZFPropertyTypeId_##TypeName(void) \
     { \
-        return ZFPropertyTypeId_##ExistTypeName(); \
+        return ZFPropertyTypeId_##AliasToTypeName(); \
     } \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DECLARE(ExistTypeName, ExistType, AnotherTypeName, AnotherType)
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DECLARE(AliasToTypeName, AliasToType, TypeName, Type)
 /** @brief see #ZFPROPERTY_TYPE_ALIAS_DECLARE */
-#define ZFPROPERTY_TYPE_ALIAS_DEFINE(ExistTypeName, ExistType, AnotherTypeName, AnotherType) \
-    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DEFINE(ExistTypeName, ExistType, AnotherTypeName, AnotherType)
+#define ZFPROPERTY_TYPE_ALIAS_DEFINE(AliasToTypeName, AliasToType, TypeName, Type) \
+    _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DEFINE(AliasToTypeName, AliasToType, TypeName, Type)
 
 // ============================================================
 /**

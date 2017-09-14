@@ -446,7 +446,7 @@ ZFOUTPUT_TYPE(ZFFilterForZFClassType, {output.execute(ZFFilterForZFClassTypeToSt
 ZFPROPERTY_TYPE_DECLARE(ZFMethodPrivilegeType, ZFMethodPrivilegeType)
 ZFOUTPUT_TYPE(ZFMethodPrivilegeType, {output.execute(ZFMethodPrivilegeTypeToString(v));})
 
-ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFComparerForZFObject, ZFComparer<ZFObject *>::Comparer)
+ZFPROPERTY_TYPE_ACCESS_ONLY_DECLARE(ZFComparer_ZFObject, ZFComparer<ZFObject *>::Comparer)
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE

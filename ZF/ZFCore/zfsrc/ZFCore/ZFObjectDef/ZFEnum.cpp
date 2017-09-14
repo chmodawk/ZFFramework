@@ -133,33 +133,30 @@ ZFCompareResult ZFEnum::objectCompare(ZF_IN ZFObject *anotherObj)
     }
 }
 
-zfclassPOD _ZFP_ZFEnumDataPrivateNameData
-{
-public:
-    zfchar *name;
-    zfchar *fullName;
-};
 zfclassNotPOD _ZFP_ZFEnumDataPrivate
 {
 public:
-    typedef zfstlmap<zfuint, _ZFP_ZFEnumDataPrivateNameData> DataType;
-    _ZFP_ZFEnumDataPrivate::DataType d;
+    typedef zfstlmap<zfuint, ZFCoreArrayPOD<zfchar *> > MapType;
+    MapType m;
+    ZFCoreArrayPOD<zfuint> vl;
+    ZFCoreArrayPOD<zfchar *> nl; // for duplicated value, only first stored
 public:
     ~_ZFP_ZFEnumDataPrivate(void)
     {
-        for(_ZFP_ZFEnumDataPrivate::DataType::iterator it = d.begin(); it != d.end(); ++it)
+        for(MapType::iterator it = this->m.begin(); it != this->m.end(); ++it)
         {
-            zfsChange(it->second.name, (const zfchar *)zfnull);
-            zfsChange(it->second.fullName, (const zfchar *)zfnull);
+            for(zfindex j = 0; j < it->second.count(); ++j)
+            {
+                zffree(it->second[j]);
+            }
         }
-        d.clear();
     }
 };
 _ZFP_ZFEnumData::_ZFP_ZFEnumData(void)
 : needInitFlag(zftrue)
 , ownerClass(zfnull)
+, d(zfnew(_ZFP_ZFEnumDataPrivate))
 {
-    d = zfnew(_ZFP_ZFEnumDataPrivate);
 }
 _ZFP_ZFEnumData::~_ZFP_ZFEnumData(void)
 {
@@ -171,115 +168,81 @@ void _ZFP_ZFEnumData::add(ZF_IN zfbool isEnableDuplicateValue,
                           ZF_IN const zfchar *name)
 {
     zfCoreAssert(value != ZFEnumInvalid());
-    _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
-    if(it != d->d.end())
+    _ZFP_ZFEnumDataPrivate::MapType::iterator it = d->m.find(value);
+    if(it != d->m.end())
     {
         zfCoreAssertWithMessageTrim(isEnableDuplicateValue,
             zfTextA("[ZFEnum] duplicate value %s (new: %s, old: %s) when define %s"),
             zfsFromInt<zfstringA>(value).cString(),
             zfsCoreZ2A(name),
-            zfsCoreZ2A(it->second.name),
+            zfsCoreZ2A(it->second[0]),
             zfsCoreZ2A(this->ownerClass->className()));
-        zfsChange(it->second.name, (const zfchar *)zfnull);
-        zfsChange(it->second.fullName, (const zfchar *)zfnull);
+        it->second.add(zfsCopy(name));
     }
-    _ZFP_ZFEnumDataPrivateNameData nameData;
-    nameData.name = zfsCopy(name);
-    nameData.fullName = zfsConnect(this->ownerClass->className(), zfText("::"), name);
-    (d->d)[value] = nameData;
+    else
+    {
+        zfchar *nameTmp = zfsCopy(name);
+        d->m[value].add(nameTmp);
+        d->vl.add(value);
+        d->nl.add(nameTmp);
+    }
 }
 zfindex _ZFP_ZFEnumData::enumCount(void) const
 {
-    return d->d.size();
+    return d->vl.count();
 }
 zfindex _ZFP_ZFEnumData::enumIndexForValue(ZF_IN zfuint value) const
 {
-    _ZFP_ZFEnumDataPrivate::DataType::iterator it = d->d.find(value);
-    if(it != d->d.end())
-    {
-        zfindex ret = 0;
-        for(_ZFP_ZFEnumDataPrivate::DataType::iterator itTmp = d->d.begin(); itTmp != it; ++itTmp, ++ret)
-        {
-            // nothing to do
-        }
-        return ret;
-    }
-    return zfindexMax();
+    return d->vl.find(value);
 }
 zfuint _ZFP_ZFEnumData::enumValueAtIndex(ZF_IN zfindex index) const
 {
-    if(index >= d->d.size())
+    if(index >= d->vl.count())
     {
         return ZFEnumInvalid();
     }
-    _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
-    for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i)
+    else
     {
-        // nothing to do
+        return d->vl[index];
     }
-    if(it == d->d.end())
-    {
-        return ZFEnumInvalid();
-    }
-    return it->first;
 }
 const zfchar *_ZFP_ZFEnumData::enumNameAtIndex(ZF_IN zfindex index) const
 {
-    if(index >= d->d.size())
+    if(index >= d->nl.count())
     {
-        return ZFEnumNameInvalid();
+        return zfnull;
     }
-    _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
-    for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i);
-    if(it == d->d.end())
+    else
     {
-        return ZFEnumNameInvalid();
+        return d->nl[index];
     }
-    return it->second.name;
-}
-const zfchar *_ZFP_ZFEnumData::enumFullNameAtIndex(ZF_IN zfindex index) const
-{
-    if(index >= d->d.size())
-    {
-        return ZFEnumNameInvalid();
-    }
-    _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
-    for(zfindex i = 0; i < index && it != d->d.end(); ++it, ++i);
-    if(it == d->d.end())
-    {
-        return ZFEnumNameInvalid();
-    }
-    return it->second.fullName;
 }
 zfbool _ZFP_ZFEnumData::enumContainValue(ZF_IN zfuint value) const
 {
-    return (d->d.find(value) != d->d.end());
+    return (d->m.find(value) != d->m.end());
 }
 zfuint _ZFP_ZFEnumData::enumValueForName(ZF_IN const zfchar *name) const
 {
-    if(name == zfnull)
+    for(zfindex i = 0; i < d->nl.count(); ++i)
     {
-        return ZFEnumInvalid();
-    }
-    for(_ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.begin();
-        it != d->d.end();
-        ++it)
-    {
-        if(zfscmpTheSame(name, it->second.name))
+        if(zfscmpTheSame(name, d->nl[i]))
         {
-            return it->first;
+            return d->vl[i];
         }
     }
     return ZFEnumInvalid();
 }
 const zfchar *_ZFP_ZFEnumData::enumNameForValue(ZF_IN zfuint value) const
 {
-    _ZFP_ZFEnumDataPrivate::DataType::const_iterator it = d->d.find(value);
-    if(it != d->d.end())
+    _ZFP_ZFEnumDataPrivate::MapType::const_iterator it = d->m.find(value);
+    if(it != d->m.end())
     {
-        return it->second.name;
+        return it->second[0];
     }
-    return ZFEnumNameInvalid();
+    else
+    {
+        return ZFEnumNameInvalid();
+    }
 }
 
 _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass *ownerClass)
@@ -425,7 +388,6 @@ ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFEnum, zfindex, enumCount)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfindex, enumIndexForValue, ZFMP_IN(zfuint, value))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfuint, enumValueAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumNameAtIndex, ZFMP_IN(zfindex, index))
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumFullNameAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfbool, enumContainValue, ZFMP_IN(zfuint, value))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfuint, enumValueForName, ZFMP_IN(const zfchar *, name))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, const zfchar *, enumNameForValue, ZFMP_IN(zfuint, value))

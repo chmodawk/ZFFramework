@@ -57,8 +57,8 @@ typedef enum {
  * it needs some trick to declare a filter
  * @code
  *   ZFFILTER_DECLARE(
- *       ChildClass<T_Public ZFM_COMMA() T_Internal>,
- *       SuperClass<T_Public ZFM_COMMA() T_Internal>)
+ *       ZFM_EXPAND(ChildClass<T_Public, T_Internal>),
+ *       ZFM_EXPAND(SuperClass<T_Public, T_Internal>))
  * @endcode
  */
 #define ZFFILTER_DECLARE(ChildClass, SuperClass) \
@@ -476,8 +476,8 @@ template<typename T_Public, typename T_Internal = T_Public>
 zfclassLikePOD ZF_ENV_EXPORT ZFFilterBasic : zfextendsLikePOD ZFFilterBase<T_Public, T_Internal>
 {
     ZFFILTER_DECLARE(
-        ZFFilterBasic<T_Public ZFM_COMMA() T_Internal>,
-        ZFFilterBase<T_Public ZFM_COMMA() T_Internal>)
+        ZFM_EXPAND(ZFFilterBasic<T_Public, T_Internal>),
+        ZFM_EXPAND(ZFFilterBase<T_Public, T_Internal>))
 
 public:
     /**
@@ -549,8 +549,8 @@ template<typename T_Public, typename T_Internal>
 zfclassLikePOD ZF_ENV_EXPORT ZFFilterForStringBase : zfextendsLikePOD ZFFilterBase<T_Public, T_Internal>
 {
     ZFFILTER_DECLARE(
-        ZFFilterForStringBase<T_Public ZFM_COMMA() T_Internal>,
-        ZFFilterBase<T_Public ZFM_COMMA() T_Internal>)
+        ZFM_EXPAND(ZFFilterForStringBase<T_Public, T_Internal>),
+        ZFM_EXPAND(ZFFilterBase<T_Public, T_Internal>))
 
 public:
     /**

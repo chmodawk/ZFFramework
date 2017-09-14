@@ -279,13 +279,13 @@ template<typename T_ZFObjectBase>
 template<typename T_ZFObject>
 inline ZFAnyT<T_ZFObjectBase>::operator T_ZFObject *(void) const
 {
-    return ZFCastZFObjectUnchecked(
-        typename _ZFP_ZFAnyTypeChecker<T_ZFObject * ZFM_COMMA()
+    return ZFCastZFObjectUnchecked(ZFM_EXPAND(
+        typename _ZFP_ZFAnyTypeChecker<T_ZFObject *,
                 zftTypeIsTypeOf<
-                        typename zftTraits<T_ZFObject>::TrType ZFM_COMMA()
+                        typename zftTraits<T_ZFObject>::TrType,
                         typename zftTraits<T_ZFObjectBase>::TrType
                     >::TypeIsTypeOf
-            >::TypeMatched,
+            >::TypeMatched),
         this->_obj);
 }
 template<typename T_ZFObjectBase>
@@ -297,13 +297,13 @@ template<typename T_ZFObjectBase>
 template<typename T_ZFObject>
 inline T_ZFObject ZFAnyT<T_ZFObjectBase>::to(void) const
 {
-    return ZFCastZFObjectUnchecked(
-        typename _ZFP_ZFAnyTypeChecker<T_ZFObject ZFM_COMMA()
+    return ZFCastZFObjectUnchecked(ZFM_EXPAND(
+        typename _ZFP_ZFAnyTypeChecker<T_ZFObject,
                 zftTypeIsTypeOf<
-                        typename zftTraits<T_ZFObject>::TrType ZFM_COMMA()
+                        typename zftTraits<T_ZFObject>::TrType,
                         typename zftTraits<T_ZFObjectBase>::TrType
                     >::TypeIsTypeOf
-            >::TypeMatched,
+            >::TypeMatched),
         this->_obj);
 }
 /** @endcond */

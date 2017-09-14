@@ -168,8 +168,8 @@ _ZFP_ZFCALLBACK_DECLARE_END_NO_ALIAS(ZFOutputCallback, ZFIOCallback)
  *
  * usage:
  * @code
- *   ZFOUTPUT_TYPE_TEMPLATE(typename T0 ZFM_COMMA() typename T1,
- *                          YourType<T0 ZFM_COMMA() T1>,
+ *   ZFOUTPUT_TYPE_TEMPLATE(ZFM_EXPAND(typename T0, typename T1),
+ *                          ZFM_EXPAND(YourType<T0, T1>),
  *                          {output.execute(v.toString())})
  * @endcode
  */

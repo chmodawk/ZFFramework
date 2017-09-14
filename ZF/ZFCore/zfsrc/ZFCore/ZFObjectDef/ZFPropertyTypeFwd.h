@@ -193,6 +193,19 @@ public:
 };
 
 // ============================================================
+#define _ZFP_ZFPROPERTY_TYPE_ID_DATA_REGISTER(TypeName, Type) \
+    ZF_STATIC_REGISTER_INIT(PropTIReg_##TypeName) \
+    { \
+        _ZFP_ZFPropertyTypeIdDataRegister(ZFPropertyTypeId_##TypeName(), \
+            zfnew(ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>)); \
+    } \
+    ZF_STATIC_REGISTER_DESTROY(PropTIReg_##TypeName) \
+    { \
+        _ZFP_ZFPropertyTypeIdDataUnregister(ZFPropertyTypeId_##TypeName()); \
+    } \
+    ZF_STATIC_REGISTER_END(PropTIReg_##TypeName)
+
+// ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_DECLARE(TypeName, Type) \
     typedef Type _ZFP_PropTypeW_##TypeName; \
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
@@ -350,17 +363,7 @@ public:
     ZFCompareResult v_##TypeName::wrappedValueCompare(ZF_IN const void *v) \
     { \
         return ZFComparerDefault(this->zfv, *(const _ZFP_PropTypeW_##TypeName *)v); \
-    } \
-    ZF_STATIC_REGISTER_INIT(PropTIReg_##TypeName) \
-    { \
-        _ZFP_ZFPropertyTypeIdDataRegister(ZFPropertyTypeId_##TypeName(), \
-            zfnew(ZFPropertyTypeIdData<_ZFP_PropTypeW_##TypeName>)); \
-    } \
-    ZF_STATIC_REGISTER_DESTROY(PropTIReg_##TypeName) \
-    { \
-        _ZFP_ZFPropertyTypeIdDataUnregister(ZFPropertyTypeId_##TypeName()); \
-    } \
-    ZF_STATIC_REGISTER_END(PropTIReg_##TypeName)
+    }
 
 // ============================================================
 #define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ACCESS_ONLY_DECLARE(TypeName, Type) \
@@ -591,7 +594,7 @@ public:
     /** @endcond */
 
 // ============================================================
-#define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DECLARE(ExistTypeName, ExistType, TypeName, Type) \
+#define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DECLARE(AliasToTypeName, AliasToType, TypeName, Type) \
     /** @cond ZFPrivateDoc */ \
     typedef Type _ZFP_PropTypeW_##TypeName; \
     template<> \
@@ -600,23 +603,23 @@ public:
         _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(Type) \
     public: \
         enum { \
-            PropertyRegistered = ZFPropertyTypeIdData<ExistType>::PropertyRegistered, \
-            PropertySerializable = ZFPropertyTypeIdData<ExistType>::PropertySerializable, \
+            PropertyRegistered = ZFPropertyTypeIdData<AliasToType>::PropertyRegistered, \
+            PropertySerializable = ZFPropertyTypeIdData<AliasToType>::PropertySerializable, \
         }; \
         static inline const zfchar *PropertyTypeId(void) \
         { \
-            return ZFPropertyTypeIdData<ExistType>::PropertyTypeId(); \
+            return ZFPropertyTypeIdData<AliasToType>::PropertyTypeId(); \
         } \
         zfoverride \
         virtual zfbool propertyWrapper(ZF_OUT zfautoObject &v) const \
         { \
-            ZFPropertyTypeIdData<ExistType> t; \
+            ZFPropertyTypeIdData<AliasToType> t; \
             t.propertyWrapper(v); \
             return zftrue; \
         } \
         static zfbool ValueStore(ZF_OUT zfautoObject &obj, ZF_IN _ZFP_PropTypeW_##TypeName const &v) \
         { \
-            return ZFPropertyTypeIdData<ExistType>::ValueStore(obj, (ExistType)v); \
+            return ZFPropertyTypeIdData<AliasToType>::ValueStore(obj, (AliasToType)v); \
         } \
         template<typename T_Access = _ZFP_PropTypeW_##TypeName, typename T_Fix = void> \
         zfclassNotPOD Value \
@@ -629,11 +632,11 @@ public:
         public: \
             static zfbool accessAvailable(ZF_IN ZFObject *obj) \
             { \
-                return ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::accessAvailable(obj); \
+                return ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj); \
             } \
             static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
             { \
-                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
+                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj); \
             } \
         }; \
         template<typename T_Fix> \
@@ -642,21 +645,21 @@ public:
         public: \
             static zfbool accessAvailable(ZF_IN ZFObject *obj) \
             { \
-                return ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::accessAvailable(obj); \
+                return ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj); \
             } \
             static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
             { \
-                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<ExistType>::Value<ExistType const &>::access(obj); \
+                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj); \
             } \
         }; \
     }; \
     /** @endcond */ \
     /** @brief type wrapper for #ZFPropertyTypeIdData::Value */ \
-    zfclass ZF_ENV_EXPORT v_##TypeName : zfextends v_##ExistTypeName \
+    zfclass ZF_ENV_EXPORT v_##TypeName : zfextends v_##AliasToTypeName \
     { \
-        ZFOBJECT_DECLARE(v_##TypeName, v_##ExistTypeName) \
+        ZFOBJECT_DECLARE(v_##TypeName, v_##AliasToTypeName) \
     };
-#define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DEFINE(ExistTypeName, ExistType, TypeName, Type) \
+#define _ZFP_ZFPROPERTY_TYPE_ID_DATA_ALIAS_DEFINE(AliasToTypeName, AliasToType, TypeName, Type) \
     ZFOBJECT_REGISTER(v_##TypeName)
 
 ZF_NAMESPACE_GLOBAL_END

@@ -41,33 +41,61 @@ it's designed to be a complete and complex framework, current code status:
 * this piece of code shows how to show a hello world on UI and log output
 
 ```cpp
-    #include "ZFUIKit.h" // for UI module
+    #include "ZFUIWidget.h" // for common UI module
     ZFMAIN_ENTRY(params) // app starts from here
     {
-        // show a hello world as a text view
-        zfblockedAlloc(ZFUIWindow, window);
-        window->windowShow();
-        zfblockedAlloc(ZFUITextView, textView);
-        window->childAdd(textView);
-        textView->textContentStringSet(zfText("hello world"));
-
         // show a hello world to log output
         zfLogT() << zfText("hello wolrd");
+
+        // show a window (full screen by default)
+        zfblockedAlloc(ZFUIWindow, window);
+        window->windowShow();
+
+        // show a hello world as a text view
+        zfblockedAlloc(ZFUITextView, textView);
+        window->childAdd(textView);
+        textView->layoutParam()->layoutAlignSet(ZFUIAlign::e_LeftInner);
+        textView->textContentStringSet(zfText("hello world"));
+
+        // button and click (as observer)
+        zfblockedAlloc(ZFUIButtonBasic, button);
+        window->childAdd(button);
+        button->layoutParam()->layoutAlignSet(ZFUIAlign::e_RightInner);
+        button->buttonLabelTextStringSet(zfText("click me"));
+        ZFLISTENER_LOCAL(onClick, {
+            ZFUIButtonBasic *button = userData->to<ZFObjectHolder *>()->holdedObj;
+            zfLogTrimT() << zfText("button clicked:") << button;
+        })
+        button->observerAdd(ZFUIButton::EventButtonOnClick(), onClick, button->objectHolder());
+
         return 0;
     }
 ```
 
 * this piece of code shows equivalent lua code to use ZFFramework,
-    all the lua bindings are done by reflection
+    all the lua bindings are automatically done by reflection!
 
 ```lua
-    local window = ZFUIWindow();
-    window:windowShow();
-    local textView = zfAlloc("ZFUITextView");
-    window:childAdd(textView);
-    textView:textContentStringSet("hello wolrd");
+    zfLog('hello world')
 
-    zfLog("hello world");
+    local window = ZFUIWindow()
+    window:windowShow()
+
+    local textView = zfAlloc('ZFUITextView')
+    window:childAdd(textView)
+    textView:layoutParam():layoutAlignSet(ZFUIAlign.e_LeftInner())
+    textView:textContentStringSet('hello wolrd')
+
+    local button = ZFUIButtonBasic.ClassData():newInstance()
+    window:childAdd(button)
+    button:layoutParam():layoutAlignSet(ZFUIAlign.e_RightInner())
+    button:buttonLabelTextStringSet('click me')
+    button:observerAdd(
+        ZFUIButton.EventButtonOnClick(),
+        ZFCallbackForLua(function (listenerData, userData)
+            zfLog('button clicked: %s', userData:holdedObj())
+        end),
+        button:objectHolder())
 ```
 
 * and here are screenshot of demo 2048 game built by ZFFramework:
