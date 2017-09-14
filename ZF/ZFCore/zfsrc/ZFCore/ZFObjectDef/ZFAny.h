@@ -282,8 +282,8 @@ inline ZFAnyT<T_ZFObjectBase>::operator T_ZFObject *(void) const
     return ZFCastZFObjectUnchecked(
         typename _ZFP_ZFAnyTypeChecker<T_ZFObject * ZFM_COMMA()
                 zftTypeIsTypeOf<
-                        typename zftTraitsType<T_ZFObject>::TraitsType ZFM_COMMA()
-                        typename zftTraitsType<T_ZFObjectBase>::TraitsType
+                        typename zftTraits<T_ZFObject>::TrType ZFM_COMMA()
+                        typename zftTraits<T_ZFObjectBase>::TrType
                     >::TypeIsTypeOf
             >::TypeMatched,
         this->_obj);
@@ -300,8 +300,8 @@ inline T_ZFObject ZFAnyT<T_ZFObjectBase>::to(void) const
     return ZFCastZFObjectUnchecked(
         typename _ZFP_ZFAnyTypeChecker<T_ZFObject ZFM_COMMA()
                 zftTypeIsTypeOf<
-                        typename zftTraitsType<T_ZFObject>::TraitsType ZFM_COMMA()
-                        typename zftTraitsType<T_ZFObjectBase>::TraitsType
+                        typename zftTraits<T_ZFObject>::TrType ZFM_COMMA()
+                        typename zftTraits<T_ZFObjectBase>::TrType
                     >::TypeIsTypeOf
             >::TypeMatched,
         this->_obj);

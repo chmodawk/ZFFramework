@@ -52,23 +52,23 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
 
         v.matched = zffalse;
         element = ZFSerializableUtil::checkElementByName(serializableData, ZFSerializableKeyword_ZFRegExpResult_matched);
-        if(element != zfnull && !zfboolFromSerializableData(v.matched, *element, outErrorHint, outErrorPos))
+        if(element != zfnull && !zfboolFromData(v.matched, *element, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
 
         v.matchedRange = zfindexRangeZero();
         element = ZFSerializableUtil::checkElementByName(serializableData, ZFSerializableKeyword_ZFRegExpResult_matchedRange);
-        if(element != zfnull && !zfindexRangeFromSerializableData(v.matchedRange, serializableData, outErrorHint, outErrorPos))
+        if(element != zfnull && !zfindexRangeFromData(v.matchedRange, serializableData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
 
         v.namedGroups.removeAll();
         element = ZFSerializableUtil::checkElementByName(serializableData, ZFSerializableKeyword_ZFRegExpResult_namedGroups);
-        if(element != zfnull && !ZFCoreArrayFromSerializableData(
+        if(element != zfnull && !ZFCoreArrayFromData(
             v.namedGroups,
-            zfindexRangeFromSerializableData,
+            zfindexRangeFromData,
             serializableData,
             outErrorHint,
             outErrorPos))
@@ -82,7 +82,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
         if(v.matched)
         {
             ZFSerializableData element;
-            if(!zfboolToSerializableData(element, v.matched, outErrorHint))
+            if(!zfboolToData(element, v.matched, outErrorHint))
             {
                 return zffalse;
             }
@@ -93,7 +93,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
         if(v.matchedRange != zfindexRangeZero())
         {
             ZFSerializableData element;
-            if(!zfindexRangeToSerializableData(element, v.matchedRange, outErrorHint))
+            if(!zfindexRangeToData(element, v.matchedRange, outErrorHint))
             {
                 return zffalse;
             }
@@ -104,7 +104,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFRegExpResult, ZFRegExpResult,
         if(!v.namedGroups.isEmpty())
         {
             ZFSerializableData element;
-            if(!ZFCoreArrayToSerializableData(element, zfindexRangeToSerializableData, v.namedGroups, outErrorHint))
+            if(!ZFCoreArrayToData(element, zfindexRangeToData, v.namedGroups, outErrorHint))
             {
                 return zffalse;
             }

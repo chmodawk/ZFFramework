@@ -158,10 +158,10 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
     return zftrue;
 }
 
-zfbool zfstringFromSerializableData(ZF_OUT const zfchar * &v,
-                                    ZF_IN const ZFSerializableData &serializableData,
-                                    ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
-                                    ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
+zfbool zfstringFromData(ZF_OUT const zfchar * &v,
+                        ZF_IN const ZFSerializableData &serializableData,
+                        ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                        ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
 {
     if(ZFSerializableUtil::requireSerializableClass(ZFPropertyTypeId_zfstring(), serializableData, outErrorHint, outErrorPos) == zfnull)
     {
@@ -177,9 +177,9 @@ zfbool zfstringFromSerializableData(ZF_OUT const zfchar * &v,
     v = valueString;
     return zftrue;
 }
-zfbool zfstringToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                  ZF_IN const zfchar * const &v,
-                                  ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
+zfbool zfstringToData(ZF_OUT ZFSerializableData &serializableData,
+                      ZF_IN const zfchar * const &v,
+                      ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
 {
     if(v == zfnull)
     {
@@ -937,9 +937,9 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFCallbackType, ZFCallbackType, {
 
 // ============================================================
 ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(zfautoObject, zfautoObject, {
-        return ZFObjectFromSerializableData(v, serializableData, outErrorHint, outErrorPos);
+        return ZFObjectFromData(v, serializableData, outErrorHint, outErrorPos);
     }, {
-        return ZFObjectToSerializableData(serializableData, v, outErrorHint);
+        return ZFObjectToData(serializableData, v, outErrorHint);
     })
 ZFOUTPUT_TYPE_DEFINE(zfautoObject, {
         output.execute(

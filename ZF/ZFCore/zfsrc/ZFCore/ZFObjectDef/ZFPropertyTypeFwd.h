@@ -98,7 +98,7 @@ zfclassNotPOD _ZFP_ZFPropertyTypeChecker
  * for advanced reflection use only\n
  * type must be registered by #ZFPROPERTY_TYPE_DECLARE before use this template,
  * and T_Type must be plain type without reference,
- * use #zftTraitsType::TraitsRemoveReference if necessary
+ * use #zftTraits::TrNoRef if necessary
  */
 template<typename T_Type, typename T_ZFObjectFix = void, typename T_PointerFix = void>
 zfclassNotPOD ZFPropertyTypeIdData : zfextendsNotPOD ZFPropertyTypeIdDataBase
@@ -173,7 +173,7 @@ public:
         /** @brief try access as raw value, see #ZFPropertyTypeIdData::Value */
         static zfbool accessAvailable(ZF_IN ZFObject *obj);
         /** @brief try access as raw value, see #ZFPropertyTypeIdData::Value */
-        static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj);
+        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj);
     };
     /*
      * if available, the templates above should handle these types,
@@ -239,14 +239,14 @@ public:
         virtual ZFCompareResult wrappedValueCompare(ZF_IN const void *v); \
     public: \
         zfoverride \
-        virtual zfbool wrappedValueFromSerializableData(ZF_IN const ZFSerializableData &serializableData, \
-                                                        ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                        ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
-        {return TypeName##FromSerializableData(this->zfv, serializableData, outErrorHint, outErrorPos);} \
+        virtual zfbool wrappedValueFromData(ZF_IN const ZFSerializableData &serializableData, \
+                                            ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
+                                            ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
+        {return TypeName##FromData(this->zfv, serializableData, outErrorHint, outErrorPos);} \
         zfoverride \
-        virtual zfbool wrappedValueToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                      ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
-        {return TypeName##ToSerializableData(serializableData, this->zfv, outErrorHint);} \
+        virtual zfbool wrappedValueToData(ZF_OUT ZFSerializableData &serializableData, \
+                                          ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
+        {return TypeName##ToData(serializableData, this->zfv, outErrorHint);} \
         zfoverride \
         virtual zfbool wrappedValueFromString(ZF_IN const zfchar *src, \
                                               ZF_IN_OPT zfindex srcLen = zfindexMax()) \
@@ -285,9 +285,9 @@ public:
             return zftrue; \
         } \
         template<typename T_Access = _ZFP_PropTypeW_##TypeName \
-            , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer \
+            , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr \
                 && zftTypeIsSame< \
-                        typename zftTraitsType<T_Access>::TraitsRemoveReference, \
+                        typename zftTraits<T_Access>::TrNoRef, \
                         _ZFP_PropTypeW_##TypeName \
                     >::TypeIsSame != 1) \
                 ? 1 : 0) \
@@ -313,7 +313,7 @@ public:
             { \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
             { \
                 return &(ZFCastZFObject(v_##TypeName *, obj)->zfv); \
             } \
@@ -409,17 +409,17 @@ public:
         virtual ZFCompareResult wrappedValueCompare(ZF_IN const void *v); \
     public: \
         zfoverride \
-        virtual zfbool wrappedValueFromSerializableData(ZF_IN const ZFSerializableData &serializableData, \
-                                                        ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
-                                                        ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
+        virtual zfbool wrappedValueFromData(ZF_IN const ZFSerializableData &serializableData, \
+                                            ZF_OUT_OPT zfstring *outErrorHint = zfnull, \
+                                            ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull) \
         { \
             ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData, \
                 zfText("registered type %s is not serializable"), zfText(#TypeName)); \
             return zffalse; \
         } \
         zfoverride \
-        virtual zfbool wrappedValueToSerializableData(ZF_OUT ZFSerializableData &serializableData, \
-                                                      ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
+        virtual zfbool wrappedValueToData(ZF_OUT ZFSerializableData &serializableData, \
+                                          ZF_OUT_OPT zfstring *outErrorHint = zfnull) \
         { \
             ZFSerializableUtil::errorOccurred(outErrorHint, \
                 zfText("registered type %s is not serializable"), zfText(#TypeName)); \
@@ -463,9 +463,9 @@ public:
             return zftrue; \
         } \
         template<typename T_Access = _ZFP_PropTypeW_##TypeName \
-            , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer \
+            , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr \
                 && zftTypeIsSame< \
-                        typename zftTraitsType<T_Access>::TraitsRemoveReference, \
+                        typename zftTraits<T_Access>::TrNoRef, \
                         _ZFP_PropTypeW_##TypeName \
                     >::TypeIsSame != 1) \
                 ? 1 : 0) \
@@ -491,7 +491,7 @@ public:
             { \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
             { \
                 return &(ZFCastZFObject(v_##TypeName *, obj)->zfv); \
             } \
@@ -582,9 +582,9 @@ public:
             { \
                 return zffalse; \
             } \
-            static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
             { \
-                return typename zftTraitsType<T_Access>::TraitsRemoveReference(); \
+                return typename zftTraits<T_Access>::TrNoRef(); \
             } \
         }; \
     }; \

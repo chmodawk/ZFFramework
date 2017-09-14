@@ -88,13 +88,13 @@ protected:
             zfautoObject testObject = owner->prepareTestObject();
             ZFUITextView *outputView = userData->tagGet<ZFUITextView *>(zfText("outputView"));
             outputView->textContentStringSet(zfText("running..."));
-            ZFSerializableData data = ZFObjectToSerializableData(testObject);
+            ZFSerializableData data = ZFObjectToData(testObject);
 
             zfindex toDataTimes = 1000;
             ZFCoreStatistic::invokeTimeAccurateLogBegin(zfText("ZFUISerializePerformance_test_toData"));
             for(zfindex i = 0; i < toDataTimes; ++i)
             {
-                ZFObjectToSerializableData(testObject);
+                ZFObjectToData(testObject);
             }
             ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFUISerializePerformance_test_toData"));
 
@@ -102,7 +102,7 @@ protected:
             ZFCoreStatistic::invokeTimeAccurateLogBegin(zfText("ZFUISerializePerformance_test_fromData"));
             for(zfindex i = 0; i < fromDataTimes; ++i)
             {
-                ZFObjectFromSerializableData(data);
+                ZFObjectFromData(data);
             }
             ZFCoreStatistic::invokeTimeAccurateLogEnd(zfText("ZFUISerializePerformance_test_fromData"));
 

@@ -571,7 +571,7 @@ const ZFOutputCallback &operator <<(const ZFOutputCallback &output, T_Type * con
     else
     {
         _ZFP_ZFOutputCallbackOutputWrapper<T_Type *,
-                ZFM_CLASS_HAS_MEMBER(_ZFP_ZFOutputCallbackOutputZFObject, ClassData, typename zftTraitsType<T_Type>::TraitsType) ? 1 : 0
+                ZFM_CLASS_HAS_MEMBER(_ZFP_ZFOutputCallbackOutputZFObject, ClassData, typename zftTraits<T_Type>::TrType) ? 1 : 0
             >::outputAction(output, v);
     }
     return output;

@@ -609,32 +609,32 @@ extern ZF_ENV_EXPORT zfbool ZFObjectToOutput(ZF_IN_OUT const ZFInputCallback &ou
  *   which describe a null object,
  *   the result would be null
  */
-extern ZF_ENV_EXPORT zfautoObject ZFObjectFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
-                                                               ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                               ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+extern ZF_ENV_EXPORT zfautoObject ZFObjectFromData(ZF_IN const ZFSerializableData &serializableData,
+                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                                   ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
 /**
  * @brief convenient method to serialize from serializable data
  *
  * you should release the result object if not null
  */
-extern ZF_ENV_EXPORT zfbool ZFObjectFromSerializableData(ZF_OUT zfautoObject &result,
-                                                         ZF_IN const ZFSerializableData &serializableData,
-                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                         ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+extern ZF_ENV_EXPORT zfbool ZFObjectFromData(ZF_OUT zfautoObject &result,
+                                             ZF_IN const ZFSerializableData &serializableData,
+                                             ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                             ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
 /**
  * @brief convenient method to serialize to serializable data
  */
-extern ZF_ENV_EXPORT zfbool ZFObjectToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                       ZF_IN ZFObject *obj,
+extern ZF_ENV_EXPORT zfbool ZFObjectToData(ZF_OUT ZFSerializableData &serializableData,
+                                           ZF_IN ZFObject *obj,
+                                           ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                           ZF_IN_OPT ZFSerializable *referencedObject = zfnull);
+/**
+ * @brief convenient method to serialize to serializable data
+ */
+extern ZF_ENV_EXPORT ZFSerializableData ZFObjectToData(ZF_IN ZFObject *obj,
+                                                       ZF_OUT_OPT zfbool *outSuccess = zfnull,
                                                        ZF_OUT_OPT zfstring *outErrorHint = zfnull,
                                                        ZF_IN_OPT ZFSerializable *referencedObject = zfnull);
-/**
- * @brief convenient method to serialize to serializable data
- */
-extern ZF_ENV_EXPORT ZFSerializableData ZFObjectToSerializableData(ZF_IN ZFObject *obj,
-                                                                   ZF_OUT_OPT zfbool *outSuccess = zfnull,
-                                                                   ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                                   ZF_IN_OPT ZFSerializable *referencedObject = zfnull);
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSerializable_h_

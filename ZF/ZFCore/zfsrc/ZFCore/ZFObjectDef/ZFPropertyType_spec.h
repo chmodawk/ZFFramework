@@ -44,9 +44,9 @@ public:
         {
             return zffalse;
         }
-        static typename zftTraitsType<T_Access>::TraitsType access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Access>::TrType access(ZF_IN ZFObject *obj)
         {
-            return typename zftTraitsType<T_Access>::TraitsType();
+            return typename zftTraits<T_Access>::TrType();
         }
     };
 };
@@ -56,7 +56,7 @@ public:
 ZFM_CLASS_HAS_MEMBER_DECLARE(_ZFP_ZFPropertyTypeIdData, ClassData, const ZFClass * (*F)(void))
 template<typename T_Type>
 zfclassNotPOD ZFPropertyTypeIdData<T_Type,
-        typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFPropertyTypeIdData, ClassData, typename zftTraitsType<T_Type>::TraitsType)>::EnableIf
+        typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFPropertyTypeIdData, ClassData, typename zftTraits<T_Type>::TrType)>::EnableIf
     > : zfextendsNotPOD ZFPropertyTypeIdDataBase
 {
     _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(T_Type)
@@ -80,11 +80,11 @@ public:
     public:
         static zfbool accessAvailable(ZF_IN ZFObject *obj)
         {
-            return !(obj != zfnull && ZFCastZFObject(typename zftTraitsType<T_Type>::TraitsType *, obj) == zfnull);
+            return !(obj != zfnull && ZFCastZFObject(typename zftTraits<T_Type>::TrType *, obj) == zfnull);
         }
-        static typename zftTraitsType<T_Type>::TraitsType *access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Type>::TrType *access(ZF_IN ZFObject *obj)
         {
-            return ZFCastZFObject(typename zftTraitsType<T_Type>::TraitsType *, obj);
+            return ZFCastZFObject(typename zftTraits<T_Type>::TrType *, obj);
         }
     };
 };
@@ -250,12 +250,12 @@ public:
 // pointer type
 template<typename T_Type>
 zfclassNotPOD ZFPropertyTypeIdData<T_Type,
-        typename zftEnableIf<!ZFM_CLASS_HAS_MEMBER(_ZFP_ZFPropertyTypeIdData, ClassData, typename zftTraitsType<T_Type>::TraitsType)>::EnableIf,
-        typename zftEnableIf<zftTraitsType<T_Type>::TypeIsPointer>::EnableIf
+        typename zftEnableIf<!ZFM_CLASS_HAS_MEMBER(_ZFP_ZFPropertyTypeIdData, ClassData, typename zftTraits<T_Type>::TrType)>::EnableIf,
+        typename zftEnableIf<zftTraits<T_Type>::TrIsPtr>::EnableIf
     > : zfextendsNotPOD ZFPropertyTypeIdDataBase
 {
 public:
-    typedef typename zftTraitsType<T_Type>::TraitsType T_Type_;
+    typedef typename zftTraits<T_Type>::TrType T_Type_;
     _ZFP_ZFPROPERTY_TYPE_ID_DATA_BASE_EXPAND(T_Type_)
 public:
     enum {
@@ -290,9 +290,9 @@ public:
         return ZFPropertyTypeIdData<T_Type_>::ValueStore(obj, *v);
     }
     template<typename T_Access = T_Type
-        , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer
+        , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr
             && zftTypeIsSame<
-                    typename zftTraitsType<T_Access>::TraitsRemoveReference,
+                    typename zftTraits<T_Access>::TrNoRef,
                     T_Type_
                 >::TypeIsSame != 1)
             ? 1 : 0)

@@ -29,7 +29,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFResJson, ZFMP_IN(const zfchar *, resPath)
     {
         return zfautoObjectNull();
     }
-    cached = ZFObjectFromSerializableData(data);
+    cached = ZFObjectFromData(data);
     if(cached == zfautoObjectNull())
     {
         return zfautoObjectNull();

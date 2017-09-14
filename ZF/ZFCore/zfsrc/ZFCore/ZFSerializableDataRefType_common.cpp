@@ -48,7 +48,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_value)
     zfindex propertyDataIndex = pos[1].start + pos[1].count + 1;
     if(propertyDataIndex == refDataLen)
     {
-        return ZFObjectToSerializableData(serializableData, owner, outErrorHint);
+        return ZFObjectToData(serializableData, owner, outErrorHint);
     }
 
     pos.removeAll();
@@ -115,7 +115,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_value)
             }
             if(i + 1 == pos.count())
             {
-                return ZFObjectToSerializableData(serializableData, obj);
+                return ZFObjectToData(serializableData, obj);
             }
         }
     }

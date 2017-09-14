@@ -52,30 +52,30 @@ ZFOUTPUT_TYPE(ZFXmlItem, {output << v.objectInfo();})
 /**
  * @brief parse xml formated data to serializable
  */
-ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlParseToSerializableData,
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlParseToData,
                         ZFMP_OUT(ZFSerializableData &, serializableData),
                         ZFMP_IN(const ZFXmlItem &, xmlElement),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 /**
- * @brief see #ZFXmlParseToSerializableData
+ * @brief see #ZFXmlParseToData
  */
-ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFXmlParseToSerializableData,
+ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFXmlParseToData,
                         ZFMP_IN(const ZFXmlItem &, xmlElement),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 /**
  * @brief print serializable to xml formated data
  */
-ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlPrintFromSerializableData,
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFXmlPrintFromData,
                         ZFMP_OUT(ZFXmlItem &, xmlElement),
                         ZFMP_IN(const ZFSerializableData &, serializableData),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 /**
- * @brief see #ZFXmlPrintFromSerializableData
+ * @brief see #ZFXmlPrintFromData
  */
-ZFMETHOD_FUNC_DECLARE_3(ZFXmlItem, ZFXmlPrintFromSerializableData,
+ZFMETHOD_FUNC_DECLARE_3(ZFXmlItem, ZFXmlPrintFromData,
                         ZFMP_IN(const ZFSerializableData &, serializableData),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))

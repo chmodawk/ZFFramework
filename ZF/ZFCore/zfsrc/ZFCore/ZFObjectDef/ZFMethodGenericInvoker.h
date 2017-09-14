@@ -75,7 +75,7 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
                                                ZF_IN ZFObject *param);
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_DECLARE_EXPAND(N, ParamType) \
     typedef ParamType _T##N; \
-    typedef zftTraitsType<ParamType>::TraitsRemoveReference _TR##N; \
+    typedef zftTraits<ParamType>::TrNoRef _TR##N; \
     typedef _ZFP_MtdGICk< \
             _TR##N, \
             ZFPropertyTypeIdData<_TR##N>::PropertyRegistered \
@@ -97,9 +97,9 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
     DefaultExpandOrEmpty()( \
         static zfautoObject pDef##N(void) \
         { \
-            zftValue<zftTraitsType<ParamType>::TraitsRemoveReference> paramDefault; \
+            zftValue<zftTraits<ParamType>::TrNoRef> paramDefault; \
             zfautoObject ret; \
-            ZFPropertyTypeIdData<zftTraitsType<ParamType>::TraitsRemoveReference>::ValueStore( \
+            ZFPropertyTypeIdData<zftTraits<ParamType>::TrNoRef>::ValueStore( \
                 ret, \
                 (paramDefault.zfv DefaultValueFix())); \
             return ret; \
@@ -152,7 +152,7 @@ public:
                 , param6
                 , param7
             );
-        typedef typename zftTraitsType<T_ReturnType>::TraitsRemoveReference T_ReturnTypeTmp;
+        typedef typename zftTraits<T_ReturnType>::TrNoRef T_ReturnTypeTmp;
         if(ZFPropertyTypeIdData<T_ReturnTypeTmp>::ValueStore(ret, retTmp))
         {
             return zftrue;

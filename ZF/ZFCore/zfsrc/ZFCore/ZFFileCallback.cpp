@@ -370,7 +370,7 @@ static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallbac
     do
     {
         ZFSerializableData filePathData;
-        if(!zfstringToSerializableData(filePathData, filePath))
+        if(!zfstringToData(filePathData, filePath))
         {
             break;
         }
@@ -380,7 +380,7 @@ static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallbac
         if(flags != ZFFileOpenOption::e_Create)
         {
             ZFSerializableData flagsData;
-            if(!ZFFileOpenOptionFlagsToSerializableData(flagsData, flags))
+            if(!ZFFileOpenOptionFlagsToData(flagsData, flags))
             {
                 break;
             }
@@ -391,7 +391,7 @@ static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallbac
         if(autoFlushSize != zfindexMax())
         {
             ZFSerializableData autoFlushSizeData;
-            if(!zfindexToSerializableData(autoFlushSizeData, autoFlushSize))
+            if(!zfindexToData(autoFlushSizeData, autoFlushSize))
             {
                 break;
             }
@@ -421,7 +421,7 @@ static zfbool _ZFP_ZFOutputCallbackForFile_parseImplData(ZF_IN const ZFSerializa
         return zffalse;
     }
     filePath = zfnull;
-    if(!zfstringFromSerializableData(filePath, *filePathData, outErrorHint, outErrorPos))
+    if(!zfstringFromData(filePath, *filePathData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -429,7 +429,7 @@ static zfbool _ZFP_ZFOutputCallbackForFile_parseImplData(ZF_IN const ZFSerializa
     flags = ZFFileOpenOption::e_Create;
     {
         const ZFSerializableData *flagsData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFFileCallback_flags);
-        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromSerializableData(flags, *flagsData, outErrorHint, outErrorPos))
+        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromData(flags, *flagsData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -437,7 +437,7 @@ static zfbool _ZFP_ZFOutputCallbackForFile_parseImplData(ZF_IN const ZFSerializa
     autoFlushSize = zfindexMax();
     {
         const ZFSerializableData *autoFlushSizeData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFFileCallback_autoFlushSize);
-        if(autoFlushSizeData != zfnull && !zfindexFromSerializableData(autoFlushSize, *autoFlushSizeData, outErrorHint, outErrorPos))
+        if(autoFlushSizeData != zfnull && !zfindexFromData(autoFlushSize, *autoFlushSizeData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -491,7 +491,7 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
         do
         {
             ZFSerializableData filePathData;
-            if(!zfstringToSerializableData(filePathData, filePath))
+            if(!zfstringToData(filePathData, filePath))
             {
                 break;
             }
@@ -501,7 +501,7 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
             if(flags != ZFFileOpenOption::e_Read)
             {
                 ZFSerializableData flagsData;
-                if(!ZFFileOpenOptionFlagsToSerializableData(flagsData, flags))
+                if(!ZFFileOpenOptionFlagsToData(flagsData, flags))
                 {
                     break;
                 }
@@ -512,7 +512,7 @@ static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback 
             if(autoSkipBOMTable.objectCompare(ZFFileBOMListDefault()) != ZFCompareTheSame)
             {
                 ZFSerializableData autoSkipBOMTableData;
-                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
+                if(!zfstringToData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
                 {
                     break;
                 }
@@ -543,7 +543,7 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
         return zffalse;
     }
     filePath = zfnull;
-    if(!zfstringFromSerializableData(filePath, *filePathData, outErrorHint, outErrorPos))
+    if(!zfstringFromData(filePath, *filePathData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -551,7 +551,7 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
     flags = ZFFileOpenOption::e_Read;
     {
         const ZFSerializableData *flagsData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFFileCallback_flags);
-        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromSerializableData(flags, *flagsData, outErrorHint, outErrorPos))
+        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromData(flags, *flagsData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -562,7 +562,7 @@ static zfbool _ZFP_ZFInputCallbackForFile_parseImplData(ZF_IN const ZFSerializab
         zfstring BOMStringList;
         if(autoSkipBOMTableData != zfnull)
         {
-            if(!zfstringFromSerializableData(BOMStringList, *autoSkipBOMTableData, outErrorHint, outErrorPos))
+            if(!zfstringFromData(BOMStringList, *autoSkipBOMTableData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }

@@ -23,10 +23,10 @@
  *   // serialize to an data holder,
  *   // which can be converted to raw data and write to file,
  *   // you may also convert it to xml or json or other data formats
- *   ZFSerializableData data = ZFObjectToSerializableData(obj);
+ *   ZFSerializableData data = ZFObjectToData(obj);
  *
  *   // serialize object from existing data
- *   ZFObject *serializedObject = ZFObjectFromSerializableData(data);
+ *   ZFObject *serializedObject = ZFObjectFromData(data);
  *   // the newly created object should be released manually
  *   zfRelease(serializedObject);
  * @endcode

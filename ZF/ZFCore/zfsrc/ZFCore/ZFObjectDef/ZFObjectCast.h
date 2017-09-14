@@ -55,7 +55,7 @@ zfclassFwd ZFInterface;
 template<typename T_ZFObjectTo, typename T_ZFObjectFrom>
 inline T_ZFObjectTo _ZFP_ObjCastExplicit(T_ZFObjectFrom const &obj)
 {
-    return ((obj->classData()->classIsTypeOf(zftTraitsType<T_ZFObjectTo>::TraitsType::ClassData()))
+    return ((obj->classData()->classIsTypeOf(zftTraits<T_ZFObjectTo>::TrType::ClassData()))
         ? static_cast<T_ZFObjectTo>(obj)
         : zfnull);
 }
@@ -92,9 +92,9 @@ inline void _ZFP_ObjCastToUnknownUnchecked(T_Unknown &ret,
 #define _ZFP_ObjCastTypeZFInterface 2
 #define _ZFP_ObjCastTypeUnknown 3
 
-#define _ZFP_ObjCastType(TraitsType) \
-    (ZFM_CLASS_HAS_MEMBER(_ZFP_ObjCast, ClassData, TraitsType) \
-        ? (zftTypeIsTypeOf<TraitsType, ZFObject>::TypeIsTypeOf \
+#define _ZFP_ObjCastType(TrType) \
+    (ZFM_CLASS_HAS_MEMBER(_ZFP_ObjCast, ClassData, TrType) \
+        ? (zftTypeIsTypeOf<TrType, ZFObject>::TypeIsTypeOf \
                 ? _ZFP_ObjCastTypeZFObject \
                 : _ZFP_ObjCastTypeZFInterface \
             ) \
@@ -150,7 +150,7 @@ public:
         return (obj
             ? static_cast<T_To>(obj->classData()->_ZFP_ZFClass_interfaceCast(
                 obj,
-                zftTraitsType<T_To>::TraitsType::ClassData()))
+                zftTraits<T_To>::TrType::ClassData()))
             : zfnull);
     }
 };
@@ -188,7 +188,7 @@ public:
         return (obj
             ? static_cast<T_To>(obj->classData()->_ZFP_ZFClass_interfaceCast(
                 obj->toObject(),
-                zftTraitsType<T_To>::TraitsType::ClassData()))
+                zftTraits<T_To>::TrType::ClassData()))
             : zfnull);
     }
 };
@@ -243,10 +243,10 @@ template<typename T_To>
 template<typename T_From>
 inline T_To _ZFP_ObjCast<T_To>::c(T_From const &obj)
 {
-    typedef typename zftTraitsType<T_To>::TraitsType T_ToTmp;
-    typedef typename zftTraitsType<T_From>::TraitsType T_FromTmp;
+    typedef typename zftTraits<T_To>::TrType T_ToTmp;
+    typedef typename zftTraits<T_From>::TrType T_FromTmp;
     return _ZFP_ObjCastHolder<
-            zftTypeIsTypeOf<typename zftTraitsType<T_From>::TraitsType, typename zftTraitsType<T_To>::TraitsType>::TypeIsTypeOf,
+            zftTypeIsTypeOf<typename zftTraits<T_From>::TrType, typename zftTraits<T_To>::TrType>::TypeIsTypeOf,
             T_To, T_From,
             _ZFP_ObjCastType(T_ToTmp), _ZFP_ObjCastType(T_FromTmp)
         >::c(obj);
@@ -304,7 +304,7 @@ public:
         return (obj
             ? static_cast<T_To>(obj->classData()->_ZFP_ZFClass_interfaceCast(
                 obj,
-                zftTraitsType<T_To>::TraitsType::ClassData()))
+                zftTraits<T_To>::TrType::ClassData()))
             : zfnull);
     }
 };
@@ -342,7 +342,7 @@ public:
         return (obj
             ? static_cast<T_To>(obj->classData()->_ZFP_ZFClass_interfaceCast(
                 obj->toObject(),
-                zftTraitsType<T_To>::TraitsType::ClassData()))
+                zftTraits<T_To>::TrType::ClassData()))
             : zfnull);
     }
 };
@@ -397,10 +397,10 @@ template<typename T_To>
 template<typename T_From>
 inline T_To _ZFP_ObjCastUnchecked<T_To>::c(T_From const &obj)
 {
-    typedef typename zftTraitsType<T_To>::TraitsType T_ToTmp;
-    typedef typename zftTraitsType<T_From>::TraitsType T_FromTmp;
+    typedef typename zftTraits<T_To>::TrType T_ToTmp;
+    typedef typename zftTraits<T_From>::TrType T_FromTmp;
     return _ZFP_ObjCastUncheckedHolder<
-            zftTypeIsTypeOf<typename zftTraitsType<T_From>::TraitsType, typename zftTraitsType<T_To>::TraitsType>::TypeIsTypeOf,
+            zftTypeIsTypeOf<typename zftTraits<T_From>::TrType, typename zftTraits<T_To>::TrType>::TypeIsTypeOf,
             T_To, T_From,
             _ZFP_ObjCastType(T_ToTmp), _ZFP_ObjCastType(T_FromTmp)
         >::c(obj);

@@ -18,7 +18,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFKeyValuePairHolder, ZFKeyValu
         data = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFKeyValuePair_key);
         if(data != zfnull)
         {
-            if(!ZFObjectFromSerializableData(v.key, *data, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(v.key, *data, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -30,7 +30,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFKeyValuePairHolder, ZFKeyValu
         data = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFKeyValuePair_value);
         if(data != zfnull)
         {
-            if(!ZFObjectFromSerializableData(v.value, *data, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(v.value, *data, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -44,7 +44,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFKeyValuePairHolder, ZFKeyValu
         if(v.key != zfnull)
         {
             ZFSerializableData data;
-            if(!ZFObjectToSerializableData(data, v.key, outErrorHint))
+            if(!ZFObjectToData(data, v.key, outErrorHint))
             {
                 return zffalse;
             }
@@ -54,7 +54,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFKeyValuePairHolder, ZFKeyValu
         if(v.value != zfnull)
         {
             ZFSerializableData data;
-            if(!ZFObjectToSerializableData(data, v.value, outErrorHint))
+            if(!ZFObjectToData(data, v.value, outErrorHint))
             {
                 return zffalse;
             }

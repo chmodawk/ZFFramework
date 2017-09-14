@@ -55,7 +55,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageResXml,
         return zfautoObjectNull();
     }
 
-    cached = ZFObjectFromSerializableData(data);
+    cached = ZFObjectFromData(data);
     if(cached == zfautoObjectNull() || !cached.toObject()->classData()->classIsTypeOf(ZFUIImage::ClassData()))
     {
         return zfautoObjectNull();

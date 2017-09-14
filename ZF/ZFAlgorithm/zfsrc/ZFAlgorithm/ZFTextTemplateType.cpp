@@ -693,7 +693,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
                     return zffalse;
                 }
                 zfstring value;
-                if(!zfstringFromSerializableData(value, item, outErrorHint, outErrorPos))
+                if(!zfstringFromData(value, item, outErrorHint, outErrorPos))
                 {
                     return zffalse;
                 }
@@ -714,7 +714,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
                     return zffalse;
                 }
                 zfbool value = zffalse;
-                if(!zfboolFromSerializableData(value, item, outErrorHint, outErrorPos))
+                if(!zfboolFromData(value, item, outErrorHint, outErrorPos))
                 {
                     return zffalse;
                 }
@@ -726,7 +726,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
         if(element != zfnull)
         {
             zfbool enableDataDefault = zffalse;
-            if(!zfboolFromSerializableData(enableDataDefault, *element, outErrorHint, outErrorPos))
+            if(!zfboolFromData(enableDataDefault, *element, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -746,7 +746,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
                     return zffalse;
                 }
                 ZFTextTemplateIndexData value;
-                if(!ZFTextTemplateIndexDataFromSerializableData(value, item, outErrorHint, outErrorPos))
+                if(!ZFTextTemplateIndexDataFromData(value, item, outErrorHint, outErrorPos))
                 {
                     return zffalse;
                 }
@@ -758,7 +758,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
         if(element != zfnull)
         {
             ZFTextTemplateIndexData indexDataDefault;
-            if(!ZFTextTemplateIndexDataFromSerializableData(indexDataDefault, *element, outErrorHint, outErrorPos))
+            if(!ZFTextTemplateIndexDataFromData(indexDataDefault, *element, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -776,7 +776,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
             for(zfindex i = 0; i < v.replaceDataCount(); ++i)
             {
                 ZFSerializableData itemData;
-                if(!zfstringToSerializableData(itemData, v.replaceDataAtIndex(i), outErrorHint))
+                if(!zfstringToData(itemData, v.replaceDataAtIndex(i), outErrorHint))
                 {
                     return zffalse;
                 }
@@ -795,7 +795,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
             for(zfindex i = 0; i < v.enableDataCount(); ++i)
             {
                 ZFSerializableData itemData;
-                if(!zfboolToSerializableData(itemData, v.enableDataAtIndex(i), outErrorHint))
+                if(!zfboolToData(itemData, v.enableDataAtIndex(i), outErrorHint))
                 {
                     return zffalse;
                 }
@@ -811,7 +811,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
         if(v.enableDataDefault())
         {
             ZFSerializableData nodeData;
-            if(!zfboolToSerializableData(nodeData, v.enableDataDefault(), outErrorHint))
+            if(!zfboolToData(nodeData, v.enableDataDefault(), outErrorHint))
             {
                 return zffalse;
             }
@@ -825,7 +825,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
             for(zfindex i = 0; i < v.indexDataCount(); ++i)
             {
                 ZFSerializableData itemData;
-                if(!ZFTextTemplateIndexDataToSerializableData(itemData, *(v.indexDataAtIndex(i)), outErrorHint))
+                if(!ZFTextTemplateIndexDataToData(itemData, *(v.indexDataAtIndex(i)), outErrorHint))
                 {
                     return zffalse;
                 }
@@ -840,7 +840,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFTextTemplateParam, ZFTextTemp
 
         {
             ZFSerializableData nodeData;
-            if(!ZFTextTemplateIndexDataToSerializableData(nodeData, v.indexDataDefault(), outErrorHint))
+            if(!ZFTextTemplateIndexDataToData(nodeData, v.indexDataDefault(), outErrorHint))
             {
                 return zffalse;
             }

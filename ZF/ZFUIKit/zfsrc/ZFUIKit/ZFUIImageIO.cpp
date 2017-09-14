@@ -58,7 +58,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromNativeImage,
 ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_input)
 {
     ZFCallback input;
-    if(!ZFCallbackFromSerializableData(input, serializableData, outErrorHint, outErrorPos))
+    if(!ZFCallbackFromData(input, serializableData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -90,7 +90,7 @@ ZFMETHOD_FUNC_DEFINE_1(zfautoObject, ZFUIImageLoadFromInput,
     if(input.callbackSerializeCustomType() != zfnull)
     {
         ZFSerializableData inputData;
-        if(ZFCallbackToSerializableData(inputData, input))
+        if(ZFCallbackToData(inputData, input))
         {
             image->imageSerializableTypeSet(ZFUIImageSerializeType_input);
             image->imageSerializableDataSet(&inputData);
@@ -109,7 +109,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
         const ZFSerializableData *categoryData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFUIImageIO_color);
         if(categoryData != zfnull)
         {
-            if(!ZFUIColorFromSerializableData(color, *categoryData, outErrorHint, outErrorPos))
+            if(!ZFUIColorFromData(color, *categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -121,7 +121,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
         const ZFSerializableData *categoryData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFUIImageIO_color_size);
         if(categoryData != zfnull)
         {
-            if(!ZFUISizeFromSerializableData(size, *categoryData, outErrorHint, outErrorPos))
+            if(!ZFUISizeFromData(size, *categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -139,7 +139,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
         if(!ZFUIColorIsEqual(color, ZFUIColorTransparent()))
         {
             ZFSerializableData categoryData;
-            if(!ZFUIColorToSerializableData(categoryData, color, outErrorHint))
+            if(!ZFUIColorToData(categoryData, color, outErrorHint))
             {
                 return zffalse;
             }
@@ -149,7 +149,7 @@ ZFUIIMAGE_SERIALIZE_TYPE_DEFINE(ZFUIImageSerializeTypeId_color)
         if(!ZFUISizeIsEqual(size, ZFUISizeMake(1, 1)))
         {
             ZFSerializableData categoryData;
-            if(!ZFUISizeToSerializableData(categoryData, size, outErrorHint))
+            if(!ZFUISizeToData(categoryData, size, outErrorHint))
             {
                 return zffalse;
             }
@@ -192,7 +192,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
         if(color != ZFUIColorTransparent())
         {
             ZFSerializableData categoryData;
-            if(!ZFUIColorToSerializableData(categoryData, color))
+            if(!ZFUIColorToData(categoryData, color))
             {
                 break;
             }
@@ -204,7 +204,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIImageLoadFromColor,
         if(!ZFUISizeIsEqual(sizeTmp, ZFUISizeMake(1, 1)))
         {
             ZFSerializableData categoryData;
-            if(!ZFUISizeToSerializableData(categoryData, sizeTmp))
+            if(!ZFUISizeToData(categoryData, sizeTmp))
             {
                 break;
             }

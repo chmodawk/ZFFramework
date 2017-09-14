@@ -495,7 +495,7 @@ public:
         SetterAccessType, GetterAccessType, \
         Retain, \
         ZFPropertyTypeId_ZFObject, \
-        zftTraitsType<Type>::TraitsType::ClassData() \
+        zftTraits<Type>::TrType::ClassData() \
         , Func_ZFPropertySetterInvoker \
         , Func_ZFPropertyGetterInvoker \
         , Func_ZFPropertyCallbackIsValueAccessed \
@@ -531,7 +531,7 @@ public:
         SetterAccessType, GetterAccessType, \
         Retain, \
         ZFPropertyTypeId_ZFObject, \
-        zftTraitsType<Type>::TraitsType::ClassData() \
+        zftTraits<Type>::TrType::ClassData() \
         , Func_ZFPropertySetterInvoker \
         , Func_ZFPropertyGetterInvoker \
         , Func_ZFPropertyCallbackIsValueAccessed \
@@ -568,7 +568,7 @@ public:
         Type, propertyNameString, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
         Assign, \
-        ZFPropertyTypeIdData<zftTraitsType<Type>::TraitsRemoveReference>::PropertyTypeId(), \
+        ZFPropertyTypeIdData<zftTraits<Type>::TrNoRef>::PropertyTypeId(), \
         zfnull \
         , Func_ZFPropertySetterInvoker \
         , Func_ZFPropertyGetterInvoker \
@@ -604,7 +604,7 @@ public:
         Type, propertyName, ZFPropertyInitValueOrNoInitValue, \
         SetterAccessType, GetterAccessType, \
         Assign, \
-        ZFPropertyTypeIdData<zftTraitsType<Type>::TraitsRemoveReference>::PropertyTypeId(), \
+        ZFPropertyTypeIdData<zftTraits<Type>::TrNoRef>::PropertyTypeId(), \
         zfnull \
         , Func_ZFPropertySetterInvoker \
         , Func_ZFPropertyGetterInvoker \

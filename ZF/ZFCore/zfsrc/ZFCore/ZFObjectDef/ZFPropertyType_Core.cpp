@@ -81,7 +81,7 @@ zfbool ZFPropertySerializeFrom(ZF_IN ZFObject *ownerObject,
     if(property->propertyIsRetainProperty())
     {
         zfautoObject obj;
-        if(!ZFObjectFromSerializableData(obj, serializableData, outErrorHint, outErrorPos))
+        if(!ZFObjectFromData(obj, serializableData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -127,7 +127,7 @@ zfbool ZFPropertySerializeTo(ZF_IN const ZFProperty *propertyInfo,
     if(propertyInfo->propertyIsRetainProperty())
     {
         ZFObject *obj = propertyInfo->callbackRetainGet(propertyInfo, ownerObject);
-        if(!ZFObjectToSerializableData(serializableData, obj, outErrorHint))
+        if(!ZFObjectToData(serializableData, obj, outErrorHint))
         {
             return zffalse;
         }
@@ -162,8 +162,8 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFPropertySerializeTo, ZFMP_IN(co
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, const zfchar *, wrappedValueTypeId)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, void, wrappedValueReset)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFPropertyTypeWrapper, zfbool, wrappedValueIsInit)
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFPropertyTypeWrapper, zfbool, wrappedValueFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
-ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueToSerializableData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_3(ZFPropertyTypeWrapper, zfbool, wrappedValueFromData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueToData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_2(ZFPropertyTypeWrapper, zfbool, wrappedValueFromString, ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFPropertyTypeWrapper, zfbool, wrappedValueToString, ZFMP_IN_OUT(zfstring &, s))
 

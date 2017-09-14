@@ -121,38 +121,38 @@ extern ZF_ENV_EXPORT void ZFMethodUserUnregister(ZF_IN const ZFMethod *method);
                 , zfnull \
                 , _ZFP_ZFMethodUserRegister_methodExtSig ZFM_TOSTRING(ZF_CALLER_LINE) \
                 , methodNameString \
-                , ZFPropertyTypeIdData<zftTraitsType<ReturnType>::TraitsRemoveReference>::PropertyTypeId() \
+                , ZFPropertyTypeIdData<zftTraits<ReturnType>::TrNoRef>::PropertyTypeId() \
                 , zfText(#ReturnType) \
                 ParamExpandOrEmpty0(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType0>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType0>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty0, 0) \
                     ) \
                 ParamExpandOrEmpty1(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType1>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType1>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty1, 1) \
                     ) \
                 ParamExpandOrEmpty2(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType2>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType2>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty2, 2) \
                     ) \
                 ParamExpandOrEmpty3(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType3>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType3>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty3, 3) \
                     ) \
                 ParamExpandOrEmpty4(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType4>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType4>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty4, 4) \
                     ) \
                 ParamExpandOrEmpty5(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType5>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType5>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty5, 5) \
                     ) \
                 ParamExpandOrEmpty6(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType6>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType6>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty6, 6) \
                     ) \
                 ParamExpandOrEmpty7(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraitsType<ParamType7>::TraitsRemoveReference>::PropertyTypeId() \
+                        , ZFPropertyTypeIdData<zftTraits<ParamType7>::TrNoRef>::PropertyTypeId() \
                         , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdUR, _, DefaultExpandOrEmpty7, 7) \
                     ) \
                 , zfnull \

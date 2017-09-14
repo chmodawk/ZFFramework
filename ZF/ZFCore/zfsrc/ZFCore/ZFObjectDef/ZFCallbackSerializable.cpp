@@ -62,7 +62,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFCallback, ZFCallback, {
             return zffalse;
         }
         const ZFMethod *method = zfnull;
-        if(!ZFMethodFromSerializableData(method, *methodData, outErrorHint, outErrorPos))
+        if(!ZFMethodFromData(method, *methodData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -112,7 +112,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(ZFCallback, ZFCallback, {
             {
                 serializableData.itemClassSet(ZFPropertyTypeId_ZFCallback());
                 ZFSerializableData methodData;
-                if(!ZFMethodToSerializableData(methodData, v.callbackMethod(), outErrorHint))
+                if(!ZFMethodToData(methodData, v.callbackMethod(), outErrorHint))
                 {
                     return zffalse;
                 }

@@ -19,7 +19,7 @@ ZFSERIALIZABLEDATA_REFERENCE_TYPE_DEFINE(ZFSerializableDataRefTypeId_xml)
             zfText("failed to load xml element from \"%s\""), refData);
         return zffalse;
     }
-    return ZFXmlParseToSerializableData(serializableData, xmlElement);
+    return ZFXmlParseToData(serializableData, xmlElement);
 }
 
 ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_xml, data)
@@ -30,17 +30,17 @@ ZFOBJECT_CREATOR_DEFINE(ZFObjectCreatorTypeId_xml, data)
         return zfautoObjectNull();
     }
     ZFSerializableData serializableData;
-    if(ZFXmlParseToSerializableData(serializableData, xmlElement))
+    if(ZFXmlParseToData(serializableData, xmlElement))
     {
-        return ZFObjectFromSerializableData(serializableData);
+        return ZFObjectFromData(serializableData);
     }
     return zfautoObjectNull();
 }
 
-static zfbool _ZFP_ZFXmlParseToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                ZF_IN const ZFXmlItem &xmlElement,
-                                                ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                ZF_OUT_OPT ZFXmlItem *outErrorPos = zfnull)
+static zfbool _ZFP_ZFXmlParseToData(ZF_OUT ZFSerializableData &serializableData,
+                                    ZF_IN const ZFXmlItem &xmlElement,
+                                    ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                    ZF_OUT_OPT ZFXmlItem *outErrorPos = zfnull)
 {
     if(xmlElement.xmlIsNull())
     {
@@ -104,7 +104,7 @@ static zfbool _ZFP_ZFXmlParseToSerializableData(ZF_OUT ZFSerializableData &seria
     while(!element.xmlIsNull())
     {
         ZFSerializableData childData;
-        if(!_ZFP_ZFXmlParseToSerializableData(childData, element, outErrorHint, outErrorPos))
+        if(!_ZFP_ZFXmlParseToData(childData, element, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -114,22 +114,22 @@ static zfbool _ZFP_ZFXmlParseToSerializableData(ZF_OUT ZFSerializableData &seria
 
     return zftrue;
 }
-ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFXmlParseToSerializableData,
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFXmlParseToData,
                        ZFMP_OUT(ZFSerializableData &, serializableData),
                        ZFMP_IN(const ZFXmlItem &, xmlElement),
                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                        ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 {
-    return _ZFP_ZFXmlParseToSerializableData(serializableData, xmlElement, outErrorHint, outErrorPos)
+    return _ZFP_ZFXmlParseToData(serializableData, xmlElement, outErrorHint, outErrorPos)
         && serializableData.referenceInfoLoad();
 }
-ZFMETHOD_FUNC_DEFINE_3(ZFSerializableData, ZFXmlParseToSerializableData,
+ZFMETHOD_FUNC_DEFINE_3(ZFSerializableData, ZFXmlParseToData,
                        ZFMP_IN(const ZFXmlItem &, xmlElement),
                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                        ZFMP_OUT_OPT(ZFXmlItem *, outErrorPos, zfnull))
 {
     ZFSerializableData ret;
-    if(ZFXmlParseToSerializableData(ret, xmlElement, outErrorHint, outErrorPos))
+    if(ZFXmlParseToData(ret, xmlElement, outErrorHint, outErrorPos))
     {
         return ret;
     }
@@ -138,16 +138,16 @@ ZFMETHOD_FUNC_DEFINE_3(ZFSerializableData, ZFXmlParseToSerializableData,
         return ZFSerializableData();
     }
 }
-ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFXmlPrintFromSerializableData,
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFXmlPrintFromData,
                        ZFMP_OUT(ZFXmlItem &, xmlElement),
                        ZFMP_IN(const ZFSerializableData &, serializableData),
                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                        ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 {
-    xmlElement = ZFXmlPrintFromSerializableData(serializableData, outErrorHint, outErrorPos);
+    xmlElement = ZFXmlPrintFromData(serializableData, outErrorHint, outErrorPos);
     return (xmlElement.xmlType() != ZFXmlType::e_XmlNull);
 }
-ZFMETHOD_FUNC_DEFINE_3(ZFXmlItem, ZFXmlPrintFromSerializableData,
+ZFMETHOD_FUNC_DEFINE_3(ZFXmlItem, ZFXmlPrintFromData,
                        ZFMP_IN(const ZFSerializableData &, serializableData),
                        ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                        ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
@@ -180,7 +180,7 @@ ZFMETHOD_FUNC_DEFINE_3(ZFXmlItem, ZFXmlPrintFromSerializableData,
 
     for(zfindex i = 0; i < serializableData.elementCount(); ++i)
     {
-        ZFXmlItem child = ZFXmlPrintFromSerializableData(serializableData.elementAtIndex(i), outErrorHint, outErrorPos);
+        ZFXmlItem child = ZFXmlPrintFromData(serializableData.elementAtIndex(i), outErrorHint, outErrorPos);
         if(child.xmlType() == ZFXmlType::e_XmlNull)
         {
             return ZFXmlItem();
@@ -196,7 +196,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlPrint,
                        ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 {
-    ZFXmlItem xmlElement = ZFXmlPrintFromSerializableData(serializableData);
+    ZFXmlItem xmlElement = ZFXmlPrintFromData(serializableData);
     if(xmlElement.xmlType() != ZFXmlType::e_XmlNull)
     {
         xmlElement.xmlAttributeSortRecursively();
@@ -209,7 +209,7 @@ ZFMETHOD_FUNC_DEFINE_3(void, ZFXmlPrint,
                        ZFMP_IN_OPT(const ZFOutputCallback &, outputCallback, ZFOutputCallbackDefault()),
                        ZFMP_IN_OPT(const ZFXmlOutputFlags &, flags, ZFXmlOutputFlagsDefault()))
 {
-    ZFXmlPrint(ZFObjectToSerializableData(obj), outputCallback, flags);
+    ZFXmlPrint(ZFObjectToData(obj), outputCallback, flags);
 }
 
 // ============================================================
@@ -226,7 +226,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFXmlParse,
     {
         return zffalse;
     }
-    if(!ZFXmlParseToSerializableData(ret, xmlElement))
+    if(!ZFXmlParseToData(ret, xmlElement))
     {
         return zffalse;
     }

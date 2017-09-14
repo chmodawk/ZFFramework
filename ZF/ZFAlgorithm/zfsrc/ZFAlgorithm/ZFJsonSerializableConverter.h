@@ -52,30 +52,30 @@ ZFOUTPUT_TYPE(ZFJsonItem, {output << v.objectInfo();})
 /**
  * @brief parse json formated data to serializable
  */
-ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFJsonParseToSerializableData,
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFJsonParseToData,
                         ZFMP_OUT(ZFSerializableData &, serializableData),
                         ZFMP_IN(const ZFJsonItem &, jsonObject),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFJsonItem *, outErrorPos, zfnull))
 /**
- * @brief see #ZFJsonParseToSerializableData
+ * @brief see #ZFJsonParseToData
  */
-ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFJsonParseToSerializableData,
+ZFMETHOD_FUNC_DECLARE_3(ZFSerializableData, ZFJsonParseToData,
                         ZFMP_IN(const ZFJsonItem &, jsonObject),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFJsonItem *, outErrorPos, zfnull))
 /**
  * @brief print serializable to json formated data
  */
-ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFJsonPrintFromSerializableData,
+ZFMETHOD_FUNC_DECLARE_4(zfbool, ZFJsonPrintFromData,
                         ZFMP_OUT(ZFJsonItem &, jsonObject),
                         ZFMP_IN(const ZFSerializableData &, serializableData),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 /**
- * @brief see #ZFJsonPrintFromSerializableData
+ * @brief see #ZFJsonPrintFromData
  */
-ZFMETHOD_FUNC_DECLARE_3(ZFJsonItem, ZFJsonPrintFromSerializableData,
+ZFMETHOD_FUNC_DECLARE_3(ZFJsonItem, ZFJsonPrintFromData,
                         ZFMP_IN(const ZFSerializableData &, serializableData),
                         ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull),
                         ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))

@@ -41,7 +41,7 @@ zfbool ZFAnimationTimeLineProperty::serializableOnSerializeFromData(ZF_IN const 
         if(zfscmpTheSame(category, ZFSerializableKeyword_ZFAnimationTimeLineProperty_step))
         {
             zfautoObject step;
-            if(!ZFObjectFromSerializableData(step, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(step, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -70,7 +70,7 @@ zfbool ZFAnimationTimeLineProperty::serializableOnSerializeToData(ZF_IN_OUT ZFSe
         for(zfindex i = 0; i < d->steps.count(); ++i)
         {
             ZFSerializableData stepData;
-            if(!ZFObjectToSerializableData(stepData, d->steps[i], outErrorHint))
+            if(!ZFObjectToData(stepData, d->steps[i], outErrorHint))
             {
                 return zffalse;
             }

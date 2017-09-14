@@ -172,17 +172,17 @@ public:
     }
 public:
     zfoverride
-    virtual zfbool wrappedValueFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
-                                                    ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                    ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
+    virtual zfbool wrappedValueFromData(ZF_IN const ZFSerializableData &serializableData,
+                                        ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                        ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
     {
         ZFSerializableUtil::errorOccurred(outErrorHint, outErrorPos, serializableData,
             zfText("not available for plain array type"));
         return zffalse;
     }
     zfoverride
-    virtual zfbool wrappedValueToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                  ZF_OUT_OPT zfstring *outErrorHint = zfnull)
+    virtual zfbool wrappedValueToData(ZF_OUT ZFSerializableData &serializableData,
+                                      ZF_OUT_OPT zfstring *outErrorHint = zfnull)
     {
         ZFSerializableUtil::errorOccurred(outErrorHint,
             zfText("not available for plain array type"));
@@ -223,9 +223,9 @@ public:
         return zftrue;
     }
     template<typename T_Access = ZFCoreArray<T_Type>
-        , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer
+        , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr
             && zftTypeIsSame<
-                    typename zftTraitsType<T_Access>::TraitsRemoveReference,
+                    typename zftTraits<T_Access>::TrNoRef,
                     ZFCoreArray<T_Type>
                 >::TypeIsSame != 1)
             ? 1 : 0)
@@ -243,9 +243,9 @@ public:
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
             {
-                holder->wrappedValueSet(typename zftTraitsType<T_Access>::TraitsType());
+                holder->wrappedValueSet(typename zftTraits<T_Access>::TrType());
             }
-            return *(typename zftTraitsType<T_Access>::TraitsType *)holder->zfv;
+            return *(typename zftTraits<T_Access>::TrType *)holder->zfv;
         }
     };
     template<typename T_Access>
@@ -256,14 +256,14 @@ public:
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
             {
-                holder->wrappedValueSet(typename zftTraitsType<T_Access>::TraitsType());
+                holder->wrappedValueSet(typename zftTraits<T_Access>::TrType());
             }
-            return (typename zftTraitsType<T_Access>::TraitsType *)holder->zfv;
+            return (typename zftTraits<T_Access>::TrType *)holder->zfv;
         }
     };
 };
@@ -286,9 +286,9 @@ public:
         return ZFPropertyTypeIdData<ZFCoreArray<T_Type> >::ValueStore(obj, v);
     }
     template<typename T_Access = ZFCoreArray<T_Type>
-        , int T_IsPointer = ((zftTraitsType<T_Access>::TypeIsPointer
+        , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr
             && zftTypeIsSame<
-                    typename zftTraitsType<T_Access>::TraitsRemoveReference,
+                    typename zftTraits<T_Access>::TrNoRef,
                     ZFCoreArray<T_Type>
                 >::TypeIsSame != 1)
             ? 1 : 0)
@@ -306,9 +306,9 @@ public:
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
             {
-                holder->wrappedValueSet(typename zftTraitsType<T_Access>::TraitsType());
+                holder->wrappedValueSet(typename zftTraits<T_Access>::TrType());
             }
-            return *(typename zftTraitsType<T_Access>::TraitsType *)holder->zfv;
+            return *(typename zftTraits<T_Access>::TrType *)holder->zfv;
         }
     };
     template<typename T_Access>
@@ -319,14 +319,14 @@ public:
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static typename zftTraitsType<T_Access>::TraitsRemoveReference access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
             {
-                holder->wrappedValueSet(typename zftTraitsType<T_Access>::TraitsType());
+                holder->wrappedValueSet(typename zftTraits<T_Access>::TrType());
             }
-            return (typename zftTraitsType<T_Access>::TraitsType *)holder->zfv;
+            return (typename zftTraits<T_Access>::TrType *)holder->zfv;
         }
     };
 };
@@ -409,15 +409,15 @@ zfstring ZFCoreArrayToString(ZF_IN ZFCoreArray<T_Type> const &v,
 // ============================================================
 /** @brief convert array from serializable data */
 template<typename T_Type>
-zfbool ZFCoreArrayFromSerializableData(ZF_OUT ZFCoreArray<T_Type> &v,
-                                       ZF_IN zfbool (*elementFromSerializableData)(
-                                           ZF_OUT T_Type &,
-                                           ZF_IN const ZFSerializableData &,
-                                           ZF_OUT_OPT zfstring *outErrorHint,
-                                           ZF_OUT_OPT ZFSerializableData *),
-                                       ZF_IN const ZFSerializableData &serializableData,
-                                       ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                       ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
+zfbool ZFCoreArrayFromData(ZF_OUT ZFCoreArray<T_Type> &v,
+                           ZF_IN zfbool (*elementFromData)(
+                               ZF_OUT T_Type &,
+                               ZF_IN const ZFSerializableData &,
+                               ZF_OUT_OPT zfstring *outErrorHint,
+                               ZF_OUT_OPT ZFSerializableData *),
+                           ZF_IN const ZFSerializableData &serializableData,
+                           ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                           ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull)
 {
     v.removeAll();
 
@@ -435,7 +435,7 @@ zfbool ZFCoreArrayFromSerializableData(ZF_OUT ZFCoreArray<T_Type> &v,
         }
 
         zftValue<T_Type> t;
-        if(!elementFromSerializableData(t.zfv, element, outErrorHint, outErrorPos))
+        if(!elementFromData(t.zfv, element, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -446,19 +446,19 @@ zfbool ZFCoreArrayFromSerializableData(ZF_OUT ZFCoreArray<T_Type> &v,
 }
 /** @brief convert array to serializable data */
 template<typename T_Type>
-zfbool ZFCoreArrayToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                     ZF_IN zfbool (*elementToSerializableData)(
-                                         ZF_OUT ZFSerializableData &,
-                                         ZF_IN T_Type const &,
-                                         ZF_OUT_OPT zfstring *outErrorHint),
-                                     ZF_IN ZFCoreArray<T_Type> const &v,
-                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull)
+zfbool ZFCoreArrayToData(ZF_OUT ZFSerializableData &serializableData,
+                         ZF_IN zfbool (*elementToData)(
+                             ZF_OUT ZFSerializableData &,
+                             ZF_IN T_Type const &,
+                             ZF_OUT_OPT zfstring *outErrorHint),
+                         ZF_IN ZFCoreArray<T_Type> const &v,
+                         ZF_OUT_OPT zfstring *outErrorHint = zfnull)
 {
     serializableData.itemClassSet(ZFPropertyTypeId_ZFCoreArray());
     for(zfindex i = 0; i < v.count(); ++i)
     {
         ZFSerializableData element;
-        if(!elementToSerializableData(element, v[i], outErrorHint))
+        if(!elementToData(element, v[i], outErrorHint))
         {
             return zffalse;
         }
@@ -468,15 +468,15 @@ zfbool ZFCoreArrayToSerializableData(ZF_OUT ZFSerializableData &serializableData
 }
 /** @brief convert array to serializable data */
 template<typename T_Type>
-ZFSerializableData ZFCoreArrayToSerializableData(ZF_IN ZFCoreArray<T_Type> const &v,
-                                                 ZF_IN zfbool (*elementToSerializableData)(
-                                                     ZF_OUT ZFSerializableData &,
-                                                     ZF_IN T_Type const &,
-                                                     ZF_OUT_OPT zfstring *outErrorHint),
-                                                 ZF_OUT_OPT zfstring *outErrorHint = zfnull)
+ZFSerializableData ZFCoreArrayToData(ZF_IN ZFCoreArray<T_Type> const &v,
+                                     ZF_IN zfbool (*elementToData)(
+                                         ZF_OUT ZFSerializableData &,
+                                         ZF_IN T_Type const &,
+                                         ZF_OUT_OPT zfstring *outErrorHint),
+                                     ZF_OUT_OPT zfstring *outErrorHint = zfnull)
 {
     ZFSerializableData ret;
-    if(ZFCoreArrayToSerializableData(ret, elementToSerializableData, v, outErrorHint))
+    if(ZFCoreArrayToData(ret, elementToData, v, outErrorHint))
     {
         return ret;
     }

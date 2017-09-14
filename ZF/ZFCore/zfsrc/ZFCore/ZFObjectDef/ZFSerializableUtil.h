@@ -246,7 +246,7 @@ extern ZF_ENV_EXPORT zfbool printResolveStatus(ZF_IN const ZFSerializableData &s
             _ZFP_ZFSerializableUtilSerializeFromData(check_or_require, outErrorHint, outErrorPos)); \
         if(valueData != zfnull) \
         { \
-            if(!TypeName##FromSerializableData(value, *valueData, outErrorHint, outErrorPos)) \
+            if(!TypeName##FromData(value, *valueData, outErrorHint, outErrorPos)) \
             { \
                 return zffalse; \
             } \
@@ -269,7 +269,7 @@ extern ZF_ENV_EXPORT zfbool printResolveStatus(ZF_IN const ZFSerializableData &s
             || (ref != zfnull && ZFComparerDefault(thisValue, refValue) != ZFCompareTheSame)) \
         { \
             ZFSerializableData categoryData; \
-            if(!TypeName##ToSerializableData(categoryData, thisValue, outErrorHint)) \
+            if(!TypeName##ToData(categoryData, thisValue, outErrorHint)) \
             { \
                 return zffalse; \
             } \

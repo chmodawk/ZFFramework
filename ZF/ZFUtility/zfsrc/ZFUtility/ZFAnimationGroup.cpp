@@ -304,7 +304,7 @@ zfbool ZFAnimationGroup::serializableOnSerializeFromData(ZF_IN const ZFSerializa
         if(zfscmpTheSame(category, ZFSerializableKeyword_ZFAnimationGroup_child))
         {
             zfautoObject element;
-            if(!ZFObjectFromSerializableData(element, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(element, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -346,7 +346,7 @@ zfbool ZFAnimationGroup::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableD
         for(zfindex i = 0; i < d->childAnis->count(); ++i)
         {
             ZFSerializableData elementData;
-            if(!ZFObjectToSerializableData(elementData, d->childAnis->get(i), outErrorHint))
+            if(!ZFObjectToData(elementData, d->childAnis->get(i), outErrorHint))
             {
                 return zffalse;
             }

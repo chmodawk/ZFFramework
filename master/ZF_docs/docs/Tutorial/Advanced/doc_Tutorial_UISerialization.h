@@ -11,14 +11,14 @@
  *   child->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
  *   child->buttonLabelTextSet(zflineAlloc(ZFString, zfText("button")));
  *
- *   ZFSerializableData data = ZFObjectToSerializableData(parent);
+ *   ZFSerializableData data = ZFObjectToData(parent);
  *   zfstring xmlString;
  *   ZFXmlPrint(data, ZFOutputCallbackForString(xmlString));
  *   zfLogTrimT() << zfText("serialized data:");
  *   zfLogTrimT() << xmlString;
  *
  *   ZFSerializableData dataNew = ZFXmlParse(ZFInputCallbackForBuffer(xmlString));
- *   zfautoObject objNew = ZFObjectFromSerializableData(dataNew);
+ *   zfautoObject objNew = ZFObjectFromData(dataNew);
  *   zfLogTrimT() << zfText("re-serialized object:");
  *   zfLogTrimT() << objNew.toObject();
  * @endcode

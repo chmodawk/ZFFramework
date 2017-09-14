@@ -217,7 +217,7 @@ zfautoObject &zfautoObject::operator = (ZF_IN T_ZFObject const &p)
 {
     _ZFP_zfautoObjectWrap<
             T_ZFObject,
-            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraitsType<T_ZFObject>::TraitsType) ? 1 : 0
+            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraits<T_ZFObject>::TrType) ? 1 : 0
         >::assign(*this, p);
     return *this;
 }
@@ -226,7 +226,7 @@ zfbool zfautoObject::operator == (ZF_IN T_ZFObject const &p) const
 {
     return _ZFP_zfautoObjectWrap<
             T_ZFObject,
-            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraitsType<T_ZFObject>::TraitsType) ? 1 : 0
+            ZFM_CLASS_HAS_MEMBER(zfautoObject, toObject, typename zftTraits<T_ZFObject>::TrType) ? 1 : 0
         >::equal(*this, p);
 }
 /** @endcond */

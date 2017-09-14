@@ -21,7 +21,7 @@ zfbool zfSkinLoad(ZF_IN const ZFSerializableData &serializableData,
             const zfchar *k = item.attributeForName(zfText("k"));
             if(k != zfnull)
             {
-                zfautoObject obj = ZFObjectFromSerializableData(item.elementAtIndex(0));
+                zfautoObject obj = ZFObjectFromData(item.elementAtIndex(0));
                 ZFStyleable *skinValue = ZFCastZFObject(ZFStyleable *, obj);
                 if(skinValue != zfnull)
                 {

@@ -176,7 +176,7 @@ public:
     template<typename T_RawType>
     inline T_RawType holdedDataRef(void)
     {
-        typedef typename zftTraitsType<T_RawType>::TraitsConstPointer T_RawTypeConstPointer;
+        typedef typename zftTraits<T_RawType>::TrConstPtr T_RawTypeConstPointer;
         return *ZFCastStatic(T_RawTypeConstPointer, this->holdedData);
     }
 
@@ -282,7 +282,7 @@ public:
     template<typename T_RawType>
     inline T_RawType holdedDataRef(void)
     {
-        typedef typename zftTraitsType<T_RawType>::TraitsPointer T_RawTypePointer;
+        typedef typename zftTraits<T_RawType>::TrPtr T_RawTypePointer;
         return *ZFCastStatic(T_RawTypePointer, this->holdedData);
     }
 
@@ -325,8 +325,8 @@ ZFM_CLASS_HAS_MEMBER_DECLARE(_ZFP_ZFObjectTypeChecker, ClassData, const ZFClass 
 template<typename T0, typename T1>
 zfclassNotPOD ZFComparerDefaultHolder<T0, T1
     , void, void
-    , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraitsType<T0>::TraitsType)>::EnableIf
-    , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraitsType<T1>::TraitsType)>::EnableIf
+    , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraits<T0>::TrType)>::EnableIf
+    , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraits<T1>::TrType)>::EnableIf
     >
 {
 public:
@@ -340,7 +340,7 @@ public:
 /** @cond ZFPrivateDoc */
 template<typename T_ZFObject>
 zfclassNotPOD ZFCoreElementInfoGetter<T_ZFObject
-        , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraitsType<T_ZFObject>::TraitsType)>::EnableIf
+        , typename zftEnableIf<ZFM_CLASS_HAS_MEMBER(_ZFP_ZFObjectTypeChecker, ClassData, typename zftTraits<T_ZFObject>::TrType)>::EnableIf
     >
 {
 public:

@@ -46,7 +46,7 @@ zfbool ZFContainer::serializableOnSerializeFromData(ZF_IN const ZFSerializableDa
         if(zfscmpTheSame(category, ZFSerializableKeyword_ZFContainer_element))
         {
             zfautoObject element;
-            if(!ZFObjectFromSerializableData(element, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(element, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -75,7 +75,7 @@ zfbool ZFContainer::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &
         for(zfiterator it = this->iterator(); this->iteratorIsValid(it); )
         {
             ZFSerializableData elementData;
-            if(!ZFObjectToSerializableData(elementData, this->iteratorNext(it), outErrorHint))
+            if(!ZFObjectToData(elementData, this->iteratorNext(it), outErrorHint))
             {
                 return zffalse;
             }
@@ -109,7 +109,7 @@ zfbool ZFContainer::serializableOnSerializeToDataWithRef(ZF_IN_OUT ZFSerializabl
         {
             ZFObject *element = this->iteratorNext(it);
             ZFSerializableData elementData;
-            if(!ZFObjectToSerializableData(elementData, element, outErrorHint))
+            if(!ZFObjectToData(elementData, element, outErrorHint))
             {
                 return zffalse;
             }
@@ -133,7 +133,7 @@ zfbool ZFContainer::serializableOnSerializeToDataWithRef(ZF_IN_OUT ZFSerializabl
         }
 
         ZFSerializableData elementData;
-        if(!ZFObjectToSerializableData(elementData, element, outErrorHint))
+        if(!ZFObjectToData(elementData, element, outErrorHint))
         {
             return zffalse;
         }

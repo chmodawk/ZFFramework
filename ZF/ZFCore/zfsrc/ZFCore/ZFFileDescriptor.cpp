@@ -93,7 +93,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
         do
         {
             ZFSerializableData fileDescriptorData;
-            if(!zfstringToSerializableData(fileDescriptorData, fileDescriptor))
+            if(!zfstringToData(fileDescriptorData, fileDescriptor))
             {
                 break;
             }
@@ -103,7 +103,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
             if(flags != ZFFileOpenOption::e_Read)
             {
                 ZFSerializableData flagsData;
-                if(!ZFFileOpenOptionFlagsToSerializableData(flagsData, flags))
+                if(!ZFFileOpenOptionFlagsToData(flagsData, flags))
                 {
                     break;
                 }
@@ -114,7 +114,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo &
             if(autoSkipBOMTable.objectCompare(ZFFileBOMListDefault()) != ZFCompareTheSame)
             {
                 ZFSerializableData autoSkipBOMTableData;
-                if(!zfstringToSerializableData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
+                if(!zfstringToData(autoSkipBOMTableData, ZFFileBOMListToString(autoSkipBOMTable)))
                 {
                     break;
                 }
@@ -150,7 +150,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         return zffalse;
     }
     const zfchar *fileDescriptor = zfnull;
-    if(!zfstringFromSerializableData(fileDescriptor, *fileDescriptorData, outErrorHint, outErrorPos))
+    if(!zfstringFromData(fileDescriptor, *fileDescriptorData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -158,7 +158,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read;
     {
         const ZFSerializableData *flagsData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForFileDescriptor_flags);
-        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromSerializableData(flags, *flagsData, outErrorHint, outErrorPos))
+        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromData(flags, *flagsData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -170,7 +170,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         zfstring BOMStringList;
         if(autoSkipBOMTableData != zfnull)
         {
-            if(!zfstringFromSerializableData(BOMStringList, *autoSkipBOMTableData, outErrorHint, outErrorPos))
+            if(!zfstringFromData(BOMStringList, *autoSkipBOMTableData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -245,7 +245,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
         do
         {
             ZFSerializableData fileDescriptorData;
-            if(!zfstringToSerializableData(fileDescriptorData, fileDescriptor))
+            if(!zfstringToData(fileDescriptorData, fileDescriptor))
             {
                 break;
             }
@@ -255,7 +255,7 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForFileDescriptor(ZF_IN const ZFCallerInfo
             if(flags != ZFFileOpenOption::e_Create)
             {
                 ZFSerializableData flagsData;
-                if(!ZFFileOpenOptionFlagsToSerializableData(flagsData, flags))
+                if(!ZFFileOpenOptionFlagsToData(flagsData, flags))
                 {
                     break;
                 }
@@ -290,7 +290,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
         return zffalse;
     }
     const zfchar *fileDescriptor = zfnull;
-    if(!zfstringFromSerializableData(fileDescriptor, *fileDescriptorData, outErrorHint, outErrorPos))
+    if(!zfstringFromData(fileDescriptor, *fileDescriptorData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -298,7 +298,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutput
     ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create;
     {
         const ZFSerializableData *flagsData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFOutputCallbackForFileDescriptor_flags);
-        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromSerializableData(flags, *flagsData, outErrorHint, outErrorPos))
+        if(flagsData != zfnull && !ZFFileOpenOptionFlagsFromData(flags, *flagsData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }

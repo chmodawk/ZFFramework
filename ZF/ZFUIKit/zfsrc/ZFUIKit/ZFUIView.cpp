@@ -504,7 +504,7 @@ public:
                                                  ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
     {
         zfautoObject internalView;
-        if(!ZFObjectFromSerializableData(internalView, categoryData, outErrorHint, outErrorPos))
+        if(!ZFObjectFromData(internalView, categoryData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -638,7 +638,7 @@ public:
                     continue;
                 }
                 ZFSerializableData childData;
-                if(!ZFObjectToSerializableData(childData, tmp, outErrorHint))
+                if(!ZFObjectToData(childData, tmp, outErrorHint))
                 {
                     return zffalse;
                 }
@@ -670,7 +670,7 @@ public:
                     continue;
                 }
                 ZFSerializableData childData;
-                if(!ZFObjectToSerializableData(childData, tmp, outErrorHint))
+                if(!ZFObjectToData(childData, tmp, outErrorHint))
                 {
                     return zffalse;
                 }
@@ -748,7 +748,7 @@ zfbool ZFUIView::serializableOnSerializeFromData(ZF_IN const ZFSerializableData 
         if(zfscmpTheSame(category, ZFSerializableKeyword_ZFUIView_child))
         {
             zfautoObject element;
-            if(!ZFObjectFromSerializableData(element, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(element, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -773,7 +773,7 @@ zfbool ZFUIView::serializableOnSerializeFromData(ZF_IN const ZFSerializableData 
         else if(zfscmpTheSame(category, ZFSerializableKeyword_ZFUIView_layoutParam))
         {
             zfautoObject layoutParam;
-            if(!ZFObjectFromSerializableData(layoutParam, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(layoutParam, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -858,7 +858,7 @@ zfbool ZFUIView::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &ser
         if(needAdd)
         {
             ZFSerializableData categoryData;
-            if(!ZFObjectToSerializableData(categoryData, d->layoutParam, outErrorHint, refLayoutParam))
+            if(!ZFObjectToData(categoryData, d->layoutParam, outErrorHint, refLayoutParam))
             {
                 return zffalse;
             }
@@ -893,7 +893,7 @@ zfbool ZFUIView::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &ser
             for(zfindex i = 0, count = this->childCount(); i < count; ++i)
             {
                 ZFSerializableData childData;
-                if(!ZFObjectToSerializableData(childData, this->childAtIndex(i), outErrorHint))
+                if(!ZFObjectToData(childData, this->childAtIndex(i), outErrorHint))
                 {
                     return zffalse;
                 }

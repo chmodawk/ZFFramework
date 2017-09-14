@@ -286,7 +286,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
 #define _ZFP_ZFPROPERTY_DECLARE_RETAIN(Type, ZFPropertyTypeId_noneOrType, Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     _ZFP_ZFPROPERTY_DECLARE_REGISTER_RETAIN(Type, ZFPropertyTypeId_noneOrType, Name, \
-                                            zftTraitsType<Type>::TraitsType::ClassData()) \
+                                            zftTraits<Type>::TrType::ClassData()) \
     _ZFP_ZFPROPERTY_VALUE_DECLARE_RETAIN(Type, ZFPropertyTypeId_noneOrType, Name, \
                                          ZFPropertyInitValueOrNoInitValue) \
     _ZFP_ZFPROPERTY_DECLARE_CALLBACK(Type, Name) \
@@ -587,7 +587,7 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
         _ZFP_ZFPROPERTY_GETTER(GetterAccessType, Type, Name) \
         /** @brief see @ref Name */ \
         _ZFP_ZFPROPERTY_SETTER_ASSIGN(SetterAccessType, Type, Name) \
-        _ZFP_ZFPROPERTY_DECLARE_ASSIGN(Type, ZFPropertyTypeIdData<zftTraitsType<Type>::TraitsRemoveReference>::PropertyTypeId(), Name, \
+        _ZFP_ZFPROPERTY_DECLARE_ASSIGN(Type, ZFPropertyTypeIdData<zftTraits<Type>::TrNoRef>::PropertyTypeId(), Name, \
                                        ZFPropertyInitValueOrNoInitValue) \
     public:
 

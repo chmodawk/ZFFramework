@@ -99,7 +99,7 @@ private:
 
             ZFInputCallback input = ZFInputCallbackForResFile(zfText("ZF2048/app/settingdialog.xml"));
             ZFSerializableData data = ZFXmlParse(input);
-            zfautoObject obj = ZFObjectFromSerializableData(data);
+            zfautoObject obj = ZFObjectFromData(data);
             this->contentViewSet(obj.toAny());
             zfCoreAssert(this->contentView() != zfnull);
         }

@@ -294,7 +294,7 @@ zfbool ZFSerializable::serializeToData(ZF_OUT ZFSerializableData &serializableDa
                 return zffalse;
             }
             zfautoObject referencedOwnerObject;
-            if(!ZFObjectFromSerializableData(referencedOwnerObject, referencedData, outErrorHint))
+            if(!ZFObjectFromData(referencedOwnerObject, referencedData, outErrorHint))
             {
                 ZFSerializableUtil::errorOccurred(outErrorHint,
                     zfText("failed to load from reference, type: %s, data: %s"),
@@ -531,7 +531,7 @@ zfbool ZFSerializable::serializableOnSerializePropertyFromData(ZF_IN const ZFSer
     if(property->propertyIsRetainProperty())
     {
         zfautoObject obj;
-        if(!ZFObjectFromSerializableData(obj, propertyData, outErrorHint, outErrorPos))
+        if(!ZFObjectFromData(obj, propertyData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -589,7 +589,7 @@ zfbool ZFSerializable::serializableOnSerializePropertyToData(ZF_OUT ZFSerializab
     if(property->propertyIsRetainProperty())
     {
         ZFObject *obj = property->callbackRetainGet(property, this->toObject());
-        if(!ZFObjectToSerializableData(propertyData, obj, outErrorHint))
+        if(!ZFObjectToData(propertyData, obj, outErrorHint))
         {
             return zffalse;
         }
@@ -825,7 +825,7 @@ zfbool ZFObjectFromString(ZF_OUT zfautoObject &result,
     {
         return zffalse;
     }
-    return ZFObjectFromSerializableData(result, serializableData, outErrorHint);
+    return ZFObjectFromData(result, serializableData, outErrorHint);
 }
 zfautoObject ZFObjectFromString(ZF_IN const zfchar *encodedData,
                                 ZF_IN_OPT zfindex encodedDataLen /* = zfindexMax() */,
@@ -845,7 +845,7 @@ zfbool ZFObjectFromInput(ZF_OUT zfautoObject &result,
     {
         return zffalse;
     }
-    return ZFObjectFromSerializableData(result, serializableData, outErrorHint);
+    return ZFObjectFromData(result, serializableData, outErrorHint);
 }
 zfautoObject ZFObjectFromInput(ZF_IN const ZFInputCallback &input,
                                ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
@@ -860,7 +860,7 @@ zfbool ZFObjectToString(ZF_OUT zfstring &encodedData,
                         ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
 {
     ZFSerializableData serializableData;
-    if(!ZFObjectToSerializableData(serializableData, obj, outErrorHint)) {return zffalse;}
+    if(!ZFObjectToData(serializableData, obj, outErrorHint)) {return zffalse;}
     return ZFSerializableDataToString(encodedData, serializableData, outErrorHint);
 }
 zfstring ZFObjectToString(ZF_IN ZFObject *obj,
@@ -875,15 +875,15 @@ zfbool ZFObjectToOutput(ZF_IN_OUT const ZFInputCallback &output,
                         ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)
 {
     ZFSerializableData serializableData;
-    if(!ZFObjectToSerializableData(serializableData, obj, outErrorHint)) {return zffalse;}
+    if(!ZFObjectToData(serializableData, obj, outErrorHint)) {return zffalse;}
     return ZFSerializableDataToOutput(output, serializableData, outErrorHint);
 }
 
 // ============================================================
-zfbool ZFObjectFromSerializableData(ZF_OUT zfautoObject &result,
-                                    ZF_IN const ZFSerializableData &serializableData,
-                                    ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
-                                    ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
+zfbool ZFObjectFromData(ZF_OUT zfautoObject &result,
+                        ZF_IN const ZFSerializableData &serializableData,
+                        ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                        ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
 {
     result = zfautoObjectNull();
 
@@ -950,18 +950,18 @@ zfbool ZFObjectFromSerializableData(ZF_OUT zfautoObject &result,
     result = obj;
     return zftrue;
 }
-zfautoObject ZFObjectFromSerializableData(ZF_IN const ZFSerializableData &serializableData,
-                                          ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
-                                          ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
+zfautoObject ZFObjectFromData(ZF_IN const ZFSerializableData &serializableData,
+                              ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                              ZF_OUT_OPT ZFSerializableData *outErrorPos /* = zfnull */)
 {
     zfautoObject result;
-    ZFObjectFromSerializableData(result, serializableData, outErrorHint, outErrorPos);
+    ZFObjectFromData(result, serializableData, outErrorHint, outErrorPos);
     return result;
 }
-zfbool ZFObjectToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                  ZF_IN ZFObject *obj,
-                                  ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
-                                  ZF_IN_OPT ZFSerializable *referencedObject /* = zfnull */)
+zfbool ZFObjectToData(ZF_OUT ZFSerializableData &serializableData,
+                      ZF_IN ZFObject *obj,
+                      ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                      ZF_IN_OPT ZFSerializable *referencedObject /* = zfnull */)
 {
     if(obj == zfnull)
     {
@@ -978,13 +978,13 @@ zfbool ZFObjectToSerializableData(ZF_OUT ZFSerializableData &serializableData,
     }
     return tmp->serializeToData(serializableData, outErrorHint, referencedObject);
 }
-ZFSerializableData ZFObjectToSerializableData(ZF_IN ZFObject *obj,
-                                              ZF_OUT_OPT zfbool *outSuccess /* = zfnull */,
-                                              ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
-                                              ZF_IN_OPT ZFSerializable *referencedObject /* = zfnull */)
+ZFSerializableData ZFObjectToData(ZF_IN ZFObject *obj,
+                                  ZF_OUT_OPT zfbool *outSuccess /* = zfnull */,
+                                  ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */,
+                                  ZF_IN_OPT ZFSerializable *referencedObject /* = zfnull */)
 {
     ZFSerializableData serializableData;
-    zfbool success = ZFObjectToSerializableData(serializableData, obj, outErrorHint, referencedObject);
+    zfbool success = ZFObjectToData(serializableData, obj, outErrorHint, referencedObject);
     if(outSuccess != zfnull)
     {
         *outSuccess = success;
@@ -1031,10 +1031,10 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfautoObject, ZFObjectFromInput, ZFMP_IN(
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToString, ZFMP_OUT(zfstring &, encodedData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_2(zfstring, ZFObjectToString, ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFObjectToOutput, ZFMP_IN_OUT(const ZFInputCallback &, output), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromSerializableData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromSerializableData, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectToSerializableData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFSerializableData, ZFObjectToSerializableData, ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfbool *, outSuccess, zfnull), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfautoObject, ZFObjectFromData, ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectFromData, ZFMP_OUT(zfautoObject &, result), ZFMP_IN(const ZFSerializableData &, serializableData), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFObjectToData, ZFMP_OUT(ZFSerializableData &, serializableData), ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(ZFSerializableData, ZFObjectToData, ZFMP_IN(ZFObject *, obj), ZFMP_OUT_OPT(zfbool *, outSuccess, zfnull), ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_IN_OPT(ZFSerializable *, referencedObject, zfnull))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif

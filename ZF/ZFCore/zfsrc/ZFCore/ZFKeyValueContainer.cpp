@@ -58,7 +58,7 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
                     key.toObject()->objectInfo().cString());
                 return zffalse;
             }
-            if(!ZFObjectFromSerializableData(key, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(key, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -76,7 +76,7 @@ zfbool ZFKeyValueContainer::serializableOnSerializeFromData(ZF_IN const ZFSerial
                     zfText("missing key"));
                 return zffalse;
             }
-            if(!ZFObjectFromSerializableData(value, categoryData, outErrorHint, outErrorPos))
+            if(!ZFObjectFromData(value, categoryData, outErrorHint, outErrorPos))
             {
                 return zffalse;
             }
@@ -115,13 +115,13 @@ zfbool ZFKeyValueContainer::serializableOnSerializeToData(ZF_IN_OUT ZFSerializab
             ZFKeyValuePair pair = this->iteratorNextPair(it);
 
             ZFSerializableData keyData;
-            if(!ZFObjectToSerializableData(keyData, pair.key, outErrorHint))
+            if(!ZFObjectToData(keyData, pair.key, outErrorHint))
             {
                 return zffalse;
             }
 
             ZFSerializableData valueData;
-            if(!ZFObjectToSerializableData(valueData, pair.value, outErrorHint))
+            if(!ZFObjectToData(valueData, pair.value, outErrorHint))
             {
                 return zffalse;
             }
@@ -158,12 +158,12 @@ zfbool ZFKeyValueContainer::serializableOnSerializeToDataWithRef(ZF_IN_OUT ZFSer
         {
             ZFKeyValuePair pair = this->iteratorNextPair(it);
             ZFSerializableData keyData;
-            if(!ZFObjectToSerializableData(keyData, pair.key, outErrorHint))
+            if(!ZFObjectToData(keyData, pair.key, outErrorHint))
             {
                 return zffalse;
             }
             ZFSerializableData valueData;
-            if(!ZFObjectToSerializableData(valueData, pair.value, outErrorHint))
+            if(!ZFObjectToData(valueData, pair.value, outErrorHint))
             {
                 return zffalse;
             }
@@ -197,12 +197,12 @@ zfbool ZFKeyValueContainer::serializableOnSerializeToDataWithRef(ZF_IN_OUT ZFSer
         }
 
         ZFSerializableData keyData;
-        if(!ZFObjectToSerializableData(keyData, pair.key, outErrorHint))
+        if(!ZFObjectToData(keyData, pair.key, outErrorHint))
         {
             return zffalse;
         }
         ZFSerializableData valueData;
-        if(!ZFObjectToSerializableData(valueData, pair.value, outErrorHint))
+        if(!ZFObjectToData(valueData, pair.value, outErrorHint))
         {
             return zffalse;
         }

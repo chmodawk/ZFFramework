@@ -44,21 +44,21 @@ inline zfbool zfstringFromString(ZF_OUT const zfchar *&v,
 /** @endcond */
 
 /**
- * @brief see #zfstringFromSerializableData, designed for performance
+ * @brief see #zfstringFromData, designed for performance
  *
  * returned (const zfchar *) propertyValue is the pointer to serializableData's value,
  * you should ensure it's alive while using the propertyValue
  */
-extern ZF_ENV_EXPORT zfbool zfstringFromSerializableData(ZF_OUT const zfchar * &propertyValue,
-                                                         ZF_IN const ZFSerializableData &serializableData,
-                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull,
-                                                         ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
+extern ZF_ENV_EXPORT zfbool zfstringFromData(ZF_OUT const zfchar * &propertyValue,
+                                             ZF_IN const ZFSerializableData &serializableData,
+                                             ZF_OUT_OPT zfstring *outErrorHint = zfnull,
+                                             ZF_OUT_OPT ZFSerializableData *outErrorPos = zfnull);
 /**
- * @brief see #zfstringToSerializableData, designed for performance
+ * @brief see #zfstringToData, designed for performance
  */
-extern ZF_ENV_EXPORT zfbool zfstringToSerializableData(ZF_OUT ZFSerializableData &serializableData,
-                                                       ZF_IN const zfchar * const &propertyValue,
-                                                       ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */);
+extern ZF_ENV_EXPORT zfbool zfstringToData(ZF_OUT ZFSerializableData &serializableData,
+                                           ZF_IN const zfchar * const &propertyValue,
+                                           ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */);
 
 /**
  * @brief convert flags to string using flagList and nameList

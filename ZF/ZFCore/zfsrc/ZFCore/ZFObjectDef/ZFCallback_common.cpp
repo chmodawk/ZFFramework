@@ -693,7 +693,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
     if(inputCallback.callbackSerializeCustomType() != zfnull)
     {
         ZFSerializableData inputData;
-        if(ZFCallbackToSerializableData(inputData, inputCallback))
+        if(ZFCallbackToData(inputData, inputCallback))
         {
             ZFSerializableData customData;
             customData.itemClassSet(ZFSerializableKeyword_node);
@@ -706,7 +706,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
                 if(start != 0)
                 {
                     ZFSerializableData startData;
-                    if(!zfindexToSerializableData(startData, start))
+                    if(!zfindexToData(startData, start))
                     {
                         break;
                     }
@@ -717,7 +717,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
                 if(count != zfindexMax())
                 {
                     ZFSerializableData countData;
-                    if(!zfindexToSerializableData(countData, count))
+                    if(!zfindexToData(countData, count))
                     {
                         break;
                     }
@@ -728,7 +728,7 @@ ZFInputCallback _ZFP_ZFInputCallbackForInputInRange(ZF_IN const ZFCallerInfo &ca
                 if(!autoRestorePos)
                 {
                     ZFSerializableData autoRestorePosData;
-                    if(!zfboolToSerializableData(autoRestorePosData, autoRestorePos))
+                    if(!zfboolToData(autoRestorePosData, autoRestorePos))
                     {
                         break;
                     }
@@ -758,7 +758,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
         return zffalse;
     }
     ZFCallback input;
-    if(!ZFCallbackFromSerializableData(input, *inputData, outErrorHint, outErrorPos))
+    if(!ZFCallbackFromData(input, *inputData, outErrorHint, outErrorPos))
     {
         return zffalse;
     }
@@ -766,7 +766,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     zfindex start = 0;
     {
         const ZFSerializableData *startData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForInputInRange_start);
-        if(startData != zfnull && !zfindexFromSerializableData(start, *startData, outErrorHint, outErrorPos))
+        if(startData != zfnull && !zfindexFromData(start, *startData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -774,7 +774,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     zfindex count = zfindexMax();
     {
         const ZFSerializableData *countData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForInputInRange_count);
-        if(countData != zfnull && !zfindexFromSerializableData(count, *countData, outErrorHint, outErrorPos))
+        if(countData != zfnull && !zfindexFromData(count, *countData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
@@ -782,7 +782,7 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
     zfbool autoRestorePos = zftrue;
     {
         const ZFSerializableData *autoRestorePosData = ZFSerializableUtil::checkElementByCategory(serializableData, ZFSerializableKeyword_ZFInputCallbackForInputInRange_autoRestorePos);
-        if(autoRestorePosData != zfnull && !zfboolFromSerializableData(autoRestorePos, *autoRestorePosData, outErrorHint, outErrorPos))
+        if(autoRestorePosData != zfnull && !zfboolFromData(autoRestorePos, *autoRestorePosData, outErrorHint, outErrorPos))
         {
             return zffalse;
         }
