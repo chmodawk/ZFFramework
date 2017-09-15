@@ -88,6 +88,84 @@ inline ZFCoreArrayPOD<const ZFPropertyTypeIdDataBase *> ZFPropertyTypeIdDataGetA
 }
 
 // ============================================================
+/**
+ * @brief used to extend #ZFPropertyTypeIdData::Value::access
+ *
+ * how it works:
+ * * register custom callback by #ZFPROPERTY_TYPE_VALUE_ACCESS_CALLBACK_DEFINE
+ * * when #ZFPropertyTypeIdData::Value::accessAvailable,
+ *   #ZFPropertyTypeValueAccessCallbackCheck would be called to check whether custom access available
+ * * if custom access available, the custom one would be called instead of builtin one
+ */
+typedef void *(*ZFPropertyTypeValueAccessCallback)(ZF_IN ZFObject *);
+
+/**
+ * @brief see #ZFPropertyTypeValueAccessCallback
+ *
+ * return null if none custom access available,
+ * or return the callback if available
+ */
+extern ZF_ENV_EXPORT ZFPropertyTypeValueAccessCallback ZFPropertyTypeValueAccessCallbackCheck(ZF_IN const zfchar *typeId, ZF_IN ZFObject *obj);
+
+/**
+ * @brief see #ZFPropertyTypeValueAccessCallback
+ *
+ * usage:
+ * @code
+ *   ZFPROPERTY_TYPE_VALUE_ACCESS_CALLBACK_DEFINE(MyType, myReg, {
+ *           if(myCastCheck(obj))
+ *           {
+ *               return zftrue;
+ *           }
+ *           else
+ *           {
+ *               return zffalse;
+ *           }
+ *       }, {
+ *           return (void *)myCast(obj);
+ *       })
+ * @endcode
+ */
+#define ZFPROPERTY_TYPE_VALUE_ACCESS_CALLBACK_DEFINE(TypeName, regSig, accessAvailableCallback, accessCallback) \
+    zfclassNotPOD _ZFP_PropTVA_##TypeName##_##regSig \
+    { \
+    public: \
+        static zfbool c(ZF_IN ZFObject *obj) \
+        { \
+            accessAvailableCallback \
+        } \
+        static void *a(ZF_IN ZFObject *obj) \
+        { \
+            accessCallback \
+        } \
+    }; \
+    ZF_STATIC_REGISTER_INIT(PropTVA_##TypeName##_##regSig) \
+    { \
+        _ZFP_ZFPropertyTypeValueAccessRegister( \
+                ZFPropertyTypeId_##TypeName(), \
+                _ZFP_PropTVA_##TypeName##_##regSig::c, \
+                _ZFP_PropTVA_##TypeName##_##regSig::a \
+            ); \
+    } \
+    ZF_STATIC_REGISTER_DESTROY(PropTVA_##TypeName##_##regSig) \
+    { \
+        _ZFP_ZFPropertyTypeValueAccessUnregister( \
+                ZFPropertyTypeId_##TypeName(), \
+                _ZFP_PropTVA_##TypeName##_##regSig::c, \
+                _ZFP_PropTVA_##TypeName##_##regSig::a \
+            ); \
+    } \
+    ZF_STATIC_REGISTER_END(PropTVA_##TypeName##_##regSig)
+
+typedef zfbool (*_ZFP_ZFPropertyTypeValueAccessCheckCallback)(ZF_IN ZFObject *);
+extern ZF_ENV_EXPORT void _ZFP_ZFPropertyTypeValueAccessRegister(ZF_IN const zfchar *typeId,
+                                                                 ZF_IN _ZFP_ZFPropertyTypeValueAccessCheckCallback callbackCheck,
+                                                                 ZF_IN ZFPropertyTypeValueAccessCallback callbackAccess);
+extern ZF_ENV_EXPORT void _ZFP_ZFPropertyTypeValueAccessUnregister(ZF_IN const zfchar *typeId,
+                                                                   ZF_IN _ZFP_ZFPropertyTypeValueAccessCheckCallback callbackCheck,
+                                                                   ZF_IN ZFPropertyTypeValueAccessCallback callbackAccess);
+
+// ============================================================
 template<typename T_Dummy>
 zfclassNotPOD _ZFP_ZFPropertyTypeChecker
 {
@@ -187,8 +265,6 @@ public:
      * -  Type * const &
      * -  const Type * &
      * -  const Type * const &
-     *
-     * for aliased type, only `Type` and `Type const &` available
      */
 };
 
@@ -309,12 +385,24 @@ public:
         zfclassNotPOD Value \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    *accessCallback = ZFPropertyTypeValueAccessCallbackCheck(PropertyTypeId(), obj); \
+                    if(*accessCallback != zfnull) \
+                    { \
+                        return zftrue; \
+                    } \
+                } \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static T_Access access(ZF_IN ZFObject *obj) \
+            static T_Access access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    return *(typename zftTraits<T_Access>::TrNoRef *)accessCallback(obj); \
+                } \
                 return ZFCastZFObject(v_##TypeName *, obj)->zfv; \
             } \
         }; \
@@ -322,12 +410,24 @@ public:
         zfclassNotPOD Value<T_Access, 1> \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    *accessCallback = ZFPropertyTypeValueAccessCallbackCheck(PropertyTypeId(), obj); \
+                    if(*accessCallback != zfnull) \
+                    { \
+                        return zftrue; \
+                    } \
+                } \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    return (typename zftTraits<T_Access>::TrNoRef)accessCallback(obj); \
+                } \
                 return &(ZFCastZFObject(v_##TypeName *, obj)->zfv); \
             } \
         }; \
@@ -477,12 +577,24 @@ public:
         zfclassNotPOD Value \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    *accessCallback = ZFPropertyTypeValueAccessCallbackCheck(PropertyTypeId(), obj); \
+                    if(*accessCallback != zfnull) \
+                    { \
+                        return zftrue; \
+                    } \
+                } \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static T_Access access(ZF_IN ZFObject *obj) \
+            static T_Access access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    return *(typename zftTraits<T_Access>::TrNoRef *)accessCallback(obj); \
+                } \
                 return ZFCastZFObject(v_##TypeName *, obj)->zfv; \
             } \
         }; \
@@ -490,12 +602,24 @@ public:
         zfclassNotPOD Value<T_Access, 1> \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    *accessCallback = ZFPropertyTypeValueAccessCallbackCheck(PropertyTypeId(), obj); \
+                    if(*accessCallback != zfnull) \
+                    { \
+                        return zftrue; \
+                    } \
+                } \
                 return (ZFCastZFObject(v_##TypeName *, obj) != zfnull); \
             } \
-            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
+                if(accessCallback != zfnull) \
+                { \
+                    return (typename zftTraits<T_Access>::TrNoRef)accessCallback(obj); \
+                } \
                 return &(ZFCastZFObject(v_##TypeName *, obj)->zfv); \
             } \
         }; \
@@ -581,11 +705,11 @@ public:
         zfclassNotPOD Value \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
                 return zffalse; \
             } \
-            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
                 return typename zftTraits<T_Access>::TrNoRef(); \
             } \
@@ -621,35 +745,50 @@ public:
         { \
             return ZFPropertyTypeIdData<AliasToType>::ValueStore(obj, (AliasToType)v); \
         } \
-        template<typename T_Access = _ZFP_PropTypeW_##TypeName, typename T_Fix = void> \
+        template<typename T_Access = _ZFP_PropTypeW_##TypeName \
+            , int T_IsPointer = ((zftTraits<T_Access>::TrIsPtr \
+                && zftTypeIsSame< \
+                        typename zftTraits<T_Access>::TrNoRef, \
+                        _ZFP_PropTypeW_##TypeName \
+                    >::TypeIsSame != 1) \
+                ? 1 : 0) \
+            , typename T_Fix = void \
+            > \
         zfclassNotPOD Value \
         { \
-            /* not support */ \
+        public: \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
+            { \
+                return (obj != zfnull && ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj, accessCallback)); \
+            } \
+            static T_Access access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
+            { \
+                AliasToType const &aliasValue = ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj, accessCallback); \
+                _ZFP_PropTypeW_##TypeName *v = zfnew(_ZFP_PropTypeW_##TypeName); \
+                *v = (_ZFP_PropTypeW_##TypeName)aliasValue; \
+                ZFTypeHolder *vHolder = zfAllocWithoutLeakTest(ZFTypeHolder, v, ZFTypeHolderTypeObject<_ZFP_PropTypeW_##TypeName *>); \
+                obj->tagSetMarkCached(zfstringWithFormat(zfText("_ZFP_PropTVH_%s"), ZFM_TOSTRING(TypeName)), vHolder); \
+                zfReleaseWithoutLeakTest(vHolder); \
+                return *v; \
+            } \
         }; \
-        template<typename T_Fix> \
-        zfclassNotPOD Value<_ZFP_PropTypeW_##TypeName, T_Fix> \
+        template<typename T_Access> \
+        zfclassNotPOD Value<T_Access, 1> \
         { \
         public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
+            static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback) \
             { \
-                return ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj); \
+                return (obj != zfnull && ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj, accessCallback)); \
             } \
-            static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
+            static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback) \
             { \
-                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj); \
-            } \
-        }; \
-        template<typename T_Fix> \
-        zfclassNotPOD Value<_ZFP_PropTypeW_##TypeName const &, T_Fix> \
-        { \
-        public: \
-            static zfbool accessAvailable(ZF_IN ZFObject *obj) \
-            { \
-                return ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::accessAvailable(obj); \
-            } \
-            static _ZFP_PropTypeW_##TypeName access(ZF_IN ZFObject *obj) \
-            { \
-                return (_ZFP_PropTypeW_##TypeName)ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj); \
+                AliasToType const &aliasValue = ZFPropertyTypeIdData<AliasToType>::Value<AliasToType const &>::access(obj, accessCallback); \
+                _ZFP_PropTypeW_##TypeName *v = zfnew(_ZFP_PropTypeW_##TypeName); \
+                *v = (_ZFP_PropTypeW_##TypeName)aliasValue; \
+                ZFTypeHolder *vHolder = zfAllocWithoutLeakTest(ZFTypeHolder, v, ZFTypeHolderTypeObject<_ZFP_PropTypeW_##TypeName *>); \
+                obj->tagSetMarkCached(zfstringWithFormat(zfText("_ZFP_PropTVH_%s"), ZFM_TOSTRING(TypeName)), vHolder); \
+                zfReleaseWithoutLeakTest(vHolder); \
+                return v; \
             } \
         }; \
     }; \

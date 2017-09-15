@@ -354,6 +354,19 @@ ZFOUTPUT_TYPE(ZFFilterCallbackResult, {output.execute(ZFFilterCallbackResultToSt
  *
  * serializable data:
  * @code
+ *   <ZFCallerInfo value="[file function (line)]" />
+ * @endcode
+ */
+ZFPROPERTY_TYPE_DECLARE(ZFCallerInfo, ZFCallerInfoHolder)
+ZFPROPERTY_TYPE_ALIAS_DECLARE(ZFCallerInfo, ZFCallerInfoHolder, ZFCallerInfoWrap, ZFCallerInfo)
+ZFOUTPUT_TYPE(ZFCallerInfoHolder, {output.execute(ZFCallerInfoToString(v));})
+ZFOUTPUT_TYPE(ZFCallerInfo, {output.execute(ZFCallerInfoToString(ZFCallerInfoHolder(v)));})
+
+/**
+ * @brief see #ZFPROPERTY_TYPE_DECLARE
+ *
+ * serializable data:
+ * @code
  *   <ZFTokenForContainer // all tokens are optional
  *       tokenLeft=""
  *       tokenRight=""
@@ -469,17 +482,6 @@ ZFOUTPUT_TYPE(ZFObjectInstanceState, {output.execute(ZFObjectInstanceStateToStri
  */
 ZFPROPERTY_TYPE_DECLARE(ZFCallbackType, ZFCallbackType)
 ZFOUTPUT_TYPE(ZFCallbackType, {output.execute(ZFCallbackTypeToString(v));})
-
-/**
- * @brief see #ZFPROPERTY_TYPE_DECLARE
- *
- * serializable data:
- * @code
- *   <MyObject />
- * @endcode
- */
-ZFPROPERTY_TYPE_DECLARE(zfautoObject, zfautoObject)
-ZFOUTPUT_TYPE_DECLARE(zfautoObject)
 
 /**
  * @brief see #ZFPROPERTY_TYPE_DECLARE

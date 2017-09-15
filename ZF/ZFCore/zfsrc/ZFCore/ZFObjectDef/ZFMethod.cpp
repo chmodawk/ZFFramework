@@ -578,14 +578,14 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFMethod, void, methodInvokerSet, ZF
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFFuncAddrType, methodInvokerOrg)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvoker)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFMethod, zfautoObject, methodGenericInvoke, ZFMP_IN_OPT(ZFObject *, ownerObjOrNull, zfnull)
-    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokerDefaultParam)
-    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokerDefaultParam)
-    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokerDefaultParam) */
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokerDefaultParam())
+    /* ZFMETHOD_MAX_PARAM , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokerDefaultParam()) */
     /* ZFMETHOD_MAX_PARAM , ZFMP_OUT_OPT(zfstring *, errorHint, zfnull) */
     )
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFMethod, ZFMethodGenericInvoker, methodGenericInvokerOrg)

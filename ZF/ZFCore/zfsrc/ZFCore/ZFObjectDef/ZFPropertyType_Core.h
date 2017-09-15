@@ -17,6 +17,7 @@
 #include "ZFStyleable.h"
 #include "ZFMethodUserRegister.h"
 #include "ZFMethodFuncUserRegister.h"
+#include "ZFObjectUtil.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================

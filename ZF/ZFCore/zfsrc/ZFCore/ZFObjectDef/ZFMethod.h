@@ -458,14 +458,14 @@ public:
      * @brief util method to invoke #methodGenericInvoker
      */
     inline zfautoObject methodGenericInvoke(ZF_IN_OPT ZFObject *ownerObjOrNull = zfnull
-                                            , ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokerDefaultParam
-                                            , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam
+                                            , ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokerDefaultParam()
+                                            , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam()
                                             , ZF_OUT_OPT zfstring *errorHint = zfnull
                                             ) const
     {

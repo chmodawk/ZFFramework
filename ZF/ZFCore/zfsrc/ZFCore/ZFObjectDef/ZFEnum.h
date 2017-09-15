@@ -16,6 +16,7 @@
 
 #include "ZFSerializable.h"
 #include "ZFCopyable.h"
+#include "ZFEnumDeclare.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
@@ -180,31 +181,6 @@ private:
 };
 
 // ============================================================
-zfclassFwd _ZFP_ZFEnumDataPrivate;
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFEnumData
-{
-public:
-    _ZFP_ZFEnumData(void);
-    ~_ZFP_ZFEnumData(void);
-public:
-    zfbool needInitFlag;
-    const ZFClass *ownerClass;
-    void add(ZF_IN zfbool isEnableDuplicateValue,
-             ZF_IN zfuint value,
-             ZF_IN const zfchar *name);
-    zfindex enumCount(void) const;
-    zfindex enumIndexForValue(ZF_IN zfuint value) const;
-    zfuint enumValueAtIndex(ZF_IN zfindex index) const;
-    const zfchar *enumNameAtIndex(ZF_IN zfindex index) const;
-    zfbool enumContainValue(ZF_IN zfuint value) const;
-    zfuint enumValueForName(ZF_IN const zfchar *name) const;
-    const zfchar *enumNameForValue(ZF_IN zfuint value) const;
-private:
-    _ZFP_ZFEnumDataPrivate *d;
-};
-extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass *ownerClass);
-
-// ============================================================
 /**
  * @brief macros to define a key-value map for enum type
  *
@@ -287,327 +263,30 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
  *     void func1(MyEnumEnum e) {...}
  *   @endcode
  */
-#define ZFENUM_BEGIN(ChildEnum) \
-    zfclass ZF_ENV_EXPORT ChildEnum : zfextends ZFEnum \
-    { \
-        ZFOBJECT_DECLARE(ChildEnum, ZFEnum) \
-    public: \
-        /** @brief see @ref ChildEnum */ \
-        typedef enum \
-        {
-/**
- * @brief see #ZFENUM_BEGIN
- */
-#define ZFENUM_VALUE(Value) /** \n */ e_##Value,
-/**
- * @brief see #ZFENUM_BEGIN
- */
-#define ZFENUM_VALUE_WITH_INIT(Value, initValue) /** @brief \n Value(initValue)\n */ e_##Value = initValue,
-#define _ZFP_ZFENUM_SEPARATOR(ChildEnum, isEnableDuplicateValue_) \
-        } ZFEnumType; \
-    public: \
-        /** @brief calculate hash for value */ \
-        static zfidentity hashForValue(ZF_IN zfuint value) \
-        { \
-            return zfidentityHash( \
-                zfidentityCalcString(zfself::ClassData()->className()), \
-                zfidentityCalcString(zfself::EnumNameForValue(value))); \
-        } \
-        /** @brief see #ZFObject::objectHash */ \
-        virtual zfidentity objectHash(void) \
-        { \
-            return zfself::hashForValue(this->enumValue()); \
-        } \
-    public: \
-        /** @brief get the count of enum value */ \
-        static zfindex EnumCount(void) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumCount(); \
-        } \
-        /** @brief get the index of enum value, or zfindexMax() if no such enum value */ \
-        static zfindex EnumIndexForValue(ZF_IN zfuint value) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumIndexForValue(value); \
-        } \
-        /** @brief get the value at index, or ZFEnumInvalid if not exist */ \
-        static zfuint EnumValueAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumValueAtIndex(index); \
-        } \
-        /** @brief get the name at index, or ZFEnumNameInvalid if not exist */ \
-        static const zfchar *EnumNameAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumNameAtIndex(index); \
-        } \
-        /** @brief return true if contain the specified value */ \
-        static zfbool EnumContainValue(ZF_IN zfuint value) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumContainValue(value); \
-        } \
-        /** @brief get value with name, or ZFEnumInvalid if not exist */ \
-        static zfuint EnumValueForName(ZF_IN const zfchar *name) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumValueForName(name); \
-        } \
-        /** @brief get name with value, or ZFEnumNameInvalid if not exist */ \
-        static const zfchar *EnumNameForValue(ZF_IN zfuint value) \
-        { \
-            return zfself::_ZFP_ZFEnumDataRef()->enumNameForValue(value); \
-        } \
-    public: \
-        zfoverride \
-        virtual zfindex enumCount(void) \
-        { \
-            return zfself::EnumCount(); \
-        } \
-        zfoverride \
-        virtual zfindex enumIndexForValue(ZF_IN zfuint value) \
-        { \
-            return zfself::EnumIndexForValue(value); \
-        } \
-        zfoverride \
-        virtual zfuint enumValueAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::EnumValueAtIndex(index); \
-        } \
-        zfoverride \
-        virtual const zfchar *enumNameAtIndex(ZF_IN zfindex index) \
-        { \
-            return zfself::EnumNameAtIndex(index); \
-        } \
-        zfoverride \
-        virtual zfbool enumContainValue(ZF_IN zfuint value) \
-        { \
-            return zfself::EnumContainValue(value); \
-        } \
-        zfoverride \
-        virtual zfuint enumValueForName(ZF_IN const zfchar *name) \
-        { \
-            return zfself::EnumValueForName(name); \
-        } \
-        zfoverride \
-        virtual const zfchar *enumNameForValue(ZF_IN zfuint value) \
-        { \
-            return zfself::EnumNameForValue(value); \
-        } \
-    private: \
-        static const _ZFP_ZFEnumData *_ZFP_ZFEnumDataRef(void) \
-        { \
-            static const _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataInit(); \
-            return d; \
-        } \
-        static const _ZFP_ZFEnumData *_ZFP_ZFEnumDataInit(void) \
-        { \
-            zfCoreMutexLocker(); \
-            _ZFP_ZFEnumData *d = _ZFP_ZFEnumDataAccess(ChildEnum::ClassData()); \
-            if(d->needInitFlag) \
-            { \
-                d->needInitFlag = zffalse; \
-                zfbool isEnableDuplicateValue = isEnableDuplicateValue_;
-/** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_SEPARATOR(ChildEnum) _ZFP_ZFENUM_SEPARATOR(ChildEnum, zffalse)
-/** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_SEPARATOR_ALLOW_DUPLICATE_VALUE(ChildEnum) _ZFP_ZFENUM_SEPARATOR(ChildEnum, zftrue)
+#define ZFENUM_BEGIN(EnumName) _ZFP_ZFENUM_BEGIN(EnumName)
 
 /** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_VALUE_REGISTER_WITH_NAME(Value, Name) \
-                d->add(isEnableDuplicateValue, zfself::e_##Value, Name);
+#define ZFENUM_VALUE(Value) _ZFP_ZFENUM_VALUE(Value)
 /** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_VALUE_REGISTER(Value) \
-                ZFENUM_VALUE_REGISTER_WITH_NAME(Value, zfText(#Value))
-#define _ZFP_ZFENUM_END_EXTRA(ChildEnum) \
-    /** @brief editable version of @ref ChildEnum */ \
-    zfclass ZF_ENV_EXPORT ChildEnum##Editable : zfextends ChildEnum \
-    { \
-        ZFOBJECT_DECLARE(ChildEnum##Editable, ChildEnum) \
-    public: \
-        zfoverride \
-        virtual void enumValueSet(ZF_IN zfuint value) \
-        { \
-            zfsuper::enumValueSet(value); \
-        } \
-    }; \
-    /** @brief same as @ref ChildEnum##Enum, see @ref ChildEnum */ \
-    typedef ChildEnum::ZFEnumType ChildEnum##Enum; \
-    _ZFP_ZFENUM_CONVERTER_DECLARE(ChildEnum) \
-    ZFPROPERTY_TYPE_DECLARE(ChildEnum##Enum, ChildEnum##Enum)
-/** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_END(ChildEnum) \
-            } \
-            return d; \
-        } \
-    public: \
-        /** @brief default value for @ref ChildEnum */ \
-        static inline ChildEnum::ZFEnumType EnumDefault(void) \
-        { \
-            return (ChildEnum::ZFEnumType)ChildEnum::EnumValueAtIndex(0); \
-        } \
-    }; \
-    _ZFP_ZFENUM_END_EXTRA(ChildEnum)
-/** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_END_WITH_DEFAULT(ChildEnum, defaultEnum) \
-            } \
-            return d; \
-        } \
-    public: \
-        /** @brief default value for @ref ChildEnum (defaultEnum) */ \
-        static inline ChildEnum::ZFEnumType EnumDefault(void) \
-        { \
-            return ChildEnum::e_##defaultEnum; \
-        } \
-    }; \
-    _ZFP_ZFENUM_END_EXTRA(ChildEnum)
+#define ZFENUM_VALUE_WITH_INIT(Value, initValue) _ZFP_ZFENUM_VALUE_WITH_INIT(Value, initValue)
 
 /** @brief see #ZFENUM_BEGIN */
-#define ZFENUM_DEFINE(ChildEnum) \
-    ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ChildEnum##Enum, ChildEnum##Enum, { \
-            if(zfsncmp(src, ZFEnumNameInvalid(), srcLen) == 0) \
-            { \
-                v = (ChildEnum##Enum)ZFEnumInvalid(); \
-                return zftrue; \
-            } \
-            v = (ChildEnum##Enum)ChildEnum::EnumValueForName( \
-                    (srcLen == zfindexMax()) ? src : zfstring(src, srcLen).cString() \
-                ); \
-            return ((zfuint)v != ZFEnumInvalid()); \
-        }, { \
-            s += ChildEnum::EnumNameForValue(v); \
-            return zftrue; \
-        }) \
-    ZFMETHOD_USER_REGISTER_3({ \
-            enumClass = ChildEnum::ClassData(); \
-            enumValue = (zfuint)enumWrapper->to<v_##ChildEnum##Enum *>()->zfv; \
-            return zftrue; \
-        }, v_##ChildEnum##Enum, zfbool, _ZFP_ZFEnumWrapperInfo \
-        , ZFMP_OUT(const ZFClass *&, enumClass) \
-        , ZFMP_OUT(zfuint &, enumValue) \
-        , ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper) \
-        ) \
-    _ZFP_ZFENUM_CONVERTER_DEFINE(ChildEnum) \
-    ZFOBJECT_REGISTER(ChildEnum) \
-    ZFOBJECT_REGISTER(ChildEnum##Editable) \
-    ZF_STATIC_REGISTER_INIT(EnumReg_##ChildEnum) \
-    { \
-        for(zfindex i = 0; i < ChildEnum::EnumCount(); ++i) \
-        { \
-            ZFMethodUserRegisterDetail_0(resultMethod, &ivk_e, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                ChildEnum##Enum, zfstringWithFormat(zfText("e_%s"), ChildEnum::EnumNameAtIndex(i))); \
-            _m.add(resultMethod); \
-        } \
-        \
-        { \
-            ZFMethodUserRegisterDetail_0(resultMethod, &ivk_EnumDefault, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfuint, zfText("EnumDefault")); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_hashForValue, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfidentity, zfText("hashForValue"), \
-                ZFMP_IN(zfuint, value)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_0(resultMethod, &ivk_EnumCount, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfindex, zfText("EnumCount")); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumIndexForValue, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfindex, zfText("EnumIndexForValue"), \
-                ZFMP_IN(zfuint, value)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumValueAtIndex, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfuint, zfText("EnumValueAtIndex"), \
-                ZFMP_IN(zfindex, index)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumNameAtIndex, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                const zfchar *, zfText("EnumNameAtIndex"), \
-                ZFMP_IN(zfindex, index)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumContainValue, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfbool, zfText("EnumContainValue"), \
-                ZFMP_IN(zfuint, value)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumValueForName, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                zfuint, zfText("EnumValueForName"), \
-                ZFMP_IN(const zfchar *, name)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_EnumNameForValue, ChildEnum::ClassData(), \
-                public, ZFMethodIsStatic, \
-                const zfchar *, zfText("EnumNameForValue"), \
-                ZFMP_IN(zfuint, value)); \
-            _m.add(resultMethod); \
-        } \
-        { \
-            ZFMethodUserRegisterDetail_1(resultMethod, &ivk_enumValueSet, ChildEnum::ClassData(), \
-                public, ZFMethodIsVirtual, \
-                void, zfText("enumValueSet"), \
-                ZFMP_IN(zfuint, value)); \
-            _m.add(resultMethod); \
-        } \
-    } \
-    ZF_STATIC_REGISTER_DESTROY(EnumReg_##ChildEnum) \
-    { \
-        for(zfindex i = 0; i < _m.count(); ++i) \
-        { \
-            ZFMethodUserUnregister(_m[i]); \
-        } \
-    } \
-    ZFCoreArrayPOD<const ZFMethod *> _m; \
-    \
-    static ChildEnum##Enum ivk_e(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
-    {return (ChildEnum##Enum)ChildEnum::EnumValueForName(invokerMethod->methodName() + 2);} \
-    \
-    static zfuint ivk_EnumDefault(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
-    {return ChildEnum::EnumDefault();} \
-    \
-    static zfidentity ivk_hashForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
-    {return ChildEnum::hashForValue(value);} \
-    \
-    static zfindex ivk_EnumCount(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
-    {return ChildEnum::EnumCount();} \
-    \
-    static zfindex ivk_EnumIndexForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
-    {return ChildEnum::EnumIndexForValue(value);} \
-    \
-    static zfuint ivk_EnumValueAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
-    {return ChildEnum::EnumValueAtIndex(index);} \
-    \
-    static const zfchar *ivk_EnumNameAtIndex(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfindex index) \
-    {return ChildEnum::EnumNameAtIndex(index);} \
-    \
-    static zfbool ivk_EnumContainValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
-    {return ChildEnum::EnumContainValue(value);} \
-    \
-    static zfuint ivk_EnumValueForName(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN const zfchar *name) \
-    {return ChildEnum::EnumValueForName(name);} \
-    \
-    static const zfchar *ivk_EnumNameForValue(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
-    {return ChildEnum::EnumNameForValue(value);} \
-    \
-    static void ivk_enumValueSet(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value) \
-    {return invokerObject->to<ChildEnum##Editable *>()->enumValueSet(value);} \
-    \
-    ZF_STATIC_REGISTER_END(EnumReg_##ChildEnum)
+#define ZFENUM_SEPARATOR(EnumName) _ZFP_ZFENUM_SEPARATOR(EnumName, zffalse)
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_SEPARATOR_ALLOW_DUPLICATE_VALUE(EnumName) _ZFP_ZFENUM_SEPARATOR(EnumName, zftrue)
+
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_VALUE_REGISTER_WITH_NAME(Value, Name) _ZFP_ZFENUM_VALUE_REGISTER_WITH_NAME(Value, Name)
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_VALUE_REGISTER(Value) _ZFP_ZFENUM_VALUE_REGISTER_WITH_NAME(Value, zfText(#Value))
+
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_END(EnumName) _ZFP_ZFENUM_END(EnumName)
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_END_WITH_DEFAULT(EnumName, defaultEnum) _ZFP_ZFENUM_END_WITH_DEFAULT(EnumName, defaultEnum)
+
+/** @brief see #ZFENUM_BEGIN */
+#define ZFENUM_DEFINE(EnumName) _ZFP_ZFENUM_DEFINE(EnumName)
 
 // ============================================================
 // zfflags conversion
@@ -644,100 +323,6 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
                                               ZF_OUT_OPT const zfchar **outErrorPos = zfnull);
 
 // ============================================================
-#define _ZFP_ZFENUM_CONVERTER_DECLARE(EnumName) \
-    /** @brief see @ref EnumName, return empty string if error */ \
-    extern ZF_ENV_EXPORT zfbool EnumName##ToString(ZF_IN_OUT zfstring &ret, ZF_IN EnumName *const &value); \
-    /** @brief see @ref EnumName, return empty string if error */ \
-    inline zfstring EnumName##ToString(ZF_IN EnumName *const &value) \
-    { \
-        zfstring ret; \
-        EnumName##ToString(ret, value); \
-        return ret; \
-    } \
-    /** @brief see @ref EnumName, return enum object if success */ \
-    extern ZF_ENV_EXPORT zfbool EnumName##FromString(ZF_OUT zfautoObject &ret, \
-                                                     ZF_IN const zfchar *src, \
-                                                     ZF_IN_OPT zfindex srcLen = zfindexMax()); \
-    ZFOUTPUT_TYPE_DECLARE(EnumName##Enum)
-#define _ZFP_ZFENUM_CONVERTER_DEFINE(EnumName) \
-    zfbool EnumName##ToString(ZF_IN_OUT zfstring &ret, ZF_IN EnumName *const &value) \
-    { \
-        ret += ((value == zfnull) ? zfText("") : value->enumName()); \
-        return zftrue; \
-    } \
-    zfbool EnumName##FromString(ZF_OUT zfautoObject &ret, \
-                                ZF_IN const zfchar *src, \
-                                ZF_IN_OPT zfindex srcLen /* = zfindexMax() */) \
-    { \
-        if(zfsncmp(src, ZFEnumNameInvalid(), srcLen) == 0) \
-        { \
-            ret = zfautoObjectCreate(zflineAlloc(EnumName, ZFEnumInvalid())); \
-            return zftrue; \
-        } \
-        zfuint tmpValue = EnumName::EnumValueForName( \
-            (srcLen == zfindexMax()) ? src : zfstring(src, srcLen).cString()); \
-        if(tmpValue == ZFEnumInvalid()) \
-        { \
-            return zffalse; \
-        } \
-        else \
-        { \
-            ret = zfautoObjectCreate(zflineAlloc(EnumName, tmpValue)); \
-            return zftrue; \
-        } \
-    } \
-    ZFOUTPUT_TYPE_DEFINE(EnumName##Enum, {output << EnumName::EnumNameForValue(v);})
-
-// ============================================================
-#define _ZFP_ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName, defaultFix) \
-    /** @brief EnumName as #zfflags, see @ref EnumName, @ref EnumFlagsName##ToString, @ref EnumFlagsName##FromString */ \
-    zffinal zfclassLikePOD ZF_ENV_EXPORT EnumFlagsName : zfextendsLikePOD ZFEnumFlagsBase \
-    { \
-        defaultFix \
-    public: \
-        /** @cond ZFPrivateDoc */ \
-        EnumFlagsName(void) : flags(0) {} \
-        EnumFlagsName(ZF_IN const zfuint &flags) : flags(flags) {} \
-        EnumFlagsName(ZF_IN const EnumName##Enum &flags) : flags((zfuint)flags) {} \
-        EnumFlagsName(ZF_IN const EnumFlagsName &ref) : flags(ref.flags) {} \
-        virtual ~EnumFlagsName(void) {} \
-    public: \
-        const zfuint &enumValue(void) const {return this->flags;} \
-        void enumValueSet(ZF_IN const zfuint &flags) {this->flags = flags;} \
-        void enumValueSet(ZF_IN const EnumName##Enum &flags) {this->flags = (zfuint)flags;} \
-    public: \
-        operator const zfuint &(void) const {return this->flags;} \
-        EnumFlagsName &operator = (ZF_IN const zfuint &flags) {this->flags = flags; return *this;} \
-        EnumFlagsName &operator = (ZF_IN const EnumName##Enum &flags) {this->flags = (zfuint)flags; return *this;} \
-        EnumFlagsName &operator = (ZF_IN const EnumFlagsName &ref) {this->flags = ref.flags; return *this;} \
-        zfbool operator == (ZF_IN const zfuint &flags) const {return (this->flags == flags);} \
-        zfbool operator == (ZF_IN const EnumName##Enum &flags) const {return (this->flags == (zfuint)flags);} \
-        zfbool operator == (ZF_IN const EnumFlagsName &ref) const {return (this->flags == ref.flags);} \
-        zfbool operator != (ZF_IN const zfuint &flags) const {return (this->flags != flags);} \
-        zfbool operator != (ZF_IN const EnumName##Enum &flags) const {return (this->flags != (zfuint)flags);} \
-        zfbool operator != (ZF_IN const EnumFlagsName &ref) const {return (this->flags != ref.flags);} \
-        EnumFlagsName &operator |= (ZF_IN const zfuint &flags) {this->flags |= flags; return *this;} \
-        EnumFlagsName &operator |= (ZF_IN const EnumName##Enum &flags) {this->flags |= (zfuint)flags; return *this;} \
-        EnumFlagsName &operator |= (ZF_IN const EnumFlagsName &ref) {this->flags |= ref.flags; return *this;} \
-        EnumFlagsName &operator &= (ZF_IN const zfuint &flags) {this->flags &= flags; return *this;} \
-        EnumFlagsName &operator &= (ZF_IN const EnumName##Enum &flags) {this->flags &= (zfuint)flags; return *this;} \
-        EnumFlagsName &operator &= (ZF_IN const EnumFlagsName &ref) {this->flags &= ref.flags; return *this;} \
-    public: \
-        virtual void objectInfoT(ZF_IN_OUT zfstring &ret) const; \
-        virtual inline zfstring objectInfo(void) const \
-        { \
-            zfstring ret; \
-            this->objectInfoT(ret); \
-            return ret; \
-        } \
-        /** @endcond */ \
-    private: \
-        zfuint flags; \
-    };
-#define _ZFP_ZFENUM_FLAGS_CONVERTER_DECLARE(EnumName, EnumFlagsName) \
-    ZFOUTPUT_TYPE_DECLARE(EnumFlagsName)
-#define _ZFP_ZFENUM_FLAGS_CONVERTER_DEFINE(EnumName, EnumFlagsName) \
-    ZFOUTPUT_TYPE_DEFINE(EnumFlagsName, {output << v.objectInfo();})
 /**
  * @brief util macro to declare a flag set type for a ZFEnum type
  *
@@ -750,55 +335,15 @@ extern ZF_ENV_EXPORT zfbool zfflagsFromString(ZF_OUT zfflags &ret,
  *   ZFENUM_FLAGS_DEFINE(YourEnumType, YourEnumFlagsType)
  * @endcode
  */
-#define ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName) \
-    _ZFP_ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName, ZFM_EMPTY()) \
-    ZFPROPERTY_TYPE_DECLARE(EnumFlagsName, EnumFlagsName) \
-    _ZFP_ZFENUM_FLAGS_CONVERTER_DECLARE(EnumName, EnumFlagsName)
-#define _ZFP_ZFENUM_FLAGS_DEFAULT_EXPAND(EnumName, EnumFlagsName, defaultValue) \
-    public: \
-        /** @brief default value for EnumFlagsName (defaultValue) */ \
-        static inline zfuint EnumDefault(void) \
-        { \
-            return defaultValue; \
-        }
+#define ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName) _ZFP_ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName)
 /**
  * @brief see #ZFENUM_FLAGS_DECLARE, declare with default value,
  *   which can be accessed by YourEnumFlagsType::EnumDefault()
  */
-#define ZFENUM_FLAGS_DECLARE_WITH_DEFAULT(EnumName, EnumFlagsName, defaultValue) \
-    _ZFP_ZFENUM_FLAGS_DECLARE(EnumName, EnumFlagsName, _ZFP_ZFENUM_FLAGS_DEFAULT_EXPAND(EnumName, EnumFlagsName, defaultValue)) \
-    ZFPROPERTY_TYPE_DECLARE(EnumFlagsName, EnumFlagsName) \
-    _ZFP_ZFENUM_FLAGS_CONVERTER_DECLARE(EnumName, EnumFlagsName)
+#define ZFENUM_FLAGS_DECLARE_WITH_DEFAULT(EnumName, EnumFlagsName, defaultValue) _ZFP_ZFENUM_FLAGS_DECLARE_WITH_DEFAULT(EnumName, EnumFlagsName, defaultValue)
 
 /** @brief see #ZFENUM_FLAGS_DECLARE */
-#define ZFENUM_FLAGS_DEFINE(EnumName, EnumFlagsName) \
-    ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(EnumFlagsName, EnumFlagsName, { \
-            zfflags flags = zfflagsZero(); \
-            if(!zfflagsFromString(flags, \
-                EnumName::ClassData(), \
-                src, srcLen)) \
-            { \
-                return zffalse; \
-            } \
-            v.enumValueSet((zfuint)flags); \
-            return zftrue; \
-        }, { \
-            return zfflagsToString(s, EnumName::ClassData(), (zfflags)v.enumValue()); \
-        }) \
-    ZFMETHOD_USER_REGISTER_3({ \
-            enumClass = EnumName::ClassData(); \
-            enumValue = (zfuint)enumWrapper->to<v_##EnumFlagsName *>()->zfv; \
-            return zftrue; \
-        }, v_##EnumFlagsName, zfbool, _ZFP_ZFEnumWrapperInfo \
-        , ZFMP_OUT(const ZFClass *&, enumClass) \
-        , ZFMP_OUT(zfuint &, enumValue) \
-        , ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper) \
-        ) \
-    _ZFP_ZFENUM_FLAGS_CONVERTER_DEFINE(EnumName, EnumFlagsName) \
-    void EnumFlagsName::objectInfoT(ZF_IN_OUT zfstring &ret) const \
-    { \
-        zfflagsToString(ret, EnumName::ClassData(), (zfflags)this->enumValue()); \
-    }
+#define ZFENUM_FLAGS_DEFINE(EnumName, EnumFlagsName) _ZFP_ZFENUM_FLAGS_DEFINE(EnumName, EnumFlagsName)
 
 // ============================================================
 // ZFEnumFlagsBase

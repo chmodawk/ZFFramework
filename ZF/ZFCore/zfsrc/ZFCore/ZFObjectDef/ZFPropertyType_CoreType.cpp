@@ -936,20 +936,6 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFCallbackType, ZFCallbackType, {
     })
 
 // ============================================================
-ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER(zfautoObject, zfautoObject, {
-        return ZFObjectFromData(v, serializableData, outErrorHint, outErrorPos);
-    }, {
-        return ZFObjectToData(serializableData, v, outErrorHint);
-    })
-ZFOUTPUT_TYPE_DEFINE(zfautoObject, {
-        output.execute(
-            (v == zfautoObjectNull())
-            ? ZFTOKEN_zfnull
-            : v.toObject()->objectInfo()
-        );
-    })
-
-// ============================================================
 ZFPROPERTY_TYPE_DEFINE(ZFSerializableData, ZFSerializableData, {
         v = serializableData;
         return zftrue;

@@ -234,11 +234,11 @@ public:
     zfclassNotPOD Value
     {
     public:
-        static zfbool accessAvailable(ZF_IN ZFObject *obj)
+        static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback)
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static T_Access access(ZF_IN ZFObject *obj)
+        static T_Access access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
@@ -252,11 +252,11 @@ public:
     zfclassNotPOD Value<T_Access, 1>
     {
     public:
-        static zfbool accessAvailable(ZF_IN ZFObject *obj)
+        static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback)
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
@@ -297,11 +297,11 @@ public:
     zfclassNotPOD Value
     {
     public:
-        static zfbool accessAvailable(ZF_IN ZFObject *obj)
+        static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback)
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static T_Access access(ZF_IN ZFObject *obj)
+        static T_Access access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)
@@ -315,11 +315,11 @@ public:
     zfclassNotPOD Value<T_Access, 1>
     {
     public:
-        static zfbool accessAvailable(ZF_IN ZFObject *obj)
+        static zfbool accessAvailable(ZF_IN ZFObject *obj, ZF_OUT ZFPropertyTypeValueAccessCallback *accessCallback)
         {
             return (ZFCastZFObject(v_ZFCoreArray *, obj) != zfnull);
         }
-        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj)
+        static typename zftTraits<T_Access>::TrNoRef access(ZF_IN ZFObject *obj, ZF_IN ZFPropertyTypeValueAccessCallback accessCallback)
         {
             v_ZFCoreArray *holder = ZFCastZFObject(v_ZFCoreArray *, obj);
             if(holder->zfv == zfnull)

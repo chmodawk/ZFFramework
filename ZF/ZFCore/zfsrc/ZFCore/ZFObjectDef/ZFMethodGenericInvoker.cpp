@@ -56,3 +56,12 @@ void _ZFP_MtdGIRetError(ZF_OUT_OPT zfstring *errorHint,
 
 ZF_NAMESPACE_GLOBAL_END
 
+#if _ZFP_ZFOBJECT_METHOD_REG
+#include "../ZFObject.h"
+ZF_NAMESPACE_GLOBAL_BEGIN
+
+ZFMETHOD_FUNC_USER_REGISTER_0({return ZFMethodGenericInvokerDefaultParam();}, ZFObject *, ZFMethodGenericInvokerDefaultParam)
+
+ZF_NAMESPACE_GLOBAL_END
+#endif
+

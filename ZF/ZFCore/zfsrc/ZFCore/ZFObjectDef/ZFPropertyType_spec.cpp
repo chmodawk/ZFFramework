@@ -12,6 +12,51 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
+// zfautoObject
+ZFPROPERTY_TYPE_DEFINE_BY_SERIALIZABLE_CONVERTER_WITH_CUSTOM_WRAPPER(zfautoObject, zfautoObject, {
+        return ZFObjectFromData(v, serializableData, outErrorHint, outErrorPos);
+    }, {
+        return ZFObjectToData(serializableData, v, outErrorHint);
+    })
+ZFOUTPUT_TYPE_DEFINE(zfautoObject, {
+        output.execute(
+            (v == zfautoObjectNull())
+            ? ZFTOKEN_zfnull
+            : v.toObject()->objectInfo()
+        );
+    })
+
+ZFOBJECT_REGISTER(v_zfautoObject)
+void v_zfautoObject::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
+{
+    ZFCoreElementInfoGetter<zfautoObject>::elementInfoGetter(ret, this->zfv);
+}
+ZFCompareResult v_zfautoObject::objectCompare(ZF_IN ZFObject *anotherObj)
+{
+    ZFPropertyTypeWrapper *t = ZFCastZFObject(ZFPropertyTypeWrapper *, anotherObj);
+    if(t == zfnull || !zfscmpTheSame(this->wrappedValueTypeId(), t->wrappedValueTypeId()))
+    {
+        return ZFCompareUncomparable;
+    }
+    else
+    {
+        return ZFComparerDefault(this->zfv, *(_ZFP_PropTypeW_zfautoObject *)t->wrappedValue());
+    }
+}
+const zfchar *v_zfautoObject::wrappedValueTypeId(void)
+{
+    return ZFPropertyTypeIdData<_ZFP_PropTypeW_zfautoObject>::PropertyTypeId();
+}
+zfbool v_zfautoObject::wrappedValueIsInit(void)
+{
+    return (ZFComparerDefault(this->zfv, zftValue<_ZFP_PropTypeW_zfautoObject>().zfv) == ZFCompareTheSame);
+}
+ZFCompareResult v_zfautoObject::wrappedValueCompare(ZF_IN const void *v)
+{
+    return ZFComparerDefault(this->zfv, *(const _ZFP_PropTypeW_zfautoObject *)v);
+}
+
+// ============================================================
 // ZFObject
 ZF_STATIC_REGISTER_INIT(PropTIReg_ZFObject)
 {
