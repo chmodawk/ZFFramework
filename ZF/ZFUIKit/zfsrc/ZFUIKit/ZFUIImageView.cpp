@@ -26,7 +26,7 @@ public:
         if(property == ZFPropertyAccess(ZFUIImage, imageNinePatch))
         {
             ZFUIImageView *imageView = userData->to<ZFObjectHolder *>()->holdedObj;
-            ZFUIImage *image = imageView->imageContent();
+            ZFUIImage *image = imageView->image();
             ZFPROTOCOL_ACCESS(ZFUIImageView)->imageNinePatchChanged(
                 imageView,
                 image->imageScaleFixed(),
@@ -39,26 +39,26 @@ ZF_GLOBAL_INITIALIZER_END(ZFUIImageViewListenerHolder)
 // ZFUIImageView
 ZFOBJECT_REGISTER(ZFUIImageView)
 
-ZFPROPERTY_CUSTOM_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, imageContent)
+ZFPROPERTY_CUSTOM_ON_ATTACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIImageViewListenerHolder) *listenerHolder = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIImageViewListenerHolder);
-    if(this->imageContent() != zfnull)
+    if(this->image() != zfnull)
     {
-        this->imageContent()->observerAdd(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener, this->objectHolder());
+        this->image()->observerAdd(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener, this->objectHolder());
     }
 }
-ZFPROPERTY_CUSTOM_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, imageContent)
+ZFPROPERTY_CUSTOM_ON_DETACH_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
     ZF_GLOBAL_INITIALIZER_CLASS(ZFUIImageViewListenerHolder) *listenerHolder = ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIImageViewListenerHolder);
-    if(this->imageContent() != zfnull)
+    if(this->image() != zfnull)
     {
-        this->imageContent()->observerRemove(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener);
+        this->image()->observerRemove(ZFObject::EventObjectPropertyValueOnUpdate(), listenerHolder->imageNinePatchChangedListener);
     }
 }
-ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIImageView, ZFUIImage *, imageContent)
+ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIImageView, ZFUIImage *, image)
 {
-    ZFPROTOCOL_ACCESS(ZFUIImageView)->imageContentSet(this, this->imageContent());
-    ZFUIImage *image = this->imageContent();
+    ZFPROTOCOL_ACCESS(ZFUIImageView)->imageSet(this, this->image());
+    ZFUIImage *image = this->image();
     if(image != zfnull)
     {
         ZFPROTOCOL_ACCESS(ZFUIImageView)->imageNinePatchChanged(
@@ -72,7 +72,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIImageView, ZFUIImage *, imageContent)
 ZFObject *ZFUIImageView::objectOnInit(ZF_IN ZFUIImage *image)
 {
     this->objectOnInit();
-    this->imageContentSet(image);
+    this->imageSet(image);
     return this;
 }
 ZFObject *ZFUIImageView::objectOnInit(void)
@@ -97,42 +97,42 @@ ZFObject *ZFUIImageView::objectOnInit(void)
 }
 void ZFUIImageView::objectOnDealloc(void)
 {
-    this->imageContentSet(zfnull);
+    this->imageSet(zfnull);
     zfsuper::objectOnDealloc();
 }
 
 void ZFUIImageView::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     zfsuper::objectInfoOnAppend(ret);
-    if(this->imageContent() != zfnull)
+    if(this->image() != zfnull)
     {
         ret += zfText(" ");
-        this->imageContent()->objectInfoT(ret);
+        this->image()->objectInfoT(ret);
     }
 }
 
 void ZFUIImageView::nativeImplViewOnLayout(ZF_OUT ZFUIRect &result,
                                            ZF_IN const ZFUIRect &bounds)
 {
-    if(this->imageContent() == zfnull
+    if(this->image() == zfnull
         || bounds.size.width == 0
         || bounds.size.height == 0)
     {
         return ;
     }
 
-    ZFUIContentScaleTypeApply(result, this->imageScaleType(), bounds, this->imageContent()->imageSize());
+    ZFUIContentScaleTypeApply(result, this->imageScaleType(), bounds, this->image()->imageSize());
 }
 void ZFUIImageView::nativeImplViewMarginOnUpdate(ZF_IN_OUT ZFUIMargin &nativeImplViewMargin)
 {
     zfsuper::nativeImplViewMarginOnUpdate(nativeImplViewMargin);
-    ZFUIMarginInc(nativeImplViewMargin, nativeImplViewMargin, this->imageContentMargin());
+    ZFUIMarginInc(nativeImplViewMargin, nativeImplViewMargin, this->imageMargin());
 }
 void ZFUIImageView::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                     ZF_IN const ZFUISize &sizeHint,
                                     ZF_IN const ZFUISizeParam &sizeParam)
 {
-    ret = ((this->imageContent() != zfnull) ? this->imageContent()->imageSize() : ZFUISizeZero());
+    ret = ((this->image() != zfnull) ? this->image()->imageSize() : ZFUISizeZero());
 }
 
 ZF_NAMESPACE_GLOBAL_END

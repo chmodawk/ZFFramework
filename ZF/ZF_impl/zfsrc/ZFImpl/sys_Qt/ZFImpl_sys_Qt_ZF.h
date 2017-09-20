@@ -20,6 +20,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+// ============================================================
 extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_QObjectTagSet(ZF_IN_OUT QObject *obj, ZF_IN const zfchar *name, ZF_IN QVariant const &tag);
 extern ZF_ENV_EXPORT QVariant ZFImpl_sys_Qt_QObjectTagGet(ZF_IN_OUT QObject *obj, ZF_IN const zfchar *name);
 
@@ -30,6 +31,25 @@ T_ZFObject ZFImpl_sys_Qt_QObjectTagGetZFObject(ZF_IN_OUT QObject *obj, ZF_IN con
 {
     return ZFCastZFObjectUnchecked(T_ZFObject, ZFImpl_sys_Qt_QObjectTagGetZFObject(obj, name));
 }
+
+// ============================================================
+/**
+ * @brief convert QString to zfstring, appended to result, do nothing if error
+ */
+extern ZF_ENV_EXPORT void ZFImpl_sys_Qt_zfstringFromQString(ZF_IN_OUT zfstring &result, ZF_IN QString const &nativeString);
+/**
+ * @brief convert QString to zfstring, appended to result, do nothing if error
+ */
+inline zfstring ZFImpl_sys_Qt_zfstringFromQString(ZF_IN QString const &nativeString)
+{
+    zfstring ret;
+    ZFImpl_sys_Qt_zfstringFromQString(ret, nativeString);
+    return ret;
+}
+/**
+ * @brief convert zfstring to QString, return a autoreleased object
+ */
+extern ZF_ENV_EXPORT QString ZFImpl_sys_Qt_zfstringToQString(ZF_IN const zfchar *s);
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #if ZF_ENV_sys_Qt

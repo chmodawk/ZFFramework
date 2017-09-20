@@ -28,11 +28,11 @@ public:
         zfautoObject imageLarge = ZFUIImageScale(imageSmall.toAny(), ZFUISizeMake(600));
 
         this->childAdd(this->imageViewSmall());
-        this->imageViewSmall()->imageContentSet(imageSmall.toAny());
+        this->imageViewSmall()->imageSet(imageSmall.toAny());
         this->imageViewSmall()->viewBackgroundColorSet(ZFUIColorRed());
 
         this->childAdd(this->imageViewLarge());
-        this->imageViewLarge()->imageContentSet(imageLarge.toAny());
+        this->imageViewLarge()->imageSet(imageLarge.toAny());
         this->imageViewLarge()->viewBackgroundColorSet(ZFUIColorBlue());
 
         return this;

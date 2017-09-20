@@ -355,7 +355,7 @@ static ZFOutputCallback _ZFP_ZFOutputCallbackForFile_create(ZF_IN const ZFCaller
     ret.callbackTagSet(ZFCallbackTagKeyword_ioOwner, outputOwner);
     zfRelease(outputOwner);
 
-    ret.callbackTagSetMarkCached(ZFCallbackTagKeyword_filePath, zflineAllocWithoutLeakTest(ZFString, filePath));
+    ret.pathInfoSet(ZFSerializableDataPathType_file, filePath);
     return ret;
 }
 static void _ZFP_ZFOutputCallbackForFile_storeImplData(ZF_IN_OUT ZFOutputCallback &ret,
@@ -464,7 +464,7 @@ static ZFInputCallback _ZFP_ZFInputCallbackForFile_create(ZF_IN const ZFCallerIn
     ret.callbackTagSet(ZFCallbackTagKeyword_ioOwner, inputOwner);
     zfRelease(inputOwner);
 
-    ret.callbackTagSetMarkCached(ZFCallbackTagKeyword_filePath, zflineAllocWithoutLeakTest(ZFString, filePath));
+    ret.pathInfoSet(ZFSerializableDataPathType_file, filePath);
     return ret;
 }
 static void _ZFP_ZFInputCallbackForFile_storeImplData(ZF_IN_OUT ZFInputCallback &ret,
@@ -600,7 +600,7 @@ static ZFInputCallback _ZFP_ZFInputCallbackForResFile_create(ZF_IN const ZFCalle
     ret.callbackTagSet(ZFCallbackTagKeyword_ioOwner, inputOwner);
     zfRelease(inputOwner);
 
-    ret.callbackTagSetMarkCached(ZFCallbackTagKeyword_resPath, zflineAllocWithoutLeakTest(ZFString, resFilePath));
+    ret.pathInfoSet(ZFSerializableDataPathType_resFile, resFilePath);
     return ret;
 }
 
@@ -760,49 +760,6 @@ ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFInputC
 }
 
 // ============================================================
-static zfbool _ZFP_ZFFileCallbackForLocalFileCheckPath(ZF_OUT zfstring &result,
-                                                       ZF_OUT zfbool &isResFile,
-                                                       ZF_IN const ZFSerializableData &dataToCheckParentPath,
-                                                       ZF_IN const zfchar *filePath)
-{
-    if(filePath == zfnull)
-    {
-        return zffalse;
-    }
-    const zfchar *parentPath = zfnull;
-    {
-        ZFSerializableData check = dataToCheckParentPath;
-        zfbool hasParent = zftrue;
-        do
-        {
-            ZFString *t = check.serializableDataTagGet<ZFString *>(ZFSerializableDataTagKeyword_filePath);
-            if(t != zfnull)
-            {
-                parentPath = t->stringValue();
-                isResFile = zffalse;
-                break;
-            }
-            t = check.serializableDataTagGet<ZFString *>(ZFSerializableDataTagKeyword_resPath);
-            if(t != zfnull)
-            {
-                parentPath = t->stringValue();
-                isResFile = zftrue;
-                break;
-            }
-            hasParent = check.serializableDataParent(check);
-        } while(hasParent);
-    }
-    if(parentPath == zfnull)
-    {
-        return zffalse;
-    }
-    ZFFile::fileParentPathOf(result, parentPath);
-    result += ZFFile::fileSeparator;
-    result += filePath;
-    return zftrue;
-}
-
-// ============================================================
 // ZFOutputCallbackForLocalFile
 ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                    ZF_IN const ZFSerializableData &dataToCheckParentPath,
@@ -810,11 +767,43 @@ ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &cal
                                                    ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOptionCreate */,
                                                    ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax() */)
 {
-    zfstring fileAbsPath;
-    zfbool isResFile = zffalse;
-    if(!_ZFP_ZFFileCallbackForLocalFileCheckPath(fileAbsPath, isResFile, dataToCheckParentPath, localPath)
-        || isResFile)
+    const zfchar *pathType = zfnull;
+    const zfchar *pathInfo = zfnull;
+    if(localPath == zfnull || !dataToCheckParentPath.pathInfoCheck(pathType, pathInfo))
     {
+        return ZFCallbackNullDetail(callerInfo);
+    }
+    return _ZFP_ZFOutputCallbackForLocalFile(callerInfo, pathType, pathInfo, localPath, flags, autoFlushSize);
+}
+ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
+                                                   ZF_IN const zfchar *pathType,
+                                                   ZF_IN const zfchar *pathInfo,
+                                                   ZF_IN const zfchar *localPath,
+                                                   ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOptionCreate */,
+                                                   ZF_IN_OPT zfindex autoFlushSize /* = zfindexMax() */)
+{
+    if(localPath == zfnull || pathType == zfnull || pathInfo == zfnull)
+    {
+        return ZFCallbackNullDetail(callerInfo);
+    }
+
+    zfstring fileAbsPath;
+    ZFFile::fileParentPathOf(fileAbsPath, pathInfo);
+    fileAbsPath += ZFFile::fileSeparator;
+    fileAbsPath += localPath;
+
+    if(zfscmpTheSame(pathType, ZFSerializableDataPathType_file))
+    {
+        // available
+    }
+    else if(zfscmpTheSame(pathType, ZFSerializableDataPathType_resFile))
+    {
+        // res can not used as output
+        return ZFCallbackNullDetail(callerInfo);
+    }
+    else
+    {
+        // unknown type
         return ZFCallbackNullDetail(callerInfo);
     }
 
@@ -835,6 +824,15 @@ ZFMETHOD_FUNC_DEFINE_4(ZFOutputCallback, ZFOutputCallbackForLocalFile,
 {
     return ZFOutputCallbackForLocalFile(dataToCheckParentPath, localPath, flags, autoFlushSize);
 }
+ZFMETHOD_FUNC_DEFINE_5(ZFOutputCallback, ZFOutputCallbackForLocalFile,
+                       ZFMP_IN(const zfchar *, pathType),
+                       ZFMP_IN(const zfchar *, pathInfo),
+                       ZFMP_IN(const zfchar *, localPath),
+                       ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
+                       ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
+{
+    return ZFOutputCallbackForLocalFile(pathType, pathInfo, localPath, flags, autoFlushSize);
+};
 ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile)
 {
     const zfchar *filePath = zfnull;
@@ -868,24 +866,50 @@ ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &calle
                                                  ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
                                                  ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
 {
-    zfstring fileAbsPath;
-    zfbool isResFile = zffalse;
-    if(!_ZFP_ZFFileCallbackForLocalFileCheckPath(fileAbsPath, isResFile, dataToCheckParentPath, localPath))
+    const zfchar *pathType = zfnull;
+    const zfchar *pathInfo = zfnull;
+    if(localPath == zfnull || !dataToCheckParentPath.pathInfoCheck(pathType, pathInfo))
+    {
+        return ZFCallbackNullDetail(callerInfo);
+    }
+    return _ZFP_ZFInputCallbackForLocalFile(callerInfo, pathType, pathInfo, localPath, flags, autoSkipBOMTable);
+}
+ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
+                                                 ZF_IN const zfchar *pathType,
+                                                 ZF_IN const zfchar *pathInfo,
+                                                 ZF_IN const zfchar *localPath,
+                                                 ZF_IN_OPT ZFFileOpenOptionFlags flags /* = ZFFileOpenOption::e_Read */,
+                                                 ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable /* = ZFFileBOMListDefault() */)
+{
+    if(localPath == zfnull || pathType == zfnull || pathInfo == zfnull)
     {
         return ZFCallbackNullDetail(callerInfo);
     }
 
+    zfstring fileAbsPath;
+    ZFFile::fileParentPathOf(fileAbsPath, pathInfo);
+    fileAbsPath += ZFFile::fileSeparator;
+    fileAbsPath += localPath;
+
     ZFInputCallback ret;
-    if(isResFile)
+    if(zfscmpTheSame(pathType, ZFSerializableDataPathType_file))
     {
+        // normal file
+        ret = _ZFP_ZFInputCallbackForFile_create(callerInfo,
+            fileAbsPath, flags, autoSkipBOMTable);
+    }
+    else if(zfscmpTheSame(pathType, ZFSerializableDataPathType_resFile))
+    {
+        // res file
         ret = _ZFP_ZFInputCallbackForResFile_create(callerInfo,
             fileAbsPath, autoSkipBOMTable);
     }
     else
     {
-        ret = _ZFP_ZFInputCallbackForFile_create(callerInfo,
-            fileAbsPath, flags, autoSkipBOMTable);
+        // unknown type
+        return ZFCallbackNullDetail(callerInfo);
     }
+
     if(!ret.callbackIsValid())
     {
         return ret;

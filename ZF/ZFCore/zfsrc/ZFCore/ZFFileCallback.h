@@ -21,33 +21,10 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 // keys
-/**
- * @brief for io callback only, the file path of the target
- *
- * stored as #ZFString within #ZFCallback::callbackTagSet
- */
-#define ZFCallbackTagKeyword_filePath zfText("ZFCallbackTagKeyword_filePath")
-/**
- * @brief for io callback only, the resource file path of the target
- *
- * stored as #ZFString within #ZFCallback::callbackTagSet
- */
-#define ZFCallbackTagKeyword_resPath zfText("ZFCallbackTagKeyword_resPath")
-
-/**
- * @brief used to impl #ZFOutputCallbackForLocalFile/#ZFInputCallbackForLocalFile
- *
- * stored as #ZFString within #ZFSerializableData::serializableDataTagSet\n
- * holds the parent serializable data's logic file path,
- * while creating #ZFOutputCallbackForLocalFile/#ZFInputCallbackForLocalFile,
- * we will try to find the proper parent path recursively from child to parent,
- * and concatenate to make the final file path
- */
-#define ZFSerializableDataTagKeyword_filePath zfText("ZFSerializableDataTagKeyword_filePath")
-/**
- * @brief see #ZFSerializableDataTagKeyword_filePath
- */
-#define ZFSerializableDataTagKeyword_resPath zfText("ZFSerializableDataTagKeyword_resPath")
+/** @brief see #ZFSerializableData::pathInfo/#ZFCallback::pathInfo */
+#define ZFSerializableDataPathType_file zfText("file")
+/** @brief see #ZFSerializableData::pathInfo/#ZFCallback::pathInfo */
+#define ZFSerializableDataPathType_resFile zfText("resFile")
 
 /** @brief keyword for serialize */
 #define ZFSerializableKeyword_ZFFileCallback_filePath zfText("filePath")
@@ -192,6 +169,12 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
                                                                         ZF_IN const zfchar *localPath,
                                                                         ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create,
                                                                         ZF_IN_OPT zfindex autoFlushSize = zfindexMax());
+extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
+                                                                        ZF_IN const zfchar *pathType,
+                                                                        ZF_IN const zfchar *pathInfo,
+                                                                        ZF_IN const zfchar *localPath,
+                                                                        ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Create,
+                                                                        ZF_IN_OPT zfindex autoFlushSize = zfindexMax());
 /**
  * @brief see #ZFCALLBACK_SERIALIZE_CUSTOM_TYPE_DEFINE
  *
@@ -209,14 +192,14 @@ extern ZF_ENV_EXPORT ZFOutputCallback _ZFP_ZFOutputCallbackForLocalFile(ZF_IN co
 #define ZFCallbackSerializeCustomType_ZFOutputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFOutputCallbackForLocalFile)
 
 /** @cond ZFPrivateDoc */
-#define ZFOutputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
-    _ZFP_ZFOutputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+#define ZFOutputCallbackForLocalFile(...) \
+    _ZFP_ZFOutputCallbackForLocalFile(ZFCallerInfoMake(), ##__VA_ARGS__)
 /** @endcond */
 /**
  * @brief util to create a file output callback
  *
  * param:
- * -  (const ZFSerializableData &)dataToCheckParentPath: see #ZFSerializableDataTagKeyword_filePath
+ * -  (const ZFSerializableData &)dataToCheckParentPath: see #ZFSerializableData::pathInfo
  * -  (const zfchar *)localPath: local file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
  * -  (zfindex)autoFlushSize: ensure to flush file after how much size written,
@@ -229,11 +212,36 @@ ZFMETHOD_FUNC_DECLARE_4(ZFOutputCallback, ZFOutputCallbackForLocalFile,
                         ZFMP_IN(const zfchar *, localPath),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
                         ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
+/**
+ * @brief util to create a file output callback
+ *
+ * param:
+ * -  (const zfchar *)pathType: see #ZFSerializableData::pathInfo
+ * -  (const zfchar *)pathInfo: see #ZFSerializableData::pathInfo
+ * -  (const zfchar *)localPath: local file path to use
+ * -  (ZFFileOpenOption)flags: flags to open file
+ * -  (zfindex)autoFlushSize: ensure to flush file after how much size written,
+ *   use zfindexMax() to disable or 0 to flush every time
+ *
+ * auto open and auto close files, may return a null callback if open file error
+ */
+ZFMETHOD_FUNC_DECLARE_5(ZFOutputCallback, ZFOutputCallbackForLocalFile,
+                        ZFMP_IN(const zfchar *, pathType),
+                        ZFMP_IN(const zfchar *, pathInfo),
+                        ZFMP_IN(const zfchar *, localPath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Create),
+                        ZFMP_IN_OPT(zfindex, autoFlushSize, zfindexMax()))
 
 // ============================================================
 // ZFInputCallbackForLocalFile
 extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
                                                                       ZF_IN const ZFSerializableData &dataToCheckParentPath,
+                                                                      ZF_IN const zfchar *filePath,
+                                                                      ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
+                                                                      ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
+extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN const ZFCallerInfo &callerInfo,
+                                                                      ZF_IN const zfchar *pathType,
+                                                                      ZF_IN const zfchar *pathInfo,
                                                                       ZF_IN const zfchar *filePath,
                                                                       ZF_IN_OPT ZFFileOpenOptionFlags flags = ZFFileOpenOption::e_Read,
                                                                       ZF_IN_OPT const ZFFileBOMList &autoSkipBOMTable = ZFFileBOMListDefault());
@@ -254,14 +262,14 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
 #define ZFCallbackSerializeCustomType_ZFInputCallbackForLocalFile ZFM_TOSTRING(ZFCallbackSerializeCustomTypeId_ZFInputCallbackForLocalFile)
 
 /** @cond ZFPrivateDoc */
-#define ZFInputCallbackForLocalFile(dataToCheckParentPath, filePath, ...) \
-    _ZFP_ZFInputCallbackForLocalFile(ZFCallerInfoMake(), dataToCheckParentPath, filePath, ##__VA_ARGS__)
+#define ZFInputCallbackForLocalFile(...) \
+    _ZFP_ZFInputCallbackForLocalFile(ZFCallerInfoMake(), ##__VA_ARGS__)
 /** @endcond */
 /**
  * @brief util to create a file input callback
  *
  * param:
- * -  (const ZFSerializableData &)dataToCheckParentPath: see #ZFSerializableDataTagKeyword_filePath
+ * -  (const ZFSerializableData &)dataToCheckParentPath: see #ZFSerializableData::pathInfo
  * -  (const zfchar *)localPath: local file path to use
  * -  (ZFFileOpenOption)flags: flags to open file
  * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
@@ -272,6 +280,26 @@ extern ZF_ENV_EXPORT ZFInputCallback _ZFP_ZFInputCallbackForLocalFile(ZF_IN cons
  */
 ZFMETHOD_FUNC_DECLARE_4(ZFInputCallback, ZFInputCallbackForLocalFile,
                         ZFMP_IN(const ZFSerializableData &, dataToCheckParentPath),
+                        ZFMP_IN(const zfchar *, filePath),
+                        ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
+                        ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))
+/**
+ * @brief util to create a file input callback
+ *
+ * param:
+ * -  (const zfchar *)pathType: see #ZFSerializableData::pathInfo
+ * -  (const zfchar *)pathInfo: see #ZFSerializableData::pathInfo
+ * -  (const zfchar *)localPath: local file path to use
+ * -  (ZFFileOpenOption)flags: flags to open file
+ * -  (const ZFFileBOMList &)autoSkipBOMTable: BOM to skip,
+ *   if not empty, BOM would be discarded and BOM's size would be ignored while calculating the file's size
+ *
+ * auto open and auto close files, may return a null callback if open file error\n
+ * auto setup callback cache id with res file path
+ */
+ZFMETHOD_FUNC_DECLARE_5(ZFInputCallback, ZFInputCallbackForLocalFile,
+                        ZFMP_IN(const zfchar *, pathType),
+                        ZFMP_IN(const zfchar *, pathInfo),
                         ZFMP_IN(const zfchar *, filePath),
                         ZFMP_IN_OPT(ZFFileOpenOptionFlags, flags, ZFFileOpenOption::e_Read),
                         ZFMP_IN_OPT(const ZFFileBOMList &, autoSkipBOMTable, ZFFileBOMListDefault()))

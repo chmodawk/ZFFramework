@@ -40,19 +40,19 @@ public:
 
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleNormal)
     {
-        propertyValue.to<ZFUIImageView *>()->imageContentSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconNormal.png")));
+        propertyValue.to<ZFUIImageView *>()->imageSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconNormal.png")));
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleHighlighted)
     {
-        propertyValue.to<ZFUIImageView *>()->imageContentSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconHighlighted.png")));
+        propertyValue.to<ZFUIImageView *>()->imageSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconHighlighted.png")));
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleChecked)
     {
-        propertyValue.to<ZFUIImageView *>()->imageContentSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconChecked.png")));
+        propertyValue.to<ZFUIImageView *>()->imageSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconChecked.png")));
     }
     ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE(ZFUIImageView *, buttonIconStyleCheckedHighlighted)
     {
-        propertyValue.to<ZFUIImageView *>()->imageContentSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconCheckedHighlighted.png")));
+        propertyValue.to<ZFUIImageView *>()->imageSet(ZFUIImageRes(zfText("ZFUIWidget/ZFUIButtonCheckBox_IconCheckedHighlighted.png")));
     }
 };
 

@@ -96,8 +96,8 @@ public:
         tmp = nil;
     }
 
-    virtual void imageContentSet(ZF_IN ZFUIImageView *imageView,
-                                 ZF_IN ZFUIImage *image)
+    virtual void imageSet(ZF_IN ZFUIImageView *imageView,
+                          ZF_IN ZFUIImage *image)
     {
         _ZFP_ZFUIImageViewImpl_sys_iOS_ImageView *nativeImplView = (__bridge _ZFP_ZFUIImageViewImpl_sys_iOS_ImageView *)imageView->nativeImplView();
         nativeImplView.ownerZFUIImage = image;

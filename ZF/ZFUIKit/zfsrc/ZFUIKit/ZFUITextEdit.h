@@ -193,26 +193,11 @@ public:
         textPlaceHolder->textColorSet(ZFUIGlobalStyle::DefaultStyle()->textColorHint());
         textPlaceHolder->textSizeSet(ZFUIGlobalStyle::DefaultStyle()->textSizeSmall());
     }
-    /**
-     * @brief see #textPlaceHolder
-     */
-    ZFMETHOD_DECLARE_0(const zfchar *, textPlaceHolderString)
-    {
-        return this->textPlaceHolder()->textContentString();
-    }
-    /**
-     * @brief see #textPlaceHolder
-     */
-    ZFMETHOD_DECLARE_1(void, textPlaceHolderStringSet,
-                       ZFMP_IN(const zfchar *, s))
-    {
-        this->textPlaceHolder()->textContentStringSet(s);
-    }
 
     /**
      * @brief text filter, null by default
      *
-     * #textContent must match exactly the filter,
+     * #text must match exactly the filter,
      * otherwise text would not be changed
      * @note if text doesn't match filter while changing filter,
      *   text would be replaced to null
@@ -232,32 +217,9 @@ public:
     /**
      * @brief text, may be null if not set
      */
-    ZFPROPERTY_RETAIN(ZFString *, textContent)
-    ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(ZFString *, textContent);
-    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFString *, textContent);
-    /**
-     * @brief see #textContent, always empty string if not set
-     */
-    ZFMETHOD_DECLARE_0(const zfchar *, textContentString)
-    {
-        return (this->textContent() ? this->textContent()->stringValue() : zfText(""));
-    }
-    /**
-     * @brief see #textContent
-     */
-    ZFMETHOD_DECLARE_1(void, textContentStringSet,
-                       ZFMP_IN(const zfchar *, s))
-    {
-        this->textContentSet((s && *s) ? zflineAlloc(ZFString, s) : zfnull);
-    }
-
-    /**
-     * @brief util method to check whether the text is null or empty string
-     */
-    ZFMETHOD_DECLARE_0(zfbool, textContentIsEmpty)
-    {
-        return zfscmpTheSame(this->textContentString(), zfText(""));
-    }
+    ZFPROPERTY_ASSIGN(zfstring, text)
+    ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(ZFString *, text);
+    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFString *, text);
 
     /**
      * @brief text appearance, #ZFUIGlobalStyle::textAppearance by default
@@ -322,7 +284,7 @@ public:
             return ;
         }
 
-        this->textContentSet(src->textContent());
+        this->textSet(src->text());
         this->textAppearanceSet(src->textAppearance());
         this->textAlignSet(src->textAlign());
         this->textColorSet(src->textColor());
@@ -341,7 +303,7 @@ public:
             return ;
         }
 
-        dst->textContentSet(this->textContent());
+        dst->textSet(this->text());
         dst->textAppearanceSet(this->textAppearance());
         dst->textAlignSet(this->textAlign());
         dst->textColorSet(this->textColor());
@@ -377,7 +339,7 @@ public:
 public:
     zffinal void _ZFP_ZFUITextEdit_textNotifyBeginEdit(void);
     zffinal void _ZFP_ZFUITextEdit_textNotifyEndEdit(void);
-    zffinal void _ZFP_ZFUITextEdit_textNotifyChange(ZF_IN ZFString *newText);
+    zffinal void _ZFP_ZFUITextEdit_textNotifyChange(ZF_IN const zfchar *newText);
     zffinal void _ZFP_ZFUITextEdit_textSelectRangeNotifyChange(void);
     zffinal void _ZFP_ZFUITextEdit_textNotifyReturnClicked(void);
     /**
@@ -387,7 +349,7 @@ public:
      * and null or empty string would always treated as allowed for safe
      */
     ZFMETHOD_DECLARE_1(zfbool, textShouldChange,
-                       ZFMP_IN(ZFString *, newText));
+                       ZFMP_IN(const zfchar *, newText));
     /**
      * @brief manually start edit
      */
@@ -407,9 +369,9 @@ protected:
     /** @brief see #EventTextOnEditEnd */
     virtual void textOnEditEnd(void);
     /** @brief see #EventTextOnChangeCheck */
-    virtual void textOnChangeCheck(ZF_IN ZFString *newText, ZF_IN_OUT zfbool &shouldChange);
+    virtual void textOnChangeCheck(ZF_IN const zfchar *newText, ZF_IN_OUT zfbool &shouldChange);
     /** @brief see #EventTextOnChange */
-    virtual void textOnChange(ZF_IN ZFString *oldText);
+    virtual void textOnChange(ZF_IN const zfchar *oldText);
     /** @brief see #EventTextOnReturnClick */
     virtual void textOnReturnClick(void);
     /** @brief see #EventTextOnEditConfirm */
@@ -460,7 +422,7 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUITextEdit, ZFUITextEditPlaceHolder, {obj->textPlaceHolder()->textContentStringSet(langValue);})
+ZFLANGAPPLY_IMPL(ZFUITextEdit, ZFUITextEditPlaceHolder, {obj->textPlaceHolder()->textSet(langValue);})
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUITextEdit_h_

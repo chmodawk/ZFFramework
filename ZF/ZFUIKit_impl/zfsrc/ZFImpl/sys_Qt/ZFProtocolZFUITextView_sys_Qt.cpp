@@ -71,9 +71,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUITextViewImpl_sys_Qt, ZFUITextView, ZFProtocolLevel::e_SystemHigh)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("Qt:QLabel"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFString, zfText("Qt:QString"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 
 public:
     virtual void *nativeTextViewCreate(ZF_IN ZFUITextView *textView)
@@ -90,18 +87,11 @@ public:
 // ============================================================
 // properties
 public:
-    virtual void textContentSet(ZF_IN ZFUITextView *textView,
-                                ZF_IN ZFString *text)
+    virtual void textSet(ZF_IN ZFUITextView *textView,
+                         ZF_IN const zfchar *text)
     {
         _ZFP_ZFUITextViewImpl_sys_Qt_TextView *nativeImplView = ZFCastStatic(_ZFP_ZFUITextViewImpl_sys_Qt_TextView *, textView->nativeImplView());
-        if(text != zfnull)
-        {
-            nativeImplView->setText(*ZFCastStatic(QString *, text->nativeString()));
-        }
-        else
-        {
-            nativeImplView->setText(QString());
-        }
+        nativeImplView->setText(ZFImpl_sys_Qt_zfstringToQString(text));
     }
     virtual void textAppearanceSet(ZF_IN ZFUITextView *textView,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance)

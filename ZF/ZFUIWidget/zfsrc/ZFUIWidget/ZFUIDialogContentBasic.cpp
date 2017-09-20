@@ -288,12 +288,12 @@ public:
     static ZFLISTENER_PROTOTYPE_EXPAND(textChange)
     {
         const ZFProperty *property = listenerData.param0->to<ZFPointerHolder *>()->holdedDataPointer<const ZFProperty *>();
-        if(property != ZFPropertyAccess(ZFUITextView, textContent))
+        if(property != ZFPropertyAccess(ZFUITextView, text))
         {
             return ;
         }
         ZFUITextView *textView = listenerData.sender->to<ZFUITextView *>();
-        textView->viewVisibleSet(!textView->textContentIsEmpty());
+        textView->viewVisibleSet(!textView->text().isEmpty());
     }
     static ZFLISTENER_PROTOTYPE_EXPAND(containerChildChange)
     {
@@ -317,7 +317,7 @@ ZFObject *ZFUIDialogContentBasic::objectOnInit(void)
         titleTextView->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
         titleTextView->observerAdd(ZFObject::EventObjectPropertyValueOnUpdate(),
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIDialogContentBasicDataHolder)->textChangeListener);
-        titleTextView->viewVisibleSet(!titleTextView->textContentIsEmpty());
+        titleTextView->viewVisibleSet(!titleTextView->text().isEmpty());
         titleTextView->textColorSet(ZFUIGlobalStyle::DefaultStyle()->textColorSecondary());
         titleTextView->textSingleLineSet(zffalse);
 
@@ -334,7 +334,7 @@ ZFObject *ZFUIDialogContentBasic::objectOnInit(void)
         contentTextView->layoutParam()->layoutAlignSet(ZFUIAlign::e_LeftInner);
         contentTextView->observerAdd(ZFObject::EventObjectPropertyValueOnUpdate(),
             ZF_GLOBAL_INITIALIZER_INSTANCE(ZFUIDialogContentBasicDataHolder)->textChangeListener);
-        contentTextView->viewVisibleSet(!contentTextView->textContentIsEmpty());
+        contentTextView->viewVisibleSet(!contentTextView->text().isEmpty());
 
         d->dialogContentContainer = zfAllocWithoutLeakTest(ZFUIViewLayout);
         d->mainContainer->childAdd(d->dialogContentContainer);

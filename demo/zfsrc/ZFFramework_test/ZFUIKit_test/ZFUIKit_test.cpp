@@ -64,7 +64,7 @@ zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings)
     zfblockedAlloc(ZFUIKit_test_Button, closeButton);
     window->childAdd(closeButton);
     closeButton->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner);
-    closeButton->buttonLabelStyle()->textContentSet(zflineAlloc(ZFString, zfText("done")));
+    closeButton->buttonLabelStyle()->textSet(zfText("done"));
     ZFLISTENER_LOCAL(onClickCloseButton, {
         ZFUIWindow *window = userData->to<ZFObjectHolder *>()->holdedObj;
         window->windowHide();

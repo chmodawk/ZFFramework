@@ -29,7 +29,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
         else
         {
             zfblockedAlloc(ZFUIImageView, skin);
-            skin->imageContentSet(image.to<ZFUIImage *>());
+            skin->imageSet(image.to<ZFUIImage *>());
             zfSkinSet(zfText("ZF2048_block_bg"), skin);
         }
     }
@@ -43,7 +43,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
         else
         {
             zfblockedAlloc(ZFUIImageView, skin);
-            skin->imageContentSet(image.to<ZFUIImage *>());
+            skin->imageSet(image.to<ZFUIImage *>());
             zfSkinSet(zfText("ZF2048_block_na"), skin);
         }
     }
@@ -94,7 +94,7 @@ void ZF2048UISkinLoad(ZF_IN const zfchar *resPath /* = zfText("ZF2048/skin/defau
                 else
                 {
                     zfblockedAlloc(ZFUIImageView, skin);
-                    skin->imageContentSet(image.to<ZFUIImage *>());
+                    skin->imageSet(image.to<ZFUIImage *>());
                     zfSkinSet(skinKey, skin);
                 }
             }

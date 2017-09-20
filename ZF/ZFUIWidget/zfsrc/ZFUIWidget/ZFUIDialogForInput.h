@@ -50,14 +50,14 @@ public:
     ZFMETHOD_DECLARE_1(void, inputHintTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
-        this->inputView()->textPlaceHolder()->textContentStringSet(text);
+        this->inputView()->textPlaceHolder()->textSet(text);
     }
     /**
      * @brief util method to get input hint text
      */
     ZFMETHOD_DECLARE_0(const zfchar *, inputHintText)
     {
-        return this->inputView()->textPlaceHolder()->textContentString();
+        return this->inputView()->textPlaceHolder()->text();
     }
 
     /**
@@ -66,14 +66,14 @@ public:
     ZFMETHOD_DECLARE_1(void, inputTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
-        this->inputView()->textContentStringSet(text);
+        this->inputView()->textSet(text);
     }
     /**
      * @brief util method to get input text
      */
     ZFMETHOD_DECLARE_0(const zfchar *, inputText)
     {
-        return this->inputView()->textContentString();
+        return this->inputView()->text();
     }
 
 public:

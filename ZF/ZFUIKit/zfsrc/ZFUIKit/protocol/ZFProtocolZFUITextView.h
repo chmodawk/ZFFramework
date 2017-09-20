@@ -16,7 +16,6 @@
 
 #include "ZFCore/ZFProtocol.h"
 #include "ZFUIKit/ZFUITextView.h"
-#include "ZFCore/protocol/ZFProtocolZFString.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
@@ -38,8 +37,8 @@ public:
     // properties
 public:
     /** @brief see #ZFUITextView */
-    virtual void textContentSet(ZF_IN ZFUITextView *textView,
-                                ZF_IN ZFString *text) zfpurevirtual;
+    virtual void textSet(ZF_IN ZFUITextView *textView,
+                         ZF_IN const zfchar *text) zfpurevirtual;
     /** @brief see #ZFUITextView */
     virtual void textAppearanceSet(ZF_IN ZFUITextView *textView,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance) zfpurevirtual;

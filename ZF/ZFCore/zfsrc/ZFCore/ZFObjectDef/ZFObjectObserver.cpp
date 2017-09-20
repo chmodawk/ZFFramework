@@ -455,22 +455,29 @@ void ZFObserverHolder::objectInfoT(ZF_OUT zfstring &ret) const
         this->observerOwner()->objectInfoT(ret);
     }
 
-    for(_ZFP_ZFObserverMapType::iterator it = d->observerMap.begin();
-        it != d->observerMap.end();
-        ++it)
+    if(d->observerMap.empty())
     {
-        ret += zfText("\n  ");
-        ret += ZFObserverEventGetName(it->first);
-        ret += zfText(":");
-
-        for(zfstlsize iObserver = 0; iObserver < it->second.size(); ++iObserver)
-        {
-            ret += zfText("\n    ");
-            ret += it->second[iObserver].pointerValueGet()->observer.objectInfo();
-        }
+        ret += zfText(">");
     }
+    else
+    {
+        for(_ZFP_ZFObserverMapType::iterator it = d->observerMap.begin();
+            it != d->observerMap.end();
+            ++it)
+        {
+            ret += zfText("\n  ");
+            ret += ZFObserverEventGetName(it->first);
+            ret += zfText(":");
 
-    ret += zfText("\n  >");
+            for(zfstlsize iObserver = 0; iObserver < it->second.size(); ++iObserver)
+            {
+                ret += zfText("\n    ");
+                ret += it->second[iObserver].pointerValueGet()->observer.objectInfo();
+            }
+        }
+
+        ret += zfText("\n  >");
+    }
 }
 
 ZFObject *ZFObserverHolder::observerOwner(void) const

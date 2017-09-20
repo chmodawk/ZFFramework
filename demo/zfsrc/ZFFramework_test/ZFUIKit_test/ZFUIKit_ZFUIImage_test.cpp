@@ -33,7 +33,7 @@ protected:
         ZFIOBridgeCallbackUsingBuffer io;
         ZFUIImageEncodeToBinary(io, imageHolder.toAny());
         zfautoObject imageNew = ZFUIImageEncodeFromBinary(io);
-        view->imageContentSet(imageNew.toAny());
+        view->imageSet(imageNew.toAny());
 
         this->prepareSettingButton(window, view);
     }

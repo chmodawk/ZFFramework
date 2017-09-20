@@ -31,8 +31,8 @@ public final class ZFUITextView extends TextView {
         ((ZFUITextView)nativeTextView).setText(null);
     }
 
-    public static void native_textContentSet(Object nativeTextView,
-                                             Object nativeText) {
+    public static void native_textSet(Object nativeTextView,
+                                      Object nativeText) {
         ((ZFUITextView)nativeTextView).setText((String)nativeText);
     }
     public static void native_textAppearanceSet(Object nativeTextView,

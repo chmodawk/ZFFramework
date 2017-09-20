@@ -55,7 +55,7 @@ it's designed to be a complete and complex framework, current code status:
         zfblockedAlloc(ZFUITextView, textView);
         window->childAdd(textView);
         textView->layoutParam()->layoutAlignSet(ZFUIAlign::e_LeftInner);
-        textView->textContentStringSet(zfText("hello world"));
+        textView->textSet(zfText("hello world"));
 
         // button and click (as observer)
         zfblockedAlloc(ZFUIButtonBasic, button);
@@ -84,7 +84,7 @@ it's designed to be a complete and complex framework, current code status:
     local textView = zfAlloc('ZFUITextView')
     window:childAdd(textView)
     textView:layoutParam():layoutAlignSet(ZFUIAlign.e_LeftInner())
-    textView:textContentStringSet('hello wolrd')
+    textView:textSet('hello wolrd')
 
     local button = ZFUIButtonBasic.ClassData():newInstance()
     window:childAdd(button)

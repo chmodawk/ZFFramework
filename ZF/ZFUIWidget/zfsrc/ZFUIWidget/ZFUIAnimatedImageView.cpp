@@ -25,12 +25,12 @@ public:
         ZFUIAnimatedImageView *view = userData->to<ZFObjectHolder *>()->holdedObj;
         if(view->animatedImageWrapToImage())
         {
-            view->imageContentSet(view->animatedImage()->aniFrameImageCurrent());
+            view->imageSet(view->animatedImage()->aniFrameImageCurrent());
         }
         else
         {
             view->layoutRequestOverrideSet(zftrue);
-            view->imageContentSet(view->animatedImage()->aniFrameImageCurrent());
+            view->imageSet(view->animatedImage()->aniFrameImageCurrent());
             view->layoutRequestOverrideSet(zffalse);
         }
     }
@@ -66,7 +66,7 @@ void ZFUIAnimatedImageView::objectOnDeallocPrepare(void)
 void ZFUIAnimatedImageView::layoutOnLayoutPrepare(ZF_IN const ZFUIRect &bounds)
 {
     zfsuper::layoutOnLayoutPrepare(bounds);
-    if(this->imageContent() == zfnull && this->animatedImage()->aniFrameCount() > 0)
+    if(this->image() == zfnull && this->animatedImage()->aniFrameCount() > 0)
     {
         this->animatedImage()->aniManualNext();
     }

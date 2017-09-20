@@ -8,7 +8,6 @@
  * ====================================================================== */
 #include "ZFImpl_sys_Qt_ZFUIKit.h"
 #include "ZFUIKit/protocol/ZFProtocolZFUITextEdit.h"
-#include "ZFCore/protocol/ZFProtocolZFString.h"
 
 #if ZF_ENV_sys_Qt
 
@@ -27,7 +26,7 @@ public:
     zfbool textEditSecured;
     QLineEdit::EchoMode textEditEchoModeSaved;
     Qt::InputMethodHints textEditInputMethodHintsSaved;
-    QString textEditTextSaved;
+    zfstring textEditTextSaved;
 
 public:
     _ZFP_ZFUITextEditImpl_sys_Qt_TextEdit(ZF_IN ZFUITextEdit *ownerZFUITextEdit)
@@ -104,34 +103,34 @@ public:
             this->setInputMethodHints(this->textEditInputMethodHintsSaved);
         }
     }
-    void _ZFP_textContentSet(QString const &text, zfbool needNotify)
+    void _ZFP_textSet(const zfchar *text, zfbool needNotify)
     {
-        if(this->textEditTextSaved == text)
+        if(this->textEditTextSaved.compare(text) == 0)
         {
             return ;
         }
         int cursor = this->cursorPosition();
-        zfblockedAllocWithoutLeakTest(ZFString, s, (void *)(new QString(text)));
-        if(ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(this->ownerZFUITextEdit, s))
+        if(ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(this->ownerZFUITextEdit, ZFImpl_sys_Qt_zfstringFromQString(text)))
         {
             int positionSaved = this->cursorPosition();
             int textLengthOld = this->text().length();
             this->textEditTextSaved = text;
             this->setText(text);
-            if(text.length() >= textLengthOld)
+            zfindex len = zfslen(text);
+            if(len >= textLengthOld)
             {
-                cursor = positionSaved + text.length() - textLengthOld;
+                cursor = positionSaved + len - textLengthOld;
             }
             this->setCursorPosition(cursor);
         }
         else
         {
-            this->setText(this->textEditTextSaved);
+            this->setText(ZFImpl_sys_Qt_zfstringToQString(this->textEditTextSaved));
             this->setCursorPosition(cursor);
         }
         if(needNotify)
         {
-            ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(this->ownerZFUITextEdit, s);
+            ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(this->ownerZFUITextEdit, text);
         }
     }
 
@@ -195,7 +194,7 @@ public slots:
             return ;
         }
         ++(this->textEditEventOverrideFlag);
-        this->_ZFP_textContentSet(text, zftrue);
+        this->_ZFP_textSet(ZFImpl_sys_Qt_zfstringFromQString(text), zftrue);
         --(this->textEditEventOverrideFlag);
     }
     void _ZFP_textSelectRangeOnChange(int posOld, int posNew)
@@ -208,9 +207,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUITextEditImpl_sys_Qt, ZFUITextEdit, ZFProtocolLevel::e_SystemHigh)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("Qt:QLineEdit"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFString, zfText("Qt:QString"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 public:
     virtual void *nativeTextEditCreate(ZF_IN ZFUITextEdit *textEdit)
     {
@@ -276,18 +272,11 @@ public:
     }
 
 public:
-    virtual void textContentSet(ZF_IN ZFUITextEdit *textEdit,
-                                ZF_IN ZFString *text)
+    virtual void textSet(ZF_IN ZFUITextEdit *textEdit,
+                         ZF_IN const zfchar *text)
     {
         _ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *nativeImplView = ZFCastStatic(_ZFP_ZFUITextEditImpl_sys_Qt_TextEdit *, textEdit->nativeImplView());
-        if(text != zfnull)
-        {
-            nativeImplView->_ZFP_textContentSet(*ZFCastStatic(QString *, text->nativeString()), zffalse);
-        }
-        else
-        {
-            nativeImplView->_ZFP_textContentSet("", zffalse);
-        }
+        nativeImplView->_ZFP_textSet(text, zffalse);
     }
     virtual void textAppearanceSet(ZF_IN ZFUITextEdit *textEdit,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance)

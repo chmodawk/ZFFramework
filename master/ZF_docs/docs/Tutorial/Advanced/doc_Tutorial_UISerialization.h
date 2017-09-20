@@ -28,7 +28,7 @@
  *   <ZFUIView>
  *       <ZFUIButtonBasic category="child" >
  *           <ZFUITextView name="buttonLabelStyleNormal" >
- *               <ZFString name="textContent" value="button" />
+ *               <zfstring name="text" value="button" />
  *           </ZFUITextView>
  *           <ZFUIViewLayoutParam category="layoutParam" >
  *               <ZFUISizeParam name="sizeParam" value="(Fill, Fill)" />

@@ -32,75 +32,75 @@ public:
 public:
     void updateButtonLabel(void)
     {
-        ZFString *value = this->pimplOwner->buttonLabelStyle(this->pimplOwner->buttonState())->textContent();
-        if(value == zfnull)
+        const zfchar *value = this->pimplOwner->buttonLabelStyle(this->pimplOwner->buttonState())->text();
+        if(*value == '\0')
         {
             if(this->pimplOwner->buttonState() == ZFUIButtonState::e_Checked)
             {
-                value = this->pimplOwner->buttonLabelStyleHighlighted()->textContent();
+                value = this->pimplOwner->buttonLabelStyleHighlighted()->text();
             }
             else if(this->pimplOwner->buttonState() == ZFUIButtonState::e_CheckedHighlighted)
             {
-                value = this->pimplOwner->buttonLabelStyleChecked()->textContent();
-                if(value == zfnull)
+                value = this->pimplOwner->buttonLabelStyleChecked()->text();
+                if(*value == '\0')
                 {
-                    value = this->pimplOwner->buttonLabelStyleHighlighted()->textContent();
+                    value = this->pimplOwner->buttonLabelStyleHighlighted()->text();
                 }
             }
-            if(value == zfnull)
+            if(*value == '\0')
             {
-                value = this->pimplOwner->buttonLabelStyleNormal()->textContent();
+                value = this->pimplOwner->buttonLabelStyleNormal()->text();
             }
         }
-        this->buttonLabel->textContentSet(value);
+        this->buttonLabel->textSet(value);
     }
     void updateButtonIcon(void)
     {
-        ZFUIImage *value = this->pimplOwner->buttonIconStyle(this->pimplOwner->buttonState())->imageContent();
+        ZFUIImage *value = this->pimplOwner->buttonIconStyle(this->pimplOwner->buttonState())->image();
         if(value == zfnull)
         {
             if(this->pimplOwner->buttonState() == ZFUIButtonState::e_Checked)
             {
-                value = this->pimplOwner->buttonIconStyleHighlighted()->imageContent();
+                value = this->pimplOwner->buttonIconStyleHighlighted()->image();
             }
             else if(this->pimplOwner->buttonState() == ZFUIButtonState::e_CheckedHighlighted)
             {
-                value = this->pimplOwner->buttonIconStyleChecked()->imageContent();
+                value = this->pimplOwner->buttonIconStyleChecked()->image();
                 if(value == zfnull)
                 {
-                    value = this->pimplOwner->buttonIconStyleHighlighted()->imageContent();
+                    value = this->pimplOwner->buttonIconStyleHighlighted()->image();
                 }
             }
             if(value == zfnull)
             {
-                value = this->pimplOwner->buttonIconStyleNormal()->imageContent();
+                value = this->pimplOwner->buttonIconStyleNormal()->image();
             }
         }
-        this->buttonIcon->imageContentSet(value);
+        this->buttonIcon->imageSet(value);
     }
     void updateButtonBackground(void)
     {
-        ZFUIImage *value = this->pimplOwner->buttonBackgroundStyle(this->pimplOwner->buttonState())->imageContent();
+        ZFUIImage *value = this->pimplOwner->buttonBackgroundStyle(this->pimplOwner->buttonState())->image();
         if(value == zfnull)
         {
             if(this->pimplOwner->buttonState() == ZFUIButtonState::e_Checked)
             {
-                value = this->pimplOwner->buttonBackgroundStyleHighlighted()->imageContent();
+                value = this->pimplOwner->buttonBackgroundStyleHighlighted()->image();
             }
             else if(this->pimplOwner->buttonState() == ZFUIButtonState::e_CheckedHighlighted)
             {
-                value = this->pimplOwner->buttonBackgroundStyleChecked()->imageContent();
+                value = this->pimplOwner->buttonBackgroundStyleChecked()->image();
                 if(value == zfnull)
                 {
-                    value = this->pimplOwner->buttonBackgroundStyleHighlighted()->imageContent();
+                    value = this->pimplOwner->buttonBackgroundStyleHighlighted()->image();
                 }
             }
             if(value == zfnull)
             {
-                value = this->pimplOwner->buttonBackgroundStyleNormal()->imageContent();
+                value = this->pimplOwner->buttonBackgroundStyleNormal()->image();
             }
         }
-        this->buttonBackground->imageContentSet(value);
+        this->buttonBackground->imageSet(value);
     }
 
 public:
@@ -114,7 +114,7 @@ public:
             { \
                 property->callbackCopy(property, button->button##T_Component()->toObject(), listenerData.sender); \
             } \
-            else if(property == ZFPropertyAccess(ZFUITextView, textContent)) \
+            else if(property == ZFPropertyAccess(ZFUITextView, text)) \
             { \
                 button->d->updateButton##T_Component(); \
             } \
@@ -273,9 +273,9 @@ void ZFUIButtonBasic::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     zfsuper::objectInfoOnAppend(ret);
 
-    if(this->buttonLabel() != zfnull && this->buttonLabel()->textContent() != zfnull && this->buttonLabel()->textContent()->length() > 0)
+    if(this->buttonLabel() != zfnull && !this->buttonLabel()->text().isEmpty())
     {
-        zfstringAppend(ret, zfText(" \"%s\""), this->buttonLabel()->textContent()->stringValue());
+        zfstringAppend(ret, zfText(" \"%s\""), this->buttonLabel()->text().cString());
     }
 }
 
@@ -305,19 +305,19 @@ void ZFUIButtonBasic::layoutOnMeasure(ZF_OUT ZFUISize &ret,
     }
 
     ZFUISize labelSize = ZFUISizeZero();
-    if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
+    if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->text().isEmpty())
     {
         labelSize = labelView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize iconSize = ZFUISizeZero();
-    if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
+    if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->image() != zfnull)
     {
         iconSize = iconView->layoutMeasure(sizeHintTmp, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize backgroundSize = ZFUISizeZero();
-    if(backgroundView != zfnull && backgroundView->viewVisible() && d->buttonBackground->imageContent() != zfnull)
+    if(backgroundView != zfnull && backgroundView->viewVisible() && d->buttonBackground->image() != zfnull)
     {
         ZFUISize sizeHintBg = sizeHint;
         if(sizeHintBg.width >= 0)
@@ -401,13 +401,13 @@ void ZFUIButtonBasic::internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &bound
     ZFUIView *iconView = ZFCastZFObjectUnchecked(ZFUIView *, d->buttonIcon);
 
     ZFUISize labelSize = ZFUISizeZero();
-    if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->textContentIsEmpty())
+    if(labelView != zfnull && labelView->viewVisible() && !d->buttonLabel->text().isEmpty())
     {
         labelSize = labelView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }
 
     ZFUISize iconSize = ZFUISizeZero();
-    if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->imageContent() != zfnull)
+    if(iconView != zfnull && iconView->viewVisible() && d->buttonIcon->image() != zfnull)
     {
         iconSize = iconView->layoutMeasure(sizeHint, ZFUISizeParamWrapWidthWrapHeight());
     }

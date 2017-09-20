@@ -81,7 +81,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveEaseIn : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveEaseIn, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {
@@ -98,7 +98,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveEaseOut : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveEaseOut, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {
@@ -115,7 +115,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveEaseInOut : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveEaseInOut, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {
@@ -132,7 +132,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveBounceIn : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveBounceIn, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {
@@ -149,7 +149,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveBounceOut : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveBounceOut, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {
@@ -166,7 +166,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveBounceInOut : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveBounceInOut, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {

@@ -18,9 +18,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUITextViewImpl_sys_Android, ZFUITextView, ZFProtocolLevel::e_SystemNormal)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("Android:TextView"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFString, zfText("Android:String"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 
 public:
     zfoverride
@@ -70,18 +67,18 @@ public:
     // ============================================================
     // properties
 public:
-    virtual void textContentSet(ZF_IN ZFUITextView *textView,
-                                ZF_IN ZFString *text)
+    virtual void textSet(ZF_IN ZFUITextView *textView,
+                         ZF_IN const zfchar *text)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
-        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_textContentSet"),
+        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_textSet"),
             JNIGetMethodSig(JNIType::S_void, JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textView->nativeImplView()),
-            ZFCastStatic(jobject, (text == zfnull) ? zfnull : text->nativeString()));
+            ZFCastStatic(jobject, ZFImpl_sys_Android_zfstringToString(text)));
     }
     virtual void textAppearanceSet(ZF_IN ZFUITextView *textView,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance)

@@ -42,15 +42,10 @@ public:
 // ZFUITextView
 ZFOBJECT_REGISTER(ZFUITextView)
 
-ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUITextView, ZFString *, textContent)
+ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfstring, text)
 {
-    zfCoreAssertWithMessage(ZFCastZFObject(ZFStringEditable *, propertyValue) == zfnull,
-        zfText("text content must not be editable (%s)"), ZFStringEditable::ClassData()->className());
-}
-ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, ZFString *, textContent)
-{
-    d->impl->textContentSet(this, this->textContent());
-    if(ZFObjectCompare(this->textContent(), propertyValueOld.to<ZFString *>()) != ZFCompareTheSame)
+    d->impl->textSet(this, this->text());
+    if(propertyValueOld.compare(this->text()) != 0)
     {
         this->layoutRequest();
     }
@@ -158,10 +153,10 @@ void ZFUITextView::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     zfsuper::objectInfoOnAppend(ret);
 
-    if(this->textContent() != zfnull && this->textContent()->length() > 0)
+    if(!this->text().isEmpty())
     {
         ret += zfText(" \"");
-        ret += this->textContent()->stringValue();
+        ret += this->text();
         ret += zfText("\"");
     }
 }

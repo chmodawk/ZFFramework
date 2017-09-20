@@ -41,7 +41,7 @@ public:
     {
         zfblockedAlloc(ZFUIImageView, textEditBackgroundView);
         propertyValue = zfautoObjectCreateWithoutLeakTest(textEditBackgroundView);
-        textEditBackgroundView->imageContentSet(ZFUIImageResXml(zfText("ZFUIWidget/ZFUITextEditWidget_background.xml")));
+        textEditBackgroundView->imageSet(ZFUIImageResXml(zfText("ZFUIWidget/ZFUITextEditWidget_background.xml")));
     }
 
     /**
@@ -81,7 +81,7 @@ protected:
     zfoverride
     virtual void internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &bounds);
     zfoverride
-    virtual void textOnChange(ZF_IN ZFString *oldText);
+    virtual void textOnChange(ZF_IN const zfchar *oldText);
 };
 
 ZF_NAMESPACE_GLOBAL_END

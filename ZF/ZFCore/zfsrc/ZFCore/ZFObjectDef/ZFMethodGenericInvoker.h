@@ -72,8 +72,8 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
             _TR##N, \
             ZFPropertyTypeIdData<_TR##N>::PropertyRegistered \
         >::TypeMustRegisterByZFPROPERTY _Ck##N;
-#define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(N, ParamType, param) \
-    if(!(N >= invokerMethod->methodParamDefaultBeginIndex() && param == ZFMethodGenericInvokerDefaultParam()) \
+#define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(N, DefaultExpandOrEmpty, ParamType, param) \
+    if(param != ZFMethodGenericInvokerDefaultParam() \
         && !ZFPropertyTypeIdData<_TR##N>::Value<_TR##N>::accessAvailable(param, &(accessCallback[N]))) \
     { \
         _ZFP_MtdGIParamError(errorHint, (zfindex)N, ZFPropertyTypeIdData<_TR##N>::PropertyTypeId(), param); \
@@ -261,14 +261,14 @@ public:
                          ) \
         { \
             ZFPropertyTypeValueAccessCallback accessCallback[ZFMETHOD_MAX_PARAM] = {0}; \
-            ParamExpandOrEmpty0(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(0, ParamType0, param0)) \
-            ParamExpandOrEmpty1(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(1, ParamType1, param1)) \
-            ParamExpandOrEmpty2(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(2, ParamType2, param2)) \
-            ParamExpandOrEmpty3(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(3, ParamType3, param3)) \
-            ParamExpandOrEmpty4(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(4, ParamType4, param4)) \
-            ParamExpandOrEmpty5(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(5, ParamType5, param5)) \
-            ParamExpandOrEmpty6(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(6, ParamType6, param6)) \
-            ParamExpandOrEmpty7(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(7, ParamType7, param7)) \
+            ParamExpandOrEmpty0(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(0, DefaultExpandOrEmpty0, ParamType0, param0)) \
+            ParamExpandOrEmpty1(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(1, DefaultExpandOrEmpty1, ParamType1, param1)) \
+            ParamExpandOrEmpty2(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(2, DefaultExpandOrEmpty2, ParamType2, param2)) \
+            ParamExpandOrEmpty3(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(3, DefaultExpandOrEmpty3, ParamType3, param3)) \
+            ParamExpandOrEmpty4(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(4, DefaultExpandOrEmpty4, ParamType4, param4)) \
+            ParamExpandOrEmpty5(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(5, DefaultExpandOrEmpty5, ParamType5, param5)) \
+            ParamExpandOrEmpty6(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(6, DefaultExpandOrEmpty6, ParamType6, param6)) \
+            ParamExpandOrEmpty7(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(7, DefaultExpandOrEmpty7, ParamType7, param7)) \
             return _ZFP_ZFMethodGenericInvokerReturnFix<ReturnType>::action(I, invokerMethod, invokerObject, errorHint, ret \
                     , param0 \
                     , param1 \

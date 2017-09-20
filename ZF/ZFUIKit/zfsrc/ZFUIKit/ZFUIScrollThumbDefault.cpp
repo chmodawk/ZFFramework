@@ -159,14 +159,14 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIScrollThumbDefault, ZFUIImage *, scrollTh
 {
     if(this->scrollThumbHorizontal())
     {
-        d->thumbView->imageContentSet(this->scrollThumbImageHorizontal());
+        d->thumbView->imageSet(this->scrollThumbImageHorizontal());
     }
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIScrollThumbDefault, ZFUIImage *, scrollThumbImageVertical)
 {
     if(!this->scrollThumbHorizontal())
     {
-        d->thumbView->imageContentSet(this->scrollThumbImageVertical());
+        d->thumbView->imageSet(this->scrollThumbImageVertical());
     }
 }
 
@@ -181,13 +181,13 @@ void ZFUIScrollThumbDefault::scrollThumbInit(void)
     {
         d->thumbView->layoutParam()->layoutAlignSet(ZFUIAlign::e_LeftInner | ZFUIAlign::e_BottomInner);
         d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-        d->thumbView->imageContentSet(this->scrollThumbImageHorizontal());
+        d->thumbView->imageSet(this->scrollThumbImageHorizontal());
     }
     else
     {
         d->thumbView->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner | ZFUIAlign::e_RightInner);
         d->thumbView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-        d->thumbView->imageContentSet(this->scrollThumbImageVertical());
+        d->thumbView->imageSet(this->scrollThumbImageVertical());
     }
 
     d->thumbView->viewVisibleSet(zffalse);
@@ -207,13 +207,13 @@ void ZFUIScrollThumbDefault::scrollThumbUpdate(void)
         d->thumbView->viewAlphaSet(1);
     }
 
-    if(d->thumbView->imageContent() == zfnull)
+    if(d->thumbView->image() == zfnull)
     {
         d->thumbView->viewVisibleSet(zffalse);
     }
     else
     {
-        ZFUISize imageSize = d->thumbView->imageContent()->imageSize();
+        ZFUISize imageSize = d->thumbView->image()->imageSize();
         zfint pos = 0;
         zfint size = 0;
         zfint sizeRange = 0;

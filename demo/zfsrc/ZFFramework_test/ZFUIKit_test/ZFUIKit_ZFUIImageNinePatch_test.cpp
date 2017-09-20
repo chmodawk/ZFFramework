@@ -27,10 +27,10 @@ protected:
         zfblockedAlloc(ZFUIImageView, imageView);
         container->childAdd(imageView);
         imageView->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
-        imageView->imageContentSet(ZFUIImageRes(zfText("test_normal.png")).to<ZFCopyable *>()->copy());
-        imageView->imageContent()->imageNinePatchSet(ZFUIMarginMake(
-            imageView->imageContent()->imageSize().width / 2,
-            imageView->imageContent()->imageSize().height / 2));
+        imageView->imageSet(ZFUIImageRes(zfText("test_normal.png")).to<ZFCopyable *>()->copy());
+        imageView->image()->imageNinePatchSet(ZFUIMarginMake(
+            imageView->image()->imageSize().width / 2,
+            imageView->image()->imageSize().height / 2));
 
         this->prepareSettingButton(window, imageView);
     }

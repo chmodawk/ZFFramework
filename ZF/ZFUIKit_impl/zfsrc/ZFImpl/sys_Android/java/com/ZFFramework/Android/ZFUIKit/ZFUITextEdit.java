@@ -128,8 +128,8 @@ public final class ZFUITextEdit extends EditText {
     }
 
     // ============================================================
-    public static void native_textContentSet(Object nativeTextEdit,
-                                             Object nativeText) {
+    public static void native_textSet(Object nativeTextEdit,
+                                      Object nativeText) {
         ((ZFUITextEdit)nativeTextEdit).setText((String)nativeText);
     }
     public static void native_textAppearanceSet(Object nativeTextEdit,

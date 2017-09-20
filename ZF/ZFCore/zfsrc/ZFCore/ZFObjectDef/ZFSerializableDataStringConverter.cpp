@@ -343,7 +343,12 @@ zfbool ZFSerializableDataFromInput(ZF_OUT ZFSerializableData &serializableData,
         ZFSerializableUtil::errorOccurred(outErrorHint, zfText("unable to load data from input"));
         return zffalse;
     }
-    return ZFSerializableDataFromString(serializableData, buf.bufferAsString(), buf.bufferAsStringLength(), outErrorHint);
+    zfbool ret = ZFSerializableDataFromString(serializableData, buf.bufferAsString(), buf.bufferAsStringLength(), outErrorHint);
+    if(ret)
+    {
+        serializableData.pathInfoSet(input.pathType(), input.pathInfo());
+    }
+    return ret;
 }
 ZFSerializableData ZFSerializableDataFromInput(ZF_IN const ZFInputCallback &input,
                                                ZF_OUT_OPT zfstring *outErrorHint /* = zfnull */)

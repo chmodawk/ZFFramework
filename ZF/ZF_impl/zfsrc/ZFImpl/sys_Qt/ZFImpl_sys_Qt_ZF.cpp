@@ -7,9 +7,12 @@
  *   https://github.com/ZFFramework/ZFFramework/blob/master/license/license.txt
  * ====================================================================== */
 #include "ZFImpl_sys_Qt_ZF.h"
+#include "ZFCore/ZFString.h"
 
 #if ZF_ENV_sys_Qt
+#include <string>
 
+// ============================================================
 class _ZFP_ZFImpl_sys_Qt_ValueWrapper
 {
 public:
@@ -40,6 +43,8 @@ public:
 Q_DECLARE_METATYPE(_ZFP_ZFImpl_sys_Qt_ValueWrapper);
 
 ZF_NAMESPACE_GLOBAL_BEGIN
+
+// ============================================================
 void ZFImpl_sys_Qt_QObjectTagSet(ZF_IN_OUT QObject *obj, ZF_IN const zfchar *name, ZF_IN QVariant const &tag)
 {
     obj->setProperty(zfsCoreZ2A(name), tag);
@@ -65,6 +70,18 @@ ZFObject *ZFImpl_sys_Qt_QObjectTagGetZFObject(ZF_IN_OUT QObject *obj, ZF_IN cons
 {
     QVariant tag = ZFImpl_sys_Qt_QObjectTagGet(obj, name);
     return ((tag.isValid()) ? tag.value<_ZFP_ZFImpl_sys_Qt_ValueWrapper>().value : zfnull);
+}
+
+// ============================================================
+ZFSTRINGENCODING_ASSERT(ZFStringEncoding::e_UTF8)
+void ZFImpl_sys_Qt_zfstringFromQString(ZF_IN_OUT zfstring &result, ZF_IN QString const &nativeString)
+{
+    std::string t = nativeString.toStdString();
+    result += t.c_str();
+}
+QString ZFImpl_sys_Qt_zfstringToQString(ZF_IN const zfchar *s)
+{
+    return QString(s);
 }
 
 ZF_NAMESPACE_GLOBAL_END

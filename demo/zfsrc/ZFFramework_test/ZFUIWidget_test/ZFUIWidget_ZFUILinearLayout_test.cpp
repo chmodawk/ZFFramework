@@ -41,7 +41,7 @@ private:
         {
             zfblockedAlloc(ZFUITextView, child);
             layout->childAdd(child);
-            child->textContentStringSet(zfstringWithFormat(zfText("text %zi"), i));
+            child->textSet(zfstringWithFormat(zfText("text %zi"), i));
             child->textAlignSet(ZFUIAlign::e_Center);
             child->viewBackgroundColorSet(ZFUIColorRandom(255));
         }
@@ -56,7 +56,7 @@ private:
         {
             zfblockedAlloc(ZFUITextView, child);
             l->childAdd(child);
-            child->textContentStringSet(zfstringWithFormat(zfText("text %zi"), 3 + i));
+            child->textSet(zfstringWithFormat(zfText("text %zi"), 3 + i));
             child->textAlignSet(ZFUIAlign::e_Center);
             child->viewBackgroundColorSet(ZFUIColorRandom(255));
         }

@@ -41,14 +41,14 @@ public:
         zfsuperI(ZFUIListAdapter)::cellOnUpdate(atIndex, cell);
 
         ZFUIListCellViewBasic *tmp = cell->cellView()->toAny();
-        tmp->cellLabelMain()->textContentStringSet(zfstringWithFormat(zfText("main %zi"), atIndex));
+        tmp->cellLabelMain()->textSet(zfstringWithFormat(zfText("main %zi"), atIndex));
         if(zfmRand(3) == 0)
         {
-            tmp->cellLabelSub()->textContentStringSet(zfstringWithFormat(zfText("sub %zi"), atIndex));
+            tmp->cellLabelSub()->textSet(zfstringWithFormat(zfText("sub %zi"), atIndex));
         }
         if(zfmRand(3) == 0)
         {
-            tmp->cellIcon()->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRandom(), ZFUISizeMake(40)).toAny());
+            tmp->cellIcon()->imageSet(ZFUIImageLoadFromColor(ZFUIColorRandom(), ZFUISizeMake(40)).toAny());
         }
         tmp->viewBackgroundColorSet(ZFUIColorRandom());
     }

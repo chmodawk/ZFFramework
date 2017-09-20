@@ -79,14 +79,14 @@ public:
     ZFMETHOD_DECLARE_1(void, dialogTitleTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
-        this->dialogTitleView()->textContentStringSet(text);
+        this->dialogTitleView()->textSet(text);
     }
     /**
      * @brief get the dialog's title text
      */
     ZFMETHOD_DECLARE_0(const zfchar *, dialogTitleText)
     {
-        return this->dialogTitleView()->textContentString();
+        return this->dialogTitleView()->text();
     }
 
     // ============================================================
@@ -105,14 +105,14 @@ public:
     ZFMETHOD_DECLARE_1(void, dialogContentTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
-        this->dialogContentView()->textContentStringSet(text);
+        this->dialogContentView()->textSet(text);
     }
     /**
      * @brief get the dialog's content text
      */
     ZFMETHOD_DECLARE_0(const zfchar *, dialogContentText)
     {
-        return this->dialogContentView()->textContentString();
+        return this->dialogContentView()->text();
     }
 
     // ============================================================

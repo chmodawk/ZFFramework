@@ -101,6 +101,7 @@ public:
     void pageCreate(ZF_IN ZFUIPage *page, ZF_IN const ZFUIPageRequestPageCreateParam &createParam)
     {
         page->pageCreateParamSet(createParam.pageCreateParam());
+        page->pageGroupIdSet(createParam.pageGroupId());
 
         page->_ZFP_ZFUIPage_pageCreate();
         this->pimplOwner->pageOnCreate(page, createParam);

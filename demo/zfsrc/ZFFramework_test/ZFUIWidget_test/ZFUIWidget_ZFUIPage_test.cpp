@@ -26,8 +26,6 @@ protected:
     {
         zfsuper::pageOnCreate();
 
-        this->pageGroupIdSet(this->pageCreateParam()->to<ZFString *>()->stringValue());
-
         this->_mainView()->layoutOrientationSet(ZFUIOrientation::e_Top);
 
         this->_mainView()->childAdd(this->_titleView());
@@ -50,7 +48,7 @@ protected:
 
         this->_titleView()->childAdd(this->_titleCenterView());
         this->_titleCenterView()->layoutParam<ZFUILinearLayoutParam *>()->layoutWeightSet(3);
-        this->_titleCenterView()->textContentStringSet(zfstringWithFormat(zfText("page %p"), this));
+        this->_titleCenterView()->textSet(zfstringWithFormat(zfText("page %p"), this));
         this->_titleCenterView()->textAlignSet(ZFUIAlign::e_Center);
 
         this->_mainView()->childAdd(this->_contentView());
@@ -62,7 +60,7 @@ protected:
                 ZFUIPage *page = userData->to<ZFObjectHolder *>()->holdedObj;
                 page->pageManager()->requestPageCreate(ZFUIPageRequestPageCreateParam()
                     .pageClassSet(zfself::ClassData())
-                    .pageCreateParamSet(page->pageCreateParam()));
+                    .pageGroupIdSet(page->pageGroupId()));
             })
             this->_contentView()->observerAdd(ZFUIButton::EventButtonOnClick(), _contentViewOnClick, this->objectHolder());
         }
@@ -169,7 +167,7 @@ protected:
 
             this->requestPageCreate(ZFUIPageRequestPageCreateParam()
                 .pageClassSet(ZFUIWidget_ZFUIPage_test_Page::ClassData())
-                .pageCreateParamSet(pageGroupId)
+                .pageGroupIdSet(pageGroupId->stringValue())
                 .pageAutoResumeSet(zffalse));
 
             zfblockedAlloc(ZFUIButtonBasic, button);
@@ -228,8 +226,8 @@ protected:
             zfint r = zfmRand(255);
             zfint g = zfmRand(255);
             zfint b = zfmRand(255);
-            button->buttonBackgroundStyleNormal()->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorMake(64, r, g, b)).toAny());
-            button->buttonBackgroundStyleHighlighted()->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorMake(255, r, g, b)).toAny());
+            button->buttonBackgroundStyleNormal()->imageSet(ZFUIImageLoadFromColor(ZFUIColorMake(64, r, g, b)).toAny());
+            button->buttonBackgroundStyleHighlighted()->imageSet(ZFUIImageLoadFromColor(ZFUIColorMake(255, r, g, b)).toAny());
         }
         this->pageAniOverrideForOnce(zfnull, zfnull);
         this->_buttonLayout()->childAtIndex(0)->to<ZFUIButton *>()->buttonCheckedSet(zftrue);

@@ -97,9 +97,6 @@ ZFMETHOD_FUNC_DECLARE_3(void, ZFJsonPrint,
 // ============================================================
 /**
  * @brief util method to parse serializable data from input with json format
- *
- * this method would automatically setup
- * #ZFSerializableDataTagKeyword_filePath/#ZFSerializableDataTagKeyword_resPath
  */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFJsonParse,
                         ZFMP_OUT(ZFSerializableData &, ret),

@@ -34,9 +34,9 @@ zfclassFwd _ZFP_ZFUIButtonBasicPrivate;
  * \n
  * specially, those property's normal state's value would be used
  * if other state doesn't supply value:
- * -  label's #ZFUITextView::textContent
- * -  icon's #ZFUIImageView::imageContent
- * -  background's #ZFUIImageView::imageContent
+ * -  label's #ZFUITextView::text
+ * -  icon's #ZFUIImageView::image
+ * -  background's #ZFUIImageView::image
  *
  * @note button's components (label, icon, background) would be created
  *   only if accessed or text/image has been set,
@@ -319,19 +319,19 @@ public:
     /**
      * @brief util method to get button label's text
      */
-    ZFMETHOD_DECLARE_1(ZFString *, buttonLabelText,
+    ZFMETHOD_DECLARE_1(zfstring const &, buttonLabelText,
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        return this->buttonLabelStyle(forState)->textContent();
+        return this->buttonLabelStyle(forState)->text();
     }
     /**
      * @brief util method to set button label's text
      */
     ZFMETHOD_DECLARE_2(void, buttonLabelTextSet,
-                       ZFMP_IN(ZFString *, text),
+                       ZFMP_IN(const zfchar *, text),
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        this->buttonLabelStyle(forState)->textContentSet(text);
+        this->buttonLabelStyle(forState)->textSet(text);
     }
     /**
      * @brief util method to get button label's text
@@ -339,7 +339,7 @@ public:
     ZFMETHOD_DECLARE_1(const zfchar *, buttonLabelTextString,
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        return this->buttonLabelStyle(forState)->textContentString();
+        return this->buttonLabelStyle(forState)->text();
     }
     /**
      * @brief util method to set button label's text
@@ -348,7 +348,7 @@ public:
                        ZFMP_IN(const zfchar *, text),
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        this->buttonLabelStyle(forState)->textContentStringSet(text);
+        this->buttonLabelStyle(forState)->textSet(text);
     }
 
     /**
@@ -357,7 +357,7 @@ public:
     ZFMETHOD_DECLARE_1(ZFUIImage *, buttonIconImage,
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        return this->buttonIconStyle(forState)->imageContent();
+        return this->buttonIconStyle(forState)->image();
     }
     /**
      * @brief util method to set button icon's image
@@ -366,7 +366,7 @@ public:
                        ZFMP_IN(ZFUIImage *, image),
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        this->buttonIconStyle(forState)->imageContentSet(image);
+        this->buttonIconStyle(forState)->imageSet(image);
     }
 
     /**
@@ -375,7 +375,7 @@ public:
     ZFMETHOD_DECLARE_1(ZFUIImage *, buttonBackgroundImage,
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        return this->buttonBackgroundStyle(forState)->imageContent();
+        return this->buttonBackgroundStyle(forState)->image();
     }
     /**
      * @brief util method to set button background's image
@@ -384,7 +384,7 @@ public:
                        ZFMP_IN(ZFUIImage *, image),
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
-        this->buttonBackgroundStyle(forState)->imageContentSet(image);
+        this->buttonBackgroundStyle(forState)->imageSet(image);
     }
 
 public:

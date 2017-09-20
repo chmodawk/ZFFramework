@@ -76,7 +76,7 @@ protected:
         outputView->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthWrapHeight());
         outputView->textSingleLineSet(zffalse);
         outputView->textColorSet(ZFUIColorWhite());
-        outputView->textContentStringSet(zfText("press start"));
+        outputView->textSet(zfText("press start"));
 
         zfblockedAlloc(ZFUIKit_test_Button, startButton);
         container->childAdd(startButton);
@@ -87,7 +87,7 @@ protected:
             ZFUIKit_ZFUISerializePerformance_test *owner = userData->tagGet<ZFObjectHolder *>(zfText("owner"))->holdedObj;
             zfautoObject testObject = owner->prepareTestObject();
             ZFUITextView *outputView = userData->tagGet<ZFUITextView *>(zfText("outputView"));
-            outputView->textContentStringSet(zfText("running..."));
+            outputView->textSet(zfText("running..."));
             ZFSerializableData data = ZFObjectToData(testObject);
 
             zfindex toDataTimes = 1000;
@@ -118,7 +118,7 @@ protected:
                 ZFTimeValueToStringFriendly(fromDataUsedTime).cString());
             result += zfText("\ndata:\n");
             ZFXmlPrint(data, ZFOutputCallbackForString(result));
-            outputView->textContentStringSet(result);
+            outputView->textSet(result);
 
             ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFUISerializePerformance_test_toData"));
             ZFCoreStatistic::invokeTimeAccurateRemove(zfText("ZFUISerializePerformance_test_fromData"));
@@ -179,7 +179,7 @@ public:
             case 1:
             {
                 zfblockedAlloc(ZFUIImageView, v);
-                v->imageContentSet(ZFUIImageLoadFromColor(ZFUIColorRed()).toAny());
+                v->imageSet(ZFUIImageLoadFromColor(ZFUIColorRed()).toAny());
                 return zfautoObjectCreate(v);
             }
             case 2:

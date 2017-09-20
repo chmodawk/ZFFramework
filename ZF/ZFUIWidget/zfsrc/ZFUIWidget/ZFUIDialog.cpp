@@ -294,7 +294,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIDialog, ZFUIColor, dialogWindowColor)
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIDialog, ZFUIImage *, dialogBackgroundImage)
 {
-    d->dialogBg->imageContentSet(this->dialogBackgroundImage());
+    d->dialogBg->imageSet(this->dialogBackgroundImage());
 }
 ZFPROPERTY_CUSTOM_ON_ATTACH_DEFINE(ZFUIDialog, ZFUIView *, dialogView)
 {
@@ -496,7 +496,7 @@ ZFObject *ZFUIDialog::objectOnInit(void)
     d->aniHideOnStopListener = ZFCallbackForMemberMethod(d, ZFMethodAccess(_ZFP_ZFUIDialogPrivate, aniHideOnStop));
 
     d->dialogWindowBg->viewBackgroundColorSet(this->dialogWindowColor());
-    d->dialogBg->imageContentSet(this->dialogBackgroundImage());
+    d->dialogBg->imageSet(this->dialogBackgroundImage());
 
     _ZFP_ZFUIDialogAllDialog.add(this);
     return this;

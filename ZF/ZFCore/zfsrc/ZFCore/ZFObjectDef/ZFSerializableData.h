@@ -180,6 +180,23 @@ public:
     zffinal void referenceInfoRestore(ZF_IN const ZFSerializableData &refNode);
 
     // ============================================================
+    // local path logic
+public:
+    /** @brief see #pathInfo */
+    zffinal const zfchar *pathType(void) const;
+    /**
+     * @brief used for impl to store path related info
+     */
+    zffinal const zfchar *pathInfo(void) const;
+    /** @brief see #pathInfo */
+    zffinal void pathInfoSet(ZF_IN const zfchar *pathType, ZF_IN const zfchar *pathInfo);
+    /**
+     * @brief recursively check path info from child to parent
+     */
+    zffinal zfbool pathInfoCheck(ZF_OUT const zfchar *&pathType,
+                                 ZF_OUT const zfchar *&pathInfo) const;
+
+    // ============================================================
     // parent
 public:
     /**

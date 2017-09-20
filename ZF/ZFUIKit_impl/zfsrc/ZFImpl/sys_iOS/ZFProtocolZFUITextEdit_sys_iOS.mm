@@ -78,8 +78,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *nativeStringNew = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    zfblockedAllocWithoutLeakTest(ZFString, stringNew, (__bridge void *)nativeStringNew);
-    BOOL ret = ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(self.ownerZFUITextEdit, stringNew);
+    BOOL ret = ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(self.ownerZFUITextEdit, ZFImpl_sys_iOS_zfstringFromNSString(nativeStringNew));
     if(ret)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_ZFP_textSelectRangeNotifyChange) object:nil];
@@ -95,7 +94,7 @@
 
 - (void)_textFieldTextChanged:(UITextField *)textField
 {
-    ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(self.ownerZFUITextEdit, zflineAllocWithoutLeakTest(ZFString, (__bridge void *)textField.text));
+    ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(self.ownerZFUITextEdit, ZFImpl_sys_iOS_zfstringFromNSString(textField.text));
 }
 @end
 
@@ -103,9 +102,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUITextEditImpl_sys_iOS, ZFUITextEdit, ZFProtocolLevel::e_SystemNormal)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("iOS:UITextField"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFString, zfText("iOS:NSString"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 public:
     virtual void *nativeTextEditCreate(ZF_IN ZFUITextEdit *textEdit)
     {
@@ -211,19 +207,11 @@ public:
     }
 
 public:
-    virtual void textContentSet(ZF_IN ZFUITextEdit *textEdit,
-                                ZF_IN ZFString *text)
+    virtual void textSet(ZF_IN ZFUITextEdit *textEdit,
+                         ZF_IN const zfchar *text)
     {
         _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *nativeImplView = (__bridge _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit *)textEdit->nativeImplView();
-        if(text != zfnull)
-        {
-            NSString *nativeString = (__bridge NSString *)text->nativeString();
-            nativeImplView.text = nativeString;
-        }
-        else
-        {
-            nativeImplView.text = nil;
-        }
+        nativeImplView.text = ZFImpl_sys_iOS_zfstringToNSString(text);
     }
     virtual void textAppearanceSet(ZF_IN ZFUITextEdit *textEdit,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance)

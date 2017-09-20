@@ -48,32 +48,8 @@ public:
     /**
      * @brief text, may be null if not set
      */
-    ZFPROPERTY_RETAIN(ZFString *, textContent)
-    ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(ZFString *, textContent);
-    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFString *, textContent);
-    /**
-     * @brief see #textContent, always empty string if not set
-     */
-    ZFMETHOD_DECLARE_0(const zfchar *, textContentString)
-    {
-        return (this->textContent() ? this->textContent()->stringValue() : zfText(""));
-    }
-    /**
-     * @brief see #textContent
-     */
-    ZFMETHOD_DECLARE_1(void, textContentStringSet,
-                       ZFMP_IN(const zfchar *, s))
-    {
-        this->textContentSet((s && *s) ? zflineAlloc(ZFString, s) : zfnull);
-    }
-
-    /**
-     * @brief util method to check whether the text is null or empty string
-     */
-    ZFMETHOD_DECLARE_0(zfbool, textContentIsEmpty)
-    {
-        return zfscmpTheSame(this->textContentString(), zfText(""));
-    }
+    ZFPROPERTY_ASSIGN(zfstring, text)
+    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfstring, text);
 
     /**
      * @brief text appearance, #ZFUIGlobalStyle::textAppearance by default
@@ -213,7 +189,7 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUITextView, ZFUITextViewText, {obj->textContentStringSet(langValue);})
+ZFLANGAPPLY_IMPL(ZFUITextView, ZFUITextViewText, {obj->textSet(langValue);})
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUITextView_h_

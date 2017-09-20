@@ -42,11 +42,7 @@ public:
     static zfindex readData(ZF_IN ZFUITextEdit *edit)
     {
         zfindex ret = 4;
-        ZFString *value = edit->textContent();
-        if(value != zfnull)
-        {
-            zfindexFromString(ret, value->stringValue());
-        }
+        zfindexFromString(ret, edit->text());
         if(ret < _ZFP_ZF2048AppDataWidthMin || ret > _ZFP_ZF2048AppDataWidthMax)
         {
             ret = 4;
@@ -193,7 +189,7 @@ private:
             zfindex value = _ZFP_ZF2048AppSettingDialogPrivate::readData(edit);
             ++value;
             value = zfmApplyRange<zfindex>(value, _ZFP_ZF2048AppDataWidthMin, _ZFP_ZF2048AppDataWidthMax);
-            edit->textContentStringSet(zfindexToString(value));
+            edit->textSet(zfindexToString(value));
             increase->buttonEnableSet(value != _ZFP_ZF2048AppDataWidthMax);
             decrease->buttonEnableSet(value != _ZFP_ZF2048AppDataWidthMin);
         })
@@ -204,7 +200,7 @@ private:
             zfindex value = _ZFP_ZF2048AppSettingDialogPrivate::readData(edit);
             --value;
             value = zfmApplyRange<zfindex>(value, _ZFP_ZF2048AppDataWidthMin, _ZFP_ZF2048AppDataWidthMax);
-            edit->textContentStringSet(zfindexToString(value));
+            edit->textSet(zfindexToString(value));
             increase->buttonEnableSet(value != _ZFP_ZF2048AppDataWidthMax);
             decrease->buttonEnableSet(value != _ZFP_ZF2048AppDataWidthMin);
         })
@@ -287,8 +283,8 @@ ZFObject *ZF2048AppSettingDialog::objectOnInit(void)
 void ZF2048AppSettingDialog::objectOnInitFinish(void)
 {
     zfsuper::objectOnInitFinish();
-    d->dataWidthEdit->textContentStringSet(zfindexToString(this->dataWidth));
-    d->dataHeightEdit->textContentStringSet(zfindexToString(this->dataHeight));
+    d->dataWidthEdit->textSet(zfindexToString(this->dataWidth));
+    d->dataHeightEdit->textSet(zfindexToString(this->dataHeight));
 }
 void ZF2048AppSettingDialog::objectOnDealloc(void)
 {

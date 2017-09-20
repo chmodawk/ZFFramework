@@ -278,21 +278,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFJsonParse,
         return zffalse;
     }
 
-    {
-        ZFString *v = input.callbackTagGet<ZFString *>(ZFCallbackTagKeyword_resPath);
-        if(v != zfnull)
-        {
-            ret.serializableDataTagSetMarkCached(ZFSerializableDataTagKeyword_resPath, v);
-        }
-        else
-        {
-            v = input.callbackTagGet<ZFString *>(ZFCallbackTagKeyword_filePath);
-            if(v != zfnull)
-            {
-                ret.serializableDataTagSetMarkCached(ZFSerializableDataTagKeyword_filePath, v);
-            }
-        }
-    }
+    ret.pathInfoSet(input.pathType(), input.pathInfo());
     return zftrue;
 }
 ZFMETHOD_FUNC_DEFINE_1(ZFSerializableData, ZFJsonParse,

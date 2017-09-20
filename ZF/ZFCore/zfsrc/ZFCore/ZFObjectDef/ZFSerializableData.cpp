@@ -48,6 +48,8 @@ public:
     zfchar *referenceRefType;
     zfchar *referenceRefData;
     zfbool referenceInfoLoaded;
+    zfchar *pathType;
+    zfchar *pathInfo;
     _ZFP_ZFSerializableDataAttributeMapType attributes;
     zfstldeque<ZFSerializableData> elements;
     _ZFP_ZFSerializableDataTagMapType serializableDataTagMap;
@@ -84,6 +86,8 @@ public:
     , referenceRefType(zfnull)
     , referenceRefData(zfnull)
     , referenceInfoLoaded(zffalse)
+    , pathType(zfnull)
+    , pathInfo(zfnull)
     , attributes()
     , elements()
     , serializableDataTagMap()
@@ -92,6 +96,8 @@ public:
     ~_ZFP_ZFSerializableDataPrivate(void)
     {
         this->removeAll();
+        zffree(this->pathType);
+        zffree(this->pathInfo);
     }
 };
 
@@ -440,6 +446,39 @@ void ZFSerializableData::referenceInfoRestore(ZF_IN const ZFSerializableData &re
         d->referenceRefData = zfnull;
     }
     d->referenceInfoLoaded = zffalse;
+}
+
+// ============================================================
+// local path logic
+const zfchar *ZFSerializableData::pathType(void) const
+{
+    return d->pathType;
+}
+const zfchar *ZFSerializableData::pathInfo(void) const
+{
+    return d->pathInfo;
+}
+void ZFSerializableData::pathInfoSet(ZF_IN const zfchar *pathType, ZF_IN const zfchar *pathInfo)
+{
+    zfsChange(d->pathType, pathType);
+    zfsChange(d->pathInfo, pathInfo);
+}
+zfbool ZFSerializableData::pathInfoCheck(ZF_OUT const zfchar *&pathType,
+                                         ZF_OUT const zfchar *&pathInfo) const
+{
+    ZFSerializableData check = *this;
+    zfbool hasParent = zftrue;
+    do
+    {
+        if(check.pathType() != zfnull && check.pathInfo() != zfnull)
+        {
+            pathType = check.pathType();
+            pathInfo = check.pathInfo();
+            return zftrue;
+        }
+        hasParent = check.serializableDataParent(check);
+    } while(hasParent);
+    return zffalse;
 }
 
 // ============================================================
@@ -1114,6 +1153,10 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFSerializableData, zfbool, referenc
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFSerializableData, zfbool, referenceInfoExistRecursively)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFSerializableData, zfbool, referenceInfoLoad, ZFMP_OUT_OPT(zfstring *, outErrorHint, zfnull), ZFMP_OUT_OPT(ZFSerializableData *, outErrorPos, zfnull))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFSerializableData, void, referenceInfoRestore, ZFMP_IN(const ZFSerializableData &, refNode))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFSerializableData, const zfchar *, pathType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFSerializableData, const zfchar *, pathInfo)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFSerializableData, void, pathInfoSet, ZFMP_IN(const zfchar *, pathType), ZFMP_IN(const zfchar *, pathInfo))
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFSerializableData, void, pathInfoCheck, ZFMP_OUT(const zfchar *&, pathType), ZFMP_OUT(const zfchar *&, pathInfo))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFSerializableData, zfbool, serializableDataParent, ZFMP_OUT(ZFSerializableData &, ret))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFSerializableData, void, itemClassSet, ZFMP_IN(const zfchar *, clsName))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFSerializableData, const zfchar *, itemClass)

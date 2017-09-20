@@ -18,9 +18,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFUITextEditImpl_sys_Android, ZFUITextEdit, ZFProtocolLevel::e_SystemNormal)
     ZFPROTOCOL_IMPLEMENTATION_PLATFORM_HINT(zfText("Android:EditText"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_BEGIN()
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_ITEM(ZFString, zfText("Android:String"))
-    ZFPROTOCOL_IMPLEMENTATION_PLATFORM_DEPENDENCY_END()
 
 public:
     zfoverride
@@ -157,18 +154,18 @@ public:
     }
 
 public:
-    virtual void textContentSet(ZF_IN ZFUITextEdit *textEdit,
-                                ZF_IN ZFString *text)
+    virtual void textSet(ZF_IN ZFUITextEdit *textEdit,
+                         ZF_IN const zfchar *text)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
-        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_textContentSet"),
+        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_textSet"),
             JNIGetMethodSig(JNIType::S_void, JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, textEdit->nativeImplView()),
-            ZFCastStatic(jobject, (text == zfnull) ? zfnull : text->nativeString()));
+            ZFCastStatic(jobject, ZFImpl_sys_Android_zfstringToString(text)));
     }
     virtual void textAppearanceSet(ZF_IN ZFUITextEdit *textEdit,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance)
@@ -311,20 +308,18 @@ JNI_METHOD_DECLARE(jboolean, ZFImpl_sys_Android_JNI_ID_ZFUITextEdit, native_1not
                    JNIPointer zfjniPointerOwnerZFUITextEdit,
                    jobject jobjNewString)
 {
-    zfblockedAlloc(ZFString, newString, ZFCastStatic(void *, ZFCastStatic(jstring, jobjNewString)));
     return (jboolean)ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(
         ZFCastZFObject(ZFUITextEdit *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUITextEdit)),
-        newString);
+        ZFImpl_sys_Android_zfstringFromString(ZFCastStatic(jstring, jobjNewString)));
 }
 JNI_METHOD_DECLARE(void, ZFImpl_sys_Android_JNI_ID_ZFUITextEdit, native_1notifyTextChange,
                    JNIEnv *jniEnv, jclass jniCls,
                    JNIPointer zfjniPointerOwnerZFUITextEdit,
                    jobject jobjNewString)
 {
-    zfblockedAlloc(ZFString, newString, ZFCastStatic(void *, ZFCastStatic(jstring, jobjNewString)));
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(
         ZFCastZFObject(ZFUITextEdit *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUITextEdit)),
-        newString);
+        ZFImpl_sys_Android_zfstringFromString(ZFCastStatic(jstring, jobjNewString)));
 }
 JNI_METHOD_DECLARE(void, ZFImpl_sys_Android_JNI_ID_ZFUITextEdit, native_1notifyTextSelectRangeChange,
                    JNIEnv *jniEnv, jclass jniCls,

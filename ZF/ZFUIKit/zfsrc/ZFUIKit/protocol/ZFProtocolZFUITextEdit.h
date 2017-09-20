@@ -16,7 +16,6 @@
 
 #include "ZFCore/ZFProtocol.h"
 #include "ZFUIKit/ZFUITextEdit.h"
-#include "ZFCore/protocol/ZFProtocolZFString.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
@@ -57,8 +56,8 @@ public:
 
 public:
     /** @brief see #ZFUITextEdit */
-    virtual void textContentSet(ZF_IN ZFUITextEdit *textEdit,
-                                ZF_IN ZFString *text) zfpurevirtual;
+    virtual void textSet(ZF_IN ZFUITextEdit *textEdit,
+                         ZF_IN const zfchar *text) zfpurevirtual;
     /** @brief see #ZFUITextEdit */
     virtual void textAppearanceSet(ZF_IN ZFUITextEdit *textEdit,
                                    ZF_IN ZFUITextAppearanceEnum const &textAppearance) zfpurevirtual;
@@ -106,7 +105,7 @@ public:
      * @brief implementation must notify to check whether text should change
      */
     zffinal zfbool notifyCheckTextShouldChange(ZF_IN ZFUITextEdit *textEdit,
-                                               ZF_IN ZFString *newValue)
+                                               ZF_IN const zfchar *newValue)
     {
         return textEdit->textShouldChange(newValue);
     }
@@ -114,7 +113,7 @@ public:
      * @brief implementation must notify when text changed
      */
     zffinal void notifyTextChange(ZF_IN ZFUITextEdit *textEdit,
-                                  ZF_IN ZFString *newValue)
+                                  ZF_IN const zfchar *newValue)
     {
         textEdit->_ZFP_ZFUITextEdit_textNotifyChange(newValue);
     }

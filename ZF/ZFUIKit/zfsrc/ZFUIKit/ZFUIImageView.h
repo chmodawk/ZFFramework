@@ -43,10 +43,10 @@ public:
     /**
      * @brief image for this view
      */
-    ZFPROPERTY_RETAIN(ZFUIImage *, imageContent)
-    ZFPROPERTY_CUSTOM_ON_ATTACH_DECLARE(ZFUIImage *, imageContent);
-    ZFPROPERTY_CUSTOM_ON_DETACH_DECLARE(ZFUIImage *, imageContent);
-    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIImage *, imageContent);
+    ZFPROPERTY_RETAIN(ZFUIImage *, image)
+    ZFPROPERTY_CUSTOM_ON_ATTACH_DECLARE(ZFUIImage *, image);
+    ZFPROPERTY_CUSTOM_ON_DETACH_DECLARE(ZFUIImage *, image);
+    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIImage *, image);
 
     /**
      * @brief image scale type, fill by default
@@ -61,8 +61,8 @@ public:
     /**
      * @brief margin of the content image
      */
-    ZFPROPERTY_ASSIGN(ZFUIMargin, imageContentMargin)
-    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIMargin, imageContentMargin)
+    ZFPROPERTY_ASSIGN(ZFUIMargin, imageMargin)
+    ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIMargin, imageMargin)
     {
         this->nativeImplViewMarginUpdate();
     }

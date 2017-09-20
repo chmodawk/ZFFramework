@@ -97,7 +97,7 @@ static void _ZFP_ZFUIViewBlinkDoOn(ZF_IN ZFUIView *view, ZF_IN const ZFUIViewBli
         t->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         blinkView = t;
     }
-    blinkView->imageContentSet((blinkParam.blinkImage() != zfnull)
+    blinkView->imageSet((blinkParam.blinkImage() != zfnull)
         ? blinkParam.blinkImage()
         : ZFUIViewBlinkImageDefault().to<ZFUIImage *>());
 

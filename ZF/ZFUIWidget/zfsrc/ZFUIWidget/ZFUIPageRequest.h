@@ -47,6 +47,11 @@ public:
     ZFCORE_PARAM(const ZFClass *, pageClass)
 
     /**
+     * @brief page create param which would be passed to #ZFUIPage::pageGroupId
+     */
+    ZFCORE_PARAM(zfstring, pageGroupId)
+
+    /**
      * @brief page create param which would be passed to #ZFUIPage::pageCreateParam,
      *   auto retained, null by default
      */

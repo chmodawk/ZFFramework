@@ -382,6 +382,18 @@ public:
      */
     zffinal const ZFSerializableData *callbackSerializeCustomData(void) const;
 
+    // ============================================================
+    // local path logic
+public:
+    /** @brief see #pathInfo */
+    zffinal const zfchar *pathType(void) const;
+    /**
+     * @brief used for impl to store path related info
+     */
+    zffinal const zfchar *pathInfo(void) const;
+    /** @brief see #pathInfo */
+    zffinal void pathInfoSet(ZF_IN const zfchar *pathType, ZF_IN const zfchar *pathInfo);
+
 private:
     _ZFP_ZFCallbackPrivate *d;
     static void _ZFP_ZFCallbackCachedDataSetup(ZF_IN_OUT ZFCallback &c, _ZFP_ZFCallbackPrivate *d);

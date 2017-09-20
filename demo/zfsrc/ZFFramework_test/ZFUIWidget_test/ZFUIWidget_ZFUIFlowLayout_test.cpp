@@ -53,7 +53,7 @@ private:
             {
                 text += c;
             }
-            view->textContentStringSet(text);
+            view->textSet(text);
         })
         addButton->observerAdd(ZFUIButton::EventButtonOnClick(), addButtonOnClick, layout->objectHolder());
         addButton->buttonLabelTextStringSet(zfText("add"));

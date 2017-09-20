@@ -79,14 +79,14 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFUITextEditKeyboardReturnTypeE
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFRegExp *, textEditFilter)
 {
-    if(this->textContent() != zfnull && !this->textShouldChange(this->textContent()))
+    if(!this->text().isEmpty() && !this->textShouldChange(this->text()))
     {
-        this->textContentSet(zfnull);
+        this->textSet(zfText(""));
     }
 }
 ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUITextEdit, zfindexRange, textSelectRange)
 {
-    zfindex textLength = zfslen(this->textContentString());
+    zfindex textLength = this->text().length();
     if(propertyValue.start >= textLength)
     {
         propertyValue = zfindexRangeZero();
@@ -108,17 +108,14 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, zfindexRange, textSelectRange)
     }
 }
 
-ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUITextEdit, ZFString *, textContent)
+ZFPROPERTY_CUSTOM_ON_VERIFY_DEFINE(ZFUITextEdit, zfstring, text)
 {
-    zfCoreAssertWithMessage(ZFCastZFObject(ZFStringEditable *, propertyValue) == zfnull,
-        zfText("text content must not be editable (%s)"), ZFStringEditable::ClassData()->className());
-    ZFString *v = propertyValue;
-    if(v != zfnull && !v->isEmpty() && !this->textShouldChange(v))
+    if(!propertyValue.isEmpty() && !this->textShouldChange(propertyValue))
     {
-        propertyValue = zfautoObjectNull();
+        propertyValue.removeAll();
     }
 }
-ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFString *, textContent)
+ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, zfstring, text)
 {
     if(d->textChangedByImplFlag)
     {
@@ -126,12 +123,11 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFString *, textContent)
     }
     else
     {
-        d->impl->textContentSet(this, this->textContent());
+        d->impl->textSet(this, this->text());
     }
-    if(ZFObjectCompare(this->textContent(), propertyValueOld.to<ZFString *>()) != ZFCompareTheSame)
+    if(propertyValueOld.compare(this->text()) != 0)
     {
-        ZFCastZFObjectUnchecked(ZFUIView *, this->textPlaceHolder())->viewVisibleSet(
-            this->textContent() == zfnull || this->textContent()->isEmpty());
+        ZFCastZFObjectUnchecked(ZFUIView *, this->textPlaceHolder())->viewVisibleSet(this->text().isEmpty());
         this->layoutRequest();
     }
 }
@@ -224,18 +220,18 @@ void ZFUITextEdit::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {
     zfsuper::objectInfoOnAppend(ret);
 
-    if(this->textPlaceHolder()->textContent() != zfnull)
+    if(!this->textPlaceHolder()->text().isEmpty())
     {
-        zfstringAppend(ret, zfText(" (%s)"), this->textPlaceHolder()->textContent()->stringValue());
+        zfstringAppend(ret, zfText(" (%s)"), this->textPlaceHolder()->text().cString());
     }
 
     if(this->textEditSecured())
     {
         ret += zfText(" EditSecured");
     }
-    else if(this->textContent() != zfnull && this->textContent()->length() > 0)
+    else if(!this->text().isEmpty())
     {
-        zfstringAppend(ret, zfText(" \"%s\""), this->textContent()->stringValue());
+        zfstringAppend(ret, zfText(" \"%s\""), this->text().cString());
     }
 
     if(!this->textEditEnable())
@@ -257,7 +253,7 @@ ZFMETHOD_DEFINE_1(ZFUITextEdit, ZFUISize, measureTextEdit,
         ZFUISizeApplyScale(this->textSize(), this->scaleGetFixed())),
         this->scaleGetFixed());
     if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUITextEdit, textPlaceHolder), this)
-        && this->textPlaceHolder()->textContentString() != zfnull)
+        && !this->textPlaceHolder()->text().isEmpty())
     {
         ZFUISize hintSize = this->textPlaceHolder()->to<ZFUITextView *>()->measureTextView();
         if(ret.width < hintSize.width)
@@ -283,17 +279,14 @@ void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyEndEdit(void)
     d->textEditing = zffalse;
     this->textOnEditEnd();
 }
-void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyChange(ZF_IN ZFString *newText)
+void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyChange(ZF_IN const zfchar *newText)
 {
-    ZFString *oldText = this->textContent();
-    zfRetainWithoutLeakTest(oldText);
+    zfstring oldText = this->text();
 
     d->textChangedByImplFlag = zftrue;
-    this->textContentSet(newText);
+    this->textSet(newText);
 
     this->textOnChange(oldText);
-
-    zfReleaseWithoutLeakTest(oldText);
 }
 void ZFUITextEdit::_ZFP_ZFUITextEdit_textSelectRangeNotifyChange(void)
 {
@@ -354,11 +347,11 @@ void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyReturnClicked(void)
     }
 }
 ZFMETHOD_DEFINE_1(ZFUITextEdit, zfbool, textShouldChange,
-                  ZFMP_IN(ZFString *, newText))
+                  ZFMP_IN(const zfchar *, newText))
 {
     zfbool shouldChange = zftrue;
     this->textOnChangeCheck(newText, shouldChange);
-    if(!shouldChange && newText != zfnull && !newText->isEmpty())
+    if(!shouldChange && newText != zfnull && *newText != '\0')
     {
         return zffalse;
     }
@@ -388,26 +381,34 @@ void ZFUITextEdit::textOnEditEnd(void)
 {
     this->observerNotify(ZFUITextEdit::EventTextOnEditEnd());
 }
-void ZFUITextEdit::textOnChangeCheck(ZF_IN ZFString *newText, ZF_IN_OUT zfbool &shouldChange)
+void ZFUITextEdit::textOnChangeCheck(ZF_IN const zfchar *newText, ZF_IN_OUT zfbool &shouldChange)
 {
     shouldChange = zftrue;
-    if(newText != zfnull && !newText->isEmpty() && this->textEditFilter() != zfnull)
+    if(newText != zfnull && *newText != '\0' && this->textEditFilter() != zfnull)
     {
         ZFRegExpResult regexpResult;
-        this->textEditFilter()->regExpMatchExact(regexpResult, newText->stringValue());
+        this->textEditFilter()->regExpMatchExact(regexpResult, newText);
         if(!regexpResult.matched)
         {
             shouldChange = zffalse;
+            return ;
         }
     }
 
-    zfautoObject t = ZFValueEditable::boolValueCreate(shouldChange);
-    this->observerNotify(ZFUITextEdit::EventTextOnChangeCheck(), newText, t.toObject());
-    shouldChange = t.to<ZFValue *>()->boolValue();
+    if(this->observerHasAdd(ZFUITextEdit::EventTextOnChangeCheck()))
+    {
+        zfautoObject t = ZFValueEditable::boolValueCreate(shouldChange);
+        this->observerNotify(ZFUITextEdit::EventTextOnChangeCheck(), zflineAllocWithoutLeakTest(ZFString, newText), t.toObject());
+        shouldChange = t.to<ZFValue *>()->boolValue();
+    }
 }
-void ZFUITextEdit::textOnChange(ZF_IN ZFString *oldText)
+void ZFUITextEdit::textOnChange(ZF_IN const zfchar *oldText)
 {
-    this->observerNotify(ZFUITextEdit::EventTextOnChange(), oldText);
+    if(this->observerHasAdd(ZFUITextEdit::EventTextOnChange()))
+    {
+        zfblockedAlloc(ZFString, oldTextTmp, oldText);
+        this->observerNotify(ZFUITextEdit::EventTextOnChange(), oldTextTmp);
+    }
 }
 void ZFUITextEdit::textOnReturnClick(void)
 {

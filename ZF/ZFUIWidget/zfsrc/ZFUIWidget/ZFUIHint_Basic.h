@@ -52,7 +52,7 @@ public:
     {
         ZFPROPERTY_OVERRIDE_ON_INIT_CALL_SUPER(zfsuper, ZFUIImageView *, buttonBackgroundStyleNormal);
         ZFUIImageView *value = propertyValue;
-        value->imageContentSet(ZFUIImageResXml(zfText("ZFUIWidget/ZFUIHintContentBasic_background.xml")));
+        value->imageSet(ZFUIImageResXml(zfText("ZFUIWidget/ZFUIHintContentBasic_background.xml")));
     }
 
 protected:

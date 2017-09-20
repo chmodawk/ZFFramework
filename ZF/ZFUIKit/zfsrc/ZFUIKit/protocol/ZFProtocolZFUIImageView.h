@@ -41,7 +41,7 @@ public:
      * it's ensured set null when owner image view deallocated\n
      * note that implementation must implement the nine patch logic
      */
-    virtual void imageContentSet(ZF_IN ZFUIImageView *imageView,
+    virtual void imageSet(ZF_IN ZFUIImageView *imageView,
                           ZF_IN ZFUIImage *image) zfpurevirtual;
     /**
      * @brief called when image's nine patch setting changed,

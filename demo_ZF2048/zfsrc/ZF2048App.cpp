@@ -146,7 +146,7 @@ public:
 public:
     void dataUpdate(void)
     {
-        this->scoreLabel()->textContentStringSet(zfintToString(this->owner->game()->gameScore()));
+        this->scoreLabel()->textSet(zfintToString(this->owner->game()->gameScore()));
         if(!this->owner->game()->gameCanMove())
         {
             this->gameOver();
@@ -215,7 +215,7 @@ public:
 
         this->headerLayout()->childAdd(this->autoMoveButton());
         this->autoMoveButton()->buttonCheckableSet(zftrue);
-        this->autoMoveButton()->buttonBackgroundStyleChecked()->imageContentSet(this->autoMoveButton()->buttonBackgroundStyleNormal()->imageContent());
+        this->autoMoveButton()->buttonBackgroundStyleChecked()->imageSet(this->autoMoveButton()->buttonBackgroundStyleNormal()->image());
 
         this->headerLayout()->childAdd(this->undoButton());
 

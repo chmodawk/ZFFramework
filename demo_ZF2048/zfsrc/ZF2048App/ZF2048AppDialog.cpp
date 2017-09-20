@@ -26,7 +26,7 @@ public:
 
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZF2048AppDialog, zfstring, dialogTitle)
 {
-    d->dialogTitleView->textContentStringSet(this->dialogTitle());
+    d->dialogTitleView->textSet(this->dialogTitle());
 }
 ZFPROPERTY_CUSTOM_ON_ATTACH_DEFINE(ZF2048AppDialog, ZFUIView *, dialogContent)
 {

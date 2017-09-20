@@ -26,7 +26,7 @@ zfclass ZF_ENV_EXPORT ZFTimeLineCurveLinear : zfextends ZFTimeLineCurve
     ZFOBJECT_DECLARE(ZFTimeLineCurveLinear, ZFTimeLineCurve)
     ZFOBJECT_SINGLETON_DECLARE(zfself, instance)
 
-public:
+protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {

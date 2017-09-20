@@ -37,12 +37,12 @@ protected:
     virtual void paintEvent(QPaintEvent *event)
     {
         QWidget::paintEvent(event);
-        if(_ZFP_owner == zfnull || _ZFP_owner->imageContent() == zfnull)
+        if(_ZFP_owner == zfnull || _ZFP_owner->image() == zfnull)
         {
             return ;
         }
 
-        QImage *image = (QImage *)_ZFP_owner->imageContent()->nativeImage();
+        QImage *image = (QImage *)_ZFP_owner->image()->nativeImage();
         QPainter painter(this);
         painter.setRenderHint(QPainter::SmoothPixmapTransform);
         QRect bounds(QPoint(), this->geometry().size());
@@ -90,8 +90,8 @@ public:
         delete ZFCastStatic(_ZFP_ZFUIImageViewImpl_sys_Qt_ImageView *, nativeImageView);
     }
 
-    virtual void imageContentSet(ZF_IN ZFUIImageView *imageView,
-                                 ZF_IN ZFUIImage *image)
+    virtual void imageSet(ZF_IN ZFUIImageView *imageView,
+                          ZF_IN ZFUIImage *image)
     {
         _ZFP_ZFUIImageViewImpl_sys_Qt_ImageView *nativeImplView = ZFCastStatic(_ZFP_ZFUIImageViewImpl_sys_Qt_ImageView *, imageView->nativeImplView());
         nativeImplView->update();

@@ -38,6 +38,8 @@ public:
     ZFCallerInfo callbackCallerInfo;
     zfchar *serializableCustomType;
     ZFSerializableData *serializableCustomData;
+    zfchar *pathType;
+    zfchar *pathInfo;
 
 public:
     _ZFP_ZFCallbackPrivate(void)
@@ -52,6 +54,8 @@ public:
     , callbackCallerInfo()
     , serializableCustomType(zfnull)
     , serializableCustomData(zfnull)
+    , pathType(zfnull)
+    , pathInfo(zfnull)
     {
     }
     ~_ZFP_ZFCallbackPrivate(void)
@@ -63,6 +67,8 @@ public:
         }
         zffree(this->serializableCustomType);
         zfdelete(this->serializableCustomData);
+        zffree(this->pathType);
+        zffree(this->pathInfo);
     }
 };
 
@@ -433,6 +439,20 @@ const ZFSerializableData *ZFCallback::callbackSerializeCustomData(void) const
     return d->serializableCustomData;
 }
 
+const zfchar *ZFCallback::pathType(void) const
+{
+    return d->pathType;
+}
+const zfchar *ZFCallback::pathInfo(void) const
+{
+    return d->pathInfo;
+}
+void ZFCallback::pathInfoSet(ZF_IN const zfchar *pathType, ZF_IN const zfchar *pathInfo)
+{
+    zfsChange(d->pathType, pathType);
+    zfsChange(d->pathInfo, pathInfo);
+}
+
 void ZFCallback::_ZFP_ZFCallbackCachedDataSetup(ZF_IN_OUT ZFCallback &c, _ZFP_ZFCallbackPrivate *d)
 {
     switch(d->callbackType)
@@ -497,6 +517,9 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackSerializeC
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const zfchar *, callbackSerializeCustomType)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFCallback, void, callbackSerializeCustomDataSet, ZFMP_IN(const ZFSerializableData &, customData))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const ZFSerializableData *, callbackSerializeCustomData)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const zfchar *, pathType)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFCallback, const zfchar *, pathInfo)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFCallback, void, pathInfoSet, ZFMP_IN(const zfchar *, pathType), ZFMP_IN(const zfchar *, pathInfo))
 
 // ============================================================
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_1(ZFCallback, ZFCallbackNullDetail, ZFMP_IN(const ZFCallerInfo &, callerInfo))

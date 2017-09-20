@@ -97,9 +97,6 @@ ZFMETHOD_FUNC_DECLARE_3(void, ZFXmlPrint,
 // ============================================================
 /**
  * @brief util method to parse serializable data from input with xml format
- *
- * this method would automatically setup
- * #ZFSerializableDataTagKeyword_filePath/#ZFSerializableDataTagKeyword_resPath
  */
 ZFMETHOD_FUNC_DECLARE_2(zfbool, ZFXmlParse,
                         ZFMP_OUT(ZFSerializableData &, ret),
