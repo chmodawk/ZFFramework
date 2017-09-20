@@ -59,10 +59,10 @@ protected:
     zfoverride
     virtual inline void objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     {
-        if(this->buttonLabelTextString() != zfnull)
+        if(this->buttonLabelText() != zfnull)
         {
             ret += zfText(" \"");
-            ret += this->buttonLabelTextString();
+            ret += this->buttonLabelText();
             ret += zfText("\"");
         }
     }

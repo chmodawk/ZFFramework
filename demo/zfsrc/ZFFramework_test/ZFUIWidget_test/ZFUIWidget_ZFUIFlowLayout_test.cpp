@@ -56,7 +56,7 @@ private:
             view->textSet(text);
         })
         addButton->observerAdd(ZFUIButton::EventButtonOnClick(), addButtonOnClick, layout->objectHolder());
-        addButton->buttonLabelTextStringSet(zfText("add"));
+        addButton->buttonLabelTextSet(zfText("add"));
 
         zfblockedAlloc(ZFUIKit_test_Button, removeButton);
         container->childAdd(removeButton);
@@ -69,7 +69,7 @@ private:
             }
         })
         removeButton->observerAdd(ZFUIButton::EventButtonOnClick(), removeButtonOnClick, layout->objectHolder());
-        removeButton->buttonLabelTextStringSet(zfText("remove"));
+        removeButton->buttonLabelTextSet(zfText("remove"));
     }
     void prepareSettingButton(ZF_IN ZFUIWindow *window,
                               ZF_IN ZFUIFlowLayout *layout)

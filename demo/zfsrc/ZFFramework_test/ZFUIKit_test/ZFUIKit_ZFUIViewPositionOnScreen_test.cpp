@@ -28,7 +28,7 @@ protected:
         zfblockedAlloc(ZFUIKit_test_Button, button);
         container->childAdd(button);
         button->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
-        button->buttonLabelTextStringSet(zfText("click me"));
+        button->buttonLabelTextSet(zfText("click me"));
 
         ZFLISTENER_LOCAL(buttonOnClick, {
             zfLogTrimT() << zfText("window size:") << ZFUIViewUtil::viewRoot(listenerData.sender->to<ZFUIView *>())->layoutedFrame().size;

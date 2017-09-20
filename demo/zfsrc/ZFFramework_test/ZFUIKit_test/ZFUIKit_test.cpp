@@ -26,7 +26,7 @@ void ZFUIKit_test_prepareTestWindow(ZF_OUT ZFUIWindow *&window,
     zfblockedAlloc(ZFUIKit_test_Button, closeButton);
     window->childAdd(closeButton);
     closeButton->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner | ZFUIAlign::e_RightInner);
-    closeButton->buttonLabelTextStringSet(zfText("close"));
+    closeButton->buttonLabelTextSet(zfText("close"));
     ZFLISTENER_LOCAL(onClickCloseButton, {
         ZFUIWindow *window = userData->tagGet<ZFObjectHolder *>(zfText("window"))->holdedObj;
         ZFTestCase *testCase = userData->tagGet<ZFObjectHolder *>(zfText("testCaseToStop"))->holdedObj;
@@ -49,7 +49,7 @@ void ZFUIKit_test_prepareTestWindow(ZF_OUT ZFUIWindow *&window,
 zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings)
 {
     zfblockedAlloc(ZFUIKit_test_Button, settingsButton);
-    settingsButton->buttonLabelTextStringSet(zfText("settings"));
+    settingsButton->buttonLabelTextSet(zfText("settings"));
     settingsButton->tagSet(zfText("settingsHolder"), settings);
 
     zfblockedAlloc(ZFUIKit_test_Window, window);
@@ -101,13 +101,13 @@ zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings)
 
             zfblockedAlloc(ZFStringEditable, buttonText);
             setting->buttonTextGetter().execute(ZFListenerData(zfidentityInvalid(), button, buttonText), setting->userData());
-            button->buttonLabelTextStringSet(buttonText->stringValue());
+            button->buttonLabelTextSet(buttonText->stringValue());
         })
         setting->observerAdd(ZFUIKit_test_SettingData::EventSettingOnChange(), settingOnChange, settingChangeUserData);
 
         zfblockedAlloc(ZFStringEditable, buttonText);
         setting->buttonTextGetter().execute(ZFListenerData(zfidentityInvalid(), button, buttonText), setting->userData());
-        button->buttonLabelTextStringSet(buttonText->stringValue());
+        button->buttonLabelTextSet(buttonText->stringValue());
     }
 
     return zfautoObjectCreate(settingsButton);

@@ -100,7 +100,7 @@ private:
             cell->cellViewSet(button);
             this->buttonGroup->buttonAdd(button);
 
-            button->buttonLabelTextStringSet(this->pimplOwner->choiceNameAtIndex(i));
+            button->buttonLabelTextSet(this->pimplOwner->choiceNameAtIndex(i));
         }
         this->buttonGroup->buttonTabCheckedSet(this->pimplOwner->choiceSelectedIndexList().getFirst());
     }
@@ -116,7 +116,7 @@ private:
             cell->cellViewSet(button);
             this->buttonGroup->buttonAdd(button);
 
-            button->buttonLabelTextStringSet(this->pimplOwner->choiceNameAtIndex(i));
+            button->buttonLabelTextSet(this->pimplOwner->choiceNameAtIndex(i));
         }
         ZFCoreArrayPOD<zfindex> selectedIndexList = this->pimplOwner->choiceSelectedIndexList();
         for(zfindex i = 0; i < selectedIndexList.count(); ++i)

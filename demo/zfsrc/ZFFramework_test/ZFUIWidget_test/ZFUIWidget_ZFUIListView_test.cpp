@@ -227,7 +227,7 @@ private:
             })
             zfblockedAlloc(ZFUIKit_test_Button, randomScrollButton);
             window->childAdd(randomScrollButton);
-            randomScrollButton->buttonLabelTextStringSet(zfText("random scroll"));
+            randomScrollButton->buttonLabelTextSet(zfText("random scroll"));
             randomScrollButton->observerAdd(ZFUIButton::EventButtonOnClick(), buttonClickListener, userData);
         }
 

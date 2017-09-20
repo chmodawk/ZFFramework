@@ -319,7 +319,7 @@ public:
     /**
      * @brief util method to get button label's text
      */
-    ZFMETHOD_DECLARE_1(zfstring const &, buttonLabelText,
+    ZFMETHOD_DECLARE_1(const zfchar *, buttonLabelText,
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
         return this->buttonLabelStyle(forState)->text();
@@ -328,23 +328,6 @@ public:
      * @brief util method to set button label's text
      */
     ZFMETHOD_DECLARE_2(void, buttonLabelTextSet,
-                       ZFMP_IN(const zfchar *, text),
-                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        this->buttonLabelStyle(forState)->textSet(text);
-    }
-    /**
-     * @brief util method to get button label's text
-     */
-    ZFMETHOD_DECLARE_1(const zfchar *, buttonLabelTextString,
-                       ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
-    {
-        return this->buttonLabelStyle(forState)->text();
-    }
-    /**
-     * @brief util method to set button label's text
-     */
-    ZFMETHOD_DECLARE_2(void, buttonLabelTextStringSet,
                        ZFMP_IN(const zfchar *, text),
                        ZFMP_IN_OPT(ZFUIButtonStateEnum, forState, ZFUIButtonState::e_Normal))
     {
@@ -478,11 +461,11 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextNormal, {obj->buttonLabelTextStringSet(langValue, ZFUIButtonState::e_Normal);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextHighlighted, {obj->buttonLabelTextStringSet(langValue, ZFUIButtonState::e_Highlighted);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextChecked, {obj->buttonLabelTextStringSet(langValue, ZFUIButtonState::e_Checked);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextCheckedHighlighted, {obj->buttonLabelTextStringSet(langValue, ZFUIButtonState::e_CheckedHighlighted);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextDisabled, {obj->buttonLabelTextStringSet(langValue, ZFUIButtonState::e_Disabled);})
+ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextNormal, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Normal);})
+ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Highlighted);})
+ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextChecked, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Checked);})
+ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextCheckedHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_CheckedHighlighted);})
+ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextDisabled, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Disabled);})
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIButtonBasic_h_

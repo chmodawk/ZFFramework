@@ -61,7 +61,7 @@ it's designed to be a complete and complex framework, current code status:
         zfblockedAlloc(ZFUIButtonBasic, button);
         window->childAdd(button);
         button->layoutParam()->layoutAlignSet(ZFUIAlign::e_RightInner);
-        button->buttonLabelTextStringSet(zfText("click me"));
+        button->buttonLabelTextSet(zfText("click me"));
         ZFLISTENER_LOCAL(onClick, {
             ZFUIButtonBasic *button = userData->to<ZFObjectHolder *>()->holdedObj;
             zfLogTrimT() << zfText("button clicked:") << button;
@@ -89,7 +89,7 @@ it's designed to be a complete and complex framework, current code status:
     local button = ZFUIButtonBasic.ClassData():newInstance()
     window:childAdd(button)
     button:layoutParam():layoutAlignSet(ZFUIAlign.e_RightInner())
-    button:buttonLabelTextStringSet('click me')
+    button:buttonLabelTextSet('click me')
     button:observerAdd(
         ZFUIButton.EventButtonOnClick(),
         ZFCallbackForLua(function (listenerData, userData)

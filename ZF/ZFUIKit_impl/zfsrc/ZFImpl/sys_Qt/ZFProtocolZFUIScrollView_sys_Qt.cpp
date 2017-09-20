@@ -548,14 +548,15 @@ public:
         QRect nativeFrame = ZFImpl_sys_Qt_ZFUIKit_ZFUIRectToQRect(frame);
         nativeScrollView->_ZFP_scrollViewContentView->setGeometry(nativeFrame);
     }
-    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView)
+    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,
+                                                   ZF_IN zftimet recommendTimerInterval)
     {
         _ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *nativeScrollView = ZFCastStatic(_ZFP_ZFUIScrollViewImpl_sys_Qt_ScrollView *, scrollView->nativeImplView());
         nativeScrollView->_ZFP_scrollAnimationTimer.connect(
             &(nativeScrollView->_ZFP_scrollAnimationTimer), SIGNAL(timeout()),
             nativeScrollView, SLOT(_ZFP_scrollAnimationTimerOnActivate()));
         nativeScrollView->_ZFP_scrollAnimationTimer.moveToThread(QCoreApplication::instance()->thread());
-        nativeScrollView->_ZFP_scrollAnimationTimer.start(30);
+        nativeScrollView->_ZFP_scrollAnimationTimer.start((zfuint)recommendTimerInterval);
         return _ZFP_ZFUIScrollViewImpl_sys_Qt_timestamp();
     }
     virtual void scrollViewScrollAnimationStop(ZF_IN ZFUIScrollView *scrollView)

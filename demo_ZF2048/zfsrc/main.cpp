@@ -44,7 +44,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, left);
         ll->childAdd(left);
-        left->buttonLabelTextStringSet(zfText("left"));
+        left->buttonLabelTextSet(zfText("left"));
         ZFLISTENER_LOCAL(leftOnClick, {
             ZF2048Core *game = userData->toAny();
             game->moveLeft();
@@ -54,7 +54,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, top);
         ll->childAdd(top);
-        top->buttonLabelTextStringSet(zfText("top"));
+        top->buttonLabelTextSet(zfText("top"));
         ZFLISTENER_LOCAL(topOnClick, {
             ZF2048Core *game = userData->toAny();
             game->moveTop();
@@ -64,7 +64,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, right);
         ll->childAdd(right);
-        right->buttonLabelTextStringSet(zfText("right"));
+        right->buttonLabelTextSet(zfText("right"));
         ZFLISTENER_LOCAL(rightOnClick, {
             ZF2048Core *game = userData->toAny();
             game->moveRight();
@@ -74,7 +74,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, bottom);
         ll->childAdd(bottom);
-        bottom->buttonLabelTextStringSet(zfText("bottom"));
+        bottom->buttonLabelTextSet(zfText("bottom"));
         ZFLISTENER_LOCAL(bottomOnClick, {
             ZF2048Core *game = userData->toAny();
             game->moveBottom();
@@ -84,7 +84,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, reset);
         ll->childAdd(reset);
-        reset->buttonLabelTextStringSet(zfText("reset"));
+        reset->buttonLabelTextSet(zfText("reset"));
         ZFLISTENER_LOCAL(resetOnClick, {
             ZF2048Core *game = userData->toAny();
             game->reset();
@@ -94,7 +94,7 @@ ZFMAIN_ENTRY(params)
 
         zfblockedAlloc(ZFUIButtonBasic, undo);
         ll->childAdd(undo);
-        undo->buttonLabelTextStringSet(zfText("undo"));
+        undo->buttonLabelTextSet(zfText("undo"));
         ZFLISTENER_LOCAL(undoOnClick, {
             ZF2048Core *game = userData->toAny();
             game->undo();

@@ -387,7 +387,8 @@ private:
                 zfLogTrimT() << this->pimplOwner->objectInfoOfInstance() << zfText("scrollAniTimerStart");
             #endif
             this->scrollAniTimerStarted = zftrue;
-            this->scrollAniLastTime = this->impl->scrollViewScrollAnimationStart(this->pimplOwner);
+            static const zftimet recommendTimerInterval = zftimet(17); // nearly 60fps
+            this->scrollAniLastTime = this->impl->scrollViewScrollAnimationStart(this->pimplOwner, recommendTimerInterval);
         }
     }
     void notifyScrollAniTimerStop(void)

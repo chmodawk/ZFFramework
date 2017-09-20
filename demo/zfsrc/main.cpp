@@ -83,7 +83,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
         _autoLeakTestOn = zffalse;
         ZFLISTENER_LOCAL(onClickButton, {
             _autoLeakTestOn = !_autoLeakTestOn;
-            listenerData.sender->to<ZFUIButtonBasic *>()->buttonLabelTextStringSet(
+            listenerData.sender->to<ZFUIButtonBasic *>()->buttonLabelTextSet(
                 zfstringWithFormat(zfText("autoLeakTest %s"), _autoLeakTestOn ? zfText("on") : zfText("off")));
         })
         button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton);
@@ -104,7 +104,7 @@ static zfautoObject _ZFP_ZFFramework_test_containerViewPrepare(void)
             {
                 ZFUIViewStateAniAutoApplyStart();
             }
-            listenerData.sender->to<ZFUIButtonBasic *>()->buttonLabelTextStringSet(
+            listenerData.sender->to<ZFUIButtonBasic *>()->buttonLabelTextSet(
                 zfstringWithFormat(zfText("stateAni %s"), ZFUIViewStateAniAutoApplyStarted() ? zfText("on") : zfText("off")));
         })
         button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton);
@@ -213,7 +213,7 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModule(ZF_IN ZFUIView *conta
         {
             zfblockedAlloc(ZFUIKit_test_Button, closeButton);
             containerView->childAdd(closeButton);
-            closeButton->buttonLabelTextStringSet(zfText("back"));
+            closeButton->buttonLabelTextSet(zfText("back"));
             ZFLISTENER_LOCAL(closeButtonOnClick, {
                 userData->to<ZFObjectHolder *>()->holdedObj.to<ZFUIWindow *>()->windowHide();
             })
@@ -237,7 +237,7 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModule(ZF_IN ZFUIView *conta
     subModuleData->subModuleName = subModuleName;
     subModuleData->testCases = testCases;
     button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton, subModuleData);
-    button->buttonLabelTextStringSet(subModuleName);
+    button->buttonLabelTextSet(subModuleName);
 }
 static void _ZFP_ZFFramework_test_prepareTestCaseSubModuleTest(ZF_IN ZFUIView *containerView,
                                                                ZF_IN const zfchar *subModuleName,
@@ -279,7 +279,7 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModuleTest(ZF_IN ZFUIView *c
     userData->tagSet(zfText("testCase"), zflineAlloc(ZFPointerHolder, testCase));
     userData->tagSet(zfText("containerView"), containerView->objectHolder());
     button->observerAdd(ZFUIButton::EventButtonOnClick(), onClickButton, userData);
-    button->buttonLabelTextStringSet(zfstring(testCase->className() + zfslen(subModuleName) + 1));
+    button->buttonLabelTextSet(zfstring(testCase->className() + zfslen(subModuleName) + 1));
 }
 
 ZF_GLOBAL_INITIALIZER_INIT(iOS7AutoTitleSpace)

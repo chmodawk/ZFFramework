@@ -211,10 +211,11 @@ public:
         _ZFP_ZFUIScrollViewImpl_sys_iOS_ScrollView *nativeScrollView = (__bridge _ZFP_ZFUIScrollViewImpl_sys_iOS_ScrollView *)scrollView->nativeImplView();
         nativeScrollView._ZFP_scrollContentFrame = frame;
     }
-    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView)
+    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,
+                                                   ZF_IN zftimet recommendTimerInterval)
     {
         _ZFP_ZFUIScrollViewImpl_sys_iOS_ScrollView *nativeScrollView = (__bridge _ZFP_ZFUIScrollViewImpl_sys_iOS_ScrollView *)scrollView->nativeImplView();
-        nativeScrollView._ZFP_scrollImplScrollAnimationTimer = [NSTimer timerWithTimeInterval:0.03f target:nativeScrollView selector:@selector(_ZFP_scrollImplScrollAnimationTimerEvent:) userInfo:nil repeats:YES];
+        nativeScrollView._ZFP_scrollImplScrollAnimationTimer = [NSTimer timerWithTimeInterval:(recommendTimerInterval / 1000.0f) target:nativeScrollView selector:@selector(_ZFP_scrollImplScrollAnimationTimerEvent:) userInfo:nil repeats:YES];
         [[NSRunLoop mainRunLoop] addTimer:nativeScrollView._ZFP_scrollImplScrollAnimationTimer forMode:NSRunLoopCommonModes];
         return _ZFP_ZFUIScrollViewImpl_sys_iOS_timestamp();
     }

@@ -29,7 +29,7 @@ ZFMETHOD_FUNC_DEFINE_2(zfautoObject, ZFUIHintMake,
 
     zfblockedAlloc(ZFUIHintContentBasic, hintContent);
     hint->hintContentSet(hintContent);
-    hintContent->buttonLabelTextStringSet(text);
+    hintContent->buttonLabelTextSet(text);
     hintContent->buttonIconImageSet(icon);
 
     return zfautoObjectCreate(hint);

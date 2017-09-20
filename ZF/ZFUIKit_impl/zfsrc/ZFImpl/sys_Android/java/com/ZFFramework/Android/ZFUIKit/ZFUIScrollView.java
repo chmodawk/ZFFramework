@@ -68,6 +68,7 @@ public class ZFUIScrollView extends ZFUIView {
 
     private boolean _scrollAnimating = false;
     private int _scrollAniTaskId = 0;
+    private int _recommendTimerInterval = 15;
     private static Handler _scrollAniTimerHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,14 +78,15 @@ public class ZFUIScrollView extends ZFUIView {
                 ZFUIScrollView.native_notifyScrollViewScrollAnimation(
                     scrollView.zfjniPointerOwnerZFUIScrollView, System.currentTimeMillis());
                 _scrollAniTimerHandler.sendMessageDelayed(Message.obtain(
-                    _scrollAniTimerHandler, scrollView._scrollAniTaskId, scrollView), 10);
+                    _scrollAniTimerHandler, scrollView._scrollAniTaskId, scrollView), scrollView._recommendTimerInterval);
             }
         }
     };
-    public static long native_scrollViewScrollAnimationStart(Object nativeView) {
+    public static long native_scrollViewScrollAnimationStart(Object nativeView, int recommendTimerInterval) {
         ZFUIScrollView nativeViewTmp = (ZFUIScrollView)nativeView;
         ++nativeViewTmp._scrollAniTaskId;
         nativeViewTmp._scrollAnimating = true;
+        nativeViewTmp._recommendTimerInterval = recommendTimerInterval;
         _scrollAniTimerHandler.sendMessage(Message.obtain(_scrollAniTimerHandler, nativeViewTmp._scrollAniTaskId, nativeViewTmp));
         return System.currentTimeMillis();
     }

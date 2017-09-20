@@ -36,7 +36,7 @@ protected:
 
         this->_titleView()->childAdd(this->_titleLeftView());
         this->_titleLeftView()->layoutParam<ZFUILinearLayoutParam *>()->layoutWeightSet(1);
-        this->_titleLeftView()->buttonLabelTextStringSet(zfText("back"));
+        this->_titleLeftView()->buttonLabelTextSet(zfText("back"));
         this->_titleLeftView()->viewBackgroundColorSet(ZFUIColorRandom());
         {
             ZFLISTENER_LOCAL(_titleLeftViewOnClick, {
@@ -54,7 +54,7 @@ protected:
         this->_mainView()->childAdd(this->_contentView());
         this->_contentView()->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
         this->_contentView()->viewBackgroundColorSet(ZFUIColorRandom());
-        this->_contentView()->buttonLabelTextStringSet(zfstringWithFormat(zfText("belong to %s"), this->pageGroupId().cString()));
+        this->_contentView()->buttonLabelTextSet(zfstringWithFormat(zfText("belong to %s"), this->pageGroupId().cString()));
         {
             ZFLISTENER_LOCAL(_contentViewOnClick, {
                 ZFUIPage *page = userData->to<ZFObjectHolder *>()->holdedObj;
@@ -173,7 +173,7 @@ protected:
             zfblockedAlloc(ZFUIButtonBasic, button);
             this->_buttonLayout()->childAdd(button);
             button->layoutParam<ZFUILinearLayoutParam *>()->layoutWeightSet(1);
-            button->buttonLabelTextStringSet(zfstringWithFormat(zfText("tab %zi"), i));
+            button->buttonLabelTextSet(zfstringWithFormat(zfText("tab %zi"), i));
             button->buttonCheckableSet(zftrue);
             ZFLISTENER_LOCAL(buttonOnClick, {
                 ZFUIWidget_ZFUIPage_test_PageManager *pageManager = userData->tagGet<ZFObjectHolder *>(zfText("pageManager"))->holdedObj;

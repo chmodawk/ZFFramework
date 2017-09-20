@@ -20,7 +20,8 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 zfclassFwd ZFPROTOCOL_INTERFACE_CLASS(ZFUIScrollView);
 extern ZF_ENV_EXPORT zftimet _ZFP_ZFProtocolZFUIScrollView_scrollViewScrollAnimationStart(ZF_IN ZFPROTOCOL_INTERFACE_CLASS(ZFUIScrollView) *impl,
-                                                                                          ZF_IN ZFUIScrollView *scrollView);
+                                                                                          ZF_IN ZFUIScrollView *scrollView,
+                                                                                          ZF_IN zftimet recommendTimerInterval);
 extern ZF_ENV_EXPORT void _ZFP_ZFProtocolZFUIScrollView_scrollViewScrollAnimationStop(ZF_IN ZFPROTOCOL_INTERFACE_CLASS(ZFUIScrollView) *impl,
                                                                                       ZF_IN ZFUIScrollView *scrollView);
 
@@ -92,9 +93,10 @@ public:
      * which may have worse performance,
      * and depends on #ZFTimer and #ZFTime
      */
-    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView)
+    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,
+                                                   ZF_IN zftimet recommendTimerInterval)
     {
-        return _ZFP_ZFProtocolZFUIScrollView_scrollViewScrollAnimationStart(this, scrollView);
+        return _ZFP_ZFProtocolZFUIScrollView_scrollViewScrollAnimationStart(this, scrollView, recommendTimerInterval);
     }
     /**
      * @brief see #scrollViewScrollAnimationStart

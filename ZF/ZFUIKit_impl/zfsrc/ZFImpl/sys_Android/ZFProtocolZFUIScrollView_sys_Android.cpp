@@ -118,15 +118,18 @@ public:
             (jint)frame.size.width,
             (jint)frame.size.height);
     }
-    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView)
+    virtual zftimet scrollViewScrollAnimationStart(ZF_IN ZFUIScrollView *scrollView,
+                                                   ZF_IN zftimet recommendTimerInterval)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsZFUIScrollView, zfTextA("native_scrollViewScrollAnimationStart"),
             JNIGetMethodSig(JNIType::S_long, JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
+                .add(JNIType::S_int)
             ).c_str());
         return (zftimet)JNIUtilCallStaticLongMethod(jniEnv, this->jclsZFUIScrollView, jmId,
-            ZFCastStatic(jobject, scrollView->nativeImplView()));
+            ZFCastStatic(jobject, scrollView->nativeImplView()),
+            (jint)(zfuint)recommendTimerInterval);
     }
     virtual void scrollViewScrollAnimationStop(ZF_IN ZFUIScrollView *scrollView)
     {

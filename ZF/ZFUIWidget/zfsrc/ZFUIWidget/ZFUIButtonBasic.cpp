@@ -508,34 +508,32 @@ void ZFUIButtonBasic::buttonStateOnUpdate(void)
     #define _ZFP_ZFUIButtonBasic_buttonStateOn(StateName) \
         if(d->buttonLabel != zfnull) \
         { \
-            ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonLabel)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonLabelStyle##StateName())); \
+            if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUIButtonBasic, buttonLabelStyle##StateName), this)) \
+            { \
+                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonLabel)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonLabelStyle##StateName())); \
+            } \
             d->updateButtonLabel(); \
         } \
         if(d->buttonIcon != zfnull) \
         { \
-            ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonIcon)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonIconStyle##StateName())); \
+            if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUIButtonBasic, buttonIconStyle##StateName), this)) \
+            { \
+                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonIcon)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonIconStyle##StateName())); \
+            } \
             d->updateButtonIcon(); \
         } \
         if(d->buttonBackground != zfnull) \
         { \
-            ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonBackground)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonBackgroundStyle##StateName())); \
+            if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUIButtonBasic, buttonBackgroundStyle##StateName), this)) \
+            { \
+                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonBackground)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonBackgroundStyle##StateName())); \
+            } \
             d->updateButtonBackground(); \
         }
     switch(this->buttonState())
     {
         case ZFUIButtonState::e_Normal:
-            if(d->buttonLabel != zfnull)
-            {
-                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonLabel)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonLabelStyleNormal()));
-            }
-            if(d->buttonIcon != zfnull)
-            {
-                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonIcon)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonIconStyleNormal()));
-            }
-            if(d->buttonBackground != zfnull)
-            {
-                ZFCastZFObjectUnchecked(ZFStyleable *, d->buttonBackground)->styleableCopyFrom(ZFCastZFObjectUnchecked(ZFStyleable *, this->buttonBackgroundStyleNormal()));
-            }
+            _ZFP_ZFUIButtonBasic_buttonStateOn(Normal)
             break;
         case ZFUIButtonState::e_Highlighted:
             _ZFP_ZFUIButtonBasic_buttonStateOn(Highlighted)

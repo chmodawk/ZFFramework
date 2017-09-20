@@ -81,7 +81,7 @@ protected:
         zfblockedAlloc(ZFUIKit_test_Button, startButton);
         container->childAdd(startButton);
         startButton->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner);
-        startButton->buttonLabelTextStringSet(zfText("start"));
+        startButton->buttonLabelTextSet(zfText("start"));
 
         ZFLISTENER_LOCAL_BEGIN(onStart) {
             ZFUIKit_ZFUISerializePerformance_test *owner = userData->tagGet<ZFObjectHolder *>(zfText("owner"))->holdedObj;

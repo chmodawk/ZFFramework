@@ -70,7 +70,7 @@ protected:
         zfblockedAlloc(ZFUIKit_test_Button, startButton);
         container->childAdd(startButton);
         startButton->layoutParam()->layoutAlignSet(ZFUIAlign::e_TopInner | ZFUIAlign::e_RightInner);
-        startButton->buttonLabelTextStringSet(zfText("start"));
+        startButton->buttonLabelTextSet(zfText("start"));
         startButton->observerAdd(ZFUIButton::EventButtonOnClick(), startOnClick, testContainer->objectHolder());
 
         this->prepareSettingButton(window);

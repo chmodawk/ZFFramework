@@ -141,12 +141,12 @@ ZFUIButton *ZFUIDialogContentBasic::dialogButton(ZF_IN ZFUIDialogButtonTypeEnum 
 const zfchar *ZFUIDialogContentBasic::dialogButtonText(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType)
 {
     ZFUIButtonBasic *button = ZFCastZFObjectUnchecked(ZFUIButtonBasic *, this->dialogButton(dialogButtonType, zffalse));
-    return ((button != zfnull) ? button->buttonLabelTextString() : zfnull);
+    return ((button != zfnull) ? button->buttonLabelText() : zfnull);
 }
 void ZFUIDialogContentBasic::dialogButtonTextSet(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType,
                                                  ZF_IN const zfchar *text)
 {
-    this->dialogButton(dialogButtonType)->to<ZFUIButtonBasic *>()->buttonLabelTextStringSet(text);
+    this->dialogButton(dialogButtonType)->to<ZFUIButtonBasic *>()->buttonLabelTextSet(text);
 }
 void ZFUIDialogContentBasic::dialogButtonRemove(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType)
 {
