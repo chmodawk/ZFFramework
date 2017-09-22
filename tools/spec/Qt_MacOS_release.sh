@@ -23,9 +23,9 @@ fi
 _OLD_DIR=$(pwd)
 mkdir -p "$ZF_ROOT_PATH/_tmp/$QT_TYPE/$PROJ_NAME" >/dev/null 2>&1
 cd "$ZF_ROOT_PATH/_tmp/$QT_TYPE/$PROJ_NAME"
-find . -name "*.a.*" | xargs rm
-find . -name "*.so.*" | xargs rm
-find . -name "*.dylib.*" | xargs rm
+find . -name "*.a.*" 2>/dev/null | xargs rm
+find . -name "*.so.*" 2>/dev/null | xargs rm
+find . -name "*.dylib.*" 2>/dev/null | xargs rm
 qmake "$PROJ_PATH/zfproj/Qt/$PROJ_NAME/$PROJ_NAME.pro" -r -spec macx-clang
 make -j2
 cd "$_OLD_DIR"

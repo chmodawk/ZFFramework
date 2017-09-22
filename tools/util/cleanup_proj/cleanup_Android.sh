@@ -14,13 +14,13 @@ rm -rf "$PROJ_ROOT/$PROJ_NAME/.gradle" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/.idea" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/build" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/local.properties" >/dev/null 2>&1
-find "$PROJ_ROOT/$PROJ_NAME" -name "*.iml" | xargs rm -rf >/dev/null 2>&1
+find "$PROJ_ROOT/$PROJ_NAME" -name "*.iml" 2>/dev/null | xargs rm -rf >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/zflib/.externalNativeBuild" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/zflib/build" >/dev/null 2>&1
-find "$PROJ_ROOT/$PROJ_NAME/zflib/" -name "*.iml" | xargs rm -rf >/dev/null 2>&1
+find "$PROJ_ROOT/$PROJ_NAME/zflib/" -name "*.iml" 2>/dev/null | xargs rm -rf >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/zfapp/.externalNativeBuild" >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/zfapp/build" >/dev/null 2>&1
-find "$PROJ_ROOT/$PROJ_NAME/zfapp/" -name "*.iml" | xargs rm -rf >/dev/null 2>&1
+find "$PROJ_ROOT/$PROJ_NAME/zfapp/" -name "*.iml" 2>/dev/null | xargs rm -rf >/dev/null 2>&1
 rm -rf "$PROJ_ROOT/$PROJ_NAME/zfapp/src/main/assets/zfres" >/dev/null 2>&1
 
 exit 0
