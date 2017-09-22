@@ -70,10 +70,12 @@ ZFENUM_END_WITH_DEFAULT(ZFUITextEditKeyboardReturnType, Normal)
  */
 ZFENUM_BEGIN(ZFUITextEditKeyboardReturnAction)
     ZFENUM_VALUE(None) /**< @brief do nothing */
-    ZFENUM_VALUE(FocusNext) /**< @brief move focus to next */
-    ZFENUM_VALUE(HideKeyboard) /**< @brief hide on screen keyboard if showing */
+    ZFENUM_VALUE(Confirm) /**< @brief confirm only, keep focus and keyboard state */
+    ZFENUM_VALUE(FocusNext) /**< @brief confirm and move focus to next */
+    ZFENUM_VALUE(HideKeyboard) /**< @brief confirm and hide on screen keyboard if showing */
 ZFENUM_SEPARATOR(ZFUITextEditKeyboardReturnAction)
     ZFENUM_VALUE_REGISTER(None)
+    ZFENUM_VALUE_REGISTER(Confirm)
     ZFENUM_VALUE_REGISTER(FocusNext)
     ZFENUM_VALUE_REGISTER(HideKeyboard)
 ZFENUM_END_WITH_DEFAULT(ZFUITextEditKeyboardReturnAction, FocusNext)
@@ -212,6 +214,11 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(zfindexRange, textSelectRange, ZFPropertyInitValue(zfindexRangeZero()))
     ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(zfindexRange, textSelectRange);
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfindexRange, textSelectRange);
+
+    /**
+     * @brief whether #textEditNotifyConfirm when lost focus, true by default
+     */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, textEditConfirmWhenLostFocus, ZFPropertyInitValue(zftrue))
 
 public:
     /**

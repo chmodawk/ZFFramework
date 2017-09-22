@@ -20,7 +20,12 @@ public final class ZFUIImage {
     @SuppressWarnings("deprecation")
     public static Object native_nativeImageFromInput(Object buf) {
         Bitmap bitmap = BitmapFactory.decodeStream(((ZFAndroidBuffer)buf).toInputStream());
-        return new BitmapDrawable(bitmap);
+        if(bitmap == null) {
+            return null;
+        }
+        else {
+            return new BitmapDrawable(bitmap);
+        }
     }
     public static Object native_nativeImageToOutput(Object nativeImage) {
         BitmapDrawable src = (BitmapDrawable)nativeImage;

@@ -32,10 +32,10 @@ public:
     // Normal(s), Destructive, Cancel, No, Yes
     zfindex dialogButtonInternalCount;
     ZFUILinearLayout *dialogButtonLayout;
-    ZFUIDialogContentBasicButtonYes *dialogButton_Yes;
-    ZFUIDialogContentBasicButtonNo *dialogButton_No;
-    ZFUIDialogContentBasicButtonCancel *dialogButton_Cancel;
-    ZFUIDialogContentBasicButtonDestructive *dialogButton_Destructive;
+    ZFUIDialogContentBasicButtonYes *dialogButtonYes;
+    ZFUIDialogContentBasicButtonNo *dialogButtonNo;
+    ZFUIDialogContentBasicButtonCancel *dialogButtonCancel;
+    ZFUIDialogContentBasicButtonDestructive *dialogButtonDestructive;
 public:
     _ZFP_ZFUIDialogContentBasicPrivate(void)
     : mainContainer(zfnull)
@@ -44,10 +44,10 @@ public:
     , dialogButtonContainer(zfnull)
     , dialogButtonInternalCount(0)
     , dialogButtonLayout(zfnull)
-    , dialogButton_Yes(zfnull)
-    , dialogButton_No(zfnull)
-    , dialogButton_Cancel(zfnull)
-    , dialogButton_Destructive(zfnull)
+    , dialogButtonYes(zfnull)
+    , dialogButtonNo(zfnull)
+    , dialogButtonCancel(zfnull)
+    , dialogButtonDestructive(zfnull)
     {
     }
 };
@@ -88,51 +88,51 @@ ZFUIButton *ZFUIDialogContentBasic::dialogButton(ZF_IN ZFUIDialogButtonTypeEnum 
         case ZFUIDialogButtonType::e_Normal:
             return zfnull;
         case ZFUIDialogButtonType::e_Yes:
-            if(autoCreateIfNotExist && d->dialogButton_Yes == zfnull)
+            if(autoCreateIfNotExist && d->dialogButtonYes == zfnull)
             {
                 ++(d->dialogButtonInternalCount);
-                d->dialogButton_Yes = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonYes);
+                d->dialogButtonYes = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonYes);
                 zfindex index = 0;
-                d->dialogButtonLayout->childAdd(d->dialogButton_Yes, zfnull, index);
-                this->dialogButtonOnAdd(d->dialogButton_Yes);
+                d->dialogButtonLayout->childAdd(d->dialogButtonYes, zfnull, index);
+                this->dialogButtonOnAdd(d->dialogButtonYes);
             }
-            return d->dialogButton_Yes;
+            return d->dialogButtonYes;
         case ZFUIDialogButtonType::e_No:
-            if(autoCreateIfNotExist && d->dialogButton_No == zfnull)
+            if(autoCreateIfNotExist && d->dialogButtonNo == zfnull)
             {
                 ++(d->dialogButtonInternalCount);
-                d->dialogButton_No = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonNo);
+                d->dialogButtonNo = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonNo);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
-                d->dialogButtonLayout->childAdd(d->dialogButton_No, zfnull, index);
-                this->dialogButtonOnAdd(d->dialogButton_No);
+                if(d->dialogButtonYes != zfnull) {++index;}
+                d->dialogButtonLayout->childAdd(d->dialogButtonNo, zfnull, index);
+                this->dialogButtonOnAdd(d->dialogButtonNo);
             }
-            return d->dialogButton_No;
+            return d->dialogButtonNo;
         case ZFUIDialogButtonType::e_Cancel:
-            if(autoCreateIfNotExist && d->dialogButton_Cancel == zfnull)
+            if(autoCreateIfNotExist && d->dialogButtonCancel == zfnull)
             {
                 ++(d->dialogButtonInternalCount);
-                d->dialogButton_Cancel = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonCancel);
+                d->dialogButtonCancel = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonCancel);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
-                if(d->dialogButton_No != zfnull) {++index;}
-                d->dialogButtonLayout->childAdd(d->dialogButton_Cancel, zfnull, index);
-                this->dialogButtonOnAdd(d->dialogButton_Cancel);
+                if(d->dialogButtonYes != zfnull) {++index;}
+                if(d->dialogButtonNo != zfnull) {++index;}
+                d->dialogButtonLayout->childAdd(d->dialogButtonCancel, zfnull, index);
+                this->dialogButtonOnAdd(d->dialogButtonCancel);
             }
-            return d->dialogButton_Cancel;
+            return d->dialogButtonCancel;
         case ZFUIDialogButtonType::e_Destructive:
-            if(autoCreateIfNotExist && d->dialogButton_Destructive == zfnull)
+            if(autoCreateIfNotExist && d->dialogButtonDestructive == zfnull)
             {
                 ++(d->dialogButtonInternalCount);
-                d->dialogButton_Destructive = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonDestructive);
+                d->dialogButtonDestructive = zfAllocWithoutLeakTest(ZFUIDialogContentBasicButtonDestructive);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
-                if(d->dialogButton_No != zfnull) {++index;}
-                if(d->dialogButton_Cancel != zfnull) {++index;}
-                d->dialogButtonLayout->childAdd(d->dialogButton_Destructive, zfnull, index);
-                this->dialogButtonOnAdd(d->dialogButton_Destructive);
+                if(d->dialogButtonYes != zfnull) {++index;}
+                if(d->dialogButtonNo != zfnull) {++index;}
+                if(d->dialogButtonCancel != zfnull) {++index;}
+                d->dialogButtonLayout->childAdd(d->dialogButtonDestructive, zfnull, index);
+                this->dialogButtonOnAdd(d->dialogButtonDestructive);
             }
-            return d->dialogButton_Destructive;
+            return d->dialogButtonDestructive;
         default:
             zfCoreCriticalShouldNotGoHere();
             return zfnull;
@@ -155,53 +155,53 @@ void ZFUIDialogContentBasic::dialogButtonRemove(ZF_IN ZFUIDialogButtonTypeEnum d
         case ZFUIDialogButtonType::e_Normal:
             break;
         case ZFUIDialogButtonType::e_Yes:
-            if(d->dialogButton_Yes != zfnull)
+            if(d->dialogButtonYes != zfnull)
             {
-                this->dialogButtonOnRemove(d->dialogButton_Yes);
+                this->dialogButtonOnRemove(d->dialogButtonYes);
                 --(d->dialogButtonInternalCount);
                 zfindex index = 0;
                 d->dialogButtonLayout->childRemoveAtIndex(index);
-                zfReleaseWithoutLeakTest(d->dialogButton_Yes);
-                d->dialogButton_Yes = zfnull;
+                zfReleaseWithoutLeakTest(d->dialogButtonYes);
+                d->dialogButtonYes = zfnull;
             }
             break;
         case ZFUIDialogButtonType::e_No:
-            if(d->dialogButton_No != zfnull)
+            if(d->dialogButtonNo != zfnull)
             {
-                this->dialogButtonOnRemove(d->dialogButton_No);
+                this->dialogButtonOnRemove(d->dialogButtonNo);
                 --(d->dialogButtonInternalCount);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
+                if(d->dialogButtonYes != zfnull) {++index;}
                 d->dialogButtonLayout->childRemoveAtIndex(index);
-                zfReleaseWithoutLeakTest(d->dialogButton_No);
-                d->dialogButton_No = zfnull;
+                zfReleaseWithoutLeakTest(d->dialogButtonNo);
+                d->dialogButtonNo = zfnull;
             }
             break;
         case ZFUIDialogButtonType::e_Cancel:
-            if(d->dialogButton_Cancel != zfnull)
+            if(d->dialogButtonCancel != zfnull)
             {
-                this->dialogButtonOnRemove(d->dialogButton_Cancel);
+                this->dialogButtonOnRemove(d->dialogButtonCancel);
                 --(d->dialogButtonInternalCount);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
-                if(d->dialogButton_No != zfnull) {++index;}
+                if(d->dialogButtonYes != zfnull) {++index;}
+                if(d->dialogButtonNo != zfnull) {++index;}
                 d->dialogButtonLayout->childRemoveAtIndex(index);
-                zfReleaseWithoutLeakTest(d->dialogButton_Cancel);
-                d->dialogButton_Cancel = zfnull;
+                zfReleaseWithoutLeakTest(d->dialogButtonCancel);
+                d->dialogButtonCancel = zfnull;
             }
             break;
         case ZFUIDialogButtonType::e_Destructive:
-            if(d->dialogButton_Destructive != zfnull)
+            if(d->dialogButtonDestructive != zfnull)
             {
-                this->dialogButtonOnRemove(d->dialogButton_Destructive);
+                this->dialogButtonOnRemove(d->dialogButtonDestructive);
                 --(d->dialogButtonInternalCount);
                 zfindex index = 0;
-                if(d->dialogButton_Yes != zfnull) {++index;}
-                if(d->dialogButton_No != zfnull) {++index;}
-                if(d->dialogButton_Cancel != zfnull) {++index;}
+                if(d->dialogButtonYes != zfnull) {++index;}
+                if(d->dialogButtonNo != zfnull) {++index;}
+                if(d->dialogButtonCancel != zfnull) {++index;}
                 d->dialogButtonLayout->childRemoveAtIndex(index);
-                zfReleaseWithoutLeakTest(d->dialogButton_Destructive);
-                d->dialogButton_Destructive = zfnull;
+                zfReleaseWithoutLeakTest(d->dialogButtonDestructive);
+                d->dialogButtonDestructive = zfnull;
             }
             break;
         default:
@@ -360,10 +360,10 @@ ZFObject *ZFUIDialogContentBasic::objectOnInit(void)
 }
 void ZFUIDialogContentBasic::objectOnDealloc(void)
 {
-    zfCoreAssert(d->dialogButton_Yes == zfnull);
-    zfCoreAssert(d->dialogButton_No == zfnull);
-    zfCoreAssert(d->dialogButton_Cancel == zfnull);
-    zfCoreAssert(d->dialogButton_Destructive == zfnull);
+    zfCoreAssert(d->dialogButtonYes == zfnull);
+    zfCoreAssert(d->dialogButtonNo == zfnull);
+    zfCoreAssert(d->dialogButtonCancel == zfnull);
+    zfCoreAssert(d->dialogButtonDestructive == zfnull);
 
     zfReleaseWithoutLeakTest(d->dialogButtonLayout);
     zfReleaseWithoutLeakTest(d->dialogButtonContainer);

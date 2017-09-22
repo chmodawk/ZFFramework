@@ -42,6 +42,7 @@ public:
                 ZFUIGlobalStyle::DefaultStyle()->itemSizeDialogWidth(),
                 ZFUIGlobalStyle::DefaultStyle()->itemSizeControl()
             ));
+        inputView->textEditConfirmWhenLostFocusSet(zffalse);
     }
 
     /**

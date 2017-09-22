@@ -18,6 +18,16 @@ ZFObject *ZFUIDialogForInput::objectOnInit(void)
 
     this->dialogContentContainer()->childAdd(this->inputView());
 
+    ZFLISTENER_LOCAL(inputOnConfirm, {
+        ZFUIDialogForInput *dialog = userData->to<ZFObjectHolder *>()->holdedObj;
+        ZFUIButton *button = dialog->dialogButtonYes(zffalse);
+        if(button != zfnull)
+        {
+            button->buttonSimulateClick();
+        }
+    })
+    this->inputView()->observerAdd(ZFUITextEdit::EventTextOnEditConfirm(), inputOnConfirm, this->objectHolder());
+
     return this;
 }
 void ZFUIDialogForInput::objectOnDealloc(void)

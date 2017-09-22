@@ -19,9 +19,15 @@ exit /b 1
 set ZF_ROOT_PATH=%WORK_DIR%\..\..
 set ZF_TOOLS_PATH=%ZF_ROOT_PATH%\tools
 
-if "%BUILD_TYPE%" == "impl" (
-    call "%ZF_TOOLS_PATH%\spec\Android\Android_release_impl.bat" %PROJ_NAME% %PROJ_PATH%
-) else (
-    call "%ZF_TOOLS_PATH%\spec\Android\Android_release_lib.bat" %PROJ_NAME% %PROJ_PATH%
+call "%ZF_TOOLS_PATH%\common\file_exist.bat" "%ZF_ROOT_PATH%\_release\Android\module\%PROJ_NAME%\libs\libs" "*.so"
+if "%errorlevel%" == "0" (
+    exit /b 0
 )
+
+set _OLD_DIR=%cd%
+
+cd "%PROJ_PATH%\zfproj\Android\%PROJ_NAME%"
+call "gradlew.bat" assembleRelease
+
+cd "%_OLD_DIR%"
 

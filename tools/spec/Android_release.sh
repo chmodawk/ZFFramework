@@ -13,9 +13,15 @@ fi
 ZF_ROOT_PATH=$WORK_DIR/../..
 ZF_TOOLS_PATH=$ZF_ROOT_PATH/tools
 
-if test "$BUILD_TYPE" = "impl" ; then
-    sh "$ZF_TOOLS_PATH/spec/Android/Android_release_impl.sh" ${PROJ_NAME} $PROJ_PATH
-else
-    sh "$ZF_TOOLS_PATH/spec/Android/Android_release_lib.sh" $PROJ_NAME $PROJ_PATH
+sh "$ZF_TOOLS_PATH/common/file_exist.sh" "$ZF_ROOT_PATH/_release/Android/module/$PROJ_NAME/libs/libs" "*.so"
+if test "$?" = "0" ; then
+    exit 0
 fi
+
+_OLD_DIR=$(pwd)
+
+cd "$PROJ_PATH/zfproj/Android/$PROJ_NAME"
+sh "gradlew" assembleRelease
+
+cd "$_OLD_DIR"
 

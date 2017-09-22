@@ -73,8 +73,9 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
             ZFPropertyTypeIdData<_TR##N>::PropertyRegistered \
         >::TypeMustRegisterByZFPROPERTY _Ck##N;
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(N, DefaultExpandOrEmpty, ParamType, param) \
-    if(param != ZFMethodGenericInvokerDefaultParam() \
+    if((param != ZFMethodGenericInvokerDefaultParam() \
         && !ZFPropertyTypeIdData<_TR##N>::Value<_TR##N>::accessAvailable(param, &(accessCallback[N]))) \
+        || (param == ZFMethodGenericInvokerDefaultParam() && N < invokerMethod->methodParamDefaultBeginIndex())) \
     { \
         _ZFP_MtdGIParamError(errorHint, (zfindex)N, ZFPropertyTypeIdData<_TR##N>::PropertyTypeId(), param); \
         return zffalse; \

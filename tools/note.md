@@ -5,12 +5,6 @@
 ~/ZF/LibName/
     zfproj/
         Android/
-            LibName_jni/
-                jni/
-                res/
-                src/
-                AndroidManifest.xml
-        AndroidStudio/
             LibName/
                 gradle/
                 jni_LibName/
@@ -31,15 +25,6 @@
 ~/ZF/ImplLibName_impl/
     zfproj/
         Android/
-            ImplLibName_impl/
-                res/
-                AndroidManifest.xml
-            ImplLibName_impl_jni/
-                jni/
-                res/
-                src/
-                AndroidManifest.xml
-        AndroidStudio/
             ImplLibName_impl/
                 gradle/
                 jni_ImplLibName_impl/
@@ -62,15 +47,6 @@
 ```
 ~/_release/
     Android/
-        all/
-        module/
-            LibName/
-                assets/
-                libs/
-                    armeabi/
-                        libLibName.so
-                    LibName.jar
-    AndroidStudio/
         all/
         module/
             LibName/

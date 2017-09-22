@@ -26,14 +26,14 @@ protected:
         ZFUIView *container = zfnull;
         ZFUIKit_test_prepareTestWindow(window, container, this);
 
-        this->dialog()->dialogApplyAutoHide(this->dialog()->dialogButton_Cancel());
-        this->dialog()->dialogButtonTextSet_Cancel(zfText("cancel"));
-        this->dialog()->dialogApplyAutoHide(this->dialog()->dialogButton_Yes());
-        this->dialog()->dialogButtonTextSet_Yes(zfText("confirm"));
+        this->dialog()->dialogApplyAutoHide(this->dialog()->dialogButtonCancel());
+        this->dialog()->dialogButtonCancelTextSet(zfText("cancel"));
+        this->dialog()->dialogApplyAutoHide(this->dialog()->dialogButtonYes());
+        this->dialog()->dialogButtonYesTextSet(zfText("confirm"));
         ZFLISTENER_LOCAL(yesOnClick, {
             zfLogT() << zfText("onConfirm") << listenerData.sender;
         })
-        this->dialog()->dialogButton_Yes()->observerAdd(ZFUIButton::EventButtonOnClick(), yesOnClick);
+        this->dialog()->dialogButtonYes()->observerAdd(ZFUIButton::EventButtonOnClick(), yesOnClick);
         this->dialog()->dialogTitleTextSet(zfText("i'm title"));
         this->dialog()->dialogContentTextSet(zfText("i'm content"));
 

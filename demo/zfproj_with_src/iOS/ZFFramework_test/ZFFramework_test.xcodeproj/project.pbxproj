@@ -19,6 +19,7 @@
 		26A77665A1765390C6D898FEB442C6B2 /* lstate.c in Sources */ = {isa = PBXBuildFile; fileRef = 88A6A20865E8F67523C27739B24AF028 /* lstate.c */; };
 		2760DA8CC376A5A127CBE04AF4DE1B32 /* zfgensrc_ZFUIWebKit_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 17AB26D1BB78BCF7ED408A961C961F18 /* zfgensrc_ZFUIWebKit_impl.mm */; };
 		2C31238A57E5020EA0E9927D1CF3A980 /* lmem.c in Sources */ = {isa = PBXBuildFile; fileRef = A9AE6DF6CF5F951B2A1B7CACECC8F89C /* lmem.c */; };
+		3013E9B201E8C1C5D52A922DF1E2A34D /* ltests.c in Sources */ = {isa = PBXBuildFile; fileRef = 4B2042393F367B8784A055A600322B96 /* ltests.c */; };
 		30F949168B0BF679BE29A4B708E08C74 /* lfunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5ACFC43F6DD4887BE76D13B361C8476C /* lfunc.c */; };
 		3361665B25B7DCCAD2FBB04C03D9B461 /* zfgensrc_ZF_loader_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 86450108529EFD924AE99CF92738CD66 /* zfgensrc_ZF_loader_impl.mm */; };
 		351797074F3CABA4578FDF340816DBDC /* zfgensrc_ZFCore_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = F1AE772DD387678E7B3BE66FD31295AC /* zfgensrc_ZFCore_impl.mm */; };
@@ -99,8 +100,10 @@
 		3F1917C3B88E1CA929097B2622E973DF /* lstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lstring.c; sourceTree = "<group>"; };
 		40E97D47EA6E39120415BFC5A4CD00E5 /* lopcodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lopcodes.h; sourceTree = "<group>"; };
 		432AE8FEE0B1231DC226F217C0DF9873 /* zfgensrc_ZFFramework_test.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFFramework_test.mm; sourceTree = "<group>"; };
+		44A85701F7AF3D167244F538AB01689A /* ltests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ltests.h; sourceTree = "<group>"; };
 		47E267C1715B556CDB460D9EDFF067C4 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lauxlib.c; sourceTree = "<group>"; };
 		4B08CAAE1232B03C34BE0204388BD6DD /* lparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lparser.h; sourceTree = "<group>"; };
+		4B2042393F367B8784A055A600322B96 /* ltests.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ltests.c; sourceTree = "<group>"; };
 		50FA77A84E0C5EB00913A543DEFE2BA5 /* zfgensrc_ZFUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUtility.mm; sourceTree = "<group>"; };
 		5571A6E22034D37232435DDD2BC0C36F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		59C9843B90E5B55FCC47458082FA9967 /* ldebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldebug.c; sourceTree = "<group>"; };
@@ -161,7 +164,6 @@
 		D8C934127D35F11E5CB112C8967A1F6A /* lundump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lundump.h; sourceTree = "<group>"; };
 		DA3B39E7F20FC9E9EA56C43B1C205EC0 /* zfgensrc_ZFUIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUIKit.mm; sourceTree = "<group>"; };
 		DC1C7CB6586D5B081C2375FA7314546F /* ldo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ldo.h; sourceTree = "<group>"; };
-		DC27F2E0224AEBF11EDFD7B0CCA14A20 /* lua.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua.hpp; sourceTree = "<group>"; };
 		DFC5B9430F81E0C17B61DE55A62EA143 /* lmem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lmem.h; sourceTree = "<group>"; };
 		E1049A1D121747C91E39FC80E3E171E0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E21FCE48B7A30D5096711BF271F4A322 /* ldo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ldo.c; sourceTree = "<group>"; };
@@ -292,10 +294,11 @@
 				B625B8C55DCB457F64C49956EE576069 /* ltable.c */,
 				04B55D133B4AC43BA4CE6FE0AF1412DF /* ltable.h */,
 				2AFCCC2D3B9BED6A1BF9906FC1A2A8B8 /* ltablib.c */,
+				4B2042393F367B8784A055A600322B96 /* ltests.c */,
+				44A85701F7AF3D167244F538AB01689A /* ltests.h */,
 				0145F60977B8AF2DC3536DA43B5095FA /* ltm.c */,
 				202482B7BFF2C9CDE84231FE23E481BD /* ltm.h */,
 				B05775F4439C24334AA6225336D6DDC5 /* lua.h */,
-				DC27F2E0224AEBF11EDFD7B0CCA14A20 /* lua.hpp */,
 				753E2C32220CF16A3D8E03578B7DCCD7 /* luaconf.h */,
 				C114D9595EE0CE37006EB3F0C415A960 /* lualib.h */,
 				7E4444FAA035B1C83F25889E29927630 /* lundump.c */,
@@ -402,7 +405,7 @@
 		D3865331A38B10F2939BC81F93A779B5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = ZFFramework;
 				TargetAttributes = {
 					3B2EB083DB3C1AF83A72FED3B2D72C78 = {
@@ -539,6 +542,7 @@
 				1E9DFABBA6B51C078635E8C34DF28589 /* lstrlib.c in Sources */,
 				50610BFBD44C039208F3E20107518807 /* ltable.c in Sources */,
 				F82F84E2DEF6983BBA1240B5CB73FC65 /* ltablib.c in Sources */,
+				3013E9B201E8C1C5D52A922DF1E2A34D /* ltests.c in Sources */,
 				72CB506F5F3FE12F744B5AC302D863AF /* ltm.c in Sources */,
 				12BB8F67CEF8126BDA98D1A6B1A6B303 /* lundump.c in Sources */,
 				5479CEAA185D09A035DE1B793CC47083 /* lutf8lib.c in Sources */,

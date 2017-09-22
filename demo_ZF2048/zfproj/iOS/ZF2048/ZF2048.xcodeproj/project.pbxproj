@@ -176,7 +176,7 @@
 		AF4E96092CBD70DA684C91661C6FD4DB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = ZFFramework;
 				TargetAttributes = {
 					D71480E95CC8D1B27EAE8DFF8A9851CB = {

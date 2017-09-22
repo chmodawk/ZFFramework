@@ -16,12 +16,18 @@ exit /b 1
 
 rem ============================================================
 rem Android
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\assets\zfres" >nul 2>&1
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\bin" >nul 2>&1
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\gen" >nul 2>&1
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\lib" >nul 2>&1
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\libs" >nul 2>&1
-rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\obj" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\.gradle" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\.idea" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\build" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\%PROJ_NAME%\local.properties" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\%PROJ_NAME%\*.iml" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\zflib\.externalNativeBuild" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\zflib\build" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\%PROJ_NAME%\zflib\*.iml" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\zfapp\.externalNativeBuild" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\zfapp\build" >nul 2>&1
+del /f/s/q "%PROJ_ROOT%\%PROJ_NAME%\zfapp\*.iml" >nul 2>&1
+rmdir /s/q "%PROJ_ROOT%\%PROJ_NAME%\zfapp\src\main\assets\zfres" >nul 2>&1
 
 exit /b 0
 

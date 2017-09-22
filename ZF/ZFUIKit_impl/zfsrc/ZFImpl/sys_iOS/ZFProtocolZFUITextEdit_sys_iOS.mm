@@ -14,6 +14,8 @@
 @interface _ZFP_ZFUITextEditImpl_sys_iOS_TextEdit : UITextField<UITextFieldDelegate>
 @property (nonatomic, assign) ZFPROTOCOL_INTERFACE_CLASS(ZFUITextEdit) *impl;
 @property (nonatomic, assign) ZFUITextEdit *ownerZFUITextEdit;
+@property (nonatomic, assign) zfstring lastText;
+@property (nonatomic, assign) zfbool textOverrideFlag;
 
 @property (nonatomic, strong) NSString *fontName;
 @property (nonatomic, assign) zfint textSize;
@@ -75,17 +77,6 @@
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextEditEnd(self.ownerZFUITextEdit);
 }
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    NSString *nativeStringNew = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    BOOL ret = ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(self.ownerZFUITextEdit, ZFImpl_sys_iOS_zfstringFromNSString(nativeStringNew));
-    if(ret)
-    {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_ZFP_textSelectRangeNotifyChange) object:nil];
-        [self performSelector:@selector(_ZFP_textSelectRangeNotifyChange) withObject:nil afterDelay:0.1f];
-    }
-    return ret;
-}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextReturnClicked(self.ownerZFUITextEdit);
@@ -94,7 +85,36 @@
 
 - (void)_textFieldTextChanged:(UITextField *)textField
 {
-    ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(self.ownerZFUITextEdit, ZFImpl_sys_iOS_zfstringFromNSString(textField.text));
+    if(self.textOverrideFlag)
+    {
+        return ;
+    }
+
+    zfstring text = textField.text.UTF8String;
+    if(textField.markedTextRange != nil)
+    {
+        NSInteger start = [textField offsetFromPosition:textField.beginningOfDocument toPosition:textField.markedTextRange.start];
+        NSInteger count = [textField offsetFromPosition:textField.markedTextRange.start toPosition:textField.markedTextRange.end];
+        NSMutableString *s = [NSMutableString stringWithString:textField.text];
+        [s replaceCharactersInRange:NSMakeRange(start, count) withString:@""];
+        text = s.UTF8String;
+    }
+
+    if(self.lastText.compare(text) == 0)
+    {
+        return ;
+    }
+
+    if(!ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyCheckTextShouldChange(self.ownerZFUITextEdit, text))
+    {
+        self.textOverrideFlag = zftrue;
+        textField.text = [NSString stringWithUTF8String:text.cString()];
+        self.textOverrideFlag = zffalse;
+        return ;
+    }
+    self.lastText = text;
+    ZFPROTOCOL_ACCESS(ZFUITextEdit)->notifyTextChange(self.ownerZFUITextEdit, self.lastText);
+    [self _ZFP_textSelectRangeNotifyChange];
 }
 @end
 

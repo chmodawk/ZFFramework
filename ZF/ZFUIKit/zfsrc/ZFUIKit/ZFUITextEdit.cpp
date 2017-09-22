@@ -304,13 +304,19 @@ void ZFUITextEdit::_ZFP_ZFUITextEdit_textSelectRangeNotifyChange(void)
 void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyReturnClicked(void)
 {
     this->textOnReturnClick();
-    this->textEditNotifyConfirm();
 
     switch(this->textEditKeyboardReturnAction())
     {
         case ZFUITextEditKeyboardReturnAction::e_None:
             break;
+        case ZFUITextEditKeyboardReturnAction::e_Confirm:
+            this->textEditNotifyConfirm();
+            break;
         case ZFUITextEditKeyboardReturnAction::e_FocusNext:
+            if(!this->viewFocused() || !this->textEditConfirmWhenLostFocus())
+            {
+                this->textEditNotifyConfirm();
+            }
             if(this->viewFocused())
             {
                 ZFUIView *next = ZFUIViewFocusNextFind(this);
@@ -334,6 +340,7 @@ void ZFUITextEdit::_ZFP_ZFUITextEdit_textNotifyReturnClicked(void)
             break;
         case ZFUITextEditKeyboardReturnAction::e_HideKeyboard:
         {
+            this->textEditNotifyConfirm();
             ZFUIOnScreenKeyboardState *keyboardState = ZFUIOnScreenKeyboardState::instanceForView(this);
             if(keyboardState != zfnull && keyboardState->keyboardShowing() && this->textEditing())
             {
@@ -458,7 +465,7 @@ void ZFUITextEdit::viewEventOnKeyEvent(ZF_IN ZFUIKeyEvent *keyEvent)
 void ZFUITextEdit::viewFocusOnChange(void)
 {
     zfsuper::viewFocusOnChange();
-    if(!this->viewFocused())
+    if(!this->viewFocused() && this->textEditConfirmWhenLostFocus())
     {
         this->textEditNotifyConfirm();
     }

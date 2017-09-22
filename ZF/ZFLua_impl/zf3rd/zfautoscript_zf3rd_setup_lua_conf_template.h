@@ -6,3 +6,7 @@
     #define lua_getlocaledecpoint() ('.')
 #endif
 
+// add by ZFFramework
+// system() not available since iOS11
+#define system(...) (-1)
+

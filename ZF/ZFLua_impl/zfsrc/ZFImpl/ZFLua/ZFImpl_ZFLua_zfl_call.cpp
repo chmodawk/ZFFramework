@@ -54,6 +54,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
                             method->methodParamTypeIdAtIndex(i)
                         );
                     parseParamSuccess = zffalse;
+                    paramList[i] = tHolder;
                     break;
                 }
 
@@ -76,6 +77,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
                             method->methodParamTypeIdAtIndex(i),
                             t->zfv.cString()
                         );
+                    paramList[i] = tHolder;
                     break;
                 }
             }

@@ -21,7 +21,6 @@ sh "$WORK_DIR/cleanup_proj/cleanup_Windows.sh" "$PROJ_ROOT/Windows" "$PROJ_NAME"
 # ============================================================
 # Android
 sh "$WORK_DIR/cleanup_proj/cleanup_Android.sh" "$PROJ_ROOT/Android" "$PROJ_NAME"
-sh "$WORK_DIR/cleanup_proj/cleanup_AndroidStudio.sh" "$PROJ_ROOT/AndroidStudio" "$PROJ_NAME"
 
 # ============================================================
 # iOS

@@ -147,70 +147,70 @@ public:
     virtual void dialogButtonRemove(ZF_IN ZFUIDialogButtonTypeEnum dialogButtonType) zfpurevirtual;
 
     /** @brief util method to access #dialogButton */
-    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Yes,
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButtonYes,
                        ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Yes, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_No,
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButtonNo,
                        ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_No, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Cancel,
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButtonCancel,
                        ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Cancel, autoCreateIfNotExist);
     }
     /** @brief util method to access #dialogButton */
-    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButton_Destructive,
+    ZFMETHOD_DECLARE_1(ZFUIButton *, dialogButtonDestructive,
                        ZFMP_IN_OPT(zfbool, autoCreateIfNotExist, zftrue))
     {
         return this->dialogButton(ZFUIDialogButtonType::e_Destructive, autoCreateIfNotExist);
     }
 
     /** @brief util method to access #dialogButtonText */
-    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Yes)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonYesText)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Yes);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Yes,
+    ZFMETHOD_DECLARE_1(void, dialogButtonYesTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Yes, text);
     }
     /** @brief util method to access #dialogButtonText */
-    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_No)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonNoText)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_No);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_No,
+    ZFMETHOD_DECLARE_1(void, dialogButtonNoTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_No, text);
     }
     /** @brief util method to access #dialogButtonText */
-    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Cancel)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonCancelText)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Cancel);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Cancel,
+    ZFMETHOD_DECLARE_1(void, dialogButtonCancelTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Cancel, text);
     }
     /** @brief util method to access #dialogButtonText */
-    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonText_Destructive)
+    ZFMETHOD_DECLARE_0(const zfchar *, dialogButtonDestructiveText)
     {
         return this->dialogButtonText(ZFUIDialogButtonType::e_Destructive);
     }
     /** @brief util method to access #dialogButtonTextSet */
-    ZFMETHOD_DECLARE_1(void, dialogButtonTextSet_Destructive,
+    ZFMETHOD_DECLARE_1(void, dialogButtonDestructiveTextSet,
                        ZFMP_IN(const zfchar *, text))
     {
         this->dialogButtonTextSet(ZFUIDialogButtonType::e_Destructive, text);

@@ -1,19 +1,11 @@
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/LuaDist/lua" "<ZF_WORK_DIR>\_repo\lua" --depth=1 -b lua-5.3
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\git_check.<ZF_SH_EXT>" "https://github.com/lua/lua" "<ZF_WORK_DIR>\_repo\lua"
 
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\lua\src" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\lua" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua"
 
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_exist.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua" "luaconf.h"
-<ZF_IF_FAILED_BEGIN>
-    <ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_conf_template.h" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luaconf.h.orig" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luaconf.h"
-<ZF_IF_FAILED_END>
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\file_merge.<ZF_SH_EXT>" "<ZF_WORK_DIR>\zfautoscript_zf3rd_setup_lua_conf_template.h" "<ZF_WORK_DIR>\_repo\lua\luaconf.h" "<ZF_WORK_DIR>\_repo\lua\.git\.luaconf.h"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\copy_check.<ZF_SH_EXT>" "<ZF_WORK_DIR>\_repo\lua\.git\.luaconf.h" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luaconf.h"
 
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\loadlib_rel.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\bugs"
 <ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\lua.c"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\lua.rc"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luac.c"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luac.rc"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luaconf.h.in"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\luaconf.h.orig"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\Makefile"
-<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\wmain.c"
+<ZF_SH> "<ZF_ROOT_PATH>\tools\common\zfsh\rm.<ZF_SH_EXT>" "<ZF_WORK_DIR>\..\zfsrc_ext\ZFImpl\_repo\lua\makefile"
 

@@ -80,7 +80,7 @@ public:
      * called when choice confirmed, either by:
      * -  click choice if choiceMode is #ZFUIDialogForChoiceMode::e_ChoiceSingleQuickly,
      *   implemented by default
-     * -  click #ZFUIDialogContent::dialogButton_Yes,
+     * -  click #ZFUIDialogContent::dialogButtonYes,
      *   implemented by default
      * -  manually notify by #choiceConfirmNotify
      */

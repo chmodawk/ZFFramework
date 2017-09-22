@@ -15,7 +15,7 @@
  *
  * ZFFramework itself is portable on most of platform,
  * however, the project files created by ZFProjCreator are currently tested only in these platforms:
- * -  Android : Eclipse
+ * -  Android : Android Studio
  * -  iOS : XCode
  * -  Qt (Windows) : QtCreator
  * -  Qt (MacOS) : QtCreator

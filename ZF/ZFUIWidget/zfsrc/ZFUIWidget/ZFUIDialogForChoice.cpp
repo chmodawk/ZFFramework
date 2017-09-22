@@ -225,7 +225,7 @@ void ZFUIDialogForChoice::objectOnDealloc(void)
 void ZFUIDialogForChoice::dialogButtonOnAdd(ZF_IN ZFUIButton *button)
 {
     zfsuper::dialogButtonOnAdd(button);
-    if(button == this->dialogButton_Yes(zfHint("autoCreateIfNotExist")zffalse))
+    if(button == this->dialogButtonYes(zfHint("autoCreateIfNotExist")zffalse))
     {
         button->observerAdd(
             ZFUIButton::EventButtonOnClick(),
@@ -235,7 +235,7 @@ void ZFUIDialogForChoice::dialogButtonOnAdd(ZF_IN ZFUIButton *button)
 }
 void ZFUIDialogForChoice::dialogButtonOnRemove(ZF_IN ZFUIButton *button)
 {
-    if(button == this->dialogButton_Yes(zfHint("autoCreateIfNotExist")zffalse))
+    if(button == this->dialogButtonYes(zfHint("autoCreateIfNotExist")zffalse))
     {
         button->observerRemove(
             ZFUIButton::EventButtonOnClick(),

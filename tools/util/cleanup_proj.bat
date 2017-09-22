@@ -25,7 +25,6 @@ call "%WORK_DIR%\cleanup_proj\cleanup_Windows.bat" "%PROJ_ROOT%\Windows" "%PROJ_
 rem ============================================================
 rem Android
 call "%WORK_DIR%\cleanup_proj\cleanup_Android.bat" "%PROJ_ROOT%\Android" "%PROJ_NAME%"
-call "%WORK_DIR%\cleanup_proj\cleanup_AndroidStudio.bat" "%PROJ_ROOT%\AndroidStudio" "%PROJ_NAME%"
 
 rem ============================================================
 rem iOS

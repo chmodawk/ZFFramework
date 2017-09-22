@@ -11,22 +11,14 @@
 **/zfgensrc_*
 
 # Android
-**/Android/**/assets
-**/Android/**/bin
-**/Android/**/gen
-**/Android/**/lib
-**/Android/**/libs
-**/Android/**/obj
-
-# AndroidStudio
-**/AndroidStudio/**/*.iml
-**/AndroidStudio/**/.externalNativeBuild
-**/AndroidStudio/**/.gradle
-**/AndroidStudio/**/.idea
-**/AndroidStudio/**/build
-**/AndroidStudio/**/captures
-**/AndroidStudio/**/local.properties
-**/AndroidStudio/**/src/main/assets
+**/Android/**/*.iml
+**/Android/**/.externalNativeBuild
+**/Android/**/.gradle
+**/Android/**/.idea
+**/Android/**/build
+**/Android/**/captures
+**/Android/**/local.properties
+**/Android/**/src/main/assets
 
 # iOS
 **/.DS_Store
