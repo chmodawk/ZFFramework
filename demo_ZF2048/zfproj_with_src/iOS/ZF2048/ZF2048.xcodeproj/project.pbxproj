@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03B4E8564020832F8FFA4F15D6933ED7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */; };
 		04E225C8BDDD4743E29D00344B0BD71F /* zfgensrc_ZFCore_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B44A63402BFDF51D49C1AB748EAA9BFD /* zfgensrc_ZFCore_impl.mm */; };
+		06CD5D9786921D3E2FB0147D7EFE762F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */; };
 		0A241D91A17781528552ED5FDE08EBA3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */; };
 		0A4F719959ABB2C8AF6ECDA494101AB5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */; };
+		0FCB4C7237AFD1A3AD532715C92DD734 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */; };
 		101DCA5D072C3A4851246D4B3F10C8EF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 84123951E666BB86E5ECD4698FA3CFF3 /* AppDelegate.mm */; };
+		28655F9AA894515CC39FFC1B5B867B8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */; };
 		2C3592138AA86732150B2D2CBAEB98CF /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A76CD30C350617CABF3778F1E16F7BB /* RootViewController.xib */; };
 		38B5C929B862D4FCD099C15986BE5661 /* zfgensrc_ZF2048.mm in Sources */ = {isa = PBXBuildFile; fileRef = A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */; };
 		3B49562362ACD12EA52397A4FF6B5661 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 934211CC40ED64B1E3654DC1FD9836FA /* main.m */; };
@@ -22,15 +24,13 @@
 		99205F3604DB23203805EFC74F8CE66A /* zfgensrc_ZFUIWidget.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8F61D6D3A7140E7899D8A2E1E3EE90EC /* zfgensrc_ZFUIWidget.mm */; };
 		9B3A59061C045E556A59FBB9504522F1 /* zfgensrc_ZFAlgorithm_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = DED8AB8EDC8E0D4229EE05ED70B82125 /* zfgensrc_ZFAlgorithm_impl.mm */; };
 		9BBB30E142D8E80EBFBB3364B4D67991 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */; };
+		9BEDAC00350A241039CB038616E08837 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */; };
 		A0F9CB986D718B0102DDC7290A280DCC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2945E2D9552B7995E1B6512BF517F740 /* RootViewController.m */; };
 		A1B00E3F1BD57E6A965EDAF0FFA7AB94 /* zfgensrc_ZFUIKit_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = F7076441B441BC337856979AC8503843 /* zfgensrc_ZFUIKit_impl.mm */; };
 		A1F0884D615185C4B739AAFDCB39B58C /* zfgensrc_ZFAlgorithm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8DED6629F13CC586A8EDD47F2452AD2F /* zfgensrc_ZFAlgorithm.mm */; };
 		A4BD38890D6916A91401C4C733EE1A05 /* zfgensrc_ZFUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = F292895FAB7EC3491E09415430291006 /* zfgensrc_ZFUtility.mm */; };
-		C1A6C57BF5C1016A80AC6A49A194EC89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */; };
-		C438852FD9786B0F1BF21CD822FB0539 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */; };
 		CF66A952BCF435E2AFD67D5155D3684B /* zfgensrc_ZFAddition.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE983FC3ED19FB39EA2BAECAC2E3267B /* zfgensrc_ZFAddition.mm */; };
 		DAB76F3491F6EE05A8999D64FB829D49 /* zfgensrc_ZFCore.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03E42D47B2083811D7F9EAE2A358CA35 /* zfgensrc_ZFCore.mm */; };
-		DE28417BD03588E75D6466BF41F797D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */; };
 		E68DD2DB5A218BE087572A839A122E05 /* zfgensrc_ZFUIKit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 91F9065CAA805CD5C8D0B4703524FDAB /* zfgensrc_ZFUIKit.mm */; };
 		EF405DCCBA9F0DD4737A08F838526BF8 /* zfgensrc_ZF_loader_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = B128B5275B0C8D321478396FF6A54B66 /* zfgensrc_ZF_loader_impl.mm */; };
 /* End PBXBuildFile section */
@@ -39,7 +39,7 @@
 		01386D265D7A8FC690A35EB32DF4468B /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		03E42D47B2083811D7F9EAE2A358CA35 /* zfgensrc_ZFCore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFCore.mm; sourceTree = "<group>"; };
 		079720C5E769646D2624BAD60F6000DD /* zfgensrc_ZF_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZF_impl.mm; sourceTree = "<group>"; };
-		1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2945E2D9552B7995E1B6512BF517F740 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = ../../../../../../ZFFramework/ZF/ZF_loader_impl/zfproj/iOS/ZF_loader_impl/ProjectFiles/RootViewController.m; sourceTree = "<group>"; };
 		301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		3215A58144791D01A03A8E2CB4EDA92A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../../../../../ZFFramework/ZF/ZF_loader_impl/zfproj/iOS/ZF_loader_impl/ProjectFiles/AppDelegate.h; sourceTree = "<group>"; };
@@ -47,21 +47,23 @@
 		3A76CD30C350617CABF3778F1E16F7BB /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RootViewController.xib; path = ../../../../../../ZFFramework/ZF/ZF_loader_impl/zfproj/iOS/ZF_loader_impl/ProjectFiles/RootViewController.xib; sourceTree = "<group>"; };
 		3D0504266722DB764EE5C38FC4234BFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		452EA08077DA1D184780B65EAD193BBF /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
-		5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		761A4D0687164B8B40E550BB380DD417 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84123951E666BB86E5ECD4698FA3CFF3 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = ../../../../../../ZFFramework/ZF/ZF_loader_impl/zfproj/iOS/ZF_loader_impl/ProjectFiles/AppDelegate.mm; sourceTree = "<group>"; };
 		86C151B3204A45EDA14C59C1EB72AEA7 /* zfsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zfsrc; path = ../../../zfsrc; sourceTree = "<group>"; };
+		87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8DED6629F13CC586A8EDD47F2452AD2F /* zfgensrc_ZFAlgorithm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFAlgorithm.mm; sourceTree = "<group>"; };
 		8F61D6D3A7140E7899D8A2E1E3EE90EC /* zfgensrc_ZFUIWidget.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUIWidget.mm; sourceTree = "<group>"; };
 		91F9065CAA805CD5C8D0B4703524FDAB /* zfgensrc_ZFUIKit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUIKit.mm; sourceTree = "<group>"; };
 		934211CC40ED64B1E3654DC1FD9836FA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../../../../../../ZFFramework/ZF/ZF_loader_impl/zfproj/iOS/ZF_loader_impl/ProjectFiles/main.m; sourceTree = "<group>"; };
+		96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		98E9A1859726F96119246D0EE7C1C036 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZF2048.mm; sourceTree = "<group>"; };
+		AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B128B5275B0C8D321478396FF6A54B66 /* zfgensrc_ZF_loader_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZF_loader_impl.mm; sourceTree = "<group>"; };
 		B44A63402BFDF51D49C1AB748EAA9BFD /* zfgensrc_ZFCore_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFCore_impl.mm; sourceTree = "<group>"; };
 		B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		CE983FC3ED19FB39EA2BAECAC2E3267B /* zfgensrc_ZFAddition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFAddition.mm; sourceTree = "<group>"; };
-		D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DED8AB8EDC8E0D4229EE05ED70B82125 /* zfgensrc_ZFAlgorithm_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFAlgorithm_impl.mm; sourceTree = "<group>"; };
 		F292895FAB7EC3491E09415430291006 /* zfgensrc_ZFUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUtility.mm; sourceTree = "<group>"; };
 		F7076441B441BC337856979AC8503843 /* zfgensrc_ZFUIKit_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZFUIKit_impl.mm; sourceTree = "<group>"; };
@@ -73,10 +75,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1A6C57BF5C1016A80AC6A49A194EC89 /* CoreGraphics.framework in Frameworks */,
-				03B4E8564020832F8FFA4F15D6933ED7 /* Foundation.framework in Frameworks */,
-				DE28417BD03588E75D6466BF41F797D6 /* QuartzCore.framework in Frameworks */,
-				C438852FD9786B0F1BF21CD822FB0539 /* UIKit.framework in Frameworks */,
+				28655F9AA894515CC39FFC1B5B867B8D /* CoreGraphics.framework in Frameworks */,
+				06CD5D9786921D3E2FB0147D7EFE762F /* Foundation.framework in Frameworks */,
+				9BEDAC00350A241039CB038616E08837 /* QuartzCore.framework in Frameworks */,
+				0FCB4C7237AFD1A3AD532715C92DD734 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +88,7 @@
 		39C1B75F09E2ADEEE32355A28E0E697E = {
 			isa = PBXGroup;
 			children = (
-				7ABC8B8B37A5C8ED07512CFEDE52239D /* Framework */,
+				80CA21A4BEEC35D91F8A9B19053ECC09 /* Frameworks */,
 				ABB60794D01801E70A4958D8B67D33C8 /* Products */,
 				4A82029FA6DA805CEC5E5F1C4E4BB861 /* ProjectFiles */,
 				F1AA92F1BF60AFF728C00EFFB185B794 /* ZF2048 */,
@@ -103,6 +105,8 @@
 				301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */,
 				B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */,
 				9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */,
+				761A4D0687164B8B40E550BB380DD417 /* Info.plist */,
+				98E9A1859726F96119246D0EE7C1C036 /* LaunchScreen.storyboard */,
 				A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */,
 				CE983FC3ED19FB39EA2BAECAC2E3267B /* zfgensrc_ZFAddition.mm */,
 				8DED6629F13CC586A8EDD47F2452AD2F /* zfgensrc_ZFAlgorithm.mm */,
@@ -119,15 +123,15 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		7ABC8B8B37A5C8ED07512CFEDE52239D /* Framework */ = {
+		80CA21A4BEEC35D91F8A9B19053ECC09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */,
-				D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */,
-				D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */,
-				1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */,
+				96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */,
+				87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */,
+				AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */,
+				1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */,
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		931985C0E356DC792425581CB51B120A /* ZF_loader_impl */ = {

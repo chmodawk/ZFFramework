@@ -1335,17 +1335,14 @@ ZFMETHOD_DEFINE_0(ZFUIView, void *, nativeView)
 {
     return d->nativeView;
 }
-ZFMETHOD_DEFINE_2(ZFUIView, void, nativeViewNotifyBeforeAdd,
-                  ZFMP_IN(ZFUIView *, view),
-                  ZFMP_IN(void *, nativeParentView))
+void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(ZF_IN ZFUIView *view, ZF_IN void *nativeParentView)
 {
     zfCoreAssert(view != zfnull && nativeParentView != zfnull);
 
     zfRetain(view);
     view->_ZFP_ZFUIView_scaleSetRecursively(view->scaleGet(), view->d->impl->nativeViewScaleForImpl(nativeParentView));
 }
-ZFMETHOD_DEFINE_1(ZFUIView, void, nativeViewNotifyAfterRemove,
-                  ZFMP_IN(ZFUIView *, view))
+void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyRemove(ZF_IN ZFUIView *view)
 {
     zfCoreAssert(view != zfnull);
     zfRelease(view);

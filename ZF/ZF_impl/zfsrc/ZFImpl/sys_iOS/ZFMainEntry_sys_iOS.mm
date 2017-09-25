@@ -32,6 +32,7 @@ ZF_NAMESPACE_GLOBAL_END
 // ============================================================
 // app entry
 @interface _ZFP_ZFImpl_sys_iOS_AppEventHolder : NSObject
+@property (nonatomic, assign) BOOL _ZFP_appResumeFlag;
 @end
 @implementation _ZFP_ZFImpl_sys_iOS_AppEventHolder
 - (void)appOnCreate
@@ -66,11 +67,19 @@ ZF_NAMESPACE_GLOBAL_END
 }
 - (void)appOnPause
 {
-    [_ZFP_ZFImpl_sys_iOS_rootWindow.rootViewController viewWillDisappear:NO];
+    if(self._ZFP_appResumeFlag)
+    {
+        self._ZFP_appResumeFlag = NO;
+        [_ZFP_ZFImpl_sys_iOS_rootWindow.rootViewController viewWillDisappear:NO];
+    }
 }
 - (void)appOnResume
 {
-    [_ZFP_ZFImpl_sys_iOS_rootWindow.rootViewController viewWillAppear:NO];
+    if(!self._ZFP_appResumeFlag)
+    {
+        self._ZFP_appResumeFlag = YES;
+        [_ZFP_ZFImpl_sys_iOS_rootWindow.rootViewController viewWillAppear:NO];
+    }
 }
 - (void)appOnReceiveMemoryWarning
 {

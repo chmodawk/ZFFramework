@@ -26,6 +26,7 @@ public:
     ZFListener windowLayoutParamOnChangeListener;
     zfbool nativeWindowCreated;
     zfbool nativeWindowResumed;
+    ZFUIMargin sysWindowMargin;
 
 public:
     _ZFP_ZFUISysWindowPrivate(void)
@@ -40,6 +41,7 @@ public:
     , windowLayoutParamOnChangeListener(ZFCallbackForRawFunction(_ZFP_ZFUISysWindowPrivate::windowLayoutParamOnChange))
     , nativeWindowCreated(zffalse)
     , nativeWindowResumed(zffalse)
+    , sysWindowMargin()
     {
     }
 
@@ -49,7 +51,7 @@ public:
         ZFUISysWindow *sysWindow = userData->to<ZFObjectHolder *>()->holdedObj;
         if(sysWindow->nativeWindowEmbedImpl() != zfnull)
         {
-            sysWindow->nativeWindowEmbedImpl()->windowLayoutParamOnChange();
+            sysWindow->nativeWindowEmbedImpl()->windowLayoutParamOnChange(sysWindow);
         }
         else
         {
@@ -65,6 +67,7 @@ ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnDestroy)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnResume)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnPause)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnRotate)
+ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowMarginOnUpdate)
 
 zfautoObject ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindow::NativeWindowEmbedImpl *impl)
 {
@@ -72,6 +75,7 @@ zfautoObject ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindow::NativeWindowE
     ZFUISysWindow *ret = tmp.to<ZFUISysWindow *>();
     ret->d->embedImpl = impl;
     impl->_ZFP_ownerZFUISysWindow = ret;
+    impl->windowLayoutParamOnInit(ret);
     return zfautoObjectCreateMarkCached(ret);
 }
 ZFUISysWindow::NativeWindowEmbedImpl *ZFUISysWindow::nativeWindowEmbedImpl(void)
@@ -118,25 +122,50 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, mainWindow)
     return _ZFP_ZFUISysWindow_mainWindow;
 }
 
+ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUIMargin &, sysWindowMargin)
+{
+    return d->sysWindowMargin;
+}
+void ZFUISysWindow::_ZFP_ZFUISysWindow_sysWindowMarginSet(ZF_IN const ZFUIMargin &sysWindowMargin)
+{
+    ZFUIMargin sysWindowMarginOld = d->sysWindowMargin;
+    d->sysWindowMargin = sysWindowMargin;
+    this->sysWindowMarginOnUpdate(sysWindowMarginOld);
+}
+void ZFUISysWindow::sysWindowMarginOnUpdate(ZF_IN const ZFUIMargin &sysWindowMarginOld)
+{
+    if(this->observerHasAdd(ZFUISysWindow::EventSysWindowMarginOnUpdate()))
+    {
+        ZFPointerHolder *param0 = ZFPointerHolder::cacheGet();
+        param0->holdedData = &sysWindowMarginOld;
+        this->observerNotify(ZFUISysWindow::EventSysWindowMarginOnUpdate(), param0);
+        ZFPointerHolder::cacheAdd(param0);
+    }
+}
+
 ZFObject *ZFUISysWindow::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUISysWindowPrivate);
-    d->windowRootView = zfAlloc(ZFUIRootView);
+    d->windowRootView = zfRetainWithoutLeakTest(ZFUIRootView::ClassData()->newInstanceWithoutLeakTest().to<ZFUIRootView *>());
     d->windowLayoutParam = zfAllocWithoutLeakTest(ZFUIViewLayoutParam);
     d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-    d->impl->updateSuggestedWindowLayoutParam(this);
-    d->windowLayoutParam->observerAdd(ZFUILayoutParam::EventLayoutParamOnChange(), d->windowLayoutParamOnChangeListener, this->objectHolder());
     return this;
+}
+void ZFUISysWindow::objectOnInitFinish(void)
+{
+    zfsuper::objectOnInitFinish();
+    d->impl->windowLayoutParamOnInit(this);
+    d->windowLayoutParam->observerAdd(ZFUILayoutParam::EventLayoutParamOnChange(), d->windowLayoutParamOnChangeListener, this->objectHolder());
 }
 void ZFUISysWindow::objectOnDealloc(void)
 {
     if(d->embedImpl != zfnull)
     {
-        d->embedImpl->nativeWindowOnCleanup();
+        d->embedImpl->nativeWindowOnCleanup(this);
     }
     zfReleaseWithoutLeakTest(d->windowLayoutParam);
-    zfRelease(d->windowRootView);
+    zfReleaseWithoutLeakTest(d->windowRootView);
     zfpoolDelete(d);
     d = zfnull;
     zfsuper::objectOnDealloc();
@@ -160,7 +189,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIOrientationEnum, windowOrientation)
 {
     if(d->embedImpl != zfnull)
     {
-        return d->embedImpl->windowOrientation();
+        return d->embedImpl->windowOrientation(this);
     }
     else
     {
@@ -192,7 +221,7 @@ ZFMETHOD_DEFINE_1(ZFUISysWindow, void, windowOrientationFlagsSet,
         d->windowOrientationFlags = tmp;
         if(d->embedImpl != zfnull)
         {
-            d->embedImpl->windowOrientationFlagsSet(tmp);
+            d->embedImpl->windowOrientationFlagsSet(this, tmp);
         }
         else
         {
@@ -264,13 +293,15 @@ void ZFUISysWindow::_ZFP_ZFUISysWindow_onCreate(ZF_IN void *nativeWindow)
 
     if(d->embedImpl != zfnull)
     {
-        d->embedImpl->windowOrientationFlagsSet(d->windowOrientationFlags);
-        d->embedImpl->nativeWindowOnRootViewAdd();
+        d->embedImpl->windowOrientationFlagsSet(this, d->windowOrientationFlags);
+        void *nativeParentView = d->embedImpl->nativeWindowOnRootViewAdd(this);
+        ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(this->rootView(), nativeParentView);
     }
     else
     {
         d->impl->windowOrientationFlagsSet(this, d->windowOrientationFlags);
-        d->impl->nativeWindowOnRootViewAdd(this);
+        void *nativeParentView = d->impl->nativeWindowOnRootViewAdd(this);
+        ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(this->rootView(), nativeParentView);
     }
 
     this->observerNotify(ZFUISysWindow::EventSysWindowOnCreate());
@@ -283,7 +314,7 @@ void ZFUISysWindow::_ZFP_ZFUISysWindow_onDestroy(void)
 
     if(d->embedImpl != zfnull)
     {
-        d->embedImpl->nativeWindowOnRootViewRemove();
+        d->embedImpl->nativeWindowOnRootViewRemove(this);
     }
     else
     {

@@ -7,54 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03B4E8564020832F8FFA4F15D6933ED7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */; };
+		06CD5D9786921D3E2FB0147D7EFE762F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */; };
 		0A241D91A17781528552ED5FDE08EBA3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */; };
 		0A4F719959ABB2C8AF6ECDA494101AB5 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */; };
-		264DD9CF9B6A42969A67A28FDC890F6D /* libZFAlgorithm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B45B57C57BDB706A78EB126DAB123083 /* libZFAlgorithm.a */; };
+		0E83B71526521171356A8F136BA268A5 /* libZF_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91C6F664F4DE76AB35AA22E0B74FCB38 /* libZF_impl.a */; };
+		0FCB4C7237AFD1A3AD532715C92DD734 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */; };
+		1D863372C5095386D0A08CF725A6A61E /* libZFAlgorithm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C771322C6D15539D84708B61B500527 /* libZFAlgorithm.a */; };
+		28655F9AA894515CC39FFC1B5B867B8D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */; };
+		2ACB1FBF42156594384C6B6005803396 /* libZFUIKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A75E9BCBD7180C323E91D21C9A42A75E /* libZFUIKit.a */; };
 		38B5C929B862D4FCD099C15986BE5661 /* zfgensrc_ZF2048.mm in Sources */ = {isa = PBXBuildFile; fileRef = A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */; };
-		3BA4596C83B7C93CA39E34091988399E /* libZFAddition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9983C67A37FD3B3F12E46380DCCCC83F /* libZFAddition.a */; };
-		45FACB91245BC0803A98C1912BAFE93B /* libZFUIWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A8404EBD9E1FBFED277007C652D0AA8 /* libZFUIWidget.a */; };
-		4A67FCF21DFC39424B50452CB1081D1A /* libZF_loader_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C7C8B361284230DCDDA6120DBC39B8 /* libZF_loader_impl.a */; };
+		395AB4831E0DCFE031951693472D30EB /* libZFUIWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7729880D15548A5D3EC2AB70787F898 /* libZFUIWidget.a */; };
+		5930829EB0AA9D1C6A6F4487C6E9E44A /* libZFUIKit_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFCCBC0AE22F64D91985A77917632DFA /* libZFUIKit_impl.a */; };
+		6080B33EF8751A97722341B72E74F17C /* libZF_loader_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C70E1F79AFF9E437B10AFA23720385C6 /* libZF_loader_impl.a */; };
 		70E0AB8BCF123779FEA357C2AC549A0B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D0504266722DB764EE5C38FC4234BFD /* Default-568h@2x.png */; };
-		80F439D1D16276809DBE4F9F5797A98B /* libZFUIKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E138D4FE7D272B111BF0BACDCC78AEE /* libZFUIKit.a */; };
+		73E7291A40ECEDF64A23F229DE1F90BB /* libZFCore_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF2AF02956DF0C15CFA921D55B99A495 /* libZFCore_impl.a */; };
 		84B7C1F5CD112B8FD53F6C0A7EBD70DA /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 01386D265D7A8FC690A35EB32DF4468B /* Icon-29.png */; };
-		8F088BCAD8C69A06B807C17421E2B69E /* libZFCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CCDB7DD09CBCB786389830BEAA1BAFA /* libZFCore.a */; };
 		90DEAD9FE8F41A78C9209DEA8631C3CA /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 452EA08077DA1D184780B65EAD193BBF /* Icon-50.png */; };
-		92D5AD04CE6DB3E4C7FD6D1DC80B4E50 /* libZF_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3864CFC1A88ADA44A3200E80EF2395D /* libZF_impl.a */; };
+		92E87D512579B2CE58EF094C8D174220 /* libZFAlgorithm_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C65289CAEB8C2ECCC5C95B79782C834 /* libZFAlgorithm_impl.a */; };
 		9BBB30E142D8E80EBFBB3364B4D67991 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */; };
-		BFE13D4954B122A4B1E4D2AAA123C6E5 /* libZFCore_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A8BA9CC7DA2551BD270F24E283B4FA73 /* libZFCore_impl.a */; };
-		C1A6C57BF5C1016A80AC6A49A194EC89 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */; };
-		C438852FD9786B0F1BF21CD822FB0539 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */; };
-		D7185401B59560E98D28DC45237FD2EC /* libZFAlgorithm_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F118EF2F142530FC68757803745FEB8 /* libZFAlgorithm_impl.a */; };
-		D8AD085DA43E4A762F1BB255776C9658 /* libZFUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A73333577CC2E1D7430D0F5F4247349E /* libZFUtility.a */; };
-		DE28417BD03588E75D6466BF41F797D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */; };
-		F2200B286A307E6C7964D9DD48429870 /* libZFUIKit_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 303D37F234DA9265AD5B4BB0CA104DBF /* libZFUIKit_impl.a */; };
+		9BEDAC00350A241039CB038616E08837 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */; };
+		B6D37B3E4AF591269DDF3C080BCD1030 /* libZFCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B1EDD1396ACEF272E32A84AD143B9E2 /* libZFCore.a */; };
+		D9757EE3018925C7B3F5D59A41FCBF04 /* libZFUtility.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D81083EAF1A6D3E3F43E9AF45263585 /* libZFUtility.a */; };
+		E95D7032E1F0EC6068A7A42F74063D1B /* libZFAddition.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E818FB076466880CD4DC340F3E10D643 /* libZFAddition.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		01386D265D7A8FC690A35EB32DF4468B /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
-		0A8404EBD9E1FBFED277007C652D0AA8 /* libZFUIWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIWidget.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIWidget.a; sourceTree = "<group>"; };
-		1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		303D37F234DA9265AD5B4BB0CA104DBF /* libZFUIKit_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIKit_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIKit_impl.a; sourceTree = "<group>"; };
-		37C7C8B361284230DCDDA6120DBC39B8 /* libZF_loader_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZF_loader_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZF_loader_impl.a; sourceTree = "<group>"; };
+		3C65289CAEB8C2ECCC5C95B79782C834 /* libZFAlgorithm_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAlgorithm_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAlgorithm_impl.a; sourceTree = "<group>"; };
 		3D0504266722DB764EE5C38FC4234BFD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		452EA08077DA1D184780B65EAD193BBF /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
-		4F118EF2F142530FC68757803745FEB8 /* libZFAlgorithm_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAlgorithm_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAlgorithm_impl.a; sourceTree = "<group>"; };
-		5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		5CCDB7DD09CBCB786389830BEAA1BAFA /* libZFCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFCore.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFCore.a; sourceTree = "<group>"; };
-		6E138D4FE7D272B111BF0BACDCC78AEE /* libZFUIKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIKit.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIKit.a; sourceTree = "<group>"; };
+		4D81083EAF1A6D3E3F43E9AF45263585 /* libZFUtility.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUtility.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUtility.a; sourceTree = "<group>"; };
+		761A4D0687164B8B40E550BB380DD417 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B1EDD1396ACEF272E32A84AD143B9E2 /* libZFCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFCore.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFCore.a; sourceTree = "<group>"; };
+		7C771322C6D15539D84708B61B500527 /* libZFAlgorithm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAlgorithm.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAlgorithm.a; sourceTree = "<group>"; };
 		86C151B3204A45EDA14C59C1EB72AEA7 /* zfsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zfsrc; path = ../../../zfsrc; sourceTree = "<group>"; };
+		87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		91C6F664F4DE76AB35AA22E0B74FCB38 /* libZF_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZF_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZF_impl.a; sourceTree = "<group>"; };
+		96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		9983C67A37FD3B3F12E46380DCCCC83F /* libZFAddition.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAddition.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAddition.a; sourceTree = "<group>"; };
+		98E9A1859726F96119246D0EE7C1C036 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZF2048.mm; sourceTree = "<group>"; };
-		A3864CFC1A88ADA44A3200E80EF2395D /* libZF_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZF_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZF_impl.a; sourceTree = "<group>"; };
-		A73333577CC2E1D7430D0F5F4247349E /* libZFUtility.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUtility.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUtility.a; sourceTree = "<group>"; };
-		A8BA9CC7DA2551BD270F24E283B4FA73 /* libZFCore_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFCore_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFCore_impl.a; sourceTree = "<group>"; };
-		B45B57C57BDB706A78EB126DAB123083 /* libZFAlgorithm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAlgorithm.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAlgorithm.a; sourceTree = "<group>"; };
+		A75E9BCBD7180C323E91D21C9A42A75E /* libZFUIKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIKit.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIKit.a; sourceTree = "<group>"; };
+		AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AF2AF02956DF0C15CFA921D55B99A495 /* libZFCore_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFCore_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFCore_impl.a; sourceTree = "<group>"; };
 		B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BFCCBC0AE22F64D91985A77917632DFA /* libZFUIKit_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIKit_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIKit_impl.a; sourceTree = "<group>"; };
+		C70E1F79AFF9E437B10AFA23720385C6 /* libZF_loader_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZF_loader_impl.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZF_loader_impl.a; sourceTree = "<group>"; };
+		E818FB076466880CD4DC340F3E10D643 /* libZFAddition.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFAddition.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFAddition.a; sourceTree = "<group>"; };
+		F7729880D15548A5D3EC2AB70787F898 /* libZFUIWidget.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libZFUIWidget.a; path = ../../../../../ZFFramework/_release/iOS/all/lib/libZFUIWidget.a; sourceTree = "<group>"; };
 		FBC2DF247F290299602E15AC938EF32F /* ZF2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZF2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -63,21 +65,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1A6C57BF5C1016A80AC6A49A194EC89 /* CoreGraphics.framework in Frameworks */,
-				03B4E8564020832F8FFA4F15D6933ED7 /* Foundation.framework in Frameworks */,
-				DE28417BD03588E75D6466BF41F797D6 /* QuartzCore.framework in Frameworks */,
-				C438852FD9786B0F1BF21CD822FB0539 /* UIKit.framework in Frameworks */,
-				3BA4596C83B7C93CA39E34091988399E /* libZFAddition.a in Frameworks */,
-				264DD9CF9B6A42969A67A28FDC890F6D /* libZFAlgorithm.a in Frameworks */,
-				D7185401B59560E98D28DC45237FD2EC /* libZFAlgorithm_impl.a in Frameworks */,
-				8F088BCAD8C69A06B807C17421E2B69E /* libZFCore.a in Frameworks */,
-				BFE13D4954B122A4B1E4D2AAA123C6E5 /* libZFCore_impl.a in Frameworks */,
-				80F439D1D16276809DBE4F9F5797A98B /* libZFUIKit.a in Frameworks */,
-				F2200B286A307E6C7964D9DD48429870 /* libZFUIKit_impl.a in Frameworks */,
-				45FACB91245BC0803A98C1912BAFE93B /* libZFUIWidget.a in Frameworks */,
-				D8AD085DA43E4A762F1BB255776C9658 /* libZFUtility.a in Frameworks */,
-				92D5AD04CE6DB3E4C7FD6D1DC80B4E50 /* libZF_impl.a in Frameworks */,
-				4A67FCF21DFC39424B50452CB1081D1A /* libZF_loader_impl.a in Frameworks */,
+				28655F9AA894515CC39FFC1B5B867B8D /* CoreGraphics.framework in Frameworks */,
+				06CD5D9786921D3E2FB0147D7EFE762F /* Foundation.framework in Frameworks */,
+				9BEDAC00350A241039CB038616E08837 /* QuartzCore.framework in Frameworks */,
+				0FCB4C7237AFD1A3AD532715C92DD734 /* UIKit.framework in Frameworks */,
+				E95D7032E1F0EC6068A7A42F74063D1B /* libZFAddition.a in Frameworks */,
+				1D863372C5095386D0A08CF725A6A61E /* libZFAlgorithm.a in Frameworks */,
+				92E87D512579B2CE58EF094C8D174220 /* libZFAlgorithm_impl.a in Frameworks */,
+				B6D37B3E4AF591269DDF3C080BCD1030 /* libZFCore.a in Frameworks */,
+				73E7291A40ECEDF64A23F229DE1F90BB /* libZFCore_impl.a in Frameworks */,
+				2ACB1FBF42156594384C6B6005803396 /* libZFUIKit.a in Frameworks */,
+				5930829EB0AA9D1C6A6F4487C6E9E44A /* libZFUIKit_impl.a in Frameworks */,
+				395AB4831E0DCFE031951693472D30EB /* libZFUIWidget.a in Frameworks */,
+				D9757EE3018925C7B3F5D59A41FCBF04 /* libZFUtility.a in Frameworks */,
+				0E83B71526521171356A8F136BA268A5 /* libZF_impl.a in Frameworks */,
+				6080B33EF8751A97722341B72E74F17C /* libZF_loader_impl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +89,7 @@
 		39C1B75F09E2ADEEE32355A28E0E697E = {
 			isa = PBXGroup;
 			children = (
-				7ABC8B8B37A5C8ED07512CFEDE52239D /* Framework */,
+				80CA21A4BEEC35D91F8A9B19053ECC09 /* Frameworks */,
 				ABB60794D01801E70A4958D8B67D33C8 /* Products */,
 				4A82029FA6DA805CEC5E5F1C4E4BB861 /* ProjectFiles */,
 				F1AA92F1BF60AFF728C00EFFB185B794 /* ZF2048 */,
@@ -103,31 +105,33 @@
 				301B2D74571B856FA7D73D919D15A81E /* Icon-72.png */,
 				B5A35DF6598ADC5CB058AC646CBFF650 /* Icon.png */,
 				9783C5B2E28370AFD4B5ED5BC4B3E163 /* Icon@2x.png */,
+				761A4D0687164B8B40E550BB380DD417 /* Info.plist */,
+				98E9A1859726F96119246D0EE7C1C036 /* LaunchScreen.storyboard */,
 				A36A5CACEC4D82FB7A1F1A77D14A3741 /* zfgensrc_ZF2048.mm */,
 			);
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		7ABC8B8B37A5C8ED07512CFEDE52239D /* Framework */ = {
+		80CA21A4BEEC35D91F8A9B19053ECC09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5B18B4D532D434AF6DA1EE76131286D3 /* CoreGraphics.framework */,
-				D77BF89978911EE0F101E206582DEE70 /* Foundation.framework */,
-				D5C20094EC0256F0741F3DD103FE1591 /* QuartzCore.framework */,
-				1BC4FD004B6178D70FFDE33146743DCE /* UIKit.framework */,
-				9983C67A37FD3B3F12E46380DCCCC83F /* libZFAddition.a */,
-				B45B57C57BDB706A78EB126DAB123083 /* libZFAlgorithm.a */,
-				4F118EF2F142530FC68757803745FEB8 /* libZFAlgorithm_impl.a */,
-				5CCDB7DD09CBCB786389830BEAA1BAFA /* libZFCore.a */,
-				A8BA9CC7DA2551BD270F24E283B4FA73 /* libZFCore_impl.a */,
-				6E138D4FE7D272B111BF0BACDCC78AEE /* libZFUIKit.a */,
-				303D37F234DA9265AD5B4BB0CA104DBF /* libZFUIKit_impl.a */,
-				0A8404EBD9E1FBFED277007C652D0AA8 /* libZFUIWidget.a */,
-				A73333577CC2E1D7430D0F5F4247349E /* libZFUtility.a */,
-				A3864CFC1A88ADA44A3200E80EF2395D /* libZF_impl.a */,
-				37C7C8B361284230DCDDA6120DBC39B8 /* libZF_loader_impl.a */,
+				96B1CDD6F5505E5855CD22513B1953E0 /* CoreGraphics.framework */,
+				87B9A34A6CBF7486F17709A67D6C720C /* Foundation.framework */,
+				AE9B587793CC376C11C939BE60C7D12E /* QuartzCore.framework */,
+				1BBCF1F44B216C06D98E0CCA74F44449 /* UIKit.framework */,
+				E818FB076466880CD4DC340F3E10D643 /* libZFAddition.a */,
+				7C771322C6D15539D84708B61B500527 /* libZFAlgorithm.a */,
+				3C65289CAEB8C2ECCC5C95B79782C834 /* libZFAlgorithm_impl.a */,
+				7B1EDD1396ACEF272E32A84AD143B9E2 /* libZFCore.a */,
+				AF2AF02956DF0C15CFA921D55B99A495 /* libZFCore_impl.a */,
+				A75E9BCBD7180C323E91D21C9A42A75E /* libZFUIKit.a */,
+				BFCCBC0AE22F64D91985A77917632DFA /* libZFUIKit_impl.a */,
+				F7729880D15548A5D3EC2AB70787F898 /* libZFUIWidget.a */,
+				4D81083EAF1A6D3E3F43E9AF45263585 /* libZFUtility.a */,
+				91C6F664F4DE76AB35AA22E0B74FCB38 /* libZF_impl.a */,
+				C70E1F79AFF9E437B10AFA23720385C6 /* libZF_loader_impl.a */,
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ABB60794D01801E70A4958D8B67D33C8 /* Products */ = {

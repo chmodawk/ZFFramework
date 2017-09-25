@@ -93,7 +93,7 @@ zfclassFwd _ZFP_ZFUIViewPrivate;
  * we allow add native view to ZFUIView environment,
  * for how to, refer to #ZFUINativeViewWrapper\n
  * we also allow add ZFUIView to native view,
- * for how to, refer to #nativeViewNotifyBeforeAdd
+ * for how to, refer to #ZFUISysWindow::nativeWindowEmbed
  */
 zfclass ZF_ENV_EXPORT ZFUIView : zfextends ZFStyleableObject
 {
@@ -474,29 +474,8 @@ public:
      * for how to access native implementation, please refer to #nativeImplView
      */
     ZFMETHOD_DECLARE_0(void *, nativeView);
-    /**
-     * @brief see #ZFUIView
-     *
-     * ZFUIView can be embeded to native view,
-     * if you want to do so, you must:
-     * -  call #nativeViewNotifyBeforeAdd before add
-     * -  call #nativeViewNotifyAfterRemove after remove
-     *
-     * \n
-     * nativeParentView is passed to setup necessary environment for view,
-     * it's ensured not to be stored to prevent cycle reference,
-     * and can't be access from ZFUIView,
-     * if it's really necessarily to be accessable,
-     * you should supply your own native method
-     */
-    ZFMETHOD_DECLARE_STATIC_2(void, nativeViewNotifyBeforeAdd,
-                              ZFMP_IN(ZFUIView *, view),
-                              ZFMP_IN(void *, nativeParentView));
-    /**
-     * @brief see #nativeViewNotifyBeforeAdd
-     */
-    ZFMETHOD_DECLARE_STATIC_1(void, nativeViewNotifyAfterRemove,
-                              ZFMP_IN(ZFUIView *, view));
+    static void _ZFP_ZFUIView_nativeViewNotifyAdd(ZF_IN ZFUIView *view, ZF_IN void *nativeParentView);
+    static void _ZFP_ZFUIView_nativeViewNotifyRemove(ZF_IN ZFUIView *view);
 
     // ============================================================
     // view delegate logic

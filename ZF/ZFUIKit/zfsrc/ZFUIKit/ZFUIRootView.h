@@ -28,24 +28,10 @@ zffinal zfclass ZF_ENV_EXPORT ZFUIRootView : zfextends ZFUIView
     ZFOBJECT_DECLARE(ZFUIRootView, ZFUIView)
 
 public:
-    // ============================================================
-    // events
-    /**
-     * @brief see #ZFObject::observerNotify
-     *
-     * called when root view need layout
-     */
-    ZFOBSERVER_EVENT(RootViewOnRequestLayout)
-
-public:
     /**
      * @brief set scale for root view, as well as all of its children
      */
     virtual void scaleSet(ZF_IN zffloat scale);
-
-public:
-    zfoverride
-    virtual void layoutRequest(void);
 
 protected:
     zfoverride
@@ -61,12 +47,15 @@ protected:
     virtual void layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                  ZF_IN const ZFUISize &sizeHint,
                                  ZF_IN const ZFUISizeParam &sizeParam);
+    zfoverride
+    virtual void layoutOnLayout(ZF_IN const ZFUIRect &bounds);
 
 protected:
-    /** @brief see #EventRootViewOnRequestLayout */
-    virtual inline void rootViewOnRequestLayout(void)
+    ZFCLASS_PRIVATE_ALLOC("can only be created by owner ZFUISysWindow")
+    zfoverride
+    virtual ZFObject *objectOnInit(void)
     {
-        this->observerNotify(ZFUIRootView::EventRootViewOnRequestLayout());
+        return zfsuper::objectOnInit();
     }
 };
 

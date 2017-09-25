@@ -48,13 +48,12 @@ public:
     /**
      * @brief called to add root view to native window container
      *
-     * note, you must properly invoke #ZFUIView::nativeViewNotifyBeforeAdd
+     * you must return a proper native parent view,
+     * which used to copy some settings to the window's root view
      */
-    virtual void nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window) zfpurevirtual;
+    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window) zfpurevirtual;
     /**
      * @brief called to remove root view to native window container
-     *
-     * note, you must properly invoke #ZFUIView::nativeViewNotifyAfterRemove
      */
     virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *window) zfpurevirtual;
 
@@ -69,9 +68,12 @@ public:
                                    ZF_IN ZFUISysWindow *windowToFinish) zfpurevirtual;
 
     /**
-     * @brief called to update suggested window layout param
+     * @brief called to update suggested window layout param,
+     *   fill with no margin by default
      */
-    virtual void updateSuggestedWindowLayoutParam(ZF_IN ZFUISysWindow *window) zfpurevirtual;
+    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *window)
+    {
+    }
     /**
      * @brief called when window layout param changed
      */
@@ -96,8 +98,10 @@ public:
      *   and layout window using the result frame
      */
     zffinal ZFUIRect notifyMeasureWindow(ZF_IN ZFUISysWindow *window,
-                                         ZF_IN const ZFUIRect &rootRefRect)
+                                         ZF_IN const ZFUIRect &rootRefRect,
+                                         ZF_IN const ZFUIMargin &sysWindowMargin)
     {
+        window->_ZFP_ZFUISysWindow_sysWindowMarginSet(sysWindowMargin);
         return window->_ZFP_ZFUISysWindow_measureWindow(rootRefRect);
     }
     /**

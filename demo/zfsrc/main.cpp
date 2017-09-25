@@ -282,24 +282,3 @@ static void _ZFP_ZFFramework_test_prepareTestCaseSubModuleTest(ZF_IN ZFUIView *c
     button->buttonLabelTextSet(zfstring(testCase->className() + zfslen(subModuleName) + 1));
 }
 
-ZF_GLOBAL_INITIALIZER_INIT(iOS7AutoTitleSpace)
-{
-    zfstring frameworkName = ZFEnvInfo::frameworkName();
-    if(zfstringFindCaseInsensitive(frameworkName, zfText("iOS")) != zfindexMax()
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPhone")) != zfindexMax()
-       || zfstringFindCaseInsensitive(frameworkName, zfText("iPad")) != zfindexMax())
-    {
-        if(zfVersionGetInt(ZFEnvInfo::frameworkVersion(), ZFVERSION_MAIN()) >= 7)
-        {
-            ZFLISTENER_LOCAL(windowLayoutParamOnUpdate, {
-                ZFUIViewLayoutParam *lp = listenerData.sender->to<ZFUIWindow *>()->windowLayoutParam();
-                ZFUIMargin margin = lp->layoutMargin();
-                margin.top = 20;
-                lp->layoutMarginSet(margin);
-            })
-            ZFObjectGlobalEventObserver().observerAdd(ZFUIWindow::EventWindowLayoutParamOnInit(), windowLayoutParamOnUpdate);
-        }
-    }
-}
-ZF_GLOBAL_INITIALIZER_END(iOS7AutoTitleSpace)
-

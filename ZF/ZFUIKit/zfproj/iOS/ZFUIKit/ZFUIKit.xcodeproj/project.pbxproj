@@ -61,17 +61,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		46C6C73FCBE4A203F4FE8853D26EF0D1 /* Framework */ = {
+		32EE8A67933723AE0DB38F7757C5CE63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		8316BC90C67D132E61038D33E29D9AA1 = {
 			isa = PBXGroup;
 			children = (
-				46C6C73FCBE4A203F4FE8853D26EF0D1 /* Framework */,
+				32EE8A67933723AE0DB38F7757C5CE63 /* Frameworks */,
 				1CF6F591736F8A8B5CCC7C3EA625C67F /* Products */,
 				DFD41D348AC169A651BA38C19201BF77 /* ProjectFiles */,
 				AA3E61CD1035F8880507EB5D087B9A56 /* ZFUIKit */,

@@ -21,7 +21,11 @@
 static void _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(ZF_IN ZFUISysWindow *window, ZF_IN QWidget *nativeWindow)
 {
     QRect screenRect = QApplication::desktop()->screenGeometry();
-    ZFUIRect frame = ZFPROTOCOL_ACCESS(ZFUISysWindow)->notifyMeasureWindow(window, ZFUIRectMake(0, 0, screenRect.width(), screenRect.height()));
+    ZFUIRect frame = ZFPROTOCOL_ACCESS(ZFUISysWindow)->notifyMeasureWindow(
+            window,
+            ZFUIRectMake(0, 0, screenRect.width(), screenRect.height()),
+            ZFUIMarginZero()
+        );
     nativeWindow->setGeometry(ZFImpl_sys_Qt_ZFUIKit_ZFUIRectToQRect(frame));
     if(nativeWindow->layout() != zfnull)
     {
@@ -121,22 +125,19 @@ public:
         this->_mainWindow = zfnull;
     }
 
-    virtual void nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
+    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
     {
         ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, window->nativeWindow());
 
-        ZFUIView::nativeViewNotifyBeforeAdd(window->rootView(), nativeWindow);
-
         QWidget *nativeRootView = ZFCastStatic(QWidget *, window->rootView()->nativeView());
         nativeWindow->layout()->addWidget(nativeRootView);
+        return (void *)nativeWindow;
     }
     virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *window)
     {
         ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, window->nativeWindow());
         QWidget *nativeRootView = ZFCastStatic(QWidget *, window->rootView()->nativeView());
         nativeWindow->layout()->removeWidget(nativeRootView);
-
-        ZFUIView::nativeViewNotifyAfterRemove(window->rootView());
     }
 
     virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow)
@@ -163,7 +164,7 @@ public:
         delete nativeModalWindow;
     }
 
-    virtual void updateSuggestedWindowLayoutParam(ZF_IN ZFUISysWindow *window)
+    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *window)
     {
         // centered by default
         window->windowLayoutParam()->layoutAlignSet(ZFUIAlign::e_Center);

@@ -21,14 +21,14 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		247472063D0D0973A99042009A9C3041 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F9C6643F150185171AE1B9D99371A4 /* CoreGraphics.framework */; };
+		253AA8743EC268D6959DA65796A478F6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F12A17C8445BCFA52B091F38E13252C9 /* QuartzCore.framework */; };
+		3B4E5B16E2FC31ED95090FAF60B34E67 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC2D2CE9A7F3AD20F9B9A3B33C766FAC /* Foundation.framework */; };
 		4D9F0B508FB1330D15575A1675699ADC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B26F1BFAFB360EE110FA8E823063F077 /* main.m */; };
-		5270180039B409A43F753882B17F4527 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45276F7ACE29B7132B51FC96B56ED4F4 /* CoreGraphics.framework */; };
 		538DB4C9E1740A414060318998D42EB4 /* zfgensrc_ZF_loader_impl.mm in Sources */ = {isa = PBXBuildFile; fileRef = FFD684F80772BDC79FA1EEDEACDB357A /* zfgensrc_ZF_loader_impl.mm */; };
-		547700558F4B7F87F5FF150CE01C2FB3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC4DEDAC49539F9702C1EE97D5A9F6 /* UIKit.framework */; };
+		5CC0172ACD29CB2AA64B9847D6F910EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 264D679A4880254C887DAEB5A6004890 /* UIKit.framework */; };
 		92C49CC49BA2CF061307283181011268 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 24C288E46754CECA281E245CB4C7AB66 /* AppDelegate.mm */; };
 		C35F9308EF79A1C3C7E86E66DD1A4418 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C982AB933A554AA442E2EC262736AA5F /* RootViewController.m */; };
-		D6AF11A13E475DF43F9D3453DDB2F436 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2B67D85A93E590A4154D764933046DB /* Foundation.framework */; };
-		F5F13D97F6E94BD3261CDCDD52F7292A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D6F3729F375B6AA3168EF7E8C6474B /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,18 +44,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00FC4DEDAC49539F9702C1EE97D5A9F6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		21116F4CCCAC5B9BC928D2DA60CB055D /* zfsrc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zfsrc; path = ../../../zfsrc; sourceTree = "<group>"; };
+		22F9C6643F150185171AE1B9D99371A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		24C288E46754CECA281E245CB4C7AB66 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		28D6F3729F375B6AA3168EF7E8C6474B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		264D679A4880254C887DAEB5A6004890 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		298DA51A517CF08F05A2E7342A492A97 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		45276F7ACE29B7132B51FC96B56ED4F4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4CDAE6D53518709B1086137EAECB1B21 /* libZF_loader_impl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libZF_loader_impl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CF04BA5B6F8508B4696946778E179A2 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		AC2D2CE9A7F3AD20F9B9A3B33C766FAC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B24B4216182BFA89B48222F4E7D92178 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B26F1BFAFB360EE110FA8E823063F077 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C982AB933A554AA442E2EC262736AA5F /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
-		F2B67D85A93E590A4154D764933046DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F12A17C8445BCFA52B091F38E13252C9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		FFD684F80772BDC79FA1EEDEACDB357A /* zfgensrc_ZF_loader_impl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = zfgensrc_ZF_loader_impl.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,16 +64,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5270180039B409A43F753882B17F4527 /* CoreGraphics.framework in Frameworks */,
-				D6AF11A13E475DF43F9D3453DDB2F436 /* Foundation.framework in Frameworks */,
-				F5F13D97F6E94BD3261CDCDD52F7292A /* QuartzCore.framework in Frameworks */,
-				547700558F4B7F87F5FF150CE01C2FB3 /* UIKit.framework in Frameworks */,
+				247472063D0D0973A99042009A9C3041 /* CoreGraphics.framework in Frameworks */,
+				3B4E5B16E2FC31ED95090FAF60B34E67 /* Foundation.framework in Frameworks */,
+				253AA8743EC268D6959DA65796A478F6 /* QuartzCore.framework in Frameworks */,
+				5CC0172ACD29CB2AA64B9847D6F910EA /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		083793B311385F753638ACE8CB9DC572 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22F9C6643F150185171AE1B9D99371A4 /* CoreGraphics.framework */,
+				AC2D2CE9A7F3AD20F9B9A3B33C766FAC /* Foundation.framework */,
+				F12A17C8445BCFA52B091F38E13252C9 /* QuartzCore.framework */,
+				264D679A4880254C887DAEB5A6004890 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		197E386639F5FC355DBC7B9965E13AA7 /* ZF_loader_impl */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,17 +107,6 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		ABBAEE0B8B4E416DBAE0CE508A9A0F2A /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-				45276F7ACE29B7132B51FC96B56ED4F4 /* CoreGraphics.framework */,
-				F2B67D85A93E590A4154D764933046DB /* Foundation.framework */,
-				28D6F3729F375B6AA3168EF7E8C6474B /* QuartzCore.framework */,
-				00FC4DEDAC49539F9702C1EE97D5A9F6 /* UIKit.framework */,
-			);
-			name = Framework;
-			sourceTree = "<group>";
-		};
 		B9DBDD5423D664DB5A526AEC1EEBA17E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,7 +118,7 @@
 		E92D558DB94450A577C3A38D89D6600A = {
 			isa = PBXGroup;
 			children = (
-				ABBAEE0B8B4E416DBAE0CE508A9A0F2A /* Framework */,
+				083793B311385F753638ACE8CB9DC572 /* Frameworks */,
 				B9DBDD5423D664DB5A526AEC1EEBA17E /* Products */,
 				A6C117656727A4DD818DC468515661CF /* ProjectFiles */,
 				197E386639F5FC355DBC7B9965E13AA7 /* ZF_loader_impl */,

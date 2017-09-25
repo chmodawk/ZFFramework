@@ -69,11 +69,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6E92B6670A283C8C40DF89698BEE90E1 /* Framework */ = {
+		98E7C586EC3E9ADCB814B990E98D387A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E72FE6E426680C41FBF6CFFF02A90059 /* ZFUtility */ = {
@@ -87,7 +87,7 @@
 		F7CDB4967F272C3BEA8661A80610E58C = {
 			isa = PBXGroup;
 			children = (
-				6E92B6670A283C8C40DF89698BEE90E1 /* Framework */,
+				98E7C586EC3E9ADCB814B990E98D387A /* Frameworks */,
 				5EAF4329727CC130B11097720978AA7D /* Products */,
 				02AE466D40203FB12D72873561D7FAE1 /* ProjectFiles */,
 				E72FE6E426680C41FBF6CFFF02A90059 /* ZFUtility */,

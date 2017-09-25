@@ -69,17 +69,17 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		883D6BB6385F397034ED3577242B5E9C /* Framework */ = {
+		58C9C5BBCFB58BEAD03622225C6A693F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Framework;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A7857C9A3373D2EDD1348661788E80AF = {
 			isa = PBXGroup;
 			children = (
-				883D6BB6385F397034ED3577242B5E9C /* Framework */,
+				58C9C5BBCFB58BEAD03622225C6A693F /* Frameworks */,
 				D9F873AE9F196DF9F0A9F740B10BA381 /* Products */,
 				2BCD38EE40866E70988CCF4783293232 /* ProjectFiles */,
 				04F6D1038DD1D1755550E27474C194AF /* ZFCore */,

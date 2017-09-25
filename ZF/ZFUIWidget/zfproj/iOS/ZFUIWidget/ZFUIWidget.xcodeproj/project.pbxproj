@@ -77,21 +77,21 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		8796CAC74C7ECAA53E4B79FE89E1DF2D /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Framework;
-			sourceTree = "<group>";
-		};
 		AA0362ADCF4DBFAAE832A44E1C7FCB2D = {
 			isa = PBXGroup;
 			children = (
-				8796CAC74C7ECAA53E4B79FE89E1DF2D /* Framework */,
+				B90F1455D1EEEA490C6CEDA8C1A94AF9 /* Frameworks */,
 				0C54FB59AEE9DB88F83A23C7F1E38DD8 /* Products */,
 				5963EDC5F9EEBC13EE86900778880381 /* ProjectFiles */,
 				5153D8AC39EDD66164551CDEAB36A498 /* ZFUIWidget */,
 			);
+			sourceTree = "<group>";
+		};
+		B90F1455D1EEEA490C6CEDA8C1A94AF9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

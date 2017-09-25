@@ -55,12 +55,11 @@ public final class ZFUISysWindow extends Activity {
         intent.putExtra(_key_zfjniPointerOwnerZFUISysWindow, zfjniPointerOwnerZFUISysWindow);
         ZFMainEntry.mainEntryActivity().startActivity(intent);
     }
-    public static Object native_nativeWindowContainerView(Object nativeWindow) {
-        return ((ZFUISysWindow)nativeWindow)._containerView;
-    }
-    public static void native_nativeWindowOnRootViewAdd(Object nativeWindow,
-                                                        Object nativeWindowRootView) {
-        ((ZFUISysWindow)nativeWindow)._containerView.addView((View)nativeWindowRootView);
+    public static Object native_nativeWindowOnRootViewAdd(Object nativeWindow,
+                                                          Object nativeWindowRootView) {
+        ZFUISysWindow nativeWindowTmp = (ZFUISysWindow)nativeWindow;
+        nativeWindowTmp._containerView.addView((View)nativeWindowRootView);
+        return nativeWindowTmp._containerView;
     }
     public static void native_nativeWindowOnRootViewRemove(Object nativeWindow,
                                                            Object nativeWindowRootView) {

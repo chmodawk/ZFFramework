@@ -97,16 +97,6 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
-     * notified to update #windowLayoutParam
-     * @note this event is used to update default window layout param,
-     *   you may also want to observe #EventWindowOwnerSysWindowOnChange
-     *   to update for different layout param accorrding different native window
-     */
-    ZFOBSERVER_EVENT(WindowLayoutParamOnInit)
-
-    /**
-     * @brief see #ZFObject::observerNotify
-     *
      * notified when window attached to native container
      */
     ZFOBSERVER_EVENT(WindowOnShow)
@@ -136,8 +126,6 @@ public:
     virtual ZFObject *objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
-    zfoverride
-    virtual void objectOnInitFinish(void);
 
     // ============================================================
     // properties
@@ -147,6 +135,12 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFUIWindowLevelEnum, windowLevel,
                                 ZFPropertyInitValue(ZFUIWindowLevel::EnumDefault()))
     ZFPROPERTY_CUSTOM_ON_VERIFY_DECLARE(ZFUIWindowLevelEnum, windowLevel);
+
+    /**
+     * @brief whether this window update layout accorrding to #ZFUISysWindow::sysWindowMargin,
+     *   true by default
+     */
+    ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, windowLayoutAccorrdingToSysWindowMargin, ZFPropertyInitValue(zftrue))
 
 public:
     /**
@@ -205,11 +199,6 @@ public:
     ZFMETHOD_DECLARE_0(ZFUIViewLayoutParam *, windowLayoutParam);
 
 protected:
-    /** @brief see #EventWindowLayoutParamOnInit */
-    virtual inline void windowLayoutParamOnInit(void)
-    {
-        this->observerNotify(ZFUIWindow::EventWindowLayoutParamOnInit());
-    }
     /** @brief see #EventWindowOnShow */
     virtual inline void windowOnShow(void)
     {

@@ -53,13 +53,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0CB550854F33A5774A37ED14B52F05A2 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Framework;
-			sourceTree = "<group>";
-		};
 		3F4243A452FF12870741895F4921B024 /* ZFAddition */ = {
 			isa = PBXGroup;
 			children = (
@@ -76,10 +69,17 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
+		8EC1593A84FF74C6D340AD6D3C840B81 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A8BA8246613283A774C23CA3220E2843 = {
 			isa = PBXGroup;
 			children = (
-				0CB550854F33A5774A37ED14B52F05A2 /* Framework */,
+				8EC1593A84FF74C6D340AD6D3C840B81 /* Frameworks */,
 				B78D97569D71ABA9CCACEE8117FF83FD /* Products */,
 				4AEEDCF4AB744623B86E504995CE8778 /* ProjectFiles */,
 				3F4243A452FF12870741895F4921B024 /* ZFAddition */,

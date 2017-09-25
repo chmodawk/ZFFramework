@@ -38,7 +38,6 @@ public:
 ZFOBJECT_REGISTER(ZFUIWindow)
 
 ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOwnerSysWindowOnChange)
-ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowLayoutParamOnInit)
 ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOnShow)
 ZFOBSERVER_EVENT_REGISTER(ZFUIWindow, WindowOnHide)
 
@@ -78,11 +77,6 @@ void ZFUIWindow::objectOnDealloc(void)
     zfpoolDelete(d);
     d = zfnull;
     zfsuper::objectOnDealloc();
-}
-void ZFUIWindow::objectOnInitFinish(void)
-{
-    zfsuper::objectOnInitFinish();
-    this->windowLayoutParamOnInit();
 }
 
 // ============================================================

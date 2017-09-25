@@ -61,21 +61,21 @@
 			path = ProjectFiles;
 			sourceTree = "<group>";
 		};
-		4DE2907A04EE247C20F0ABE2F9CAFFC5 /* Framework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Framework;
-			sourceTree = "<group>";
-		};
 		B89D8E19E59D28D950B4E95E991D7B16 = {
 			isa = PBXGroup;
 			children = (
-				4DE2907A04EE247C20F0ABE2F9CAFFC5 /* Framework */,
+				C3544AAC17DB4394A0AF32BA75B18D25 /* Frameworks */,
 				FC6431A82F75FB1127A06D8166BDF01A /* Products */,
 				473C272A6CB4D7CEC10DF56C047BE090 /* ProjectFiles */,
 				C7DBDD5E8EA5314BC526DB744365D73B /* ZFUIWebKit */,
 			);
+			sourceTree = "<group>";
+		};
+		C3544AAC17DB4394A0AF32BA75B18D25 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		C7DBDD5E8EA5314BC526DB744365D73B /* ZFUIWebKit */ = {

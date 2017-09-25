@@ -17,6 +17,7 @@
 @property (nonatomic, assign) ZFUISysWindow *ownerZFUISysWindow;
 @property (nonatomic, assign) ZFUIOrientationEnum windowOrientation;
 @property (nonatomic, assign) ZFUIOrientationFlags windowOrientationFlags;
+@property (nonatomic, assign) BOOL _ZFP_windowResumeFlag;
 - (void)_ZFP_updateLayout;
 @end
 @implementation _ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow
@@ -25,9 +26,26 @@
 {
     if(self.ownerZFUISysWindow != zfnull)
     {
+        ZFUIMargin sysWindowMargin = ZFUIMarginZero();
+
+        if(@available(ios 11, *))
+        {
+            UIEdgeInsets t = [UIApplication sharedApplication].keyWindow.rootViewController.view.safeAreaInsets;
+            sysWindowMargin.left = t.left;
+            sysWindowMargin.top = t.top;
+            sysWindowMargin.right = t.right;
+            sysWindowMargin.bottom = t.bottom;
+        }
+        else
+        {
+            sysWindowMargin.top = [UIApplication sharedApplication].statusBarFrame.size.height;
+        }
+
         UIView *nativeRootView = (__bridge UIView *)self.ownerZFUISysWindow->rootView()->nativeView();
         nativeRootView.frame = ZFImpl_sys_iOS_ZFUIKit_ZFUIRectToCGRect(self.impl->notifyMeasureWindow(
-            self.ownerZFUISysWindow, ZFImpl_sys_iOS_ZFUIKit_ZFUIRectFromCGRect(self.view.bounds)));
+            self.ownerZFUISysWindow,
+            ZFImpl_sys_iOS_ZFUIKit_ZFUIRectFromCGRect(self.view.bounds),
+            sysWindowMargin));
     }
 }
 // ============================================================
@@ -99,7 +117,11 @@
     [super viewWillAppear:animated];
     if(self.ownerZFUISysWindow != zfnull)
     {
-        self.impl->notifyOnResume(self.ownerZFUISysWindow);
+        if(!self._ZFP_windowResumeFlag)
+        {
+            self._ZFP_windowResumeFlag = YES;
+            self.impl->notifyOnResume(self.ownerZFUISysWindow);
+        }
     }
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -107,7 +129,11 @@
     [super viewWillDisappear:animated];
     if(self.ownerZFUISysWindow != zfnull)
     {
-        self.impl->notifyOnPause(self.ownerZFUISysWindow);
+        if(self._ZFP_windowResumeFlag)
+        {
+            self._ZFP_windowResumeFlag = NO;
+            self.impl->notifyOnPause(self.ownerZFUISysWindow);
+        }
     }
 }
 @end
@@ -171,22 +197,19 @@ public:
         this->_mainWindow = zfnull;
     }
 
-    virtual void nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
+    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
     {
         _ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow *nativeWindow = (__bridge _ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow *)window->nativeWindow();
-
-        ZFUIView::nativeViewNotifyBeforeAdd(window->rootView(), (__bridge void *)nativeWindow.view);
 
         UIView *nativeRootView = (__bridge UIView *)window->rootView()->nativeView();
         [nativeWindow.view addSubview:nativeRootView];
         [nativeWindow _ZFP_updateLayout];
+        return (__bridge void *)nativeWindow.view;
     }
     virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *window)
     {
         UIView *nativeRootView = (__bridge UIView *)window->rootView()->nativeView();
         [nativeRootView removeFromSuperview];
-
-        ZFUIView::nativeViewNotifyAfterRemove(window->rootView());
     }
 
     virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow)
@@ -208,10 +231,6 @@ public:
         [(__bridge UIViewController *)ownerWindow->nativeWindow() dismissViewControllerAnimated:YES completion:nil];
     }
 
-    virtual void updateSuggestedWindowLayoutParam(ZF_IN ZFUISysWindow *window)
-    {
-        // default is fill parent, nothing to do
-    }
     virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *window)
     {
         [(__bridge _ZFP_ZFUISysWindowImpl_sys_iOS_NativeWindow *)window->nativeWindow() _ZFP_updateLayout];

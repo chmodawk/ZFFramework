@@ -75,25 +75,15 @@ public:
         this->_mainWindow = zfnull;
     }
 
-    virtual void nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
+    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
     {
-        {
-            JNIEnv *jniEnv = JNIGetJNIEnv();
-            static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowContainerView"),
-                JNIGetMethodSig(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object), JNIParamTypeContainer()
-                    .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
-                ).c_str());
-            jobject tmp = JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId, ZFCastStatic(jobject, window->nativeWindow()));
-            ZFUIView::nativeViewNotifyBeforeAdd(window->rootView(), tmp);
-        }
-
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowOnRootViewAdd"),
-            JNIGetMethodSig(JNIType::S_void, JNIParamTypeContainer()
+            JNIGetMethodSig(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object), JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
-        JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
+        return (void *)JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId,
             ZFCastStatic(jobject, window->nativeWindow()),
             ZFCastStatic(jobject, window->rootView()->nativeView())
             );
@@ -110,8 +100,6 @@ public:
             ZFCastStatic(jobject, window->nativeWindow()),
             ZFCastStatic(jobject, window->rootView()->nativeView())
             );
-
-        ZFUIView::nativeViewNotifyAfterRemove(window->rootView());
     }
 
     virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow)
@@ -142,10 +130,6 @@ public:
             ZFCastStatic(jobject, windowToFinish->nativeWindow()));
     }
 
-    virtual void updateSuggestedWindowLayoutParam(ZF_IN ZFUISysWindow *window)
-    {
-        // default is fill parent, nothing to do
-    }
     virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *window)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
@@ -199,7 +183,8 @@ JNI_METHOD_DECLARE(void, ZFImpl_sys_Android_JNI_ID_ZFUISysWindow, native_1notify
 {
     ZFUIRect result = ZFPROTOCOL_ACCESS(ZFUISysWindow)->notifyMeasureWindow(
         ZFCastZFObject(ZFUISysWindow *, JNIConvertZFObjectFromJNIType(jniEnv, zfjniPointerOwnerZFUISysWindow)),
-        ZFUIRectMake(0, 0, refWidth, refHeight));
+        ZFUIRectMake(0, 0, refWidth, refHeight),
+        ZFUIMarginZero());
     ZFImpl_sys_Android_ZFUIRectToZFAndroidRect(result, resultRect);
 }
 JNI_METHOD_DECLARE(void, ZFImpl_sys_Android_JNI_ID_ZFUISysWindow, native_1notifyOnCreate,
