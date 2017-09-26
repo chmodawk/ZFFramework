@@ -18,11 +18,11 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-static void _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(ZF_IN ZFUISysWindow *window, ZF_IN QWidget *nativeWindow)
+static void _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(ZF_IN ZFUISysWindow *sysWindow, ZF_IN QWidget *nativeWindow)
 {
     QRect screenRect = QApplication::desktop()->screenGeometry();
     ZFUIRect frame = ZFPROTOCOL_ACCESS(ZFUISysWindow)->notifyMeasureWindow(
-            window,
+            sysWindow,
             ZFUIRectMake(0, 0, screenRect.width(), screenRect.height()),
             ZFUIMarginZero()
         );
@@ -125,22 +125,29 @@ public:
         this->_mainWindow = zfnull;
     }
 
-    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
+    // ============================================================
+public:
+    virtual void nativeWindowOnCleanup(ZF_IN ZFUISysWindow *sysWindow)
     {
-        ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, window->nativeWindow());
-
-        QWidget *nativeRootView = ZFCastStatic(QWidget *, window->rootView()->nativeView());
-        nativeWindow->layout()->addWidget(nativeRootView);
-        return (void *)nativeWindow;
     }
-    virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *window)
+
+    virtual void nativeWindowRootViewOnAdd(ZF_IN ZFUISysWindow *sysWindow,
+                                           ZF_OUT void *&nativeParentView)
     {
-        ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, window->nativeWindow());
-        QWidget *nativeRootView = ZFCastStatic(QWidget *, window->rootView()->nativeView());
+        ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, sysWindow->nativeWindow());
+
+        QWidget *nativeRootView = ZFCastStatic(QWidget *, sysWindow->rootView()->nativeView());
+        nativeWindow->layout()->addWidget(nativeRootView);
+        nativeParentView = (void *)nativeWindow;
+    }
+    virtual void nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *sysWindow)
+    {
+        ZFImpl_sys_Qt_Window *nativeWindow = ZFCastStatic(ZFImpl_sys_Qt_Window *, sysWindow->nativeWindow());
+        QWidget *nativeRootView = ZFCastStatic(QWidget *, sysWindow->rootView()->nativeView());
         nativeWindow->layout()->removeWidget(nativeRootView);
     }
 
-    virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow)
+    virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner)
     {
         ZFUISysWindow *modalWindow = zfRetain(ZFUISysWindow::ClassData()->newInstance(ZFCallerInfoMake()).to<ZFUISysWindow *>());
         ZFImpl_sys_Qt_Window *nativeModalWindow = new ZFImpl_sys_Qt_Window();
@@ -153,35 +160,35 @@ public:
 
         return modalWindow;
     }
-    virtual void modalWindowFinish(ZF_IN ZFUISysWindow *ownerWindow,
-                                   ZF_IN ZFUISysWindow *windowToFinish)
+    virtual void modalWindowFinish(ZF_IN ZFUISysWindow *sysWindowOwner,
+                                   ZF_IN ZFUISysWindow *sysWindowToFinish)
     {
-        this->notifyOnDestroy(windowToFinish);
-        QWidget *nativeModalWindow = ZFCastStatic(QWidget *, ownerWindow->nativeWindow());
+        this->notifyOnDestroy(sysWindowToFinish);
+        QWidget *nativeModalWindow = ZFCastStatic(QWidget *, sysWindowOwner->nativeWindow());
         nativeModalWindow->hide();
         nativeModalWindow->removeEventFilter(&_eventWrapper);
         ZFImpl_sys_Qt_QObjectTagSetZFObject(nativeModalWindow, zfText("_ZFP_ZFUISysWindowImpl_sys_Qt_ownerZFUISysWindow"), zfnull);
         delete nativeModalWindow;
     }
 
-    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *window)
+    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *sysWindow)
     {
         // centered by default
-        window->windowLayoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
-        window->windowLayoutParam()->sizeHintSet(ZFUISizeMake(480, 640));
+        sysWindow->windowLayoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
+        sysWindow->windowLayoutParam()->sizeHintSet(ZFUISizeMake(480, 640));
     }
-    virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *window)
+    virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *sysWindow)
     {
-        _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(window, (ZFImpl_sys_Qt_Window *)window->nativeWindow());
+        _ZFP_ZFUISysWindowImpl_sys_Qt_updateWindowLayout(sysWindow, (ZFImpl_sys_Qt_Window *)sysWindow->nativeWindow());
     }
 
-    virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *window)
+    virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *sysWindow)
     {
         // Qt don't support rotate
         return ZFUIOrientation::e_Top;
     }
-    virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *window,
-                                         ZF_IN const ZFUIOrientationFlags &flags)
+    virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *sysWindow,
+                                           ZF_IN const ZFUIOrientationFlags &flags)
     {
         // Qt don't support rotate
     }

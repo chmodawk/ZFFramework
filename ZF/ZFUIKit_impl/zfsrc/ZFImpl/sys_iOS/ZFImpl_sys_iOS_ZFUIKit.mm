@@ -235,6 +235,33 @@ void ZFImpl_sys_iOS_ZFUIKit_UIViewGetViewTree(ZF_OUT zfstring &ret, ZF_IN UIView
     ret += zfText("==================== UIView tree  end  ====================\n");
 }
 
+#if ZF_ENV_DEBUG && 0
+    ZF_GLOBAL_INITIALIZER_INIT(ZFImpl_sys_iOS_autoPrintViewTree)
+    {
+        if(!ZFProtocolIsAvailable(zfText("ZFUIView")))
+        {
+            return ;
+        }
+        ZFLISTENER_LOCAL(windowOnPause, {
+            ZFUISysWindow *sysWindow = listenerData.sender->to<ZFUISysWindow *>();
+            zfstring s;
+            ZFImpl_sys_iOS_ZFUIKit_UIViewGetViewTree(s, (__bridge UIView *)sysWindow->rootView()->nativeView());
+            zfLogTrimT() << s;
+        })
+        this->windowOnPauseListener = windowOnPause;
+        ZFObjectGlobalEventObserver().observerAdd(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    ZF_GLOBAL_INITIALIZER_DESTROY(ZFImpl_sys_iOS_autoPrintViewTree)
+    {
+        ZFObjectGlobalEventObserver().observerRemove(
+            ZFUISysWindow::EventSysWindowOnPause(), this->windowOnPauseListener);
+    }
+    private:
+        ZFListener windowOnPauseListener;
+    ZF_GLOBAL_INITIALIZER_END(ZFImpl_sys_iOS_autoPrintViewTree)
+#endif
+
 ZF_NAMESPACE_GLOBAL_END
 
 #endif // #if ZF_ENV_sys_iOS

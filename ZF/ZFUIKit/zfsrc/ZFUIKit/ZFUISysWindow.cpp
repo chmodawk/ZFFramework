@@ -16,7 +16,7 @@ zfclassNotPOD _ZFP_ZFUISysWindowPrivate
 {
 public:
     ZFPROTOCOL_INTERFACE_CLASS(ZFUISysWindow) *impl;
-    ZFUISysWindow::NativeWindowEmbedImpl *embedImpl;
+    ZFUISysWindowEmbedImpl *embedImpl;
     void *nativeWindow;
     ZFUIRootView *windowRootView;
     ZFUIOrientationFlags windowOrientationFlags;
@@ -69,16 +69,16 @@ ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnPause)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowOnRotate)
 ZFOBSERVER_EVENT_REGISTER(ZFUISysWindow, SysWindowMarginOnUpdate)
 
-zfautoObject ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindow::NativeWindowEmbedImpl *impl)
+zfautoObject ZFUISysWindow::nativeWindowEmbed(ZF_IN ZFUISysWindowEmbedImpl *embedImpl)
 {
     zfautoObject tmp = ZFUISysWindow::ClassData()->newInstance(ZFCallerInfoMake());
     ZFUISysWindow *ret = tmp.to<ZFUISysWindow *>();
-    ret->d->embedImpl = impl;
-    impl->_ZFP_ownerZFUISysWindow = ret;
-    impl->windowLayoutParamOnInit(ret);
+    ret->d->embedImpl = embedImpl;
+    embedImpl->_ZFP_ownerZFUISysWindow = ret;
+    embedImpl->windowLayoutParamOnInit(ret);
     return zfautoObjectCreateMarkCached(ret);
 }
-ZFUISysWindow::NativeWindowEmbedImpl *ZFUISysWindow::nativeWindowEmbedImpl(void)
+ZFUISysWindowEmbedImpl *ZFUISysWindow::nativeWindowEmbedImpl(void)
 {
     return d->embedImpl;
 }
@@ -129,8 +129,11 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUIMargin &, sysWindowMargin)
 void ZFUISysWindow::_ZFP_ZFUISysWindow_sysWindowMarginSet(ZF_IN const ZFUIMargin &sysWindowMargin)
 {
     ZFUIMargin sysWindowMarginOld = d->sysWindowMargin;
-    d->sysWindowMargin = sysWindowMargin;
-    this->sysWindowMarginOnUpdate(sysWindowMarginOld);
+    d->sysWindowMargin = ZFUIMarginApplyScaleReversely(sysWindowMargin, this->rootView()->scaleGetFixed());
+    if(d->sysWindowMargin != sysWindowMarginOld)
+    {
+        this->sysWindowMarginOnUpdate(sysWindowMarginOld);
+    }
 }
 void ZFUISysWindow::sysWindowMarginOnUpdate(ZF_IN const ZFUIMargin &sysWindowMarginOld)
 {
@@ -158,12 +161,43 @@ void ZFUISysWindow::objectOnInitFinish(void)
     d->impl->windowLayoutParamOnInit(this);
     d->windowLayoutParam->observerAdd(ZFUILayoutParam::EventLayoutParamOnChange(), d->windowLayoutParamOnChangeListener, this->objectHolder());
 }
-void ZFUISysWindow::objectOnDealloc(void)
+void ZFUISysWindow::objectOnDeallocPrepare(void)
 {
+    if(d->nativeWindowResumed)
+    {
+        if(d->embedImpl != zfnull)
+        {
+            d->embedImpl->notifyOnPause(this);
+        }
+        else
+        {
+            d->impl->notifyOnPause(this);
+        }
+    }
+    if(d->nativeWindowCreated)
+    {
+        if(d->embedImpl != zfnull)
+        {
+            d->embedImpl->notifyOnDestroy(this);
+        }
+        else
+        {
+            d->impl->notifyOnDestroy(this);
+        }
+    }
+
     if(d->embedImpl != zfnull)
     {
         d->embedImpl->nativeWindowOnCleanup(this);
     }
+    else
+    {
+        d->impl->nativeWindowOnCleanup(this);
+    }
+    zfsuper::objectOnDeallocPrepare();
+}
+void ZFUISysWindow::objectOnDealloc(void)
+{
     zfReleaseWithoutLeakTest(d->windowLayoutParam);
     zfReleaseWithoutLeakTest(d->windowRootView);
     zfpoolDelete(d);
@@ -240,9 +274,20 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUIOrientationFlags &, windowOrientation
 ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUISysWindow *, modalWindowShow)
 {
     zfCoreAssertWithMessage(d->modalWindowShowing == zfnull, zfTextA("already has a showing modal window, you must finish it first"));
-    zfCoreAssertWithMessage(this->nativeWindow() != zfnull, zfTextA("you can only create modal window after ZFUISysWindow created, see ZFUISysWindow::nativeWindowIsCreated"));
 
-    ZFUISysWindow *modalWindow = d->impl->modalWindowShow(this);
+    ZFUISysWindow *modalWindow = zfnull;
+    if(d->embedImpl != zfnull)
+    {
+        modalWindow = d->embedImpl->modalWindowShow(this);
+    }
+    else
+    {
+        zfCoreAssertWithMessage(this->nativeWindow() != zfnull,
+            zfTextA("you can only create modal window after ZFUISysWindow created, see ZFUISysWindow::nativeWindowIsCreated"));
+
+        modalWindow = d->impl->modalWindowShow(this);
+    }
+
     d->modalWindowShowing = modalWindow;
     modalWindow->d->modalWindowOwner = this;
     return modalWindow;
@@ -251,7 +296,14 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, void, modalWindowFinish)
 {
     zfCoreAssertWithMessage(d->modalWindowOwner != zfnull, zfTextA("not a modal window"));
 
-    d->impl->modalWindowFinish(d->modalWindowOwner, this);
+    if(d->embedImpl != zfnull)
+    {
+        d->embedImpl->modalWindowFinish(d->modalWindowOwner, this);
+    }
+    else
+    {
+        d->impl->modalWindowFinish(d->modalWindowOwner, this);
+    }
     d->modalWindowOwner->d->modalWindowShowing = zfnull;
     d->modalWindowOwner = zfnull;
 
@@ -291,18 +343,18 @@ void ZFUISysWindow::_ZFP_ZFUISysWindow_onCreate(ZF_IN void *nativeWindow)
     d->nativeWindow = nativeWindow;
     d->nativeWindowCreated = zftrue;
 
+    void *nativeParentView = zfnull;
     if(d->embedImpl != zfnull)
     {
         d->embedImpl->windowOrientationFlagsSet(this, d->windowOrientationFlags);
-        void *nativeParentView = d->embedImpl->nativeWindowOnRootViewAdd(this);
-        ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(this->rootView(), nativeParentView);
+        d->embedImpl->nativeWindowRootViewOnAdd(this, nativeParentView);
     }
     else
     {
         d->impl->windowOrientationFlagsSet(this, d->windowOrientationFlags);
-        void *nativeParentView = d->impl->nativeWindowOnRootViewAdd(this);
-        ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(this->rootView(), nativeParentView);
+        d->impl->nativeWindowRootViewOnAdd(this, nativeParentView);
     }
+    ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(this->rootView(), nativeParentView);
 
     this->observerNotify(ZFUISysWindow::EventSysWindowOnCreate());
 }
@@ -314,12 +366,14 @@ void ZFUISysWindow::_ZFP_ZFUISysWindow_onDestroy(void)
 
     if(d->embedImpl != zfnull)
     {
-        d->embedImpl->nativeWindowOnRootViewRemove(this);
+        d->embedImpl->nativeWindowRootViewOnRemove(this);
     }
     else
     {
-        d->impl->nativeWindowOnRootViewRemove(this);
+        d->impl->nativeWindowRootViewOnRemove(this);
     }
+
+    ZFUIView::_ZFP_ZFUIView_nativeViewNotifyRemove(this->rootView());
 
     this->observerNotify(ZFUISysWindow::EventSysWindowOnDestroy());
 
@@ -349,6 +403,43 @@ void ZFUISysWindow::_ZFP_ZFUISysWindow_onRotate(void)
     zfCoreAssertWithMessage(d->nativeWindowCreated, zfTextA("window not created"));
     zfCoreAssertWithMessage(d->nativeWindowResumed, zfTextA("window not resumed"));
     this->observerNotify(ZFUISysWindow::EventSysWindowOnRotate());
+}
+
+// ============================================================
+ZFOBJECT_REGISTER(ZFUISysWindowEmbedImpl)
+
+void ZFUISysWindowEmbedImpl::nativeWindowRootViewOnAdd(ZF_IN ZFUISysWindow *sysWindow,
+                                                       ZF_OUT void *&nativeParentView)
+{
+}
+void ZFUISysWindowEmbedImpl::nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *sysWindow)
+{
+}
+
+ZFUISysWindow *ZFUISysWindowEmbedImpl::modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner)
+{
+    return ZFPROTOCOL_ACCESS(ZFUISysWindow)->modalWindowShow(sysWindowOwner);
+}
+void ZFUISysWindowEmbedImpl::modalWindowFinish(ZF_IN ZFUISysWindow *sysWindowOwner,
+                                               ZF_IN ZFUISysWindow *sysWindowToFinish)
+{
+    ZFPROTOCOL_ACCESS(ZFUISysWindow)->modalWindowFinish(sysWindowOwner, sysWindowToFinish);
+}
+
+void ZFUISysWindowEmbedImpl::windowLayoutParamOnInit(ZF_IN ZFUISysWindow *sysWindow)
+{
+}
+void ZFUISysWindowEmbedImpl::windowLayoutParamOnChange(ZF_IN ZFUISysWindow *sysWindow)
+{
+}
+
+ZFUIOrientationEnum ZFUISysWindowEmbedImpl::windowOrientation(ZF_IN ZFUISysWindow *sysWindow)
+{
+    return ZFUIOrientation::e_Top;
+}
+void ZFUISysWindowEmbedImpl::windowOrientationFlagsSet(ZF_IN ZFUISysWindow *sysWindow,
+                                                       ZF_IN const ZFUIOrientationFlags &flags)
+{
 }
 
 ZF_NAMESPACE_GLOBAL_END

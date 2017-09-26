@@ -43,6 +43,8 @@ ZF_NAMESPACE_GLOBAL_END
     ZFFrameworkInit();
     ZFMainExecute();
 
+    [self appOnResume];
+
 #if ZF_ENV_DEBUG && 0 // framework's init and dealloc
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"test cleanup");

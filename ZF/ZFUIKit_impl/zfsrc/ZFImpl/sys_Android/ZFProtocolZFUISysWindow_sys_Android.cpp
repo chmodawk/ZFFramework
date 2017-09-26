@@ -75,34 +75,41 @@ public:
         this->_mainWindow = zfnull;
     }
 
-    virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *window)
+    // ============================================================
+public:
+    virtual void nativeWindowOnCleanup(ZF_IN ZFUISysWindow *sysWindow)
+    {
+    }
+
+    virtual void nativeWindowRootViewOnAdd(ZF_IN ZFUISysWindow *sysWindow,
+                                           ZF_OUT void *&nativeParentView)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
-        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowOnRootViewAdd"),
+        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowRootViewOnAdd"),
             JNIGetMethodSig(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object), JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
-        return (void *)JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, window->nativeWindow()),
-            ZFCastStatic(jobject, window->rootView()->nativeView())
+        nativeParentView = (void *)JNIUtilCallStaticObjectMethod(jniEnv, this->jclsOwner, jmId,
+            ZFCastStatic(jobject, sysWindow->nativeWindow()),
+            ZFCastStatic(jobject, sysWindow->rootView()->nativeView())
             );
     }
-    virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *window)
+    virtual void nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *sysWindow)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
-        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowOnRootViewRemove"),
+        static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_nativeWindowRootViewOnRemove"),
             JNIGetMethodSig(JNIType::S_void, JNIParamTypeContainer()
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, window->nativeWindow()),
-            ZFCastStatic(jobject, window->rootView()->nativeView())
+            ZFCastStatic(jobject, sysWindow->nativeWindow()),
+            ZFCastStatic(jobject, sysWindow->rootView()->nativeView())
             );
     }
 
-    virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow)
+    virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner)
     {
         ZFUISysWindow *modalWindow = zfRetain(ZFUISysWindow::ClassData()->newInstance(ZFCallerInfoMake()).to<ZFUISysWindow *>());
 
@@ -113,13 +120,13 @@ public:
                 .add(JNIPointerJNIType)
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, ownerWindow->nativeWindow()),
+            ZFCastStatic(jobject, sysWindowOwner->nativeWindow()),
             JNIConvertZFObjectToJNIType(jniEnv, modalWindow));
 
         return modalWindow;
     }
-    virtual void modalWindowFinish(ZF_IN ZFUISysWindow *ownerWindow,
-                                   ZF_IN ZFUISysWindow *windowToFinish)
+    virtual void modalWindowFinish(ZF_IN ZFUISysWindow *sysWindowOwner,
+                                   ZF_IN ZFUISysWindow *sysWindowToFinish)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_modalWindowFinish"),
@@ -127,10 +134,13 @@ public:
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, windowToFinish->nativeWindow()));
+            ZFCastStatic(jobject, sysWindowToFinish->nativeWindow()));
     }
 
-    virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *window)
+    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *sysWindow)
+    {
+    }
+    virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *sysWindow)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_windowLayoutParamOnChange"),
@@ -138,10 +148,10 @@ public:
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, window->nativeWindow()));
+            ZFCastStatic(jobject, sysWindow->nativeWindow()));
     }
 
-    virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *window)
+    virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *sysWindow)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();
         static jmethodID jmId = JNIUtilGetStaticMethodID(jniEnv, this->jclsOwner, zfTextA("native_windowOrientation"),
@@ -149,10 +159,10 @@ public:
                 .add(JNIType::S_object(ZFImpl_sys_Android_JNI_NAME_Object))
             ).c_str());
         jint ret = JNIUtilCallStaticIntMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, window->nativeWindow()));
+            ZFCastStatic(jobject, sysWindow->nativeWindow()));
         return ZFCastStatic(ZFUIOrientationEnum, ret);
     }
-    virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *window,
+    virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *sysWindow,
                                            ZF_IN const ZFUIOrientationFlags &flags)
     {
         JNIEnv *jniEnv = JNIGetJNIEnv();

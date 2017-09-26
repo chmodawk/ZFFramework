@@ -18,6 +18,8 @@
 #include "ZFUIRootView.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+// ============================================================
+zfclassFwd ZFUISysWindowEmbedImpl;
 zfclassFwd _ZFP_ZFUISysWindowPrivate;
 /**
  * @brief root native window
@@ -75,145 +77,21 @@ public:
 
 public:
     /**
-     * @brief impl for #nativeWindowEmbed
-     */
-    zfclassNotPOD ZF_ENV_EXPORT NativeWindowEmbedImpl
-    {
-    public:
-        ZFUISysWindow *_ZFP_ownerZFUISysWindow;
-        /**
-         * @brief the attached #ZFUISysWindow
-         */
-        inline ZFUISysWindow *ownerZFUISysWindow(void)
-        {
-            return this->_ZFP_ownerZFUISysWindow;
-        }
-
-    public:
-        /** @cond ZFPrivateDoc */
-        NativeWindowEmbedImpl(void) : _ZFP_ownerZFUISysWindow(zfnull) {}
-        /** @endcond */
-        virtual ~NativeWindowEmbedImpl(void) {}
-
-    public:
-        /**
-         * @brief called when owner #ZFUISysWindow is about to destroy
-         */
-        virtual void nativeWindowOnCleanup(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
-
-    public:
-        /**
-         * @brief called to add root view to native window container
-         *
-         * you must return a proper native parent view,
-         * which used to copy some settings to the window's root view
-         */
-        virtual void *nativeWindowOnRootViewAdd(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
-        /**
-         * @brief called to remove root view to native window container
-         */
-        virtual void nativeWindowOnRootViewRemove(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
-
-        /**
-         * @brief see #ZFUISysWindow::modalWindowShow
-         */
-        virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *ownerWindow) zfpurevirtual;
-        /**
-         * @brief see #ZFUISysWindow::modalWindowFinish
-         */
-        virtual void modalWindowFinish(ZF_IN ZFUISysWindow *ownerWindow,
-                                       ZF_IN ZFUISysWindow *windowToFinish) zfpurevirtual;
-
-        /**
-         * @brief called to update suggested window layout param,
-         *   fill with no margin by default
-         */
-        virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *window)
-        {
-        }
-        /**
-         * @brief called when window layout param changed
-         */
-        virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
-
-        /**
-         * @brief see #ZFUISysWindow::windowOrientation
-         */
-        virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
-        /**
-         * @brief see #ZFUISysWindow::windowOrientationFlagsSet,
-         *  impl should have #ZFUIOrientation::e_Top as init value
-         */
-        virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *sysWindow, ZF_IN const ZFUIOrientationFlags &flags) zfpurevirtual;
-
-        // ============================================================
-        // callbacks that implementations must notify
-    public:
-        /**
-         * @brief implementation must call this method to measure window's frame,
-         *   and layout window using the result frame
-         */
-        zffinal ZFUIRect notifyMeasureWindow(ZF_IN ZFUISysWindow *sysWindow,
-                                             ZF_IN const ZFUIRect &rootRefRect,
-                                             ZF_IN const ZFUIMargin &sysWindowMargin)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_sysWindowMarginSet(sysWindowMargin);
-            return sysWindow->_ZFP_ZFUISysWindow_measureWindow(rootRefRect);
-        }
-        /**
-         * @brief implementation must call this to notify after window create
-         */
-        zffinal void notifyOnCreate(ZF_IN ZFUISysWindow *sysWindow, ZF_IN void *nativeWindow)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_onCreate(nativeWindow);
-        }
-        /**
-         * @brief implementation must call this to notify before window destroy
-         */
-        zffinal void notifyOnDestroy(ZF_IN ZFUISysWindow *sysWindow)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_onDestroy();
-        }
-        /**
-         * @brief implementation must call this to notify after window resume,
-         *   note that rotate a window should not notify this
-         */
-        zffinal void notifyOnResume(ZF_IN ZFUISysWindow *sysWindow)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_onResume();
-        }
-        /**
-         * @brief implementation must call this to notify before window pause,
-         *   note that rotate a window should not notify this
-         */
-        zffinal void notifyOnPause(ZF_IN ZFUISysWindow *sysWindow)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_onPause();
-        }
-        /**
-         * @brief implementation must call this to notify when window rotate
-         */
-        zffinal void notifyOnRotate(ZF_IN ZFUISysWindow *sysWindow)
-        {
-            sysWindow->_ZFP_ZFUISysWindow_onRotate();
-        }
-    };
-    /**
      * @brief used to embed #ZFUISysWindow to existing UI framework
      *
      * #ZFUISysWindow would create internal native window by default,
      * however, you may create your own native window and attach #ZFUISysWindow to it\n
      * to achieve this feature,
-     * you must supply custom embed impl by #ZFUISysWindow::NativeWindowEmbedImpl,
+     * you must supply custom embed impl by #ZFUISysWindowEmbedImpl,
      * call this method to get an attached #ZFUISysWindow,
      * and manually manage the life cycle of the returned #ZFUISysWindow\n
-     * see #ZFUISysWindow::NativeWindowEmbedImpl for all the impl that you need to implement
+     * see #ZFUISysWindowEmbedImpl for all the impl that you need to implement
      */
-    static zfautoObject nativeWindowEmbed(ZF_IN ZFUISysWindow::NativeWindowEmbedImpl *impl);
+    static zfautoObject nativeWindowEmbed(ZF_IN ZFUISysWindowEmbedImpl *embedImpl);
     /**
      * @brief see #nativeWindowEmbed
      */
-    virtual ZFUISysWindow::NativeWindowEmbedImpl *nativeWindowEmbedImpl(void);
+    virtual ZFUISysWindowEmbedImpl *nativeWindowEmbedImpl(void);
 
 public:
     /**
@@ -249,6 +127,8 @@ protected:
 public:
     zfoverride
     virtual void objectOnInitFinish(void);
+    zfoverride
+    virtual void objectOnDeallocPrepare(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
@@ -353,6 +233,136 @@ public:
 
 private:
     _ZFP_ZFUISysWindowPrivate *d;
+};
+
+// ============================================================
+/**
+ * @brief impl for #nativeWindowEmbed
+ */
+zfinterface ZF_ENV_EXPORT ZFUISysWindowEmbedImpl : zfextends ZFInterface
+{
+    ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(ZFUISysWindowEmbedImpl, ZFInterface)
+
+public:
+    ZFUISysWindow *_ZFP_ownerZFUISysWindow;
+    /**
+     * @brief the attached #ZFUISysWindow
+     */
+    inline ZFUISysWindow *ownerZFUISysWindow(void)
+    {
+        return this->_ZFP_ownerZFUISysWindow;
+    }
+
+public:
+    /** @cond ZFPrivateDoc */
+    ZFUISysWindowEmbedImpl(void) : _ZFP_ownerZFUISysWindow(zfnull) {}
+    /** @endcond */
+
+    // ============================================================
+public:
+    /**
+     * @brief called when owner #ZFUISysWindow is about to destroy
+     */
+    virtual void nativeWindowOnCleanup(ZF_IN ZFUISysWindow *sysWindow)
+    {
+    }
+
+    /**
+     * @brief called to add root view to native window container
+     *
+     * if nativeParentView was specified,
+     * it would be used to copy some settings to the window's root view
+     */
+    virtual void nativeWindowRootViewOnAdd(ZF_IN ZFUISysWindow *sysWindow,
+                                           ZF_OUT void *&nativeParentView) zfpurevirtual;
+    /**
+     * @brief called to remove root view to native window container
+     */
+    virtual void nativeWindowRootViewOnRemove(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
+
+    /**
+     * @brief see #ZFUISysWindow::modalWindowShow
+     */
+    virtual ZFUISysWindow *modalWindowShow(ZF_IN ZFUISysWindow *sysWindowOwner) zfpurevirtual;
+    /**
+     * @brief see #ZFUISysWindow::modalWindowFinish
+     */
+    virtual void modalWindowFinish(ZF_IN ZFUISysWindow *sysWindowOwner,
+                                   ZF_IN ZFUISysWindow *sysWindowToFinish) zfpurevirtual;
+
+    /**
+     * @brief called to update suggested window layout param,
+     *   fill with no margin by default
+     */
+    virtual void windowLayoutParamOnInit(ZF_IN ZFUISysWindow *sysWindow);
+    /**
+     * @brief called when window layout param changed
+     */
+    virtual void windowLayoutParamOnChange(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
+
+    /**
+     * @brief see #ZFUISysWindow::windowOrientation
+     */
+    virtual ZFUIOrientationEnum windowOrientation(ZF_IN ZFUISysWindow *sysWindow) zfpurevirtual;
+    /**
+     * @brief see #ZFUISysWindow::windowOrientationFlagsSet,
+     *  impl should have #ZFUIOrientation::e_Top as init value
+     */
+    virtual void windowOrientationFlagsSet(ZF_IN ZFUISysWindow *sysWindow,
+                                           ZF_IN const ZFUIOrientationFlags &flags) zfpurevirtual;
+
+    // ============================================================
+    // callbacks that implementations must notify
+public:
+    /**
+     * @brief implementation must call this method to measure window's frame,
+     *   and layout window using the result frame
+     */
+    zffinal ZFUIRect notifyMeasureWindow(ZF_IN ZFUISysWindow *sysWindow,
+                                         ZF_IN const ZFUIRect &rootRefRect,
+                                         ZF_IN const ZFUIMargin &sysWindowMargin)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_sysWindowMarginSet(sysWindowMargin);
+        return sysWindow->_ZFP_ZFUISysWindow_measureWindow(rootRefRect);
+    }
+    /**
+     * @brief implementation must call this to notify after window create
+     */
+    zffinal void notifyOnCreate(ZF_IN ZFUISysWindow *sysWindow,
+                                ZF_IN void *nativeWindow)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_onCreate(nativeWindow);
+    }
+    /**
+     * @brief implementation must call this to notify before window destroy
+     */
+    zffinal void notifyOnDestroy(ZF_IN ZFUISysWindow *sysWindow)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_onDestroy();
+    }
+    /**
+     * @brief implementation must call this to notify after window resume,
+     *   note that rotate a window should not notify this
+     */
+    zffinal void notifyOnResume(ZF_IN ZFUISysWindow *sysWindow)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_onResume();
+    }
+    /**
+     * @brief implementation must call this to notify before window pause,
+     *   note that rotate a window should not notify this
+     */
+    zffinal void notifyOnPause(ZF_IN ZFUISysWindow *sysWindow)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_onPause();
+    }
+    /**
+     * @brief implementation must call this to notify when window rotate
+     */
+    zffinal void notifyOnRotate(ZF_IN ZFUISysWindow *sysWindow)
+    {
+        sysWindow->_ZFP_ZFUISysWindow_onRotate();
+    }
 };
 
 ZF_NAMESPACE_GLOBAL_END

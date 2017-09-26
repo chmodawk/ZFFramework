@@ -142,15 +142,15 @@
     for(NSUInteger i = 0; i < [children count]; ++i)
     {
         UIView *child = [children objectAtIndex:i];
-        if([child isKindOfClass:[_ZFP_ZFUIViewImpl_sys_iOS_View class]])
-        {
-            child.frame = ((_ZFP_ZFUIViewImpl_sys_iOS_View *)child)._ZFP_frame;
-        }
-        else if(child == self._ZFP_nativeImplView)
+        if(child == self._ZFP_nativeImplView)
         {
             ZFUIRect rect;
             self._ZFP_impl->notifyLayoutNativeImplView(self._ZFP_ownerZFUIView, rect);
             child.frame = ZFImpl_sys_iOS_ZFUIKit_ZFUIRectToCGRect(rect);
+        }
+        else if([child isKindOfClass:[_ZFP_ZFUIViewImpl_sys_iOS_View class]])
+        {
+            child.frame = ((_ZFP_ZFUIViewImpl_sys_iOS_View *)child)._ZFP_frame;
         }
         else
         {

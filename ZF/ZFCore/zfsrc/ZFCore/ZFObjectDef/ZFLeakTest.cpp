@@ -746,7 +746,7 @@ void _ZFP_ZFLeakTestPrintObjectStatus(ZF_IN _ZFP_ZFLeakTestSectionData *ownerSec
 
     const _ZFP_ZFLeakTestActionDataListType &actionList = objectData->actionList;
     zfstring s = zfstringWithFormat(zfText("| %s retainCount from %zi to %zi%s, info:\n|   %s\n"),
-        obj->objectInfo().cString(),
+        obj->objectInfoOfInstance().cString(),
         objectData->objectRetainCountSaved,
         obj->objectRetainCount(),
         (objectData->objectCacheCountFix != 0)
