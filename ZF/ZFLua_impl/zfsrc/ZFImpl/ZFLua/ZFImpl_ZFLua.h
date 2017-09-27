@@ -133,9 +133,9 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implSetupObject(ZF_IN_OUT lua_State *L, Z
 /**
  * @brief used to hold unknown lua param as string
  */
-zfclass ZF_ENV_EXPORT ZFImpl_ZFLua_UnknownParamHolder : zfextends ZFObject
+zfclass ZF_ENV_EXPORT ZFImpl_ZFLua_UnknownParam : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE(ZFImpl_ZFLua_UnknownParamHolder, ZFObject)
+    ZFOBJECT_DECLARE(ZFImpl_ZFLua_UnknownParam, ZFObject)
 
 public:
     /** @brief the value */
@@ -368,7 +368,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
     do { \
         if(paramName == zfnull && dispatchInfo.paramList[N]->toObject() != zfnull) \
         { \
-            ZFImpl_ZFLua_UnknownParamHolder *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParamHolder *, dispatchInfo.paramList[N]->toObject()); \
+            ZFImpl_ZFLua_UnknownParam *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParam *, dispatchInfo.paramList[N]->toObject()); \
             if(t != zfnull && desiredClass::ClassData()->classIsTypeOf(ZFPropertyTypeWrapper::ClassData())) \
             { \
                 zfblockedAllocWithoutLeakTest(desiredClass, t2); \
@@ -393,7 +393,7 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
     do { \
         if(paramName == zfnull) \
         { \
-            ZFImpl_ZFLua_UnknownParamHolder *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParamHolder *, dispatchInfo.paramList[N]->toObject()); \
+            ZFImpl_ZFLua_UnknownParam *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParam *, dispatchInfo.paramList[N]->toObject()); \
             if(t != zfnull && desiredClass::ClassData()->classIsTypeOf(ZFPropertyTypeWrapper::ClassData())) \
             { \
                 zfblockedAllocWithoutLeakTest(desiredClass, t2); \
@@ -450,6 +450,8 @@ extern ZF_ENV_EXPORT void ZFImpl_ZFLua_implDispatch(ZF_IN_OUT ZFImpl_ZFLua_ImplD
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_execute(ZF_IN lua_State *L,
                                                  ZF_IN const zfchar *buf,
                                                  ZF_IN_OPT zfindex bufLen = zfindexMax(),
+                                                 ZF_IN_OPT zfbool luaResultRequire = zffalse,
+                                                 ZF_OUT_OPT zfautoObject *luaResult = zfnull,
                                                  ZF_OUT_OPT zfstring *errHint = zfnull);
 
 // ============================================================
@@ -490,11 +492,13 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toObject(ZF_OUT zfautoObject &param,
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
                                                   ZF_IN lua_State *L,
                                                   ZF_IN zfint luaStackOffset,
-                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse,
+                                                  ZF_OUT_OPT const ZFClass **holderCls = zfnull);
 /** @brief see #ZFImpl_ZFLua_toString */
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
                                                   ZF_IN ZFObject *obj,
-                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse,
+                                                  ZF_OUT_OPT const ZFClass **holderCls = zfnull);
 
 /**
  * @brief get params from lua
@@ -521,21 +525,24 @@ extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toString(ZF_IN_OUT zfstring &s,
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
                                                   ZF_IN lua_State *L,
                                                   ZF_IN zfint luaStackOffset,
-                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse,
+                                                  ZF_OUT_OPT const ZFClass **holderCls = zfnull);
 /** @brief see #ZFImpl_ZFLua_toNumber */
 inline zfautoObject ZFImpl_ZFLua_toNumber(ZF_IN lua_State *L,
                                           ZF_IN zfint luaStackOffset,
-                                          ZF_IN_OPT zfbool allowEmpty = zffalse)
+                                          ZF_IN_OPT zfbool allowEmpty = zffalse,
+                                          ZF_OUT_OPT const ZFClass **holderCls = zfnull)
 {
     zfautoObject ret;
-    ZFImpl_ZFLua_toNumber(ret, L, luaStackOffset, allowEmpty);
+    ZFImpl_ZFLua_toNumber(ret, L, luaStackOffset, allowEmpty, holderCls);
     return ret;
 }
 
 /** @brief see #ZFImpl_ZFLua_toNumber */
 extern ZF_ENV_EXPORT zfbool ZFImpl_ZFLua_toNumber(ZF_OUT zfautoObject &ret,
                                                   ZF_IN ZFObject *obj,
-                                                  ZF_IN_OPT zfbool allowEmpty = zffalse);
+                                                  ZF_IN_OPT zfbool allowEmpty = zffalse,
+                                                  ZF_OUT_OPT const ZFClass **holderCls = zfnull);
 
 /**
  * @brief convert native type to lua type

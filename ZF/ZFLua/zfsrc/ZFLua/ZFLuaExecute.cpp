@@ -12,18 +12,22 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-ZFMETHOD_FUNC_DEFINE_1(zfbool, ZFLuaExecute,
-                       ZFMP_IN(const ZFInputCallback &, input))
+ZFMETHOD_FUNC_DEFINE_3(zfbool, ZFLuaExecute,
+                       ZFMP_IN(const ZFInputCallback &, input),
+                       ZFMP_IN_OPT(zfbool, luaResultRequire, zffalse),
+                       ZFMP_OUT_OPT(zfautoObject *, luaResult, zfnull))
 {
     ZFBuffer buf = ZFInputCallbackReadToBuffer(input);
-    return ZFLuaExecute(buf.bufferAsString(), buf.bufferAsStringLength());
+    return ZFLuaExecute(buf.bufferAsString(), buf.bufferAsStringLength(), luaResultRequire, luaResult);
 }
-ZFMETHOD_FUNC_DEFINE_2(zfbool, ZFLuaExecute,
+ZFMETHOD_FUNC_DEFINE_4(zfbool, ZFLuaExecute,
                        ZFMP_IN(const zfchar *, buf),
-                       ZFMP_IN_OPT(zfindex, bufLen, zfindexMax()))
+                       ZFMP_IN_OPT(zfindex, bufLen, zfindexMax()),
+                       ZFMP_IN_OPT(zfbool, luaResultRequire, zffalse),
+                       ZFMP_OUT_OPT(zfautoObject *, luaResult, zfnull))
 {
     zfstring errHint;
-    if(!ZFPROTOCOL_ACCESS(ZFLua)->luaExecute(buf, bufLen, &errHint))
+    if(!ZFPROTOCOL_ACCESS(ZFLua)->luaExecute(buf, bufLen, luaResultRequire, luaResult, &errHint))
     {
         ZFLuaErrorOccurredTrim(zfText("native lua error:\n    %s\n"), errHint.cString());
         return zffalse;

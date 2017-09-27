@@ -240,14 +240,14 @@ static void _ZFP_ZFMethodInstanceSig(ZF_OUT zfstring &ret,
     ret += ':';
     ret += methodExtSig;
 
-    ret += '-'; ret += methodParamTypeId0;
-    ret += '-'; ret += methodParamTypeId1;
-    ret += '-'; ret += methodParamTypeId2;
-    ret += '-'; ret += methodParamTypeId3;
-    ret += '-'; ret += methodParamTypeId4;
-    ret += '-'; ret += methodParamTypeId5;
-    ret += '-'; ret += methodParamTypeId6;
-    ret += '-'; ret += methodParamTypeId7;
+    ret += '+'; ret += methodParamTypeId0;
+    ret += '+'; ret += methodParamTypeId1;
+    ret += '+'; ret += methodParamTypeId2;
+    ret += '+'; ret += methodParamTypeId3;
+    ret += '+'; ret += methodParamTypeId4;
+    ret += '+'; ret += methodParamTypeId5;
+    ret += '+'; ret += methodParamTypeId6;
+    ret += '+'; ret += methodParamTypeId7;
 }
 
 static ZFMethod *_ZFP_ZFMethodInstanceFind(ZF_IN const zfchar *methodInternalId)

@@ -216,14 +216,25 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
             s += EnumName::EnumNameForValue(v); \
             return zftrue; \
         }) \
-    ZFMETHOD_USER_REGISTER_3({ \
+    ZFMETHOD_USER_REGISTER_4({ \
             enumClass = EnumName::ClassData(); \
             enumValue = (zfuint)enumWrapper->to<v_##EnumName##Enum *>()->zfv; \
+            isEnumFlags = zffalse; \
             return zftrue; \
-        }, v_##EnumName##Enum, zfbool, _ZFP_ZFEnumWrapperInfo \
+        }, v_##EnumName##Enum, zfbool, _ZFP_ZFEnumInfoFromWrapper \
         , ZFMP_OUT(const ZFClass *&, enumClass) \
         , ZFMP_OUT(zfuint &, enumValue) \
+        , ZFMP_OUT(zfbool &, isEnumFlags) \
         , ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper) \
+        ) \
+    ZFMETHOD_USER_REGISTER_2({ \
+            v_##EnumName##Enum *ret = zfAllocWithoutLeakTest(v_##EnumName##Enum, (EnumName##Enum)enumValue); \
+            enumWrapper = zfautoObjectCreateWithoutLeakTest(ret); \
+            zfReleaseWithoutLeakTest(ret); \
+            return zftrue; \
+        }, EnumName, zfbool, _ZFP_ZFEnumInfoToWrapper \
+        , ZFMP_OUT(zfautoObject &, enumWrapper) \
+        , ZFMP_IN(zfuint, enumValue) \
         ) \
     _ZFP_ZFENUM_CONVERTER_DEFINE(EnumName) \
     ZFOBJECT_REGISTER(EnumName) \
@@ -471,14 +482,25 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
         }, { \
             return zfflagsToString(s, EnumName::ClassData(), (zfflags)v.enumValue()); \
         }) \
-    ZFMETHOD_USER_REGISTER_3({ \
+    ZFMETHOD_USER_REGISTER_4({ \
             enumClass = EnumName::ClassData(); \
             enumValue = (zfuint)enumWrapper->to<v_##EnumFlagsName *>()->zfv; \
+            isEnumFlags = zftrue; \
             return zftrue; \
-        }, v_##EnumFlagsName, zfbool, _ZFP_ZFEnumWrapperInfo \
+        }, v_##EnumFlagsName, zfbool, _ZFP_ZFEnumInfoFromWrapper \
         , ZFMP_OUT(const ZFClass *&, enumClass) \
         , ZFMP_OUT(zfuint &, enumValue) \
+        , ZFMP_OUT(zfbool &, isEnumFlags) \
         , ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper) \
+        ) \
+    ZFMETHOD_USER_REGISTER_2({ \
+            v_##EnumFlagsName *ret = zfAllocWithoutLeakTest(v_##EnumFlagsName, (EnumFlagsName)enumValue); \
+            enumWrapper = zfautoObjectCreateWithoutLeakTest(ret); \
+            zfReleaseWithoutLeakTest(ret); \
+            return zftrue; \
+        }, EnumName, zfbool, _ZFP_ZFEnumInfoToWrapper_flags \
+        , ZFMP_OUT(zfautoObject &, enumWrapper) \
+        , ZFMP_IN(zfuint, enumValue) \
         ) \
     ZFOUTPUT_TYPE_DEFINE(EnumFlagsName, {output << v.objectInfo();}) \
     void EnumFlagsName::objectInfoT(ZF_IN_OUT zfstring &ret) const \
@@ -495,6 +517,7 @@ extern ZF_ENV_EXPORT _ZFP_ZFEnumData *_ZFP_ZFEnumDataAccess(ZF_IN const ZFClass 
             v_##EnumFlagsName *vHolder = zfAllocWithoutLeakTest(v_##EnumFlagsName); \
             vHolder->zfv = w->zfv; \
             w->tagSetMarkCached(zfText("_ZFP_PropTVH_") ZFM_TOSTRING(EnumName##Enum), vHolder); \
+            zfReleaseWithoutLeakTest(vHolder); \
             return &(vHolder->zfv); \
         })
 

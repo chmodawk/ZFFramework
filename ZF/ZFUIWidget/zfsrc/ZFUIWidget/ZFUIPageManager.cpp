@@ -72,7 +72,9 @@ private:
             manager->requestOnResolve(request);
         }
         manager->managerUIBlockedSet(zffalse);
-        zfCoreAssertWithMessageTrim(request->requestResolved(), zfTextA("[ZFUIPageManager] unresolved request: %s"), zfsCoreZ2A(request->objectInfo().cString()));
+        zfCoreAssertWithMessageTrim(request->requestResolved(),
+            zfTextA("[ZFUIPageManager] unresolved request: %s"),
+            zfsCoreZ2A(request->objectInfo().cString()));
         manager->requestOnResolveFinish(request);
         ZFLeakTestLogBeforeReleaseVerbose(request, ZFCallerInfo(ZF_CALLER_FILE, zfTextA("requestOnResolve"), ZF_CALLER_LINE));
         zfReleaseWithoutLeakTest(request);
@@ -239,8 +241,10 @@ public:
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIPageManager)
 
+ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, ManagerAfterCreate)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, ManagerAfterResume)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, ManagerBeforePause)
+ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, ManagerBeforeDestroy)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, ManagerUIBlockedOnChange)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, RequestBlockedOnChange)
 ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, RequestOnResolvePrepare)
@@ -260,14 +264,16 @@ ZFOBSERVER_EVENT_REGISTER(ZFUIPageManager, PageBeforeDestroy)
 // embeded logic
 ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededCreate)
 {
-    zfCoreAssert(d == zfnull);
+    zfCoreAssertWithMessageTrim(d == zfnull, zfText("[ZFUIPageManager] already created"));
     d = zfpoolNew(_ZFP_ZFUIPageManagerPrivate);
     d->pimplOwner = this;
     this->managerOnCreate();
+    this->managerAfterCreate();
 }
 ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededResume)
 {
-    zfCoreAssert(!d->managerResumed);
+    zfCoreAssertWithMessageTrim(d != zfnull, zfText("[ZFUIPageManager] resume called before create"));
+    zfCoreAssertWithMessageTrim(!d->managerResumed, zfText("[ZFUIPageManager] already resumed"));
     d->managerResumed = zftrue;
 
     this->managerOnResume();
@@ -285,7 +291,7 @@ ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededResume)
 }
 ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededPause)
 {
-    zfCoreAssert(d->managerResumed);
+    zfCoreAssertWithMessageTrim(d->managerResumed, zfText("[ZFUIPageManager] already paused"));
     d->managerResumed = zffalse;
 
     this->managerBeforePause();
@@ -302,9 +308,11 @@ ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededPause)
 }
 ZFMETHOD_DEFINE_0(ZFUIPageManager, void, embededDestroy)
 {
-    zfCoreAssert(d != zfnull);
-    zfCoreAssert(!d->managerResumed);
-    zfCoreAssertWithMessage(d->pageDelayDestroyList.isEmpty(), zfTextA("you must not destroy the manager if there are pages delaying detach or destroy"));
+    zfCoreAssertWithMessageTrim(d != zfnull, zfText("[ZFUIPageManager] already destroyed"));
+    zfCoreAssertWithMessageTrim(!d->managerResumed, zfText("[ZFUIPageManager] destroy called before pause"));
+    zfCoreAssertWithMessageTrim(d->pageDelayDestroyList.isEmpty(), zfTextA("[ZFUIPageManager] you must not destroy the manager if there are pages delaying detach or destroy"));
+
+    this->managerBeforeDestroy();
 
     if(!d->pageList.isEmpty())
     {

@@ -16,6 +16,8 @@ ZFPROTOCOL_IMPLEMENTATION_BEGIN(ZFLua_impl, ZFLua, ZFProtocolLevel::e_Default)
 public:
     virtual zfbool luaExecute(ZF_IN const zfchar *src,
                               ZF_IN_OPT zfindex srcLen = zfindexMax(),
+                              ZF_IN_OPT zfbool luaResultRequire = zffalse,
+                              ZF_OUT_OPT zfautoObject *luaResult = zfnull,
                               ZF_OUT_OPT zfstring *errorHint = zfnull)
     {
         if(ZFFrameworkStateCheck(ZFLevelZFFrameworkLow) != ZFFrameworkStateAvailable)
@@ -26,7 +28,7 @@ public:
             return zffalse;
         }
 
-        return ZFImpl_ZFLua_execute(ZFImpl_ZFLua_luaState, src, srcLen, errorHint);
+        return ZFImpl_ZFLua_execute(ZFImpl_ZFLua_luaState, src, srcLen, luaResultRequire, luaResult, errorHint);
     }
     virtual void luaGC(void)
     {

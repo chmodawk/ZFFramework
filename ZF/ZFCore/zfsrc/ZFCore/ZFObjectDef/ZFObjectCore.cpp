@@ -77,6 +77,7 @@ zfindex ZFObject::objectRetainCount(void)
 
 ZFObjectHolder *ZFObject::objectHolder(void)
 {
+    zfCoreMutexLocker();
     if(d->objectHolder == zfnull)
     {
         d->objectHolder = zfAllocWithoutLeakTest(ZFObjectHolder, this);

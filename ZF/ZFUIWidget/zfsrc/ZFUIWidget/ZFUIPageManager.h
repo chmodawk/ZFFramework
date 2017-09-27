@@ -56,6 +56,12 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
+     * called when page manager created
+     */
+    ZFOBSERVER_EVENT(ManagerAfterCreate)
+    /**
+     * @brief see #ZFObject::observerNotify
+     *
      * called when page manager resumed
      */
     ZFOBSERVER_EVENT(ManagerAfterResume)
@@ -65,6 +71,12 @@ public:
      * called when page manager resumed
      */
     ZFOBSERVER_EVENT(ManagerBeforePause)
+    /**
+     * @brief see #ZFObject::observerNotify
+     *
+     * called when page manager destroyed
+     */
+    ZFOBSERVER_EVENT(ManagerBeforeDestroy)
     /**
      * @brief see #ZFObject::observerNotify
      *
@@ -572,6 +584,11 @@ protected:
     // ============================================================
     // page manager events
 protected:
+    /** @brief see #EventManagerAfterCreate */
+    virtual void managerAfterCreate(void)
+    {
+        this->toObject()->observerNotify(ZFUIPageManager::EventManagerAfterCreate());
+    }
     /** @brief see #EventManagerAfterResume */
     virtual void managerAfterResume(void)
     {
@@ -581,6 +598,11 @@ protected:
     virtual void managerBeforePause(void)
     {
         this->toObject()->observerNotify(ZFUIPageManager::EventManagerBeforePause());
+    }
+    /** @brief see #EventManagerBeforeDestroy */
+    virtual void managerBeforeDestroy(void)
+    {
+        this->toObject()->observerNotify(ZFUIPageManager::EventManagerBeforeDestroy());
     }
 
     // ============================================================

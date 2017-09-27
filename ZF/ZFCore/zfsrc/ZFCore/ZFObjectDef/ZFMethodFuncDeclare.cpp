@@ -179,6 +179,10 @@ void ZFMethodFuncGetAllT(ZF_IN_OUT ZFCoreArray<const ZFMethod *> &ret,
 {
     zfCoreMutexLocker();
 
+    if(zfscmpTheSame(methodNamespace, zfText("")))
+    {
+        methodNamespace = ZFMethodFuncNamespaceGlobal;
+    }
     zfstlmap<zfstlstringZ, zfstlmap<zfstlstringZ, zfstlvector<const ZFMethod *> > > &m = _ZFP_ZFMethodFuncMethodMap;
     zfstlmap<zfstlstringZ, zfstlmap<zfstlstringZ, zfstlvector<const ZFMethod *> > >::iterator itNS = m.find(methodNamespace);
     if(itNS == m.end())

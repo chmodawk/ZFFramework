@@ -20,12 +20,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 /**
  * @brief protocol for ZFLua
+ *
+ * impl must supply all protocol described by #ZFLuaExecute
  */
 ZFPROTOCOL_INTERFACE_BEGIN(ZFLua)
 public:
     /** @brief see #ZFLuaExecute */
     virtual zfbool luaExecute(ZF_IN const zfchar *src,
                               ZF_IN_OPT zfindex srcLen = zfindexMax(),
+                              ZF_IN_OPT zfbool luaResultRequire = zffalse,
+                              ZF_OUT_OPT zfautoObject *luaResult = zfnull,
                               ZF_OUT_OPT zfstring *errorHint = zfnull) zfpurevirtual;
     /** @brief see #ZFLuaGC */
     virtual void luaGC(void) zfpurevirtual;

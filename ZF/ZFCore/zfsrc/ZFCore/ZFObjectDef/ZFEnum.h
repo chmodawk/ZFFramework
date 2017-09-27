@@ -374,11 +374,19 @@ ZFOUTPUT_TYPE_DECLARE(ZFEnumFlagsBase)
 // ============================================================
 zfclassFwd ZFPropertyTypeWrapper;
 /**
- * @brief access enum info from enum wrapper class
+ * @brief try access enum info from enum wrapper class (#ZFPropertyTypeWrapper)
  */
-extern ZF_ENV_EXPORT zfbool ZFEnumWrapperInfo(ZF_OUT const ZFClass *&enumClass,
-                                              ZF_OUT zfuint &enumValue,
-                                              ZF_IN ZFPropertyTypeWrapper *enumWrapper);
+extern ZF_ENV_EXPORT zfbool ZFEnumInfoFromWrapper(ZF_OUT const ZFClass *&enumClass,
+                                                  ZF_OUT zfuint &enumValue,
+                                                  ZF_OUT zfbool &isEnumFlags,
+                                                  ZF_IN ZFPropertyTypeWrapper *enumWrapper);
+/**
+ * @brief try create enum wrapper class (#ZFPropertyTypeWrapper) from enum value
+ */
+extern ZF_ENV_EXPORT zfbool ZFEnumInfoToWrapper(ZF_OUT zfautoObject &enumWrapper,
+                                                ZF_IN const ZFClass *enumClass,
+                                                ZF_IN zfuint enumValue,
+                                                ZF_IN zfbool isEnumFlags);
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFEnum_h_

@@ -42,7 +42,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
         zfbool parseParamSuccess = zftrue;
         for(zfindex i = 0; i < paramCount; ++i)
         {
-            ZFImpl_ZFLua_UnknownParamHolder *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParamHolder *, paramList[i].toObject());
+            ZFImpl_ZFLua_UnknownParam *t = ZFCastZFObject(ZFImpl_ZFLua_UnknownParam *, paramList[i].toObject());
             if(t != zfnull)
             {
                 zfautoObject tHolder = paramList[i];
@@ -51,7 +51,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
                 {
                     zfstringAppend(errorHint, zfText("param %zi (%s) can not be converted from string automatically"),
                             i,
-                            method->methodParamTypeIdAtIndex(i)
+                            method->methodParamTypeNameAtIndex(i)
                         );
                     parseParamSuccess = zffalse;
                     paramList[i] = tHolder;
@@ -74,7 +74,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call_invoker(ZF_IN lua_State *L,
                 {
                     zfstringAppend(errorHint, zfText("param %zi (%s) can not be converted from string \"%s\""),
                             i,
-                            method->methodParamTypeIdAtIndex(i),
+                            method->methodParamTypeNameAtIndex(i),
                             t->zfv.cString()
                         );
                     paramList[i] = tHolder;
@@ -227,6 +227,12 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
         obj = objTmp->zfv;
     }
 
+    if(obj.toObject() == zfnull)
+    {
+        ZFLuaErrorOccurredTrim(zfText("[zfl_call] caller object must not be null"));
+        return luaL_error(L, "");
+    }
+
     zfautoObject paramList[ZFMETHOD_MAX_PARAM] = {
               ZFMethodGenericInvokerDefaultParamHolder()
             , ZFMethodGenericInvokerDefaultParamHolder()
@@ -241,7 +247,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
     {
         if(!ZFImpl_ZFLua_toObject(paramList[i], L, luaParamOffset + i + 1))
         {
-            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParamHolder, t);
+            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParam, t);
             if(!ZFImpl_ZFLua_toString(t->zfv, L, luaParamOffset + i + 1))
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_call] failed to get param%d, expect zfautoObject, got %s"),
@@ -301,12 +307,6 @@ static int _ZFP_ZFImpl_ZFLua_zfl_call(ZF_IN lua_State *L)
         }
     } while(zffalse);
 
-    if(obj.toObject() == zfnull)
-    {
-        ZFLuaErrorOccurredTrim(zfText("[zfl_call] caller object must not be null"));
-        return luaL_error(L, "");
-    }
-
     return _ZFP_ZFImpl_ZFLua_zfl_call_invoker(L, paramList, paramCount, methodList, obj);
 }
 
@@ -340,7 +340,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic(ZF_IN lua_State *L)
     {
         if(!ZFImpl_ZFLua_toObject(paramList[i], L, luaParamOffset + i + 1))
         {
-            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParamHolder, t);
+            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParam, t);
             if(!ZFImpl_ZFLua_toString(t->zfv, L, luaParamOffset + i + 1))
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic] failed to get param%d, expect zfautoObject, got %s"),
@@ -454,7 +454,7 @@ static int _ZFP_ZFImpl_ZFLua_zfl_callStatic2(ZF_IN lua_State *L)
     {
         if(!ZFImpl_ZFLua_toObject(paramList[i], L, luaParamOffset + i + 1))
         {
-            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParamHolder, t);
+            zfblockedAllocWithoutLeakTest(ZFImpl_ZFLua_UnknownParam, t);
             if(!ZFImpl_ZFLua_toString(t->zfv, L, luaParamOffset + i + 1))
             {
                 ZFLuaErrorOccurredTrim(zfText("[zfl_callStatic2] failed to get param%d, expect zfautoObject, got %s"),

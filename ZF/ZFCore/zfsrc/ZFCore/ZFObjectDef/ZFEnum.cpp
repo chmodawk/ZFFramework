@@ -362,20 +362,41 @@ zfbool zfflagsFromString(ZF_OUT zfflags &ret,
 ZFOUTPUT_TYPE_DEFINE(ZFEnumFlagsBase, {output << v.objectInfo();})
 
 // ============================================================
-zfbool ZFEnumWrapperInfo(ZF_OUT const ZFClass *&enumClass,
-                         ZF_OUT zfuint &enumValue,
-                         ZF_IN ZFPropertyTypeWrapper *enumWrapper)
+zfbool ZFEnumInfoFromWrapper(ZF_OUT const ZFClass *&enumClass,
+                             ZF_OUT zfuint &enumValue,
+                             ZF_OUT zfbool &isEnumFlags,
+                             ZF_IN ZFPropertyTypeWrapper *enumWrapper)
 {
     if(enumWrapper == zfnull)
     {
         return zffalse;
     }
-    const ZFMethod *m = enumWrapper->classData()->methodForName(zfText("_ZFP_ZFEnumWrapperInfo"));
+    const ZFMethod *m = enumWrapper->classData()->methodForName(zfText("_ZFP_ZFEnumInfoFromWrapper"));
     if(m == zfnull)
     {
         return zffalse;
     }
-    return m->executeStatic<zfbool, const ZFClass *&, zfuint &, ZFPropertyTypeWrapper *>(enumClass, enumValue, enumWrapper);
+    return m->executeStatic<zfbool, const ZFClass *&, zfuint &, zfbool &, ZFPropertyTypeWrapper *>(enumClass, enumValue, isEnumFlags, enumWrapper);
+}
+zfbool ZFEnumInfoToWrapper(ZF_OUT zfautoObject &enumWrapper,
+                           ZF_IN const ZFClass *enumClass,
+                           ZF_IN zfuint enumValue,
+                           ZF_IN zfbool isEnumFlags)
+{
+    if(enumClass == zfnull || !enumClass->classIsTypeOf(ZFEnum::ClassData()))
+    {
+        return zffalse;
+    }
+    const ZFMethod *m = enumClass->methodForName(
+            isEnumFlags
+            ? zfText("_ZFP_ZFEnumInfoToWrapper_flags")
+            : zfText("_ZFP_ZFEnumInfoToWrapper")
+        );
+    if(m == zfnull)
+    {
+        return zffalse;
+    }
+    return m->executeStatic<zfbool, zfautoObject &, zfuint>(enumWrapper, enumValue);
 }
 
 ZF_NAMESPACE_GLOBAL_END
@@ -403,7 +424,8 @@ ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_7(zfbool, zfflagsToString, ZFMP_IN_OUT(zfst
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_6(zfstring, zfflagsToString, ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfflags const &, value), ZFMP_IN_OPT(zfbool, includeNotConverted, zftrue), ZFMP_IN_OPT(zfbool, exclusiveMode, zffalse), ZFMP_OUT_OPT(zfflags *, notConverted, zfnull), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_5(zfbool, zfflagsFromString, ZFMP_OUT(zfflags &, ret), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(const zfchar *, src), ZFMP_IN_OPT(zfindex, srcLen, zfindexMax()), ZFMP_IN_OPT(zfchar, separatorToken, '|'))
 
-ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_3(zfbool, ZFEnumWrapperInfo, ZFMP_OUT(const ZFClass *&, enumClass), ZFMP_OUT(zfuint &, enumValue), ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFEnumInfoFromWrapper, ZFMP_OUT(const ZFClass *&, enumClass), ZFMP_OUT(zfuint &, enumValue), ZFMP_OUT(zfbool &, isEnumFlags), ZFMP_IN(ZFPropertyTypeWrapper *, enumWrapper))
+ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_4(zfbool, ZFEnumInfoToWrapper, ZFMP_OUT(zfautoObject &, enumWrapper), ZFMP_IN(const ZFClass *, enumClass), ZFMP_IN(zfuint, enumValue), ZFMP_IN(zfbool, isEnumFlags))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif
