@@ -182,8 +182,7 @@ typedef zfautoObject (*_ZFP_ZFMethodParamDefaultValueAccessCallback)(void);
  * -  DefaultValueN is the default value for the param
  *
  * to override a method declared in parent,
- * subclass should use ZFMETHOD_OVERRIDE_DECLARE_XXX,
- * which is similar to ZFMETHOD_DECLARE_XXX/ZFMETHOD_DEFINE_XXX\n
+ * simply override like normal virtual functions\n
  * overrided method isn't belong to subclass,
  * they still can only be found by parent's ZFClass\n
  * \n

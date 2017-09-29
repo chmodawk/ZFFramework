@@ -461,11 +461,11 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextNormal, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Normal);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Highlighted);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextChecked, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Checked);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextCheckedHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_CheckedHighlighted);})
-ZFLANGAPPLY_IMPL(ZFUIButtonBasic, ZFUIButtonBasicTextDisabled, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Disabled);})
+ZFLANGAPPLY_DECLARE(ZFUIButtonBasic, ZFUIButtonBasicTextNormal)
+ZFLANGAPPLY_DECLARE(ZFUIButtonBasic, ZFUIButtonBasicTextHighlighted)
+ZFLANGAPPLY_DECLARE(ZFUIButtonBasic, ZFUIButtonBasicTextChecked)
+ZFLANGAPPLY_DECLARE(ZFUIButtonBasic, ZFUIButtonBasicTextCheckedHighlighted)
+ZFLANGAPPLY_DECLARE(ZFUIButtonBasic, ZFUIButtonBasicTextDisabled)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUIButtonBasic_h_

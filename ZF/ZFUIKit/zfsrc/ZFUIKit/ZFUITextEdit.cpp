@@ -490,5 +490,8 @@ void ZFUITextEdit::internalBackgroundViewOnLayout(ZF_IN const ZFUIRect &bounds)
         ));
 }
 
+// ============================================================
+ZFLANGAPPLY_DEFINE(ZFUITextEdit, ZFUITextEditPlaceHolder, {obj->textPlaceHolder()->textSet(langValue);})
+
 ZF_NAMESPACE_GLOBAL_END
 

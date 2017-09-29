@@ -52,10 +52,11 @@ public:
 
 ZFOBJECT_REGISTER(ZFOperationAsync)
 
-void ZFOperationAsync::taskNotifyFinishAfterDelay(ZF_IN zftimet delay,
-                                                  ZF_IN ZFOperation *operation,
-                                                  ZF_IN ZFOperationParam *operationParam,
-                                                  ZF_IN ZFOperationResult *operationResult)
+ZFMETHOD_DEFINE_4(ZFOperationAsync, void, taskNotifyFinishAfterDelay,
+                  ZFMP_IN(zftimet, delay),
+                  ZFMP_IN(ZFOperation *, operation),
+                  ZFMP_IN(ZFOperationParam *, operationParam),
+                  ZFMP_IN(ZFOperationResult *, operationResult))
 {
     zfautoObject operationTaskDataHolder = operation->createTaskData();
     ZFOperationTaskData *operationTaskData = operationTaskDataHolder.to<ZFOperationTaskData *>();
@@ -68,10 +69,11 @@ void ZFOperationAsync::taskNotifyFinishAfterDelay(ZF_IN zftimet delay,
     })
     ZFThreadExecuteInMainThreadAfterDelay(delay, onNotify, operationTaskData);
 }
-void ZFOperationAsync::taskNotifyFinishAfterDelay(ZF_IN zftimet delay,
-                                                  ZF_IN ZFOperation *operation,
-                                                  ZF_IN zfidentity operationId,
-                                                  ZF_IN ZFOperationResult *operationResult)
+ZFMETHOD_DEFINE_4(ZFOperationAsync, void, taskNotifyFinishAfterDelay,
+                  ZFMP_IN(zftimet, delay),
+                  ZFMP_IN(ZFOperation *, operation),
+                  ZFMP_IN(zfidentity, operationId),
+                  ZFMP_IN(ZFOperationResult *, operationResult))
 {
     zfautoObject operationTaskDataHolder = operation->createTaskData();
     ZFOperationTaskData *operationTaskData = operationTaskDataHolder.to<ZFOperationTaskData *>();
@@ -84,10 +86,11 @@ void ZFOperationAsync::taskNotifyFinishAfterDelay(ZF_IN zftimet delay,
     })
     ZFThreadExecuteInMainThreadAfterDelay(delay, onNotify, operationTaskData);
 }
-void ZFOperationAsync::taskNotifyProgressAfterDelay(ZF_IN zftimet delay,
-                                                    ZF_IN ZFOperation *operation,
-                                                    ZF_IN ZFOperationParam *operationParam,
-                                                    ZF_IN_OPT ZFOperationProgress *operationProgress /* = zfnull */)
+ZFMETHOD_DEFINE_4(ZFOperationAsync, void, taskNotifyProgressAfterDelay,
+                  ZFMP_IN(zftimet, delay),
+                  ZFMP_IN(ZFOperation *, operation),
+                  ZFMP_IN(ZFOperationParam *, operationParam),
+                  ZFMP_IN_OPT(ZFOperationProgress *, operationProgress, zfnull))
 {
     zfautoObject operationTaskDataHolder = operation->createTaskData();
     ZFOperationTaskData *operationTaskData = operationTaskDataHolder.to<ZFOperationTaskData *>();
@@ -100,10 +103,11 @@ void ZFOperationAsync::taskNotifyProgressAfterDelay(ZF_IN zftimet delay,
     })
     ZFThreadExecuteInMainThreadAfterDelay(delay, onNotify, operationTaskData);
 }
-void ZFOperationAsync::taskNotifyProgressAfterDelay(ZF_IN zftimet delay,
-                                                    ZF_IN ZFOperation *operation,
-                                                    ZF_IN zfidentity operationId,
-                                                    ZF_IN_OPT ZFOperationProgress *operationProgress /* = zfnull */)
+ZFMETHOD_DEFINE_4(ZFOperationAsync, void, taskNotifyProgressAfterDelay,
+                  ZFMP_IN(zftimet, delay),
+                  ZFMP_IN(ZFOperation *, operation),
+                  ZFMP_IN(zfidentity, operationId),
+                  ZFMP_IN_OPT(ZFOperationProgress *, operationProgress, zfnull))
 {
     zfautoObject operationTaskDataHolder = operation->createTaskData();
     ZFOperationTaskData *operationTaskData = operationTaskDataHolder.to<ZFOperationTaskData *>();

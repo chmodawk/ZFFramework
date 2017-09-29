@@ -56,8 +56,12 @@ extern ZF_ENV_EXPORT void zfSkinApplyCancel(ZF_IN ZFStyleable *obj,
  *
  * usage:
  * @code
+ *   // in header file
  *   / ** you may add docs here * /
- *   ZFSKINAPPLY_IMPL(YourObjectType, YourTypeName, {obj->applyYourSkin(objIdentity, skinKey, skinValueOrNull, userData);})
+ *   ZFSKINAPPLY_DECLARE(YourObjectType, YourTypeName)
+ *
+ *   // in cpp file
+ *   ZFSKINAPPLY_DEFINE(YourObjectType, YourTypeName, {obj->applyYourSkin(objIdentity, skinKey, skinValueOrNull, userData);})
  *
  *   // impl function's proto type:
  *   //   void action(ZF_IN ZFStyleable *obj,
@@ -69,12 +73,19 @@ extern ZF_ENV_EXPORT void zfSkinApplyCancel(ZF_IN ZFStyleable *obj,
  * expand this method for you:
  * @code
  *   void zfSkinApplyYourTypeName(ZF_IN YourObjectType *,
- *                                ZF_IN const zfchar *skinKey,
- *                                ZF_IN_OPT ZFObject *userData = zfnull);
+ *                                ZF_IN const zfchar *skinKey);
  *   void zfSkinApplyCancelYourTypeName(ZF_IN YourObjectType *);
  * @endcode
  */
-#define ZFSKINAPPLY_IMPL(YourTypeName, T_action) \
+#define ZFSKINAPPLY_DECLARE(YourTypeName) \
+    /** \n apply skin */ \
+    ZFMETHOD_FUNC_DECLARE_2(void, zfSkinApply##YourTypeName, \
+                            ZFMP_IN(ZFStyleable *, obj), \
+                            ZFMP_IN(const zfchar *, skinKey)) \
+    /** @brief see #zfSkinApplyCancel */ \
+    ZFMETHOD_FUNC_DECLARE_1(void, zfSkinApplyCancel##YourTypeName, \
+                            ZFMP_IN(ZFStyleable *, obj))
+#define ZFSKINAPPLY_DEFINE(YourTypeName, T_action) \
     zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfSkinApplyImpl_##YourTypeName \
     { \
     public: \
@@ -87,20 +98,19 @@ extern ZF_ENV_EXPORT void zfSkinApplyCancel(ZF_IN ZFStyleable *obj,
             T_action \
         } \
     }; \
-    /** \n apply skin */ \
-    inline void zfSkinApply##YourTypeName(ZF_IN ZFStyleable *obj, \
-                                          ZF_IN const zfchar *skinKey, \
-                                          ZF_IN_OPT ZFObject *userData = zfnull) \
+    ZFMETHOD_FUNC_DEFINE_2(void, zfSkinApply##YourTypeName, \
+                           ZFMP_IN(ZFStyleable *, obj), \
+                           ZFMP_IN(const zfchar *, skinKey)) \
     { \
-        zfSkinApply(obj, ZFM_TOSTRING(YourTypeName), skinKey, _ZFP_zfSkinApplyImpl_##YourTypeName::_ZFP_action, userData); \
+        zfSkinApply(obj, ZFM_TOSTRING(YourTypeName), skinKey, _ZFP_zfSkinApplyImpl_##YourTypeName::_ZFP_action); \
     } \
-    /** @brief see #zfSkinApplyCancel */ \
-    inline void zfSkinApplyCancel##YourTypeName(ZF_IN ZFStyleable *obj) \
+    ZFMETHOD_FUNC_DEFINE_1(void, zfSkinApplyCancel##YourTypeName, \
+                           ZFMP_IN(ZFStyleable *, obj)) \
     { \
         zfSkinApplyCancel(obj, ZFM_TOSTRING(YourTypeName)); \
     }
 
-ZFSKINAPPLY_IMPL(ZFStyleable, {obj->styleableCopyFrom(skinValueOrNull);})
+ZFSKINAPPLY_DECLARE(ZFStyleable)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSkinUtil_h_

@@ -10,8 +10,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfbool zfSkinLoad(ZF_IN const ZFSerializableData &serializableData,
-                  ZF_OUT_OPT zfstring *errorHint /* = zfnull */)
+ZFMETHOD_FUNC_DEFINE_2(zfbool, zfSkinLoad,
+                       ZFMP_IN(const ZFSerializableData &, serializableData),
+                       ZFMP_OUT_OPT(zfstring *, errorHint, zfnull))
 {
     for(zfindex i = 0; i < serializableData.elementCount(); ++i)
     {

@@ -164,5 +164,7 @@ void zfSkinApplyCancel(ZF_IN ZFStyleable *obj,
     }
 }
 
+ZFSKINAPPLY_DEFINE(ZFStyleable, {obj->styleableCopyFrom(skinValueOrNull);})
+
 ZF_NAMESPACE_GLOBAL_END
 

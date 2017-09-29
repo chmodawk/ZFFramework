@@ -30,6 +30,7 @@ public:
     virtual ZFObject *objectOnInit(ZF_IN ZFOperation *childOperation,
                                    ZF_IN ZFOperationStartParam *childTaskData);
     /** @brief see #ZFObject::objectOnInit */
+    zfoverride
     virtual ZFObject *objectOnInit(void);
 
 protected:

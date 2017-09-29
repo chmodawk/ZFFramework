@@ -632,5 +632,12 @@ ZFMETHOD_DEFINE_0(ZFUIButtonBasic, void, prepareButtonBackground)
     }
 }
 
+// ============================================================
+ZFLANGAPPLY_DEFINE(ZFUIButtonBasic, ZFUIButtonBasicTextNormal, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Normal);})
+ZFLANGAPPLY_DEFINE(ZFUIButtonBasic, ZFUIButtonBasicTextHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Highlighted);})
+ZFLANGAPPLY_DEFINE(ZFUIButtonBasic, ZFUIButtonBasicTextChecked, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Checked);})
+ZFLANGAPPLY_DEFINE(ZFUIButtonBasic, ZFUIButtonBasicTextCheckedHighlighted, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_CheckedHighlighted);})
+ZFLANGAPPLY_DEFINE(ZFUIButtonBasic, ZFUIButtonBasicTextDisabled, {obj->buttonLabelTextSet(langValue, ZFUIButtonState::e_Disabled);})
+
 ZF_NAMESPACE_GLOBAL_END
 

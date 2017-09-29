@@ -429,7 +429,7 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUITextEdit, ZFUITextEditPlaceHolder, {obj->textPlaceHolder()->textSet(langValue);})
+ZFLANGAPPLY_DECLARE(ZFUITextEdit, ZFUITextEditPlaceHolder)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUITextEdit_h_

@@ -417,32 +417,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
         )
 
-#define _ZFP_ZFMETHOD_OVERRIDE_DECLARE(...) \
-    ZFM_EXPAND(_ZFP_ZFMETHOD_OVERRIDE_DECLARE_(__VA_ARGS__))
-#define _ZFP_ZFMETHOD_OVERRIDE_DECLARE_( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
-    , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
-    , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-    , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-    , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-    , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-    , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-    , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-    ) \
-    PublicOrProtectedOrPrivate: \
-        ZFMethodIsWhatType() ReturnType MethodName( \
-            ParamExpandOrEmpty0(            ParamType0 param0 DefaultValueFix0()) \
-            ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1 DefaultValueFix1()) \
-            ParamExpandOrEmpty2(ZFM_COMMA() ParamType2 param2 DefaultValueFix2()) \
-            ParamExpandOrEmpty3(ZFM_COMMA() ParamType3 param3 DefaultValueFix3()) \
-            ParamExpandOrEmpty4(ZFM_COMMA() ParamType4 param4 DefaultValueFix4()) \
-            ParamExpandOrEmpty5(ZFM_COMMA() ParamType5 param5 DefaultValueFix5()) \
-            ParamExpandOrEmpty6(ZFM_COMMA() ParamType6 param6 DefaultValueFix6()) \
-            ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7 DefaultValueFix7()) \
-            )
-
 #define _ZFP_ZFMETHOD_REGISTER(...) \
     ZFM_EXPAND(_ZFP_ZFMETHOD_REGISTER_(__VA_ARGS__))
 #define _ZFP_ZFMETHOD_REGISTER_(OwnerClass, MethodName, DECLARE_LINE) \
@@ -663,6 +637,13 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         ReturnType, MethodName \
         )
 /** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_0(ReturnType, MethodName \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_0( \
+        public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        )
+/** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_DETAIL_0( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
@@ -711,32 +692,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
         , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
-// ============================================================
-// 0 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_0(ReturnType, MethodName \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_0( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_0( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EMPTY,  ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
 
 // ============================================================
 // 1 param method declare
@@ -755,6 +710,15 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_1( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_1(ReturnType, MethodName \
+    , ZFMP_0 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_1( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         )
@@ -810,35 +774,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
         , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
-// ============================================================
-// 1 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_1(ReturnType, MethodName \
-    , ZFMP_0 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_1( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_1( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EMPTY,  ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
 
 // ============================================================
 // 2 param method declare
@@ -860,6 +795,17 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_2( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_2(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_2( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -919,38 +865,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
         , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
-// ============================================================
-// 2 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_2(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_2( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_2( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EMPTY,  ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
 
 // ============================================================
 // 3 param method declare
@@ -975,6 +889,19 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_3( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_3(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_3( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1038,41 +965,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
         , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
         )
-// ============================================================
-// 3 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_3(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_3( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_3( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EMPTY,  ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
 
 // ============================================================
 // 4 param method declare
@@ -1100,6 +992,21 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_4( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_4(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_4( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1169,45 +1076,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         )
 
 // ============================================================
-// 4 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_4(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_4( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND(ZFMP_3) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_4( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EMPTY,  ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
-
-// ============================================================
 // 5 param method declare
 /** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_5(ReturnType, MethodName \
@@ -1236,6 +1104,23 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_5( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_5(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_5( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1309,48 +1194,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         )
 
 // ============================================================
-// 5 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_5(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_5( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND(ZFMP_4) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_5( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EMPTY,  ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
-
-// ============================================================
 // 6 param method declare
 /** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_6(ReturnType, MethodName \
@@ -1382,6 +1225,25 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_6( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_6(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_6( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1459,51 +1321,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         )
 
 // ============================================================
-// 6 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_6(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_6( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND(ZFMP_5) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_6( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EMPTY,  ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
-
-// ============================================================
 // 7 param method declare
 /** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_7(ReturnType, MethodName \
@@ -1538,6 +1355,27 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_7( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND(ZFMP_6) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_7(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_7( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1619,54 +1457,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         )
 
 // ============================================================
-// 7 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_7(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_7( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND(ZFMP_6) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_7( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EMPTY,  ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
-
-// ============================================================
 // 8 param method declare
 /** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_8(ReturnType, MethodName \
@@ -1704,6 +1494,29 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_8( \
         public, ZFMethodIsStatic, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EXPAND(ZFMP_7) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_FINAL_8(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    , ZFMP_7 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_8( \
+        public, ZFMethodIsNormal, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1778,57 +1591,6 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     , ZFMP_7 \
     ) \
     _ZFP_ZFMETHOD_DEFINE(OwnerClass, ReturnType, MethodName \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EXPAND, ZFM_EXPAND(ZFMP_7) \
-        )
-
-// ============================================================
-// 8 param method override declare
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_8(ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    , ZFMP_7 \
-    ) \
-    ZFMETHOD_OVERRIDE_DECLARE_DETAIL_8( \
-        public, ZFMethodIsVirtual, \
-        ReturnType, MethodName \
-        , ZFM_EXPAND(ZFMP_0) \
-        , ZFM_EXPAND(ZFMP_1) \
-        , ZFM_EXPAND(ZFMP_2) \
-        , ZFM_EXPAND(ZFMP_3) \
-        , ZFM_EXPAND(ZFMP_4) \
-        , ZFM_EXPAND(ZFMP_5) \
-        , ZFM_EXPAND(ZFMP_6) \
-        , ZFM_EXPAND(ZFMP_7) \
-        )
-/** @brief see #ZFMethod */
-#define ZFMETHOD_OVERRIDE_DECLARE_DETAIL_8( \
-    PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-    ReturnType, MethodName \
-    , ZFMP_0 \
-    , ZFMP_1 \
-    , ZFMP_2 \
-    , ZFMP_3 \
-    , ZFMP_4 \
-    , ZFMP_5 \
-    , ZFMP_6 \
-    , ZFMP_7 \
-    ) \
-    _ZFP_ZFMETHOD_OVERRIDE_DECLARE( \
-        PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
-        ReturnType, MethodName \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_1) \
         , ZFM_EXPAND, ZFM_EXPAND(ZFMP_2) \

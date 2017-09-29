@@ -43,6 +43,8 @@ zfbool ZFOperationParam::paramOnCheckIsEqual(ZF_IN ZFOperationParam *anotherOper
     return zftrue;
 }
 
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFOperationParam, zfbool, paramIsEqual, ZFMP_IN(ZFOperationParam *, anotherOperationParam))
+
 // ============================================================
 // ZFOperationResult
 ZFOBJECT_REGISTER(ZFOperationResult)
@@ -85,7 +87,7 @@ ZFCompareResult ZFOperationCache::objectCompare(ZF_IN ZFObject *anotherObj)
     }
 }
 
-zfbool ZFOperationCache::cacheIsExpired(void)
+ZFMETHOD_DEFINE_0(ZFOperationCache, zfbool, cacheIsExpired)
 {
     return (ZFTime::currentTimeValue().sec - this->cacheTime() >= this->cacheExpireTime());
 }
@@ -180,6 +182,9 @@ void ZFOperationStartParam::operationTaskDataSet(ZF_IN ZFOperationTaskData *oper
 {
     ZFPropertyChange(this->_operationTaskData, operationTaskData);
 }
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFOperationStartParam, void, operationTaskDataSet, ZFMP_IN(ZFOperationTaskData *, operationTaskData))
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFOperationStartParam, ZFOperationTaskData *, operationTaskData)
+
 ZFObject *ZFOperationStartParam::objectOnInit(void)
 {
     zfsuper::objectOnInit();

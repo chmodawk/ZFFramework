@@ -35,7 +35,8 @@ public:
      * time ensured increasing from 0.0f to 1.0f,
      * while result have no limits
      */
-    zffinal inline zffloat progressUpdate(ZF_IN zffloat time)
+    ZFMETHOD_DECLARE_FINAL_1(zffloat, progressUpdate,
+                             ZFMP_IN(zffloat, time))
     {
         return this->progressOnUpdate(time);
     }

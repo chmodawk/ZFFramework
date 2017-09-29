@@ -81,8 +81,9 @@ public:
      *
      * caller must make sure #ownerProperty is valid and ownerObj containing #ownerProperty
      */
-    zffinal inline void progressUpdate(ZF_IN ZFObject *ownerObj,
-                                       ZF_IN zffloat progress)
+    ZFMETHOD_DECLARE_FINAL_2(void, progressUpdate,
+                             ZFMP_IN(ZFObject *, ownerObj),
+                             ZFMP_IN(zffloat, progress))
     {
         this->progressOnUpdate(ownerObj, progress);
     }
@@ -91,7 +92,8 @@ public:
      *
      * caller must make sure #ownerProperty is valid and ownerObj containing #ownerProperty
      */
-    zffinal inline void stateSave(ZF_IN ZFObject *ownerObj)
+    ZFMETHOD_DECLARE_FINAL_1(void, stateSave,
+                             ZFMP_IN(ZFObject *, ownerObj))
     {
         this->stateOnSave(ownerObj);
     }
@@ -100,7 +102,8 @@ public:
      *
      * caller must make sure #ownerProperty is valid and ownerObj containing #ownerProperty
      */
-    zffinal inline void stateRestore(ZF_IN ZFObject *ownerObj)
+    ZFMETHOD_DECLARE_FINAL_1(void, stateRestore,
+                             ZFMP_IN(ZFObject *, ownerObj))
     {
         this->stateOnRestore(ownerObj);
     }

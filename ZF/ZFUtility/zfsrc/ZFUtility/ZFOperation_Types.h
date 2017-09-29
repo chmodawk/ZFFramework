@@ -87,7 +87,7 @@ public:
      * @brief compare whether two param is equal,
      *   see #paramOnCheckPropertyIsEqual, #paramOnCheckIsEqual
      */
-    inline zfbool paramIsEqual(ZF_IN ZFOperationParam *anotherOperationParam)
+    zffinal zfbool paramIsEqual(ZF_IN ZFOperationParam *anotherOperationParam)
     {
         return (this->paramOnCheckPropertyIsEqual(anotherOperationParam)
             && this->paramOnCheckIsEqual(anotherOperationParam));
@@ -238,7 +238,7 @@ public:
      *
      * check by cache time only, whether the cache is valid should be checked by #ZFOperation::cacheIsValid
      */
-    virtual zfbool cacheIsExpired(void);
+    ZFMETHOD_DECLARE_0(zfbool, cacheIsExpired);
 };
 
 // ============================================================
@@ -374,11 +374,11 @@ public:
      * you may use this object to store or pass data
      * by #ZFObject::tagSet
      */
-    virtual void operationTaskDataSet(ZF_IN ZFOperationTaskData *operationTaskData);
+    zffinal void operationTaskDataSet(ZF_IN ZFOperationTaskData *operationTaskData);
     /**
      * @brief see #operationTaskData
      */
-    virtual ZFOperationTaskData *operationTaskData(void)
+    zffinal ZFOperationTaskData *operationTaskData(void)
     {
         return this->_operationTaskData;
     }

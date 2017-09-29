@@ -56,8 +56,12 @@ extern ZF_ENV_EXPORT void zfLangApplyCancel(ZF_IN ZFObject *obj,
  *
  * usage:
  * @code
+ *   // in header file
  *   / ** you may add docs here * /
- *   ZFLANGAPPLY_IMPL(YourObjectType, YourTypeName, {obj->applyYourLang(objIdentity, langKey, langValue, userData);})
+ *   ZFLANGAPPLY_DECLARE(YourObjectType, YourTypeName)
+ *
+ *   // in cpp file
+ *   ZFLANGAPPLY_DEFINE(YourObjectType, YourTypeName, {obj->applyYourLang(objIdentity, langKey, langValue, userData);})
  *
  *   // impl function's proto type:
  *   //   void action(ZF_IN YourObjectType *obj,
@@ -69,12 +73,20 @@ extern ZF_ENV_EXPORT void zfLangApplyCancel(ZF_IN ZFObject *obj,
  * expand this method for you:
  * @code
  *   void zfLangApplyYourTypeName(ZF_IN YourObjectType *,
- *                                ZF_IN const zfchar *langKey,
- *                                ZF_IN_OPT ZFObject *userData = zfnull);
+ *                                ZF_IN const zfchar *langKey);
  *   void zfLangApplyCancelYourTypeName(ZF_IN YourObjectType *);
  * @endcode
  */
-#define ZFLANGAPPLY_IMPL(T_ZFObject, YourTypeName, T_action) \
+#define ZFLANGAPPLY_DECLARE(T_ZFObject, YourTypeName) \
+    /** \n apply language for T_ZFObject */ \
+    ZFMETHOD_FUNC_DECLARE_2(void, zfLangApply##YourTypeName, \
+                            ZFMP_IN(T_ZFObject *, obj), \
+                            ZFMP_IN(const zfchar *, langKey)) \
+    /** @brief see #zfLangApplyCancel */ \
+    ZFMETHOD_FUNC_DECLARE_1(void, zfLangApplyCancel##YourTypeName, \
+                            ZFMP_IN(T_ZFObject *, obj))
+/** @brief see #ZFLANGAPPLY_DECLARE */
+#define ZFLANGAPPLY_DEFINE(T_ZFObject, YourTypeName, T_action) \
     zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfLangApplyImpl_##YourTypeName \
     { \
     public: \
@@ -88,15 +100,14 @@ extern ZF_ENV_EXPORT void zfLangApplyCancel(ZF_IN ZFObject *obj,
             T_action \
         } \
     }; \
-    /** \n apply language for T_ZFObject */ \
-    inline void zfLangApply##YourTypeName(ZF_IN T_ZFObject *obj, \
-                                          ZF_IN const zfchar *langKey, \
-                                          ZF_IN_OPT ZFObject *userData = zfnull) \
+    ZFMETHOD_FUNC_DEFINE_2(void, zfLangApply##YourTypeName, \
+                           ZFMP_IN(T_ZFObject *, obj), \
+                           ZFMP_IN(const zfchar *, langKey)) \
     { \
-        zfLangApply(ZFObjectToObject(obj), ZFM_TOSTRING(YourTypeName), langKey, _ZFP_zfLangApplyImpl_##YourTypeName::_ZFP_action, userData); \
+        zfLangApply(ZFObjectToObject(obj), ZFM_TOSTRING(YourTypeName), langKey, _ZFP_zfLangApplyImpl_##YourTypeName::_ZFP_action); \
     } \
-    /** @brief see #zfLangApplyCancel */ \
-    inline void zfLangApplyCancel##YourTypeName(ZF_IN T_ZFObject *obj) \
+    ZFMETHOD_FUNC_DEFINE_1(void, zfLangApplyCancel##YourTypeName, \
+                           ZFMP_IN(T_ZFObject *, obj)) \
     { \
         zfLangApplyCancel(ZFObjectToObject(obj), ZFM_TOSTRING(YourTypeName)); \
     }
@@ -105,12 +116,14 @@ extern ZF_ENV_EXPORT void zfLangApplyCancel(ZF_IN ZFObject *obj,
 /**
  * @brief auto apply localized string to propery when #ZFGlobalEvent::EventLangOnChange
  */
-extern ZF_ENV_EXPORT void zfLangApplyProperty_zfstring(ZF_IN ZFObject *obj,
-                                                       ZF_IN const ZFProperty *property,
-                                                       ZF_IN const zfchar *langKey);
+ZFMETHOD_FUNC_DECLARE_3(void, zfLangApplyProperty_zfstring,
+                        ZFMP_IN(ZFObject *, obj),
+                        ZFMP_IN(const ZFProperty *, property),
+                        ZFMP_IN(const zfchar *, langKey))
 /** @brief see #zfLangApplyProperty_zfstring, #zfLangApplyCancel */
-extern ZF_ENV_EXPORT void zfLangApplyCancelProperty_zfstring(ZF_IN ZFObject *obj,
-                                                             ZF_IN const ZFProperty *property);
+ZFMETHOD_FUNC_DECLARE_2(void, zfLangApplyCancelProperty_zfstring,
+                        ZFMP_IN(ZFObject *, obj),
+                        ZFMP_IN(const ZFProperty *, property))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFLangUtil_h_

@@ -96,7 +96,7 @@ public:
     /**
      * @brief whether test is running
      */
-    zffinal zfbool testCaseIsRunning(void);
+    ZFMETHOD_DECLARE_FINAL_0(zfbool, testCaseIsRunning);
 
     /**
      * @brief output something for the test case,
@@ -110,19 +110,21 @@ public:
      * automatically retain this object during test,
      * and release it after #testCaseStop
      */
-    zffinal void testCaseStart(void);
+    ZFMETHOD_DECLARE_FINAL_0(void, testCaseStart);
     /**
      * @brief called to notify progress,
      *   do nothing if not running
      */
-    zffinal void testCaseProgress(ZF_IN_OPT ZFObject *progress = zfnull);
+    ZFMETHOD_DECLARE_FINAL_1(void, testCaseProgress,
+                             ZFMP_IN_OPT(ZFObject *, progress, zfnull));
     /**
      * @brief must be called to stop test,
      *   do nothing if not running
      *
      * @warning you must not access this object after calling this method
      */
-    zffinal void testCaseStop(ZF_IN_OPT ZFResultTypeEnum testCaseResult = ZFResultType::e_Success);
+    ZFMETHOD_DECLARE_FINAL_1(void, testCaseStop,
+                             ZFMP_IN_OPT(ZFResultTypeEnum, testCaseResult, ZFResultType::e_Success));
 
 private:
     zfbool _testCaseIsRunning;

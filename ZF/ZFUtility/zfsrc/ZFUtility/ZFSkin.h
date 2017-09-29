@@ -42,12 +42,13 @@ ZF_NAMESPACE_END(ZFGlobalEvent)
  * it all depends on app to manage skin files,
  * and decide which file to use
  */
-extern ZF_ENV_EXPORT zfautoObject zfSkin(ZF_IN const zfchar *key,
-                                         ZF_IN_OPT ZFStyleable *valueDefault = zfnull);
+ZFMETHOD_FUNC_DECLARE_2(zfautoObject, zfSkin,
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN_OPT(ZFStyleable *, valueDefault, zfnull))
 /**
  * @brief notify skin changed
  */
-extern ZF_ENV_EXPORT void zfSkinNotifyChanged(void);
+ZFMETHOD_FUNC_DECLARE_0(void, zfSkinNotifyChanged)
 /**
  * @brief manually change one skin data, or remove if value is null
  *
@@ -56,20 +57,25 @@ extern ZF_ENV_EXPORT void zfSkinNotifyChanged(void);
  * -# load by your own logic, and save by #zfSkinSet
  * -# notify data changed by #zfSkinNotifyChanged
  */
-extern ZF_ENV_EXPORT void zfSkinSet(ZF_IN const zfchar *key, ZF_IN ZFStyleable *value);
+ZFMETHOD_FUNC_DECLARE_2(void, zfSkinSet,
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN(ZFStyleable *, value))
 /**
  * @brief similar to #zfSkinSet, but applies only if not exist
  */
-extern ZF_ENV_EXPORT void zfSkinSetDefault(ZF_IN const zfchar *key, ZF_IN ZFStyleable *value);
+ZFMETHOD_FUNC_DECLARE_2(void, zfSkinSetDefault,
+                        ZFMP_IN(const zfchar *, key),
+                        ZFMP_IN(ZFStyleable *, value))
 /**
  * @brief unload all data (not recommended)
  */
-extern ZF_ENV_EXPORT void zfSkinUnload(void);
+ZFMETHOD_FUNC_DECLARE_0(void, zfSkinUnload)
 
 /**
  * @brief for debug use only
  */
-extern ZF_ENV_EXPORT void zfSkinDebug(ZF_IN_OPT const ZFOutputCallback &output = ZFOutputCallbackDefault());
+ZFMETHOD_FUNC_DECLARE_1(void, zfSkinDebug,
+                        ZFMP_IN_OPT(const ZFOutputCallback &, output, ZFOutputCallbackDefault()))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFSkin_h_

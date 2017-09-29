@@ -193,5 +193,8 @@ void ZFUITextView::layoutOnLayout(ZF_IN const ZFUIRect &bounds)
         ZFUISizeApplyScale(ZFUISizeApplyMargin(bounds.size, this->nativeImplViewMargin()), this->scaleGetFixed()));
 }
 
+// ============================================================
+ZFLANGAPPLY_DEFINE(ZFUITextView, ZFUITextViewText, {obj->textSet(langValue);})
+
 ZF_NAMESPACE_GLOBAL_END
 

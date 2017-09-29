@@ -181,9 +181,10 @@ public:
 };
 #define _ZFP_zfLangApplyProperty_zfstring_objIdentity(property) \
     zfstringWithFormat(zfText("Property_zfstring:%s"), property->objectInfo().cString())
-void zfLangApplyProperty_zfstring(ZF_IN ZFObject *obj,
-                                  ZF_IN const ZFProperty *property,
-                                  ZF_IN const zfchar *langKey)
+ZFMETHOD_FUNC_DEFINE_3(void, zfLangApplyProperty_zfstring,
+                       ZFMP_IN(ZFObject *, obj),
+                       ZFMP_IN(const ZFProperty *, property),
+                       ZFMP_IN(const zfchar *, langKey))
 {
     if(obj == zfnull || property == zfnull || langKey == zfnull
         || !obj->classData()->classIsTypeOf(property->propertyOwnerClass()))
@@ -197,8 +198,9 @@ void zfLangApplyProperty_zfstring(ZF_IN ZFObject *obj,
         _ZFP_zfLangApplyProperty_zfstring::_ZFP_action,
         zflineAllocWithoutLeakTest(ZFPointerHolder, property));
 }
-void zfLangApplyCancelProperty_zfstring(ZF_IN ZFObject *obj,
-                                        ZF_IN const ZFProperty *property)
+ZFMETHOD_FUNC_DEFINE_2(void, zfLangApplyCancelProperty_zfstring,
+                       ZFMP_IN(ZFObject *, obj),
+                       ZFMP_IN(const ZFProperty *, property))
 {
     zfLangApplyCancel(obj, _ZFP_zfLangApplyProperty_zfstring_objIdentity(property));
 }

@@ -231,7 +231,6 @@ public:
  * -  you must not override anything within an interface,
  *   such as:
  *   -  ZFProperty (ZFPROPERTY_OVERRIDE_XXX)
- *   -  ZFMethod (ZFMETHOD_OVERRIDE_XXX)
  *   -  normal virtual method
  *
  * \n

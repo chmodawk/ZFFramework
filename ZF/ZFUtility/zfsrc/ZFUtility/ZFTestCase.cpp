@@ -23,7 +23,7 @@ void ZFTestCase::objectOnDeallocPrepare(void)
     zfsuper::objectOnDeallocPrepare();
 }
 
-zfbool ZFTestCase::testCaseIsRunning(void)
+ZFMETHOD_DEFINE_0(ZFTestCase, zfbool, testCaseIsRunning)
 {
     return this->_testCaseIsRunning;
 }
@@ -36,7 +36,8 @@ void ZFTestCase::testCaseOutput(ZF_IN const zfchar *info, ...)
 
     this->testCaseOnOutput(data.cString());
 }
-void ZFTestCase::testCaseStart(void)
+ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFTestCase, void, testCaseOutput, ZFMP_IN(const zfchar *, info))
+ZFMETHOD_DEFINE_0(ZFTestCase, void, testCaseStart)
 {
     if(this->_testCaseIsRunning)
     {
@@ -47,7 +48,8 @@ void ZFTestCase::testCaseStart(void)
     this->testCaseOnStart();
 }
 
-void ZFTestCase::testCaseProgress(ZF_IN_OPT ZFObject *progress /* = zfnull */)
+ZFMETHOD_DEFINE_1(ZFTestCase, void, testCaseProgress,
+                  ZFMP_IN_OPT(ZFObject *, progress, zfnull))
 {
     if(!this->_testCaseIsRunning)
     {
@@ -58,7 +60,8 @@ void ZFTestCase::testCaseProgress(ZF_IN_OPT ZFObject *progress /* = zfnull */)
     zfRelease(progress);
 }
 
-void ZFTestCase::testCaseStop(ZF_IN_OPT ZFResultTypeEnum testCaseResult /* = ZFResultType::e_Success */)
+ZFMETHOD_DEFINE_1(ZFTestCase, void, testCaseStop,
+                  ZFMP_IN_OPT(ZFResultTypeEnum, testCaseResult, ZFResultType::e_Success))
 {
     if(!this->_testCaseIsRunning)
     {

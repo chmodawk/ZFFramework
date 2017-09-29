@@ -189,7 +189,7 @@ private:
 };
 
 // ============================================================
-ZFLANGAPPLY_IMPL(ZFUITextView, ZFUITextViewText, {obj->textSet(langValue);})
+ZFLANGAPPLY_DECLARE(ZFUITextView, ZFUITextViewText)
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFUITextView_h_
