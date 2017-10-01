@@ -16,10 +16,6 @@ everything here starts with "ZF", which stands for "Zero Framework"
 
 # Current status
 
-it's designed to be a complete and complex framework, current code status:
-
-![ZF2048_iOS](https://raw.githubusercontent.com/ZFFramework/zfframework.github.com/master/res/ZFFramework/code_summary.jpg)
-
 * finished
     * core module (memory management, reflection, serialization)
     * basic UI module (view, window, label, image view, button, layout, scroll view, list view)
