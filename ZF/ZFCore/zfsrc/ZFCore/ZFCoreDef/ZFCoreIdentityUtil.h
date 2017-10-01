@@ -125,10 +125,6 @@ extern ZF_ENV_EXPORT zfidentity zfidentityCalcPointer(ZF_IN const void *p);
  * @brief make a identity from pointer value
  */
 extern ZF_ENV_EXPORT zfidentity zfidentityCalcPointer(ZF_IN ZFFuncAddrType p);
-/**
- * @brief make a identity from pointer value
- */
-extern ZF_ENV_EXPORT zfidentity zfidentityCalcPointer(ZF_IN ZFMemberFuncAddrType p);
 
 ZF_NAMESPACE_GLOBAL_END
 

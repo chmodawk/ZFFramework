@@ -162,10 +162,6 @@ zfidentity zfidentityCalcPointer(ZF_IN ZFFuncAddrType p)
 {
     return zfidentityCalcBuf(&p, sizeof(ZFFuncAddrType));
 }
-zfidentity zfidentityCalcPointer(ZF_IN ZFMemberFuncAddrType p)
-{
-    return zfidentityCalcBuf(&p, sizeof(ZFMemberFuncAddrType));
-}
 
 ZF_NAMESPACE_GLOBAL_END
 

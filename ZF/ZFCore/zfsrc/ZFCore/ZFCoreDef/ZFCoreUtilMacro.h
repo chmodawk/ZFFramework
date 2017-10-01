@@ -92,7 +92,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  * @brief macro to repeat something
  *
  * for example\n
- *   ZFM_REPEAT(2, ZFMARCO_REPEAT_TEMPLATE, ZFM_EMPTY)\n
+ *   ZFM_REPEAT(2, ZFM_REPEAT_TEMPLATE, ZFM_EMPTY)\n
  * would be expand as:\n
  *   typename Type0, typename Type1\n
  * and
@@ -102,7 +102,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 #define ZFM_REPEAT(N, Type, LeftCommaFix) _ZFP_ZFM_REPEAT(N, Type, LeftCommaFix)
 
-#define _ZFP_ZFMARCO_REPEAT_TEMPLATE(N) typename Type##N
+#define _ZFP_ZFM_REPEAT_TEMPLATE(N) typename Type##N
 #define _ZFP_ZFM_REPEAT_TYPE(N) Type##N
 #define _ZFP_ZFM_REPEAT_TYPE_CONST(N) Type##N const &
 #define _ZFP_ZFM_REPEAT_NAME(N) param##N
@@ -111,7 +111,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 /**
  * @brief usually used by #ZFM_REPEAT
  */
-#define ZFMARCO_REPEAT_TEMPLATE(N) _ZFP_ZFMARCO_REPEAT_TEMPLATE(N)
+#define ZFM_REPEAT_TEMPLATE(N) _ZFP_ZFM_REPEAT_TEMPLATE(N)
 /**
  * @brief usually used by #ZFM_REPEAT
  */

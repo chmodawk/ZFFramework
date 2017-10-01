@@ -82,13 +82,13 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIParamError(ZF_OUT_OPT zfstring *errorHint,
     }
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_ACCESS_EXPAND(N, DefaultExpandOrEmpty, ParamType, param) \
     ZFPropertyTypeIdData<_TR##N>::Value<_T##N>::access( \
-            DefaultExpandOrEmpty()(param != ZFMethodGenericInvokerDefaultParam() ?) \
+            DefaultExpandOrEmpty(param != ZFMethodGenericInvokerDefaultParam() ?) \
             param \
-            DefaultExpandOrEmpty()(: pDef##N().toObject()) \
+            DefaultExpandOrEmpty(: pDef##N().toObject()) \
             , accessCallback[N] \
         )
 #define _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS(N, DefaultExpandOrEmpty, ParamType, DefaultValueFix) \
-    DefaultExpandOrEmpty()( \
+    DefaultExpandOrEmpty( \
         static zfautoObject pDef##N(void) \
         { \
             zftValue<zftTraits<ParamType>::TrNoRef> paramDefault; \
@@ -106,7 +106,7 @@ extern ZF_ENV_EXPORT void _ZFP_MtdGIRetError(ZF_OUT_OPT zfstring *errorHint,
                                              ZF_IN const zfchar *returnValueInfo);
 
 template<typename T_ReturnType>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerReturnFix
+zfclassNotPOD _ZFP_MtdGIFix
 {
 public:
     typedef T_ReturnType (*Ivk)(ZF_IN const ZFMethod *invokerMethod
@@ -166,7 +166,7 @@ public:
     }
 };
 template<>
-zfclassNotPOD _ZFP_ZFMethodGenericInvokerReturnFix<void>
+zfclassNotPOD _ZFP_MtdGIFix<void>
 {
 public:
     typedef void (*Ivk)(ZF_IN const ZFMethod *invokerMethod
@@ -215,19 +215,16 @@ public:
 
 // ============================================================
 #define _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
-    ReturnType, methodSig \
-    , ParamExpandOrEmpty0, ParamType0, param0_, DefaultExpandOrEmpty0, DefaultValueFix0 \
-    , ParamExpandOrEmpty1, ParamType1, param1_, DefaultExpandOrEmpty1, DefaultValueFix1 \
-    , ParamExpandOrEmpty2, ParamType2, param2_, DefaultExpandOrEmpty2, DefaultValueFix2 \
-    , ParamExpandOrEmpty3, ParamType3, param3_, DefaultExpandOrEmpty3, DefaultValueFix3 \
-    , ParamExpandOrEmpty4, ParamType4, param4_, DefaultExpandOrEmpty4, DefaultValueFix4 \
-    , ParamExpandOrEmpty5, ParamType5, param5_, DefaultExpandOrEmpty5, DefaultValueFix5 \
-    , ParamExpandOrEmpty6, ParamType6, param6_, DefaultExpandOrEmpty6, DefaultValueFix6 \
-    , ParamExpandOrEmpty7, ParamType7, param7_, DefaultExpandOrEmpty7, DefaultValueFix7 \
+        ReturnType \
+        , ParamExpandOrEmpty0, ParamType0, param0_, DefaultExpandOrEmpty0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1_, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2_, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3_, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4_, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5_, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6_, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7_, DefaultExpandOrEmpty7, DefaultValueFix7 \
     ) \
-    public: \
-    zfclassNotPOD _ZFP_MtdGI_##methodSig \
-    { \
     private: \
         ParamExpandOrEmpty0(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_DECLARE_EXPAND(0, ParamType0)) \
         ParamExpandOrEmpty1(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_DECLARE_EXPAND(1, ParamType1)) \
@@ -270,7 +267,7 @@ public:
             ParamExpandOrEmpty5(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(5, DefaultExpandOrEmpty5, ParamType5, param5)) \
             ParamExpandOrEmpty6(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(6, DefaultExpandOrEmpty6, ParamType6, param6)) \
             ParamExpandOrEmpty7(_ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_PREPARE_EXPAND(7, DefaultExpandOrEmpty7, ParamType7, param7)) \
-            return _ZFP_ZFMethodGenericInvokerReturnFix<ReturnType>::action(I, invokerMethod, invokerObject, errorHint, ret \
+            return _ZFP_MtdGIFix<ReturnType>::action(I, invokerMethod, invokerObject, errorHint, ret \
                     , param0 \
                     , param1 \
                     , param2 \
@@ -282,6 +279,7 @@ public:
                     , accessCallback \
                 ); \
         } \
+    private: \
         static ReturnType I(ZF_IN const ZFMethod *invokerMethod \
                             , ZF_IN ZFObject *invokerObject \
                             , ZF_IN ZFObject *param0 \
@@ -315,12 +313,12 @@ public:
                     ParamExpandOrEmpty7(ZFM_COMMA() _ZFP_ZFMETHOD_GENERIC_INVOKER_PARAM_ACCESS_EXPAND(7, DefaultExpandOrEmpty7, ParamType7, param7)) \
                 ); \
         } \
-    };
+    public:
 /* ZFMETHOD_MAX_PARAM */
-#define _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(ReturnType, methodSig) \
-    _ZFP_MtdGI_##methodSig::GI
-#define _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(owner, methodSig, DefaultExpandOrEmpty, N) \
-    (zfnull DefaultExpandOrEmpty()(ZFM_EMPTY(), owner::_ZFP_MtdGI_##methodSig::pDef##N))
+#define _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(owner) \
+    owner::GI
+#define _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(owner, DefaultExpandOrEmpty, N) \
+    (zfnull DefaultExpandOrEmpty(ZFM_EMPTY(), owner::pDef##N))
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFMethodGenericInvoker_h_

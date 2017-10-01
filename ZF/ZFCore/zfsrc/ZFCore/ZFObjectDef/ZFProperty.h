@@ -228,18 +228,18 @@ public:
     const ZFClass *_ZFP_ZFProperty_propertyClassOfRetainProperty;
     _ZFP_ZFPropertyCallbackDealloc _ZFP_ZFProperty_callbackDealloc;
 public:
-    // void (Owner::*)(ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnInit;
-    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnDealloc;
-    // void (Owner::*)(ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnVerify;
-    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnAttach;
-    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnDetach;
-    // void (Owner::*)(ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
-    ZFMemberFuncAddrType _ZFP_ZFProperty_cbCustomOnUpdate;
+    // void (*)(ZF_IN Owner *owner, ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnInit;
+    // void (*)(ZF_IN Owner *owner, ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnDealloc;
+    // void (*)(ZF_IN Owner *owner, ZF_IN_OUT PropHolderType &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnVerify;
+    // void (*)(ZF_IN Owner *owner, ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnAttach;
+    // void (*)(ZF_IN Owner *owner, ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnDetach;
+    // void (*)(ZF_IN Owner *owner, ZF_IN PropHolderType const &propertyValue, ZF_IN PropHolderType const &propertyValueOld);
+    ZFFuncAddrType _ZFP_ZFProperty_cbCustomOnUpdate;
 };
 
 // ============================================================

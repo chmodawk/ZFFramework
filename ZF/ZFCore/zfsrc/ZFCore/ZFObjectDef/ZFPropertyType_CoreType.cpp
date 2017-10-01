@@ -953,7 +953,6 @@ ZFOUTPUT_TYPE_DEFINE(ZFSerializableData, {
 
 // ============================================================
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFuncAddrType, ZFFuncAddrType)
-ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFMemberFuncAddrType, ZFMemberFuncAddrType)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE_UNCOMPARABLE(zfiterator, zfiterator)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFBuffer, ZFBuffer)
 ZFPROPERTY_TYPE_ACCESS_ONLY_DEFINE(ZFFilterForNumber, ZFFilterForNumber)

@@ -70,6 +70,7 @@ private:
         docHolder->implJsonDoc.ParseInsitu<rapidjson::kParseNumbersAsStringsFlag>(buf.bufferAsString());
         if(docHolder->implJsonDoc.HasParseError())
         {
+            zfdelete(docHolder);
             return ZFJsonItem();
         }
         ZFJsonItem ret = this->jsonConvert(docHolder->implJsonDoc, docHolder);

@@ -49,7 +49,7 @@ extern ZF_ENV_EXPORT void _ZFP_ZFCallback_executeNullCallback(ZF_IN const ZFCall
  */
 #define _ZFP_ZFCALLBACK_INVOKER(N) \
     /** @brief see #ZFCallback, you must assign the exact return type and param types for safe */ \
-    template<typename T_ReturnType ZFM_REPEAT(N, ZFMARCO_REPEAT_TEMPLATE, ZFM_COMMA)> \
+    template<typename T_ReturnType ZFM_REPEAT(N, ZFM_REPEAT_TEMPLATE, ZFM_COMMA)> \
     T_ReturnType executeExact(ZFM_REPEAT(N, ZFM_REPEAT_PARAM, ZFM_EMPTY)) const \
     { \
         switch(_ZFP_ZFCallbackCached_callbackType) \

@@ -69,6 +69,7 @@ private:
         pugi::xml_parse_result implResult = docHolder->implXmlDoc.load_buffer_inplace(buf.buffer(), buf.bufferSize(), pugi::parse_full);
         if(implResult.status != pugi::status_ok)
         {
+            zfdelete(docHolder);
             return ZFXmlItem();
         }
         ZFXmlItem doc(ZFXmlType::e_XmlDocument);

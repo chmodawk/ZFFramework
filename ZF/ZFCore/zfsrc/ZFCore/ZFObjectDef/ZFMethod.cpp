@@ -250,20 +250,6 @@ static void _ZFP_ZFMethodInstanceSig(ZF_OUT zfstring &ret,
     ret += '+'; ret += methodParamTypeId7;
 }
 
-static ZFMethod *_ZFP_ZFMethodInstanceFind(ZF_IN const zfchar *methodInternalId)
-{
-    zfCoreMutexLocker();
-    _ZFP_ZFMethodMapData *v = _ZFP_ZFMethodMap.get<_ZFP_ZFMethodMapData *>(methodInternalId);
-    if(v == zfnull)
-    {
-        return zfnull;
-    }
-    else
-    {
-        return &(v->method);
-    }
-}
-
 static ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalId)
 {
     zfCoreMutexLocker();
@@ -279,22 +265,6 @@ static ZFMethod *_ZFP_ZFMethodInstanceAccess(ZF_IN const zfchar *methodInternalI
         ++(v->refCount);
     }
     return &(v->method);
-}
-
-static zfbool _ZFP_ZFMethodInstanceCleanup(ZF_IN const ZFMethod *method)
-{
-    zfCoreMutexLocker();
-    _ZFP_ZFMethodMapData *v = _ZFP_ZFMethodMap.get<_ZFP_ZFMethodMapData *>(method->methodInternalId());
-    if(v == zfnull)
-    {
-        return zffalse;
-    }
-    --(v->refCount);
-    if(v->refCount == 0)
-    {
-        _ZFP_ZFMethodMap.remove(method->methodInternalId());
-    }
-    return zftrue;
 }
 
 ZFMethod *_ZFP_ZFMethodRegister(ZF_IN zfbool methodIsUserRegister
@@ -388,24 +358,34 @@ ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
             , paramTypeId[7]
         );
 
-    method = _ZFP_ZFMethodInstanceFind(methodInternalId);
-    if(methodOwnerClass != zfnull)
+    _ZFP_ZFMethodMapData *methodData = _ZFP_ZFMethodMap.get<_ZFP_ZFMethodMapData *>(methodInternalId);
+    if(methodData != zfnull)
     {
-        zfCoreAssertWithMessageTrim(method == zfnull,
-            zfTextA("[ZFMethodUserRegister] registering a method that already registered, class: %s, methodName: %s, methodExtSig: %s"),
-            zfsCoreZ2A(methodOwnerClass->className()),
-            zfsCoreZ2A(methodName),
-            zfsCoreZ2A(methodExtSig));
+        method = &methodData->method;
+        if(method->methodIsUserRegister())
+        {
+            if(methodOwnerClass != zfnull)
+            {
+                zfCoreCriticalMessageTrim(
+                    zfTextA("[ZFMethodUserRegister] registering a method that already registered, class: %s, methodName: %s, methodInternalId: %s"),
+                    zfsCoreZ2A(methodOwnerClass->className()),
+                    zfsCoreZ2A(methodName),
+                    zfsCoreZ2A(methodInternalId.cString()));
+            }
+            else
+            {
+                zfCoreCriticalMessageTrim(
+                    zfTextA("[ZFMethodFuncUserRegister] registering a method that already registered, namespace: %s, methodName: %s, methodInternalId: %s"),
+                    zfsCoreZ2A(methodNamespace),
+                    zfsCoreZ2A(methodName),
+                    zfsCoreZ2A(methodInternalId.cString()));
+            }
+        }
     }
     else
     {
-        zfCoreAssertWithMessageTrim(method == zfnull,
-            zfTextA("[ZFMethodFuncUserRegister] registering a method that already registered, namespace: %s, methodName: %s, methodExtSig: %s"),
-            zfsCoreZ2A(methodNamespace),
-            zfsCoreZ2A(methodName),
-            zfsCoreZ2A(methodExtSig));
+        method = _ZFP_ZFMethodInstanceAccess(methodInternalId);
     }
-    method = _ZFP_ZFMethodInstanceAccess(methodInternalId);
 
     if(method->_ZFP_ZFMethodNeedInit)
     {
@@ -445,6 +425,18 @@ ZFMethod *_ZFP_ZFMethodRegisterV(ZF_IN zfbool methodIsUserRegister
 }
 void _ZFP_ZFMethodUnregister(ZF_IN const ZFMethod *method)
 {
+    zfCoreMutexLocker();
+    _ZFP_ZFMethodMapData *v = _ZFP_ZFMethodMap.get<_ZFP_ZFMethodMapData *>(method->methodInternalId());
+    if(v == zfnull)
+    {
+        return ;
+    }
+    --(v->refCount);
+    if(v->refCount != 0)
+    {
+        return ;
+    }
+
     if(method->methodIsFunctionType())
     {
         _ZFP_ZFMethodFuncUnregister(method);
@@ -456,9 +448,9 @@ void _ZFP_ZFMethodUnregister(ZF_IN const ZFMethod *method)
             method->methodOwnerClass()->_ZFP_ZFClass_removeConst()->_ZFP_ZFClass_methodUnregister(method);
         }
     }
-
     _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeDetach, zfnull, zfnull, method);
-    _ZFP_ZFMethodInstanceCleanup(method);
+
+    _ZFP_ZFMethodMap.remove(method->methodInternalId());
 }
 
 _ZFP_ZFMethodRegisterHolder::_ZFP_ZFMethodRegisterHolder(ZF_IN zfbool methodIsUserRegister

@@ -233,15 +233,6 @@ public:
  */
 typedef void (*ZFFuncAddrType)(void);
 
-/**
- * @brief see #ZFMemberFuncAddrType
- */
-zfclassNotPOD ZF_ENV_EXPORT ZFMemberFuncAddrTypeOwner {};
-/**
- * @brief dummy member function address type
- */
-typedef void (ZFMemberFuncAddrTypeOwner::*ZFMemberFuncAddrType)(void);
-
 ZF_NAMESPACE_GLOBAL_END
 
 #endif // #ifndef _ZFI_ZFCoreTypeDef_OtherType_h_

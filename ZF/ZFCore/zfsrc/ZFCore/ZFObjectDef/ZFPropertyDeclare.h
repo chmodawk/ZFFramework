@@ -383,13 +383,13 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &propertyValue, \
             ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld) \
         { \
-            const ZFProperty *property = zfself::_ZFP_Prop_##Name(); \
+            ZFProperty *property = zfself::_ZFP_Prop_##Name(); \
             if(property->_ZFP_ZFProperty_cbCustom##lifeCycleName) \
             { \
-                return (this->*( \
-                        (void (zfself::*)(ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &, ZF_IN zfself::_ZFP_PropHT_##Name const &)) \
+                return (ZFCastReinterpret( \
+                        void (*)(ZF_IN zfself *, ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &, ZF_IN zfself::_ZFP_PropHT_##Name const &), \
                         property->_ZFP_ZFProperty_cbCustom##lifeCycleName \
-                    ))(propertyValue, propertyValueOld); \
+                    ))(this, propertyValue, propertyValueOld); \
             } \
         } \
     public:
@@ -401,16 +401,24 @@ extern ZF_ENV_EXPORT const ZFProperty *ZFPropertyGet(ZF_IN const ZFClass *cls,
             _ZFP_propLReg_##lifeCycleName##_##Name(void) \
             { \
                 zfself::_ZFP_Prop_##Name()->_ZFP_ZFProperty_cbCustom##lifeCycleName = \
-                    (ZFMemberFuncAddrType)&zfself::_ZFP_propLC_##lifeCycleName##_##Name; \
+                    ZFCastReinterpret(ZFFuncAddrType, &zfself::_ZFP_propLC_##lifeCycleName##_##Name); \
             } \
         }; \
         _ZFP_propLReg_##lifeCycleName##_##Name _ZFP_propLRegH_##lifeCycleName##_##Name; \
+    private: \
+        static void _ZFP_propLC_##lifeCycleName##_##Name( \
+            ZF_IN zfself *this_, \
+            ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &propertyValue, \
+            ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld) \
+        { \
+            this_->_ZFP_propLCA_##lifeCycleName##_##Name(propertyValue, propertyValueOld); \
+        } \
     public: \
-        zffinal void _ZFP_propLC_##lifeCycleName##_##Name( \
+        zffinal void _ZFP_propLCA_##lifeCycleName##_##Name( \
             ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &propertyValue, \
             ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 #define _ZFP_ZFPROPERTY_LIFE_CYCLE_CUSTOM_DEFINE(OwnerClass, Type, Name, lifeCycleName, constFix) \
-    void OwnerClass::_ZFP_propLC_##lifeCycleName##_##Name( \
+    void OwnerClass::_ZFP_propLCA_##lifeCycleName##_##Name( \
         ZF_IN zfself::_ZFP_PropHT_##Name constFix(const) &propertyValue, \
         ZF_IN zfself::_ZFP_PropHT_##Name const &propertyValueOld)
 

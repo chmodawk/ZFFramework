@@ -242,9 +242,11 @@ protected:
         this->testCaseOutput(zfText("methodStatic: %s"),
                 ZFMethodAccess(_ZFP_ZFCore_ZFMethod_test_TestBase, methodStatic)->objectInfo().cString());
         this->testCaseOutput(zfText("methodOverloaded(zfint): %s"),
-                ZFMethodAccessDetail_1(_ZFP_ZFCore_ZFMethod_test_TestBase, methodOverloaded, zfint)->objectInfo().cString());
+                ZFMethodAccessDetail_1(_ZFP_ZFCore_ZFMethod_test_TestBase, methodOverloaded, ZFMP_IN(zfint, param0))
+                ->objectInfo().cString());
         this->testCaseOutput(zfText("methodOverloaded(zffloat): %s"),
-                ZFMethodAccessDetail_1(_ZFP_ZFCore_ZFMethod_test_TestBase, methodOverloaded, zffloat)->objectInfo().cString());
+                ZFMethodAccessDetail_1(_ZFP_ZFCore_ZFMethod_test_TestBase, methodOverloaded, ZFMP_IN(zffloat, param0))
+                ->objectInfo().cString());
 
         this->testCaseOutput(zfText("unlike reflected by ZFClass, ZFMethodAccess would comiple error if method not defined"));
 #if 0 // this should not able to be compiled
