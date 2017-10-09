@@ -84,12 +84,11 @@ template<typename T_Element>
 zffinal zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCoreArrayPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfbool PODType;
     T_Element *buf;
     T_Element *bufEnd;
     T_Element *contentEnd;
-    typename ZFCoreInfoGetter<T_Element>::InfoGetter customInfoGetter;
 public:
     _ZFP_ZFCoreArrayPrivate(void)
     : refCount(1)
@@ -97,7 +96,6 @@ public:
     , buf(zfnull)
     , bufEnd(zfnull)
     , contentEnd(zfnull)
-    , customInfoGetter(zfnull)
     {
     }
     ~_ZFP_ZFCoreArrayPrivate(void)
@@ -220,11 +218,7 @@ void ZFCoreArray<T_Element>::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
             ret += token.tokenSeparator;
         }
         ret += token.tokenValueLeft;
-        if(d->customInfoGetter != zfnull)
-        {
-            d->customInfoGetter(ret, this->get(count));
-        }
-        else if(elementInfoGetter != zfnull)
+        if(elementInfoGetter != zfnull)
         {
             elementInfoGetter(ret, this->get(count));
         }
@@ -243,17 +237,6 @@ void ZFCoreArray<T_Element>::objectInfoOfContentT(ZF_IN_OUT zfstring &ret,
         ret += token.tokenEtc;
     }
     ret += token.tokenRight;
-}
-
-template<typename T_Element>
-void ZFCoreArray<T_Element>::customInfoGetterSet(ZF_IN typename ZFCoreInfoGetter<T_Element>::InfoGetter customInfoGetter)
-{
-    d->customInfoGetter = customInfoGetter;
-}
-template<typename T_Element>
-typename ZFCoreInfoGetter<T_Element>::InfoGetter ZFCoreArray<T_Element>::customInfoGetter(void) const
-{
-    return d->customInfoGetter;
 }
 
 template<typename T_Element>

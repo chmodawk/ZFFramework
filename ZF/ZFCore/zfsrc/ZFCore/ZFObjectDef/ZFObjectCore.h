@@ -568,8 +568,6 @@ public:
     {
         this->observerHolder().observerNotifyWithCustomSender(customSender, eventId, param0, param1);
     }
-    zffinal void _ZFP_ZFObject_observerNotifyBegin(void);
-    zffinal void _ZFP_ZFObject_observerNotifyEnd(void);
 
 protected:
     /**

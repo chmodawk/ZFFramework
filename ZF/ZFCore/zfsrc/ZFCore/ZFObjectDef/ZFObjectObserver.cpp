@@ -90,7 +90,7 @@ typedef zfstlmap<zfidentity, _ZFP_ZFObserverListType> _ZFP_ZFObserverMapType;
 zfclassNotPOD _ZFP_ZFObserverHolderPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFObject *observerOwner;
     _ZFP_ZFObserverMapType observerMap;
 public:
@@ -414,7 +414,6 @@ void ZFObserverHolder::observerNotifyWithCustomSender(ZF_IN ZFObject *customSend
     d->observerNotifyPrepare(toNotify, toRelease, eventId, this->observerOwner());
     if(this->observerOwner() != zfnull)
     {
-        this->observerOwner()->_ZFP_ZFObject_observerNotifyBegin();
         this->observerOwner()->observerOnEvent(eventId, param0, param1);
         ZFObjectGlobalEventObserver().d->observerNotifyPrepare(toNotify, toRelease, eventId, this->observerOwner());
     }
@@ -431,10 +430,6 @@ void ZFObserverHolder::observerNotifyWithCustomSender(ZF_IN ZFObject *customSend
     }
 
     zfCoreMutexLock();
-    if(this->observerOwner() != zfnull)
-    {
-        this->observerOwner()->_ZFP_ZFObject_observerNotifyEnd();
-    }
     for(zfstlsize i = 0; i < toRelease.size(); ++i)
     {
         ZFObject *userDataTmp = toRelease[i];

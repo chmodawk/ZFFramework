@@ -33,7 +33,7 @@ public:
 #endif
 
 public:
-    zfindex refCount;
+    zfuint refCount;
     _ZFP_ZFCoreMapPrivate::MapType m;
 
 public:

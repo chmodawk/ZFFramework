@@ -156,14 +156,12 @@ template<typename T_Pointer>
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCorePointerPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     T_Pointer pointerValue;
-    typename ZFCoreInfoGetter<T_Pointer>::InfoGetter customInfoGetter;
 public:
     _ZFP_ZFCorePointerPrivate(void)
     : refCount(1)
     , pointerValue(zfnull)
-    , customInfoGetter(zfnull)
     {
     }
 };
@@ -249,22 +247,6 @@ public:
     /** @endcond */
 
 public:
-    /**
-     * @brief custom info getter for #objectInfoOfContent, null to disable
-     */
-    zffinal void customInfoGetterSet(ZF_IN typename ZFCoreInfoGetter<T_Pointer>::InfoGetter customInfoGetter)
-    {
-        d->customInfoGetter = customInfoGetter;
-    }
-    /**
-     * @brief see #customInfoGetterSet
-     */
-    zffinal typename ZFCoreInfoGetter<T_Pointer>::InfoGetter customInfoGetter(void) const
-    {
-        return d->customInfoGetter;
-    }
-
-public:
     /** @cond ZFPrivateDoc */
     ZFCorePointer(void)
     : d(zfnew(_ZFP_ZFCorePointerPrivate<T_Pointer>))
@@ -328,11 +310,7 @@ public:
     /** @brief see #objectInfoOfContentT */
     virtual void objectInfoOfContentT(ZF_IN_OUT zfstring &ret, ZF_IN typename ZFCoreInfoGetter<T_Pointer>::InfoGetter elementInfoGetter) const
     {
-        if(d->customInfoGetter != zfnull)
-        {
-            d->customInfoGetter(ret, d->pointerValue);
-        }
-        else if(elementInfoGetter != zfnull)
+        if(elementInfoGetter != zfnull)
         {
             elementInfoGetter(ret, d->pointerValue);
         }

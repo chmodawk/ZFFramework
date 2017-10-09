@@ -306,7 +306,7 @@ typedef zfstldeque<ZFJsonItem> _ZFP_ZFJsonObjectArrayType;
 zfclassNotPOD _ZFP_ZFJsonItemPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFJsonTypeEnum jsonType;
     _ZFP_ZFJsonItemPrivate *jsonParent;
     const zfchar *jsonKey;

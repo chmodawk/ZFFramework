@@ -15,7 +15,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfclassNotPOD _ZFP_ZFIdentityGeneratorPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfidentity cur;
     zfstlmap<zfidentity, zfbool> used;
 

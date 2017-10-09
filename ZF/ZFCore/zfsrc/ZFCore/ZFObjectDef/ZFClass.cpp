@@ -66,7 +66,7 @@ typedef zfstlmap<const ZFProperty *, zfstlmap<const ZFClass *, zfbool> > _ZFP_ZF
 zfclassNotPOD _ZFP_ZFClassPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     /*
      * here's a memo for ZFCoreLibDestroyFlag:
      *

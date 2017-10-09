@@ -51,7 +51,7 @@ ZFDebugCallback _ZFP_zfDebugTNull(void)
 zfclassNotPOD _ZFP_ZFDebugSessionPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfint enableFlagCount; // enable if greater than 0
     ZFCoreArray<ZFOutputCallback> callbacks;
     ZFDebugLevelEnum debugLevel;

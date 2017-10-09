@@ -18,7 +18,7 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-#define _ZFP_ZFCoreString_builtin_capacityDefault 16
+#define _ZFP_ZFCoreString_builtin_capacityDefault (sizeof(void *) * 2)
 
 // ============================================================
 /** @cond ZFPrivateDoc */
@@ -26,15 +26,15 @@ template<typename T_Char>
 zfclassNotPOD _zfstrD
 {
 public:
-    zfbool builtinBuf;
-    zfindex length;
     union {
         struct {
-            zfindex capacity;
             T_Char *s;
+            zfindex capacity;
         } s;
         T_Char buf[_ZFP_ZFCoreString_builtin_capacityDefault];
     } d;
+    zfuint length;
+    zfbool builtinBuf;
 
 public:
     _zfstrD(void)
@@ -92,7 +92,7 @@ public:
     : d()
     {
         T_Char *buf = _capacityRequire(s.length());
-        d.length = s.length();
+        d.length = (zfuint)s.length();
         zfmemcpy(buf, s.cString(), d.length * sizeof(T_Char));
         buf[d.length] = '\0';
     }
@@ -103,7 +103,7 @@ public:
         if(pos < s.length())
         {
             T_Char *buf = _capacityRequire(s.length() - pos);
-            d.length = s.length() - pos;
+            d.length = (zfuint)(s.length() - pos);
             zfmemcpy(buf, s.cString() + pos, d.length * sizeof(T_Char));
             buf[d.length] = '\0';
         }
@@ -119,7 +119,7 @@ public:
                 len = s.length() - pos;
             }
             T_Char *buf = _capacityRequire(len);
-            d.length = len;
+            d.length = (zfuint)len;
             zfmemcpy(buf, s.cString() + pos, d.length * sizeof(T_Char));
             buf[d.length] = '\0';
         }
@@ -132,7 +132,7 @@ public:
         {
             zfindex len = zfslenT(s);
             T_Char *buf = _capacityRequire(len);
-            d.length = len;
+            d.length = (zfuint)len;
             zfmemcpy(buf, s, d.length * sizeof(T_Char));
             buf[d.length] = '\0';
         }
@@ -148,7 +148,7 @@ public:
                 len = zfslenT(s);
             }
             T_Char *buf = _capacityRequire(len);
-            d.length = len;
+            d.length = (zfuint)len;
             zfmemcpy(buf, s, d.length * sizeof(T_Char));
             buf[d.length] = '\0';
         }
@@ -254,7 +254,7 @@ public:
             T_Char *buf = _capacityRequire(d.length + len);
             _safeCheck(buf, s);
             zfmemcpy(buf + d.length, s, len * sizeof(T_Char));
-            d.length += len;
+            d.length += (zfuint)len;
             buf[d.length] = '\0';
         }
         return *this;
@@ -282,7 +282,7 @@ public:
             T_Char *buf = _capacityRequire(len);;
             _safeCheck(buf, s);
             zfmemcpy(buf, s, len * sizeof(T_Char));
-            d.length = len;
+            d.length = (zfuint)len;
             buf[d.length] = '\0';
         }
         else
@@ -320,7 +320,7 @@ public:
             _safeCheck(buf, s);
             zfmemmove(buf + insertAt + len, buf + insertAt, (d.length - insertAt) * sizeof(T_Char));
             zfmemcpy(buf + insertAt, s, len * sizeof(T_Char));
-            d.length += len;
+            d.length += (zfuint)len;
             buf[d.length] = '\0';
         }
         return *this;
@@ -357,7 +357,7 @@ public:
             _safeCheck(buf, s);
             zfmemmove(buf + replacePos + len, buf + replacePos + replaceLen, (d.length - replacePos - replaceLen) * sizeof(T_Char));
             zfmemcpy(buf + replacePos, s, len * sizeof(T_Char));
-            d.length = d.length + len - replaceLen;
+            d.length = (zfuint)(d.length + len - replaceLen);
             buf[d.length] = '\0';
         }
         return *this;
@@ -402,7 +402,7 @@ public:
             {
                 T_Char *buf = d.buf();
                 zfmemmove(buf + pos, buf + pos + len, (d.length - pos - len) * sizeof(T_Char));
-                d.length -= len;
+                d.length -= (zfuint)len;
                 buf[d.length] = '\0';
             }
         }

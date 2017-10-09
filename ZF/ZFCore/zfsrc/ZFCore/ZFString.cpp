@@ -24,7 +24,7 @@ ZFENUM_DEFINE(ZFStringStorageType)
 zfclassNotPOD _ZFP_ZFStringPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfindex cachedLength;
     zfindex cachedWordCount;
     ZFStringStorageTypeEnum storageType;

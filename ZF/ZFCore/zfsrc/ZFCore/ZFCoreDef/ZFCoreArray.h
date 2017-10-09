@@ -148,16 +148,6 @@ public:
 
 public:
     /**
-     * @brief custom info getter for #objectInfoOfContent, null to disable
-     */
-    void customInfoGetterSet(ZF_IN typename ZFCoreInfoGetter<T_Element>::InfoGetter customInfoGetter);
-    /**
-     * @brief see #customInfoGetterSet
-     */
-    typename ZFCoreInfoGetter<T_Element>::InfoGetter customInfoGetter(void) const;
-
-public:
-    /**
      * @brief whether the array contains POD type
      */
     zfbool isPODType(void) const;

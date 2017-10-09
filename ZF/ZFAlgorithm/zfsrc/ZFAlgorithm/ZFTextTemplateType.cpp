@@ -162,7 +162,7 @@ public:
 zfclassNotPOD _ZFP_ZFTextTemplateParamPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
 
     ZFCoreArrayPOD<_ZFP_ZFTextTemplateReplaceData *> replaceDataList;
     ZFCoreMap replaceDataMap; // map to _ZFP_ZFTextTemplateReplaceData *

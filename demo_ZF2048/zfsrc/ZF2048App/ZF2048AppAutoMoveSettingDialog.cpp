@@ -31,8 +31,8 @@ public:
     ZF2048AppAutoMoveSettingDialog *owner;
 
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, hintText, ZFPropertyInitValue(zflineAlloc(ZFUITextView)))
-    ZFPROPERTY_RETAIN_READONLY(ZFUIListView *, actionList, ZFPropertyInitValue(zflineAlloc(ZFUIListView)))
     ZFPROPERTY_RETAIN_READONLY(ZFUIListAdapterArray *, actionListAdapter, ZFPropertyInitValue(zflineAlloc(ZFUIListAdapterArray)))
+    ZFPROPERTY_RETAIN_READONLY(ZFUIListView *, actionList, ZFPropertyInitValue(zflineAlloc(ZFUIListView)))
     ZFPROPERTY_RETAIN_READONLY(ZFUILinearLayout *, addActionLayout, ZFPropertyInitValue(zflineAlloc(ZFUILinearLayout)))
     ZFPROPERTY_RETAIN_READONLY(_ZFP_ZF2048AppAutoMoveActionItem *, addAction_left, ZFPropertyInitValue(zflineAlloc(_ZFP_ZF2048AppAutoMoveActionItem)))
     ZFPROPERTY_RETAIN_READONLY(_ZFP_ZF2048AppAutoMoveActionItem *, addAction_top, ZFPropertyInitValue(zflineAlloc(_ZFP_ZF2048AppAutoMoveActionItem)))

@@ -27,7 +27,7 @@ typedef zfstlmap<zfstlstringZ, zfautoObject> _ZFP_ZFCallbackTagMap;
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFCallbackPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfchar *callbackId;
     _ZFP_ZFCallbackTagMap callbackTagMap;
     ZFCallbackType callbackType;

@@ -79,7 +79,7 @@ ZF_GLOBAL_INITIALIZER_END(ZFLogInitDataHolder)
 zfclassNotPOD _ZFP_ZFLogPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFDebugCallback debugCallback;
 
 public:

@@ -41,7 +41,7 @@ typedef zfstlmap<zfstlstringZ, zfautoObject> _ZFP_ZFSerializableDataTagMapType;
 zfclassNotPOD _ZFP_ZFSerializableDataPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     _ZFP_ZFSerializableDataPrivate *serializableDataParent;
     zfbool resolved;
     zfstlstringZ className;

@@ -12,7 +12,7 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-#define _ZFP_ZFObjectGlobalInstanceine_(Name, Level) \
+#define _ZFP_ZFObjectGlobalInstanceDefine_(Name, Level) \
     ZF_GLOBAL_INITIALIZER_INIT_WITH_LEVEL(Name, Level) \
     { \
     } \
@@ -32,23 +32,23 @@ ZF_NAMESPACE_GLOBAL_BEGIN
     public: \
         ZFCoreArrayPOD<ZFCorePointerBase *> instances; \
     ZF_GLOBAL_INITIALIZER_END(Name)
-#define _ZFP_ZFObjectGlobalInstanceine(Name, Level) \
-    _ZFP_ZFObjectGlobalInstanceine_(Name, Level)
+#define _ZFP_ZFObjectGlobalInstanceDefine(Name, Level) \
+    _ZFP_ZFObjectGlobalInstanceDefine_(Name, Level)
 
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkEssential), ZFLevelZFFrameworkEssential)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkHigh), ZFLevelZFFrameworkHigh)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkNormal), ZFLevelZFFrameworkNormal)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkLow), ZFLevelZFFrameworkLow)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkEssential), ZFLevelZFFrameworkEssential)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkHigh), ZFLevelZFFrameworkHigh)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkNormal), ZFLevelZFFrameworkNormal)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkLow), ZFLevelZFFrameworkLow)
 
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppEssential), ZFLevelAppEssential)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppHigh), ZFLevelAppHigh)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppNormal), ZFLevelAppNormal)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppLow), ZFLevelAppLow)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppEssential), ZFLevelAppEssential)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppHigh), ZFLevelAppHigh)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppNormal), ZFLevelAppNormal)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, AppLow), ZFLevelAppLow)
 
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostLow), ZFLevelZFFrameworkPostLow)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostNormal), ZFLevelZFFrameworkPostNormal)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostHigh), ZFLevelZFFrameworkPostHigh)
-_ZFP_ZFObjectGlobalInstanceine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostEssential), ZFLevelZFFrameworkPostEssential)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostLow), ZFLevelZFFrameworkPostLow)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostNormal), ZFLevelZFFrameworkPostNormal)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostHigh), ZFLevelZFFrameworkPostHigh)
+_ZFP_ZFObjectGlobalInstanceDefine(ZFM_CAT(ZFObjectGlobalInstanceLevel, ZFFrameworkPostEssential), ZFLevelZFFrameworkPostEssential)
 
 static ZFCoreArrayPOD<ZFCorePointerBase *> &_ZFP_ZFObjectGlobalInstanceRef(ZF_IN ZFLevel level)
 {

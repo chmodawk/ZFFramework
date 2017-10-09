@@ -38,7 +38,6 @@ public:
     , _bufTail(_bufBuiltin + _ZFP_ZFCoreQueuePODBuiltinBufSize)
     , _pHead(_bufHead)
     , _pTail(_pHead)
-    , _customInfoGetter(zfnull)
     {
     }
     virtual ~ZFCoreQueuePOD(void)
@@ -87,11 +86,7 @@ public:
                 ret += token.tokenSeparator;
             }
             ret += token.tokenValueLeft;
-            if(_customInfoGetter != zfnull)
-            {
-                _customInfoGetter(ret, *p);
-            }
-            else if(elementInfoGetter != zfnull)
+            if(elementInfoGetter != zfnull)
             {
                 elementInfoGetter(ret, *p);
             }
@@ -119,22 +114,6 @@ public:
         zfstring ret;
         this->objectInfoOfContentT(ret, elementInfoGetter, maxCount, token);
         return ret;
-    }
-
-public:
-    /**
-     * @brief custom info getter for #objectInfoOfContent, null to disable
-     */
-    zffinal void customInfoGetterSet(ZF_IN typename ZFCoreInfoGetter<T_POD>::InfoGetter customInfoGetter)
-    {
-        _customInfoGetter = customInfoGetter;
-    }
-    /**
-     * @brief see #customInfoGetterSet
-     */
-    zffinal typename ZFCoreInfoGetter<T_POD>::InfoGetter customInfoGetter(void) const
-    {
-        return _customInfoGetter;
     }
 
 public:
@@ -376,7 +355,6 @@ private:
     T_POD *_bufTail;
     T_POD *_pHead;
     T_POD *_pTail;
-    typename ZFCoreInfoGetter<T_POD>::InfoGetter _customInfoGetter;
 private:
     void _loopNext(ZF_IN_OUT T_POD *&p) const
     {

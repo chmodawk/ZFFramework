@@ -102,7 +102,7 @@ public:
      */
     ZFCallerInfo(ZF_IN_OPT const zfcharA *callerFile = zfnull,
                  ZF_IN_OPT const zfcharA *callerFunc = zfnull,
-                 ZF_IN_OPT zfindex callerLine = 0)
+                 ZF_IN_OPT zfuint callerLine = 0)
     : _callerFile(zfsCoreA2Z(callerFile))
     , _callerFunc(zfsCoreA2Z(callerFunc))
     , _callerLine(callerLine)
@@ -136,7 +136,7 @@ public:
      */
     virtual void callerInfoSet(ZF_IN_OPT const zfcharA *callerFile = zfnull,
                                ZF_IN_OPT const zfcharA *callerFunc = zfnull,
-                               ZF_IN_OPT zfindex callerLine = 0)
+                               ZF_IN_OPT zfuint callerLine = 0)
     {
         _callerFile = zfsCoreA2Z(callerFile);
         _callerFunc = zfsCoreA2Z(callerFunc);
@@ -199,7 +199,7 @@ private:
         /** @cond ZFPrivateDoc */
         const zfchar *_callerFile;
         const zfchar *_callerFunc;
-        zfindex _callerLine;
+        zfuint _callerLine;
         /** @endcond */
     public:
         /** @brief see #ZF_CALLER_FILE */
@@ -207,7 +207,7 @@ private:
         /** @brief see #ZF_CALLER_FUNCTION */
         inline const zfchar *callerFunc(void) const {return _callerFunc;}
         /** @brief see #ZF_CALLER_LINE */
-        inline zfindex callerLine(void) const {return _callerLine;}
+        inline zfuint callerLine(void) const {return _callerLine;}
 
         /** @brief return caller info looks like "[File function (line)]" */
         inline zfbool callerInfoAT(ZF_IN_OUT zfstringA &ret) const
@@ -227,7 +227,7 @@ private:
         /** @cond ZFPrivateDoc */
         zfstring _callerFile;
         zfstring _callerFunc;
-        zfindex _callerLine;
+        zfuint _callerLine;
         /** @endcond */
     public:
         /** @brief see #ZF_CALLER_FILE */
@@ -235,7 +235,7 @@ private:
         /** @brief see #ZF_CALLER_FUNCTION */
         inline const zfchar *callerFunc(void) const {return _callerFunc.isEmpty() ? zfnull : _callerFunc.cString();}
         /** @brief see #ZF_CALLER_LINE */
-        inline zfindex callerLine(void) const {return _callerLine;}
+        inline zfuint callerLine(void) const {return _callerLine;}
 
         /** @brief return caller info looks like "[File function (line)]" */
         inline zfbool callerInfoAT(ZF_IN_OUT zfstringA &ret) const
@@ -282,7 +282,7 @@ zfclassLikePOD ZF_ENV_EXPORT ZFCallerInfoHolder : zfextendsLikePOD ZFCallerInfo
     public:
         ZFCallerInfoHolder(ZF_IN_OPT const zfcharA *callerFile = zfnull,
                            ZF_IN_OPT const zfcharA *callerFunc = zfnull,
-                           ZF_IN_OPT zfindex callerLine = 0)
+                           ZF_IN_OPT zfuint callerLine = 0)
         : ZFCallerInfo()
         , _callerFileHolder()
         , _callerFuncHolder(zfsCoreA2Z(callerFunc))
@@ -309,7 +309,7 @@ zfclassLikePOD ZF_ENV_EXPORT ZFCallerInfoHolder : zfextendsLikePOD ZFCallerInfo
     public:
         virtual void callerInfoSet(ZF_IN_OPT const zfcharA *callerFile = zfnull,
                                    ZF_IN_OPT const zfcharA *callerFunc = zfnull,
-                                   ZF_IN_OPT zfindex callerLine = 0)
+                                   ZF_IN_OPT zfuint callerLine = 0)
         {
             _callerFileHolder = callerFile;
             _callerFuncHolder = callerFunc;
@@ -319,7 +319,7 @@ zfclassLikePOD ZF_ENV_EXPORT ZFCallerInfoHolder : zfextendsLikePOD ZFCallerInfo
     public:
         ZFCallerInfoHolder(ZF_IN_OPT const zfcharA *callerFile = zfnull,
                            ZF_IN_OPT const zfcharA *callerFunc = zfnull,
-                           ZF_IN_OPT zfindex callerLine = 0)
+                           ZF_IN_OPT zfuint callerLine = 0)
         : ZFCallerInfo(callerFile, callerFunc, callerLine)
         {
         }

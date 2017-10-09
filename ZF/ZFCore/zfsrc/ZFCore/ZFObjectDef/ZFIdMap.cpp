@@ -31,7 +31,7 @@ _ZFP_ZFIdMapHolder::~_ZFP_ZFIdMapHolder(void)
 zfclassLikePOD _ZFP_ZFIdMapData
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfidentity idValue;
     zfstring idName;
     ZFCoreArrayPOD<zfbool *> ZFCoreLibDestroyFlag;

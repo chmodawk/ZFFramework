@@ -94,7 +94,7 @@ void ZFProperty::_ZFP_ZFPropertyInit(ZF_IN zfbool propertyIsUserRegister,
 zfclassLikePOD _ZFP_ZFPropertyMapData
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFProperty propertyInfo;
 public:
     _ZFP_ZFPropertyMapData(void)

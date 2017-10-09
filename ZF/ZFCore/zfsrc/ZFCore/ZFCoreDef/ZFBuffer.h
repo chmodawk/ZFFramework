@@ -22,7 +22,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFBufferPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     void *buffer;
     zfindex bufferSize;
     zfbool bufferAutoFree;

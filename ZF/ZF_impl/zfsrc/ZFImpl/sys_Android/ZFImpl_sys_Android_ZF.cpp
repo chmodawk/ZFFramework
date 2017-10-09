@@ -16,7 +16,7 @@
 void _ZFP_ZFImpl_sys_Android_jniWrap_Created_action(ZF_IN const void *obj,
                                                     ZF_IN const zfcharA *callerFile,
                                                     ZF_IN const zfcharA *callerFunction,
-                                                    ZF_IN zfindex callerLine,
+                                                    ZF_IN zfuint callerLine,
                                                     ZF_IN const zfcharA *actionName)
 {
 #if 0
@@ -29,7 +29,7 @@ void _ZFP_ZFImpl_sys_Android_jniWrap_Created_action(ZF_IN const void *obj,
 void _ZFP_ZFImpl_sys_Android_jniWrap_Released_action(ZF_IN const void *obj,
                                                      ZF_IN const zfcharA *callerFile,
                                                      ZF_IN const zfcharA *callerFunction,
-                                                     ZF_IN zfindex callerLine,
+                                                     ZF_IN zfuint callerLine,
                                                      ZF_IN const zfcharA *actionName)
 {
 #if 0
@@ -41,7 +41,7 @@ void _ZFP_ZFImpl_sys_Android_jniWrap_Released_action(ZF_IN const void *obj,
 }
 void _ZFP_ZFImpl_sys_Android_jniWrap_FuncCalled_action(ZF_IN const zfcharA *callerFile,
                                                        ZF_IN const zfcharA *callerFunction,
-                                                       ZF_IN zfindex callerLine,
+                                                       ZF_IN zfuint callerLine,
                                                        ZF_IN const zfcharA *actionName)
 {
 #if 0

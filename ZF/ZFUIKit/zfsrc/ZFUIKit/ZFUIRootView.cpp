@@ -19,7 +19,7 @@ void ZFUIRootView::scaleSet(ZF_IN zffloat scale)
 {
     if(scale > 0)
     {
-        this->_ZFP_ZFUIView_scaleSetRecursively(scale, this->scaleGetForImpl());
+        this->_ZFP_ZFUIView_scaleSetRecursively(scale * this->scaleGetForImpl(), this->scaleGetForImpl());
     }
 }
 

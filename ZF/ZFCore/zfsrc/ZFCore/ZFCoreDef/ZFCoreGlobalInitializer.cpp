@@ -28,7 +28,7 @@ ZFCoreArrayPOD<ZFFrameworkStateChangeCallback> &_ZFP_ZFFrameworkCleanupPrepareCa
 zfclassNotPOD _ZFP_GI_Data
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFCoreArrayPOD<zfbool *> ZFCoreLibDestroyFlag;
     ZFFrameworkState state;
     zfstring name;

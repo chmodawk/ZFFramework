@@ -148,7 +148,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             { \
                 return ZF_CALLER_FILE; \
             } \
-            inline zfindex _callerLine(void) const \
+            inline zfuint _callerLine(void) const \
             { \
                 return ZF_CALLER_LINE; \
             } \

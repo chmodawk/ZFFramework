@@ -195,7 +195,7 @@ void ZFMethod::methodInvokerSet(ZF_IN ZFFuncAddrType methodInvoker) const
 zfclassLikePOD _ZFP_ZFMethodMapData
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFMethod method;
 public:
     _ZFP_ZFMethodMapData(void)

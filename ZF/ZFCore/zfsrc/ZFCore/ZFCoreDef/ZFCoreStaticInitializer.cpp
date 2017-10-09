@@ -16,7 +16,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zfclassLikePOD _ZFP_SI_ItemData
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfstring name;
     void *instance;
     _ZFP_SI_Destructor destructor;

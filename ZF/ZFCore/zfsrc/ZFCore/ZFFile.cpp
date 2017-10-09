@@ -27,7 +27,7 @@ public:
         ResAdditionalFileFind,
     } FindStatus;
 public:
-    zfindex refCount;
+    zfuint refCount;
     zfstring resFindFirstPathSaved;
     ZFFileFindDataContainer d;
     _ZFP_ZFFileFindDataPrivate::FindStatus findStatus;

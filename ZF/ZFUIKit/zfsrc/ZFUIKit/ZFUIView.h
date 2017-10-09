@@ -681,9 +681,9 @@ protected:
      */
     virtual void scaleOnChange(void);
 public:
-    void _ZFP_ZFUIView_scaleSet(ZF_IN zffloat scaleForApp,
+    void _ZFP_ZFUIView_scaleSet(ZF_IN zffloat scaleFixed,
                                 ZF_IN zffloat scaleForImpl);
-    void _ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleForApp,
+    void _ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
                                            ZF_IN zffloat scaleForImpl);
 
     // ============================================================

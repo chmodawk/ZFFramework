@@ -582,7 +582,7 @@ public:
 zfclassNotPOD _ZFP_ZFXmlItemPrivate
 {
 public:
-    zfindex refCount;
+    zfuint refCount;
     ZFXmlTypeEnum xmlType;
     _ZFP_ZFXmlItemPrivate *xmlParent;
     _ZFP_ZFXmlMemoryPoolString xmlName;
