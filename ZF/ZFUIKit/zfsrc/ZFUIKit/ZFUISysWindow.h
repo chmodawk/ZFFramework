@@ -70,7 +70,7 @@ public:
     /**
      * @brief see #ZFObject::observerNotify
      *
-     * notified when #windowMargin changed,
+     * notified when #sysWindowMargin changed,
      * param0 is a #ZFPointerHolder that holds the old window margin as #ZFUIMargin
      */
     ZFOBSERVER_EVENT(SysWindowMarginOnUpdate)
@@ -118,6 +118,9 @@ public:
     ZFMETHOD_DECLARE_0(const ZFUIMargin &, sysWindowMargin);
     void _ZFP_ZFUISysWindow_sysWindowMarginSet(ZF_IN const ZFUIMargin &sysWindowMargin);
 protected:
+    /**
+     * @brief see #EventSysWindowMarginOnUpdate
+     */
     virtual void sysWindowMarginOnUpdate(ZF_IN const ZFUIMargin &sysWindowMarginOld);
 
 protected:
@@ -237,7 +240,7 @@ private:
 
 // ============================================================
 /**
- * @brief impl for #nativeWindowEmbed
+ * @brief impl for #ZFUISysWindow::nativeWindowEmbed
  */
 zfinterface ZF_ENV_EXPORT ZFUISysWindowEmbedImpl : zfextends ZFInterface
 {

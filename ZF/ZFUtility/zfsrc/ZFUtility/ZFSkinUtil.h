@@ -85,6 +85,7 @@ extern ZF_ENV_EXPORT void zfSkinApplyCancel(ZF_IN ZFStyleable *obj,
     /** @brief see #zfSkinApplyCancel */ \
     ZFMETHOD_FUNC_DECLARE_1(void, zfSkinApplyCancel##YourTypeName, \
                             ZFMP_IN(ZFStyleable *, obj))
+/** @brief see #ZFSKINAPPLY_DECLARE */
 #define ZFSKINAPPLY_DEFINE(YourTypeName, T_action) \
     zfclassNotPOD ZF_ENV_EXPORT _ZFP_zfSkinApplyImpl_##YourTypeName \
     { \
