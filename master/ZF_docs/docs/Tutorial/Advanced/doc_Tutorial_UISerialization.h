@@ -37,6 +37,6 @@
  *   </ZFUIView>
  *
  *   re-serialized object:
- *   <ZFUIView(0x608000189720) (0, 0, 0, 0)>
+ *   <ZFUIView(0x7fe61e1340b0) (0, 0, 0, 0)>
  * @endcode
  */

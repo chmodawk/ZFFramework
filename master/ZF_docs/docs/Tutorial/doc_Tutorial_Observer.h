@@ -54,6 +54,7 @@
  *
  *   // finlly we will test to notify the event
  *   obj->test();
+ *
  *   // or, you may notify it manually
  *   // but it's your responsibility to ensure the passed params suit for the listener
  *   zfblockedAlloc(ZFObject, myParam0);
@@ -61,3 +62,4 @@
  *   obj->observerNotify(MyObject::EventMyEvent(), myParam0, myParam1);
  * @endcode
  */
+

@@ -4,31 +4,31 @@
  * to make an object serializable is easy:
  * @code
  *   // extends from any ZFObject type, and implements from ZFSerializable
- *   zfclass MyObject : zfextends ZFObject, zfimplements ZFSerializable
+ *   zfclass MyObject : zfextends MyParent, zfimplements ZFSerializable
  *   {
- *       ZFOBJECT_DECLARE(MyObject, ZFObject)
+ *       ZFOBJECT_DECLARE(MyObject, MyParent)
  *       ZFIMPLEMENTS_DECLARE(ZFSerializable)
  *
  *       // normal property value would be serialized automatically
  *       ZFPROPERTY_ASSIGN(zfindex, myProperty)
  *
  *       // object type property can be serialized automatically
- *       // if it's type of ZFSerializable
+ *       // if it's serializable
  *       ZFPROPERTY_RETAIN(SomeSerializable *, mySerializableProperty)
  *   };
  * @endcode
+ *
  * once declared, the object can be serialized by:
  * @code
  *   zfblockedAlloc(MyObject, obj);
+ *
  *   // serialize to an data holder,
  *   // which can be converted to raw data and write to file,
  *   // you may also convert it to xml or json or other data formats
  *   ZFSerializableData data = ZFObjectToData(obj);
  *
  *   // serialize object from existing data
- *   ZFObject *serializedObject = ZFObjectFromData(data);
- *   // the newly created object should be released manually
- *   zfRelease(serializedObject);
+ *   zfautoObject serializedObject = ZFObjectFromData(data);
  * @endcode
  *
  * @section DocTag_Tutorial_Serializable_Advanced Advanced

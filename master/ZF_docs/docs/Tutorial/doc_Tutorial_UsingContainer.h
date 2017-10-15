@@ -11,7 +11,6 @@
  *   use only if necessary
  *   @code
  *     ZFCoreArray<zfstring> array;
- *     // can hold any types
  *     array.add(zfText("element"));
  *     const zfstring &e = array[0];
  *
@@ -35,6 +34,7 @@
  *   and release when remove
  *   @code
  *     zfblockedAlloc(ZFArrayEditable, array);
+ *
  *     // can hold ZFObject types only
  *     array->add(zflineAlloc(ZFString));
  *   @endcode

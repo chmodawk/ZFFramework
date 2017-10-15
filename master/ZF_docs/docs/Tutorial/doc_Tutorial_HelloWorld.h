@@ -15,6 +15,7 @@
  *       return 0;
  *   }
  * @endcode
+ *
  * ZFFramework would be started from #ZFMAIN_ENTRY,
  * you may write any C++ compatible code here\n
  * in this example,

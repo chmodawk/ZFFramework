@@ -12,6 +12,7 @@
  *   // in cpp files
  *   ZFOBJECT_REGISTER(MyObject)
  * @endcode
+ *
  * -  use zfclass to show it's an ZFObject type
  * -  use zfextends to extends from a ZFObject
  *   or any other ZFObject type

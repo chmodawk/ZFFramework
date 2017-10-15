@@ -17,8 +17,10 @@
  *       // create a text view and set text content
  *       zfblockedAlloc(ZFUITextView, textView);
  *       textView->textSet(zfText("hello world"));
+ *
  *       // add to window
  *       window->childAdd(textView);
+ *
  *       // make it center in window
  *       textView->layoutParam()->layoutAlignSet(ZFUIAlign::e_Center);
  *

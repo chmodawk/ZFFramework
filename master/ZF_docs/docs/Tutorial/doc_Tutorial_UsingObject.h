@@ -54,22 +54,37 @@
  * to manage allocated object:
  * @code
  *   {
+ *       // similar to shared_ptr in C++ world
+ *       zfautoObject obj = zfautoObjectCreate(zflineAlloc(MyObject));
+ *   } // obj would be released automatically after this code block
+ *
+ *   {
  *       // allocate an object which looks like being allocated in stack
- *       zfblockedAlloc(ZFObject, obj);
+ *       zfblockedAlloc(MyObject, obj);
  *   } // obj would be released automatically after this code block
  *
  *   // allocate an temp object which would be released automatically
  *   // after end of this code line
- *   func(zflineAlloc(ZFObject));
+ *   func(zflineAlloc(MyObject));
  *
- *   ZFObject *obj = zfAlloc(ZFObject);
+ *   MyObject *obj = zfAlloc(MyObject);
  *   // release the object automatically after end of this code line
  *   func(zflineRelease(obj));
  *
- *   obj = zfAlloc(ZFObject);
+ *   obj = zfAlloc(MyObject);
  *   // most powerful auto release logic similar to autorelease in Object-C
  *   // however, requires ZFThread,
  *   // and may affect performance for a little
  *   func(zfautoRelease(obj)); // obj would be released at future
+ * @endcode
+ * \n
+ * it's recommended to use #zfautoObject for API design
+ * when your function needs to return an allocated object
+ * @code
+ *   zfautoObject myFunc(void)
+ *   {
+ *       zfblockedAlloc(MyObject, obj);
+ *       return zfautoObjectCreate(obj);
+ *   }
  * @endcode
  */

@@ -19,10 +19,12 @@
  * @code
  *   obj->styleableCopyFrom(anotherStyleableObject);
  * @endcode
+ *
  * and you can access default style by the macro generated method:
  * @code
  *   YourStyle::DefaultStyle();
  * @endcode
+ *
  * then, it's convenient to chain different styleable object to achieve simple style logic:
  * @code
  *   zfclass SomeStyle : zfextends Parent
@@ -49,8 +51,10 @@
  * @code
  *   ZFLISTENER_LOCAL(myObjCreated, {
  *       MyStyleableObject *obj = listenerData.sender->toAny();
+ *
  *       // change default setting for all instance of MyStyleableObject
  *       obj->myPropertySet(xxx);
+ *
  *       // or apply style copy (consume more CPU)
  *       obj->styleableCopyFrom(yyy);
  *   })

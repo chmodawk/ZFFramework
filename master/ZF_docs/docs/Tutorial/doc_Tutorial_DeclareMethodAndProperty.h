@@ -18,6 +18,7 @@
  *       ZFPROPERTY_ASSIGN(zfstring, myProperty)
  *   };
  * @endcode
+ *
  * once declared,
  * you may use them as normal methods:
  * @code
@@ -29,6 +30,8 @@
  *   // set property value by normal method
  *   obj->myPropertySet(value);
  * @endcode
+ *
  * for advanced usage of method and property,
  * see @ref DocTag_Tutorial_Reflection "Reflection" for more info
  */
+

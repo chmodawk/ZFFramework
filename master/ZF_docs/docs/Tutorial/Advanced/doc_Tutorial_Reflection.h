@@ -12,13 +12,13 @@
  * @code
  *   // find the class meta data, null if not found
  *   const ZFClass *cls = ZFClass::classForName(zfText("MyObject"));
+ *
  *   // you may create the object's instance by the meta data
  *   zfautoObject objTmp = cls->newInstance();
  *   ZFObject *obj = objTmp.toObject();
+ *
  *   // cast to desired type if necessary
  *   MyObject *myObj = ZFCastZFObject(MyObject *, obj);
- *   // newly created object should be released after use
- *   zfRelease(obj);
  *
  *   // also, you may access class's info by ZFClass's method
  *   zfLogT() << zfText("class name:") << cls->className();
@@ -32,10 +32,11 @@
  *   // find the method info by its owner ZFClass's method,
  *   // return null if not found
  *   const ZFMethod *method = cls->methodForName(zfText("myFunc"));
- *   // invoke the method,
- *   // you must explicitly specify the return type and param type,
- *   // you must ensure the proto type of the method is right,
- *   // and must ensure obj is the right object that have the method
+ *
+ *   // invoke the method, note that you must:
+ *   // -  explicitly specify the return type and each param type
+ *   // -  ensure the proto type of the method is right
+ *   // -  ensure obj is the right object that have the method
  *   method->execute<ReturnType, ParamType0, ParamType1>(obj, param0, param1);
  * @endcode
  *
@@ -47,8 +48,9 @@
  *   // find the property info by its owner ZFClass's method,
  *   // return null if not found
  *   const ZFProperty *property = cls->propertyForName(zfText("myProperty"));
+ *
  *   // change the property's value by setter method,
- *   // also, must ensure the type is all right
+ *   // also, must ensure all the type matches the original type
  *   property->setterMethod()->execute<void, Type const &>(obj, newValue);
  * @endcode
  */
