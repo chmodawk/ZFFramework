@@ -60,13 +60,7 @@ zfclass ZF_ENV_EXPORT ZFOperationParam : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationParam, ZFObject)
 
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createParam")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 
 protected:
     zfoverride
@@ -125,14 +119,7 @@ protected:
 zfclass ZF_ENV_EXPORT ZFOperationResult : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationResult, ZFObject)
-
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createResult")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 
 protected:
     zfoverride
@@ -168,14 +155,7 @@ public:
 zfclass ZF_ENV_EXPORT ZFOperationObserver : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationObserver, ZFObject)
-
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createObserver")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 };
 
 // ============================================================
@@ -190,14 +170,7 @@ protected:
 zfclass ZF_ENV_EXPORT ZFOperationCache : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationCache, ZFObject)
-
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createCache")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 
 protected:
     zfoverride
@@ -248,14 +221,7 @@ public:
 zfclass ZF_ENV_EXPORT ZFOperationProgress : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationProgress, ZFObject)
-
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createProgress")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 
 protected:
     zfoverride
@@ -398,9 +364,9 @@ public:
      */
     ZFPROPERTY_ASSIGN_WITH_INIT(ZFOperationTaskDuplicateActionEnum, taskDuplicateAction, ZFPropertyInitValue(ZFOperationTaskDuplicateAction::e_Unspecified))
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 };

@@ -41,9 +41,8 @@ protected:
         this->blockValueSet((ZF2048Value)0);
     }
 
-public:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
 };
 
 ZF_NAMESPACE_GLOBAL_END

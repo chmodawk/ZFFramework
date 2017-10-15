@@ -563,12 +563,11 @@ private:
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIScrollerDefault)
 
-ZFObject *ZFUIScrollerDefault::objectOnInit(void)
+void ZFUIScrollerDefault::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIScrollerDefaultPrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFUIScrollerDefault::objectOnDealloc(void)
 {

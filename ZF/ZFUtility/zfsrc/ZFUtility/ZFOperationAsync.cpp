@@ -121,14 +121,12 @@ ZFMETHOD_DEFINE_4(ZFOperationAsync, void, taskNotifyProgressAfterDelay,
     ZFThreadExecuteInMainThreadAfterDelay(delay, onNotify, operationTaskData);
 }
 
-ZFObject *ZFOperationAsync::objectOnInit(void)
+void ZFOperationAsync::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
     d = zfAllocWithoutLeakTest(_ZFP_ZFOperationAsyncPrivate);
     d->pimplOwner = this;
-
-    return this;
 }
 void ZFOperationAsync::objectOnDealloc(void)
 {

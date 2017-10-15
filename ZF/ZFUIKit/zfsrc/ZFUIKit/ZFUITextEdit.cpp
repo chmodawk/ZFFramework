@@ -166,7 +166,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, zfint, textSize)
     }
 }
 
-ZFObject *ZFUITextEdit::objectOnInit(void)
+void ZFUITextEdit::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUITextEditPrivate);
@@ -196,13 +196,11 @@ ZFObject *ZFUITextEdit::objectOnInit(void)
         {
             zfCoreCriticalMessage(zfTextA("textPlaceHolder must not be null"));
         }
-        return zfnull;
+        return ;
     }
     this->internalImplViewAdd(textPlaceHolderTmp);
     textPlaceHolderTmp->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     textPlaceHolderTmp->serializableRefLayoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-
-    return this;
 }
 void ZFUITextEdit::objectOnDealloc(void)
 {

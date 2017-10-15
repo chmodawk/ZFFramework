@@ -21,16 +21,17 @@ zfclass _ZFP_I_ZFUIOnScreenKeyboardAutoResizeTaskData : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_I_ZFUIOnScreenKeyboardAutoResizeTaskData, ZFObject)
 
-public:
-    virtual ZFObject *objectOnInit(void)
+protected:
+    zfoverride
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->ownerWindow = zfnull;
         this->startCount = 1;
         this->layoutMarginSaved = ZFUIMarginZero();
         this->layoutMarginHasStored = zffalse;
-        return this;
     }
+    zfoverride
     virtual void objectOnDeallocPrepare(void)
     {
         _ZFP_ZFUIOnScreenKeyboardAutoResize_doStop(this->ownerWindow, this);

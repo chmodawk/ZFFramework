@@ -264,7 +264,7 @@ ZFUIView *ZFUIOnScreenKeyboardAutoFitLayout::autoFitFocusedView(void)
     return d->autoFitFocusedView;
 }
 
-ZFObject *ZFUIOnScreenKeyboardAutoFitLayout::objectOnInit(void)
+void ZFUIOnScreenKeyboardAutoFitLayout::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIOnScreenKeyboardAutoFitLayoutPrivate);
@@ -274,7 +274,6 @@ ZFObject *ZFUIOnScreenKeyboardAutoFitLayout::objectOnInit(void)
     d->scrollEnableFlag = zffalse;
     d->scrollView->scrollEnableSet(d->scrollEnableFlag && this->autoFitScrollEnable());
     this->viewDelegateSet(d->scrollView);
-    return this;
 }
 void ZFUIOnScreenKeyboardAutoFitLayout::objectOnDealloc(void)
 {

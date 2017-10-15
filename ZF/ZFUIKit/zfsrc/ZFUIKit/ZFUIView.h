@@ -362,9 +362,9 @@ public:
 
     // ============================================================
     // init and dealloc
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

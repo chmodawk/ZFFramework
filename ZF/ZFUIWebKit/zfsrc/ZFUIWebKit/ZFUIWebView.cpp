@@ -61,7 +61,7 @@ ZFMETHOD_DEFINE_0(ZFUIWebView, zfbool, webGoForwardAvailable)
     return ZFPROTOCOL_ACCESS(ZFUIWebView)->webGoForwardAvailable(this);
 }
 
-ZFObject *ZFUIWebView::objectOnInit(void)
+void ZFUIWebView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -77,8 +77,6 @@ ZFObject *ZFUIWebView::objectOnInit(void)
     };
     this->nativeImplViewSet(ZFPROTOCOL_ACCESS(ZFUIWebView)->nativeWebViewCreate(this),
                             _ZFP_ZFUIWebView_nativeImplViewDestroy::action);
-
-    return this;
 }
 void ZFUIWebView::objectOnDealloc(void)
 {

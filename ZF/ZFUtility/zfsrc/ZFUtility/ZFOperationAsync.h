@@ -75,9 +75,9 @@ public:
                               ZFMP_IN(zfidentity, operationId),
                               ZFMP_IN_OPT(ZFOperationProgress *, operationProgress, zfnull));
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

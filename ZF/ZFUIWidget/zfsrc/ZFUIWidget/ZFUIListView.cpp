@@ -1380,7 +1380,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIListView, zfbool, listBounce)
 }
 
 // ============================================================
-ZFObject *ZFUIListView::objectOnInit(void)
+void ZFUIListView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIListViewPrivate);
@@ -1395,7 +1395,6 @@ ZFObject *ZFUIListView::objectOnInit(void)
         ZFUIView::EventViewLayoutOnLayoutRequest(),
         layoutOnLayoutRequest,
         zflineAllocWithoutLeakTest(ZFTypeHolder, d, ZFTypeHolderTypePointerRef));
-    return this;
 }
 void ZFUIListView::objectOnDealloc(void)
 {

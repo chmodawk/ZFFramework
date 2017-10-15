@@ -307,12 +307,11 @@ ZFMETHOD_DEFINE_0(ZFUIImage, const ZFUISize &, imageSizeFixed)
     return d->imageSizeFixed;
 }
 
-ZFObject *ZFUIImage::objectOnInit(void)
+void ZFUIImage::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIImagePrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFUIImage::objectOnDealloc(void)
 {

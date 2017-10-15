@@ -352,12 +352,6 @@ zfbool ZFObject::_ZFP_ZFObjectTryLock(void)
     }
 }
 
-ZFObject *ZFObject::_ZFP_ZFObjectAlloc(ZFObject *obj)
-{
-    // called when object constructed
-    // no use for now, paired with _ZFP_ZFObjectDealloc
-    return obj;
-}
 ZFObject *ZFObject::_ZFP_ZFObjectCheckOnInit(void)
 {
     if(d == zfnull)
@@ -411,12 +405,12 @@ void ZFObject::_ZFP_ZFObjectDealloc(ZFObject *obj)
     obj->classData()->_ZFP_ZFClass_objectDesctuct(obj);
 }
 
-ZFObject *ZFObject::objectOnInit(void)
+void ZFObject::objectOnInit(void)
 {
     if(d != zfnull)
     {
         zfCoreCriticalMessageTrim(zfTextA("[ZFObject] ZFObject::objectOnInit() called twice"));
-        return zfnull;
+        return ;
     }
 
     // note that (d != zfnull) is also used to check whether ZFObject::objectOnInit() is called
@@ -431,8 +425,6 @@ ZFObject *ZFObject::objectOnInit(void)
     {
         ZFBitSet(d->stateFlags, _ZFP_ZFObjectPrivate::stateFlag_objectIsInternal);
     }
-
-    return this;
 }
 void ZFObject::objectOnDealloc(void)
 {

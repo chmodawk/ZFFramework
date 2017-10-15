@@ -142,20 +142,19 @@ zffinal zfclass ZF_ENV_EXPORT ZFPointerHolder : zfextends ZFObject
 protected:
     ZFPointerHolder(void) : holdedData(zfnull) {}
 
-public:
+protected:
     /**
      * @brief init with pointer
      */
-    virtual ZFObject *objectOnInit(ZF_IN const void *holdedData)
+    virtual void objectOnInit(ZF_IN const void *holdedData)
     {
         this->objectOnInit();
         this->holdedData = holdedData;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
 
 public:
@@ -229,22 +228,21 @@ public:
 protected:
     ZFTypeHolder(void) : holdedData(zfnull), holderType(zfnull) {}
 
-public:
+protected:
     /**
      * @brief init with object
      */
-    virtual ZFObject *objectOnInit(ZF_IN void *holdedData,
-                                   ZF_IN ZFTypeHolderType holderType)
+    virtual void objectOnInit(ZF_IN void *holdedData,
+                              ZF_IN ZFTypeHolderType holderType)
     {
         this->objectOnInit();
         this->holdedData = holdedData;
         this->holderType = holderType;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
     virtual void objectOnDeallocPrepare(void)

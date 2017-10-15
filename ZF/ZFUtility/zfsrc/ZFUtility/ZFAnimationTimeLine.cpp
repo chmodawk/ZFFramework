@@ -38,15 +38,16 @@ public:
         }
     }
 
-public:
-    virtual ZFObject *objectOnInit(void)
+protected:
+    zfoverride
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->timer = zfAllocWithoutLeakTest(ZFTimer);
         this->timer->observerAdd(ZFTimer::EventTimerOnActivate(),
             ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, timerOnEvent)));
-        return this;
     }
+    zfoverride
     virtual void objectOnDealloc(void)
     {
         zfReleaseWithoutLeakTest(this->timer);
@@ -61,12 +62,11 @@ ZFOBSERVER_EVENT_REGISTER(ZFAnimationTimeLine, AniTimeLineOnUpdate)
 
 // ============================================================
 // object
-ZFObject *ZFAnimationTimeLine::objectOnInit(void)
+void ZFAnimationTimeLine::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAllocWithoutLeakTest(_ZFP_ZFAnimationTimeLinePrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFAnimationTimeLine::objectOnDealloc(void)
 {

@@ -15,17 +15,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ZFSet
 ZFOBJECT_REGISTER(ZFSet)
 
-ZFObject *ZFSet::objectOnInit(ZF_IN ZFContainer *another)
+void ZFSet::objectOnInit(ZF_IN ZFContainer *another)
 {
     this->objectOnInit();
     zfself::addFrom(another);
-    return this;
 }
-ZFObject *ZFSet::objectOnInit(void)
+void ZFSet::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAllocWithoutLeakTest(ZFMapEditable);
-    return this;
 }
 void ZFSet::objectOnDealloc(void)
 {

@@ -293,22 +293,22 @@ public:
         _ZFP_PropTypeW_##TypeName zfv; \
     protected: \
         v_##TypeName(void) : zfv() {} \
-    public: \
-        zfoverride \
-        virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();} \
+    protected: \
         /** @brief init with value */ \
-        virtual ZFObject *objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
+        virtual void objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
         { \
             this->objectOnInit(); \
             this->zfv = value; \
-            return this; \
         } \
+        zfoverride \
+        virtual void objectOnInit(void) {zfsuper::objectOnInit();} \
         zfoverride \
         virtual inline void objectInfoOnAppendTokenLeft(ZF_IN_OUT zfstring &ret) {} \
         zfoverride \
         virtual inline void objectInfoOnAppendTokenRight(ZF_IN_OUT zfstring &ret) {} \
         zfoverride \
         virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret); \
+    public: \
         zfoverride \
         virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj); \
     public: \
@@ -477,22 +477,22 @@ public:
         _ZFP_PropTypeW_##TypeName zfv; \
     protected: \
         v_##TypeName(void) : zfv() {} \
-    public: \
-        zfoverride \
-        virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();} \
+    protected: \
         /** @brief init with value */ \
-        virtual ZFObject *objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
+        virtual void objectOnInit(ZF_IN _ZFP_PropTypeW_##TypeName const &value) \
         { \
             this->objectOnInit(); \
             this->zfv = value; \
-            return this; \
         } \
+        zfoverride \
+        virtual void objectOnInit(void) {zfsuper::objectOnInit();} \
         zfoverride \
         virtual inline void objectInfoOnAppendTokenLeft(ZF_IN_OUT zfstring &ret) {} \
         zfoverride \
         virtual inline void objectInfoOnAppendTokenRight(ZF_IN_OUT zfstring &ret) {} \
         zfoverride \
         virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret); \
+    public: \
         zfoverride \
         virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj); \
     public: \

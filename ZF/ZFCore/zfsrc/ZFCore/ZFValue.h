@@ -97,14 +97,19 @@ protected:
         this->valueSet(ZFCastZFObjectUnchecked(zfself *, anotherObj));
     }
 
-public:
+protected:
     /**
      * @brief init from another value
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFValue *another);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(ZFValue *, another))
+    {
+        this->objectOnInit();
+        zfself::valueSet(another);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
@@ -224,15 +229,6 @@ private:
 zfclass ZF_ENV_EXPORT ZFValueEditable : zfextends ZFValue
 {
     ZFOBJECT_DECLARE(ZFValueEditable, ZFValue)
-
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN ZFValue *another) {return zfsuper::objectOnInit(another);}
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();}
-    zfoverride
-    virtual void objectOnDealloc(void) {zfsuper::objectOnDealloc();}
 
 public:
     zfoverride

@@ -20,7 +20,7 @@ zfclass _ZFP_ZF2048AppTextView : zfextends ZFUITextView
 {
     ZFOBJECT_DECLARE(_ZFP_ZF2048AppTextView, ZFUITextView)
 
-public:
+protected:
     zfoverride
     virtual void objectOnInitFinish(void)
     {
@@ -290,18 +290,16 @@ public:
         ZFUIHintShow(zfLang(zfText("ZF2048_aboutContent")));
     }
 
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN ZF2048App *owner)
+protected:
+    virtual void objectOnInit(ZF_IN ZF2048App *owner)
     {
         this->objectOnInit();
         this->owner = owner;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
     virtual void objectOnInitFinish(void)
@@ -337,12 +335,10 @@ public:
     }
 };
 
-ZFObject *ZF2048App::objectOnInit(void)
+void ZF2048App::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAlloc(_ZFP_ZF2048AppPrivate, this);
-
-    return this;
 }
 void ZF2048App::objectOnDealloc(void)
 {

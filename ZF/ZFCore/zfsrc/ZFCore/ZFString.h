@@ -345,19 +345,34 @@ public:
     /**
      * @brief init from zfchar string
      */
-    virtual ZFObject *objectOnInit(ZF_IN const zfchar *s,
-                                   ZF_IN_OPT ZFStringStorageTypeEnum storageType = ZFStringStorageType::EnumDefault());
+    ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit,
+                                 ZFMP_IN(const zfchar *, s),
+                                 ZFMP_IN_OPT(ZFStringStorageTypeEnum, storageType, ZFStringStorageType::EnumDefault()))
+    {
+        this->objectOnInit();
+        zfself::stringValueSet(s, storageType);
+    }
     /**
      * @brief init from ZFString (no deep copy)
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFString *another);
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(ZFString *, another))
+    {
+        this->objectOnInit();
+        zfself::stringValueSet(another);
+    }
     /**
      * @brief init from native string
      */
-    virtual ZFObject *objectOnInit(ZF_IN void *nativeString);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(void *, nativeString))
+    {
+        this->objectOnInit();
+        zfself::nativeStringSet(nativeString);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
@@ -467,23 +482,6 @@ private:
 zfclass ZF_ENV_EXPORT ZFStringEditable : zfextends ZFString
 {
     ZFOBJECT_DECLARE(ZFStringEditable, ZFString)
-
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN const zfchar *s,
-                                   ZF_IN_OPT ZFStringStorageTypeEnum storageType = ZFStringStorageType::EnumDefault())
-    {
-        return zfsuper::objectOnInit(s, storageType);
-    }
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN ZFString *another) {return zfsuper::objectOnInit(another);}
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN void *nativeString) {return zfsuper::objectOnInit(nativeString);}
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();}
-    zfoverride
-    virtual void objectOnDealloc(void) {zfsuper::objectOnDealloc();}
 
 public:
     ZFMETHOD_DECLARE_2(void, stringValueSet,

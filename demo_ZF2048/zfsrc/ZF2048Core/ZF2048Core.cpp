@@ -775,13 +775,12 @@ void ZF2048Core::gameDataOnChange(void)
     this->observerNotify(ZF2048Core::EventGameDataOnChange());
 }
 
-ZFObject *ZF2048Core::objectOnInit(void)
+void ZF2048Core::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfnew(_ZFP_ZF2048CorePrivate, this);
 
     this->reset();
-    return this;
 }
 void ZF2048Core::objectOnDealloc(void)
 {

@@ -246,13 +246,12 @@ public:
      */
     ZFMETHOD_DECLARE_0(zfindex, aniRepeatCountCurrent);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

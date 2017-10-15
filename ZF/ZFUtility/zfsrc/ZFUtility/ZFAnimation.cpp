@@ -79,11 +79,10 @@ ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStop)
 ZFOBSERVER_EVENT_REGISTER(ZFAnimation, AniOnStopOrOnInvalid)
 
-ZFObject *ZFAnimation::objectOnInit(void)
+void ZFAnimation::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFAnimationPrivate);
-    return this;
 }
 void ZFAnimation::objectOnDealloc(void)
 {

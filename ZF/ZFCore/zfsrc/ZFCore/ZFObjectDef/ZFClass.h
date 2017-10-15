@@ -265,7 +265,8 @@ public:
      *   ZFObject *newObj = newObjTmp.toObject();
      * @endcode
      * @note object's no param version of objectOnInit would be called,
-     *   ZFClass doesn't support newInstance with params
+     *   if you want to construct with params,
+     *   use #newInstanceGeneric instead
      */
     inline zfautoObject newInstance(void) const
     {
@@ -275,6 +276,45 @@ public:
     zfautoObject newInstance(ZF_IN const ZFCallerInfo &callerInfo) const;
     /** @brief see #newInstance */
     zfautoObject newInstanceWithoutLeakTest(void) const;
+    /**
+     * @brief for advanced reflection use only
+     *
+     * create object by specified params,
+     * the object must have proper #ZFObject::objectOnInit
+     * declared as #ZFMETHOD_DECLARE_PROTECTED_1 series,
+     * and params are passed accorrding to #ZFMethod::methodGenericInvoke
+     * @note this method do much reflection steps to find proper objectOnInit,
+     *   which may cause performance issue,
+     *   use with caution,
+     *   or use #newInstanceGenericWithMethod if available
+     * @note if all params are #ZFMethodGenericInvokerDefaultParam, this method would call
+     *   original #ZFObject::objectOnInit instead (same as #newInstance)
+     */
+    zfautoObject newInstanceGeneric(
+                                      ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam()
+                                    , ZF_IN_OPT const ZFCallerInfo &callerInfo = ZFCallerInfoEmpty()
+                                    ) const; /* ZFMETHOD_MAX_PARAM */
+    /**
+     * @brief see #newInstanceGeneric
+     */
+    zfautoObject newInstanceGenericWithMethod(ZF_IN const ZFMethod *objectOnInitMethod
+                                              , ZF_IN_OPT ZFObject *param0 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param1 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param2 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param3 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param4 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param5 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param6 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT ZFObject *param7 = ZFMethodGenericInvokerDefaultParam()
+                                              , ZF_IN_OPT const ZFCallerInfo &callerInfo = ZFCallerInfoEmpty()
+                                              ) const; /* ZFMETHOD_MAX_PARAM */
 
     /**
      * @brief get implemented interface count

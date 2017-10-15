@@ -247,12 +247,11 @@ ZFMETHOD_DEFINE_0(ZFUIAnimatedImage, zfindex, aniRepeatCountCurrent)
     return d->aniRepeatCountCurrent;
 }
 
-ZFObject *ZFUIAnimatedImage::objectOnInit(void)
+void ZFUIAnimatedImage::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIAnimatedImagePrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFUIAnimatedImage::objectOnDealloc(void)
 {

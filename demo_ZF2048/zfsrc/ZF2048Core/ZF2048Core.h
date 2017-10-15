@@ -86,9 +86,9 @@ public:
 protected:
     virtual void gameDataOnChange(void);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

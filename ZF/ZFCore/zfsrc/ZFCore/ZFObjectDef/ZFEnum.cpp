@@ -68,30 +68,19 @@ zfbool ZFEnum::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &seria
     return zftrue;
 }
 
-ZFObject *ZFEnum::objectOnInit(ZF_IN zfuint value)
+void ZFEnum::objectOnInit(ZF_IN zfuint value)
 {
     this->objectOnInit();
     zfself::enumValueSet(value);
-    return this;
 }
-ZFObject *ZFEnum::objectOnInit(ZF_IN ZFEnum *another)
+
+void ZFEnum::objectOnInit(ZF_IN ZFEnum *another)
 {
     this->objectOnInit();
     if(another != zfnull && another->classData()->classIsTypeOf(this->classData()))
     {
         zfself::enumValueSet(another->enumValue());
     }
-    return this;
-}
-ZFObject *ZFEnum::objectOnInit(void)
-{
-    zfsuper::objectOnInit();
-    _ZFP_ZFEnum_value = ZFEnumInvalid();
-    return this;
-}
-void ZFEnum::objectOnDealloc(void)
-{
-    zfsuper::objectOnDealloc();
 }
 
 void ZFEnum::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
@@ -297,7 +286,8 @@ public:
         return ret;
     }
 
-public:
+protected:
+    zfoverride
     virtual void objectOnDealloc(void)
     {
         zffree(this->flagList);
@@ -405,6 +395,16 @@ ZF_NAMESPACE_GLOBAL_END
 #include "../ZFObject.h"
 ZF_NAMESPACE_GLOBAL_BEGIN
 
+ZFMETHOD_USER_REGISTER_DETAIL_1(ZFEnum_objectOnInit_zfuint, ZFEnum::_ZFP_ZFEnum_objectOnInit_zfuint, ZFEnum::ClassData(),
+    protected, ZFMethodIsVirtual,
+    void, zfText("objectOnInit")
+    , ZFMP_IN(zfuint, value)
+    )
+ZFMETHOD_USER_REGISTER_DETAIL_1(ZFEnum_objectOnInit_ZFEnum, ZFEnum::_ZFP_ZFEnum_objectOnInit_ZFEnum, ZFEnum::ClassData(),
+    protected, ZFMethodIsVirtual,
+    void, zfText("objectOnInit")
+    , ZFMP_IN(ZFEnum *, another)
+    )
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFEnum, zfindex, enumCount)
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfindex, enumIndexForValue, ZFMP_IN(zfuint, value))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFEnum, zfuint, enumValueAtIndex, ZFMP_IN(zfindex, index))

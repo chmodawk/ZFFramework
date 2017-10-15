@@ -77,13 +77,12 @@ public:
         return this->inputView()->text();
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual ZFUIView *dialogFocusOnUpdate(void)
     {

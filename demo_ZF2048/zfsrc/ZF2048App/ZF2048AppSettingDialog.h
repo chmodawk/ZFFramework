@@ -23,18 +23,16 @@ public:
     zfindex dataWidth;
     zfindex dataHeight;
 
-public:
+protected:
+    virtual void objectOnInit(ZF_IN zfindex dataWidth,
+                              ZF_IN zfindex dataHeight);
     zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN zfindex dataWidth,
-                                   ZF_IN zfindex dataHeight);
-    zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnInitFinish(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     virtual void settingOnChange(void)
     {
         this->observerNotify(zfself::EventSettingOnChange());

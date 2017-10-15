@@ -66,21 +66,27 @@ protected:
     }
 
 public:
+    static void _ZFP_ZFEnum_objectOnInit_zfuint(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN zfuint value)
+    {
+        invokerObject->to<ZFEnum *>()->objectOnInit(value);
+    }
+    static void _ZFP_ZFEnum_objectOnInit_ZFEnum(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject, ZF_IN ZFEnum *another)
+    {
+        invokerObject->to<ZFEnum *>()->objectOnInit(another);
+    }
+protected:
     /**
      * @brief init with value or ZFEnumInvalid if invalid
      */
-    virtual ZFObject *objectOnInit(ZF_IN zfuint value);
+    virtual void objectOnInit(ZF_IN zfuint value);
     /**
      * @brief init with ZFEnum
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFEnum *another);
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(void);
-    zfoverride
-    virtual void objectOnDealloc(void);
+    virtual void objectOnInit(ZF_IN ZFEnum *another);
 
-protected:
+    zfoverride
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
+
     zfoverride
     virtual inline void objectInfoOnAppendTokenLeft(ZF_IN_OUT zfstring &ret)
     {

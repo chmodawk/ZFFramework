@@ -40,7 +40,7 @@ public:
      */
     virtual ZFUIView *cellAccessoryContainer(void) zfpurevirtual;
 
-public:
+protected:
     zfoverride
     virtual void objectOnInitFinish(void);
 

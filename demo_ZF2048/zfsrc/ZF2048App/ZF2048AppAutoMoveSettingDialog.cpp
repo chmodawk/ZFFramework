@@ -43,19 +43,16 @@ public:
     ZFPROPERTY_RETAIN_READONLY(ZF2048AppButton *, confirmButton, ZFPropertyInitValue(zflineAlloc(ZF2048AppButton)))
     ZFPROPERTY_RETAIN_READONLY(ZF2048AppButton *, cancelButton, ZFPropertyInitValue(zflineAlloc(ZF2048AppButton)))
 
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN ZF2048AppAutoMoveSettingDialog *owner)
+protected:
+    virtual void objectOnInit(ZF_IN ZF2048AppAutoMoveSettingDialog *owner)
     {
         this->objectOnInit();
         this->owner = owner;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
-        return this;
     }
     zfoverride
     virtual void objectOnInitFinish(void)
@@ -173,7 +170,7 @@ ZFOBJECT_REGISTER(ZF2048AppAutoMoveSettingDialog)
 
 ZFOBSERVER_EVENT_REGISTER(ZF2048AppAutoMoveSettingDialog, AutoMoveSettingOnChange)
 
-ZFObject *ZF2048AppAutoMoveSettingDialog::objectOnInit(void)
+void ZF2048AppAutoMoveSettingDialog::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAlloc(_ZFP_ZF2048AppAutoMoveSettingDialogPrivate, this);
@@ -184,8 +181,6 @@ ZFObject *ZF2048AppAutoMoveSettingDialog::objectOnInit(void)
     d->addAction_top()->buttonSimulateClick();
     d->addAction_left()->buttonSimulateClick();
     d->addAction_bottom()->buttonSimulateClick();
-
-    return this;
 }
 void ZF2048AppAutoMoveSettingDialog::objectOnDealloc(void)
 {

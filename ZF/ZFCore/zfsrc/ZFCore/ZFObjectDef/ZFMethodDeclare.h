@@ -652,6 +652,13 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         ReturnType, MethodName \
         )
 /** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_0(ReturnType, MethodName \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_0( \
+        protected, ZFMethodIsVirtual, \
+        ReturnType, MethodName \
+        )
+/** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_DETAIL_0( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
@@ -727,6 +734,15 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_1( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_1(ReturnType, MethodName \
+    , ZFMP_0 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_1( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         )
@@ -814,6 +830,17 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_2( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_2(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_2( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -910,6 +937,19 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_3( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_3(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_3( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1015,6 +1055,21 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_4( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_4(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_4( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1129,6 +1184,23 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_5( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_5(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_5( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1252,6 +1324,25 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_6( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_6(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_6( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \
@@ -1394,6 +1485,27 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
         , ZFM_EXPAND(ZFMP_6) \
         )
 /** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_7(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_7( \
+        protected, ZFMethodIsVirtual, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND(ZFMP_6) \
+        )
+/** @brief see #ZFMethod */
 #define ZFMETHOD_DECLARE_DETAIL_7( \
     PublicOrProtectedOrPrivate, ZFMethodIsWhatType, \
     ReturnType, MethodName \
@@ -1525,6 +1637,29 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
     ) \
     ZFMETHOD_DECLARE_DETAIL_8( \
         public, ZFMethodIsNormal, \
+        ReturnType, MethodName \
+        , ZFM_EXPAND(ZFMP_0) \
+        , ZFM_EXPAND(ZFMP_1) \
+        , ZFM_EXPAND(ZFMP_2) \
+        , ZFM_EXPAND(ZFMP_3) \
+        , ZFM_EXPAND(ZFMP_4) \
+        , ZFM_EXPAND(ZFMP_5) \
+        , ZFM_EXPAND(ZFMP_6) \
+        , ZFM_EXPAND(ZFMP_7) \
+        )
+/** @brief see #ZFMethod */
+#define ZFMETHOD_DECLARE_PROTECTED_8(ReturnType, MethodName \
+    , ZFMP_0 \
+    , ZFMP_1 \
+    , ZFMP_2 \
+    , ZFMP_3 \
+    , ZFMP_4 \
+    , ZFMP_5 \
+    , ZFMP_6 \
+    , ZFMP_7 \
+    ) \
+    ZFMETHOD_DECLARE_DETAIL_8( \
+        protected, ZFMethodIsVirtual, \
         ReturnType, MethodName \
         , ZFM_EXPAND(ZFMP_0) \
         , ZFM_EXPAND(ZFMP_1) \

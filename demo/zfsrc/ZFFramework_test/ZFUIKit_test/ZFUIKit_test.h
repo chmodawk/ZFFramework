@@ -45,15 +45,14 @@ zfclass ZFUIKit_test_ListView : zfextends ZFUIScrollView
 {
     ZFOBJECT_DECLARE(ZFUIKit_test_ListView, ZFUIScrollView)
 
-public:
-    virtual ZFObject *objectOnInit(void)
+protected:
+    zfoverride
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->scrollBounceVerticalAlwaysSet(zftrue);
-        return this;
     }
 
-protected:
     zfoverride
     virtual void layoutParamOnUpdate(ZF_IN ZFUIViewLayoutParam *layoutParam)
     {
@@ -115,20 +114,20 @@ public:
         this->observerNotify(zfself::EventSettingOnChange());
     }
 
-public:
-    virtual ZFObject *objectOnInit(ZF_IN const ZFListener &buttonTextGetter,
-                                   ZF_IN const ZFListener &buttonClickListener,
-                                   ZF_IN_OPT ZFObject *userData = zfnull)
+protected:
+    virtual void objectOnInit(ZF_IN const ZFListener &buttonTextGetter,
+                              ZF_IN const ZFListener &buttonClickListener,
+                              ZF_IN_OPT ZFObject *userData = zfnull)
     {
         this->objectOnInit();
         this->buttonTextGetterSet(buttonTextGetter);
         this->buttonClickListenerSet(buttonClickListener);
         this->userDataSet(userData);
-        return this;
     }
-    virtual ZFObject *objectOnInit(void)
+    zfoverride
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
 };
 extern zfautoObject ZFUIKit_test_prepareSettingButton(ZF_IN ZFArray *settings);
@@ -183,7 +182,8 @@ protected:
     }
 public:
     _ZFP_ZFUIKit_test_prepareSettingForNormalProperty_ProgressBase *action;
-public:
+protected:
+    zfoverride
     virtual void objectOnDealloc(void)
     {
         zfdelete(this->action);

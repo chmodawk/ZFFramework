@@ -62,14 +62,13 @@ ZFMETHOD_DEFINE_1(ZFUIWindow, ZFUISysWindow *, sysWindowForView,
     return ((window != zfnull) ? window->windowSysWindow() : zfnull);
 }
 
-ZFObject *ZFUIWindow::objectOnInit(void)
+void ZFUIWindow::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIWindowPrivate);
     d->windowSysWindow = ZFUISysWindow::mainWindow();
     d->windowLayoutParam = zfAlloc(ZFUIViewLayoutParam);
     d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-    return this;
 }
 void ZFUIWindow::objectOnDealloc(void)
 {

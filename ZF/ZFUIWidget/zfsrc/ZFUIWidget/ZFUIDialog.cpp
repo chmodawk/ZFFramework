@@ -456,7 +456,7 @@ ZFUIView *ZFUIDialog::dialogFocusOnUpdate(void)
         ZFUIViewFocusNextParam().focusDirectionSet(ZFUIOrientation::e_Left | ZFUIOrientation::e_Top));
 }
 
-ZFObject *ZFUIDialog::objectOnInit(void)
+void ZFUIDialog::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAllocWithoutLeakTest(_ZFP_ZFUIDialogPrivate);
@@ -499,7 +499,6 @@ ZFObject *ZFUIDialog::objectOnInit(void)
     d->dialogBg->imageSet(this->dialogBackgroundImage());
 
     _ZFP_ZFUIDialogAllDialog.add(this);
-    return this;
 }
 void ZFUIDialog::objectOnDealloc(void)
 {

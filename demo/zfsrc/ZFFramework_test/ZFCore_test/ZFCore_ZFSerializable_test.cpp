@@ -76,12 +76,11 @@ protected:
 
         this->testCaseStop();
     }
-public:
-    virtual ZFObject *objectOnInit(void)
+protected:
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->memberPrepare();
-        return this;
     }
     virtual void objectOnDealloc(void)
     {

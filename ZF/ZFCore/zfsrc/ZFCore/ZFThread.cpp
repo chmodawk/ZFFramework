@@ -110,7 +110,8 @@ public:
         return this->_runnable;
     }
 
-public:
+protected:
+    zfoverride
     virtual void objectOnDeallocPrepare(void)
     {
         this->_runnable.callbackOwnerObjectRelease();
@@ -435,18 +436,11 @@ ZF_GLOBAL_INITIALIZER_END(ZFThreadAutoReleasePoolDrainDataHolder)
 
 // ============================================================
 // thread instance method
-ZFObject *ZFThread::objectOnInit(ZF_IN const ZFListener &runnable)
-{
-    this->objectOnInit();
-    zfself::threadRunnableSet(runnable);
-    return this;
-}
-ZFObject *ZFThread::objectOnInit(void)
+void ZFThread::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     _ZFP_ZFThread_d = zfpoolNew(_ZFP_ZFThreadPrivate);
     _ZFP_ZFThread_d->autoReleasePool = zfAllocWithoutLeakTest(ZFAutoReleasePool);
-    return this;
 }
 void ZFThread::objectOnDealloc(void)
 {

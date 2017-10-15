@@ -180,19 +180,18 @@ zfbool ZFRegExp::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &ser
     return zftrue;
 }
 
-ZFObject *ZFRegExp::objectOnInit(ZF_IN const zfchar *pattern,
-                                 ZF_IN_OPT ZFRegExpOptionFlags flag /* = ZFRegExpOptionFlags::EnumDefault() */)
+ZFMETHOD_DEFINE_2(ZFRegExp, void, objectOnInit,
+                  ZFMP_IN(const zfchar *, pattern),
+                  ZFMP_IN_OPT(ZFRegExpOptionFlags, flag, ZFRegExpOptionFlags::EnumDefault)())
 {
     this->objectOnInit();
     zfself::regExpCompile(pattern, flag);
-    return this;
 }
-ZFObject *ZFRegExp::objectOnInit(void)
+void ZFRegExp::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFRegExpPrivate);
     d->nativeRegExp = ZFPROTOCOL_ACCESS(ZFRegExp)->nativeRegExpCreate(this);
-    return this;
 }
 void ZFRegExp::objectOnDealloc(void)
 {

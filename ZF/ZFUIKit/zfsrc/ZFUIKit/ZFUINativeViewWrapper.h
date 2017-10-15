@@ -35,16 +35,19 @@ zffinal zfclass ZF_ENV_EXPORT ZFUINativeViewWrapper : zfextends ZFUIView
 {
     ZFOBJECT_DECLARE(ZFUINativeViewWrapper, ZFUIView)
 
-public:
+protected:
     /**
      * @brief init with native view, see #ZFUINativeViewWrapper
      */
-    virtual ZFObject *objectOnInit(ZF_IN void *wrappedNativeView);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(void *, wrappedNativeView))
+    {
+        this->objectOnInit();
+        zfself::wrappedNativeViewSet(wrappedNativeView);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
-    zfoverride
-    virtual void objectOnDealloc(void);
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
 
 protected:
     zfoverride

@@ -421,12 +421,11 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIButton, zfbool, buttonChecked)
     }
 }
 
-ZFObject *ZFUIButton::objectOnInit(void)
+void ZFUIButton::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIButtonPrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFUIButton::objectOnDealloc(void)
 {

@@ -36,9 +36,9 @@ protected:
         this->observerNotify(zfself::EventRunnerOnStop());
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

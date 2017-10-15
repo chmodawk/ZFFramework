@@ -109,15 +109,14 @@ public:
     virtual void dialogButtonRemoveAll(void);
 
     // ============================================================
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
-protected:
     zfoverride
     virtual void layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                  ZF_IN const ZFUISize &sizeHint,

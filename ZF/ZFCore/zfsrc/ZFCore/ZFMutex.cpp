@@ -68,21 +68,12 @@ ZF_STATIC_REGISTER_END(ZFObjectMutexImpl_ZFMutex)
 // ============================================================
 // ZFMutex
 ZFOBJECT_REGISTER(ZFMutex)
-ZFObject *ZFMutex::objectOnInit(ZF_IN zfbool noWarningIfImplementationNotAvailable)
+
+ZFMETHOD_DEFINE_1(ZFMutex, void, objectOnInit,
+                  ZFMP_IN(zfbool, noWarningIfImplNotAvailable))
 {
     this->objectOnInit();
-    this->noWarningIfImplementationNotAvailable = noWarningIfImplementationNotAvailable;
-    return this;
-}
-ZFObject *ZFMutex::objectOnInit(void)
-{
-    zfsuper::objectOnInit();
-    this->noWarningIfImplementationNotAvailable = zffalse;
-    return this;
-}
-void ZFMutex::objectOnDealloc(void)
-{
-    zfsuper::objectOnDealloc();
+    this->noWarningIfImplNotAvailable = noWarningIfImplNotAvailable;
 }
 
 void ZFMutex::mutexLock(void)
@@ -91,7 +82,7 @@ void ZFMutex::mutexLock(void)
     {
         this->_ZFP_ZFObjectLock();
     }
-    else if(!this->noWarningIfImplementationNotAvailable)
+    else if(!this->noWarningIfImplNotAvailable)
     {
         zfCoreLogTrim(zfTextA("[ZFMutex] try mutexLock a object while no implementation for lock"));
     }
@@ -102,7 +93,7 @@ zfbool ZFMutex::mutexTryLock(void)
     {
         return this->_ZFP_ZFObjectTryLock();
     }
-    else if(!this->noWarningIfImplementationNotAvailable)
+    else if(!this->noWarningIfImplNotAvailable)
     {
         zfCoreLogTrim(zfTextA("[ZFMutex] try mutexTryLock a object while no implementation for lock"));
     }
@@ -114,7 +105,7 @@ void ZFMutex::mutexUnlock(void)
     {
         this->_ZFP_ZFObjectUnlock();
     }
-    else if(!this->noWarningIfImplementationNotAvailable)
+    else if(!this->noWarningIfImplNotAvailable)
     {
         zfCoreLogTrim(zfTextA("[ZFMutex] try mutexUnlock a object while no implementation for lock"));
     }

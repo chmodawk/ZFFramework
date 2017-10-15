@@ -65,9 +65,9 @@ public:
     ZFPROPERTY_ASSIGN_WITH_INIT(zfbool, textEditClearButtonAutoEnable, ZFPropertyInitValue(zffalse))
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(zfbool, textEditClearButtonAutoEnable);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

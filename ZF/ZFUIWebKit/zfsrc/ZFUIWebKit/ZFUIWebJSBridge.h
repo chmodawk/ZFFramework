@@ -122,11 +122,10 @@ public:
                        ZFMP_IN_OUT(ZFJsonItem &, messageSend));
     zffinal ZFJsonItem _ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT ZFJsonItem &messageRecv);
 
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFUIWebJSBridge::instanceForWebView")
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
-public:
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

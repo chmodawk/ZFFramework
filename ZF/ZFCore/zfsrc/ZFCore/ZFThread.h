@@ -100,14 +100,19 @@ public:
 
     // ============================================================
     // thread instance method
-public:
+protected:
     /**
      * @brief init from listener
      */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFListener &runnable);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(const ZFListener &, runnable))
+    {
+        this->objectOnInit();
+        zfself::threadRunnableSet(runnable);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

@@ -109,12 +109,11 @@ protected:
                                                         ZF_IN ZFSerializable *referencedOwnerOrNull,
                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 
-public:
+protected:
     /** @brief see #ZFObject::objectOnDeallocPrepare, remove all contents before dealloc */
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
-protected:
     zfoverride
     virtual inline void objectInfoOnAppendTokenLeft(ZF_IN_OUT zfstring &ret)
     {

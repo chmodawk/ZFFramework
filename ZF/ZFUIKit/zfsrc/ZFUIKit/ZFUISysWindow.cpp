@@ -146,14 +146,13 @@ void ZFUISysWindow::sysWindowMarginOnUpdate(ZF_IN const ZFUIMargin &sysWindowMar
     }
 }
 
-ZFObject *ZFUISysWindow::objectOnInit(void)
+void ZFUISysWindow::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUISysWindowPrivate);
     d->windowRootView = zfRetainWithoutLeakTest(ZFUIRootView::ClassData()->newInstanceWithoutLeakTest().to<ZFUIRootView *>());
     d->windowLayoutParam = zfAllocWithoutLeakTest(ZFUIViewLayoutParam);
     d->windowLayoutParam->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
-    return this;
 }
 void ZFUISysWindow::objectOnInitFinish(void)
 {

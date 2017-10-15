@@ -20,24 +20,82 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 // zfAlloc
 template<typename T_ZFObject, int valid>
-zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk
-{
-};
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk;
 template<typename T_ZFObject>
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk<T_ZFObject, 1>
 {
 public:
-    typedef T_ZFObject CanAlloc;
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj)
+    {
+        obj->objectOnInit();
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0)
+    {
+        obj->objectOnInit(p0);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1)
+    {
+        obj->objectOnInit(p0, p1);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2)
+    {
+        obj->objectOnInit(p0, p1, p2);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2, typename P3>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2, P3 p3)
+    {
+        obj->objectOnInit(p0, p1, p2, p3);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2, typename P3, typename P4>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2, P3 p3, P4 p4)
+    {
+        obj->objectOnInit(p0, p1, p2, p3, p4);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2, typename P3, typename P4, typename P5>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5)
+    {
+        obj->objectOnInit(p0, p1, p2, p3, p4, p5);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6)
+    {
+        obj->objectOnInit(p0, p1, p2, p3, p4, p5, p6);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
+    template<typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+    static inline T_ZFObject *CanAlloc(T_ZFObject *obj, P0 p0, P1 p1, P2 p2, P3 p3, P4 p4, P5 p5, P6 p6, P7 p7)
+    {
+        obj->objectOnInit(p0, p1, p2, p3, p4, p5, p6, p7);
+        obj->_ZFP_ZFObjectCheckOnInit();
+        return obj;
+    }
 };
 template<typename T_ZFObject>
 zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk<T_ZFObject, 0>
 {
 };
 #define _ZFP_zfAlloc(T_ZFObject, ...) \
-    _ZFP_ObjCastInternal(T_ZFObject *, _ZFP_ObjCastInternal(T_ZFObject *, \
-        (ZFObject::_ZFP_ZFObjectAlloc( \
-            _ZFP_Obj_AllocCk<T_ZFObject, T_ZFObject::_ZFP_ZFObjectCanAlloc>::CanAlloc::_ZFP_Obj_ctor())) \
-        )->objectOnInit(__VA_ARGS__)->_ZFP_ZFObjectCheckOnInit())
+    _ZFP_Obj_AllocCk<T_ZFObject, T_ZFObject::_ZFP_ZFObjectCanAlloc && T_ZFObject::_ZFP_ZFObjectCanAllocPublic>::CanAlloc( \
+        _ZFP_ObjCastInternal(T_ZFObject *, T_ZFObject::_ZFP_Obj_ctor()) \
+        , ##__VA_ARGS__)
 /**
  * @brief won't be logged by ZFLeakTest, use only if necessary
  * @see zfAlloc, ZFLeakTestBegin

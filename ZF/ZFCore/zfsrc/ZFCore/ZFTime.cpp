@@ -425,35 +425,20 @@ const ZFTimeValue &ZFTime::timeZoneLocal(void)
     return _ZFP_ZFTimeImpl->timeZoneLocal();
 }
 
-ZFObject *ZFTime::objectOnInit(ZF_IN ZFTime *time)
+ZFMETHOD_DEFINE_1(ZFTime, void, objectOnInit,
+                  ZFMP_IN(ZFTime *, time))
 {
     this->objectOnInit();
     if(time != zfnull)
     {
         d->copyFrom(time->d);
     }
-    return this;
 }
-ZFObject *ZFTime::objectOnInit(ZF_IN const ZFTimeValue &tv,
-                               ZF_IN_OPT const ZFTimeValue &timeZone /* = zfself::timeZoneLocal() */)
-{
-    this->objectOnInit();
-    zfself::timeZoneSet(timeZone);
-    zfself::timeValueSet(tv);
-    return this;
-}
-ZFObject *ZFTime::objectOnInit(ZF_IN const ZFTimeInfo &ti,
-                               ZF_IN_OPT const ZFTimeValue &timeZone /* = zfself::timeZoneLocal() */)
-{
-    this->objectOnInit();
-    zfself::timeInfoSet(ti, timeZone);
-    return this;
-}
-ZFObject *ZFTime::objectOnInit(void)
+
+void ZFTime::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFTimePrivate);
-    return this;
 }
 void ZFTime::objectOnDealloc(void)
 {

@@ -35,14 +35,15 @@ protected:
         this->addFrom(ZFCastZFObjectUnchecked(zfself *, anotherObj));
     }
 
-public:
+protected:
     /**
      * @brief init from a existing container
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFKeyValueContainer *another);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(ZFKeyValueContainer *, another));
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

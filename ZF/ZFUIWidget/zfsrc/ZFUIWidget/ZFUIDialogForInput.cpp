@@ -12,7 +12,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFSTYLE_DEFAULT_DEFINE(ZFUIDialogForInput)
 
-ZFObject *ZFUIDialogForInput::objectOnInit(void)
+void ZFUIDialogForInput::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -27,8 +27,6 @@ ZFObject *ZFUIDialogForInput::objectOnInit(void)
         }
     })
     this->inputView()->observerAdd(ZFUITextEdit::EventTextOnEditConfirm(), inputOnConfirm, this->objectHolder());
-
-    return this;
 }
 void ZFUIDialogForInput::objectOnDealloc(void)
 {

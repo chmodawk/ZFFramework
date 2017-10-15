@@ -15,7 +15,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 ZFOBJECT_REGISTER(ZFFramework_test_TestCase)
 
-ZFObject *ZFFramework_test_TestCase::objectOnInit(void)
+void ZFFramework_test_TestCase::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     this->_testCaseTmpPath = zfstringWithFormat(zfText("%s%cZFFramework_test%c%s"),
@@ -23,7 +23,6 @@ ZFObject *ZFFramework_test_TestCase::objectOnInit(void)
         ZFFile::fileSeparator,
         ZFFile::fileSeparator,
         this->classData()->className());
-    return this;
 }
 void ZFFramework_test_TestCase::objectOnDealloc(void)
 {

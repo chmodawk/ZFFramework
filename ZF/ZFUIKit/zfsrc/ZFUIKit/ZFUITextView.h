@@ -132,15 +132,14 @@ public:
                                 ZFPropertyInitValue(ZFUIGlobalStyle::DefaultStyle()->textTruncateMode()))
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUITextTruncateModeEnum, textTruncateMode);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnInitFinish(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

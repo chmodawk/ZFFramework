@@ -111,11 +111,10 @@ zfbool ZFAnimationTimeLineProperty::serializableOnSerializeToData(ZF_IN_OUT ZFSe
 
 // ============================================================
 // object
-ZFObject *ZFAnimationTimeLineProperty::objectOnInit(void)
+void ZFAnimationTimeLineProperty::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFAnimationTimeLinePropertyPrivate);
-    return this;
 }
 void ZFAnimationTimeLineProperty::objectOnDealloc(void)
 {

@@ -19,13 +19,12 @@ zfclass ZF2048App : zfextends ZFUIView
 
     ZFPROPERTY_RETAIN_READONLY(ZF2048Game *, game, ZFPropertyInitValue(zflineAlloc(ZF2048Game)))
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual void viewOnAddToParent(ZF_IN ZFUIView *parent)
     {

@@ -212,12 +212,11 @@ _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Checke
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, CheckedHighlighted)
 _ZFP_ZFUIBUTTONBASIC_BUTTON_COMPONENT_DEFINE(ZFUIImageView *, Background, Disabled)
 
-ZFObject *ZFUIButtonBasic::objectOnInit(void)
+void ZFUIButtonBasic::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIButtonBasicPrivate);
     d->pimplOwner = this;
-    return this;
 }
 
 void ZFUIButtonBasic::objectOnDealloc(void)

@@ -39,7 +39,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZF2048UIBlock, ZF2048Value, blockValue)
     }
 }
 
-ZFObject *ZF2048UIBlock::objectOnInit(void)
+void ZF2048UIBlock::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     this->internalForegroundViewAdd(this->blockTitle());
@@ -50,7 +50,6 @@ ZFObject *ZF2048UIBlock::objectOnInit(void)
     this->blockTitle()->textShadowColorSet(ZFUIColorGrayDark());
     this->blockTitle()->textAppearanceSet(ZFUITextAppearance::e_Bold);
     this->blockTitle()->textSizeSet(24);
-    return this;
 }
 
 ZF_NAMESPACE_GLOBAL_END

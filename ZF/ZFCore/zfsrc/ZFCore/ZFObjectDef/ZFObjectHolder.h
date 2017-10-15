@@ -34,39 +34,36 @@ zffinal zfclass ZF_ENV_EXPORT ZFObjectHolder : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFObjectHolder, ZFObject)
 
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
-public:
+protected:
     /** @brief see #ZFObject::objectOnInit */
-    virtual ZFObject *objectOnInit(ZF_IN ZFObject *obj)
+    virtual void objectOnInit(ZF_IN ZFObject *obj)
     {
         this->objectOnInit();
         this->holdedObj = obj;
-        return this;
     }
     /** @brief see #ZFObject::objectOnInit */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFAny &obj)
+    virtual void objectOnInit(ZF_IN const ZFAny &obj)
     {
         this->objectOnInit();
         this->holdedObj = obj;
-        return this;
     }
     /** @brief see #ZFObject::objectOnInit */
     template<typename T_ZFObject>
-    ZFObject *objectOnInit(ZF_IN const ZFAnyT<T_ZFObject> &obj)
+    void objectOnInit(ZF_IN const ZFAnyT<T_ZFObject> &obj)
     {
         this->objectOnInit();
         this->holdedObj = obj;
-        return this;
     }
 
-protected:
+    zfoverride
+    virtual void objectOnInit(void)
+    {
+        zfsuper::objectOnInit();
+    }
+
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
+
 public:
     zfoverride
     virtual zfidentity objectHash(void);
@@ -96,23 +93,22 @@ public:
     /** @brief see #ZFListener */
     ZFPROPERTY_RETAIN(ZFObject *, userData)
 
-public:
+protected:
     /** @brief see #ZFObject::objectOnInit */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFListener &runnable,
-                                   ZF_IN const ZFListenerData &listenerData,
-                                   ZF_IN_OPT ZFObject *userData = zfnull)
+    virtual void objectOnInit(ZF_IN const ZFListener &runnable,
+                              ZF_IN const ZFListenerData &listenerData,
+                              ZF_IN_OPT ZFObject *userData = zfnull)
     {
         this->objectOnInit();
         this->runnable = runnable;
         this->listenerData = listenerData;
         this->userDataSet(userData);
-        return this;
     }
-public:
+
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
     virtual void objectOnDealloc(void)

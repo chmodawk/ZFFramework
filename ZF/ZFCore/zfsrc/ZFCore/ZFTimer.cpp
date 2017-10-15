@@ -42,26 +42,11 @@ ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnActivate)
 ZFOBSERVER_EVENT_REGISTER(ZFTimer, TimerOnStop)
 
-ZFObject *ZFTimer::objectOnInit(ZF_IN const zftimet &timerInterval,
-                                ZF_IN_OPT ZFObject *timerParam0 /* = zfnull */,
-                                ZF_IN_OPT ZFObject *timerParam1 /* = zfnull */,
-                                ZF_IN_OPT const zftimet &timerDelay /* = zftimetZero() */,
-                                ZF_IN_OPT zfbool timerActivateInMainThread /* = zffalse */)
-{
-    this->objectOnInit();
-    zfself::timerIntervalSet(timerInterval);
-    zfself::timerDelaySet(timerDelay);
-    zfself::timerParam0Set(timerParam0);
-    zfself::timerParam1Set(timerParam1);
-    zfself::timerActivateInMainThreadSet(timerActivateInMainThread);
-    return this;
-}
-ZFObject *ZFTimer::objectOnInit(void)
+void ZFTimer::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFTimerPrivate);
     d->nativeTimer = ZFPROTOCOL_ACCESS(ZFTimer)->nativeTimerCreate(this);
-    return this;
 }
 void ZFTimer::objectOnDealloc(void)
 {

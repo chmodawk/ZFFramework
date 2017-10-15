@@ -233,12 +233,11 @@ ZFMETHOD_DEFINE_2(ZFObjectCache, void, cacheGetAll,
         cacheValues.add((*it)->cacheValue);
     }
 }
-ZFObject *ZFObjectCache::objectOnInit(void)
+void ZFObjectCache::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFObjectCachePrivate);
     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFObjectCacheDataHolder)->cacheTrimListenerSetup(this, this->cacheTrimWhenReceiveMemoryWarning());
-    return this;
 }
 void ZFObjectCache::objectOnDealloc(void)
 {

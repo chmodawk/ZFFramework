@@ -29,7 +29,7 @@ public:
     DeleteCallback deleteCallback;
 public:
     static zfautoObject create(ZF_IN void *v, ZF_IN DeleteCallback deleteCallback);
-public:
+protected:
     zfoverride
     virtual void objectOnDealloc(void)
     {

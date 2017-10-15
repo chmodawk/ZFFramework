@@ -69,13 +69,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIImageView, ZFUIImage *, image)
     this->layoutRequest();
 }
 
-ZFObject *ZFUIImageView::objectOnInit(ZF_IN ZFUIImage *image)
-{
-    this->objectOnInit();
-    this->imageSet(image);
-    return this;
-}
-ZFObject *ZFUIImageView::objectOnInit(void)
+void ZFUIImageView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -92,8 +86,6 @@ ZFObject *ZFUIImageView::objectOnInit(void)
     this->nativeImplViewSet(
         ZFPROTOCOL_ACCESS(ZFUIImageView)->nativeImageViewCreate(this),
         _ZFP_ZFUIImageView_nativeImplViewDestroy::action);
-
-    return this;
 }
 void ZFUIImageView::objectOnDealloc(void)
 {

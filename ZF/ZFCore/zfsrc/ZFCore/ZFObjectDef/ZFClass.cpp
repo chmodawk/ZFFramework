@@ -513,7 +513,6 @@ zfautoObject ZFClass::newInstance(ZF_IN const ZFCallerInfo &callerInfo) const
         }
         if(obj != zfnull)
         {
-            ZFObject::_ZFP_ZFObjectAlloc(obj);
             obj->objectOnInit();
             obj->_ZFP_ZFObjectCheckOnInit();
             zflockfree_ZFLeakTestLogAfterAllocVerbose(obj, callerInfo);
@@ -538,12 +537,104 @@ zfautoObject ZFClass::newInstanceWithoutLeakTest(void) const
     }
     if(obj != zfnull)
     {
-        ZFObject::_ZFP_ZFObjectAlloc(obj);
         obj->objectOnInit();
         obj->_ZFP_ZFObjectCheckOnInit();
     }
     zflockfree_zfblockedReleaseWithoutLeakTest(obj);
     return zflockfree_zfautoObjectCreateWithoutLeakTest(obj);
+}
+
+zfautoObject ZFClass::newInstanceGeneric(
+                                           ZF_IN_OPT ZFObject *param0 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param1 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param2 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param3 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param4 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param5 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param6 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT ZFObject *param7 /* = ZFMethodGenericInvokerDefaultParam() */
+                                         , ZF_IN_OPT const ZFCallerInfo &callerInfo /* = ZFCallerInfoEmpty() */
+                                         ) const /* ZFMETHOD_MAX_PARAM */
+{
+    if(d->constructor == zfnull)
+    {
+        return zfautoObjectNull();
+    }
+    if(zftrue
+        && param0 == ZFMethodGenericInvokerDefaultParam()
+        && param1 == ZFMethodGenericInvokerDefaultParam()
+        && param2 == ZFMethodGenericInvokerDefaultParam()
+        && param3 == ZFMethodGenericInvokerDefaultParam()
+        && param4 == ZFMethodGenericInvokerDefaultParam()
+        && param5 == ZFMethodGenericInvokerDefaultParam()
+        && param6 == ZFMethodGenericInvokerDefaultParam()
+        && param7 == ZFMethodGenericInvokerDefaultParam()
+        )
+    {
+        return this->newInstance(callerInfo);
+    }
+
+    zfCoreMutexLocker();
+    ZFCoreArrayPOD<const ZFMethod *> objectOnInitMethodList;
+    this->methodForNameGetAllT(objectOnInitMethodList, zfText("objectOnInit"));
+    if(objectOnInitMethodList.isEmpty())
+    {
+        return zfautoObjectNull();
+    }
+    ZFObject *obj = d->constructor();
+    zfautoObject dummy;
+    for(zfindex i = 0; i < objectOnInitMethodList.count(); ++i)
+    {
+        const ZFMethod *m = objectOnInitMethodList[i];
+        if(m->methodGenericInvoker()(m, obj, zfnull, dummy
+                , param0, param1, param2, param3, param4, param5, param6, param7
+            ))
+        {
+            zflockfree_zfblockedReleaseWithoutLeakTest(obj);
+            return zflockfree_zfautoObjectCreateVerbose(obj, callerInfo);
+        }
+    }
+    d->destructor(obj);
+    return zfautoObjectNull();
+}
+zfautoObject ZFClass::newInstanceGenericWithMethod(ZF_IN const ZFMethod *objectOnInitMethod
+                                                   , ZF_IN_OPT ZFObject *param0 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param1 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param2 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param3 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param4 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param5 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param6 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT ZFObject *param7 /* = ZFMethodGenericInvokerDefaultParam() */
+                                                   , ZF_IN_OPT const ZFCallerInfo &callerInfo /* = ZFCallerInfoEmpty() */
+                                                   ) const /* ZFMETHOD_MAX_PARAM */
+{
+    if(objectOnInitMethod == zfnull)
+    {
+        return this->newInstanceGeneric(param0, param1, param2, param3, param4, param5, param6, param7, callerInfo);
+    }
+    zfCoreAssertWithMessageTrim(
+            this->classIsTypeOf(objectOnInitMethod->methodOwnerClass()),
+            zfText("[ZFClass] class %s has no such objectOnInitMethod %s"),
+            this->objectInfo().cString(),
+            objectOnInitMethod->objectInfo().cString()
+        );
+    zfCoreAssertWithMessageTrim(
+            zfscmpTheSame(objectOnInitMethod->methodName(), zfText("objectOnInit")),
+            zfText("[ZFClass] method %s is not objectOnInitMethod"),
+            objectOnInitMethod->objectInfo().cString()
+        );
+    ZFObject *obj = d->constructor();
+    zfautoObject dummy;
+    if(objectOnInitMethod->methodGenericInvoker()(objectOnInitMethod, obj, zfnull, dummy
+            , param0, param1, param2, param3, param4, param5, param6, param7
+        ))
+    {
+        zflockfree_zfblockedReleaseWithoutLeakTest(obj);
+        return zflockfree_zfautoObjectCreateVerbose(obj, callerInfo);
+    }
+    d->destructor(obj);
+    return zfautoObjectNull();
 }
 
 zfindex ZFClass::implementedInterfaceCount(void) const
@@ -1501,6 +1592,29 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsPrivate)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfbool, classIsInternal)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, zfautoObject, newInstance, ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfautoObject, newInstanceWithoutLeakTest)
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFClass, zfautoObject, newInstanceGeneric
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokerDefaultParam())
+    /* , ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()) */
+    ) /* ZFMETHOD_MAX_PARAM */
+ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFClass, zfautoObject, newInstanceGenericWithMethod
+    , ZFMP_IN(const ZFMethod *, objectOnInitMethod)
+    , ZFMP_IN_OPT(ZFObject *, param0, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param1, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param2, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param3, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param4, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param5, ZFMethodGenericInvokerDefaultParam())
+    , ZFMP_IN_OPT(ZFObject *, param6, ZFMethodGenericInvokerDefaultParam())
+    /* , ZFMP_IN_OPT(ZFObject *, param7, ZFMethodGenericInvokerDefaultParam()) */
+    /* , ZFMP_IN_OPT(const ZFCallerInfo &, callerInfo, ZFCallerInfoEmpty()) */
+    ) /* ZFMETHOD_MAX_PARAM */
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfindex, implementedInterfaceCount)
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, const ZFClass *, implementedInterfaceAtIndex, ZFMP_IN(zfindex, index))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfindex, methodCount)
@@ -1514,7 +1628,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFClass, const ZFMethod *, methodFor
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull)
     // , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull)
-    )
+    ) /* ZFMETHOD_MAX_PARAM */
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFClass, const ZFMethod *, methodForName, ZFMP_IN(const zfchar *, methodName)
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId0, zfnull)
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId1, zfnull)
@@ -1524,7 +1638,7 @@ ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_8(v_ZFClass, const ZFMethod *, methodFor
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId5, zfnull)
     , ZFMP_IN_OPT(const zfchar *, methodParamTypeId6, zfnull)
     // , ZFMP_IN_OPT(const zfchar *, methodParamTypeId7, zfnull)
-    )
+    ) /* ZFMETHOD_MAX_PARAM */
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_2(v_ZFClass, void, methodForNameGetAllT, ZFMP_IN_OUT(ZFCoreArray<const ZFMethod *> &, ret), ZFMP_IN(const zfchar *, methodName))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_1(v_ZFClass, ZFCoreArrayPOD<const ZFMethod *>, methodForNameGetAll, ZFMP_IN(const zfchar *, methodName))
 ZFMETHOD_USER_REGISTER_FOR_WRAPPER_FUNC_0(v_ZFClass, zfindex, propertyCount)

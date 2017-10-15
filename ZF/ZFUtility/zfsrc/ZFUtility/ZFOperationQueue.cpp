@@ -12,18 +12,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
 ZFOBJECT_REGISTER(ZFOperationQueueChildTaskData)
-ZFObject *ZFOperationQueueChildTaskData::objectOnInit(ZF_IN ZFOperation *childOperation,
-                                                      ZF_IN ZFOperationStartParam *childTaskData)
-{
-    this->objectOnInit();
-    this->childOperationSet(childOperation);
-    this->childTaskDataSet(childTaskData);
-    return this;
-}
-ZFObject *ZFOperationQueueChildTaskData::objectOnInit(void)
-{
-    return zfsuper::objectOnInit();
-}
+
 zfidentity ZFOperationQueueChildTaskData::objectHash(void)
 {
     return zfidentityHash(0
@@ -135,9 +124,9 @@ public:
     ZFListener observerChildOnStop;
     ZFValue *taskCategory;
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->ownerQueue = zfnull;
@@ -148,8 +137,8 @@ public:
         this->observerChildOnProgress = ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, childOnProgress));
         this->observerChildOnStop = ZFCallbackForMemberMethod(this, ZFMethodAccess(zfself, childOnStop));
         this->taskCategory = zfRetain(ZFValue::identityValueCreate(zfidentityCalcPointer(this)).to<ZFValue *>());
-        return this;
     }
+    zfoverride
     virtual void objectOnDealloc(void)
     {
         zfReleaseWithoutLeakTest(this->childRunning);

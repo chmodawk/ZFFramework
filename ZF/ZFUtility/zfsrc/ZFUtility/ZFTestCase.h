@@ -61,7 +61,7 @@ public:
      */
     ZFOBSERVER_EVENT(TestCaseOnStop)
 
-public:
+protected:
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 

@@ -46,20 +46,19 @@ public:
 // ZFMap
 ZFOBJECT_REGISTER(ZFMap)
 
-ZFObject *ZFMap::objectOnInit(ZF_IN ZFKeyValueContainer *another)
+ZFMETHOD_DEFINE_1(ZFMap, void, objectOnInit,
+                  ZFMP_IN(ZFKeyValueContainer *, another))
 {
     this->objectOnInit();
     if(another != zfnull)
     {
         zfself::addFrom(another);
     }
-    return this;
 }
-ZFObject *ZFMap::objectOnInit(void)
+void ZFMap::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFMapPrivate);
-    return this;
 }
 void ZFMap::objectOnDealloc(void)
 {

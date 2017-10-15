@@ -128,11 +128,10 @@ protected:
                                                         ZF_IN ZFSerializable *referencedOwnerOrNull,
                                                         ZF_OUT_OPT zfstring *outErrorHint = zfnull);
 
-public:
+protected:
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
-protected:
     zfoverride
     virtual inline void objectInfoOnAppendTokenLeft(ZF_IN_OUT zfstring &ret)
     {

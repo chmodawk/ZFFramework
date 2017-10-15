@@ -56,13 +56,12 @@ protected:
         this->observerNotify(zfself::EventFrameOnMove(), zflineAlloc(ZFUIOrientation, direction));
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual void layoutOnLayoutPrepare(ZF_IN const ZFUIRect &bounds);
     zfoverride

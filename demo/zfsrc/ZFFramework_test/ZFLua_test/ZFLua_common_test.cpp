@@ -14,27 +14,27 @@ zfclass _ZFP_ZFLua_common_test_Object : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_ZFLua_common_test_Object, ZFObject)
 
-public:
+protected:
     zfoverride
-    ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfLogT() << (void *)this;
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
-    void objectOnDealloc(void)
+    virtual void objectOnDealloc(void)
     {
         zfLogT() << (void *)this;
         zfsuper::objectOnDealloc();
     }
     zfoverride
-    void objectOnRetain(void)
+    virtual void objectOnRetain(void)
     {
         zfsuper::objectOnRetain();
         zfLogT() << (void *)this << this->objectRetainCount();
     }
     zfoverride
-    void objectOnRelease(void)
+    virtual void objectOnRelease(void)
     {
         zfsuper::objectOnRelease();
         zfLogT() << (void *)this << this->objectRetainCount();

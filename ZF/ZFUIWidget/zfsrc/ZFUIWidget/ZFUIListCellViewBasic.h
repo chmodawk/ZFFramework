@@ -113,9 +113,9 @@ public:
      */
     ZFMETHOD_DECLARE_0(ZFUIView *, cellAccessoryContainer);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

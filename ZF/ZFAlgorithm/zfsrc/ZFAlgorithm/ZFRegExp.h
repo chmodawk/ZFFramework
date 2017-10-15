@@ -178,20 +178,19 @@ protected:
         this->regExpCompile(another->regExpPattern(), another->regExpFlag());
     }
 
-public:
+protected:
     /**
      * @brief init with pattern, see #regExpCompile
      */
-    virtual ZFObject *objectOnInit(ZF_IN const zfchar *pattern,
-                                   ZF_IN_OPT ZFRegExpOptionFlags flag = ZFRegExpOptionFlags::EnumDefault());
+    ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit,
+                                 ZFMP_IN(const zfchar *, pattern),
+                                 ZFMP_IN_OPT(ZFRegExpOptionFlags, flag, ZFRegExpOptionFlags::EnumDefault)());
 
-public:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

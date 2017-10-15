@@ -66,19 +66,18 @@ zfclass ZF_ENV_EXPORT ZFEncrypt : zfextends ZFObject, zfimplements ZFSerializabl
      */
     ZFPROPERTY_ASSIGN(zfstring, encryptKey)
 
-public:
+protected:
     /**
      * @brief init with encrypt key
      */
-    virtual ZFObject *objectOnInit(ZF_IN const zfchar *encryptKey)
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(const zfchar *, encryptKey))
     {
         this->objectOnInit();
         this->encryptKeySet(encryptKey);
-        return this;
     }
-public:
     zfoverride
-    virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();}
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
 
 public:
     /** @brief calc size for encrypt */

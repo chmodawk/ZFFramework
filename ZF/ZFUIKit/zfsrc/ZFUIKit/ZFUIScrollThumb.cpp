@@ -15,14 +15,14 @@ ZFOBJECT_REGISTER(ZFUIScrollThumb)
 
 ZFOBSERVER_EVENT_REGISTER(ZFUIScrollThumb, ScrollThumbOnUpdate)
 
-void ZFUIScrollThumb::scrollThumbPosCalc(ZF_OUT zfint &scrollThumbResultPos,
-                                         ZF_OUT zfint &scrollThumbResultSize,
-                                         ZF_IN zfint scrollViewSize,
-                                         ZF_IN zfint scrollContentOffset,
-                                         ZF_IN zfint scrollContentSize,
-                                         ZF_IN zfint scrollThumbMinSize,
-                                         ZF_IN_OPT zfint headMargin /* = 0 */,
-                                         ZF_IN_OPT zfint tailMargin /* = 0 */)
+void ZFUIScrollThumb::scrollThumbPosFromViewPos(ZF_OUT zfint &scrollThumbResultPos,
+                                                ZF_OUT zfint &scrollThumbResultSize,
+                                                ZF_IN zfint scrollViewSize,
+                                                ZF_IN zfint scrollContentOffset,
+                                                ZF_IN zfint scrollContentSize,
+                                                ZF_IN zfint scrollThumbMinSize,
+                                                ZF_IN_OPT zfint headMargin /* = 0 */,
+                                                ZF_IN_OPT zfint tailMargin /* = 0 */)
 {
     if(scrollViewSize <= 0
         || scrollContentSize <= 0)
@@ -78,6 +78,32 @@ void ZFUIScrollThumb::scrollThumbPosCalc(ZF_OUT zfint &scrollThumbResultPos,
     if(scrollThumbResultPos < headMargin)
     {
         scrollThumbResultPos = headMargin;
+    }
+}
+void ZFUIScrollThumb::scrollThumbPosToViewPos(ZF_OUT zfint &scrollContentOffset,
+                                              ZF_IN zfint scrollViewSize,
+                                              ZF_IN zfint scrollContentSize,
+                                              ZF_IN zfint scrollThumbPos,
+                                              ZF_IN zfint scrollThumbSize,
+                                              ZF_IN_OPT zfint headMargin /* = 0 */,
+                                              ZF_IN_OPT zfint tailMargin /* = 0 */)
+{
+    if(scrollContentSize <= scrollViewSize
+        || scrollThumbPos <= headMargin
+        || scrollViewSize - headMargin - tailMargin - scrollThumbSize <= 0)
+    {
+        scrollContentOffset = 0;
+    }
+    else if(scrollThumbPos + scrollThumbSize >= scrollViewSize - tailMargin)
+    {
+        scrollContentOffset = scrollViewSize - scrollContentSize;
+    }
+    else
+    {
+        scrollContentOffset =
+            (scrollThumbPos - headMargin)
+            * (scrollViewSize - scrollContentSize)
+            / (scrollViewSize - headMargin - tailMargin - scrollThumbSize);
     }
 }
 

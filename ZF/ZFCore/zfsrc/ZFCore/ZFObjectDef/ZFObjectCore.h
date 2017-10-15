@@ -72,6 +72,8 @@ public:
     }
     static void _ZFP_Obj_initImpl(ZFClass *cls) {}
 };
+template<typename T_ZFObject, int valid>
+zfclassNotPOD ZF_ENV_EXPORT _ZFP_Obj_AllocCk;
 zfclassFwd _ZFP_ZFObjectPrivate;
 zfclassFwd ZFObjectHolder;
 /**
@@ -238,6 +240,7 @@ zfclass ZF_ENV_EXPORT ZFObject
     _ZFP_ZFOBJECT_DECLARE_OBJECT(ZFObject, _ZFP_ZFObjectDummyParent)
 
 public:
+    enum {_ZFP_ZFObjectCanAllocPublic = 1};
     static void _ZFP_Obj_initImpl(ZFClass *cls) {}
     virtual inline void _ZFP_ObjI_onInitIvk(void) {}
     virtual inline void _ZFP_ObjI_onDeallocIvk(void) {}
@@ -595,39 +598,37 @@ public:
     void _ZFP_ZFObjectUnlock(void);
     zfbool _ZFP_ZFObjectTryLock(void);
 
-    static ZFObject *_ZFP_ZFObjectAlloc(ZFObject *obj);
     ZFObject *_ZFP_ZFObjectCheckOnInit(void);
     static void _ZFP_ZFObjectDealloc(ZFObject *obj);
 
-public:
+protected:
     /**
      * @brief override this to init your object
      *
      * subclass must call superclass's objectOnInit before any other code if override\n
-     * due to the limitation of C++,
-     * you must declare it as public function,
-     * but never call it in your application manually\n
      * you may also declare objectOnInit with params like this:
      * @code
      *   zfclass Parent : ...
      *   {
      *       ...
-     *       virtual ZFObject *objectOnInit(void) {...};
+     *   protected:
+     *       virtual void objectOnInit(void) {...};
      *   };
      *   zfclass Child : Parent
      *   {
-     *   public:
-     *       virtual ZFObject *objectOnInit(void)
+     *   protected:
+     *       // override all parent's objectOnInit is also required,
+     *       // because of function hiding of C++
+     *       zfoverride
+     *       virtual void objectOnInit(void)
      *       {
-     *           zfsuper::objectOnInit(); // since Parent1 doesn't override objectOnInit
-     *           return this;
+     *           zfsuper::objectOnInit();
      *       }
-     *       // init with params
-     *       virtual ZFObject *objectOnInit(Params...)
+     *       // custom init entry
+     *       virtual void objectOnInit(Params...)
      *       {
      *           this->objectOnInit(); // call objectOnInit with no params first
      *           // your init steps
-     *           return this;
      *       }
      *   };
      * @endcode
@@ -641,24 +642,21 @@ public:
      *   and your child type want to override part of those objectOnInit,
      *   then your child type must also override all objectOnInit that parent declared,
      *   otherwise, some may be hidden
-     * @note you may declare objectOnInit as protected method
-     *   while declaring subclass of ZFObject,
-     *   which means the subclass should not be allocated normally,
+     * @note for objects that designed not to be allocated by user,
+     *   you should use #ZFCLASS_PRIVATE_ALLOC,
      *   typically usage:
      *   @code
      *     zfclass MyObject : zfextends ZFObject
      *     {
      *         ZFOBJECT_DECLARE(MyObject, ZFObject)
+     *         ZFCLASS_PRIVATE_ALLOC("should be created by MyObject::instanceForXxx only")
      *
      *     public:
      *         static zfautoObject instanceForXxx(xxx)
      *         {
-     *             return zfautoObjectCreate(zflineAlloc(MyObject));
+     *             // can only be allocated by reflection
+     *             return zfself::ClassData()->newInstance();
      *         }
-     *     protected:
-     *         ZFCLASS_PRIVATE_ALLOC("should be created by MyObject::instanceForXxx only")
-     *         zfoverride
-     *         virtual ZFObject *objectOnInit(void) {...}
      *     };
      *     static void func(void)
      *     {
@@ -667,7 +665,7 @@ public:
      *     }
      *   @endcode
      */
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     /**
      * @brief called after #objectOnInit, safe to call virtual functions here
      *
@@ -768,8 +766,11 @@ protected:
 
 private:
     _ZFP_ZFObjectPrivate *d;
+    friend zfclassFwd ZFClass;
     friend zfclassFwd ZFObserverHolder;
     friend zfclassFwd _ZFP_ZFObserverHolderPrivate;
+    friend void _ZFP_zfRetainAction(ZF_IN ZFObject *obj);
+    friend void _ZFP_zfReleaseAction(ZF_IN ZFObject *obj);
 };
 
 ZF_NAMESPACE_GLOBAL_END

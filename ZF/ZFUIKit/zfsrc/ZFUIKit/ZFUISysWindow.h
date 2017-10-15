@@ -123,11 +123,10 @@ protected:
      */
     virtual void sysWindowMarginOnUpdate(ZF_IN const ZFUIMargin &sysWindowMarginOld);
 
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by reflect or ZFUISysWindow::modalWindowShow")
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
-public:
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnInitFinish(void);
     zfoverride

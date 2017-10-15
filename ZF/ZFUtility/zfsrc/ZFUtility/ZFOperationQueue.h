@@ -25,15 +25,20 @@ zfclass ZF_ENV_EXPORT ZFOperationQueueChildTaskData : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationQueueChildTaskData, ZFObject)
 
-public:
-    /** @brief see #ZFObject::objectOnInit */
-    virtual ZFObject *objectOnInit(ZF_IN ZFOperation *childOperation,
-                                   ZF_IN ZFOperationStartParam *childTaskData);
-    /** @brief see #ZFObject::objectOnInit */
-    zfoverride
-    virtual ZFObject *objectOnInit(void);
-
 protected:
+    /** @brief see #ZFObject::objectOnInit */
+    ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit,
+                                 ZFMP_IN(ZFOperation *, childOperation),
+                                 ZFMP_IN(ZFOperationStartParam *, childTaskData))
+    {
+        this->objectOnInit();
+        this->childOperationSet(childOperation);
+        this->childTaskDataSet(childTaskData);
+    }
+
+    zfoverride
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
+
     zfoverride
     virtual inline void objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
     {

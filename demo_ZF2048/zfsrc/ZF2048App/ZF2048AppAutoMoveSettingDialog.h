@@ -23,13 +23,13 @@ zfclass ZF2048AppAutoMoveSettingDialog : zfextends ZF2048AppDialog
 public:
     ZFCoreArrayPOD<ZF2048AppAutoMoveActionEnum> autoMoves;
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
+    zfoverride
     virtual void autoMoveSettingOnChange(void)
     {
         this->observerNotify(zfself::EventAutoMoveSettingOnChange());

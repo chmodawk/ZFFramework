@@ -193,9 +193,9 @@ public:
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZFUIRect, scrollContentFrame);
     zffinal void _ZFP_ZFUIScrollView_scrollContentFrameSetByImpl(ZF_IN const ZFUIRect &rect);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

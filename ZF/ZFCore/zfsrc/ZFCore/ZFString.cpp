@@ -222,31 +222,11 @@ zfindex ZFString::wordCountOfUTF8(ZF_IN const zfcharA *utf8String)
 
 // ============================================================
 // instance method
-ZFObject *ZFString::objectOnInit(ZF_IN const zfchar *s,
-                                 ZF_IN_OPT ZFStringStorageTypeEnum storageType /* = ZFStringStorageType::EnumDefault() */)
-{
-    this->objectOnInit();
-    zfself::stringValueSet(s, storageType);
-    return this;
-}
-ZFObject *ZFString::objectOnInit(ZF_IN ZFString *another)
-{
-    this->objectOnInit();
-    zfself::stringValueSet(another);
-    return this;
-}
-ZFObject *ZFString::objectOnInit(ZF_IN void *nativeString)
-{
-    this->objectOnInit();
-    zfself::nativeStringSet(nativeString);
-    return this;
-}
-ZFObject *ZFString::objectOnInit(void)
+void ZFString::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = _ZFP_ZFStringEmptyData;
     ++(d->refCount);
-    return this;
 }
 void ZFString::objectOnDealloc(void)
 {

@@ -37,34 +37,33 @@ public:
     /** @brief bezier value */
     ZFPROPERTY_ASSIGN(ZFBezier, bezier)
 
-public:
+protected:
     /**
      * @brief init with bezier
      */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFBezier &bezier)
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(const ZFBezier &, bezier))
     {
         this->objectOnInit();
         this->bezierSet(bezier);
-        return this;
     }
     /**
      * @brief init with bezier control point
      */
-    virtual ZFObject *objectOnInit(ZF_IN zffloat p0x, ZF_IN zffloat p0y,
-                                   ZF_IN zffloat p1x, ZF_IN zffloat p1y)
+    ZFMETHOD_DECLARE_PROTECTED_4(void, objectOnInit,
+                                 ZFMP_IN(zffloat, p0x),
+                                 ZFMP_IN(zffloat, p0y),
+                                 ZFMP_IN(zffloat, p1x),
+                                 ZFMP_IN(zffloat, p1y))
     {
         this->objectOnInit();
         this->bezierSet(ZFBezier(p0x, p0y, p1x, p1y));
-        return this;
     }
-public:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
-
-protected:
     zfoverride
     virtual zffloat progressOnUpdate(ZF_IN zffloat time)
     {

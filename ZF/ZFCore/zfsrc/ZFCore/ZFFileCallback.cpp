@@ -126,15 +126,14 @@ zfclass _ZFP_ZFOutputCallbackForFileOwner : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_ZFOutputCallbackForFileOwner, ZFObject)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->autoFlushSize = 0;
         this->token = ZFFileTokenInvalid();
         this->notFlushedCount = 0;
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -199,14 +198,13 @@ zfclass _ZFP_ZFInputCallbackForFileOwner : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_ZFInputCallbackForFileOwner, ZFObject)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->token = ZFFileTokenInvalid();
         this->BOMSize = 0;
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -270,13 +268,12 @@ zfclass _ZFP_ZFInputCallbackForResFileOwner : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_ZFInputCallbackForResFileOwner, ZFObject)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->token = ZFFileTokenInvalid();
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)

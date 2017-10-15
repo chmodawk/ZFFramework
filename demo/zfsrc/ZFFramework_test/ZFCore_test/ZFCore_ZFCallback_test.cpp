@@ -69,9 +69,9 @@ private:
     ZFCallback callbackClassStaticMember;
     ZFCallback callbackFunction;
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->ownerClass = zfAlloc(_ZFP_ZFCore_ZFCallback_test_Class);
@@ -84,7 +84,6 @@ public:
             _ZFP_ZFCore_ZFCallback_test_Class::ClassData()->methodForName(zfText("classStaticMember")));
 
         this->callbackFunction = ZFCallbackForRawFunction(_ZFP_ZFCore_ZFCallback_test_StaticFunction);
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)

@@ -73,12 +73,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 #define zfpurevirtual = 0
 
-/**
- * @brief dummy macro shows the object can not be allocated normally,
- *   marked for reminder
- */
-#define ZFCLASS_PRIVATE_ALLOC(hint)
-
 // ============================================================
 /**
  * @brief same as dynamic_cast<Type>(obj), require #ZF_ENV_RTTI

@@ -22,18 +22,21 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  */
 zfclass ZF_ENV_EXPORT ZFMutex : zfextends ZFObject
 {
-    ZFOBJECT_DECLARE(ZFMutex, ZFObject)
+    ZFOBJECT_DECLARE_WITH_CUSTOM_CTOR(ZFMutex, ZFObject)
+protected:
+    /** @cond ZFPrivateDoc */
+    ZFMutex(void) : noWarningIfImplNotAvailable(zffalse) {}
+    /** @endcond */
 
-public:
+protected:
     /**
      * @brief whether to warning if no implementation available
      */
-    virtual ZFObject *objectOnInit(ZF_IN zfbool noWarningIfImplementationNotAvailable);
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(zfbool, noWarningIfImplNotAvailable));
 public:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
-    zfoverride
-    virtual void objectOnDealloc(void);
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
 
 public:
     /**
@@ -59,7 +62,7 @@ public:
     virtual void mutexUnlock(void);
 
 private:
-    zfbool noWarningIfImplementationNotAvailable;
+    zfbool noWarningIfImplNotAvailable;
 };
 
 zffinal zfclassNotPOD ZF_ENV_EXPORT _ZFP_ZFMutexLocker

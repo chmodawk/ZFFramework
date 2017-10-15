@@ -301,7 +301,8 @@ public:
         containerView->viewVisibleSet(containerView->childCount() > 0);
     }
 ZF_GLOBAL_INITIALIZER_END(ZFUIDialogContentBasicDataHolder)
-ZFObject *ZFUIDialogContentBasic::objectOnInit(void)
+
+void ZFUIDialogContentBasic::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIDialogContentBasicPrivate);
@@ -355,8 +356,6 @@ ZFObject *ZFUIDialogContentBasic::objectOnInit(void)
         d->dialogButtonLayout->layoutOrientationSet(ZFUIOrientation::e_Right);
         d->dialogButtonLayout->layoutChildSpaceSet(ZFUIGlobalStyle::DefaultStyle()->itemSpace());
     }
-
-    return this;
 }
 void ZFUIDialogContentBasic::objectOnDealloc(void)
 {

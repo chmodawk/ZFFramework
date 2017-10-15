@@ -370,19 +370,17 @@ public:
         this->buttonBackgroundStyle(forState)->imageSet(image);
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnInitFinish(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 
-protected:
     zfoverride
     virtual void layoutOnMeasure(ZF_OUT ZFUISize &ret,
                                  ZF_IN const ZFUISize &sizeHint,
@@ -392,7 +390,6 @@ protected:
     zfoverride
     virtual zfbool internalViewShouldLayout(ZF_IN ZFUIView *internalView);
 
-protected:
     zfoverride
     virtual void buttonStateOnUpdate(void);
 

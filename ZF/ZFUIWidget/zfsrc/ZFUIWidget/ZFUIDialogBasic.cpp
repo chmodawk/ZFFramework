@@ -110,13 +110,10 @@ ZFPROPERTY_CUSTOM_ON_DETACH_DEFINE(ZFUIDialogBasic, ZFUIDialogContent *, dialogC
     }
 }
 
-ZFObject *ZFUIDialogBasic::objectOnInit(void)
+void ZFUIDialogBasic::objectOnInit(void)
 {
     zfsuper::objectOnInit();
-
     this->dialogContentSet(this->dialogContent());
-
-    return this;
 }
 void ZFUIDialogBasic::objectOnDeallocPrepare(void)
 {

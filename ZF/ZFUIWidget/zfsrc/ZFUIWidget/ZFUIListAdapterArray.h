@@ -26,13 +26,12 @@ zfclass ZF_ENV_EXPORT ZFUIListAdapterArray : zfextends ZFObject, zfimplements ZF
     ZFOBJECT_DECLARE(ZFUIListAdapterArray, ZFObject)
     ZFIMPLEMENTS_DECLARE(ZFUIListAdapter)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         d = zfAllocWithoutLeakTest(ZFArrayEditable);
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)

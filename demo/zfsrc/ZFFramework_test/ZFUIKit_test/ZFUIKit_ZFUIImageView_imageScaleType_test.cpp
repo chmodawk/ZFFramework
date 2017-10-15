@@ -17,9 +17,9 @@ zfclass ZFUIKit_ZFUIImageView_imageScaleType_test_Container : zfextends ZFUIView
     ZFPROPERTY_RETAIN_WITH_INIT(ZFUIImageView *, imageViewSmall, ZFPropertyInitValue(zflineAlloc(ZFUIImageView)))
     ZFPROPERTY_RETAIN_WITH_INIT(ZFUIImageView *, imageViewLarge, ZFPropertyInitValue(zflineAlloc(ZFUIImageView)))
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->viewBackgroundColorSet(ZFUIColorYellow());
@@ -34,10 +34,7 @@ public:
         this->childAdd(this->imageViewLarge());
         this->imageViewLarge()->imageSet(imageLarge.toAny());
         this->imageViewLarge()->viewBackgroundColorSet(ZFUIColorBlue());
-
-        return this;
     }
-protected:
     zfoverride
     virtual void layoutOnLayout(ZF_IN const ZFUIRect &bounds)
     {

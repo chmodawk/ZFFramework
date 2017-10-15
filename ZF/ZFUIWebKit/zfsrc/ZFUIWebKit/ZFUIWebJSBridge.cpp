@@ -51,10 +51,10 @@ ZFMETHOD_DEFINE_1(ZFUIWebJSBridge, ZFUIWebJSBridge *, instanceForWebView,
     ZFUIWebJSBridge *ret = webView->tagGet<ZFUIWebJSBridge *>(_ZFP_ZFUIWebJSBridge_tagKey);
     if(ret == zfnull)
     {
-        zfblockedAlloc(ZFUIWebJSBridge, tmp);
-        webView->tagSet(_ZFP_ZFUIWebJSBridge_tagKey, tmp);
-        ret->d->webView = webView;
+        zfautoObject tmp = ZFUIWebJSBridge::ClassData()->newInstance();
         ret = tmp;
+        ret->d->webView = webView;
+        webView->tagSet(_ZFP_ZFUIWebJSBridge_tagKey, ret);
     }
     return ret;
 }
@@ -83,14 +83,12 @@ ZFJsonItem ZFUIWebJSBridge::_ZFP_ZFUIWebJSBridge_notifyWebMessageRecv(ZF_IN_OUT 
     return dataRecv->messageResponse;
 }
 
-ZFObject *ZFUIWebJSBridge::objectOnInit(void)
+void ZFUIWebJSBridge::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
     d = zfpoolNew(_ZFP_ZFUIWebJSBridgePrivate);
     d->nativeWebJSBridge = ZFPROTOCOL_ACCESS(ZFUIWebJSBridge)->nativeWebJSBridgeCreate(this);
-
-    return this;
 }
 void ZFUIWebJSBridge::objectOnDealloc(void)
 {

@@ -101,9 +101,9 @@ zfabstract ZF_ENV_EXPORT ZFOperation : zfextends ZFObject
      */
     ZFOBSERVER_EVENT(OperationTaskOnProgress)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
@@ -630,12 +630,12 @@ zfclass ZF_ENV_EXPORT ZFOperationTaskData : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationTaskData, ZFObject)
 
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createTaskData")
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
 
 protected:

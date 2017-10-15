@@ -57,14 +57,15 @@ private:
     ZFListener cachedOnStopListener;
     ZFCoreArrayPOD<zfidentity> childDelayTaskIds;
 
-public:
-    virtual ZFObject *objectOnInit(void)
+protected:
+    zfoverride
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->childAnis = zfAllocWithoutLeakTest(ZFArrayEditable);
         this->childBuf = zfAllocWithoutLeakTest(ZFArrayEditable);
-        return this;
     }
+    zfoverride
     virtual void objectOnDealloc(void)
     {
         zfReleaseWithoutLeakTest(this->childAnis);
@@ -386,12 +387,11 @@ zfbool ZFAnimationGroup::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableD
 
 // ============================================================
 // object
-ZFObject *ZFAnimationGroup::objectOnInit(void)
+void ZFAnimationGroup::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAllocWithoutLeakTest(_ZFP_ZFAnimationGroupPrivate);
     d->pimplOwner = this;
-    return this;
 }
 void ZFAnimationGroup::objectOnDealloc(void)
 {

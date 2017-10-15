@@ -319,15 +319,14 @@ public:
         dst->textSizeSet(this->textSize());
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnInitFinish(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

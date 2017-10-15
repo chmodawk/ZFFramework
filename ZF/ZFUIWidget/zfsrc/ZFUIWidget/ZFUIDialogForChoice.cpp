@@ -157,7 +157,7 @@ private:
 
 public:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
 
@@ -174,8 +174,6 @@ public:
         this->buttonGroup->observerAdd(ZFUIButton::EventButtonOnClick(), this->buttonEventListener);
 
         this->updateListSize();
-
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -204,15 +202,13 @@ public:
     }
 ZF_GLOBAL_INITIALIZER_END(ZFUIDialogForChoiceDataHolder)
 
-ZFObject *ZFUIDialogForChoice::objectOnInit(void)
+void ZFUIDialogForChoice::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
     d = zfAllocWithoutLeakTest(_ZFP_ZFUIDialogForChoicePrivate);
     d->pimplOwner = this;
     this->dialogContentContainer()->childAdd(d);
-
-    return this;
 }
 void ZFUIDialogForChoice::objectOnDealloc(void)
 {

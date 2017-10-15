@@ -174,15 +174,14 @@ zfclass _ZFP_I_ZFDebugCallbackOwner : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(_ZFP_I_ZFDebugCallbackOwner, ZFObject)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->firstTimeOutput = zftrue;
         this->prefix = zfnull;
         this->suffix = zfnull;
-        return this;
     }
     zfoverride
     virtual void objectOnDeallocPrepare(void)

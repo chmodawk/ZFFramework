@@ -118,23 +118,25 @@ zfclass ZFUIWidget_ZFUIPage_test_PageManager : zfextends ZFUIPageManagerBasic
     ZFPROPERTY_RETAIN_WITH_INIT(ZFUIView *, _pageContainer, ZFPropertyInitValue(zflineAlloc(ZFUIView)))
     ZFPROPERTY_RETAIN_WITH_INIT(ZFUILinearLayout *, _buttonLayout, ZFPropertyInitValue(zflineAlloc(ZFUILinearLayout)))
 
-public:
-    virtual ZFObject *objectOnInit(ZF_IN ZFUIView *container)
+protected:
+    virtual void objectOnInit(ZF_IN ZFUIView *container)
     {
         this->objectOnInit();
         this->_containerSet(container);
-        return this;
     }
-    virtual ZFObject *objectOnInit(void)
+    zfoverride
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
+    zfoverride
     virtual void objectOnInitFinish(void)
     {
         zfsuper::objectOnInitFinish();
         this->embededCreate();
         this->embededResume();
     }
+    zfoverride
     virtual void objectOnDeallocPrepare(void)
     {
         this->embededPause();
@@ -142,7 +144,6 @@ public:
         zfsuper::objectOnDeallocPrepare();
     }
 
-protected:
     zfoverride
     virtual void managerOnCreate(void)
     {

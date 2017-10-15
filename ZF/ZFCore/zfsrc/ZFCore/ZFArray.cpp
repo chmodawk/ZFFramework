@@ -23,17 +23,16 @@ public:
 // ZFArray
 ZFOBJECT_REGISTER(ZFArray)
 
-ZFObject *ZFArray::objectOnInit(ZF_IN ZFContainer *another)
+ZFMETHOD_DEFINE_1(ZFArray, void, objectOnInit,
+                  ZFMP_IN(ZFContainer *, another))
 {
     this->objectOnInit();
     zfself::addFrom(another);
-    return this;
 }
-ZFObject *ZFArray::objectOnInit(void)
+void ZFArray::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFArrayPrivate);
-    return this;
 }
 void ZFArray::objectOnDealloc(void)
 {

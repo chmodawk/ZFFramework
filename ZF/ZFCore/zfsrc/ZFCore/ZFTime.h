@@ -416,24 +416,36 @@ public:
      */
     ZFMETHOD_DECLARE_STATIC_0(const ZFTimeValue &, timeZoneLocal);
 
-public:
+protected:
     /**
      * @brief init from another ZFTime
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFTime *time);
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(ZFTime *, time));
     /**
      * @brief init from time value
      */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFTimeValue &tv,
-                                   ZF_IN_OPT const ZFTimeValue &timeZone = zfself::timeZoneLocal());
+    ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit,
+                                 ZFMP_IN(const ZFTimeValue &, tv),
+                                 ZFMP_IN_OPT(const ZFTimeValue &, timeZone, zfself::timeZoneLocal)())
+    {
+        this->objectOnInit();
+        zfself::timeZoneSet(timeZone);
+        zfself::timeValueSet(tv);
+    }
     /**
      * @brief init from time info, or zero time if invalid
      */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFTimeInfo &ti,
-                                   ZF_IN_OPT const ZFTimeValue &timeZone = zfself::timeZoneLocal());
-public:
+    ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit,
+                                 ZFMP_IN(const ZFTimeInfo &, ti),
+                                 ZFMP_IN_OPT(const ZFTimeValue &, timeZone, zfself::timeZoneLocal)())
+    {
+        this->objectOnInit();
+        zfself::timeInfoSet(ti, timeZone);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

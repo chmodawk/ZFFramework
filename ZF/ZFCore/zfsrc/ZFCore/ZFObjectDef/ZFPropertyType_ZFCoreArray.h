@@ -48,30 +48,28 @@ public:
     ZFCoreArrayBase *zfv;
 protected:
     v_ZFCoreArray(void) : zfv(zfnull) {}
-public:
+protected:
+    /** @brief init with value */
+    virtual void objectOnInit(ZF_IN const void *v)
+    {
+        this->objectOnInit();
+        this->wrappedValueSet(v);
+    }
+    /** @brief init with value */
+    virtual void objectOnInit(ZF_IN const ZFCoreArrayBase *v)
+    {
+        this->objectOnInit();
+        this->wrappedValueSet(v);
+    }
+    /** @brief init with value */
+    virtual void objectOnInit(ZF_IN ZFCoreArrayBase const &v)
+    {
+        this->objectOnInit();
+        this->wrappedValueSet(v);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void) {return zfsuper::objectOnInit();}
-    /** @brief init with value */
-    virtual ZFObject *objectOnInit(ZF_IN const void *v)
-    {
-        this->objectOnInit();
-        this->wrappedValueSet(v);
-        return this;
-    }
-    /** @brief init with value */
-    virtual ZFObject *objectOnInit(ZF_IN const ZFCoreArrayBase *v)
-    {
-        this->objectOnInit();
-        this->wrappedValueSet(v);
-        return this;
-    }
-    /** @brief init with value */
-    virtual ZFObject *objectOnInit(ZF_IN ZFCoreArrayBase const &v)
-    {
-        this->objectOnInit();
-        this->wrappedValueSet(v);
-        return this;
-    }
+    virtual void objectOnInit(void) {zfsuper::objectOnInit();}
     zfoverride
     virtual void objectOnDealloc(void)
     {
@@ -88,6 +86,8 @@ public:
     virtual inline void objectInfoOnAppendTokenRight(ZF_IN_OUT zfstring &ret) {}
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret) {}
+
+public:
     zfoverride
     virtual ZFCompareResult objectCompare(ZF_IN ZFObject *anotherObj)
     {

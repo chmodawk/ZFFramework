@@ -26,9 +26,9 @@ zfclass ZF_ENV_EXPORT ZFUIScrollerDefault : zfextends ZFObject, zfimplements ZFU
     ZFOBJECT_DECLARE(ZFUIScrollerDefault, ZFObject)
     ZFIMPLEMENTS_DECLARE(ZFUIScroller)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

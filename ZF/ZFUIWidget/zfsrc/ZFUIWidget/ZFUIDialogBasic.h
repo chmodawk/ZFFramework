@@ -389,14 +389,15 @@ public:
         this->dialogContent()->dialogButtonRemoveAll();
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
+public:
     zffinal void _ZFP_ZFUIDialogBasic_dialogButtonOnAdd(ZF_IN ZFUIButton *button)
     {
         this->dialogButtonOnAdd(button);

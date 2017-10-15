@@ -185,11 +185,10 @@ void ZFOperationStartParam::operationTaskDataSet(ZF_IN ZFOperationTaskData *oper
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_1(ZFOperationStartParam, void, operationTaskDataSet, ZFMP_IN(ZFOperationTaskData *, operationTaskData))
 ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_0(ZFOperationStartParam, ZFOperationTaskData *, operationTaskData)
 
-ZFObject *ZFOperationStartParam::objectOnInit(void)
+void ZFOperationStartParam::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     this->_operationTaskData = zfnull;
-    return this;
 }
 void ZFOperationStartParam::objectOnDeallocPrepare(void)
 {

@@ -340,16 +340,15 @@ private:
     _ZFP_ZFCore_ZFMethod_test_TestBase *pBase;
     _ZFP_ZFCore_ZFMethod_test_TestChild *pChild;
     _ZFP_ZFCore_ZFMethod_test_TestBase *pBasePointToChild;
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
 
         this->pBase = zfnull;
         this->pChild = zfnull;
         this->pBasePointToChild = zfnull;
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)

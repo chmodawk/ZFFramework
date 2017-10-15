@@ -22,27 +22,27 @@ public:
         this->observerNotify(zfself::EventTest(), ZFValue::intValueCreate(1111), ZFValue::intValueCreate(2222));
     }
 
-public:
+protected:
     zfoverride
-    ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfLogT() << (void *)this;
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
-    void objectOnDealloc(void)
+    virtual void objectOnDealloc(void)
     {
         zfLogT() << (void *)this;
         zfsuper::objectOnDealloc();
     }
     zfoverride
-    void objectOnRetain(void)
+    virtual void objectOnRetain(void)
     {
         zfsuper::objectOnRetain();
         zfLogT() << (void *)this << this->objectRetainCount();
     }
     zfoverride
-    void objectOnRelease(void)
+    virtual void objectOnRelease(void)
     {
         zfsuper::objectOnRelease();
         zfLogT() << (void *)this << this->objectRetainCount();

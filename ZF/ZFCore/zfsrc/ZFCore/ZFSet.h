@@ -35,12 +35,12 @@ protected:
         this->addFrom(ZFCastZFObjectUnchecked(zfself *, anotherObj));
     }
 
-public:
+protected:
     /** @brief see #ZFObject::objectOnInit */
-    virtual ZFObject *objectOnInit(ZF_IN ZFContainer *another);
-public:
+    virtual void objectOnInit(ZF_IN ZFContainer *another);
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

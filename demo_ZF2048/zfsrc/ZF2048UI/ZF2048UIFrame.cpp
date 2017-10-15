@@ -19,15 +19,12 @@ zfclass _ZFP_ZF2048UIBlockBackgroundView : zfextends ZFUIImageView, zfimplements
 
     ZFCACHEABLE_DECLARE(_ZFP_ZF2048UIBlockBackgroundView)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
-
         zfSkinApplyZFStyleable(this, zfText("ZF2048_block_bg"));
-
-        return this;
     }
 };
 zfclassNotPOD _ZFP_ZF2048UIFramePrivate
@@ -169,7 +166,7 @@ ZFUIRect ZF2048UIFrame::blockRectAt(ZF_IN zfindex posX, ZF_IN zfindex posY)
         (zfint)(d->cachedBlockSize));
 }
 
-ZFObject *ZF2048UIFrame::objectOnInit(void)
+void ZF2048UIFrame::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfnew(_ZFP_ZF2048UIFramePrivate);
@@ -182,8 +179,6 @@ ZFObject *ZF2048UIFrame::objectOnInit(void)
     d->blockBackgrounds = zfAlloc(ZFArrayEditable);
 
     zfSkinApplyZFStyleable(this, zfText("ZF2048_frame"));
-
-    return this;
 }
 void ZF2048UIFrame::objectOnDealloc(void)
 {

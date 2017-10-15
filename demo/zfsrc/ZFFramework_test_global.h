@@ -17,14 +17,13 @@ zfabstract ZFFramework_test_TestCase : zfextends ZFTestCase
 {
     ZFOBJECT_DECLARE_ABSTRACT(ZFFramework_test_TestCase, ZFTestCase)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
-protected:
     zfoverride
     virtual void testCaseOnStop(ZF_IN ZFResultTypeEnum testCaseResult);
 

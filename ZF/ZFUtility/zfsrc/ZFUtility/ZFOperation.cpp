@@ -25,16 +25,15 @@ public:
     zfbool taskIsDuplicate; // used when remove taskObserverData before taskOnStop, to mark whether it's duplicated task
     zftimet cacheExpireTime;
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->ownerTaskData = zfnull;
         this->operationTaskData = zfnull;
         this->taskIsDuplicate = zffalse;
         this->cacheExpireTime = ZFOperationCacheExpireTimeUnspecified;
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -51,14 +50,13 @@ public:
     ZFCoreArrayPOD<zfidentity> operationIds;
     ZFArrayEditable *taskObserverDatas; // array of _ZFP_I_ZFOperationPrivateTaskObserverData, auto create and release
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->operationParam = zfnull;
         this->taskObserverDatas = zfAllocWithoutLeakTest(ZFArrayEditable);
-        return this;
     }
     zfoverride
     virtual void objectOnDealloc(void)
@@ -626,13 +624,12 @@ ZFOBSERVER_EVENT_REGISTER(ZFOperation, OperationTaskOnStart)
 ZFOBSERVER_EVENT_REGISTER(ZFOperation, OperationTaskOnStop)
 ZFOBSERVER_EVENT_REGISTER(ZFOperation, OperationTaskOnProgress)
 
-ZFObject *ZFOperation::objectOnInit(void)
+void ZFOperation::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFOperationPrivate);
     d->pimplOwner = this;
     ZF_GLOBAL_INITIALIZER_INSTANCE(ZFOperationDataHolder)->cacheTrimListenerSetup(this, this->cacheTrimWhenReceiveMemoryWarning());
-    return this;
 }
 void ZFOperation::objectOnDealloc(void)
 {

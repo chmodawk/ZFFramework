@@ -38,20 +38,20 @@ zfclass ZF_ENV_EXPORT ZFAutoReleasePool : zfextends ZFObject
      */
     ZFOBJECT_SINGLETON_DECLARE(ZFAutoReleasePool, instance)
 
-public:
+protected:
     /**
      * @brief init with max capacity
      */
-    virtual ZFObject *objectOnInit(ZF_IN zfindex maxSize);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(zfindex, maxSize));
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

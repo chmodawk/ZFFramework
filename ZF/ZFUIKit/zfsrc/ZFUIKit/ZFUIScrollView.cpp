@@ -654,7 +654,7 @@ void ZFUIScrollView::_ZFP_ZFUIScrollView_scrollContentFrameSetByImpl(ZF_IN const
     d->scrollContentFrameOverrideFlag = zffalse;
 }
 
-ZFObject *ZFUIScrollView::objectOnInit(void)
+void ZFUIScrollView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -684,8 +684,6 @@ ZFObject *ZFUIScrollView::objectOnInit(void)
     this->nativeImplViewSet(
         ZFPROTOCOL_ACCESS(ZFUIScrollView)->nativeScrollViewCreate(this),
         _ZFP_ZFUIScrollView_nativeImplViewDestroy::action);
-
-    return this;
 }
 void ZFUIScrollView::objectOnDealloc(void)
 {

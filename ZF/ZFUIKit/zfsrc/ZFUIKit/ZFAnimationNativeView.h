@@ -41,9 +41,9 @@ zfclass ZF_ENV_EXPORT ZFAnimationNativeView : zfextends ZFAnimation
 {
     ZFOBJECT_DECLARE(ZFAnimationNativeView, ZFAnimation)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

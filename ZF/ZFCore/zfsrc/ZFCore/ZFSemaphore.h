@@ -25,9 +25,9 @@ zfclass ZF_ENV_EXPORT ZFSemaphore : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFSemaphore, ZFObject)
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

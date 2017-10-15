@@ -12,21 +12,6 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFOBJECT_REGISTER(ZFUINativeViewWrapper)
-ZFObject *ZFUINativeViewWrapper::objectOnInit(ZF_IN void *wrappedNativeView)
-{
-    this->objectOnInit();
-    zfself::wrappedNativeViewSet(wrappedNativeView);
-    return this;
-}
-ZFObject *ZFUINativeViewWrapper::objectOnInit(void)
-{
-    zfsuper::objectOnInit();
-    return this;
-}
-void ZFUINativeViewWrapper::objectOnDealloc(void)
-{
-    zfsuper::objectOnDealloc();
-}
 
 void ZFUINativeViewWrapper::objectInfoOnAppend(ZF_IN_OUT zfstring &ret)
 {

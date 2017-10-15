@@ -155,15 +155,16 @@ private:
         ZFUIKit_test_prepareSettingButtonWithTestWindow(window, settings);
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
         zfsuper::objectOnInit();
         this->testObjectType = 0;
         this->testObjectTypeCount = 3;
-        return this;
     }
+
+public:
     zfindex testObjectType;
     zfindex testObjectTypeCount;
     zfautoObject prepareTestObject(void)

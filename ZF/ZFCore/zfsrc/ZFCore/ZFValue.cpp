@@ -395,17 +395,10 @@ zfbool ZFValue::serializableOnSerializeToData(ZF_IN_OUT ZFSerializableData &seri
     return zftrue;
 }
 
-ZFObject *ZFValue::objectOnInit(ZF_IN ZFValue *another)
-{
-    this->objectOnInit();
-    zfself::valueSet(another);
-    return this;
-}
-ZFObject *ZFValue::objectOnInit(void)
+void ZFValue::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFValuePrivate);
-    return this;
 }
 void ZFValue::objectOnDealloc(void)
 {

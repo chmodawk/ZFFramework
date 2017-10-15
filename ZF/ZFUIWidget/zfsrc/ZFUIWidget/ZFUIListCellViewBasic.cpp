@@ -49,7 +49,7 @@ ZFMETHOD_DEFINE_0(ZFUIListCellViewBasic, ZFUIView *, cellAccessoryContainer)
     return d->cellAccessoryContainer;
 }
 
-ZFObject *ZFUIListCellViewBasic::objectOnInit(void)
+void ZFUIListCellViewBasic::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -71,8 +71,6 @@ ZFObject *ZFUIListCellViewBasic::objectOnInit(void)
     }
 
     d->cellAccessoryContainer = zfAllocWithoutLeakTest(ZFUIViewLayout);
-
-    return this;
 }
 void ZFUIListCellViewBasic::objectOnDealloc(void)
 {

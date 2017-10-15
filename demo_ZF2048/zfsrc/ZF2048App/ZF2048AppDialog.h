@@ -33,9 +33,9 @@ zfclass ZF2048AppDialog : zfextends ZFUIDialog
     ZFPROPERTY_CUSTOM_ON_ATTACH_DECLARE(ZFUIView *, dialogContent);
     ZFPROPERTY_CUSTOM_ON_DETACH_DECLARE(ZFUIView *, dialogContent);
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 

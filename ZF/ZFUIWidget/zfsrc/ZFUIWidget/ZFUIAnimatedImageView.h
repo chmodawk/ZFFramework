@@ -61,13 +61,12 @@ public:
         return this->animatedImage()->aniRunning();
     }
 
-public:
+protected:
     zfoverride
     virtual void objectOnInitFinish(void);
     zfoverride
     virtual void objectOnDeallocPrepare(void);
 
-protected:
     zfoverride
     virtual void layoutOnLayoutPrepare(ZF_IN const ZFUIRect &bounds);
     zfoverride

@@ -24,17 +24,16 @@ zfclass _ZFP_ZFUIScrollThumbDefault_HideThumbAni : zfextends ZFAnimationTimeLine
 private:
     ZFUIImageView *thumbView;
 
-public:
-    virtual ZFObject *objectOnInit(ZF_IN ZFUIImageView *thumbView)
+protected:
+    virtual void objectOnInit(ZF_IN ZFUIImageView *thumbView)
     {
         this->objectOnInit();
         this->thumbView = thumbView;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
 
 protected:
@@ -53,17 +52,16 @@ zfclass _ZFP_ZFUIScrollThumbDefault_HideThumbAniTypeNativeView : zfextends ZFAni
     ZFOBJECT_DECLARE(_ZFP_ZFUIScrollThumbDefault_HideThumbAniTypeNativeView, ZFAnimationNativeView)
 
 public:
-    virtual ZFObject *objectOnInit(ZF_IN ZFUIImageView *thumbView)
+    virtual void objectOnInit(ZF_IN ZFUIImageView *thumbView)
     {
         this->objectOnInit();
         this->aniTargetSet(thumbView);
         this->aniAlphaToSet(0);
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
 };
 zfclassNotPOD _ZFP_ZFUIScrollThumbDefaultPrivate
@@ -108,7 +106,7 @@ public:
 // ============================================================
 ZFOBJECT_REGISTER(ZFUIScrollThumbDefault)
 
-ZFObject *ZFUIScrollThumbDefault::objectOnInit(void)
+void ZFUIScrollThumbDefault::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIScrollThumbDefaultPrivate);
@@ -124,8 +122,6 @@ ZFObject *ZFUIScrollThumbDefault::objectOnInit(void)
     {
         d->thumbHideAni = zfAllocWithoutLeakTest(_ZFP_ZFUIScrollThumbDefault_HideThumbAni, d->thumbView);
     }
-
-    return this;
 }
 void ZFUIScrollThumbDefault::objectOnInitFinish(void)
 {
@@ -220,7 +216,7 @@ void ZFUIScrollThumbDefault::scrollThumbUpdate(void)
         zfbool viewVisibleNew = zffalse;
         if(this->scrollThumbHorizontal())
         {
-            ZFUIScrollThumb::scrollThumbPosCalc(
+            ZFUIScrollThumb::scrollThumbPosFromViewPos(
                 pos,
                 size,
                 this->scrollView()->layoutedFrame().size.width,
@@ -241,7 +237,7 @@ void ZFUIScrollThumbDefault::scrollThumbUpdate(void)
         }
         else
         {
-            ZFUIScrollThumb::scrollThumbPosCalc(
+            ZFUIScrollThumb::scrollThumbPosFromViewPos(
                 pos,
                 size,
                 this->scrollView()->layoutedFrame().size.height,

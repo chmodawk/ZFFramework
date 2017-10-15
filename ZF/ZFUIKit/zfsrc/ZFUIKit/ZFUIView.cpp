@@ -1001,7 +1001,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUIView, ZFUIColor, viewBackgroundColor)
 
 // ============================================================
 // init and dealloc
-ZFObject *ZFUIView::objectOnInit(void)
+void ZFUIView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -1011,8 +1011,6 @@ ZFObject *ZFUIView::objectOnInit(void)
     d->nativeView = ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewCreate(this);
     d->scaleForImpl = ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForImpl(d->nativeView);
     d->scaleFixed = d->scaleForImpl;
-
-    return this;
 }
 void ZFUIView::objectOnDealloc(void)
 {

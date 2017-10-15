@@ -133,7 +133,7 @@ zfbool ZF2048AppAutoMoveRunner::runnerUnableToMove(void)
     return d->runnerUnableToMove;
 }
 
-ZFObject *ZF2048AppAutoMoveRunner::objectOnInit(void)
+void ZF2048AppAutoMoveRunner::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfnew(_ZFP_ZF2048AppAutoMoveRunnerPrivate);
@@ -141,7 +141,6 @@ ZFObject *ZF2048AppAutoMoveRunner::objectOnInit(void)
     d->loopTimer->timerIntervalSet((zftimet)(ZFUIGlobalStyle::DefaultStyle()->aniDurationNormal() * 1.5f));
     d->loopTimer->timerActivateInMainThreadSet(zftrue);
     d->loopTimer->observerAdd(ZFTimer::EventTimerOnActivate(), ZFCallbackForRawFunction(_ZFP_ZF2048AppAutoMoveRunnerPrivate::timerEvent), this->objectHolder());
-    return this;
 }
 void ZF2048AppAutoMoveRunner::objectOnDealloc(void)
 {

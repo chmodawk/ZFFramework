@@ -43,7 +43,7 @@ ZFPROPERTY_CUSTOM_ON_DETACH_DEFINE(ZF2048AppDialog, ZFUIView *, dialogContent)
     }
 }
 
-ZFObject *ZF2048AppDialog::objectOnInit(void)
+void ZF2048AppDialog::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfnew(_ZFP_ZF2048AppDialogPrivate);
@@ -58,8 +58,6 @@ ZFObject *ZF2048AppDialog::objectOnInit(void)
     d->dialogContainer->childAdd(d->dialogTitleView);
     d->dialogTitleView->viewSizeMinSet(ZFUISizeMake(0, ZFUIGlobalStyle::DefaultStyle()->itemSizeDialog()));
     d->dialogTitleView->textAlignSet(ZFUIAlign::e_Center);
-
-    return this;
 }
 void ZF2048AppDialog::objectOnDealloc(void)
 {

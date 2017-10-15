@@ -67,18 +67,22 @@ public:
         this->nativeImplViewMarginUpdate();
     }
 
-public:
+protected:
     /**
      * @brief init with image
      */
-    virtual ZFObject *objectOnInit(ZF_IN ZFUIImage *image);
-public:
+    ZFMETHOD_DECLARE_PROTECTED_1(void, objectOnInit,
+                                 ZFMP_IN(ZFUIImage *, image))
+    {
+        this->objectOnInit();
+        this->imageSet(image);
+    }
+
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
-protected:
     zfoverride
     virtual void objectInfoOnAppend(ZF_IN_OUT zfstring &ret);
 

@@ -592,7 +592,7 @@ public:
     zfindex savedPos;
     zfindex curPos; // ensured init with start
 
-public:
+protected:
     zfoverride
     virtual void objectOnDeallocPrepare(void)
     {

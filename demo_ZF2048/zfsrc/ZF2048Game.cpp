@@ -343,7 +343,7 @@ ZF2048Value ZF2048Game::gameMaxNumber(void)
     return d->gameCore->scoreMaxNumber();
 }
 
-ZFObject *ZF2048Game::objectOnInit(void)
+void ZF2048Game::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfnew(_ZFP_ZF2048GamePrivate, this);
@@ -355,8 +355,6 @@ ZFObject *ZF2048Game::objectOnInit(void)
     this->childAdd(d->gameUI);
     d->gameUI->layoutParam()->sizeParamSet(ZFUISizeParamFillWidthFillHeight());
     d->gameUI->observerAdd(ZF2048UIFrame::EventFrameOnMove(), d->gameOnMoveListener, this->objectHolder());
-
-    return this;
 }
 void ZF2048Game::objectOnInitFinish(void)
 {

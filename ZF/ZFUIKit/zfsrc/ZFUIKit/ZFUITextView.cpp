@@ -116,7 +116,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, ZFUITextTruncateModeEnum, textT
     }
 }
 
-ZFObject *ZFUITextView::objectOnInit(void)
+void ZFUITextView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUITextViewPrivate);
@@ -134,8 +134,6 @@ ZFObject *ZFUITextView::objectOnInit(void)
     };
     this->nativeImplViewSet(d->impl->nativeTextViewCreate(this),
                             _ZFP_ZFUITextView_nativeImplViewDestroy::action);
-
-    return this;
 }
 void ZFUITextView::objectOnDealloc(void)
 {

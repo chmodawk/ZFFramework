@@ -21,13 +21,12 @@ public:
 // ============================================================
 // ZFSemaphore
 ZFOBJECT_REGISTER(ZFSemaphore)
-ZFObject *ZFSemaphore::objectOnInit(void)
+void ZFSemaphore::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFSemaphorePrivate);
     d->impl = ZFPROTOCOL_ACCESS(ZFSemaphore);
     d->nativeSemaphore = d->impl->nativeSemaphoreCreate(this);
-    return this;
 }
 void ZFSemaphore::objectOnDealloc(void)
 {

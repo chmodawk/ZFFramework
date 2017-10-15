@@ -50,18 +50,16 @@ public:
         return ret;
     }
 
-public:
-    zfoverride
-    virtual ZFObject *objectOnInit(ZF_IN ZF2048AppSettingDialog *owner)
+protected:
+    virtual void objectOnInit(ZF_IN ZF2048AppSettingDialog *owner)
     {
         this->objectOnInit();
         this->owner = owner;
-        return this;
     }
     zfoverride
-    virtual ZFObject *objectOnInit(void)
+    virtual void objectOnInit(void)
     {
-        return zfsuper::objectOnInit();
+        zfsuper::objectOnInit();
     }
     zfoverride
     virtual void objectOnInitFinish(void)
@@ -263,22 +261,20 @@ ZFOBJECT_REGISTER(ZF2048AppSettingDialog)
 
 ZFOBSERVER_EVENT_REGISTER(ZF2048AppSettingDialog, SettingOnChange)
 
-ZFObject *ZF2048AppSettingDialog::objectOnInit(ZF_IN zfindex dataWidth,
-                                               ZF_IN zfindex dataHeight)
+void ZF2048AppSettingDialog::objectOnInit(ZF_IN zfindex dataWidth,
+                                          ZF_IN zfindex dataHeight)
 {
     this->objectOnInit();
     this->dataWidth = zfmApplyRange(dataWidth, _ZFP_ZF2048AppDataWidthMin, _ZFP_ZF2048AppDataWidthMax);
     this->dataHeight = zfmApplyRange(dataHeight, _ZFP_ZF2048AppDataWidthMin, _ZFP_ZF2048AppDataWidthMax);
-    return this;
 }
-ZFObject *ZF2048AppSettingDialog::objectOnInit(void)
+void ZF2048AppSettingDialog::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAlloc(_ZFP_ZF2048AppSettingDialogPrivate, this);
     this->dataWidth = 4;
     this->dataHeight = 4;
     this->dialogContentSet(d->contentView());
-    return this;
 }
 void ZF2048AppSettingDialog::objectOnInitFinish(void)
 {

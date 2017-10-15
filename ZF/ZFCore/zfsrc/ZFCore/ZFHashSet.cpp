@@ -15,17 +15,16 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ZFHashSet
 ZFOBJECT_REGISTER(ZFHashSet)
 
-ZFObject *ZFHashSet::objectOnInit(ZF_IN ZFContainer *another)
+ZFMETHOD_DEFINE_1(ZFHashSet, void, objectOnInit,
+                  ZFMP_IN(ZFContainer *, another))
 {
     this->objectOnInit();
     zfself::addFrom(another);
-    return this;
 }
-ZFObject *ZFHashSet::objectOnInit(void)
+void ZFHashSet::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfAllocWithoutLeakTest(ZFHashMapEditable);
-    return this;
 }
 void ZFHashSet::objectOnDealloc(void)
 {

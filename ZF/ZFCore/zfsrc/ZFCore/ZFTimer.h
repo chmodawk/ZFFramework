@@ -62,22 +62,30 @@ public:
      */
     ZFOBSERVER_EVENT(TimerOnStop)
 
-public:
+protected:
     /**
      * @brief init with timer settings
      *
      * you may change them after timer created,
      * but you must not if timer is started
      */
-    virtual ZFObject *objectOnInit(ZF_IN const zftimet &timerInterval,
-                                   ZF_IN_OPT ZFObject *timerParam0 = zfnull,
-                                   ZF_IN_OPT ZFObject *timerParam1 = zfnull,
-                                   ZF_IN_OPT const zftimet &timerDelay = zftimetZero(),
-                                   ZF_IN_OPT zfbool timerActivateInMainThread = zffalse);
+    ZFMETHOD_DECLARE_PROTECTED_5(void, objectOnInit,
+                                 ZFMP_IN(const zftimet &, timerInterval),
+                                 ZFMP_IN_OPT(ZFObject *, timerParam0, zfnull),
+                                 ZFMP_IN_OPT(ZFObject *, timerParam1, zfnull),
+                                 ZFMP_IN_OPT(const zftimet &, timerDelay, zftimetZero()),
+                                 ZFMP_IN_OPT(zfbool, timerActivateInMainThread, zffalse))
+    {
+        this->objectOnInit();
+        zfself::timerIntervalSet(timerInterval);
+        zfself::timerDelaySet(timerDelay);
+        zfself::timerParam0Set(timerParam0);
+        zfself::timerParam1Set(timerParam1);
+        zfself::timerActivateInMainThreadSet(timerActivateInMainThread);
+    }
 
-public:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

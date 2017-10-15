@@ -31,7 +31,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEditWidget, zfbool, textEditClearButt
     _ZFP_ZFUITextEditWidget_updateClearButton(this);
 }
 
-ZFObject *ZFUITextEditWidget::objectOnInit(void)
+void ZFUITextEditWidget::objectOnInit(void)
 {
     zfsuper::objectOnInit();
 
@@ -46,8 +46,6 @@ ZFObject *ZFUITextEditWidget::objectOnInit(void)
     textEditClearButton->serializableRefLayoutParam()->layoutAlignSet(ZFUIAlign::e_RightInner);
 
     _ZFP_ZFUITextEditWidget_updateClearButton(this);
-
-    return this;
 }
 void ZFUITextEditWidget::objectOnDealloc(void)
 {

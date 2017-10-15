@@ -367,7 +367,7 @@ ZFMETHOD_DEFINE_0(ZFUIHint, ZFAnimation *, hintAnimating)
     return d->hintAnimating;
 }
 
-ZFObject *ZFUIHint::objectOnInit(void)
+void ZFUIHint::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFUIHintPrivate);
@@ -418,7 +418,6 @@ ZFObject *ZFUIHint::objectOnInit(void)
     d->hintWindow->observerAdd(ZFUIView::EventViewLayoutOnLayoutPrepare(), hintWindowOnLayoutPrepare, this->objectHolder());
 
     _ZFP_ZFUIHint_allHint.add(this);
-    return this;
 }
 void ZFUIHint::objectOnInitFinish(void)
 {

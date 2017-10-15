@@ -121,14 +121,15 @@ public:
     ZFMETHOD_DECLARE_STATIC_1(ZFUISysWindow *, sysWindowForView,
                               ZFMP_IN(ZFUIView *, view));
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
 
     // ============================================================
     // properties
+public:
     /**
      * @brief window's level
      */

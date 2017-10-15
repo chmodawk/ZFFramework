@@ -148,20 +148,20 @@ protected:
         ZFPROPERTY_ASSIGN(Type, fromValue) \
         /** @brief see #ZFTimeLineProperty */ \
         ZFPROPERTY_ASSIGN(Type, toValue) \
-    public: \
+    protected: \
         /** @brief init with from and to value */ \
-        virtual ZFObject *objectOnInit(ZF_IN Type const &from, \
-                                       ZF_IN Type const &to) \
+        ZFMETHOD_DECLARE_PROTECTED_2(void, objectOnInit, \
+                                     ZFMP_IN(Type const &, from), \
+                                     ZFMP_IN(Type const &, to)) \
         { \
             this->objectOnInit(); \
             this->fromValueSet(from); \
             this->toValueSet(to); \
-            return this; \
         } \
         zfoverride \
-        virtual ZFObject *objectOnInit(void) \
+        virtual void objectOnInit(void) \
         { \
-            return zfsuper::objectOnInit(); \
+            zfsuper::objectOnInit(); \
         } \
     protected: \
         zfoverride \

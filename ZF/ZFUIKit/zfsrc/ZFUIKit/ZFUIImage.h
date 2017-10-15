@@ -191,11 +191,10 @@ public:
 
     // ============================================================
     // other
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFUIImageLoadXxx")
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
-public:
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnDealloc(void);
     zfoverride

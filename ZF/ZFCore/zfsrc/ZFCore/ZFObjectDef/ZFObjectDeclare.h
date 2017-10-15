@@ -90,9 +90,11 @@ public:
     public:
 #define _ZFP_ZFOBJECT_DECLARE_OBJECT(ChildClass, SuperClass) \
     public: \
-        typedef enum {_ZFP_ZFObjectCanAlloc = 1} _ZFP_ZFObjectCanAllocChecker; \
+        enum {_ZFP_ZFObjectCanAlloc = 1}; \
     public: \
         zfpoolDeclareFriend() \
+        friend zfclassFwd _ZFP_Obj_AllocCk<zfself, 0>; \
+        friend zfclassFwd _ZFP_Obj_AllocCk<zfself, 1>; \
         static ZFObject *_ZFP_Obj_ctor(void) \
         { \
             return zfpoolNew(zfself); \
@@ -224,6 +226,26 @@ public:
         return T_ZFObject::ClassData(); \
     } \
     ZF_STATIC_REGISTER_END(ObjR_##T_ZFObject)
+
+/**
+ * @brief mark this object can not be allocated directly
+ *
+ * usage:
+ * @code
+ *   zfclass MyClass : zfextends ZFObject
+ *   {
+ *       ZFOBJECT_DECLARE(MyClass, ZFObject)
+ *       ZFCLASS_PRIVATE_ALLOC("hint about why it's private")
+ *   };
+ * @endcode
+ *
+ * when declared, the object can not be allocated by #zfAlloc series directly,
+ * and can only be allocated by reflection (#ZFClass::newInstance)
+ */
+#define ZFCLASS_PRIVATE_ALLOC(...) \
+    public: \
+        enum {_ZFP_ZFObjectCanAllocPublic = 0}; \
+    protected:
 
 ZF_NAMESPACE_GLOBAL_END
 #endif // #ifndef _ZFI_ZFObjectDeclare_h_

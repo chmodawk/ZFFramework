@@ -50,20 +50,19 @@ public:
 // ZFHashMap
 ZFOBJECT_REGISTER(ZFHashMap)
 
-ZFObject *ZFHashMap::objectOnInit(ZF_IN ZFKeyValueContainer *another)
+ZFMETHOD_DEFINE_1(ZFHashMap, void, objectOnInit,
+                  ZFMP_IN(ZFKeyValueContainer *, another))
 {
     this->objectOnInit();
     if(another != zfnull)
     {
         zfself::addFrom(another);
     }
-    return this;
 }
-ZFObject *ZFHashMap::objectOnInit(void)
+void ZFHashMap::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFHashMapPrivate);
-    return this;
 }
 void ZFHashMap::objectOnDealloc(void)
 {

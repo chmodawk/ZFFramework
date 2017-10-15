@@ -50,13 +50,7 @@ protected:
     zfoverride
     virtual void layoutOnLayout(ZF_IN const ZFUIRect &bounds);
 
-protected:
     ZFCLASS_PRIVATE_ALLOC("can only be created by owner ZFUISysWindow")
-    zfoverride
-    virtual ZFObject *objectOnInit(void)
-    {
-        return zfsuper::objectOnInit();
-    }
 };
 
 ZF_NAMESPACE_GLOBAL_END

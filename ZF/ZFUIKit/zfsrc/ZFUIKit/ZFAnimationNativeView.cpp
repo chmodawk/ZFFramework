@@ -33,12 +33,11 @@ public:
 // ============================================================
 ZFOBJECT_REGISTER(ZFAnimationNativeView)
 
-ZFObject *ZFAnimationNativeView::objectOnInit(void)
+void ZFAnimationNativeView::objectOnInit(void)
 {
     zfsuper::objectOnInit();
     d = zfpoolNew(_ZFP_ZFAnimationNativeViewPrivate);
     d->nativeAni = ZFPROTOCOL_ACCESS(ZFAnimationNativeView)->nativeAniCreate(this);
-    return this;
 }
 void ZFAnimationNativeView::objectOnDealloc(void)
 {

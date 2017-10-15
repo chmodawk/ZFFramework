@@ -179,9 +179,9 @@ protected:
         }
     }
 
-public:
+protected:
     zfoverride
-    virtual ZFObject *objectOnInit(void);
+    virtual void objectOnInit(void);
     zfoverride
     virtual void objectOnInitFinish(void);
     zfoverride
