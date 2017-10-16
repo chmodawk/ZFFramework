@@ -125,7 +125,7 @@ ZFPROPERTY_TYPE_DEFINE_BY_STRING_CONVERTER(ZFCallerInfo, ZFCallerInfoHolder, {
                 (pos[1].count > 0)
                     ? zfstring(src + pos[1].start, pos[1].count).cString()
                     : zfnull,
-                (zfindex)zfsToInt(zfstring(src + pos[2].start, pos[2].count).cString())
+                (zfuint)zfsToInt(zfstring(src + pos[2].start, pos[2].count).cString())
             );
         return zftrue;
     }, {

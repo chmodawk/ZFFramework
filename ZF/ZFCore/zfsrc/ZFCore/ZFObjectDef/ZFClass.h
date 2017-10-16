@@ -545,6 +545,7 @@ public:
     static void _ZFP_ZFClassInitFinish_methodAndPropertyFindCache(ZF_IN ZFClass *cls);
     static void _ZFP_ZFClassInitFinish_propertyMetaDataCache(ZF_IN ZFClass *cls);
     static void _ZFP_ZFClassInitFinish_instanceObserverCache(ZF_IN ZFClass *cls);
+    static void _ZFP_ZFClassInitFinish_ClassDataMethod(ZF_IN ZFClass *cls);
 
     void _ZFP_ZFClass_objectDesctuct(ZF_IN ZFObject *obj) const;
     ZFClass *_ZFP_ZFClass_removeConst(void) const

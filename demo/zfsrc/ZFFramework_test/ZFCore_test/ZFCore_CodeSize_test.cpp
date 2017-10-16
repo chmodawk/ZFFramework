@@ -11,8 +11,8 @@
 ZF_NAMESPACE_GLOBAL_BEGIN
 
 // ============================================================
-// 52.5
-// 40916258
+// 50.5
+// 39290562
 #define _ZFP_ZFCore_CodeSize_test_Dummy_ENABLE                  0 // x~x,     117760, 39769933
 #define _ZFP_ZFCore_CodeSize_test_StaticRegister_ENABLE         0 // 1000~7N, 81120, 39733293
 #define _ZFP_ZFCore_CodeSize_test_StaticInit_ENABLE             0 // 10~10,   322656, 39974829

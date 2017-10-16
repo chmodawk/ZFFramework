@@ -210,20 +210,7 @@ public:
 #define ZFOBJECT_REGISTER(T_ZFObject) \
     ZF_STATIC_REGISTER_INIT(ObjR_##T_ZFObject) \
     { \
-        T_ZFObject::ClassData()->_ZFP_ZFClass_methodAndPropertyAutoRegister(); \
-        ZFMethodUserRegisterDetail_0(resultMethod, &invoker, T_ZFObject::ClassData(), \
-            public, ZFMethodIsStatic, \
-            const ZFClass *, zfText("ClassData")); \
-        this->method = resultMethod; \
-    } \
-    ZF_STATIC_REGISTER_DESTROY(ObjR_##T_ZFObject) \
-    { \
-        ZFMethodUserUnregister(this->method); \
-    } \
-    const ZFMethod *method; \
-    static const ZFClass *invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject) \
-    { \
-        return T_ZFObject::ClassData(); \
+        (void)T_ZFObject::ClassData(); \
     } \
     ZF_STATIC_REGISTER_END(ObjR_##T_ZFObject)
 

@@ -20,6 +20,73 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 // ============================================================
 #define _ZFP_ZFMethodFuncUserRegister_methodExtSig zfText("MtdFUR")
 
+#define _ZFP_ZFMethodFuncUserRegisterParamExpand( \
+        GenericInvokerOwner, methodInvoker, methodNamespaceString, \
+        ReturnType, methodNameString \
+        , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
+    ) \
+    ( \
+        zftrue \
+        , ZFCastReinterpret(ZFFuncAddrType, methodInvoker) \
+        , _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(GenericInvokerOwner) \
+        , _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic) \
+        , zfnull \
+        , ZFMethodPrivilegeTypePublic \
+        , methodNamespaceString \
+        , _ZFP_ZFMethodFuncUserRegister_methodExtSig \
+        , methodNameString \
+        , ZFPropertyTypeIdData<zftTraits<ReturnType>::TrNoRef>::PropertyTypeId() \
+        , zfText(#ReturnType) \
+        ParamExpandOrEmpty0(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType0>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType0) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty0, 0) \
+            ) \
+        ParamExpandOrEmpty1(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType1>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType1) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty1, 1) \
+            ) \
+        ParamExpandOrEmpty2(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType2>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType2) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty2, 2) \
+            ) \
+        ParamExpandOrEmpty3(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType3>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType3) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty3, 3) \
+            ) \
+        ParamExpandOrEmpty4(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType4>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType4) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty4, 4) \
+            ) \
+        ParamExpandOrEmpty5(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType5>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType5) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty5, 5) \
+            ) \
+        ParamExpandOrEmpty6(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType6>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType6) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty6, 6) \
+            ) \
+        ParamExpandOrEmpty7(ZFM_EMPTY() \
+                , ZFPropertyTypeIdData<zftTraits<ParamType7>::TrNoRef>::PropertyTypeId() \
+                , ZFM_TOSTRING(ParamType7) \
+                , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(GenericInvokerOwner, DefaultExpandOrEmpty7, 7) \
+            ) \
+        , zfnull \
+    )
+
 #define _ZFP_ZFMethodFuncUserRegister(...) \
     ZFM_EXPAND(_ZFP_ZFMethodFuncUserRegister_(__VA_ARGS__))
 #define _ZFP_ZFMethodFuncUserRegister_(resultMethod, methodInvokerAction, \
@@ -83,16 +150,6 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         zfclassNotPOD _ZFP_MtdFUR \
         { \
         public: \
-            typedef ReturnType (*Ck)(const ZFMethod *, ZFObject * \
-                    ParamExpandOrEmpty0(ZFM_COMMA() ParamType0) \
-                    ParamExpandOrEmpty1(ZFM_COMMA() ParamType1) \
-                    ParamExpandOrEmpty2(ZFM_COMMA() ParamType2) \
-                    ParamExpandOrEmpty3(ZFM_COMMA() ParamType3) \
-                    ParamExpandOrEmpty4(ZFM_COMMA() ParamType4) \
-                    ParamExpandOrEmpty5(ZFM_COMMA() ParamType5) \
-                    ParamExpandOrEmpty6(ZFM_COMMA() ParamType6) \
-                    ParamExpandOrEmpty7(ZFM_COMMA() ParamType7) \
-                ); \
             _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
                     ReturnType \
                     , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
@@ -105,60 +162,17 @@ ZF_NAMESPACE_GLOBAL_BEGIN
                     , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
                 ) \
         }; \
-        \
-        _ZFP_MtdFUR::Ck fn = methodInvoker; \
-        resultMethod = _ZFP_ZFMethodRegister(zftrue \
-                , ZFCastReinterpret(ZFFuncAddrType, fn) \
-                , _ZFP_ZFMETHOD_GENERIC_INVOKER_ADDR(_ZFP_MtdFUR) \
-                , _ZFP_ZFMethodIsWhatTypeText(ZFMethodIsStatic) \
-                , zfnull \
-                , ZFMethodPrivilegeTypePublic \
-                , methodNamespaceString \
-                , _ZFP_ZFMethodFuncUserRegister_methodExtSig \
-                , methodNameString \
-                , ZFPropertyTypeIdData<zftTraits<ReturnType>::TrNoRef>::PropertyTypeId() \
-                , zfText(#ReturnType) \
-                ParamExpandOrEmpty0(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType0>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType0) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty0, 0) \
-                    ) \
-                ParamExpandOrEmpty1(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType1>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType1) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty1, 1) \
-                    ) \
-                ParamExpandOrEmpty2(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType2>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType2) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty2, 2) \
-                    ) \
-                ParamExpandOrEmpty3(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType3>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType3) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty3, 3) \
-                    ) \
-                ParamExpandOrEmpty4(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType4>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType4) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty4, 4) \
-                    ) \
-                ParamExpandOrEmpty5(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType5>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType5) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty5, 5) \
-                    ) \
-                ParamExpandOrEmpty6(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType6>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType6) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty6, 6) \
-                    ) \
-                ParamExpandOrEmpty7(ZFM_EMPTY() \
-                        , ZFPropertyTypeIdData<zftTraits<ParamType7>::TrNoRef>::PropertyTypeId() \
-                        , ZFM_TOSTRING(ParamType7) \
-                        , _ZFP_ZFMETHOD_GENERIC_PARAM_DEFAULT_ACCESS_ADDR(_ZFP_MtdFUR, DefaultExpandOrEmpty7, 7) \
-                    ) \
-                , zfnull \
+        resultMethod = _ZFP_ZFMethodRegister _ZFP_ZFMethodFuncUserRegisterParamExpand( \
+                _ZFP_MtdFUR, methodInvoker, methodNamespaceString, \
+                ReturnType, methodNameString \
+                , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+                , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+                , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+                , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+                , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+                , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+                , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+                , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
             ); \
     } \
     ZFUNUSED(resultMethod)
@@ -193,62 +207,24 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         { \
             methodInvokerAction \
         } \
-    }; \
-    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
-            _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
-            ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
-            , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
-            , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
-            , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-            , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-            , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-            , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-            , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-            , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
-
-#define _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC(...) \
-    ZFM_EXPAND(_ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_(__VA_ARGS__))
-#define _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_(methodNamespace, \
-        ReturnType, methodName, DECLARE_LINE \
-        , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
-        , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
-        , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
-        , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
-        , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
-        , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
-        , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
-        , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-    ) \
-    zfclassNotPOD _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE \
-    { \
-    public: \
-        static ReturnType invoker(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject \
-                ParamExpandOrEmpty0(ZFM_COMMA() ParamType0 param0) \
-                ParamExpandOrEmpty1(ZFM_COMMA() ParamType1 param1) \
-                ParamExpandOrEmpty2(ZFM_COMMA() ParamType2 param2) \
-                ParamExpandOrEmpty3(ZFM_COMMA() ParamType3 param3) \
-                ParamExpandOrEmpty4(ZFM_COMMA() ParamType4 param4) \
-                ParamExpandOrEmpty5(ZFM_COMMA() ParamType5 param5) \
-                ParamExpandOrEmpty6(ZFM_COMMA() ParamType6 param6) \
-                ParamExpandOrEmpty7(ZFM_COMMA() ParamType7 param7) \
+        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
+                ReturnType \
+                , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+                , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+                , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+                , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+                , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+                , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+                , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+                , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
             ) \
-        { \
-            return (ReturnType)ZFM_EXPAND(methodName ZFM_BRACKET_L() \
-                    ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
-                    ParamExpandOrEmpty1(ZFM_COMMA() param1) \
-                    ParamExpandOrEmpty2(ZFM_COMMA() param2) \
-                    ParamExpandOrEmpty3(ZFM_COMMA() param3) \
-                    ParamExpandOrEmpty4(ZFM_COMMA() param4) \
-                    ParamExpandOrEmpty5(ZFM_COMMA() param5) \
-                    ParamExpandOrEmpty6(ZFM_COMMA() param6) \
-                    ParamExpandOrEmpty7(ZFM_COMMA() param7) \
-                ZFM_BRACKET_R()); \
-        } \
     }; \
-    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(methodNamespace##_##methodName##_##DECLARE_LINE, \
+    static _ZFP_ZFMethodRegisterHolder _ZFP_MtdFURH_##methodNamespace##_##methodName##_##DECLARE_LINE \
+        _ZFP_ZFMethodFuncUserRegisterParamExpand( \
+            _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE, \
             _ZFP_MtdFURIvk_##methodNamespace##_##methodName##_##DECLARE_LINE::invoker, \
-            ZFM_TOSTRING(methodNamespace), ReturnType, ZFM_TOSTRING(methodName) \
+            ZFM_TOSTRING(methodNamespace), \
+            ReturnType, ZFM_TOSTRING(methodName) \
             , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
             , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
             , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
@@ -257,7 +233,7 @@ ZF_NAMESPACE_GLOBAL_BEGIN
             , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
             , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
             , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-        )
+        );
 
 #define _ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL(...) \
     ZFM_EXPAND(_ZFP_ZFMETHOD_FUNC_USER_REGISTER_DETAIL_(__VA_ARGS__))
@@ -272,10 +248,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
         , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
         , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
     ) \
-    ZF_STATIC_REGISTER_INIT(MtdFURReg_##registerSig) \
+    zfclassNotPOD _ZFP_MtdFURIvk_##registerSig \
     { \
-        _ZFP_ZFMethodFuncUserRegisterDetail(resultMethod, methodInvoker, methodNamespaceString, \
-                ReturnType, methodNameString \
+    public: \
+        _ZFP_ZFMETHOD_GENERIC_INVOKER_DECLARE( \
+                ReturnType \
                 , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
                 , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
                 , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
@@ -284,15 +261,60 @@ ZF_NAMESPACE_GLOBAL_BEGIN
                 , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
                 , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
                 , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
-            ); \
-        this->_method = resultMethod; \
-    } \
-    ZF_STATIC_REGISTER_DESTROY(MtdFURReg_##registerSig) \
-    { \
-        ZFMethodFuncUserUnregister(this->_method); \
-    } \
-    const ZFMethod *_method; \
-    ZF_STATIC_REGISTER_END(MtdFURReg_##registerSig)
+            ) \
+    }; \
+    static _ZFP_ZFMethodRegisterHolder _ZFP_MtdFURH_##registerSig \
+        _ZFP_ZFMethodFuncUserRegisterParamExpand( \
+            _ZFP_MtdFURIvk_##registerSig, \
+            methodInvoker, \
+            methodNamespaceString, \
+            ReturnType, methodNameString \
+            , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+            , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+            , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+            , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+            , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+            , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+            , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+            , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
+        );
+
+#define _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC(...) \
+    ZFM_EXPAND(_ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_(__VA_ARGS__))
+#define _ZFP_ZFMETHOD_FUNC_USER_REGISTER_FOR_FUNC_(methodNamespace, \
+        ReturnType, methodName, DECLARE_LINE \
+        , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+        , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+        , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+        , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+        , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+        , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+        , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+        , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
+    ) \
+    _ZFP_ZFMETHOD_FUNC_USER_REGISTER_({ \
+                return (ReturnType)ZFM_EXPAND(methodName ZFM_BRACKET_L() \
+                        ParamExpandOrEmpty0(ZFM_EMPTY() param0) \
+                        ParamExpandOrEmpty1(ZFM_COMMA() param1) \
+                        ParamExpandOrEmpty2(ZFM_COMMA() param2) \
+                        ParamExpandOrEmpty3(ZFM_COMMA() param3) \
+                        ParamExpandOrEmpty4(ZFM_COMMA() param4) \
+                        ParamExpandOrEmpty5(ZFM_COMMA() param5) \
+                        ParamExpandOrEmpty6(ZFM_COMMA() param6) \
+                        ParamExpandOrEmpty7(ZFM_COMMA() param7) \
+                    ZFM_BRACKET_R()); \
+            }, \
+            methodNamespace, \
+            ReturnType, methodName, DECLARE_LINE \
+            , ParamExpandOrEmpty0, ParamType0, param0, DefaultExpandOrEmpty0, DefaultValueFix0 \
+            , ParamExpandOrEmpty1, ParamType1, param1, DefaultExpandOrEmpty1, DefaultValueFix1 \
+            , ParamExpandOrEmpty2, ParamType2, param2, DefaultExpandOrEmpty2, DefaultValueFix2 \
+            , ParamExpandOrEmpty3, ParamType3, param3, DefaultExpandOrEmpty3, DefaultValueFix3 \
+            , ParamExpandOrEmpty4, ParamType4, param4, DefaultExpandOrEmpty4, DefaultValueFix4 \
+            , ParamExpandOrEmpty5, ParamType5, param5, DefaultExpandOrEmpty5, DefaultValueFix5 \
+            , ParamExpandOrEmpty6, ParamType6, param6, DefaultExpandOrEmpty6, DefaultValueFix6 \
+            , ParamExpandOrEmpty7, ParamType7, param7, DefaultExpandOrEmpty7, DefaultValueFix7 \
+        )
 
 // ============================================================
 /** @brief see #ZFMethodFuncUserRegister_0 */

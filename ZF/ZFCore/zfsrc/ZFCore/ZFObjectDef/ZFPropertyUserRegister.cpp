@@ -11,9 +11,9 @@
 
 ZF_NAMESPACE_GLOBAL_BEGIN
 
-zfautoObject _ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder::create(ZF_IN void *v, ZF_IN DeleteCallback deleteCallback)
+zfautoObject _ZFP_I_PropURDIVH::create(ZF_IN void *v, ZF_IN DeleteCallback deleteCallback)
 {
-    zfblockedAllocWithoutLeakTest(_ZFP_I_ZFPropertyUserRegisterDefaultImplValueHolder, holder);
+    zfblockedAllocWithoutLeakTest(_ZFP_I_PropURDIVH, holder);
     holder->v = v;
     holder->deleteCallback = deleteCallback;
     return zfautoObjectCreateWithoutLeakTest(holder);
@@ -25,7 +25,7 @@ void ZFPropertyUserUnregister(ZF_IN const ZFProperty *zfproperty)
     {
         return ;
     }
-
+    zfCoreMutexLocker();
     zfCoreAssertWithMessageTrim(zfproperty->propertyIsUserRegister(),
             zfTextA("[ZFPropertyUserUnregister] property %s is not user registered"),
             zfsCoreZ2A(zfproperty->objectInfo().cString())

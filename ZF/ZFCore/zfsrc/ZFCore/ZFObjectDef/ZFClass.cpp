@@ -1047,6 +1047,8 @@ void ZFClass::_ZFP_ZFClassUnregister(ZF_IN zfbool *ZFCoreLibDestroyFlag, ZF_IN c
         _ZFP_ZFClassMap.iteratorRemove(it);
         _ZFP_ZFClassDelayDeleteMap.set(cls->className(),
             ZFCorePointerForPointerRef<ZFClass *>(cls->_ZFP_ZFClass_removeConst()));
+
+        ZFMethodUserUnregister(cls->methodForName(zfText("ClassData")));
     }
 }
 
@@ -1134,6 +1136,7 @@ void ZFClass::_ZFP_ZFClassInitFinish(ZF_IN ZFClass *cls)
         ZFClass::_ZFP_ZFClassInitFinish_methodAndPropertyFindCache(cls);
         ZFClass::_ZFP_ZFClassInitFinish_propertyMetaDataCache(cls);
         ZFClass::_ZFP_ZFClassInitFinish_instanceObserverCache(cls);
+        ZFClass::_ZFP_ZFClassInitFinish_ClassDataMethod(cls);
 
         _ZFP_ZFClassDataChangeNotify(ZFClassDataChangeTypeAttach, cls, zfnull, zfnull);
     }
@@ -1314,6 +1317,24 @@ void ZFClass::_ZFP_ZFClassInitFinish_instanceObserverCache(ZF_IN ZFClass *cls)
             cls->d->instanceObserverCached.push_back(parentInstanceObserver[i].pointerValueGet());
         }
     }
+}
+static const ZFClass *_ZFP_ZFClass_ClassDataIvk(ZF_IN const ZFMethod *invokerMethod, ZF_IN ZFObject *invokerObject)
+{
+    return invokerMethod->methodOwnerClass();
+}
+void ZFClass::_ZFP_ZFClassInitFinish_ClassDataMethod(ZF_IN ZFClass *cls)
+{ // register ClassData()
+    // ClassData() registered here instead of ZFOBJECT_REGISTER,
+    // to reduce output executable size and runtime memory usage,
+    // unregistered during class unregister
+    ZFMethodUserRegisterDetail_0(
+        resultMethod,
+        _ZFP_ZFClass_ClassDataIvk,
+        cls,
+        public,
+        ZFMethodIsStatic,
+        const ZFClass *,
+        zfText("ClassData"));
 }
 
 void ZFClass::_ZFP_ZFClass_objectDesctuct(ZF_IN ZFObject *obj) const
