@@ -112,7 +112,7 @@ public:
     ZFCoreArrayPOD<const ZFProperty *> propertyList;
     ZFCoreMap propertyMap; // map to const ZFProperty *
     /*
-     * store all property declared by #ZFPROPERTY_MARK_AUTO_INIT
+     * store all property declared by #ZFPROPERTY_OVERRIDE_ON_INIT_DECLARE
      * including self and all parent
      */
     zfstlmap<const ZFProperty *, zfbool> propertyAutoInitMap;

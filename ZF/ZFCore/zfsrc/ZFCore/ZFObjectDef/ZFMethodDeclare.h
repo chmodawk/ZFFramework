@@ -248,7 +248,7 @@ extern ZF_ENV_EXPORT const ZFMethod *ZFMethodGet(ZF_IN const ZFClass *cls,
             zfself::_ZFP_Mtd_##MethodName##_##DECLARE_LINE(); \
         } \
     }; \
-    _ZFP_MtdReg_##MethodName##_##DECLARE_LINE _ZFP_MtdReg_##MethodName##_##DECLARE_LINE##_; \
+    _ZFP_MtdReg_##MethodName##_##DECLARE_LINE _ZFP_MtdRegI_##MethodName##_##DECLARE_LINE; \
     friend zfclassFwd _ZFP_MtdReg_##MethodName##_##DECLARE_LINE;
 #define _ZFP_ZFMethod_AutoRegister_notAutoRegister(MethodName, DECLARE_LINE)
 #define _ZFP_ZFMethod_AutoRegister(autoRegisterOrNot, MethodName, DECLARE_LINE) \

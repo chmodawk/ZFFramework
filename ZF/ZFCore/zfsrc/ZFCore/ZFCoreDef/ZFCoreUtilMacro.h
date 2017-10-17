@@ -480,10 +480,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
  *   // typical method sig:
  *   static void func(void)
  *       : void (*F)(void)
- *         note: if parent have the method, child type would also have
  *   virtual void func(void)
  *       : void (T::*F)(void)
  * @endcode
+ *
+ * limitations:
+ * -  for static member methods, if parent have, then child type would also have,
+ *   no way to check whether only child have
+ * -  for non-public methods, the ZFM_CLASS_HAS_MEMBER_DECLARE must be
+ *   declared in class scope to take effect
  */
 #define ZFM_CLASS_HAS_MEMBER_DECLARE(NameSpace, memberName, memberSig) \
     /** @cond ZFPrivateDoc */ \

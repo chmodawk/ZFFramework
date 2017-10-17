@@ -16,16 +16,15 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFStyleable *ZFStyleable::defaultStyle(void)
 {
-    zfCoreMutexLocker();
-    if(this->_ZFP_ZFStyleable_defaultStyleCache == zfnull)
+    const ZFMethod *method = this->classData()->methodForName(zfText("DefaultStyleReflect"));
+    if(method != zfnull)
     {
-        const ZFMethod *method = this->classData()->methodForName(zfText("DefaultStyleReflect"));
-        if(method != zfnull)
-        {
-            this->_ZFP_ZFStyleable_defaultStyleCache = method->executeStatic<zfautoObject>().to<ZFStyleable *>();
-        }
+        return method->executeStatic<zfautoObject>().to<ZFStyleable *>();
     }
-    return this->_ZFP_ZFStyleable_defaultStyleCache;
+    else
+    {
+        return zfnull;
+    }
 }
 
 // ============================================================

@@ -28,7 +28,6 @@ zfclass ZF2048UIBlock : zfextends ZFUIImageView, zfimplements ZFCacheable
 
 public:
     ZFPROPERTY_ASSIGN_WITH_INIT(ZF2048Value, blockValue, ZFPropertyInitValue(0))
-    ZFPROPERTY_MARK_AUTO_INIT(ZF2048Value, blockValue)
     ZFPROPERTY_CUSTOM_ON_UPDATE_DECLARE(ZF2048Value, blockValue);
 
     ZFPROPERTY_RETAIN_READONLY(ZFUITextView *, blockTitle, ZFPropertyInitValue(zflineAlloc(ZFUITextView)))

@@ -51,12 +51,6 @@ ZFProperty::ZFProperty(void)
 , _ZFP_ZFProperty_getterMethod(zfnull)
 , _ZFP_ZFProperty_propertyClassOfRetainProperty(zfnull)
 , _ZFP_ZFProperty_callbackDealloc(zfnull)
-, _ZFP_ZFProperty_cbCustomOnInit(zfnull)
-, _ZFP_ZFProperty_cbCustomOnDealloc(zfnull)
-, _ZFP_ZFProperty_cbCustomOnVerify(zfnull)
-, _ZFP_ZFProperty_cbCustomOnAttach(zfnull)
-, _ZFP_ZFProperty_cbCustomOnDetach(zfnull)
-, _ZFP_ZFProperty_cbCustomOnUpdate(zfnull)
 {
 }
 ZFProperty::~ZFProperty(void)

@@ -37,21 +37,15 @@ zfclassFwd _ZFP_I_ZFStyleable_PropertyTypeHolder;
  */
 zfinterface ZF_ENV_EXPORT ZFStyleable : zfextends ZFInterface
 {
-    ZFINTERFACE_DECLARE_WITH_CUSTOM_CTOR(ZFStyleable, ZFSerializable, ZFCopyable)
+    ZFINTERFACE_DECLARE(ZFStyleable, ZFSerializable, ZFCopyable)
 
-protected:
-    /** @cond ZFPrivateDoc */
-    ZFStyleable(void)
-    : _ZFP_ZFStyleable_defaultStyleCache(zfnull)
-    {
-    }
-    /** @endcond */
-
-private:
-    ZFStyleable *_ZFP_ZFStyleable_defaultStyleCache;
 public:
     /**
      * @brief return default style of this instance
+     *
+     * note this method use reflection to find the default style
+     * (see #ZFSTYLE_DEFAULT_DECLARE),
+     * cache it first if necessary
      */
     virtual ZFStyleable *defaultStyle(void);
 
@@ -194,7 +188,7 @@ private:
         /** \n default style for @ref YourStyle */ \
         static YourStyle *DefaultStyle(void); \
         /** @brief default style for @ref YourStyle (reflectable) */ \
-        ZFMETHOD_DECLARE_STATIC_0(zfautoObject, DefaultStyleReflect); \
+        static zfautoObject DefaultStyleReflect(void); \
     private: \
         static void _ZFP_ZFStyleablEnumDefaultStyleSet(ZF_IN YourStyle *newInstance); \
         static ZFCorePointerBase *&_ZFP_ZFStyleableDefaultCleaner(void); \
@@ -230,10 +224,11 @@ private:
         } \
         return ZFCastStatic(YourStyle *, holder->d); \
     } \
-    ZFMETHOD_DEFINE_0(YourStyle, zfautoObject, DefaultStyleReflect) \
+    zfautoObject YourStyle::DefaultStyleReflect(void) \
     { \
         return zfautoObjectCreate(ZFCastZFObjectUnchecked(ZFObject *, zfself::DefaultStyle())); \
     } \
+    ZFMETHOD_USER_REGISTER_FOR_ZFOBJECT_FUNC_STATIC_0(YourStyle, zfautoObject, DefaultStyleReflect) \
     void YourStyle::_ZFP_ZFStyleablEnumDefaultStyleSet(ZF_IN YourStyle *newInstance) \
     { \
         if(ZFFrameworkStateCheck(_ZFP_ZFStyleableDefault_level) == ZFFrameworkStateNotAvailable) \
@@ -322,8 +317,7 @@ private:
     _ZFP_ZFSTYLE_DEFAULT_DECLARE(YourStyle)
 /** @brief see #ZFSTYLE_DEFAULT_DECLARE */
 #define ZFSTYLE_DEFAULT_DEFINE(YourStyle) \
-    _ZFP_ZFSTYLE_DEFAULT_DEFINE(YourStyle) \
-    ZFMETHOD_REGISTER(YourStyle, DefaultStyleReflect)
+    _ZFP_ZFSTYLE_DEFAULT_DEFINE(YourStyle)
 
 /**
  * @brief util method to setup automatically copy style from
