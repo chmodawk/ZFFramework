@@ -12,6 +12,7 @@ if test "x-$SRC_PATH" = "x-" || test "x-$DST_PATH" = "x-" ; then
 fi
 
 rm -rf "$DST_PATH" >/dev/null 2>&1
+mkdir -p "$DST_PATH" >/dev/null 2>&1
 cp -rf "$SRC_PATH/." "$DST_PATH/" >/dev/null 2>&1
 
 find "$DST_PATH" -type f -name "*.c" 2>/dev/null | xargs rm >/dev/null 2>&1

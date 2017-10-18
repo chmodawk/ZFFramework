@@ -52,13 +52,13 @@ gradle.buildFinished {
     if(Os.isFamily(Os.FAMILY_WINDOWS)) {
         exec {
             executable "cmd.exe"
-            args "/c", ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.bat", "ZFUIKit_impl", this.projectDir.getAbsolutePath()
+            args "/c", ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.bat", "ZFUIKit_impl", this.projectDir.getAbsolutePath() + '/..'
         }
     }
     else {
         exec {
             executable "sh"
-            args ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.sh", "ZFUIKit_impl", this.projectDir.getAbsolutePath()
+            args ZF_ROOT_PATH + "/tools/spec/Android/libs_copy.sh", "ZFUIKit_impl", this.projectDir.getAbsolutePath() + '/..'
         }
     }
 }
