@@ -228,7 +228,7 @@ public:
         if(child->scaleGet() != owner->scaleGet()
            || child->scaleGetForImpl() != owner->scaleGetForImpl())
         {
-            child->_ZFP_ZFUIView_scaleSetRecursively(owner->scaleGet(), owner->scaleGetForImpl());
+            child->_ZFP_ZFUIView_scaleSetRecursively(owner->scaleGetFixed(), owner->scaleGetForImpl());
         }
     }
     void childAdd(ZF_IN ZFUIView *owner,
@@ -1346,7 +1346,7 @@ void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(ZF_IN ZFUIView *view, ZF_IN voi
 
     zfRetain(view);
     view->_ZFP_ZFUIView_scaleSetRecursively(
-        view->scaleGet(),
+        view->scaleGetFixed(),
         ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForImpl(nativeParentView));
 }
 void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyRemove(ZF_IN ZFUIView *view)

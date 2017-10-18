@@ -172,7 +172,7 @@ public:
                 .add(JNIType::S_int)
             ).c_str());
         JNIUtilCallStaticVoidMethod(jniEnv, this->jclsOwner, jmId,
-            ZFCastStatic(jobject, window->nativeWindow()),
+            ZFCastStatic(jobject, sysWindow->nativeWindow()),
             (jint)flags);
     }
 
