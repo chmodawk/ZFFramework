@@ -42,7 +42,7 @@ public:
                                         ZF_OUT ZFUIRect &clientFrame)
     {
         ZFUIRect frame = ZFUIViewPositionOnScreen(keyboardState->windowSysWindow()->rootView());
-        ZFUIRectApplyScale(clientFrame, frame, keyboardState->windowSysWindow()->rootView()->scaleGetFixed());
+        ZFUIRectApplyScale(clientFrame, frame, keyboardState->windowSysWindow()->rootView()->scaleFixed());
         if(ZFUIRectGetBottom(clientFrame) > ZFUIRectGetTop(keyboardFrame))
         {
             clientFrame.size.height -= ZFUIRectGetBottom(clientFrame) - ZFUIRectGetTop(keyboardFrame);
@@ -57,7 +57,7 @@ public:
      */
     zffinal void notifyKeyboardStateOnChange(ZF_IN ZFUIOnScreenKeyboardState *keyboardState)
     {
-        zffloat scale = keyboardState->windowSysWindow()->rootView()->scaleGetFixed();
+        zffloat scale = keyboardState->windowSysWindow()->rootView()->scaleFixed();
         zfbool keyboardShowingNew = this->keyboardShowing(keyboardState);
         ZFUIRect keyboardFrameNew = ZFUIRectApplyScaleReversely(this->keyboardFrame(keyboardState), scale);
         if(keyboardShowingNew == keyboardState->_ZFP_ZFUIOnScreenKeyboardState_keyboardShowing

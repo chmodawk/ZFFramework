@@ -78,7 +78,7 @@ public:
     zffinal void scrollViewScrollContentFrameSetForImpl(ZF_IN ZFUIScrollView *scrollView,
                                                         ZF_IN const ZFUIRect &frame)
     {
-        scrollView->_ZFP_ZFUIScrollView_scrollContentFrameSetByImpl(ZFUIRectApplyScaleReversely(frame, scrollView->scaleGetFixed()));
+        scrollView->_ZFP_ZFUIScrollView_scrollContentFrameSetByImpl(ZFUIRectApplyScaleReversely(frame, scrollView->scaleFixed()));
     }
     /**
      * @brief used to start scroll animation for performance
@@ -139,7 +139,7 @@ public:
                                            ZF_IN const ZFUIPoint &mousePos,
                                            ZF_IN const zftimet &mouseTime)
     {
-        scrollView->_ZFP_ZFUIScrollView_notifyDragBegin(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleGetFixed()), mouseTime);
+        scrollView->_ZFP_ZFUIScrollView_notifyDragBegin(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleFixed()), mouseTime);
     }
     /**
      * @brief see #scrollViewScrollContentFrameSet for how to implements scroll logic
@@ -148,7 +148,7 @@ public:
                                       ZF_IN const ZFUIPoint &mousePos,
                                       ZF_IN const zftimet &mouseTime)
     {
-        scrollView->_ZFP_ZFUIScrollView_notifyDrag(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleGetFixed()), mouseTime);
+        scrollView->_ZFP_ZFUIScrollView_notifyDrag(ZFUIPointApplyScaleReversely(mousePos, scrollView->scaleFixed()), mouseTime);
     }
     /**
      * @brief see #scrollViewScrollContentFrameSet for how to implements scroll logic

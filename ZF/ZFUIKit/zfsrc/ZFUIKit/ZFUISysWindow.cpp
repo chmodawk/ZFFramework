@@ -129,7 +129,7 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, const ZFUIMargin &, sysWindowMargin)
 void ZFUISysWindow::_ZFP_ZFUISysWindow_sysWindowMarginSet(ZF_IN const ZFUIMargin &sysWindowMargin)
 {
     ZFUIMargin sysWindowMarginOld = d->sysWindowMargin;
-    d->sysWindowMargin = ZFUIMarginApplyScaleReversely(sysWindowMargin, this->rootView()->scaleGetFixed());
+    d->sysWindowMargin = ZFUIMarginApplyScaleReversely(sysWindowMargin, this->rootView()->scaleFixed());
     if(d->sysWindowMargin != sysWindowMarginOld)
     {
         this->sysWindowMarginOnUpdate(sysWindowMarginOld);
@@ -329,10 +329,10 @@ ZFMETHOD_DEFINE_0(ZFUISysWindow, ZFUIRootView *, rootView)
 ZFUIRect ZFUISysWindow::_ZFP_ZFUISysWindow_measureWindow(ZF_IN const ZFUIRect &rootRefRect)
 {
     ZFUIRect ret = ZFUIRectApplyScale(ZFUIViewLayoutParam::layoutParamApply(
-            ZFUIRectApplyScaleReversely(rootRefRect, this->rootView()->scaleGetFixed()),
+            ZFUIRectApplyScaleReversely(rootRefRect, this->rootView()->scaleFixed()),
             this->rootView(),
             this->windowLayoutParam()),
-        this->rootView()->scaleGetFixed());
+        this->rootView()->scaleFixed());
     return ret;
 }
 void ZFUISysWindow::_ZFP_ZFUISysWindow_onCreate(ZF_IN void *nativeWindow)

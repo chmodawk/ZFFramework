@@ -109,7 +109,7 @@ public:
                                  ZF_IN const ZFUISize &sizeHint)
     {
         zfint curTextSize = textView->textSize();
-        ZFUISize curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleGetFixed()));
+        ZFUISize curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleFixed()));
 
         if(textView->textSizeAutoChangeMaxSize() > 0)
         {
@@ -118,7 +118,7 @@ public:
                     && (sizeHint.height <= 0 || curSize.height < sizeHint.height)))
             {
                 ++curTextSize;
-                curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleGetFixed()));
+                curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleFixed()));
             }
         }
 
@@ -129,11 +129,11 @@ public:
                     || (sizeHint.height > 0 && curSize.height > sizeHint.height)))
             {
                 --curTextSize;
-                curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleGetFixed()));
+                curSize = this->measureNativeTextView(textView, sizeHint, ZFUISizeApplyScale(curTextSize, textView->scaleFixed()));
             }
         }
 
-        return ZFUISizeApplyScale(curTextSize, textView->scaleGetFixed());
+        return ZFUISizeApplyScale(curTextSize, textView->scaleFixed());
     }
 ZFPROTOCOL_INTERFACE_END(ZFUITextView)
 

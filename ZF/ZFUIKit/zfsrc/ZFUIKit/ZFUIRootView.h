@@ -26,12 +26,13 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 zffinal zfclass ZF_ENV_EXPORT ZFUIRootView : zfextends ZFUIView
 {
     ZFOBJECT_DECLARE(ZFUIRootView, ZFUIView)
+    ZFCLASS_PRIVATE_ALLOC("can only be created by owner ZFUISysWindow")
 
 public:
     /**
      * @brief set scale for root view, as well as all of its children
      */
-    virtual void scaleSet(ZF_IN zffloat scale);
+    virtual void scaleForAppSet(ZF_IN zffloat scale);
 
 protected:
     zfoverride
@@ -49,8 +50,6 @@ protected:
                                  ZF_IN const ZFUISizeParam &sizeParam);
     zfoverride
     virtual void layoutOnLayout(ZF_IN const ZFUIRect &bounds);
-
-    ZFCLASS_PRIVATE_ALLOC("can only be created by owner ZFUISysWindow")
 };
 
 ZF_NAMESPACE_GLOBAL_END

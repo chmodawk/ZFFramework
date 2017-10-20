@@ -313,7 +313,7 @@ public:
         ZFUIRect frame = this->pimplOwner->scrollContentFrame();
         frame.point.x += this->pimplOwner->scrollAreaMargin().left;
         frame.point.y += this->pimplOwner->scrollAreaMargin().top;
-        this->impl->scrollViewScrollContentFrameSet(this->pimplOwner, ZFUIRectApplyScale(frame, this->pimplOwner->scaleGetFixed()));
+        this->impl->scrollViewScrollContentFrameSet(this->pimplOwner, ZFUIRectApplyScale(frame, this->pimplOwner->scaleFixed()));
     }
 private:
     void scrollContentFrameUpdate(void)

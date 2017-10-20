@@ -15,11 +15,11 @@ ZF_NAMESPACE_GLOBAL_BEGIN
 
 ZFOBJECT_REGISTER(ZFUIRootView)
 
-void ZFUIRootView::scaleSet(ZF_IN zffloat scale)
+void ZFUIRootView::scaleForAppSet(ZF_IN zffloat scale)
 {
     if(scale > 0)
     {
-        this->_ZFP_ZFUIView_scaleSetRecursively(scale * this->scaleGetForImpl(), this->scaleGetForImpl());
+        this->_ZFP_ZFUIView_scaleSetRecursively(scale * this->scaleForImpl(), this->scaleForImpl());
     }
 }
 

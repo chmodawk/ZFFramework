@@ -189,7 +189,7 @@ public:
     zffinal void notifyLayoutRootView(ZF_IN ZFUIView *view,
                                       ZF_IN const ZFUIRect &rect)
     {
-        view->_ZFP_ZFUIView_notifyLayoutRootView(ZFUIRectApplyScaleReversely(rect, view->scaleGetFixed()));
+        view->_ZFP_ZFUIView_notifyLayoutRootView(ZFUIRectApplyScaleReversely(rect, view->scaleFixed()));
     }
     /**
      * @brief implementations must notify just before layout native impl view
@@ -198,7 +198,7 @@ public:
                                             ZF_IN_OUT ZFUIRect &result)
     {
         view->_ZFP_ZFUIView_notifyLayoutNativeImplView(result);
-        result = ZFUIRectApplyScale(result, view->scaleGetFixed());
+        result = ZFUIRectApplyScale(result, view->scaleFixed());
     }
     /**
      * @brief implementation must notify when UI event occurred
@@ -210,7 +210,7 @@ public:
     zffinal void notifyUIEvent(ZF_IN ZFUIView *view,
                                ZF_IN ZFUIEvent *uiEvent)
     {
-        uiEvent->_ZFP_ZFUIEvent_eventOnApplyScaleReversely(view->scaleGetFixed());
+        uiEvent->_ZFP_ZFUIEvent_eventOnApplyScaleReversely(view->scaleFixed());
         view->viewEventSend(uiEvent);
     }
 ZFPROTOCOL_INTERFACE_END(ZFUIView)

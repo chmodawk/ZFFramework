@@ -35,8 +35,8 @@ public:
 public:
     void updateSizeRelatedProperty(void)
     {
-        this->impl->textShadowOffsetSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->scaleGetFixed()));
-        this->impl->textSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->scaleGetFixed()));
+        this->impl->textShadowOffsetSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->scaleFixed()));
+        this->impl->textSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->scaleFixed()));
     }
 
 public:
@@ -155,11 +155,11 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFUIColor, textShadowColor)
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, ZFUISize, textShadowOffset)
 {
-    d->impl->textShadowOffsetSet(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleGetFixed()));
+    d->impl->textShadowOffsetSet(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleFixed()));
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextEdit, zfint, textSize)
 {
-    d->impl->textSizeSet(this, ZFUISizeApplyScale(this->textSize(), this->scaleGetFixed()));
+    d->impl->textSizeSet(this, ZFUISizeApplyScale(this->textSize(), this->scaleFixed()));
     if(this->textSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -247,9 +247,9 @@ ZFMETHOD_DEFINE_1(ZFUITextEdit, ZFUISize, measureTextEdit,
                     0 - ZFUIMarginGetX(this->nativeImplViewMargin()),
                     0 - ZFUIMarginGetY(this->nativeImplViewMargin())
                 )),
-            this->scaleGetFixed()),
-        ZFUISizeApplyScale(this->textSize(), this->scaleGetFixed())),
-        this->scaleGetFixed());
+            this->scaleFixed()),
+        ZFUISizeApplyScale(this->textSize(), this->scaleFixed())),
+        this->scaleFixed());
     if(ZFPropertyIsValueAccessed(ZFPropertyAccess(ZFUITextEdit, textPlaceHolder), this)
         && !this->textPlaceHolder()->text().isEmpty())
     {

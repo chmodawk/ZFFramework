@@ -53,9 +53,9 @@ void ZFUINativeViewWrapper::layoutOnMeasure(ZF_OUT ZFUISize &ret,
                     0 - ZFUIMarginGetX(this->nativeImplViewMargin()),
                     0 - ZFUIMarginGetY(this->nativeImplViewMargin())
                 )),
-            this->scaleGetFixed()),
+            this->scaleFixed()),
         sizeParam);
-    ZFUISizeApplyScaleReversely(ret, ret, this->scaleGetFixed());
+    ZFUISizeApplyScaleReversely(ret, ret, this->scaleFixed());
     ZFUISizeApplyMarginReversely(ret, ret, this->nativeImplViewMargin());
 }
 void ZFUINativeViewWrapper::layoutOnLayout(ZF_IN const ZFUIRect &bounds)

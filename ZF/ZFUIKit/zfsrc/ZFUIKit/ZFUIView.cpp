@@ -94,7 +94,7 @@ public:
      *
      * ZFUISysWindow would have its ZFUIRootView's scale setting set from ZFUISysWindow's implementation
      *
-     * to change scale, app would use #ZFUIRootView::scaleSet from ZFUISysWindow
+     * to change scale, app would use #ZFUIRootView::scaleForAppSet from ZFUISysWindow
      *
      * scaleOnChange would be called each time scaleFixed changed
      */
@@ -225,11 +225,7 @@ public:
     }
     void checkUpdateChildScale(ZF_IN ZFUIView *owner, ZF_IN ZFUIView *child)
     {
-        if(child->scaleGet() != owner->scaleGet()
-           || child->scaleGetForImpl() != owner->scaleGetForImpl())
-        {
-            child->_ZFP_ZFUIView_scaleSetRecursively(owner->scaleGetFixed(), owner->scaleGetForImpl());
-        }
+        child->_ZFP_ZFUIView_scaleSetRecursively(owner->scaleFixed(), owner->scaleForImpl());
     }
     void childAdd(ZF_IN ZFUIView *owner,
                   ZF_IN ZFUIViewChildLayerEnum childLayer,
@@ -1345,9 +1341,10 @@ void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyAdd(ZF_IN ZFUIView *view, ZF_IN voi
     zfCoreAssert(view != zfnull && nativeParentView != zfnull);
 
     zfRetain(view);
+    zffloat scaleForImpl = ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForImpl(nativeParentView);
     view->_ZFP_ZFUIView_scaleSetRecursively(
-        view->scaleGetFixed(),
-        ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForImpl(nativeParentView));
+        view->scaleFixed() * scaleForImpl / view->scaleForImpl(),
+        scaleForImpl);
 }
 void ZFUIView::_ZFP_ZFUIView_nativeViewNotifyRemove(ZF_IN ZFUIView *view)
 {
@@ -1595,19 +1592,19 @@ ZFMETHOD_DEFINE_0(ZFUIView, void, viewRemoveFromParent)
 
 // ============================================================
 // scale settings
-ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleGet)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleForApp)
 {
     return (d->scaleFixed / d->scaleForImpl);
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleGetForImpl)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleForImpl)
 {
     return d->scaleForImpl;
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleGetFixed)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleFixed)
 {
     return d->scaleFixed;
 }
-ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleGetForImplPhysicalPixel)
+ZFMETHOD_DEFINE_0(ZFUIView, zffloat, scaleForImplPhysicalPixel)
 {
     return ZFPROTOCOL_ACCESS(ZFUIView)->nativeViewScaleForPhysicalPixel(d->nativeView);
 }
@@ -1615,23 +1612,14 @@ void ZFUIView::scaleOnChange(void)
 {
     this->observerNotify(ZFUIView::EventViewScaleOnChange());
 }
-void ZFUIView::_ZFP_ZFUIView_scaleSet(ZF_IN zffloat scaleFixed,
-                                      ZF_IN zffloat scaleForImpl)
-{
-    d->scaleFixed = scaleFixed;
-    d->scaleForImpl = scaleForImpl;
-    if(zffloatNotEqual(d->scaleFixed, scaleFixed))
-    {
-        this->scaleOnChange();
-    }
-}
 void ZFUIView::_ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
                                                  ZF_IN zffloat scaleForImpl)
 {
     if(zffloatNotEqual(d->scaleFixed, scaleFixed)
         || zffloatNotEqual(d->scaleForImpl, scaleForImpl))
     {
-        this->_ZFP_ZFUIView_scaleSet(scaleFixed, scaleForImpl);
+        d->scaleFixed = scaleFixed;
+        d->scaleForImpl = scaleForImpl;
         for(zfindex i = d->layerInternalImpl.views.count() - 1; i != zfindexMax(); --i)
         {
             d->layerInternalImpl.views.get(i)->to<ZFUIView *>()->_ZFP_ZFUIView_scaleSetRecursively(scaleFixed, scaleForImpl);
@@ -1648,6 +1636,8 @@ void ZFUIView::_ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
         {
             this->childAtIndex(i)->_ZFP_ZFUIView_scaleSetRecursively(scaleFixed, scaleForImpl);
         }
+        this->layoutRequest();
+        this->scaleOnChange();
     }
 }
 
@@ -1833,7 +1823,7 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, layout,
         }
         ZFBitUnset(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutedFramePrevResetFlag);
         d->layoutedFrame = rect;
-        ZFPROTOCOL_ACCESS(ZFUIView)->viewFrameSet(this, ZFUIRectApplyScale(rect, this->scaleGetFixed()));
+        ZFPROTOCOL_ACCESS(ZFUIView)->viewFrameSet(this, ZFUIRectApplyScale(rect, this->scaleFixed()));
         ZFUIRect bounds = ZFUIRectGetBounds(rect);
 
         ZFBitSet(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layouting);
@@ -1880,7 +1870,7 @@ ZFMETHOD_DEFINE_1(ZFUIView, void, layout,
         }
         ZFBitUnset(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutedFramePrevResetFlag);
         d->layoutedFrame = rect;
-        ZFPROTOCOL_ACCESS(ZFUIView)->viewFrameSet(this, ZFUIRectApplyScale(rect, this->scaleGetFixed()));
+        ZFPROTOCOL_ACCESS(ZFUIView)->viewFrameSet(this, ZFUIRectApplyScale(rect, this->scaleFixed()));
     }
     ZFBitUnset(d->stateFlag, _ZFP_ZFUIViewPrivate::stateFlag_layoutRequested);
 }

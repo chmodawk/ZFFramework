@@ -623,21 +623,21 @@ public:
      * ZFUIView use a special scale logic to adapt various screen sizes,
      * which contain these scale values:
      * -  app scale:\n
-     *   accessed by #scaleGet, 1 by default\n
+     *   accessed by #scaleForApp, 1 by default\n
      *   automatically changed while adding a ZFUIView to another,
-     *   and can only be changed by app by using #ZFUIRootView::scaleSet of #ZFUISysWindow
+     *   and can only be changed by app by using #ZFUIRootView::scaleForAppSet of #ZFUISysWindow
      * -  impl scale:\n
-     *   accessed by #scaleGetForImpl, it's value depends on impl\n
+     *   accessed by #scaleForImpl, it's value depends on impl\n
      *   automatically changed while adding a ZFUIView to native view,
      *   can not be changed by app
      * -  fixed scale:\n
-     *   accessed by #scaleGetFixed, always equal to (#scaleGet * #scaleGetForImpl)\n
+     *   accessed by #scaleFixed, always equal to (#scaleForApp * #scaleForImpl)\n
      *   all size unit would be applied with this value
      *   before passing to implementations,
      *   can not be changed by app
      * -  impl physical scale:\n
-     *   accessedb y #scaleGetForImplPhysicalPixel, it's value depends on impl\n
-     *   corresponding to #scaleGetForImpl,
+     *   accessedb y #scaleForImplPhysicalPixel, it's value depends on impl\n
+     *   corresponding to #scaleForImpl,
      *   used only if you want to verify physical pixel
      *   (since impl may have it's own scale logic)
      *
@@ -648,7 +648,7 @@ public:
      *   such as 48 for a button's height and 21 for a small textView's height,
      *   it will be scaled automatically while rendering to different size's or DPI's devices\n
      *   if you really want to change scale setting,
-     *   you should use #ZFUIRootView::scaleSet of #ZFUISysWindow
+     *   you should use #ZFUIRootView::scaleForAppSet of #ZFUISysWindow
      * -  for implementation:\n
      *   you have no need to worry about element's logical size,
      *   everything would be scaled to desired size unit
@@ -658,31 +658,29 @@ public:
      * since scale may affect impl's pixel size,
      * size-related property should be flushed manually while scale changed,
      * subclass should override #scaleOnChange to update them,
-     * which would be called if #scaleGetFixed really changed
+     * which would be called if #scaleFixed really changed
      */
-    ZFMETHOD_DECLARE_0(zffloat, scaleGet);
+    ZFMETHOD_DECLARE_0(zffloat, scaleForApp);
     /**
-     * @brief see #scaleGet
+     * @brief see #scaleForApp
      */
-    ZFMETHOD_DECLARE_0(zffloat, scaleGetForImpl);
+    ZFMETHOD_DECLARE_0(zffloat, scaleForImpl);
     /**
-     * @brief see #scaleGet
+     * @brief see #scaleForApp
      */
-    ZFMETHOD_DECLARE_0(zffloat, scaleGetForImplPhysicalPixel);
+    ZFMETHOD_DECLARE_0(zffloat, scaleForImplPhysicalPixel);
     /**
-     * @brief see #scaleGet
+     * @brief see #scaleForApp
      */
-    ZFMETHOD_DECLARE_0(zffloat, scaleGetFixed);
+    ZFMETHOD_DECLARE_0(zffloat, scaleFixed);
 protected:
     /**
-     * @brief see #scaleGet, ensured called only when scale value actually changed
+     * @brief see #scaleForApp, ensured called only when scale value actually changed
      *
      * after this method, #EventViewScaleOnChange would be fired
      */
     virtual void scaleOnChange(void);
 public:
-    void _ZFP_ZFUIView_scaleSet(ZF_IN zffloat scaleFixed,
-                                ZF_IN zffloat scaleForImpl);
     void _ZFP_ZFUIView_scaleSetRecursively(ZF_IN zffloat scaleFixed,
                                            ZF_IN zffloat scaleForImpl);
 

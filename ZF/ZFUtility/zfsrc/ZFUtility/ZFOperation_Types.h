@@ -59,7 +59,6 @@ zfclassFwd ZFOperation;
 zfclass ZF_ENV_EXPORT ZFOperationParam : zfextends ZFObject
 {
     ZFOBJECT_DECLARE(ZFOperationParam, ZFObject)
-
     ZFCLASS_PRIVATE_ALLOC("can only be created by ZFOperation::createParam")
 
 protected:

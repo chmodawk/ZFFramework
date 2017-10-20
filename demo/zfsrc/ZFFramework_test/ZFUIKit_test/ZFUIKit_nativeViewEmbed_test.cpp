@@ -73,7 +73,7 @@ private:
     {
         ZFUIRect frame = this->notifyMeasureWindow(
             this->_sysWindow,
-            ZFUIRectApplyScale(ZFUIRectGetBounds(this->_wrapper->layoutedFrame()), this->_sysWindow->rootView()->scaleGetFixed()),
+            ZFUIRectApplyScale(ZFUIRectGetBounds(this->_wrapper->layoutedFrame()), this->_sysWindow->rootView()->scaleFixed()),
             ZFUIMarginZero()
         );
         ZFPROTOCOL_ACCESS(ZFUIView)->viewFrameSet(this->_sysWindow->rootView(), frame);

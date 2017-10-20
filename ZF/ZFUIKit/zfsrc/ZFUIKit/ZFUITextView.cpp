@@ -24,10 +24,10 @@ public:
 public:
     void updateSizeRelatedProperty(void)
     {
-        this->impl->textShadowOffsetSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->scaleGetFixed()));
-        this->impl->textSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->scaleGetFixed()));
-        this->impl->textSizeAutoChangeMinSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSizeAutoChangeMinSize(), this->pimplOwner->scaleGetFixed()));
-        this->impl->textSizeAutoChangeMaxSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSizeAutoChangeMaxSize(), this->pimplOwner->scaleGetFixed()));
+        this->impl->textShadowOffsetSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textShadowOffset(), this->pimplOwner->scaleFixed()));
+        this->impl->textSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSize(), this->pimplOwner->scaleFixed()));
+        this->impl->textSizeAutoChangeMinSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSizeAutoChangeMinSize(), this->pimplOwner->scaleFixed()));
+        this->impl->textSizeAutoChangeMaxSizeSet(this->pimplOwner, ZFUISizeApplyScale(this->pimplOwner->textSizeAutoChangeMaxSize(), this->pimplOwner->scaleFixed()));
     }
 
 public:
@@ -73,11 +73,11 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, ZFUIColor, textShadowColor)
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, ZFUISize, textShadowOffset)
 {
-    d->impl->textShadowOffsetSet(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleGetFixed()));
+    d->impl->textShadowOffsetSet(this, ZFUISizeApplyScale(this->textShadowOffset(), this->scaleFixed()));
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfint, textSize)
 {
-    d->impl->textSizeSet(this, ZFUISizeApplyScale(this->textSize(), this->scaleGetFixed()));
+    d->impl->textSizeSet(this, ZFUISizeApplyScale(this->textSize(), this->scaleFixed()));
     if(this->textSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -85,7 +85,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfint, textSize)
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfint, textSizeAutoChangeMinSize)
 {
-    d->impl->textSizeAutoChangeMinSizeSet(this, ZFUISizeApplyScale(this->textSizeAutoChangeMinSize(), this->scaleGetFixed()));
+    d->impl->textSizeAutoChangeMinSizeSet(this, ZFUISizeApplyScale(this->textSizeAutoChangeMinSize(), this->scaleFixed()));
     if(this->textSizeAutoChangeMinSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -93,7 +93,7 @@ ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfint, textSizeAutoChangeMinSiz
 }
 ZFPROPERTY_CUSTOM_ON_UPDATE_DEFINE(ZFUITextView, zfint, textSizeAutoChangeMaxSize)
 {
-    d->impl->textSizeAutoChangeMaxSizeSet(this, ZFUISizeApplyScale(this->textSizeAutoChangeMaxSize(), this->scaleGetFixed()));
+    d->impl->textSizeAutoChangeMaxSizeSet(this, ZFUISizeApplyScale(this->textSizeAutoChangeMaxSize(), this->scaleFixed()));
     if(this->textSizeAutoChangeMaxSize() != propertyValueOld)
     {
         this->layoutRequest();
@@ -163,14 +163,14 @@ ZFMETHOD_DEFINE_1(ZFUITextView, ZFUISize, measureTextView,
                   ZFMP_IN_OPT(const ZFUISize &, sizeHint, ZFUISizeZero()))
 {
     return ZFUISizeApplyScaleReversely(d->impl->measureNativeTextView(this,
-        ZFUISizeApplyScale(sizeHint, this->scaleGetFixed()),
-        ZFUISizeApplyScale(this->textSize(), this->scaleGetFixed())),
-        this->scaleGetFixed());
+        ZFUISizeApplyScale(sizeHint, this->scaleFixed()),
+        ZFUISizeApplyScale(this->textSize(), this->scaleFixed())),
+        this->scaleFixed());
 }
 
 ZFMETHOD_DEFINE_0(ZFUITextView, zfint, textSizeCurrent)
 {
-    return ZFUISizeApplyScaleReversely(d->impl->textSizeCurrent(this), this->scaleGetFixed());
+    return ZFUISizeApplyScaleReversely(d->impl->textSizeCurrent(this), this->scaleFixed());
 }
 
 void ZFUITextView::scaleOnChange(void)
@@ -188,7 +188,7 @@ void ZFUITextView::layoutOnLayout(ZF_IN const ZFUIRect &bounds)
 {
     zfsuper::layoutOnLayout(bounds);
     d->impl->layoutNativeTextView(this,
-        ZFUISizeApplyScale(ZFUISizeApplyMargin(bounds.size, this->nativeImplViewMargin()), this->scaleGetFixed()));
+        ZFUISizeApplyScale(ZFUISizeApplyMargin(bounds.size, this->nativeImplViewMargin()), this->scaleFixed()));
 }
 
 // ============================================================
